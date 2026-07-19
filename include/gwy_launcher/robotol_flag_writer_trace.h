@@ -27,8 +27,14 @@ extern "C" {
  *   JJFB_E8H_SVC_TRAP=1           — observe-only trap at SVC #0xAB (0x2D92AE); no fake success
  *   JJFB_E8H_SVC_STOP=1           — uc_emu_stop on first SVC #0xAB (default when trap=1)
  *
+ * E8I Env:
+ *   JJFB_E8I_PARENT_BP=1          — 0x300158 + upstream BL sites + dispatcher chain
+ *   JJFB_E8I_PARENT_PCS=0x..,..   — CSV (priority or all)
+ *   JJFB_E8I_STATE_WATCH=1        — MEM_WRITE watch on R9+(0x800+0xD0); observe-only
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
+ * Never force-writes state word or idle flags as product success.
  */
 
 int robotol_flag_writer_trace_enabled(void);

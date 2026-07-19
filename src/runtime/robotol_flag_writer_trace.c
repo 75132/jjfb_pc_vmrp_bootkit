@@ -11,7 +11,8 @@
 #include <unicorn/unicorn.h>
 #endif
 
-#define E8F_MAX_BP 64
+#define E8F_MAX_BP 128
+#define E8I_STATE_OFF (0x800u + 0xD0u) /* audit-safe: former state/ui word */
 
 typedef struct E8fBp {
     int used;
@@ -36,9 +37,12 @@ static struct {
     int caller_bp;
     int fault_watch;
     int dispatcher_bp;
+    int parent_bp;
+    int state_watch;
     int svc_trap;
     int svc_stop;
     int armed;
+    int state_watch_armed;
     int sibling_done;
     int counterfactual_done;
     int probe10162_done;
@@ -55,9 +59,14 @@ static struct {
     uint32_t queue_depth_at_probe;
     uint32_t fault_hits;
     uint32_t svc_hits;
+    uint32_t state_writes;
+    uint32_t state_last_val;
+    uint32_t state_last_writer;
+    uint32_t parent_hit_n;
 #ifdef GWY_HAVE_UNICORN
     uc_hook svc_code_hook;
     uc_hook svc_intr_hook;
+    uc_hook state_hook;
 #endif
 } g_e8f;
 
@@ -93,6 +102,8 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.caller_bp = env1("JJFB_E8G_CALLER_BP");
         g_e8f.fault_watch = env1("JJFB_E8G_FAULT_WATCH");
         g_e8f.dispatcher_bp = env1("JJFB_E8H_DISPATCHER_BP");
+        g_e8f.parent_bp = env1("JJFB_E8I_PARENT_BP");
+        g_e8f.state_watch = env1("JJFB_E8I_STATE_WATCH");
         g_e8f.svc_trap = env1("JJFB_E8H_SVC_TRAP");
         /* Default stop-on-hit when trap armed unless explicitly disabled. */
         g_e8f.svc_stop = g_e8f.svc_trap && !env1("JJFB_E8H_SVC_NO_STOP");
@@ -109,7 +120,8 @@ int robotol_flag_writer_trace_enabled(void) {
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
-                        g_e8f.svc_trap || (g_e8f.counterfactual[0] != '\0');
+                        g_e8f.parent_bp || g_e8f.state_watch || g_e8f.svc_trap ||
+                        (g_e8f.counterfactual[0] != '\0');
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -132,6 +144,10 @@ void robotol_flag_writer_trace_reset(void) {
         if (g_e8f.svc_intr_hook) {
             uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.svc_intr_hook);
             g_e8f.svc_intr_hook = 0;
+        }
+        if (g_e8f.state_hook) {
+            uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.state_hook);
+            g_e8f.state_hook = 0;
         }
     }
 #endif
@@ -305,6 +321,16 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         dump_dispatcher_context(uc, bp->tag, bp->pc);
         return;
     }
+    if (bp->tag[0] == 'p') {
+        g_e8f.parent_hit_n++;
+        printf("[JJFB_E8I_PARENT_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
+               "lr=0x%X evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+        if (bp->pc == 0x300158u || bp->pc == 0x300714u || bp->pc == 0x30103Cu)
+            dump_dispatcher_context(uc, bp->tag, bp->pc);
+        fflush(stdout);
+        return;
+    }
     if (bp->pc == 0x30D28Cu) {
         g_e8f.longpath_hits++;
         printf("[JJFB_E8F_LONGPATH_HIT] pc=0x%X tick=%u r0=0x%X r1=0x%X r9=0x%X lr=0x%X "
@@ -323,6 +349,31 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         printf("[JJFB_E8F_WRITER_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
                "lr=0x%X evidence=OBSERVED\n",
                bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+    }
+    fflush(stdout);
+}
+static void on_e8i_state_write(uc_engine *uc, uc_mem_type type, uint64_t address, int size,
+                               int64_t value, void *user_data) {
+    uint32_t pc = 0, lr = 0, r0 = 0, r9 = 0;
+    uint32_t newv = (uint32_t)value;
+    (void)type;
+    (void)user_data;
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    if (size == 1) newv = (uint32_t)(uint8_t)value;
+    else if (size == 2) newv = (uint32_t)(uint16_t)value;
+    g_e8f.state_writes++;
+    g_e8f.state_last_val = newv;
+    g_e8f.state_last_writer = pc;
+    printf("[JJFB_E8I_STATE_WRITE] addr=0x%X off=0x%X size=%d new=0x%X writer_pc=0x%X lr=0x%X "
+           "r0=0x%X r9=0x%X tick=%u note=observe_only evidence=OBSERVED\n",
+           (uint32_t)address, E8I_STATE_OFF, size, newv, pc, lr, r0, r9, g_e8f.tick);
+    if (newv == 38u) {
+        printf("[JJFB_E8I_STATE_EQ38] writer_pc=0x%X tick=%u note=required_for_30103C_arm "
+               "evidence=OBSERVED\n",
+               pc, g_e8f.tick);
     }
     fflush(stdout);
 }
@@ -356,7 +407,7 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     if (!uc) uc = g_e8f.uc;
     if (!uc || g_e8f.armed) return;
     if (!g_e8f.writer_bp && !g_e8f.longpath_watch && !g_e8f.caller_bp && !g_e8f.fault_watch &&
-        !g_e8f.dispatcher_bp && !g_e8f.svc_trap)
+        !g_e8f.dispatcher_bp && !g_e8f.parent_bp && !g_e8f.state_watch && !g_e8f.svc_trap)
         return;
     if (!find_robotol_code(&code_base, &code_size)) return;
 
@@ -426,6 +477,33 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                 add_bp(k_disp[i], k_disp_tags[i]);
         }
     }
+    if (g_e8f.parent_bp) {
+        uint32_t ppcs[E8F_MAX_BP];
+        int np2 = 0;
+        const char *pcsv = getenv("JJFB_E8I_PARENT_PCS");
+        static const uint32_t k_parent_chain[] = {
+            0x300158u, 0x3002C0u, 0x300714u, 0x30103Cu, 0x3020C8u, 0x302340u, 0x302362u,
+        };
+        if (pcsv && pcsv[0])
+            np2 = parse_hex_list(pcsv, ppcs, E8F_MAX_BP);
+        else {
+            for (i = 0; i < (int)(sizeof(k_parent_chain) / sizeof(k_parent_chain[0])); i++)
+                ppcs[np2++] = k_parent_chain[i];
+        }
+        for (i = 0; i < np2; i++) {
+            char tag[16];
+            uint32_t p = ppcs[i];
+            if (p == 0x300158u)
+                snprintf(tag, sizeof(tag), "p300158");
+            else if (p == 0x300714u)
+                snprintf(tag, sizeof(tag), "p300714");
+            else if (p == 0x30103Cu)
+                snprintf(tag, sizeof(tag), "p30103c");
+            else
+                snprintf(tag, sizeof(tag), "p%X", p & 0xFFFFFFu);
+            add_bp(p, tag);
+        }
+    }
 
 #ifdef GWY_HAVE_UNICORN
     for (i = 0; i < g_e8f.nbps; i++) {
@@ -460,9 +538,38 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     g_e8f.armed = 1;
     g_e8f.uc = uc;
     printf("[JJFB_E8F_WRITER_BP] armed=1 n=%d code_base=0x%X size=0x%X caller_bp=%d "
-           "fault_watch=%d dispatcher_bp=%d svc_trap=%d evidence=OBSERVED\n",
+           "fault_watch=%d dispatcher_bp=%d parent_bp=%d state_watch=%d svc_trap=%d "
+           "evidence=OBSERVED\n",
            g_e8f.nbps, code_base, code_size, g_e8f.caller_bp, g_e8f.fault_watch,
-           g_e8f.dispatcher_bp, g_e8f.svc_trap);
+           g_e8f.dispatcher_bp, g_e8f.parent_bp, g_e8f.state_watch, g_e8f.svc_trap);
+    fflush(stdout);
+}
+
+static void e8i_try_arm_state_watch(void *uc) {
+    uint32_t r9 = 0;
+    uint32_t addr;
+    uint32_t cur = 0;
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    if (!g_e8f.state_watch || g_e8f.state_watch_armed || !uc) return;
+    if (!find_robotol_r9(uc, &r9) || !r9) return;
+    addr = r9 + E8I_STATE_OFF;
+#ifdef GWY_HAVE_UNICORN
+    ue = uc_hook_add((uc_engine *)uc, &g_e8f.state_hook, UC_HOOK_MEM_WRITE,
+                     (void *)on_e8i_state_write, NULL, (uint64_t)addr, (uint64_t)(addr + 3u));
+    if (ue != UC_ERR_OK) {
+        printf("[JJFB_E8I_STATE_WATCH] arm_fail addr=0x%X uc_err=%u evidence=OBSERVED\n", addr,
+               (unsigned)ue);
+        return;
+    }
+#endif
+    g_e8f.state_watch_armed = 1;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, addr, &cur);
+    g_e8f.state_last_val = cur;
+    printf("[JJFB_E8I_STATE_WATCH] armed=1 addr=0x%X r9=0x%X off=0x%X init=0x%X "
+           "note=observe_only_no_force evidence=OBSERVED\n",
+           addr, r9, E8I_STATE_OFF, cur);
     fflush(stdout);
 }
 
@@ -577,6 +684,10 @@ void robotol_flag_writer_trace_dump_summary(const char *reason) {
            "svc_trapped=%d cf=%s evidence=OBSERVED\n",
            reason ? reason : "-", disp_hits, disp_miss, g_e8f.svc_hits, g_e8f.svc_trapped,
            g_e8f.counterfactual[0] ? g_e8f.counterfactual : "NONE");
+    printf("[JJFB_E8I_PARENT_SUMMARY] reason=%s parent_hits=%u state_watch_armed=%d "
+           "state_writes=%u state_last=0x%X state_last_writer=0x%X evidence=OBSERVED\n",
+           reason ? reason : "-", g_e8f.parent_hit_n, g_e8f.state_watch_armed, g_e8f.state_writes,
+           g_e8f.state_last_val, g_e8f.state_last_writer);
     fflush(stdout);
 }
 
@@ -621,6 +732,7 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
     if (!uc) uc = g_e8f.uc;
     g_e8f.tick = tick;
     robotol_flag_writer_trace_try_arm(uc);
+    e8i_try_arm_state_watch(uc);
 
     if (tick == 1u && find_robotol_r9(uc, &r9)) {
         uint32_t depth = 0;
@@ -655,6 +767,9 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
     if (tick == 2u && g_e8f.counterfactual_done && find_robotol_r9(uc, &r9))
         snap_idle_flags(uc, r9, "cf_after_next_10140");
 
-    if (tick == 25u || tick == 40u)
-        robotol_flag_writer_trace_dump_summary(tick == 40u ? "tick_40" : "tick_25");
+    if (tick == 25u || tick == 40u || tick == 100u || tick == 600u)
+        robotol_flag_writer_trace_dump_summary(tick == 600u   ? "tick_600"
+                                              : tick == 100u ? "tick_100"
+                                              : tick == 40u  ? "tick_40"
+                                                             : "tick_25");
 }

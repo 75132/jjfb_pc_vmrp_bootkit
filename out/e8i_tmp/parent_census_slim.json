@@ -1,0 +1,4647 @@
+{
+  "code_base": 2985460,
+  "parent_fn": 3146072,
+  "dispatcher_fn": 3147540,
+  "state_offset": 2256,
+  "state_offset_note": "R9+(0x800+0xD0); audit-safe spelling of former state/ui word",
+  "caller_count": 85,
+  "bucket_counts": {
+    "constant_event_code": 81,
+    "other": 1,
+    "propagated_or_unknown": 3
+  },
+  "census": [
+    {
+      "bl_pc": 3000276,
+      "fn": 3000184,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3000248
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3014102,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014100
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014232,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014230
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014248,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014246
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014286,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014284
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014392,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014390
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014424,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014422
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3014462,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014460
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ]
+    },
+    {
+      "bl_pc": 3016058,
+      "fn": 3016058,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016056
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3016292,
+      "fn": 3016292,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016290
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3016414,
+      "fn": 3016414,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016412
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3016524,
+      "fn": 3016524,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016522
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3018674,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018672
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3018760,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018758
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3018824,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018822
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3018938,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018936
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3018988,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3018986
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019046,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019042
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019142,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019136
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019316,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019314
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019366,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019364
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019488,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019486
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019854,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019852
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019892,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019890
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3019960,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019958
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3020400,
+      "fn": 3020400,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020398
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3020762,
+      "fn": 3020762,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020760
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3020862,
+      "fn": 3020862,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020860
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3020896,
+      "fn": 3020896,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020894
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3020922,
+      "fn": 3020922,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020920
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021078,
+      "fn": 3021078,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021076
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021140,
+      "fn": 3021140,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021138
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021258,
+      "fn": 3021258,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021256
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021454,
+      "fn": 3021454,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021452
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021532,
+      "fn": 3021532,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021530
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021760,
+      "fn": 3021760,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021758
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021812,
+      "fn": 3021812,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021810
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3021840,
+      "fn": 3021840,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021838
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022070,
+      "fn": 3022070,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022068
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022358,
+      "fn": 3022358,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022356
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022410,
+      "fn": 3022410,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022408
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022594,
+      "fn": 3022594,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022592
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022648,
+      "fn": 3022648,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022646
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022910,
+      "fn": 3022910,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022908
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022954,
+      "fn": 3022954,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022952
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3022978,
+      "fn": 3022978,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022976
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023028,
+      "fn": 3023028,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023026
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023050,
+      "fn": 3023050,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023048
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023178,
+      "fn": 3023178,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023176
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023212,
+      "fn": 3023212,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023210
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023276,
+      "fn": 3023276,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023274
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023340,
+      "fn": 3023340,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023338
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023470,
+      "fn": 3023470,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023468
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023536,
+      "fn": 3023536,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023534
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023568,
+      "fn": 3023568,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023566
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023696,
+      "fn": 3023696,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023694
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023748,
+      "fn": 3023748,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023746
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023766,
+      "fn": 3023766,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023764
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023772,
+      "fn": 3023772,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023770
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023836,
+      "fn": 3023836,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023834
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023854,
+      "fn": 3023854,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023852
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3023860,
+      "fn": 3023860,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3023858
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3025638,
+      "fn": 3024160,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3025636
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3026410,
+      "fn": 3026410,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3026408
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "UHUIHD"
+      ]
+    },
+    {
+      "bl_pc": 3046060,
+      "fn": 3046020,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3046058
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3046122,
+      "fn": 3046020,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3046120
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3046186,
+      "fn": 3046020,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3046184
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3092522,
+      "fn": 3092468,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3092520
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3101668,
+      "fn": 3101584,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3101666
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3101812,
+      "fn": 3101584,
+      "r0": {
+        "kind": "ldr_pc_literal",
+        "const": 464,
+        "notes": [],
+        "set_pc": 3101778
+      },
+      "bucket": "other",
+      "interesting_r0": false,
+      "strings": []
+    },
+    {
+      "bl_pc": 3102436,
+      "fn": 3101584,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3102434
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3122276,
+      "fn": 3121544,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3122274
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "/H0IHD"
+      ]
+    },
+    {
+      "bl_pc": 3122574,
+      "fn": 3122432,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3122572
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "/H0IHD"
+      ]
+    },
+    {
+      "bl_pc": 3122620,
+      "fn": 3122432,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3122618
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "/H0IHD"
+      ]
+    },
+    {
+      "bl_pc": 3126968,
+      "fn": 3126716,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3126966
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3154768,
+      "fn": 3154120,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3154766
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "/HHD"
+      ]
+    },
+    {
+      "bl_pc": 3155850,
+      "fn": 3154120,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3155848
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3163092,
+      "fn": 3161620,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3163090
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3172640,
+      "fn": 3172612,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3172638
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3202550,
+      "fn": 3202550,
+      "r0": {
+        "kind": "mov_from_reg",
+        "const": null,
+        "notes": [],
+        "from_reg": 4,
+        "set_pc": 3202548
+      },
+      "bucket": "propagated_or_unknown",
+      "interesting_r0": false,
+      "strings": []
+    },
+    {
+      "bl_pc": 3218608,
+      "fn": 3217552,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3218606
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3221588,
+      "fn": 3221496,
+      "r0": {
+        "kind": "unknown",
+        "const": null,
+        "notes": []
+      },
+      "bucket": "propagated_or_unknown",
+      "interesting_r0": false,
+      "strings": [
+        "/HHD"
+      ]
+    },
+    {
+      "bl_pc": 3221738,
+      "fn": 3221656,
+      "r0": {
+        "kind": "unknown",
+        "const": null,
+        "notes": []
+      },
+      "bucket": "propagated_or_unknown",
+      "interesting_r0": false,
+      "strings": [
+        "/HHD"
+      ]
+    },
+    {
+      "bl_pc": 3223076,
+      "fn": 3222732,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3223074
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    },
+    {
+      "bl_pc": 3223402,
+      "fn": 3222732,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3223400
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": []
+    }
+  ],
+  "priority_callers": [
+    {
+      "bl_pc": 3000276,
+      "fn": 3000184,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3000248
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2DC7A8: MOVS r3, #15",
+        "0x2DC7AA: 0x64C8",
+        "0x2DC7AC: 0x6BD0",
+        "0x2DC7AE: 0x3740",
+        "0x2DC7B0: 0x6508",
+        "0x2DC7B2: 0x56F8",
+        "0x2DC7B4: CMP r0, #0",
+        "0x2DC7B6: 0xD102",
+        "0x2DC7B8: MOVS r0, #20",
+        "0x2DC7BA: BL 0x2FA500",
+        "0x2DC7BE: LDR r0,[pc] =0xC6C",
+        "0x2DC7C0: 0x4448",
+        "0x2DC7C2: 0x3080",
+        "0x2DC7C4: 0x64C5",
+        "0x2DC7C6: CMP r6, #0",
+        "0x2DC7C8: 0xDD0C",
+        "0x2DC7CA: 0x6DA8",
+        "0x2DC7CC: 0x00A1",
+        "0x2DC7CE: 0x5840",
+        "0x2DC7D0: BL 0x2F98F0"
+      ]
+    },
+    {
+      "bl_pc": 3014102,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014100
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFDAA: BL 0x304558",
+        "0x2DFDAE: 0xE77B",
+        "0x2DFDB0: LDR r0,[pc] =0x34C6E",
+        "0x2DFDB2: MOVS r2, #0",
+        "0x2DFDB4: 0x1C21",
+        "0x2DFDB6: 0x4478",
+        "0x2DFDB8: BL 0x2FD868",
+        "0x2DFDBC: LDR r1,[pc] =0xC6C",
+        "0x2DFDBE: 0x4449",
+        "0x2DFDC0: 0x3160",
+        "0x2DFDC2: 0x9104",
+        "0x2DFDC4: 0x1C43",
+        "0x2DFDC6: 0xD034",
+        "0x2DFDC8: LDR r4,[pc] =0xA90",
+        "0x2DFDCA: MOVS r3, #0",
+        "0x2DFDCC: 0x444C",
+        "0x2DFDCE: 0x56E0",
+        "0x2DFDD0: 0x1C43",
+        "0x2DFDD2: 0xD089",
+        "0x2DFDD4: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014232,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014230
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFE2A: LDR r0,[pc] =0x1E216",
+        "0x2DFE2C: BL 0x304558",
+        "0x2DFE30: 0xE73A",
+        "0x2DFE32: LDR r0,[pc] =0x34BF8",
+        "0x2DFE34: MOVS r2, #0",
+        "0x2DFE36: 0x1C21",
+        "0x2DFE38: 0x4478",
+        "0x2DFE3A: BL 0x2FD868",
+        "0x2DFE3E: 0x1C43",
+        "0x2DFE40: 0xD01C",
+        "0x2DFE42: LDR r0,[pc] =0xC6C",
+        "0x2DFE44: MOVS r3, #11",
+        "0x2DFE46: 0x4448",
+        "0x2DFE48: 0x56C0",
+        "0x2DFE4A: CMP r0, #2",
+        "0x2DFE4C: 0xD00B",
+        "0x2DFE4E: MOVS r0, #2",
+        "0x2DFE50: BL 0x2FA030",
+        "0x2DFE54: 0x1C04",
+        "0x2DFE56: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014248,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014246
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFE38: 0x4478",
+        "0x2DFE3A: BL 0x2FD868",
+        "0x2DFE3E: 0x1C43",
+        "0x2DFE40: 0xD01C",
+        "0x2DFE42: LDR r0,[pc] =0xC6C",
+        "0x2DFE44: MOVS r3, #11",
+        "0x2DFE46: 0x4448",
+        "0x2DFE48: 0x56C0",
+        "0x2DFE4A: CMP r0, #2",
+        "0x2DFE4C: 0xD00B",
+        "0x2DFE4E: MOVS r0, #2",
+        "0x2DFE50: BL 0x2FA030",
+        "0x2DFE54: 0x1C04",
+        "0x2DFE56: MOVS r0, #18",
+        "0x2DFE58: BL 0x300158",
+        "0x2DFE5C: MOVS r1, #0",
+        "0x2DFE5E: 0x1C20",
+        "0x2DFE60: BL 0x2FAF04",
+        "0x2DFE64: 0xE720",
+        "0x2DFE66: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014286,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014284
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "q@h/",
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFE5C: MOVS r1, #0",
+        "0x2DFE5E: 0x1C20",
+        "0x2DFE60: BL 0x2FAF04",
+        "0x2DFE64: 0xE720",
+        "0x2DFE66: MOVS r0, #18",
+        "0x2DFE68: BL 0x300158",
+        "0x2DFE6C: BL 0x30E55C",
+        "0x2DFE70: 0x1C39",
+        "0x2DFE72: MOVS r0, #255",
+        "0x2DFE74: 0x3064",
+        "0x2DFE76: BL 0x30E7F8",
+        "0x2DFE7A: 0xE715",
+        "0x2DFE7C: LDR r0,[pc] =0x34BC6",
+        "0x2DFE7E: MOVS r2, #0",
+        "0x2DFE80: 0x1C21",
+        "0x2DFE82: 0x4478",
+        "0x2DFE84: BL 0x2FD868",
+        "0x2DFE88: 0x1C43",
+        "0x2DFE8A: 0xD018",
+        "0x2DFE8C: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014392,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014390
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFECC: 0x1C43",
+        "0x2DFECE: 0xD107",
+        "0x2DFED0: MOVS r2, #0",
+        "0x2DFED2: 0x1C21",
+        "0x2DFED4: 0x1C28",
+        "0x2DFED6: 0x3014",
+        "0x2DFED8: BL 0x2FD868",
+        "0x2DFEDC: 0x1C43",
+        "0x2DFEDE: 0xD025",
+        "0x2DFEE0: LDR r0,[pc] =0xC6C",
+        "0x2DFEE2: MOVS r3, #11",
+        "0x2DFEE4: 0x4448",
+        "0x2DFEE6: 0x56C0",
+        "0x2DFEE8: MOVS r6, #0",
+        "0x2DFEEA: CMP r0, #2",
+        "0x2DFEEC: 0xD00B",
+        "0x2DFEEE: MOVS r0, #2",
+        "0x2DFEF0: BL 0x2FA030",
+        "0x2DFEF4: 0x1C04",
+        "0x2DFEF6: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014424,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014422
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFEE8: MOVS r6, #0",
+        "0x2DFEEA: CMP r0, #2",
+        "0x2DFEEC: 0xD00B",
+        "0x2DFEEE: MOVS r0, #2",
+        "0x2DFEF0: BL 0x2FA030",
+        "0x2DFEF4: 0x1C04",
+        "0x2DFEF6: MOVS r0, #18",
+        "0x2DFEF8: BL 0x300158",
+        "0x2DFEFC: MOVS r1, #0",
+        "0x2DFEFE: 0x1C20",
+        "0x2DFF00: BL 0x2FAF04",
+        "0x2DFF04: 0xE6D0",
+        "0x2DFF06: MOVS r2, #0",
+        "0x2DFF08: 0x1C21",
+        "0x2DFF0A: 0x1C28",
+        "0x2DFF0C: BL 0x2FD868",
+        "0x2DFF10: 0x1C43",
+        "0x2DFF12: 0xD100",
+        "0x2DFF14: MOVS r6, #1",
+        "0x2DFF16: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3014462,
+      "fn": 3013692,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3014460
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [
+        "HxD/"
+      ],
+      "prev20": [
+        "0x2DFF0C: BL 0x2FD868",
+        "0x2DFF10: 0x1C43",
+        "0x2DFF12: 0xD100",
+        "0x2DFF14: MOVS r6, #1",
+        "0x2DFF16: MOVS r0, #18",
+        "0x2DFF18: BL 0x300158",
+        "0x2DFF1C: BL 0x30E55C",
+        "0x2DFF20: 0x1C31",
+        "0x2DFF22: MOVS r0, #255",
+        "0x2DFF24: 0x3062",
+        "0x2DFF26: BL 0x30E7F8",
+        "0x2DFF2A: 0xE6BD",
+        "0x2DFF2C: LDR r0,[pc] =0x34B6E",
+        "0x2DFF2E: MOVS r2, #0",
+        "0x2DFF30: 0x1C21",
+        "0x2DFF32: 0x4478",
+        "0x2DFF34: BL 0x2FD868",
+        "0x2DFF38: 0x1C43",
+        "0x2DFF3A: 0xD00D",
+        "0x2DFF3C: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3016058,
+      "fn": 3016058,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016056
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E054A: LDR r0,[pc] =0x34720",
+        "0x2E054C: MOVS r2, #0",
+        "0x2E054E: 0x1C21",
+        "0x2E0550: 0x4478",
+        "0x2E0552: BL 0x2FD868",
+        "0x2E0556: 0x1C43",
+        "0x2E0558: 0xD004",
+        "0x2E055A: MOVS r1, #0",
+        "0x2E055C: MOVS r0, #2",
+        "0x2E055E: BL 0x2FB5BC",
+        "0x2E0562: 0xE410",
+        "0x2E0564: LDR r0,[pc] =0x3470E",
+        "0x2E0566: MOVS r2, #0",
+        "0x2E0568: 0x1C21",
+        "0x2E056A: 0x4478",
+        "0x2E056C: BL 0x2FD868",
+        "0x2E0570: 0x1C43",
+        "0x2E0572: 0xD007",
+        "0x2E0574: BL 0x30C008",
+        "0x2E0578: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3016292,
+      "fn": 3016292,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016290
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E0638: 0x9000",
+        "0x2E063A: 0x1C3B",
+        "0x2E063C: MOVS r1, #5",
+        "0x2E063E: LDR r0,[pc] =0x1E202",
+        "0x2E0640: BL 0x304558",
+        "0x2E0644: 0xE40E",
+        "0x2E0646: LDR r0,[pc] =0x34224",
+        "0x2E0648: MOVS r2, #0",
+        "0x2E064A: 0x1C21",
+        "0x2E064C: 0x4478",
+        "0x2E064E: BL 0x2FD868",
+        "0x2E0652: 0x1C43",
+        "0x2E0654: 0xD035",
+        "0x2E0656: LDR r0,[pc] =(0x800+0xD0)",
+        "0x2E0658: 0x4448",
+        "0x2E065A: 0x6800",
+        "0x2E065C: 0x38FF",
+        "0x2E065E: 0x3833",
+        "0x2E0660: 0xD102",
+        "0x2E0662: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3016414,
+      "fn": 3016414,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016412
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E06B2: 0x9100",
+        "0x2E06B4: 0x9101",
+        "0x2E06B6: MOVS r3, #233",
+        "0x2E06B8: MOVS r1, #41",
+        "0x2E06BA: LDR r0,[pc] =0x1E501",
+        "0x2E06BC: BL 0x304558",
+        "0x2E06C0: 0xE420",
+        "0x2E06C2: LDR r0,[pc] =0x341E4",
+        "0x2E06C4: MOVS r2, #0",
+        "0x2E06C6: 0x1C21",
+        "0x2E06C8: 0x4478",
+        "0x2E06CA: BL 0x2FD868",
+        "0x2E06CE: 0x1C43",
+        "0x2E06D0: 0xD02E",
+        "0x2E06D2: 0x9903",
+        "0x2E06D4: MOVS r3, #8",
+        "0x2E06D6: 0x56C8",
+        "0x2E06D8: CMP r0, #1",
+        "0x2E06DA: 0xD108",
+        "0x2E06DC: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3016524,
+      "fn": 3016524,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3016522
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E0720: 0x4448",
+        "0x2E0722: 0x68C0",
+        "0x2E0724: 0x6981",
+        "0x2E0726: 0x69C2",
+        "0x2E0728: MOVS r0, #189",
+        "0x2E072A: BL 0x30F908",
+        "0x2E072E: 0xE412",
+        "0x2E0730: LDR r0,[pc] =0x34182",
+        "0x2E0732: MOVS r2, #0",
+        "0x2E0734: 0x1C21",
+        "0x2E0736: 0x4478",
+        "0x2E0738: BL 0x2FD868",
+        "0x2E073C: 0x1C43",
+        "0x2E073E: 0xD021",
+        "0x2E0740: 0x9903",
+        "0x2E0742: MOVS r3, #8",
+        "0x2E0744: 0x56C8",
+        "0x2E0746: CMP r0, #1",
+        "0x2E0748: 0xD108",
+        "0x2E074A: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3018674,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018672
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E0F86: 0x444A",
+        "0x2E0F88: 0x6812",
+        "0x2E0F8A: 0x4790",
+        "0x2E0F8C: CMP r0, #0",
+        "0x2E0F8E: 0xD12A",
+        "0x2E0F90: BL 0x30C008",
+        "0x2E0F94: MOVS r1, #0",
+        "0x2E0F96: MOVS r2, #0",
+        "0x2E0F98: 0x9202",
+        "0x2E0F9A: 0x9100",
+        "0x2E0F9C: 0x9101",
+        "0x2E0F9E: LDR r4,[pc] =0x1E216",
+        "0x2E0FA0: MOVS r1, #3",
+        "0x2E0FA2: MOVS r2, #2",
+        "0x2E0FA4: 0x1C2B",
+        "0x2E0FA6: 0x1C20",
+        "0x2E0FA8: BL 0x304558",
+        "0x2E0FAC: CMP r0, #2",
+        "0x2E0FAE: 0xD10F",
+        "0x2E0FB0: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3018760,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018758
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E0FDE: 0x9202",
+        "0x2E0FE0: BL 0x304558",
+        "0x2E0FE4: 0xE723",
+        "0x2E0FE6: LDR r1,[pc] =0x349D8",
+        "0x2E0FE8: 0x4479",
+        "0x2E0FEA: LDR r2,[pc] =0x143C",
+        "0x2E0FEC: 0x1C20",
+        "0x2E0FEE: 0x444A",
+        "0x2E0FF0: 0x6812",
+        "0x2E0FF2: 0x4790",
+        "0x2E0FF4: CMP r0, #0",
+        "0x2E0FF6: 0xD117",
+        "0x2E0FF8: LDR r0,[pc] =0xCBC",
+        "0x2E0FFA: 0x4448",
+        "0x2E0FFC: 0x30B0",
+        "0x2E0FFE: 0x6D80",
+        "0x2E1000: CMP r0, #0",
+        "0x2E1002: 0xD093",
+        "0x2E1004: 0x6804",
+        "0x2E1006: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3018824,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018822
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E101C: MOVS r3, #120",
+        "0x2E101E: MOVS r1, #17",
+        "0x2E1020: LDR r0,[pc] =0x1E202",
+        "0x2E1022: BL 0x304558",
+        "0x2E1026: 0xE702",
+        "0x2E1028: LDR r1,[pc] =0x349A2",
+        "0x2E102A: 0x4479",
+        "0x2E102C: LDR r2,[pc] =0x143C",
+        "0x2E102E: 0x1C20",
+        "0x2E1030: 0x444A",
+        "0x2E1032: 0x6812",
+        "0x2E1034: 0x4790",
+        "0x2E1036: CMP r0, #0",
+        "0x2E1038: 0xD12B",
+        "0x2E103A: BL 0x30C008",
+        "0x2E103E: MOVS r3, #8",
+        "0x2E1040: 0x56F0",
+        "0x2E1042: CMP r0, #1",
+        "0x2E1044: 0xD108",
+        "0x2E1046: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3018938,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3018936
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1092: LDR r1,[pc] =0x34944",
+        "0x2E1094: 0x4479",
+        "0x2E1096: LDR r2,[pc] =0x143C",
+        "0x2E1098: 0x1C20",
+        "0x2E109A: 0x444A",
+        "0x2E109C: 0x6812",
+        "0x2E109E: 0x4790",
+        "0x2E10A0: CMP r0, #0",
+        "0x2E10A2: 0xD126",
+        "0x2E10A4: LDR r0,[pc] =0xCBC",
+        "0x2E10A6: 0x4448",
+        "0x2E10A8: 0x30B0",
+        "0x2E10AA: 0x6D80",
+        "0x2E10AC: CMP r0, #0",
+        "0x2E10AE: 0xD08E",
+        "0x2E10B0: 0x3010",
+        "0x2E10B2: 0x7BC0",
+        "0x2E10B4: CMP r0, #0",
+        "0x2E10B6: 0xD08A",
+        "0x2E10B8: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3018988,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 20,
+        "notes": [],
+        "set_pc": 3018986
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E10C0: MOVS r1, #0",
+        "0x2E10C2: 0x9202",
+        "0x2E10C4: MOVS r2, #10",
+        "0x2E10C6: 0x9100",
+        "0x2E10C8: 0x9101",
+        "0x2E10CA: 0x1C2B",
+        "0x2E10CC: MOVS r1, #24",
+        "0x2E10CE: LDR r0,[pc] =0x1E202",
+        "0x2E10D0: BL 0x304558",
+        "0x2E10D4: MOVS r2, #0",
+        "0x2E10D6: MOVS r1, #0",
+        "0x2E10D8: 0x9202",
+        "0x2E10DA: 0x1C03",
+        "0x2E10DC: MOVS r2, #9",
+        "0x2E10DE: 0x9100",
+        "0x2E10E0: 0x9101",
+        "0x2E10E2: MOVS r1, #3",
+        "0x2E10E4: LDR r0,[pc] =0x1E202",
+        "0x2E10E6: BL 0x304558",
+        "0x2E10EA: MOVS r0, #20"
+      ]
+    },
+    {
+      "bl_pc": 3019046,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019042
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E10FC: 0x6812",
+        "0x2E10FE: 0x4790",
+        "0x2E1100: LDR r1,[pc] =0xCBC",
+        "0x2E1102: 0x4449",
+        "0x2E1104: 0x3930",
+        "0x2E1106: 0x9104",
+        "0x2E1108: CMP r0, #0",
+        "0x2E110A: 0xD127",
+        "0x2E110C: 0x9904",
+        "0x2E110E: MOVS r3, #14",
+        "0x2E1110: 0x56C8",
+        "0x2E1112: CMP r0, #0",
+        "0x2E1114: 0xD104",
+        "0x2E1116: LDR r0,[pc] =0x348DC",
+        "0x2E1118: 0x4478",
+        "0x2E111A: BL 0x2FBFB4",
+        "0x2E111E: 0xE686",
+        "0x2E1120: 0x9904",
+        "0x2E1122: MOVS r0, #18",
+        "0x2E1124: 0x738D"
+      ]
+    },
+    {
+      "bl_pc": 3019142,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019136
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E115C: LDR r1,[pc] =0x348B2",
+        "0x2E115E: 0x4479",
+        "0x2E1160: LDR r2,[pc] =0x143C",
+        "0x2E1162: 0x1C20",
+        "0x2E1164: 0x444A",
+        "0x2E1166: 0x6812",
+        "0x2E1168: 0x4790",
+        "0x2E116A: CMP r0, #0",
+        "0x2E116C: 0xD14E",
+        "0x2E116E: BL 0x30C008",
+        "0x2E1172: LDR r4,[pc] =0xCBC",
+        "0x2E1174: 0x444C",
+        "0x2E1176: 0x34B0",
+        "0x2E1178: 0x6DA0",
+        "0x2E117A: CMP r0, #0",
+        "0x2E117C: 0xD088",
+        "0x2E117E: LDR r1,[pc] =0x1A8",
+        "0x2E1180: MOVS r0, #18",
+        "0x2E1182: 0x4449",
+        "0x2E1184: 0x700D"
+      ]
+    },
+    {
+      "bl_pc": 3019316,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019314
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E120C: LDR r1,[pc] =0x3480E",
+        "0x2E120E: 0x4479",
+        "0x2E1210: LDR r2,[pc] =0x143C",
+        "0x2E1212: 0x1C20",
+        "0x2E1214: 0x444A",
+        "0x2E1216: 0x6812",
+        "0x2E1218: 0x4790",
+        "0x2E121A: CMP r0, #0",
+        "0x2E121C: 0xD133",
+        "0x2E121E: LDR r0,[pc] =0xD6C",
+        "0x2E1220: 0x4448",
+        "0x2E1222: 0x6D80",
+        "0x2E1224: CMP r0, #0",
+        "0x2E1226: 0xD098",
+        "0x2E1228: MOVS r1, #40",
+        "0x2E122A: 0x5C09",
+        "0x2E122C: 0x6804",
+        "0x2E122E: CMP r1, #0",
+        "0x2E1230: 0xD108",
+        "0x2E1232: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3019366,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019364
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E123A: MOVS r1, #0",
+        "0x2E123C: 0x4478",
+        "0x2E123E: BL 0x2FAF04",
+        "0x2E1242: 0xE5F4",
+        "0x2E1244: 0x3010",
+        "0x2E1246: 0x7BC0",
+        "0x2E1248: CMP r0, #1",
+        "0x2E124A: 0xD10B",
+        "0x2E124C: 0x9904",
+        "0x2E124E: MOVS r3, #14",
+        "0x2E1250: 0x56C8",
+        "0x2E1252: CMP r0, #0",
+        "0x2E1254: 0xD104",
+        "0x2E1256: LDR r0,[pc] =0x347E8",
+        "0x2E1258: 0x4478",
+        "0x2E125A: BL 0x2FBFB4",
+        "0x2E125E: 0xE5E6",
+        "0x2E1260: 0x9904",
+        "0x2E1262: 0x738D",
+        "0x2E1264: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3019488,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019486
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E12B2: MOVS r1, #12",
+        "0x2E12B4: LDR r0,[pc] =0x1E21F",
+        "0x2E12B6: BL 0x304558",
+        "0x2E12BA: 0x1C04",
+        "0x2E12BC: MOVS r2, #0",
+        "0x2E12BE: MOVS r1, #0",
+        "0x2E12C0: 0x9202",
+        "0x2E12C2: MOVS r2, #2",
+        "0x2E12C4: 0x9100",
+        "0x2E12C6: 0x9101",
+        "0x2E12C8: 0x1C2B",
+        "0x2E12CA: MOVS r1, #12",
+        "0x2E12CC: LDR r0,[pc] =0x1E21F",
+        "0x2E12CE: BL 0x304558",
+        "0x2E12D2: 0x1C21",
+        "0x2E12D4: BL 0x312AB4",
+        "0x2E12D8: 0x30FF",
+        "0x2E12DA: 0x3001",
+        "0x2E12DC: 0x6844",
+        "0x2E12DE: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3019854,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019852
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1422: 0x61B1",
+        "0x2E1424: 0x6881",
+        "0x2E1426: 0x61F1",
+        "0x2E1428: 0x6A40",
+        "0x2E142A: LDR r1,[pc] =0x33282",
+        "0x2E142C: 0x6840",
+        "0x2E142E: 0x4479",
+        "0x2E1430: BL 0x2D9648",
+        "0x2E1434: 0x6230",
+        "0x2E1436: LDR r1,[pc] =0x33B50",
+        "0x2E1438: 0x4479",
+        "0x2E143A: LDR r2,[pc] =0x143C",
+        "0x2E143C: 0x1C20",
+        "0x2E143E: 0x444A",
+        "0x2E1440: 0x6812",
+        "0x2E1442: 0x4790",
+        "0x2E1444: CMP r0, #0",
+        "0x2E1446: 0xD114",
+        "0x2E1448: BL 0x30C008",
+        "0x2E144C: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3019892,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019890
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1444: CMP r0, #0",
+        "0x2E1446: 0xD114",
+        "0x2E1448: BL 0x30C008",
+        "0x2E144C: MOVS r0, #18",
+        "0x2E144E: BL 0x300158",
+        "0x2E1452: BL 0x30E55C",
+        "0x2E1456: MOVS r1, #0",
+        "0x2E1458: MOVS r2, #0",
+        "0x2E145A: LDR r0,[pc] =0x126C",
+        "0x2E145C: 0x9100",
+        "0x2E145E: 0x9101",
+        "0x2E1460: 0x9202",
+        "0x2E1462: 0x4448",
+        "0x2E1464: 0x6982",
+        "0x2E1466: 0x69C3",
+        "0x2E1468: LDR r0,[pc] =0x1E217",
+        "0x2E146A: MOVS r1, #22",
+        "0x2E146C: BL 0x304558",
+        "0x2E1470: 0xE4DD",
+        "0x2E1472: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3019960,
+      "fn": 3018240,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3019958
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E148C: 0x69C3",
+        "0x2E148E: LDR r0,[pc] =0x1E221",
+        "0x2E1490: MOVS r1, #11",
+        "0x2E1492: BL 0x304558",
+        "0x2E1496: 0xE4CA",
+        "0x2E1498: LDR r1,[pc] =0x33B3E",
+        "0x2E149A: 0x4479",
+        "0x2E149C: LDR r2,[pc] =0x143C",
+        "0x2E149E: 0x1C20",
+        "0x2E14A0: 0x444A",
+        "0x2E14A2: 0x6812",
+        "0x2E14A4: 0x4790",
+        "0x2E14A6: CMP r0, #0",
+        "0x2E14A8: 0xD171",
+        "0x2E14AA: BL 0x30C008",
+        "0x2E14AE: MOVS r3, #8",
+        "0x2E14B0: 0x56F0",
+        "0x2E14B2: CMP r0, #1",
+        "0x2E14B4: 0xD108",
+        "0x2E14B6: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3020400,
+      "fn": 3020400,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020398
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1646: 0x9101",
+        "0x2E1648: 0x43CB",
+        "0x2E164A: MOVS r1, #13",
+        "0x2E164C: LDR r0,[pc] =0x1E202",
+        "0x2E164E: BL 0x304558",
+        "0x2E1652: 0xE40C",
+        "0x2E1654: LDR r1,[pc] =0x3393E",
+        "0x2E1656: 0x4479",
+        "0x2E1658: LDR r2,[pc] =0x143C",
+        "0x2E165A: 0x1C20",
+        "0x2E165C: 0x444A",
+        "0x2E165E: 0x6812",
+        "0x2E1660: 0x4790",
+        "0x2E1662: CMP r0, #0",
+        "0x2E1664: 0xD171",
+        "0x2E1666: MOVS r3, #8",
+        "0x2E1668: 0x56F0",
+        "0x2E166A: CMP r0, #1",
+        "0x2E166C: 0xD108",
+        "0x2E166E: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3020762,
+      "fn": 3020762,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020760
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E17AC: 0x1C2B",
+        "0x2E17AE: MOVS r1, #12",
+        "0x2E17B0: LDR r0,[pc] =0x1E21F",
+        "0x2E17B2: BL 0x304558",
+        "0x2E17B6: 0x1C21",
+        "0x2E17B8: BL 0x312AB4",
+        "0x2E17BC: LDR r1,[pc] =0x1A8",
+        "0x2E17BE: 0x6844",
+        "0x2E17C0: 0x6885",
+        "0x2E17C2: MOVS r0, #1",
+        "0x2E17C4: 0x4449",
+        "0x2E17C6: 0x7008",
+        "0x2E17C8: 0xE004",
+        "0x2E17CA: LDR r0,[pc] =0xE6C",
+        "0x2E17CC: 0x4448",
+        "0x2E17CE: 0x6F80",
+        "0x2E17D0: 0x6844",
+        "0x2E17D2: 0x6885",
+        "0x2E17D4: BL 0x30C008",
+        "0x2E17D8: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3020862,
+      "fn": 3020862,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020860
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1814: 0x9101",
+        "0x2E1816: MOVS r6, #4",
+        "0x2E1818: LDR r4,[pc] =0x1E21F",
+        "0x2E181A: 0x1C33",
+        "0x2E181C: MOVS r1, #8",
+        "0x2E181E: MOVS r2, #3",
+        "0x2E1820: 0x1C20",
+        "0x2E1822: BL 0x304558",
+        "0x2E1826: 0x6838",
+        "0x2E1828: CMP r0, #209",
+        "0x2E182A: 0xD121",
+        "0x2E182C: LDR r0,[pc] =0x106C",
+        "0x2E182E: 0x4448",
+        "0x2E1830: 0x6D80",
+        "0x2E1832: 0x7C01",
+        "0x2E1834: CMP r1, #0",
+        "0x2E1836: 0xD012",
+        "0x2E1838: 0x6845",
+        "0x2E183A: 0x6887",
+        "0x2E183C: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3020896,
+      "fn": 3020896,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020894
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1834: CMP r1, #0",
+        "0x2E1836: 0xD012",
+        "0x2E1838: 0x6845",
+        "0x2E183A: 0x6887",
+        "0x2E183C: MOVS r0, #18",
+        "0x2E183E: BL 0x300158",
+        "0x2E1842: LDR r1,[pc] =0x11EC",
+        "0x2E1844: MOVS r2, #0",
+        "0x2E1846: 0x4449",
+        "0x2E1848: 0x3180",
+        "0x2E184A: 0xC1A0",
+        "0x2E184C: MOVS r1, #2",
+        "0x2E184E: 0x1C33",
+        "0x2E1850: 0x1C20",
+        "0x2E1852: 0x9500",
+        "0x2E1854: 0x9701",
+        "0x2E1856: 0x9202",
+        "0x2E1858: BL 0x304558",
+        "0x2E185C: 0xE418",
+        "0x2E185E: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3020922,
+      "fn": 3020922,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3020920
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E184C: MOVS r1, #2",
+        "0x2E184E: 0x1C33",
+        "0x2E1850: 0x1C20",
+        "0x2E1852: 0x9500",
+        "0x2E1854: 0x9701",
+        "0x2E1856: 0x9202",
+        "0x2E1858: BL 0x304558",
+        "0x2E185C: 0xE418",
+        "0x2E185E: MOVS r0, #18",
+        "0x2E1860: BL 0x300158",
+        "0x2E1864: LDR r0,[pc] =0x34214",
+        "0x2E1866: MOVS r1, #0",
+        "0x2E1868: 0x4478",
+        "0x2E186A: BL 0x2FAF04",
+        "0x2E186E: 0xE40F",
+        "0x2E1870: 0x1C01",
+        "0x2E1872: 0x39FF",
+        "0x2E1874: 0x3936",
+        "0x2E1876: 0xD122",
+        "0x2E1878: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021078,
+      "fn": 3021078,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021076
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E18E8: MOVS r1, #12",
+        "0x2E18EA: 0xE000",
+        "0x2E18EC: 0xE042",
+        "0x2E18EE: LDR r0,[pc] =0x1E21F",
+        "0x2E18F0: BL 0x304558",
+        "0x2E18F4: 0x1C21",
+        "0x2E18F6: BL 0x312AB4",
+        "0x2E18FA: 0x1C04",
+        "0x2E18FC: MOVS r2, #0",
+        "0x2E18FE: MOVS r1, #0",
+        "0x2E1900: 0x9202",
+        "0x2E1902: MOVS r2, #3",
+        "0x2E1904: 0x9100",
+        "0x2E1906: 0x9101",
+        "0x2E1908: 0x1C2B",
+        "0x2E190A: MOVS r1, #12",
+        "0x2E190C: LDR r0,[pc] =0x1E21F",
+        "0x2E190E: BL 0x304558",
+        "0x2E1912: 0x1C05",
+        "0x2E1914: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021140,
+      "fn": 3021140,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021138
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E192A: 0x9100",
+        "0x2E192C: 0x9101",
+        "0x2E192E: 0x1C2B",
+        "0x2E1930: MOVS r1, #8",
+        "0x2E1932: LDR r0,[pc] =0x1E21F",
+        "0x2E1934: BL 0x304558",
+        "0x2E1938: 0xE40F",
+        "0x2E193A: LDR r0,[pc] =0xE6C",
+        "0x2E193C: 0x4448",
+        "0x2E193E: 0x6F80",
+        "0x2E1940: CMP r0, #0",
+        "0x2E1942: 0xD006",
+        "0x2E1944: LDR r2,[pc] =0x11EC",
+        "0x2E1946: 0x6841",
+        "0x2E1948: 0x444A",
+        "0x2E194A: 0x3280",
+        "0x2E194C: 0x6011",
+        "0x2E194E: 0x6880",
+        "0x2E1950: 0x6050",
+        "0x2E1952: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021258,
+      "fn": 3021258,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021256
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E199C: 0x1C2B",
+        "0x2E199E: MOVS r1, #12",
+        "0x2E19A0: LDR r0,[pc] =0x1E21F",
+        "0x2E19A2: BL 0x304558",
+        "0x2E19A6: 0x1C04",
+        "0x2E19A8: MOVS r2, #0",
+        "0x2E19AA: MOVS r1, #0",
+        "0x2E19AC: 0x9202",
+        "0x2E19AE: MOVS r2, #2",
+        "0x2E19B0: 0x9100",
+        "0x2E19B2: 0x9101",
+        "0x2E19B4: 0x1C2B",
+        "0x2E19B6: MOVS r1, #12",
+        "0x2E19B8: LDR r0,[pc] =0x1E21F",
+        "0x2E19BA: BL 0x304558",
+        "0x2E19BE: 0x1C21",
+        "0x2E19C0: BL 0x312AB4",
+        "0x2E19C4: 0x30C0",
+        "0x2E19C6: 0x6B84",
+        "0x2E19C8: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021454,
+      "fn": 3021454,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021452
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1A60: 0x1C2B",
+        "0x2E1A62: MOVS r1, #12",
+        "0x2E1A64: LDR r0,[pc] =0x1E21F",
+        "0x2E1A66: BL 0x304558",
+        "0x2E1A6A: 0x1C04",
+        "0x2E1A6C: MOVS r2, #0",
+        "0x2E1A6E: MOVS r1, #0",
+        "0x2E1A70: 0x9202",
+        "0x2E1A72: MOVS r2, #2",
+        "0x2E1A74: 0x9100",
+        "0x2E1A76: 0x9101",
+        "0x2E1A78: 0x1C2B",
+        "0x2E1A7A: MOVS r1, #12",
+        "0x2E1A7C: LDR r0,[pc] =0x1E21F",
+        "0x2E1A7E: BL 0x304558",
+        "0x2E1A82: 0x1C21",
+        "0x2E1A84: BL 0x312AB4",
+        "0x2E1A88: 0x30C0",
+        "0x2E1A8A: 0x6AC4",
+        "0x2E1A8C: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021532,
+      "fn": 3021532,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021530
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1AB0: 0x9100",
+        "0x2E1AB2: 0x9101",
+        "0x2E1AB4: MOVS r1, #3",
+        "0x2E1AB6: LDR r0,[pc] =0x1E211",
+        "0x2E1AB8: BL 0x304558",
+        "0x2E1ABC: 0xE41D",
+        "0x2E1ABE: LDR r1,[pc] =0x33520",
+        "0x2E1AC0: 0x4479",
+        "0x2E1AC2: LDR r2,[pc] =0x143C",
+        "0x2E1AC4: 0x1C20",
+        "0x2E1AC6: 0x444A",
+        "0x2E1AC8: 0x6812",
+        "0x2E1ACA: 0x4790",
+        "0x2E1ACC: CMP r0, #0",
+        "0x2E1ACE: 0xD170",
+        "0x2E1AD0: BL 0x2FF4AC",
+        "0x2E1AD4: 0x1C04",
+        "0x2E1AD6: CMP r0, #0",
+        "0x2E1AD8: 0xDD06",
+        "0x2E1ADA: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021760,
+      "fn": 3021760,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021758
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1B94: 0x9202",
+        "0x2E1B96: MOVS r2, #2",
+        "0x2E1B98: 0x9100",
+        "0x2E1B9A: 0x9101",
+        "0x2E1B9C: 0x1C2B",
+        "0x2E1B9E: MOVS r1, #12",
+        "0x2E1BA0: LDR r0,[pc] =0x1E21F",
+        "0x2E1BA2: BL 0x304558",
+        "0x2E1BA6: 0x1C21",
+        "0x2E1BA8: BL 0x312AB4",
+        "0x2E1BAC: 0x6844",
+        "0x2E1BAE: 0x6885",
+        "0x2E1BB0: 0xE005",
+        "0x2E1BB2: 0xE00F",
+        "0x2E1BB4: LDR r0,[pc] =0xE6C",
+        "0x2E1BB6: 0x4448",
+        "0x2E1BB8: 0x6F80",
+        "0x2E1BBA: 0x6844",
+        "0x2E1BBC: 0x6885",
+        "0x2E1BBE: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021812,
+      "fn": 3021812,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021810
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1BC8: 0x1C2A",
+        "0x2E1BCA: 0x1C21",
+        "0x2E1BCC: MOVS r0, #217",
+        "0x2E1BCE: BL 0x30F908",
+        "0x2E1BD2: 0xE44D",
+        "0x2E1BD4: LDR r1,[pc] =0x33412",
+        "0x2E1BD6: 0x4479",
+        "0x2E1BD8: LDR r2,[pc] =0x143C",
+        "0x2E1BDA: 0x1C20",
+        "0x2E1BDC: 0x444A",
+        "0x2E1BDE: 0x6812",
+        "0x2E1BE0: 0x4790",
+        "0x2E1BE2: CMP r0, #0",
+        "0x2E1BE4: 0xD171",
+        "0x2E1BE6: LDR r0,[pc] =0xFB1",
+        "0x2E1BE8: MOVS r1, #1",
+        "0x2E1BEA: BL 0x2F8790",
+        "0x2E1BEE: CMP r0, #0",
+        "0x2E1BF0: 0xD108",
+        "0x2E1BF2: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3021840,
+      "fn": 3021840,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3021838
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1BE0: 0x4790",
+        "0x2E1BE2: CMP r0, #0",
+        "0x2E1BE4: 0xD171",
+        "0x2E1BE6: LDR r0,[pc] =0xFB1",
+        "0x2E1BE8: MOVS r1, #1",
+        "0x2E1BEA: BL 0x2F8790",
+        "0x2E1BEE: CMP r0, #0",
+        "0x2E1BF0: 0xD108",
+        "0x2E1BF2: MOVS r0, #18",
+        "0x2E1BF4: BL 0x300158",
+        "0x2E1BF8: LDR r0,[pc] =0x33EBC",
+        "0x2E1BFA: MOVS r1, #0",
+        "0x2E1BFC: 0x4478",
+        "0x2E1BFE: BL 0x2FAF04",
+        "0x2E1C02: 0xE435",
+        "0x2E1C04: BL 0x2FF4AC",
+        "0x2E1C08: 0x1C04",
+        "0x2E1C0A: CMP r0, #0",
+        "0x2E1C0C: 0xDD06",
+        "0x2E1C0E: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3022070,
+      "fn": 3022070,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022068
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1CCA: 0xE01E",
+        "0x2E1CCC: 0x9202",
+        "0x2E1CCE: MOVS r2, #2",
+        "0x2E1CD0: 0x9100",
+        "0x2E1CD2: 0x9101",
+        "0x2E1CD4: 0x1C2B",
+        "0x2E1CD6: MOVS r1, #12",
+        "0x2E1CD8: LDR r0,[pc] =0x1E21F",
+        "0x2E1CDA: BL 0x304558",
+        "0x2E1CDE: 0x1C21",
+        "0x2E1CE0: BL 0x312AB4",
+        "0x2E1CE4: 0x6844",
+        "0x2E1CE6: 0x6885",
+        "0x2E1CE8: 0xE004",
+        "0x2E1CEA: LDR r0,[pc] =0xE6C",
+        "0x2E1CEC: 0x4448",
+        "0x2E1CEE: 0x6F80",
+        "0x2E1CF0: 0x6844",
+        "0x2E1CF2: 0x6885",
+        "0x2E1CF4: MOVS r0, #18"
+      ]
+    },
+    {
+      "bl_pc": 3022358,
+      "fn": 3022358,
+      "r0": {
+        "kind": "const_movs",
+        "const": 18,
+        "notes": [],
+        "set_pc": 3022356
+      },
+      "bucket": "constant_event_code",
+      "interesting_r0": true,
+      "strings": [],
+      "prev20": [
+        "0x2E1DEE: 0x0001",
+        "0x2E1DF0: 0x0D6C",
+        "0x2E1DF2: 0x0000",
+        "0x2E1DF4: 0xE216",
+        "0x2E1DF6: 0x0001",
+        "0x2E1DF8: 0x0E6C",
+        "0x2E1DFA: 0x0000",
+        "0x2E1DFC: 0x3412",
+        "0x2E1DFE: 0x0003",
+        "0x2E1E00: 0x0FB1",
+        "0x2E1E02: 0x0000",
+        "0x2E1E04: 0x3EBC",
+        "0x2E1E06: 0x0003",
+        "0x2E1E08: 0x32A4",
+        "0x2E1E0A: 0x0003",
+        "0x2E1E0C: 0x01A8",
+        "0x2E1E0E: 0x0000",
+        "0x2E1E10: 0x3D24",
+        "0x2E1E12: 0x0003",
+        "0x2E1E14: MOVS r0, #18"
+      ]
+    }
+  ],
+  "state_writers": [
+    {
+      "ldr_pc": 2991992,
+      "rd": 0,
+      "store": {
+        "pc": 2992016,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 2991756,
+      "window": [
+        "0x2DA77A:0x4448",
+        "0x2DA77C:0x6800",
+        "0x2DA77E:0x38FF",
+        "0x2DA780:0x382D",
+        "0x2DA782:0xD00B",
+        "0x2DA784:0xF038",
+        "0x2DA788:0x4907",
+        "0x2DA78A:0x2000",
+        "0x2DA78C:0x43C0",
+        "0x2DA78E:0x4449",
+        "0x2DA790:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 2999866,
+      "rd": 0,
+      "store": {
+        "pc": 2999876,
+        "raw": 25040,
+        "width_guess": 4
+      },
+      "fn": 2999840,
+      "window": [
+        "0x2DC63C:0x4A12",
+        "0x2DC63E:0x4448",
+        "0x2DC640:0x6800",
+        "0x2DC642:0x444A",
+        "0x2DC644:0x61D0"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3000642,
+      "rd": 1,
+      "store": {
+        "pc": 3000654,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3000332,
+      "window": [
+        "0x2DC944:0x4449",
+        "0x2DC946:0x6808",
+        "0x2DC948:0x282E",
+        "0x2DC94A:0xD005",
+        "0x2DC94C:0x202E",
+        "0x2DC94E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3001930,
+      "rd": 0,
+      "store": {
+        "pc": 3001958,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3001860,
+      "window": [
+        "0x2DCE4C:0x4448",
+        "0x2DCE4E:0x6800",
+        "0x2DCE50:0x28E9",
+        "0x2DCE52:0xD001",
+        "0x2DCE54:0x28D1",
+        "0x2DCE56:0xD102",
+        "0x2DCE58:0x2014",
+        "0x2DCE5A:0xF01D",
+        "0x2DCE5E:0x495C",
+        "0x2DCE60:0x6860",
+        "0x2DCE62:0x4A5C",
+        "0x2DCE64:0x4449"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3003436,
+      "rd": 0,
+      "store": {
+        "pc": 3003456,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3002472,
+      "window": [
+        "0x2DD42E:0x4448",
+        "0x2DD430:0x6800",
+        "0x2DD432:0x2825",
+        "0x2DD434:0xD001",
+        "0x2DD436:0xF031",
+        "0x2DD43A:0x4991",
+        "0x2DD43C:0x2025",
+        "0x2DD43E:0x4449",
+        "0x2DD440:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3003506,
+      "rd": 1,
+      "store": {
+        "pc": 3003512,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3002472,
+      "window": [
+        "0x2DD474:0x201E",
+        "0x2DD476:0x4449",
+        "0x2DD478:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3003660,
+      "rd": 1,
+      "store": {
+        "pc": 3003666,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3002472,
+      "window": [
+        "0x2DD50E:0x2014",
+        "0x2DD510:0x4449",
+        "0x2DD512:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3003670,
+      "rd": 1,
+      "store": {
+        "pc": 3003678,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3002472,
+      "window": [
+        "0x2DD518:0x20FF",
+        "0x2DD51A:0x3001",
+        "0x2DD51C:0x4449",
+        "0x2DD51E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3003964,
+      "rd": 1,
+      "store": {
+        "pc": 3003968,
+        "raw": 29352,
+        "width_guess": 1
+      },
+      "fn": 3002472,
+      "window": [
+        "0x2DD63E:0x444D",
+        "0x2DD640:0x72A8"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3004194,
+      "rd": 0,
+      "store": {
+        "pc": 3004214,
+        "raw": 28801,
+        "width_guess": 1
+      },
+      "fn": 3004064,
+      "window": [
+        "0x2DD724:0x4448",
+        "0x2DD726:0x6800",
+        "0x2DD728:0x2801",
+        "0x2DD72A:0xD014",
+        "0x2DD72C:0x1C21",
+        "0x2DD72E:0x1C30",
+        "0x2DD730:0xF035",
+        "0x2DD734:0x2101",
+        "0x2DD736:0x7081"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3015974,
+      "rd": 1,
+      "store": {
+        "pc": 3015980,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3015974,
+      "window": [
+        "0x2E0528:0x20FF",
+        "0x2E052A:0x4449",
+        "0x2E052C:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3017434,
+      "rd": 0,
+      "store": {
+        "pc": 3017444,
+        "raw": 36864,
+        "width_guess": 4
+      },
+      "fn": 3017434,
+      "window": [
+        "0x2E0ADC:0x2336",
+        "0x2E0ADE:0x4448",
+        "0x2E0AE0:0x6802",
+        "0x2E0AE2:0x2000",
+        "0x2E0AE4:0x9000"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3018262,
+      "rd": 7,
+      "store": {
+        "pc": 3018300,
+        "raw": 37120,
+        "width_guess": 4
+      },
+      "fn": 3018240,
+      "window": [
+        "0x2E0E18:0x4EE4",
+        "0x2E0E1A:0x444F",
+        "0x2E0E1C:0x444E",
+        "0x2E0E1E:0xD155",
+        "0x2E0E20:0x6838",
+        "0x2E0E22:0x28D1",
+        "0x2E0E24:0xD105",
+        "0x2E0E26:0xF02B",
+        "0x2E0E2A:0xF019",
+        "0x2E0E2E:0xB005",
+        "0x2E0E30:0xBDF0",
+        "0x2E0E32:0x1C01"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3023972,
+      "rd": 1,
+      "store": {
+        "pc": 3024008,
+        "raw": 25694,
+        "width_guess": 4
+      },
+      "fn": 3023960,
+      "window": [
+        "0x2E2466:0x4448",
+        "0x2E2468:0x1C05",
+        "0x2E246A:0x22FF",
+        "0x2E246C:0x3201",
+        "0x2E246E:0x3520",
+        "0x2E2470:0x2600",
+        "0x2E2472:0x2400",
+        "0x2E2474:0x2F31",
+        "0x2E2476:0x56C0",
+        "0x2E2478:0x4449",
+        "0x2E247A:0xD11F",
+        "0x2E247C:0x4F27"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3026776,
+      "rd": 1,
+      "store": {
+        "pc": 3026784,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3026776,
+      "window": [
+        "0x2E2F5A:0x4448",
+        "0x2E2F5C:0x6800",
+        "0x2E2F5E:0x4449",
+        "0x2E2F60:0x6008"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3027510,
+      "rd": 0,
+      "store": {
+        "pc": 3027540,
+        "raw": 28673,
+        "width_guess": 1
+      },
+      "fn": 3027510,
+      "window": [
+        "0x2E3238:0x4448",
+        "0x2E323A:0x6800",
+        "0x2E323C:0x38FF",
+        "0x2E323E:0x380C",
+        "0x2E3240:0xD101",
+        "0x2E3242:0xF017",
+        "0x2E3246:0x4897",
+        "0x2E3248:0x2300",
+        "0x2E324A:0x4448",
+        "0x2E324C:0x56C1",
+        "0x2E324E:0x2901",
+        "0x2E3250:0xD129"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3028070,
+      "rd": 1,
+      "store": {
+        "pc": 3028078,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3028070,
+      "window": [
+        "0x2E3468:0x4448",
+        "0x2E346A:0x6800",
+        "0x2E346C:0x4449",
+        "0x2E346E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3029476,
+      "rd": 1,
+      "store": {
+        "pc": 3029484,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3029476,
+      "window": [
+        "0x2E39E6:0x4448",
+        "0x2E39E8:0x6800",
+        "0x2E39EA:0x4449",
+        "0x2E39EC:0x6008"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3029500,
+      "rd": 1,
+      "store": {
+        "pc": 3029508,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3029500,
+      "window": [
+        "0x2E39FE:0x4448",
+        "0x2E3A00:0x6800",
+        "0x2E3A02:0x4449",
+        "0x2E3A04:0x6008"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3030916,
+      "rd": 1,
+      "store": {
+        "pc": 3030924,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3030916,
+      "window": [
+        "0x2E3F86:0x4448",
+        "0x2E3F88:0x6800",
+        "0x2E3F8A:0x4449",
+        "0x2E3F8C:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3030982,
+      "rd": 1,
+      "store": {
+        "pc": 3030988,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3030982,
+      "window": [
+        "0x2E3FC8:0x2014",
+        "0x2E3FCA:0x4449",
+        "0x2E3FCC:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3036592,
+      "rd": 1,
+      "store": {
+        "pc": 3036600,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3036200,
+      "window": [
+        "0x2E55B2:0x20FF",
+        "0x2E55B4:0x3001",
+        "0x2E55B6:0x4449",
+        "0x2E55B8:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3041654,
+      "rd": 1,
+      "store": {
+        "pc": 3041670,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3041520,
+      "window": [
+        "0x2E6978:0x4449",
+        "0x2E697A:0x6808",
+        "0x2E697C:0x2845",
+        "0x2E697E:0xD103",
+        "0x2E6980:0x480C",
+        "0x2E6982:0x4448",
+        "0x2E6984:0x6800",
+        "0x2E6986:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3041728,
+      "rd": 2,
+      "store": {
+        "pc": 3041736,
+        "raw": 24593,
+        "width_guess": 4
+      },
+      "fn": 3041520,
+      "window": [
+        "0x2E69C2:0x4449",
+        "0x2E69C4:0x6809",
+        "0x2E69C6:0x444A",
+        "0x2E69C8:0x6011"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3045734,
+      "rd": 1,
+      "store": {
+        "pc": 3045742,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3045684,
+      "window": [
+        "0x2E7968:0x8686",
+        "0x2E796A:0x2020",
+        "0x2E796C:0x4449",
+        "0x2E796E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3048352,
+      "rd": 0,
+      "store": {
+        "pc": 3048390,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3048324,
+      "window": [
+        "0x2E83A2:0x4448",
+        "0x2E83A4:0x6800",
+        "0x2E83A6:0x2801",
+        "0x2E83A8:0xD066",
+        "0x2E83AA:0x4C52",
+        "0x2E83AC:0x444C",
+        "0x2E83AE:0x6820",
+        "0x2E83B0:0x2800",
+        "0x2E83B2:0xD061",
+        "0x2E83B4:0x4850",
+        "0x2E83B6:0x4448",
+        "0x2E83B8:0x56C0"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3049432,
+      "rd": 2,
+      "store": {
+        "pc": 3049458,
+        "raw": 24793,
+        "width_guess": 4
+      },
+      "fn": 3049396,
+      "window": [
+        "0x2E87DA:0x4448",
+        "0x2E87DC:0x6880",
+        "0x2E87DE:0x444A",
+        "0x2E87E0:0x6812",
+        "0x2E87E2:0x1A21",
+        "0x2E87E4:0x2A45",
+        "0x2E87E6:0xD10B",
+        "0x2E87E8:0x4B25",
+        "0x2E87EA:0x444B",
+        "0x2E87EC:0x68DA",
+        "0x2E87EE:0x2A00",
+        "0x2E87F0:0xD102"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3053906,
+      "rd": 0,
+      "store": {
+        "pc": 3053928,
+        "raw": 37379,
+        "width_guess": 4
+      },
+      "fn": 3053884,
+      "window": [
+        "0x2E9954:0x4448",
+        "0x2E9956:0x6800",
+        "0x2E9958:0x38FF",
+        "0x2E995A:0x382D",
+        "0x2E995C:0xD043",
+        "0x2E995E:0x4825",
+        "0x2E9960:0x43F1",
+        "0x2E9962:0x4448",
+        "0x2E9964:0x6800",
+        "0x2E9966:0x2208",
+        "0x2E9968:0x9203"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3074130,
+      "rd": 0,
+      "store": {
+        "pc": 3074168,
+        "raw": 37145,
+        "width_guess": 4
+      },
+      "fn": 3073616,
+      "window": [
+        "0x2EE854:0x4448",
+        "0x2EE856:0x6800",
+        "0x2EE858:0x2829",
+        "0x2EE85A:0xD001",
+        "0x2EE85C:0x28DF",
+        "0x2EE85E:0xD136",
+        "0x2EE860:0x1C33",
+        "0x2EE862:0x981E",
+        "0x2EE864:0x991A",
+        "0x2EE866:0x9A25",
+        "0x2EE868:0xF005",
+        "0x2EE86C:0xE02F"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3074222,
+      "rd": 0,
+      "store": {
+        "pc": 3074250,
+        "raw": 38154,
+        "width_guess": 4
+      },
+      "fn": 3073616,
+      "window": [
+        "0x2EE8B0:0x4448",
+        "0x2EE8B2:0x6800",
+        "0x2EE8B4:0x2827",
+        "0x2EE8B6:0xD001",
+        "0x2EE8B8:0x2828",
+        "0x2EE8BA:0xD108",
+        "0x2EE8BC:0x1C33",
+        "0x2EE8BE:0x981E",
+        "0x2EE8C0:0x9919",
+        "0x2EE8C2:0x9A25",
+        "0x2EE8C4:0xF005",
+        "0x2EE8C8:0x9919"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3074620,
+      "rd": 0,
+      "store": {
+        "pc": 3074634,
+        "raw": 36868,
+        "width_guess": 4
+      },
+      "fn": 3073616,
+      "window": [
+        "0x2EEA3E:0x2384",
+        "0x2EEA40:0x4448",
+        "0x2EEA42:0x6800",
+        "0x2EEA44:0x28DF",
+        "0x2EEA46:0xD071",
+        "0x2EEA48:0x2000",
+        "0x2EEA4A:0x9004"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3080690,
+      "rd": 0,
+      "store": {
+        "pc": 3080710,
+        "raw": 37633,
+        "width_guess": 4
+      },
+      "fn": 3080340,
+      "window": [
+        "0x2F01F4:0x4448",
+        "0x2F01F6:0x6800",
+        "0x2F01F8:0x2814",
+        "0x2F01FA:0xD102",
+        "0x2F01FC:0x1C20",
+        "0x2F01FE:0xF021",
+        "0x2F0202:0x69A3",
+        "0x2F0204:0x1C20",
+        "0x2F0206:0x9301"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3082864,
+      "rd": 1,
+      "store": {
+        "pc": 3082902,
+        "raw": 37379,
+        "width_guess": 4
+      },
+      "fn": 3082604,
+      "window": [
+        "0x2F0A72:0x4449",
+        "0x2F0A74:0x6809",
+        "0x2F0A76:0x1C0A",
+        "0x2F0A78:0x3AFF",
+        "0x2F0A7A:0x3A2C",
+        "0x2F0A7C:0xD001",
+        "0x2F0A7E:0x1FD1",
+        "0x2F0A80:0xD102",
+        "0x2F0A82:0x20FF",
+        "0x2F0A84:0x4686",
+        "0x2F0A86:0x4684",
+        "0x2F0A88:0x495A"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3100810,
+      "rd": 6,
+      "store": {
+        "pc": 3100830,
+        "raw": 37120,
+        "width_guess": 4
+      },
+      "fn": 3100788,
+      "window": [
+        "0x2F508C:0x2500",
+        "0x2F508E:0x444E",
+        "0x2F5090:0x6830",
+        "0x2F5092:0x2814",
+        "0x2F5094:0xD00D",
+        "0x2F5096:0x283A",
+        "0x2F5098:0xD171",
+        "0x2F509A:0x2100",
+        "0x2F509C:0x2200",
+        "0x2F509E:0x9100"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3122448,
+      "rd": 6,
+      "store": {
+        "pc": 3122478,
+        "raw": 24583,
+        "width_guess": 4
+      },
+      "fn": 3122432,
+      "window": [
+        "0x2FA512:0x2500",
+        "0x2FA514:0x43EF",
+        "0x2FA516:0x2800",
+        "0x2FA518:0x444E",
+        "0x2FA51A:0xDD0C",
+        "0x2FA51C:0x6830",
+        "0x2FA51E:0x38FF",
+        "0x2FA520:0x382D",
+        "0x2FA522:0xD00B",
+        "0x2FA524:0xF018",
+        "0x2FA528:0x482F",
+        "0x2FA52A:0x4930"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3124970,
+      "rd": 1,
+      "store": {
+        "pc": 3124976,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3124888,
+      "window": [
+        "0x2FAEEC:0x201A",
+        "0x2FAEEE:0x4449",
+        "0x2FAEF0:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125016,
+      "rd": 1,
+      "store": {
+        "pc": 3125034,
+        "raw": 24913,
+        "width_guess": 4
+      },
+      "fn": 3124996,
+      "window": [
+        "0x2FAF1A:0x4A31",
+        "0x2FAF1C:0x4449",
+        "0x2FAF1E:0x6809",
+        "0x2FAF20:0x444A",
+        "0x2FAF22:0x2916",
+        "0x2FAF24:0xD003",
+        "0x2FAF26:0x2926",
+        "0x2FAF28:0xD001",
+        "0x2FAF2A:0x6151"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125160,
+      "rd": 0,
+      "store": {
+        "pc": 3125174,
+        "raw": 26415,
+        "width_guess": 4
+      },
+      "fn": 3124996,
+      "window": [
+        "0x2FAFAA:0x4448",
+        "0x2FAFAC:0x6800",
+        "0x2FAFAE:0x2816",
+        "0x2FAFB0:0xD001",
+        "0x2FAFB2:0xF013",
+        "0x2FAFB6:0x672F"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125192,
+      "rd": 1,
+      "store": {
+        "pc": 3125198,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3124996,
+      "window": [
+        "0x2FAFCA:0x2016",
+        "0x2FAFCC:0x4449",
+        "0x2FAFCE:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125268,
+      "rd": 0,
+      "store": {
+        "pc": 3125278,
+        "raw": 36864,
+        "width_guess": 4
+      },
+      "fn": 3125264,
+      "window": [
+        "0x2FB016:0x2600",
+        "0x2FB018:0x4448",
+        "0x2FB01A:0x6800",
+        "0x2FB01C:0x4930",
+        "0x2FB01E:0x9000"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125412,
+      "rd": 4,
+      "store": {
+        "pc": 3125426,
+        "raw": 24608,
+        "width_guess": 4
+      },
+      "fn": 3125264,
+      "window": [
+        "0x2FB0A6:0x444C",
+        "0x2FB0A8:0x6820",
+        "0x2FB0AA:0x2816",
+        "0x2FB0AC:0xD100",
+        "0x2FB0AE:0x2501",
+        "0x2FB0B0:0x9800",
+        "0x2FB0B2:0x6020"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125498,
+      "rd": 1,
+      "store": {
+        "pc": 3125504,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3125484,
+      "window": [
+        "0x2FB0FC:0x20D6",
+        "0x2FB0FE:0x4449",
+        "0x2FB100:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3125916,
+      "rd": 5,
+      "store": {
+        "pc": 3125942,
+        "raw": 25696,
+        "width_guess": 4
+      },
+      "fn": 3125832,
+      "window": [
+        "0x2FB29E:0x444D",
+        "0x2FB2A0:0x6828",
+        "0x2FB2A2:0x1C01",
+        "0x2FB2A4:0x39FF",
+        "0x2FB2A6:0x392D",
+        "0x2FB2A8:0xD025",
+        "0x2FB2AA:0x4C1F",
+        "0x2FB2AC:0x2844",
+        "0x2FB2AE:0x444C",
+        "0x2FB2B0:0xD00A",
+        "0x2FB2B2:0x2845",
+        "0x2FB2B4:0xD001"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3126124,
+      "rd": 1,
+      "store": {
+        "pc": 3126128,
+        "raw": 28869,
+        "width_guess": 1
+      },
+      "fn": 3126112,
+      "window": [
+        "0x2FB36E:0x4448",
+        "0x2FB370:0x70C5"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3126556,
+      "rd": 1,
+      "store": {
+        "pc": 3126562,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3126112,
+      "window": [
+        "0x2FB51E:0x2021",
+        "0x2FB520:0x4449",
+        "0x2FB522:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3128118,
+      "rd": 1,
+      "store": {
+        "pc": 3128124,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3126716,
+      "window": [
+        "0x2FBB38:0x2040",
+        "0x2FBB3A:0x4449",
+        "0x2FBB3C:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3128924,
+      "rd": 4,
+      "store": {
+        "pc": 3128932,
+        "raw": 24611,
+        "width_guess": 4
+      },
+      "fn": 3128172,
+      "window": [
+        "0x2FBE5E:0x2300",
+        "0x2FBE60:0x43DB",
+        "0x2FBE62:0x444C",
+        "0x2FBE64:0x6023"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129188,
+      "rd": 1,
+      "store": {
+        "pc": 3129194,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3128172,
+      "window": [
+        "0x2FBF66:0x2014",
+        "0x2FBF68:0x4449",
+        "0x2FBF6A:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129240,
+      "rd": 0,
+      "store": {
+        "pc": 3129244,
+        "raw": 24582,
+        "width_guess": 4
+      },
+      "fn": 3129228,
+      "window": [
+        "0x2FBF9A:0x4448",
+        "0x2FBF9C:0x6006"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3129272,
+      "rd": 5,
+      "store": {
+        "pc": 3129278,
+        "raw": 28689,
+        "width_guess": 1
+      },
+      "fn": 3129268,
+      "window": [
+        "0x2FBFBA:0x2101",
+        "0x2FBFBC:0x444A",
+        "0x2FBFBE:0x7011"
+      ],
+      "can_write_38_hyp": "possible_const_38_in_fn"
+    },
+    {
+      "ldr_pc": 3129484,
+      "rd": 1,
+      "store": {
+        "pc": 3129490,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3129456,
+      "window": [
+        "0x2FC08E:0x2025",
+        "0x2FC090:0x4449",
+        "0x2FC092:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129614,
+      "rd": 1,
+      "store": {
+        "pc": 3129620,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3129576,
+      "window": [
+        "0x2FC110:0x302F",
+        "0x2FC112:0x4449",
+        "0x2FC114:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129760,
+      "rd": 1,
+      "store": {
+        "pc": 3129766,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3129576,
+      "window": [
+        "0x2FC1A2:0x2003",
+        "0x2FC1A4:0x4449",
+        "0x2FC1A6:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129844,
+      "rd": 1,
+      "store": {
+        "pc": 3129848,
+        "raw": 25348,
+        "width_guess": 4
+      },
+      "fn": 3129824,
+      "window": [
+        "0x2FC1F6:0x4448",
+        "0x2FC1F8:0x6304"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3129910,
+      "rd": 2,
+      "store": {
+        "pc": 3129914,
+        "raw": 24968,
+        "width_guess": 4
+      },
+      "fn": 3129900,
+      "window": [
+        "0x2FC238:0x4449",
+        "0x2FC23A:0x6188"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3130394,
+      "rd": 5,
+      "store": {
+        "pc": 3130410,
+        "raw": 25632,
+        "width_guess": 4
+      },
+      "fn": 3130392,
+      "window": [
+        "0x2FC41C:0x1C06",
+        "0x2FC41E:0x444D",
+        "0x2FC420:0x6828",
+        "0x2FC422:0x4C0B",
+        "0x2FC424:0x2845",
+        "0x2FC426:0x444C",
+        "0x2FC428:0xD000",
+        "0x2FC42A:0x6420"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3130988,
+      "rd": 1,
+      "store": {
+        "pc": 3130994,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3130456,
+      "window": [
+        "0x2FC66E:0x20CE",
+        "0x2FC670:0x4449",
+        "0x2FC672:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131206,
+      "rd": 1,
+      "store": {
+        "pc": 3131214,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131164,
+      "window": [
+        "0x2FC748:0x20FF",
+        "0x2FC74A:0x302D",
+        "0x2FC74C:0x4449",
+        "0x2FC74E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131268,
+      "rd": 1,
+      "store": {
+        "pc": 3131276,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131164,
+      "window": [
+        "0x2FC786:0x20FF",
+        "0x2FC788:0x3019",
+        "0x2FC78A:0x4449",
+        "0x2FC78C:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131354,
+      "rd": 4,
+      "store": {
+        "pc": 3131370,
+        "raw": 25922,
+        "width_guess": 4
+      },
+      "fn": 3131352,
+      "window": [
+        "0x2FC7DC:0x1C0E",
+        "0x2FC7DE:0x1C05",
+        "0x2FC7E0:0x2A00",
+        "0x2FC7E2:0x444C",
+        "0x2FC7E4:0xD003",
+        "0x2FC7E6:0x480D",
+        "0x2FC7E8:0x4448",
+        "0x2FC7EA:0x6542"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131462,
+      "rd": 1,
+      "store": {
+        "pc": 3131470,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131428,
+      "window": [
+        "0x2FC848:0x20FF",
+        "0x2FC84A:0x3006",
+        "0x2FC84C:0x4449",
+        "0x2FC84E:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131520,
+      "rd": 0,
+      "store": {
+        "pc": 3131524,
+        "raw": 24580,
+        "width_guess": 4
+      },
+      "fn": 3131496,
+      "window": [
+        "0x2FC882:0x4448",
+        "0x2FC884:0x6004"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131564,
+      "rd": 1,
+      "store": {
+        "pc": 3131572,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131540,
+      "window": [
+        "0x2FC8AE:0x20FF",
+        "0x2FC8B0:0x300E",
+        "0x2FC8B2:0x4449",
+        "0x2FC8B4:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131664,
+      "rd": 1,
+      "store": {
+        "pc": 3131672,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131612,
+      "window": [
+        "0x2FC912:0x20FF",
+        "0x2FC914:0x3018",
+        "0x2FC916:0x4449",
+        "0x2FC918:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3131978,
+      "rd": 1,
+      "store": {
+        "pc": 3131986,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3131780,
+      "window": [
+        "0x2FCA4C:0x20FF",
+        "0x2FCA4E:0x3030",
+        "0x2FCA50:0x4449",
+        "0x2FCA52:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3132156,
+      "rd": 1,
+      "store": {
+        "pc": 3132162,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3132032,
+      "window": [
+        "0x2FCAFE:0x2037",
+        "0x2FCB00:0x4449",
+        "0x2FCB02:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3134180,
+      "rd": 7,
+      "store": {
+        "pc": 3134186,
+        "raw": 24632,
+        "width_guess": 4
+      },
+      "fn": 3133492,
+      "window": [
+        "0x2FD2E6:0x20D1",
+        "0x2FD2E8:0x444F",
+        "0x2FD2EA:0x6038"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3134326,
+      "rd": 0,
+      "store": {
+        "pc": 3134332,
+        "raw": 24580,
+        "width_guess": 4
+      },
+      "fn": 3134312,
+      "window": [
+        "0x2FD378:0x4905",
+        "0x2FD37A:0x4448",
+        "0x2FD37C:0x6004"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3134376,
+      "rd": 3,
+      "store": {
+        "pc": 3134380,
+        "raw": 24784,
+        "width_guess": 4
+      },
+      "fn": 3134356,
+      "window": [
+        "0x2FD3AA:0x444A",
+        "0x2FD3AC:0x60D0"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3134416,
+      "rd": 1,
+      "store": {
+        "pc": 3134424,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3134408,
+      "window": [
+        "0x2FD3D2:0x20FF",
+        "0x2FD3D4:0x300C",
+        "0x2FD3D6:0x4449",
+        "0x2FD3D8:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3134536,
+      "rd": 0,
+      "store": {
+        "pc": 3134542,
+        "raw": 24578,
+        "width_guess": 4
+      },
+      "fn": 3134516,
+      "window": [
+        "0x2FD44A:0x223A",
+        "0x2FD44C:0x4448",
+        "0x2FD44E:0x6002"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3140586,
+      "rd": 4,
+      "store": {
+        "pc": 3140600,
+        "raw": 37120,
+        "width_guess": 4
+      },
+      "fn": 3140540,
+      "window": [
+        "0x2FEBEC:0x444C",
+        "0x2FEBEE:0x6820",
+        "0x2FEBF0:0x283A",
+        "0x2FEBF2:0xD109",
+        "0x2FEBF4:0x2100",
+        "0x2FEBF6:0x2200",
+        "0x2FEBF8:0x9100"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3151364,
+      "rd": 1,
+      "store": {
+        "pc": 3151372,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3151040,
+      "window": [
+        "0x301606:0x6105",
+        "0x301608:0x20DA",
+        "0x30160A:0x4449",
+        "0x30160C:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3151562,
+      "rd": 0,
+      "store": {
+        "pc": 3151578,
+        "raw": 37378,
+        "width_guess": 4
+      },
+      "fn": 3151440,
+      "window": [
+        "0x3016CC:0x4448",
+        "0x3016CE:0x6800",
+        "0x3016D0:0x1C01",
+        "0x3016D2:0x39FF",
+        "0x3016D4:0x393B",
+        "0x3016D6:0xD11E",
+        "0x3016D8:0x2200",
+        "0x3016DA:0x9202"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3151982,
+      "rd": 0,
+      "store": {
+        "pc": 3151996,
+        "raw": 29484,
+        "width_guess": 1
+      },
+      "fn": 3151972,
+      "window": [
+        "0x301870:0x4D09",
+        "0x301872:0x4448",
+        "0x301874:0x6800",
+        "0x301876:0x444D",
+        "0x301878:0x2814",
+        "0x30187A:0xD100",
+        "0x30187C:0x732C"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3154416,
+      "rd": 1,
+      "store": {
+        "pc": 3154426,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3154120,
+      "window": [
+        "0x3021F2:0x4448",
+        "0x3021F4:0x6D40",
+        "0x3021F6:0x4EB1",
+        "0x3021F8:0x4449",
+        "0x3021FA:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3154776,
+      "rd": 1,
+      "store": {
+        "pc": 3154784,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3154120,
+      "window": [
+        "0x30235A:0x4448",
+        "0x30235C:0x6D40",
+        "0x30235E:0x4449",
+        "0x302360:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3174268,
+      "rd": 1,
+      "store": {
+        "pc": 3174274,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3172612,
+      "window": [
+        "0x306F7E:0x2014",
+        "0x306F80:0x4449",
+        "0x306F82:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3174546,
+      "rd": 6,
+      "store": {
+        "pc": 3174566,
+        "raw": 24624,
+        "width_guess": 4
+      },
+      "fn": 3174524,
+      "window": [
+        "0x307094:0x444D",
+        "0x307096:0x2800",
+        "0x307098:0x444E",
+        "0x30709A:0xD007",
+        "0x30709C:0x6E88",
+        "0x30709E:0x2800",
+        "0x3070A0:0xD004",
+        "0x3070A2:0x20FF",
+        "0x3070A4:0x301C",
+        "0x3070A6:0x6030"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3192012,
+      "rd": 0,
+      "store": {
+        "pc": 3192036,
+        "raw": 25189,
+        "width_guess": 4
+      },
+      "fn": 3191996,
+      "window": [
+        "0x30B4CE:0x2500",
+        "0x30B4D0:0x62A5",
+        "0x30B4D2:0x4448",
+        "0x30B4D4:0x6800",
+        "0x30B4D6:0x2821",
+        "0x30B4D8:0xD10A",
+        "0x30B4DA:0x6A60",
+        "0x30B4DC:0x2800",
+        "0x30B4DE:0xD002",
+        "0x30B4E0:0xF7FE",
+        "0x30B4E4:0x6265"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3204820,
+      "rd": 1,
+      "store": {
+        "pc": 3204828,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3204532,
+      "window": [
+        "0x30E6D6:0x6445",
+        "0x30E6D8:0x2014",
+        "0x30E6DA:0x4449",
+        "0x30E6DC:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3215344,
+      "rd": 1,
+      "store": {
+        "pc": 3215352,
+        "raw": 34608,
+        "width_guess": 2
+      },
+      "fn": 3215128,
+      "window": [
+        "0x310FF2:0x75B7",
+        "0x310FF4:0x4449",
+        "0x310FF6:0x6808",
+        "0x310FF8:0x8730"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3217310,
+      "rd": 1,
+      "store": {
+        "pc": 3217316,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3217268,
+      "window": [
+        "0x3117A0:0x2019",
+        "0x3117A2:0x4449",
+        "0x3117A4:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3217698,
+      "rd": 7,
+      "store": {
+        "pc": 3217718,
+        "raw": 28684,
+        "width_guess": 1
+      },
+      "fn": 3217552,
+      "window": [
+        "0x311924:0x444F",
+        "0x311926:0x6838",
+        "0x311928:0x2A01",
+        "0x31192A:0xD10F",
+        "0x31192C:0x2845",
+        "0x31192E:0xD00D",
+        "0x311930:0x2816",
+        "0x311932:0xD00B",
+        "0x311934:0x4DB3",
+        "0x311936:0x700C"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3218746,
+      "rd": 7,
+      "store": {
+        "pc": 3218768,
+        "raw": 24632,
+        "width_guess": 4
+      },
+      "fn": 3217552,
+      "window": [
+        "0x311D3C:0x444E",
+        "0x311D3E:0x6E72",
+        "0x311D40:0x444F",
+        "0x311D42:0x2A00",
+        "0x311D44:0xD006",
+        "0x311D46:0x6EB2",
+        "0x311D48:0x2A00",
+        "0x311D4A:0xD003",
+        "0x311D4C:0x20FF",
+        "0x311D4E:0x301C",
+        "0x311D50:0x6038"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3219414,
+      "rd": 4,
+      "store": {
+        "pc": 3219430,
+        "raw": 24666,
+        "width_guess": 4
+      },
+      "fn": 3219412,
+      "window": [
+        "0x311FD8:0x4B0F",
+        "0x311FDA:0x444C",
+        "0x311FDC:0x6822",
+        "0x311FDE:0x444B",
+        "0x311FE0:0x2A03",
+        "0x311FE2:0xD005",
+        "0x311FE4:0x2264",
+        "0x311FE6:0x605A"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3219972,
+      "rd": 1,
+      "store": {
+        "pc": 3219990,
+        "raw": 26081,
+        "width_guess": 4
+      },
+      "fn": 3219676,
+      "window": [
+        "0x312206:0x4449",
+        "0x312208:0x6809",
+        "0x31220A:0x2916",
+        "0x31220C:0xD0EE",
+        "0x31220E:0x2926",
+        "0x312210:0xD0EC",
+        "0x312212:0x6DE1",
+        "0x312214:0x3101",
+        "0x312216:0x65E1"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3220294,
+      "rd": 1,
+      "store": {
+        "pc": 3220316,
+        "raw": 28733,
+        "width_guess": 1
+      },
+      "fn": 3220184,
+      "window": [
+        "0x312348:0x4449",
+        "0x31234A:0x6808",
+        "0x31234C:0x28C9",
+        "0x31234E:0xD108",
+        "0x312350:0x2300",
+        "0x312352:0x56F8",
+        "0x312354:0x2801",
+        "0x312356:0xD102",
+        "0x312358:0xF7FD",
+        "0x31235C:0x703D"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3220322,
+      "rd": 0,
+      "store": {
+        "pc": 3220336,
+        "raw": 37120,
+        "width_guess": 4
+      },
+      "fn": 3220184,
+      "window": [
+        "0x312364:0x4448",
+        "0x312366:0x6800",
+        "0x312368:0x283A",
+        "0x31236A:0xD11C",
+        "0x31236C:0x2100",
+        "0x31236E:0x2200",
+        "0x312370:0x9100"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3220390,
+      "rd": 0,
+      "store": {
+        "pc": 3220420,
+        "raw": 26612,
+        "width_guess": 4
+      },
+      "fn": 3220184,
+      "window": [
+        "0x3123A8:0x4448",
+        "0x3123AA:0x6800",
+        "0x3123AC:0x28F1",
+        "0x3123AE:0xD10C",
+        "0x3123B0:0x2300",
+        "0x3123B2:0x56F8",
+        "0x3123B4:0x2801",
+        "0x3123B6:0xD1D2",
+        "0x3123B8:0x4843",
+        "0x3123BA:0x2100",
+        "0x3123BC:0x4448",
+        "0x3123BE:0x6BC0"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3220462,
+      "rd": 0,
+      "store": {
+        "pc": 3220494,
+        "raw": 36867,
+        "width_guess": 4
+      },
+      "fn": 3220184,
+      "window": [
+        "0x3123F0:0x4448",
+        "0x3123F2:0x6801",
+        "0x3123F4:0x1C08",
+        "0x3123F6:0x38FF",
+        "0x3123F8:0x382D",
+        "0x3123FA:0xD115",
+        "0x3123FC:0x4F30",
+        "0x3123FE:0x2300",
+        "0x312400:0x444F",
+        "0x312402:0x56F8",
+        "0x312404:0x2801",
+        "0x312406:0xD1AA"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3221440,
+      "rd": 1,
+      "store": {
+        "pc": 3221448,
+        "raw": 24584,
+        "width_guess": 4
+      },
+      "fn": 3221276,
+      "window": [
+        "0x3127C2:0x20FF",
+        "0x3127C4:0x3001",
+        "0x3127C6:0x4449",
+        "0x3127C8:0x6008"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3221596,
+      "rd": 0,
+      "store": {
+        "pc": 3221614,
+        "raw": 28748,
+        "width_guess": 1
+      },
+      "fn": 3221496,
+      "window": [
+        "0x31285E:0x64FE",
+        "0x312860:0x4448",
+        "0x312862:0x6800",
+        "0x312864:0x2845",
+        "0x312866:0xD10C",
+        "0x312868:0x4909",
+        "0x31286A:0x4449",
+        "0x31286C:0x3980",
+        "0x31286E:0x704C"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3221746,
+      "rd": 0,
+      "store": {
+        "pc": 3221760,
+        "raw": 28776,
+        "width_guess": 1
+      },
+      "fn": 3221656,
+      "window": [
+        "0x3128F4:0x64E6",
+        "0x3128F6:0x4448",
+        "0x3128F8:0x6800",
+        "0x3128FA:0x2845",
+        "0x3128FC:0xD102",
+        "0x3128FE:0x2001",
+        "0x312900:0x7068"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3222792,
+      "rd": 0,
+      "store": {
+        "pc": 3222810,
+        "raw": 25032,
+        "width_guess": 4
+      },
+      "fn": 3222732,
+      "window": [
+        "0x312D0A:0x4448",
+        "0x312D0C:0x6800",
+        "0x312D0E:0x2837",
+        "0x312D10:0xD108",
+        "0x312D12:0x49D8",
+        "0x312D14:0x4449",
+        "0x312D16:0x69C8",
+        "0x312D18:0x3801",
+        "0x312D1A:0x61C8"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    },
+    {
+      "ldr_pc": 3222824,
+      "rd": 0,
+      "store": {
+        "pc": 3222842,
+        "raw": 25032,
+        "width_guess": 4
+      },
+      "fn": 3222732,
+      "window": [
+        "0x312D2A:0x4448",
+        "0x312D2C:0x6800",
+        "0x312D2E:0x2837",
+        "0x312D30:0xD1F8",
+        "0x312D32:0x49D0",
+        "0x312D34:0x4449",
+        "0x312D36:0x69C8",
+        "0x312D38:0x3001",
+        "0x312D3A:0x61C8"
+      ],
+      "can_write_38_hyp": "no_const_38_seen_in_fn"
+    }
+  ],
+  "dispatcher_table": [
+    {
+      "pc": 3147550,
+      "rn": 0,
+      "imm": 0,
+      "branch": "Bcond(0)",
+      "target": 3147620,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147576,
+      "rn": 0,
+      "imm": 230,
+      "branch": "Bcond(0)",
+      "target": 3147794,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147582,
+      "rn": 0,
+      "imm": 46,
+      "branch": "Bcond(0)",
+      "target": 3147796,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147588,
+      "rn": 0,
+      "imm": 38,
+      "branch": "Bcond(0)",
+      "target": 3147798,
+      "leads_to_30103C_arm": true,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147594,
+      "rn": 0,
+      "imm": 33,
+      "branch": "Bcond(0)",
+      "target": 3147800,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147600,
+      "rn": 0,
+      "imm": 20,
+      "branch": "Bcond(0)",
+      "target": 3147802,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147604,
+      "rn": 0,
+      "imm": 22,
+      "branch": "Bcond(1)",
+      "target": 3147620,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147624,
+      "rn": 0,
+      "imm": 35,
+      "branch": "Bcond(0)",
+      "target": 3147858,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147628,
+      "rn": 0,
+      "imm": 37,
+      "branch": "Bcond(1)",
+      "target": 3147620,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147664,
+      "rn": 0,
+      "imm": 7,
+      "branch": "Bcond(2)",
+      "target": 3147678,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147696,
+      "rn": 0,
+      "imm": 64,
+      "branch": "Bcond(0)",
+      "target": 3147930,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147704,
+      "rn": 0,
+      "imm": 8,
+      "branch": "Bcond(2)",
+      "target": 3147718,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147738,
+      "rn": 0,
+      "imm": 214,
+      "branch": "Bcond(0)",
+      "target": 3147934,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147742,
+      "rn": 0,
+      "imm": 223,
+      "branch": "Bcond(0)",
+      "target": 3147936,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147746,
+      "rn": 0,
+      "imm": 224,
+      "branch": "Bcond(0)",
+      "target": 3147938,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147750,
+      "rn": 0,
+      "imm": 229,
+      "branch": "Bcond(1)",
+      "target": 3147620,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147780,
+      "rn": 0,
+      "imm": 240,
+      "branch": "Bcond(0)",
+      "target": 3147940,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147804,
+      "rn": 0,
+      "imm": 7,
+      "branch": "Bcond(2)",
+      "target": 3147818,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147836,
+      "rn": 0,
+      "imm": 241,
+      "branch": "Bcond(0)",
+      "target": 3147942,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147840,
+      "rn": 0,
+      "imm": 252,
+      "branch": "Bcond(0)",
+      "target": 3147944,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147874,
+      "rn": 0,
+      "imm": 15,
+      "branch": "Bcond(2)",
+      "target": 3147888,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    },
+    {
+      "pc": 3147946,
+      "rn": 0,
+      "imm": 47,
+      "branch": "Bcond(2)",
+      "target": 3147960,
+      "leads_to_30103C_arm": false,
+      "note": "CMP on r0 after load of state word"
+    }
+  ],
+  "dispatcher_lead_cases": [
+    {
+      "pc": 3147588,
+      "rn": 0,
+      "imm": 38,
+      "branch": "Bcond(0)",
+      "target": 3147798,
+      "leads_to_30103C_arm": true,
+      "note": "CMP on r0 after load of state word"
+    }
+  ],
+  "bp_csv_all": "0x300158,0x3002C0,0x300714,0x30103C,0x3020C8,0x302340,0x302362,0x2DC7D4,0x2DFDD6,0x2DFE58,0x2DFE68,0x2DFE8E,0x2DFEF8,0x2DFF18,0x2DFF3E,0x2E057A,0x2E0664,0x2E06DE,0x2E074C,0x2E0FB2,0x2E1008,0x2E1048,0x2E10BA,0x2E10EC,0x2E1126,0x2E1186,0x2E1234,0x2E1266,0x2E12E0,0x2E144E,0x2E1474,0x2E14B8,0x2E1670,0x2E17DA,0x2E183E,0x2E1860,0x2E187A,0x2E1916,0x2E1954,0x2E19CA,0x2E1A8E,0x2E1ADC,0x2E1BC0,0x2E1BF4,0x2E1C10,0x2E1CF6,0x2E1E16,0x2E1E4A,0x2E1F02,0x2E1F38,0x2E203E,0x2E206A,0x2E2082,0x2E20B4,0x2E20CA,0x2E214A,0x2E216C,0x2E21AC,0x2E21EC,0x2E226E,0x2E22B0,0x2E22D0,0x2E2350,0x2E2384,0x2E2396,0x2E239C,0x2E23DC,0x2E23EE,0x2E23F4,0x2E2AE6,0x2E2DEA,0x2E7AAC,0x2E7AEA,0x2E7B2A,0x2F302A,0x2F53E4,0x2F5474,0x2F56E4,0x2FA464,0x2FA58E,0x2FA5BC,0x2FB6B8,0x302350,0x30278A,0x3043D4,0x306920,0x30DDF6,0x311CB0,0x312854,0x3128EA,0x312E24,0x312F6A",
+  "bp_csv_priority": "0x300158,0x3002C0,0x300714,0x30103C,0x3020C8,0x302340,0x302362,0x2DC7D4,0x2DFDD6,0x2DFE58,0x2DFE68,0x2DFE8E,0x2DFEF8,0x2DFF18,0x2DFF3E,0x2E057A,0x2E0664,0x2E06DE,0x2E074C,0x2E0FB2,0x2E1008,0x2E1048,0x2E10BA,0x2E10EC,0x2E1126,0x2E1186,0x2E1234,0x2E1266,0x2E12E0,0x2E144E,0x2E1474,0x2E14B8,0x2E1670,0x2E17DA,0x2E183E,0x2E1860,0x2E187A",
+  "hypotheses_ranked": [
+    {
+      "id": "MISSING_APP_INIT_DISPATCH",
+      "why": "0x300158 never entered; many callers look init/event-ish but product cold"
+    },
+    {
+      "id": "MISSING_PLATFORM_SIDE_EFFECT_STATE_38",
+      "why": "state word stays 0; arm to 0x30103C needs value 38"
+    },
+    {
+      "id": "MISSING_RESOURCE_READY_DISPATCH",
+      "why": "resourceish caller bucket present statically"
+    },
+    {
+      "id": "MISSING_NETWORK_READY_DISPATCH",
+      "why": "networkish bucket present; only claim if live caller proves"
+    },
+    {
+      "id": "MISSING_QUEUE_CONSUMER_TO_DISPATCHER",
+      "why": "10165 sets FE8/B7D but never proven to call 0x300158"
+    }
+  ]
+}

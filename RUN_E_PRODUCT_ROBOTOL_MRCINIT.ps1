@@ -164,7 +164,11 @@ $e8eMode = ($env:JJFB_E8E_MODE -eq '1')
 $e8fMode = ($env:JJFB_E8F_MODE -eq '1')
 $e8gMode = ($env:JJFB_E8G_MODE -eq '1')
 $e8hMode = ($env:JJFB_E8H_MODE -eq '1')
-if ($e8hMode) {
+$e8iMode = ($env:JJFB_E8I_MODE -eq '1')
+if ($e8iMode) {
+  # Parent/dispatcher entry or state=38, else run to tick=600 for census.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8I_PARENT_HIT\] tag=p300(158|714)|JJFB_E8I_STATE_EQ38\]|JJFB_E8I_PARENT_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8hMode) {
   # Dispatcher BP + observe-only SVC #0xAB trap; stop on DRAW, SVC trap, summary, or tick25/40.
   $stopPat = '\[JJFB_DRAW\]|JJFB_E8H_SVC_AB_STOP\]|JJFB_E8H_DISPATCHER_SUMMARY\]|JJFB_E8G_SECOND_GATE_FAULT\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e8gMode) {
