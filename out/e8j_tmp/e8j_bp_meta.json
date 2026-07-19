@@ -1,0 +1,668 @@
+[
+  {
+    "key": "p:3146072",
+    "role": "p",
+    "pc": 3146072,
+    "note": "parent"
+  },
+  {
+    "key": "p:3146432",
+    "role": "p",
+    "pc": 3146432,
+    "note": "bl_to_dispatcher"
+  },
+  {
+    "key": "p:3147540",
+    "role": "p",
+    "pc": 3147540,
+    "note": "dispatcher"
+  },
+  {
+    "key": "p:3149884",
+    "role": "p",
+    "pc": 3149884,
+    "note": "site_30103c"
+  },
+  {
+    "key": "p:3154120",
+    "role": "p",
+    "pc": 3154120,
+    "note": "fn_3020c8"
+  },
+  {
+    "key": "p:3154752",
+    "role": "p",
+    "pc": 3154752,
+    "note": "case_arm"
+  },
+  {
+    "key": "p:3154786",
+    "role": "p",
+    "pc": 3154786,
+    "note": "case_arm2"
+  },
+  {
+    "key": "e:3018240",
+    "role": "e",
+    "pc": 3018240,
+    "note": "parent_bls=21"
+  },
+  {
+    "key": "u:3150758",
+    "role": "u",
+    "pc": 3150758,
+    "note": "upstream_of_0x2E0E00"
+  },
+  {
+    "key": "u:3150794",
+    "role": "u",
+    "pc": 3150794,
+    "note": "upstream_of_0x2E0E00"
+  },
+  {
+    "key": "u:3150776",
+    "role": "u",
+    "pc": 3150776,
+    "note": "ubl_to_0x2E0E00"
+  },
+  {
+    "key": "u:3150798",
+    "role": "u",
+    "pc": 3150798,
+    "note": "ubl_to_0x2E0E00"
+  },
+  {
+    "key": "e:3013692",
+    "role": "e",
+    "pc": 3013692,
+    "note": "parent_bls=11"
+  },
+  {
+    "key": "u:2999840",
+    "role": "u",
+    "pc": 2999840,
+    "note": "upstream_of_0x2DFC3C"
+  },
+  {
+    "key": "u:3100810",
+    "role": "u",
+    "pc": 3100810,
+    "note": "upstream_of_0x2DFC3C"
+  },
+  {
+    "key": "u:3147186",
+    "role": "u",
+    "pc": 3147186,
+    "note": "upstream_of_0x2DFC3C"
+  },
+  {
+    "key": "u:3147386",
+    "role": "u",
+    "pc": 3147386,
+    "note": "upstream_of_0x2DFC3C"
+  },
+  {
+    "key": "u:3200480",
+    "role": "u",
+    "pc": 3200480,
+    "note": "upstream_of_0x2DFC3C"
+  },
+  {
+    "key": "u:2999888",
+    "role": "u",
+    "pc": 2999888,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "u:3101402",
+    "role": "u",
+    "pc": 3101402,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "u:3147270",
+    "role": "u",
+    "pc": 3147270,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "u:3147292",
+    "role": "u",
+    "pc": 3147292,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "u:3147502",
+    "role": "u",
+    "pc": 3147502,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "u:3147524",
+    "role": "u",
+    "pc": 3147524,
+    "note": "ubl_to_0x2DFC3C"
+  },
+  {
+    "key": "e:3000184",
+    "role": "e",
+    "pc": 3000184,
+    "note": "parent_bls=1"
+  },
+  {
+    "key": "u:3002526",
+    "role": "u",
+    "pc": 3002526,
+    "note": "upstream_of_0x2DC778"
+  },
+  {
+    "key": "u:3003344",
+    "role": "u",
+    "pc": 3003344,
+    "note": "ubl_to_0x2DC778"
+  },
+  {
+    "key": "e:3046080",
+    "role": "e",
+    "pc": 3046080,
+    "note": "parent_bls=2"
+  },
+  {
+    "key": "e:3101750",
+    "role": "e",
+    "pc": 3101750,
+    "note": "parent_bls=2"
+  },
+  {
+    "key": "e:3122432",
+    "role": "e",
+    "pc": 3122432,
+    "note": "parent_bls=2"
+  },
+  {
+    "key": "u:2991280",
+    "role": "u",
+    "pc": 2991280,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:2999956",
+    "role": "u",
+    "pc": 2999956,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3000086",
+    "role": "u",
+    "pc": 3000086,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3000184",
+    "role": "u",
+    "pc": 3000184,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3001460",
+    "role": "u",
+    "pc": 3001460,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3001860",
+    "role": "u",
+    "pc": 3001860,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3013804",
+    "role": "u",
+    "pc": 3013804,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:3017430",
+    "role": "u",
+    "pc": 3017430,
+    "note": "upstream_of_0x2FA500"
+  },
+  {
+    "key": "u:2991324",
+    "role": "u",
+    "pc": 2991324,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "u:2991404",
+    "role": "u",
+    "pc": 2991404,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "u:3000020",
+    "role": "u",
+    "pc": 3000020,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "u:3000088",
+    "role": "u",
+    "pc": 3000088,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "u:3000250",
+    "role": "u",
+    "pc": 3000250,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "u:3001482",
+    "role": "u",
+    "pc": 3001482,
+    "note": "ubl_to_0x2FA500"
+  },
+  {
+    "key": "e:3154200",
+    "role": "e",
+    "pc": 3154200,
+    "note": "parent_bls=2"
+  },
+  {
+    "key": "e:3222824",
+    "role": "e",
+    "pc": 3222824,
+    "note": "parent_bls=2"
+  },
+  {
+    "key": "e:3021454",
+    "role": "e",
+    "pc": 3021454,
+    "note": "parent_bls=1"
+  },
+  {
+    "key": "e:3021532",
+    "role": "e",
+    "pc": 3021532,
+    "note": "parent_bls=1"
+  },
+  {
+    "key": "e:3021760",
+    "role": "e",
+    "pc": 3021760,
+    "note": "parent_bls=1"
+  },
+  {
+    "key": "e:3021812",
+    "role": "e",
+    "pc": 3021812,
+    "note": "parent_bls=1"
+  },
+  {
+    "key": "u:3199744",
+    "role": "u",
+    "pc": 3199744,
+    "note": "event_switch_table_bl_2DFC3C"
+  },
+  {
+    "key": "u:3200816",
+    "role": "u",
+    "pc": 3200816,
+    "note": "case_bl_site_2DFC3C"
+  },
+  {
+    "key": "u:3199628",
+    "role": "u",
+    "pc": 3199628,
+    "note": "10165_long_path_entry"
+  },
+  {
+    "key": "u:3199564",
+    "role": "u",
+    "pc": 3199564,
+    "note": "10165_enqueue_core"
+  },
+  {
+    "key": "u:3169976",
+    "role": "u",
+    "pc": 3169976,
+    "note": "b7d_reader_upstream_legacy_gate"
+  },
+  {
+    "key": "e:3101584",
+    "role": "e",
+    "pc": 3101584,
+    "note": "parent_cluster_and_7D8_reader"
+  },
+  {
+    "key": "u:3161620",
+    "role": "u",
+    "pc": 3161620,
+    "note": "upstream_of_2F5390"
+  },
+  {
+    "key": "u:3164796",
+    "role": "u",
+    "pc": 3164796,
+    "note": "upstream_of_303E14"
+  },
+  {
+    "key": "q:3199564",
+    "role": "q",
+    "pc": 3199564,
+    "note": "FE8_reader"
+  },
+  {
+    "key": "q:3199592",
+    "role": "q",
+    "pc": 3199592,
+    "note": "FE8_reader_access"
+  },
+  {
+    "key": "q:2991652",
+    "role": "q",
+    "pc": 2991652,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:2991674",
+    "role": "q",
+    "pc": 2991674,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3000392",
+    "role": "q",
+    "pc": 3000392,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:3000404",
+    "role": "q",
+    "pc": 3000404,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3000446",
+    "role": "q",
+    "pc": 3000446,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3000646",
+    "role": "q",
+    "pc": 3000646,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3000708",
+    "role": "q",
+    "pc": 3000708,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:3000738",
+    "role": "q",
+    "pc": 3000738,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3137918",
+    "role": "q",
+    "pc": 3137918,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:3138046",
+    "role": "q",
+    "pc": 3138046,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3199628",
+    "role": "q",
+    "pc": 3199628,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:3199636",
+    "role": "q",
+    "pc": 3199636,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3210412",
+    "role": "q",
+    "pc": 3210412,
+    "note": "B7D_reader"
+  },
+  {
+    "key": "q:3210458",
+    "role": "q",
+    "pc": 3210458,
+    "note": "B7D_reader_access"
+  },
+  {
+    "key": "q:3002356",
+    "role": "q",
+    "pc": 3002356,
+    "note": "7D8_reader"
+  },
+  {
+    "key": "q:3002362",
+    "role": "q",
+    "pc": 3002362,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010046",
+    "role": "q",
+    "pc": 3010046,
+    "note": "7D8_reader"
+  },
+  {
+    "key": "q:3010294",
+    "role": "q",
+    "pc": 3010294,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010314",
+    "role": "q",
+    "pc": 3010314,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010436",
+    "role": "q",
+    "pc": 3010436,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010490",
+    "role": "q",
+    "pc": 3010490,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010534",
+    "role": "q",
+    "pc": 3010534,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010738",
+    "role": "q",
+    "pc": 3010738,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010782",
+    "role": "q",
+    "pc": 3010782,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010856",
+    "role": "q",
+    "pc": 3010856,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010952",
+    "role": "q",
+    "pc": 3010952,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3010984",
+    "role": "q",
+    "pc": 3010984,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3011066",
+    "role": "q",
+    "pc": 3011066,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3011082",
+    "role": "q",
+    "pc": 3011082,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "q:3011126",
+    "role": "q",
+    "pc": 3011126,
+    "note": "7D8_reader_access"
+  },
+  {
+    "key": "b:3018674",
+    "role": "b",
+    "pc": 3018674,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3018760",
+    "role": "b",
+    "pc": 3018760,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3018824",
+    "role": "b",
+    "pc": 3018824,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3018938",
+    "role": "b",
+    "pc": 3018938,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3018988",
+    "role": "b",
+    "pc": 3018988,
+    "note": "bl_parent_r0=20"
+  },
+  {
+    "key": "b:3019046",
+    "role": "b",
+    "pc": 3019046,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3019142",
+    "role": "b",
+    "pc": 3019142,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3019316",
+    "role": "b",
+    "pc": 3019316,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014102",
+    "role": "b",
+    "pc": 3014102,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014232",
+    "role": "b",
+    "pc": 3014232,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014248",
+    "role": "b",
+    "pc": 3014248,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014286",
+    "role": "b",
+    "pc": 3014286,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014392",
+    "role": "b",
+    "pc": 3014392,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014424",
+    "role": "b",
+    "pc": 3014424,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3014462",
+    "role": "b",
+    "pc": 3014462,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3016058",
+    "role": "b",
+    "pc": 3016058,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3000276",
+    "role": "b",
+    "pc": 3000276,
+    "note": "bl_parent_r0=20"
+  },
+  {
+    "key": "b:3046122",
+    "role": "b",
+    "pc": 3046122,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3046186",
+    "role": "b",
+    "pc": 3046186,
+    "note": "bl_parent_r0=18"
+  },
+  {
+    "key": "b:3101812",
+    "role": "b",
+    "pc": 3101812,
+    "note": "bl_parent_r0=464"
+  },
+  {
+    "key": "b:3102436",
+    "role": "b",
+    "pc": 3102436,
+    "note": "bl_parent_r0=20"
+  }
+]

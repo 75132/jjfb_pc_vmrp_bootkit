@@ -32,6 +32,11 @@ extern "C" {
  *   JJFB_E8I_PARENT_PCS=0x..,..   — CSV (priority or all)
  *   JJFB_E8I_STATE_WATCH=1        — MEM_WRITE watch on R9+(0x800+0xD0); observe-only
  *
+ * E8J Env:
+ *   JJFB_E8J_CLUSTER_BP=1         — role-tagged cluster/upstream/queue CODE hooks
+ *   JJFB_E8J_BP_SPEC=e:0x..,u:0x..,q:0x..,p:0x..,b:0x..
+ *   JJFB_E8J_QUEUE_READ_WATCH=1   — MEM_READ watch on R9+FE8 / R9+B7D; observe-only
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

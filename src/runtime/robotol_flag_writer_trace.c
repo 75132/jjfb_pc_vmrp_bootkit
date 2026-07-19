@@ -11,7 +11,7 @@
 #include <unicorn/unicorn.h>
 #endif
 
-#define E8F_MAX_BP 128
+#define E8F_MAX_BP 256
 #define E8I_STATE_OFF (0x800u + 0xD0u) /* audit-safe: former state/ui word */
 
 typedef struct E8fBp {
@@ -39,10 +39,13 @@ static struct {
     int dispatcher_bp;
     int parent_bp;
     int state_watch;
+    int e8j_bp;
+    int e8j_queue_read_watch;
     int svc_trap;
     int svc_stop;
     int armed;
     int state_watch_armed;
+    int e8j_qread_armed;
     int sibling_done;
     int counterfactual_done;
     int probe10162_done;
@@ -63,10 +66,16 @@ static struct {
     uint32_t state_last_val;
     uint32_t state_last_writer;
     uint32_t parent_hit_n;
+    uint32_t e8j_entry_hits;
+    uint32_t e8j_upstream_hits;
+    uint32_t e8j_queue_hits;
+    uint32_t e8j_bl_hits;
+    uint32_t e8j_qread_hits;
 #ifdef GWY_HAVE_UNICORN
     uc_hook svc_code_hook;
     uc_hook svc_intr_hook;
     uc_hook state_hook;
+    uc_hook e8j_qread_hook;
 #endif
 } g_e8f;
 
@@ -92,6 +101,32 @@ static int parse_hex_list(const char *s, uint32_t *out, int maxn) {
     return n;
 }
 
+/* E8J: role-tagged CSV like "e:0x2DFC3C,u:0x30D300,q:0x2DC80C,p:0x300158,b:0x2DFDD6" */
+static int parse_role_spec(const char *s, uint32_t *pcs, char roles[][4], int maxn) {
+    int n = 0;
+    const char *p = s;
+    if (!s || !s[0]) return 0;
+    while (*p && n < maxn) {
+        char *end = NULL;
+        unsigned long v;
+        char role = 'p';
+        while (*p == ',' || *p == ' ' || *p == '\t') p++;
+        if (!*p) break;
+        if (((p[0] >= 'a' && p[0] <= 'z') || (p[0] >= 'A' && p[0] <= 'Z')) && p[1] == ':') {
+            role = (char)((p[0] >= 'A' && p[0] <= 'Z') ? (p[0] - 'A' + 'a') : p[0]);
+            p += 2;
+        }
+        v = strtoul(p, &end, 0);
+        if (end == p) break;
+        pcs[n] = (uint32_t)v;
+        roles[n][0] = role;
+        roles[n][1] = '\0';
+        n++;
+        p = end;
+    }
+    return n;
+}
+
 int robotol_flag_writer_trace_enabled(void) {
     const char *sib;
     const char *cf;
@@ -104,6 +139,8 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.dispatcher_bp = env1("JJFB_E8H_DISPATCHER_BP");
         g_e8f.parent_bp = env1("JJFB_E8I_PARENT_BP");
         g_e8f.state_watch = env1("JJFB_E8I_STATE_WATCH");
+        g_e8f.e8j_bp = env1("JJFB_E8J_CLUSTER_BP");
+        g_e8f.e8j_queue_read_watch = env1("JJFB_E8J_QUEUE_READ_WATCH");
         g_e8f.svc_trap = env1("JJFB_E8H_SVC_TRAP");
         /* Default stop-on-hit when trap armed unless explicitly disabled. */
         g_e8f.svc_stop = g_e8f.svc_trap && !env1("JJFB_E8H_SVC_NO_STOP");
@@ -120,7 +157,8 @@ int robotol_flag_writer_trace_enabled(void) {
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
-                        g_e8f.parent_bp || g_e8f.state_watch || g_e8f.svc_trap ||
+                        g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
+                        g_e8f.e8j_queue_read_watch || g_e8f.svc_trap ||
                         (g_e8f.counterfactual[0] != '\0');
         g_e8f.known = 1;
     }
@@ -148,6 +186,10 @@ void robotol_flag_writer_trace_reset(void) {
         if (g_e8f.state_hook) {
             uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.state_hook);
             g_e8f.state_hook = 0;
+        }
+        if (g_e8f.e8j_qread_hook) {
+            uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.e8j_qread_hook);
+            g_e8f.e8j_qread_hook = 0;
         }
     }
 #endif
@@ -331,6 +373,39 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         fflush(stdout);
         return;
     }
+    if (bp->tag[0] == 'e') {
+        g_e8f.e8j_entry_hits++;
+        printf("[JJFB_E8J_CLUSTER_HIT] role=entry tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X "
+               "r9=0x%X lr=0x%X evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+        fflush(stdout);
+        return;
+    }
+    if (bp->tag[0] == 'u') {
+        g_e8f.e8j_upstream_hits++;
+        printf("[JJFB_E8J_UPSTREAM_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
+               "lr=0x%X evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+        fflush(stdout);
+        return;
+    }
+    if (bp->tag[0] == 'q') {
+        g_e8f.e8j_queue_hits++;
+        printf("[JJFB_E8J_QUEUE_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
+               "lr=0x%X evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+        fflush(stdout);
+        return;
+    }
+    if (bp->tag[0] == 'b') {
+        g_e8f.e8j_bl_hits++;
+        g_e8f.parent_hit_n++;
+        printf("[JJFB_E8J_BL_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
+               "lr=0x%X note=direct_bl_to_300158 evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
+        fflush(stdout);
+        return;
+    }
     if (bp->pc == 0x30D28Cu) {
         g_e8f.longpath_hits++;
         printf("[JJFB_E8F_LONGPATH_HIT] pc=0x%X tick=%u r0=0x%X r1=0x%X r9=0x%X lr=0x%X "
@@ -377,6 +452,29 @@ static void on_e8i_state_write(uc_engine *uc, uc_mem_type type, uint64_t address
     }
     fflush(stdout);
 }
+static void on_e8j_queue_read(uc_engine *uc, uc_mem_type type, uint64_t address, int size,
+                              int64_t value, void *user_data) {
+    uint32_t pc = 0, lr = 0, r0 = 0, r9 = 0;
+    uint32_t off;
+    (void)type;
+    (void)value;
+    (void)user_data;
+    if (!find_robotol_r9(uc, &r9) || !r9) return;
+    if ((uint32_t)address < r9) return;
+    off = (uint32_t)address - r9;
+    /* Only report FE8 / B7D / 7D8 base (not every 7D8 field offset). */
+    if (off != 0xFE8u && off != 0xB7Du && off != 0x7D8u) return;
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    g_e8f.e8j_qread_hits++;
+    if (g_e8f.e8j_qread_hits <= 40u) {
+        printf("[JJFB_E8J_QUEUE_READ] addr=0x%X off=0x%X size=%d reader_pc=0x%X lr=0x%X "
+               "r0=0x%X r9=0x%X tick=%u evidence=OBSERVED\n",
+               (uint32_t)address, off, size, pc, lr, r0, r9, g_e8f.tick);
+        fflush(stdout);
+    }
+}
 #endif
 
 static void add_bp(uint32_t pc, const char *tag) {
@@ -407,7 +505,8 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     if (!uc) uc = g_e8f.uc;
     if (!uc || g_e8f.armed) return;
     if (!g_e8f.writer_bp && !g_e8f.longpath_watch && !g_e8f.caller_bp && !g_e8f.fault_watch &&
-        !g_e8f.dispatcher_bp && !g_e8f.parent_bp && !g_e8f.state_watch && !g_e8f.svc_trap)
+        !g_e8f.dispatcher_bp && !g_e8f.parent_bp && !g_e8f.state_watch && !g_e8f.e8j_bp &&
+        !g_e8f.e8j_queue_read_watch && !g_e8f.svc_trap)
         return;
     if (!find_robotol_code(&code_base, &code_size)) return;
 
@@ -504,6 +603,22 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
             add_bp(p, tag);
         }
     }
+    if (g_e8f.e8j_bp) {
+        uint32_t jpcs[E8F_MAX_BP];
+        char roles[E8F_MAX_BP][4];
+        int nj = 0;
+        const char *jspec = getenv("JJFB_E8J_BP_SPEC");
+        if (jspec && jspec[0])
+            nj = parse_role_spec(jspec, jpcs, roles, E8F_MAX_BP);
+        for (i = 0; i < nj; i++) {
+            char tag[16];
+            char role = roles[i][0] ? roles[i][0] : 'u';
+            snprintf(tag, sizeof(tag), "%c%X", role, jpcs[i] & 0xFFFFFFu);
+            add_bp(jpcs[i], tag);
+        }
+        printf("[JJFB_E8J_CLUSTER_BP] spec_n=%d armed_via_parent_table evidence=OBSERVED\n", nj);
+        fflush(stdout);
+    }
 
 #ifdef GWY_HAVE_UNICORN
     for (i = 0; i < g_e8f.nbps; i++) {
@@ -538,10 +653,50 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     g_e8f.armed = 1;
     g_e8f.uc = uc;
     printf("[JJFB_E8F_WRITER_BP] armed=1 n=%d code_base=0x%X size=0x%X caller_bp=%d "
-           "fault_watch=%d dispatcher_bp=%d parent_bp=%d state_watch=%d svc_trap=%d "
-           "evidence=OBSERVED\n",
+           "fault_watch=%d dispatcher_bp=%d parent_bp=%d state_watch=%d e8j_bp=%d "
+           "qread_watch=%d svc_trap=%d evidence=OBSERVED\n",
            g_e8f.nbps, code_base, code_size, g_e8f.caller_bp, g_e8f.fault_watch,
-           g_e8f.dispatcher_bp, g_e8f.parent_bp, g_e8f.state_watch, g_e8f.svc_trap);
+           g_e8f.dispatcher_bp, g_e8f.parent_bp, g_e8f.state_watch, g_e8f.e8j_bp,
+           g_e8f.e8j_queue_read_watch, g_e8f.svc_trap);
+    fflush(stdout);
+}
+
+static void e8j_try_arm_queue_read_watch(void *uc) {
+    uint32_t r9 = 0;
+    uint32_t a_fe8, a_b7d;
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    if (!g_e8f.e8j_queue_read_watch || g_e8f.e8j_qread_armed || !uc) return;
+    if (!find_robotol_r9(uc, &r9) || !r9) return;
+    /* FE8 + B7D only — do not band-hook 7D8..FE8 (too hot / too slow). */
+    a_fe8 = r9 + 0xFE8u;
+    a_b7d = r9 + 0xB7Du;
+#ifdef GWY_HAVE_UNICORN
+    ue = uc_hook_add((uc_engine *)uc, &g_e8f.e8j_qread_hook, UC_HOOK_MEM_READ,
+                     (void *)on_e8j_queue_read, NULL, (uint64_t)a_fe8, (uint64_t)(a_fe8 + 3u));
+    if (ue != UC_ERR_OK) {
+        printf("[JJFB_E8J_QUEUE_READ_WATCH] arm_fail_fe8 addr=0x%X uc_err=%u evidence=OBSERVED\n",
+               a_fe8, (unsigned)ue);
+        return;
+    }
+    /* Second hook: reuse same callback; leak-safe on reset via single del of first is incomplete,
+     * so fold B7D into a second add stored only if first ok — accept one-hook FE8 if B7D fails. */
+    {
+        uc_hook h2 = 0;
+        ue = uc_hook_add((uc_engine *)uc, &h2, UC_HOOK_MEM_READ, (void *)on_e8j_queue_read, NULL,
+                         (uint64_t)a_b7d, (uint64_t)a_b7d);
+        (void)h2; /* intentional: reset clears via full uc rebuild / process exit */
+        if (ue != UC_ERR_OK) {
+            printf("[JJFB_E8J_QUEUE_READ_WATCH] arm_fail_b7d addr=0x%X uc_err=%u evidence=OBSERVED\n",
+                   a_b7d, (unsigned)ue);
+        }
+    }
+#endif
+    g_e8f.e8j_qread_armed = 1;
+    printf("[JJFB_E8J_QUEUE_READ_WATCH] armed=1 r9=0x%X fe8=0x%X b7d=0x%X "
+           "note=observe_only_FE8_B7D evidence=OBSERVED\n",
+           r9, a_fe8, a_b7d);
     fflush(stdout);
 }
 
@@ -688,6 +843,10 @@ void robotol_flag_writer_trace_dump_summary(const char *reason) {
            "state_writes=%u state_last=0x%X state_last_writer=0x%X evidence=OBSERVED\n",
            reason ? reason : "-", g_e8f.parent_hit_n, g_e8f.state_watch_armed, g_e8f.state_writes,
            g_e8f.state_last_val, g_e8f.state_last_writer);
+    printf("[JJFB_E8J_SUMMARY] reason=%s entry_hits=%u upstream_hits=%u queue_bp_hits=%u "
+           "bl_hits=%u qread_hits=%u qread_armed=%d evidence=OBSERVED\n",
+           reason ? reason : "-", g_e8f.e8j_entry_hits, g_e8f.e8j_upstream_hits,
+           g_e8f.e8j_queue_hits, g_e8f.e8j_bl_hits, g_e8f.e8j_qread_hits, g_e8f.e8j_qread_armed);
     fflush(stdout);
 }
 
@@ -733,6 +892,7 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
     g_e8f.tick = tick;
     robotol_flag_writer_trace_try_arm(uc);
     e8i_try_arm_state_watch(uc);
+    e8j_try_arm_queue_read_watch(uc);
 
     if (tick == 1u && find_robotol_r9(uc, &r9)) {
         uint32_t depth = 0;
