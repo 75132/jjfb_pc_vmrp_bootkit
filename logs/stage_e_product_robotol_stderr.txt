@@ -7,7 +7,7 @@ libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
-[VM_FILE_BIND] runtime=1 svc=17074a78
+[VM_FILE_BIND] runtime=1 svc=16074a38
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [GWY_LAUNCH] mode=GWY_LAUNCHER bound=1

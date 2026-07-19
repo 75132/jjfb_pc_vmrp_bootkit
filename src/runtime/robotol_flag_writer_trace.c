@@ -84,6 +84,10 @@ static struct {
     int fast_c6c22_set;
     uint32_t fast_c6c22_val; /* poke *(u8*)(R9+0xC6C+0x22) — R1=20 CMP#1 gate */
     uint64_t fast_insn_limit; /* 0 = default 400000 */
+    /* E8R: invoke real unlock fn 0x2FC8C0 (not direct C44 poke). */
+    int fast_unlock_call; /* JJFB_FAST_UNLOCK_CALL=1 */
+    int fast_unlock_done;
+    char fast_unlock_when[12]; /* before | after (case156); default before */
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -351,13 +355,28 @@ int robotol_flag_writer_trace_enabled(void) {
                     if (end != ilim && v > 0) g_e8f.fast_insn_limit = (uint64_t)v;
                 }
             }
+            {
+                const char *ucall = getenv("JJFB_FAST_UNLOCK_CALL");
+                const char *uwhen = getenv("JJFB_FAST_UNLOCK_WHEN");
+                if (ucall && ucall[0] == '1' && ucall[1] == '\0')
+                    g_e8f.fast_unlock_call = 1;
+                strncpy(g_e8f.fast_unlock_when, "before", sizeof(g_e8f.fast_unlock_when) - 1);
+                if (uwhen && uwhen[0]) {
+                    if (strcmp(uwhen, "after") == 0)
+                        strncpy(g_e8f.fast_unlock_when, "after", sizeof(g_e8f.fast_unlock_when) - 1);
+                    else
+                        strncpy(g_e8f.fast_unlock_when, "before", sizeof(g_e8f.fast_unlock_when) - 1);
+                }
+            }
             printf("[JJFB_FAST_ASSIST] enabled=1 state=0x%X case156_r1=0x%X seq=%s "
                    "svc_ab=%c eec7c=%s dec30=%s c6c22=%s insn_limit=%llu "
+                   "unlock_call=%d unlock_when=%s "
                    "note=NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS\n",
                    g_e8f.e8n_cf_state, g_e8f.e8l_10102_r1, g_e8f.e8m_seq, g_e8f.fast_svc_mode,
                    g_e8f.fast_eec7c_set ? "set" : "off", g_e8f.fast_dec30_set ? "set" : "off",
                    g_e8f.fast_c6c22_set ? "set" : "off",
-                   (unsigned long long)(g_e8f.fast_insn_limit ? g_e8f.fast_insn_limit : 400000ull));
+                   (unsigned long long)(g_e8f.fast_insn_limit ? g_e8f.fast_insn_limit : 400000ull),
+                   g_e8f.fast_unlock_call, g_e8f.fast_unlock_when);
             fflush(stdout);
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
@@ -631,9 +650,12 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         printf("[JJFB_E8I_PARENT_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r4=0x%X "
                "r9=0x%X lr=0x%X state=0x%X evidence=OBSERVED\n",
                bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r4, r9, lr, state);
-        /* E8Q: success-arm / C44-unlock landmarks. */
+        /* E8Q/E8R: success-arm / C44-unlock landmarks. */
         if (bp->pc == 0x301848u || bp->pc == 0x301864u || bp->pc == 0x304558u ||
-            bp->pc == 0x2FC8C0u || bp->pc == 0x2FC8CEu || bp->pc == 0x30213Eu) {
+            bp->pc == 0x2FC8C0u || bp->pc == 0x2FC8CEu || bp->pc == 0x30213Eu ||
+            bp->pc == 0x3046A8u || bp->pc == 0x2E4788u || bp->pc == 0x2DB948u ||
+            bp->pc == 0x2DB9DCu || bp->pc == 0x30D300u || bp->pc == 0x30DDE2u ||
+            (bp->pc >= 0x2E4840u && bp->pc <= 0x2E4B06u)) {
             uint32_t r2 = 0, r3 = 0, c44 = 0, eec7c = 0, dec30 = 0, b1a8 = 0;
             uint8_t c44b = 0, b1a8b = 0, c6c22 = 0;
             uc_reg_read(uc, UC_ARM_REG_R2, &r2);
@@ -647,13 +669,19 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 c44 = c44b;
                 b1a8 = b1a8b;
             }
-            printf("[JJFB_E8Q_ARM] tag=%s pc=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X lr=0x%X "
-                   "state=0x%X C44=0x%X R9_1A8=0x%X C6C22=0x%X EEC7C=0x%X DEC30=0x%X "
-                   "note=FAST_OR_OBSERVE evidence=OBSERVED\n",
-                   bp->tag, bp->pc, r0, r1, r2, r3, lr, state, c44, b1a8, c6c22, eec7c, dec30);
+            if (bp->pc == 0x301848u || bp->pc == 0x301864u || bp->pc == 0x304558u ||
+                bp->pc == 0x2FC8C0u || bp->pc == 0x2FC8CEu || bp->pc == 0x30213Eu) {
+                printf("[JJFB_E8Q_ARM] tag=%s pc=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X lr=0x%X "
+                       "state=0x%X C44=0x%X R9_1A8=0x%X C6C22=0x%X EEC7C=0x%X DEC30=0x%X "
+                       "note=FAST_OR_OBSERVE evidence=OBSERVED\n",
+                       bp->tag, bp->pc, r0, r1, r2, r3, lr, state, c44, b1a8, c6c22, eec7c, dec30);
+            }
             if (bp->pc == 0x2FC8CEu)
                 printf("[JJFB_E8Q_C44_UNLOCK_SITE] pc=0x2FC8CE note=STRB_1_not_reset "
                        "evidence=TARGET_OBSERVED\n");
+            printf("[JJFB_E8R_UNLOCK_PATH] tag=%s pc=0x%X lr=0x%X state=0x%X C44=0x%X "
+                   "note=caller_or_writer evidence=OBSERVED\n",
+                   bp->tag, bp->pc, lr, state, c44);
         }
         /* E8M path landmarks inside parent. */
         if (bp->pc == 0x300182u || bp->pc == 0x300194u || bp->pc == 0x30026Eu ||
@@ -1133,6 +1161,55 @@ static void fast_poke_c44_dep_fields(void *uc, uint32_t r9) {
     }
 }
 
+/* E8R: invoke real unlock writer path 0x2FC8C0 (BL 0x3046A8 then STRB#1@C44).
+ * Not a direct C44 poke. FAST_ASSIST / COUNTERFACTUAL_ONLY. */
+static void fast_call_c44_unlock(void *uc, const char *when) {
+    uint32_t r9_save = 0, r9_run = 0;
+    uint8_t c44_before = 0, c44_after = 0;
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    int ok;
+    uint64_t lim = 200000ull;
+    if (!g_e8f.fast_assist || !g_e8f.fast_unlock_call || g_e8f.fast_unlock_done || !uc)
+        return;
+    g_e8f.fast_unlock_done = 1;
+    (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+    if (!find_robotol_r9(uc, &r9_run)) r9_run = r9_save;
+    if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+    if (r9_run)
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC44u, &c44_before, 1);
+    snap_idle_flags(uc, r9_run, "before_fast_unlock");
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = 0;
+    abi.set_r1 = 1;
+    abi.r1 = 0;
+    abi.set_r2 = 1;
+    abi.r2 = 0;
+    abi.set_r3 = 1;
+    abi.r3 = 0;
+    abi.set_lr = 1;
+    abi.lr = 0x80000u;
+    if (g_e8f.fast_insn_limit) lim = g_e8f.fast_insn_limit;
+    printf("[JJFB_FAST_UNLOCK_CALL] when=%s entry=0x2FC8C0 r9=0x%X C44_before=0x%X "
+           "note=FAST_ASSIST_real_fn_not_C44_poke evidence=HYPOTHESIS\n",
+           when ? when : "-", r9_run, c44_before);
+    fflush(stdout);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x2FC8C1u, 0x80000u, lim, &abi, &out);
+    if (r9_run)
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC44u, &c44_after, 1);
+    snap_idle_flags(uc, r9_run, "after_fast_unlock");
+    printf("[JJFB_FAST_UNLOCK_DONE] ok=%d end=%s pc_after=0x%X r0_after=0x%X "
+           "C44_before=0x%X C44_after=0x%X note=FAST_ASSIST_not_product evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after, out.r0_after, c44_before,
+           c44_after);
+    if (c44_after == 1u)
+        printf("[JJFB_E8R_C44_UNLOCKED] C44=1 via=0x2FC8C0 note=FAST_ASSIST_real_writer "
+               "evidence=OBSERVED\n");
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
 static void fire_handler_regs(void *uc, uint32_t code, const char *label, uint32_t r0,
                               uint32_t r1, uint32_t r2, uint32_t r3, const char *note) {
     uint32_t handler, stop = 0x80000u;
@@ -1392,6 +1469,9 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
             /* Field poke without state poke still allowed under FAST_ASSIST. */
             fast_poke_c44_dep_fields(uc, r9);
         }
+        /* E8R: real unlock fn before case156 (default). */
+        if (g_e8f.fast_unlock_call && strcmp(g_e8f.fast_unlock_when, "after") != 0)
+            fast_call_c44_unlock(uc, "before_case156");
         if (g_e8f.e8k_10102_case) {
             fire_handler_regs(uc, 0x10102u, "e8m_case", g_e8f.e8k_10102_case, g_e8f.e8l_10102_r1,
                               g_e8f.e8l_10102_r2, g_e8f.e8l_10102_r3,
@@ -1404,6 +1484,9 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
                                                 : (g_e8f.e8l_regs_set
                                                        ? "E8L_structured_abi_observe_only_not_product"
                                                        : "E8K_derived_case_observe_only_not_product"))));
+            /* E8R: unlock after case156 success arm (before FIRE_DONE log so stop-watch can miss race). */
+            if (g_e8f.fast_unlock_call && strcmp(g_e8f.fast_unlock_when, "after") == 0)
+                fast_call_c44_unlock(uc, "after_case156");
             if (g_e8f.fast_assist) {
                 printf("[JJFB_FAST_FIRE_DONE] case156_r1=0x%X state=0x%X svc_hits=%u "
                        "svc_continues=%u note=FAST_ASSIST_not_product evidence=OBSERVED\n",
