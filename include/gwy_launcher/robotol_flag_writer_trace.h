@@ -78,6 +78,13 @@ extern "C" {
  *   JJFB_FAST_UI_OBJECT_R0=0x..    — explicit UI object for 0x2E4788 (never r0=0)
  *   JJFB_E8U_SCREENSHOT=path.bmp   — first nontrivial guiDrawBitmap → SDL_SaveBMP
  *
+ * E8V-FirstFrame (NOT product success):
+ *   JJFB_E8V_MODE=1                — deep-trace idle success 0x2E88CC toward real draw
+ *   JJFB_E8V_E88CC_TRACE=1         — insn trace 0x2E88CC..0x2E8A4E (default on with MODE)
+ *   JJFB_E8V_INSN_LIMIT=<n>        — max logged insns in 0x2E88CC (default 2000)
+ *   JJFB_E8V_CALL_2E993C=1         — Case C: FAST call R9-only 0x2E993C after first idle OK
+ *   Pair with DISPLAY_FIRST + C9D bypass (Case A base). No C9D/CF5 poke / no fake DRAW.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

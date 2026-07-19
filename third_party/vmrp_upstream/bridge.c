@@ -257,10 +257,65 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         printf("[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x%X lr=0x%X r0=0x%X r1=%d r2=%d r3=%u "
                "h=%u sp=0x%X surface=0x%X note=real_platform_draw evidence=OBSERVED\n",
                pc, lr, bmp, (int)x, (int)y, w, h, sp, bmp);
+        printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x%X lr=0x%X "
+               "r0=0x%X r1=%d r2=%d r3=%u h=%u note=real_platform_draw evidence=OBSERVED\n",
+               pc, lr, bmp, (int)x, (int)y, w, h);
     }
     printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
     fflush(stdout);
     guiDrawBitmap(getMrpMemPtr(bmp), x, y, w, h);
+}
+
+/* Observe-only graphics stubs: log real guest calls; no host fake paint. */
+static void br_observe_draw_text(BridgeMap *o, uc_engine *uc) {
+    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0, sp = 0;
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+    printf("[JJFB_DRAW] api=%s r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
+           o && o->name ? o->name : "drawText", r0, r1, r2, r3);
+    printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
+           "r2=0x%X r3=0x%X sp=0x%X note=real_platform_draw evidence=OBSERVED\n",
+           o && o->name ? o->name : "drawText", pc, lr, r0, r1, r2, r3, sp);
+    fflush(stdout);
+}
+
+static void br_observe_draw_rect(BridgeMap *o, uc_engine *uc) {
+    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0, sp = 0, a4 = 0;
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+    uc_mem_read(uc, sp, &a4, 4);
+    printf("[JJFB_DRAW] api=%s x=%d y=%d w=%u h=%u evidence=OBSERVED\n",
+           o && o->name ? o->name : "DrawRect", (int)r0, (int)r1, r2, r3);
+    printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
+           "r2=0x%X r3=0x%X sp0=0x%X note=real_platform_draw evidence=OBSERVED\n",
+           o && o->name ? o->name : "DrawRect", pc, lr, r0, r1, r2, r3, a4);
+    fflush(stdout);
+}
+
+static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
+    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0;
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    printf("[JJFB_REFRESH] api=%s r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
+           o && o->name ? o->name : "_DispUpEx", r0, r1, r2, r3);
+    printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
+           "r2=0x%X r3=0x%X note=real_refresh evidence=OBSERVED\n",
+           o && o->name ? o->name : "_DispUpEx", pc, lr, r0, r1, r2, r3);
+    fflush(stdout);
 }
 
 static void br_mr_open(BridgeMap *o, uc_engine *uc) {
@@ -1311,17 +1366,17 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x1CC, MAP_FUNC, mr_md5_finish, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1D0, MAP_FUNC, _mr_load_sms_cfg, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1D4, MAP_FUNC, _mr_save_sms_cfg, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x1D8, MAP_FUNC, _DispUpEx, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x1D8, MAP_FUNC, _DispUpEx, NULL, br_observe_disp_up, 0),
     BRIDGE_FUNC_MAP(0x1DC, MAP_FUNC, _DrawPoint, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1E0, MAP_FUNC, _DrawBitmap, NULL, br_mr_drawBitmap, 0),
     BRIDGE_FUNC_MAP(0x1E4, MAP_FUNC, _DrawBitmapEx, NULL, br_mr_drawBitmap, 0),
-    BRIDGE_FUNC_MAP(0x1E8, MAP_FUNC, DrawRect, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x1EC, MAP_FUNC, _DrawText, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x1E8, MAP_FUNC, DrawRect, NULL, br_observe_draw_rect, 0),
+    BRIDGE_FUNC_MAP(0x1EC, MAP_FUNC, _DrawText, NULL, br_observe_draw_text, 0),
     BRIDGE_FUNC_MAP(0x1F0, MAP_FUNC, _BitmapCheck, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1F4, MAP_FUNC, _mr_readFile, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1F8, MAP_FUNC, mr_wstrlen, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1FC, MAP_FUNC, mr_registerAPP, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x200, MAP_FUNC, _DrawTextEx, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x200, MAP_FUNC, _DrawTextEx, NULL, br_observe_draw_text, 0),
     BRIDGE_FUNC_MAP(0x204, MAP_FUNC, _mr_EffSetCon, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x208, MAP_FUNC, _mr_TestCom, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x20C, MAP_FUNC, _mr_TestCom1, NULL, NULL, 0),
