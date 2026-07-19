@@ -170,18 +170,25 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST / E8P/E8Q/E8R/E8S: do not stop on 30103C alone — continue to expose C44/SVC/DRAW/fault.
+  # FAST_ASSIST / E8P/E8Q/E8R/E8S/E8T: do not stop on 30103C alone — continue to expose C44/SVC/DRAW/fault.
   # observe: stop on first SVC dump; return0/preserve: keep going past SVC until DRAW/C44/fault/tick600.
   # E8P/E8Q: also stop on FAST_FIRE_DONE (tick1 fire captures the 3020C8 / success-arm outcome).
   # E8R: Prefer completing tick1 sequence (unlock + case156). Stop on DRAW / post-fire / tick600.
   # E8S: continue past C44 unlock to tick2 post-C44 / C9D/CF5 / UI-init / DRAW.
+  # E8T: do NOT stop on C44 unlock alone — watch C9D/UI-init/DRAW through tick_80.
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
+  $e8tMode = ($env:JJFB_E8T_MODE -eq '1')
   $e8sMode = ($env:JJFB_E8S_MODE -eq '1')
   $e8rMode = ($env:JJFB_E8R_MODE -eq '1')
   $e8pMode = ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1')
-  if ($e8sMode) {
+  if ($e8tMode) {
+    # E8T: C9D/UI-init watch. Skip early-stop on UNLOCK_DONE / C44 alone.
+    $deep = ($env:JJFB_E8T_DEEP -eq '1')
+    $tickStop = if ($deep) { 'tick_600' } else { 'tick_80|tick_100|tick=80\b|tick=100\b' }
+    $stopPat = "\[JJFB_DRAW\]|\[JJFB_REFRESH\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(9D|F5)\b|JJFB_E8S_POST_C44_FLAGS\]|JJFB_FAST_UI_INIT_DONE\]|JJFB_E8I_PARENT_HIT\] tag=p2E4788\b|JJFB_E8I_PARENT_HIT\] tag=p2F4E82\b|JJFB_E8T_C9D_WRITER\]|JJFB_FAST_SVC_AB\]|JJFB_E8J_SUMMARY\] reason=($tickStop)|JJFB_LIFECYCLE\] op=FIRE_DONE tick=(80|100|600)\b|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
+  } elseif ($e8sMode) {
     # E8S-SpeedPatch: early-stop on unlock/fire/UI/C9D/CF5/DRAW; tick_80 unless DEEP.
     $deep = ($env:JJFB_E8S_DEEP -eq '1')
     $tickStop = if ($deep) { 'tick_600' } else { 'tick_80|tick_100|tick=80\b|tick=100\b' }

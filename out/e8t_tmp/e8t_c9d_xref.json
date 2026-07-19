@@ -1,0 +1,302 @@
+{
+  "code_base": "0x2D8DF4",
+  "gate_offset": "0xC9D",
+  "exact_strb_c9d": [
+    {
+      "kind": "STRB",
+      "pc": "0x30AA46",
+      "insn": "STRB r4,[r0,#0x1]",
+      "lit_base": "0xC9C",
+      "effective": "0xC9D",
+      "value_source": "MOVS#0",
+      "class": "writes_0",
+      "fn": "0x30A9EC",
+      "callers": [
+        "0x30AF8A",
+        "0x30DF78"
+      ],
+      "caller_count": 2,
+      "path_tags": [
+        "clear_reset_path",
+        "clears_reset"
+      ]
+    },
+    {
+      "kind": "STRB",
+      "pc": "0x3115BA",
+      "insn": "STRB r7,[r0,#0x1]",
+      "lit_base": "0xC9C",
+      "effective": "0xC9D",
+      "value_source": "MOVS#0 (r7)",
+      "class": "writes_0",
+      "fn": "0x311546",
+      "callers": [],
+      "caller_count": 0,
+      "path_tags": [
+        "clears_reset"
+      ]
+    }
+  ],
+  "all_covering_stores": [
+    {
+      "kind": "STR",
+      "pc": "0x2DCF76",
+      "insn": "STR r0,[r1,#0x1C]",
+      "lit_base": "0xC7F",
+      "c9d_byte_index": 2,
+      "value_source": "r0",
+      "class": "writes_variable_nonzero",
+      "note": "word store; C9D is byte2; MOVS#1 only sets byte0",
+      "fn": "0x2DCE04",
+      "callers": [
+        "0x2E35E4"
+      ],
+      "caller_count": 1,
+      "path_tags": []
+    },
+    {
+      "kind": "STR",
+      "pc": "0x2E3A7C",
+      "insn": "STR r0,[r1,#0x0]",
+      "lit_base": "0xC9C",
+      "c9d_byte_index": 1,
+      "value_source": "MOVS#1",
+      "class": "writes_1",
+      "note": "word store; C9D is byte1; MOVS#1 only sets byte0",
+      "fn": "0x2E2520",
+      "callers": [
+        "0x2DC8D4",
+        "0x2E7B9E"
+      ],
+      "caller_count": 2,
+      "path_tags": []
+    },
+    {
+      "kind": "STR",
+      "pc": "0x2E3A84",
+      "insn": "STR r2,[r1,#0x0]",
+      "lit_base": "0xC9C",
+      "c9d_byte_index": 1,
+      "value_source": "MOVS#0",
+      "class": "writes_0",
+      "note": "word store; C9D is byte1; MOVS#1 only sets byte0",
+      "fn": "0x2E2520",
+      "callers": [
+        "0x2DC8D4",
+        "0x2E7B9E"
+      ],
+      "caller_count": 2,
+      "path_tags": [
+        "clears_reset"
+      ]
+    },
+    {
+      "kind": "STRB",
+      "pc": "0x30AA46",
+      "insn": "STRB r4,[r0,#0x1]",
+      "lit_base": "0xC9C",
+      "effective": "0xC9D",
+      "value_source": "MOVS#0",
+      "class": "writes_0",
+      "fn": "0x30A9EC",
+      "callers": [
+        "0x30AF8A",
+        "0x30DF78"
+      ],
+      "caller_count": 2,
+      "path_tags": [
+        "clear_reset_path",
+        "clears_reset"
+      ]
+    },
+    {
+      "kind": "STRB",
+      "pc": "0x3115BA",
+      "insn": "STRB r7,[r0,#0x1]",
+      "lit_base": "0xC9C",
+      "effective": "0xC9D",
+      "value_source": "MOVS#0 (r7)",
+      "class": "writes_0",
+      "fn": "0x311546",
+      "callers": [],
+      "caller_count": 0,
+      "path_tags": [
+        "clears_reset"
+      ]
+    }
+  ],
+  "nonzero_capable_candidates": [],
+  "adjacent_c9c_write1_misclassified": [
+    {
+      "pc": "0x2E3A68",
+      "fn": "0x2E2520",
+      "effective": "0xC9C",
+      "class": "writes_1_ADJACENT_NOT_C9D",
+      "callers": [
+        "0x2DC8D4",
+        "0x2E7B9E"
+      ],
+      "note": "STRB #1 @ C9C; gate reads C9D \u2014 does not unlock idle C9D"
+    },
+    {
+      "pc": "0x2FB008",
+      "fn": "0x2FAFFC",
+      "effective": "0xC9C",
+      "class": "writes_1_ADJACENT_NOT_C9D",
+      "callers": [
+        "0x30D9EE"
+      ],
+      "note": "STRB #1 @ C9C; gate reads C9D \u2014 does not unlock idle C9D"
+    }
+  ],
+  "ui_init": {
+    "fn": "0x2E4788",
+    "state_cmps": [
+      {
+        "pc": "0x2E4796",
+        "reg": 0,
+        "imm": 0
+      },
+      {
+        "pc": "0x2E47B2",
+        "reg": 0,
+        "imm": 0
+      },
+      {
+        "pc": "0x2E47C4",
+        "reg": 0,
+        "imm": 252
+      },
+      {
+        "pc": "0x2E47C8",
+        "reg": 0,
+        "imm": 38
+      },
+      {
+        "pc": "0x2E47CC",
+        "reg": 0,
+        "imm": 46
+      },
+      {
+        "pc": "0x2E47D0",
+        "reg": 0,
+        "imm": 69
+      },
+      {
+        "pc": "0x2E47DA",
+        "reg": 0,
+        "imm": 1
+      },
+      {
+        "pc": "0x2E47E4",
+        "reg": 6,
+        "imm": 191
+      },
+      {
+        "pc": "0x2E48D6",
+        "reg": 6,
+        "imm": 230
+      },
+      {
+        "pc": "0x2E494C",
+        "reg": 6,
+        "imm": 218
+      },
+      {
+        "pc": "0x2E49BA",
+        "reg": 6,
+        "imm": 108
+      },
+      {
+        "pc": "0x2E4A30",
+        "reg": 6,
+        "imm": 23
+      },
+      {
+        "pc": "0x2E4AAA",
+        "reg": 6,
+        "imm": 58
+      }
+    ],
+    "rejected_states_observed": [
+      38,
+      46,
+      69,
+      252,
+      300
+    ],
+    "reject_300_via_sub_chain": true,
+    "r9_reads": [
+      "0x2E478C:LDR=0xED8",
+      "0x2E47B6:LDR=0x8D0",
+      "0x2E47D4:LDR=0xCA3"
+    ],
+    "bls": [
+      "0x2E47E0->0x2FA500",
+      "0x2E47F4->0x308D98",
+      "0x2E4802->0x308D98",
+      "0x2E4810->0x30A0CC",
+      "0x2E481C->0x2D96BC",
+      "0x2E4824->0x2D96BC",
+      "0x2E483C->0x2FA500",
+      "0x2E4840->0x2FC8C0",
+      "UNLOCK_BL@2E4840",
+      "0x2E4846->0x2FBFB4",
+      "0x2E486C->0x308D98",
+      "0x2E487A->0x308D98",
+      "0x2E488C->0x30A0CC",
+      "0x2E4898->0x2D96BC",
+      "0x2E48A0->0x2D96BC",
+      "0x2E48B8->0x2FA500",
+      "0x2E48BC->0x2FC8C0",
+      "UNLOCK_BL@2E48BC",
+      "0x2E48C2->0x2FBFB4",
+      "0x2E48E6->0x308D98",
+      "0x2E48F4->0x308D98",
+      "0x2E4902->0x30A0CC",
+      "0x2E490E->0x2D96BC",
+      "0x2E4916->0x2D96BC",
+      "0x2E492E->0x2FA500",
+      "0x2E4932->0x2FC8C0",
+      "UNLOCK_BL@2E4932",
+      "0x2E4938->0x2FBFB4",
+      "0x2E495C->0x308D98",
+      "0x2E496A->0x308D98",
+      "0x2E4978->0x30A0CC",
+      "0x2E4984->0x2D96BC",
+      "0x2E498C->0x2D96BC",
+      "0x2E49A4->0x2FA500",
+      "0x2E49A8->0x2FC8C0",
+      "UNLOCK_BL@2E49A8",
+      "0x2E49AE->0x2FBFB4",
+      "0x2E49CA->0x308D98",
+      "0x2E49D8->0x308D98",
+      "0x2E49E6->0x30A0CC"
+    ],
+    "callers": [
+      "0x2E2F50",
+      "0x2E39BE",
+      "0x2E39C8",
+      "0x2E39D2",
+      "0x2E39DC",
+      "0x2E3BB2",
+      "0x2E3F7C"
+    ],
+    "ed8_gate": "CMP #0; BGT early-out \u2014 continue only if ED8<=0 (typically 0)",
+    "ca3_gate": "CMP #1; BNE early-out \u2014 need CA3==1",
+    "c8e_gate": "CMP #0; BNE early-out \u2014 need C8E==0",
+    "note": "UI-init rejects state {38,46,69,252,300} via BEQ early-out; ED8 must be 0 (BGT rejects ED8>0); CA3==1; C8E==0. FAST state=38 is in reject set \u2014 product needs different state at UI-init time"
+  },
+  "verdict_hint": "C9D_NONZERO_WRITER_NEVER_REACHED",
+  "summary": {
+    "exact_strb_count": 2,
+    "exact_strb_classes": {
+      "0x30AA46": "writes_0",
+      "0x3115BA": "writes_0"
+    },
+    "covering_store_count": 5,
+    "nonzero_candidate_count": 0,
+    "exact_write1_count": 0,
+    "note": "Exact STRB @ C9D are clears only (0x30AA46, 0x3115BA). No MOVS#1 STRB @ C9D in robotol.ext. C9C=#1 sites (0x2E3A68, 0x2FB008) do not satisfy gate LDRSB C9D. Nonzero C9D may require memcpy/other-module/path not yet found."
+  }
+}

@@ -725,11 +725,12 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                    "note=caller_or_writer evidence=OBSERVED\n",
                    bp->tag, bp->pc, lr, state, c44);
         }
-        /* E8S: C9D/CF5 writers + UI-init landmarks. */
+        /* E8S/E8T: C9D/CF5 writers + UI-init landmarks. */
         if (bp->pc == 0x2F097Au || bp->pc == 0x2FB008u || bp->pc == 0x30AA42u ||
-            bp->pc == 0x2E7DA8u || bp->pc == 0x2E7DC2u || bp->pc == 0x2F7F2Cu ||
-            bp->pc == 0x2E2520u || bp->pc == 0x2E2F50u || bp->pc == 0x2E3F7Cu ||
-            bp->pc == 0x2E32A2u) {
+            bp->pc == 0x30AA46u || bp->pc == 0x3115BAu || bp->pc == 0x2FAFFCu ||
+            bp->pc == 0x30D9EEu || bp->pc == 0x2E7DA8u || bp->pc == 0x2E7DC2u ||
+            bp->pc == 0x2F7F2Cu || bp->pc == 0x2E2520u || bp->pc == 0x2E2F50u ||
+            bp->pc == 0x2E3F7Cu || bp->pc == 0x2E32A2u) {
             uint8_t c9d = 0, cf5 = 0, c44b = 0;
             if (r9) {
                 (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC44u, &c44b, 1);
@@ -739,6 +740,10 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[JJFB_E8S_FLAG_WRITER] tag=%s pc=0x%X lr=0x%X state=0x%X C44=0x%X C9D=0x%X "
                    "CF5=0x%X evidence=OBSERVED\n",
                    bp->tag, bp->pc, lr, state, c44b, c9d, cf5);
+            if (bp->pc == 0x30AA46u || bp->pc == 0x3115BAu)
+                printf("[JJFB_E8T_C9D_WRITER] tag=%s pc=0x%X lr=0x%X C9D=0x%X "
+                       "note=exact_C9D_strb_clear_or_reg evidence=OBSERVED\n",
+                       bp->tag, bp->pc, lr, c9d);
         }
         /* E8M path landmarks inside parent. */
         if (bp->pc == 0x300182u || bp->pc == 0x300194u || bp->pc == 0x30026Eu ||
@@ -1267,8 +1272,9 @@ static void fast_call_c44_unlock(void *uc, const char *when) {
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
 
-/* E8S: invoke real UI-init 0x2E4788. Static: rejects state in {38,46,69,252,300};
- * needs *(R9+ED8)!=0 and CA3==1 among other gates. */
+/* E8S/E8T: invoke real UI-init 0x2E4788. Static: rejects state in {38,46,69,252,300};
+ * ED8 gate is CMP #0; BGT early-out — continue only if ED8<=0 (typically 0).
+ * Also needs C8E==0 and CA3==1 among other gates. */
 static void fast_call_ui_init(void *uc) {
     uint32_t r9_save = 0, r9_run = 0, state_before = 0, state_after = 0;
     uint8_t c44b = 0, c9db = 0, cf5b = 0, ca3b = 0;
