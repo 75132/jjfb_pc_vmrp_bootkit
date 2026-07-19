@@ -1,18 +1,2 @@
-/mytest/
-*.o
-*.ext
-*.exe
-*.dll
-.vscode/settings.json
-
-
-
-
-
-
-
-
-
-
-
-
+﻿# Intentionally empty: this monorepo tracks the full working tree for GPT/clone use.
+# Do not re-add ignore patterns unless the repo policy changes.

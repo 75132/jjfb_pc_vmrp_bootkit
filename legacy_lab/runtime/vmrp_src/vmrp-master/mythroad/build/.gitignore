@@ -1,4 +1,2 @@
-*.lib
-*.fmt
-*.lnk
-vmrp.mrp
+﻿# Intentionally empty: this monorepo tracks the full working tree for GPT/clone use.
+# Do not re-add ignore patterns unless the repo policy changes.

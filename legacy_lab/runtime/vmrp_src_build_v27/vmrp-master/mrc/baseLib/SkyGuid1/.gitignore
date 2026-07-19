@@ -1,3 +1,2 @@
-Debug/
-project/*.mrp
-SkyGuid1.vcproj.VM.Administrator.user
+﻿# Intentionally empty: this monorepo tracks the full working tree for GPT/clone use.
+# Do not re-add ignore patterns unless the repo policy changes.
