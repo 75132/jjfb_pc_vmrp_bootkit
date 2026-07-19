@@ -1,0 +1,881 @@
+{
+  "parent": {
+    "fn": {
+      "start": 3146072,
+      "end_approx": 3146998,
+      "epilogue_pop": 3146168
+    },
+    "state_load": {
+      "sequence": [
+        "LDR r1, =0x7D8; ADD r1,r9",
+        "MOVS r0,#1; STRB r0,[r1,#2]  \u2014 touch queue/base flag",
+        "LDR r0, =0x7D8; ADD r0,r9; ADDS r0,#0x80; LDR r0,[r0,#0x78]",
+        "=> r0 = *[R9+0x7D8+0x80+0x78] = *[R9+0x8D0]  (state word)",
+        "MOV r4, <incoming R0> saved before clobber"
+      ],
+      "switch_subject": "R9+0x8D0 state word (NOT incoming event code)",
+      "incoming_r0_role": "saved in r4; restored only on arms that need event code",
+      "math": "0x7D8 + 0x80 + 0x78 = 0x8D0"
+    },
+    "path_to_714": {
+      "only_bl_site": 3146432,
+      "gate": {
+        "pc": 3146426,
+        "insns": [
+          "CMP r0, #20",
+          "BLT 0x3001E2 (epilogue path)",
+          "MOV r0,r4",
+          "BL 0x300714"
+        ],
+        "meaning": "state word must be >= 20 (signed) to call dispatcher"
+      },
+      "reach_gate_via": "default arm 0x300272 \u2192 0x3002BA when state matches no special case",
+      "state0_arm": {
+        "cmp": "CMP r0,#0; BEQ \u2192 0x30026E \u2192 0x3004C8",
+        "effect": "state==0 never reaches 0x3002BA / 0x300714",
+        "evidence": "E8L probes all had R9_state=0 \u2192 this arm"
+      },
+      "why_e8l_missed_714": "Parent switch keys off R9+0x8D0; probes left state=0; state0 arm does plat 0x304558 then return \u2014 no BL 0x300714"
+    },
+    "special_states": [
+      {
+        "state": 0,
+        "arm": "0x3004C8",
+        "reaches_714": false
+      },
+      {
+        "state": 1,
+        "arm": "0x3004E0",
+        "reaches_714": false
+      },
+      {
+        "state": 4,
+        "note": "falls toward default if NE path",
+        "reaches_714": "maybe"
+      },
+      {
+        "state": 5,
+        "arm": "0x3001A0 early POP",
+        "reaches_714": false
+      },
+      {
+        "state": 20,
+        "note": "CMP#20 at gate: EQ not LT \u2192 may call 714 if default",
+        "reaches_714": true
+      },
+      {
+        "state": 38,
+        "note": "unlisted \u2192 default; 38>=20 \u2192 BL 300714 with r4",
+        "reaches_714": true
+      }
+    ],
+    "bls": [
+      {
+        "pc": 3146162,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146200,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146206,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146310,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146334,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146356,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146362,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146432,
+        "target": 3147540,
+        "is_300714": true
+      },
+      {
+        "pc": 3146440,
+        "target": 3149976,
+        "is_300714": false
+      },
+      {
+        "pc": 3146446,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146468,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146474,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146484,
+        "target": 3151440,
+        "is_300714": false
+      },
+      {
+        "pc": 3146490,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146500,
+        "target": 3151912,
+        "is_300714": false
+      },
+      {
+        "pc": 3146506,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146530,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146536,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146560,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146566,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146590,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146614,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146624,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146630,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146652,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146676,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146686,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146692,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146716,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146728,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146734,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146752,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146758,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146782,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146788,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146812,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146818,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146836,
+        "target": 3150708,
+        "is_300714": false
+      },
+      {
+        "pc": 3146842,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146866,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146872,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146896,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146902,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146926,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146932,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146940,
+        "target": 3099616,
+        "is_300714": false
+      },
+      {
+        "pc": 3146946,
+        "target": 3151944,
+        "is_300714": false
+      },
+      {
+        "pc": 3146970,
+        "target": 3163480,
+        "is_300714": false
+      },
+      {
+        "pc": 3146994,
+        "target": 3163480,
+        "is_300714": false
+      }
+    ],
+    "bl_targets_unique": [
+      3099616,
+      3147540,
+      3149976,
+      3150708,
+      3151440,
+      3151912,
+      3151944,
+      3163480
+    ],
+    "cmps_on_r0": [
+      {
+        "pc": 3146114,
+        "rn": 0,
+        "imm": 217
+      },
+      {
+        "pc": 3146120,
+        "rn": 0,
+        "imm": 204
+      },
+      {
+        "pc": 3146126,
+        "rn": 0,
+        "imm": 5
+      },
+      {
+        "pc": 3146132,
+        "rn": 0,
+        "imm": 0
+      },
+      {
+        "pc": 3146136,
+        "rn": 0,
+        "imm": 1
+      },
+      {
+        "pc": 3146140,
+        "rn": 0,
+        "imm": 4
+      },
+      {
+        "pc": 3146170,
+        "rn": 0,
+        "imm": 68
+      },
+      {
+        "pc": 3146174,
+        "rn": 0,
+        "imm": 201
+      },
+      {
+        "pc": 3146178,
+        "rn": 0,
+        "imm": 203
+      },
+      {
+        "pc": 3146256,
+        "rn": 0,
+        "imm": 254
+      },
+      {
+        "pc": 3146262,
+        "rn": 0,
+        "imm": 233
+      },
+      {
+        "pc": 3146268,
+        "rn": 0,
+        "imm": 218
+      },
+      {
+        "pc": 3146272,
+        "rn": 0,
+        "imm": 219
+      },
+      {
+        "pc": 3146276,
+        "rn": 0,
+        "imm": 226
+      },
+      {
+        "pc": 3146282,
+        "rn": 0,
+        "imm": 236
+      },
+      {
+        "pc": 3146286,
+        "rn": 0,
+        "imm": 239
+      },
+      {
+        "pc": 3146290,
+        "rn": 0,
+        "imm": 242
+      },
+      {
+        "pc": 3146378,
+        "rn": 0,
+        "imm": 255
+      },
+      {
+        "pc": 3146426,
+        "rn": 0,
+        "imm": 20
+      }
+    ],
+    "r9_literals": [
+      {
+        "pc": 3146074,
+        "op": "LDR_lit",
+        "rd": 1,
+        "imm": 2008
+      },
+      {
+        "pc": 3146082,
+        "op": "ADD_rN_r9",
+        "rd": 1
+      },
+      {
+        "pc": 3146086,
+        "op": "LDR_lit",
+        "rd": 1,
+        "imm": 16
+      },
+      {
+        "pc": 3146092,
+        "op": "ADD_rN_r9",
+        "rd": 1
+      },
+      {
+        "pc": 3146098,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 2008
+      },
+      {
+        "pc": 3146100,
+        "op": "LDR_lit",
+        "rd": 7,
+        "imm": 123423
+      },
+      {
+        "pc": 3146102,
+        "op": "ADD_rN_r9",
+        "rd": 0
+      },
+      {
+        "pc": 3146308,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123414
+      },
+      {
+        "pc": 3146332,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123414
+      },
+      {
+        "pc": 3146588,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123411
+      },
+      {
+        "pc": 3146612,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123411
+      },
+      {
+        "pc": 3146674,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123423
+      },
+      {
+        "pc": 3146714,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123394
+      },
+      {
+        "pc": 3146720,
+        "op": "LDR_lit",
+        "rd": 2,
+        "imm": 3540
+      },
+      {
+        "pc": 3146726,
+        "op": "ADD_rN_r9",
+        "rd": 2
+      },
+      {
+        "pc": 3146740,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 4288
+      },
+      {
+        "pc": 3146742,
+        "op": "LDR_lit",
+        "rd": 2,
+        "imm": 4284
+      },
+      {
+        "pc": 3146744,
+        "op": "ADD_rN_r9",
+        "rd": 0
+      },
+      {
+        "pc": 3146750,
+        "op": "ADD_rN_r9",
+        "rd": 2
+      },
+      {
+        "pc": 3146780,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 124161
+      },
+      {
+        "pc": 3146810,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 123411
+      },
+      {
+        "pc": 3146824,
+        "op": "LDR_lit",
+        "rd": 0,
+        "imm": 4280
+      },
+      {
+        "pc": 3146826,
+        "op": "LDR_lit",
+        "rd": 2,
+        "imm": 4276
+      },
+      {
+        "pc": 3146828,
+        "op": "ADD_rN_r9",
+        "rd": 0
+      },
+      {
+        "pc": 3146834,
+        "op": "ADD_rN_r9",
+        "rd": 2
+      }
+    ],
+    "branches_sample": [
+      {
+        "pc": 3146116,
+        "kind": "BEQ",
+        "target": 3146346,
+        "cond": 0
+      },
+      {
+        "pc": 3146118,
+        "kind": "BGT",
+        "target": 3146256,
+        "cond": 12
+      },
+      {
+        "pc": 3146122,
+        "kind": "BEQ",
+        "target": 3146348,
+        "cond": 0
+      },
+      {
+        "pc": 3146124,
+        "kind": "BGT",
+        "target": 3146212,
+        "cond": 12
+      },
+      {
+        "pc": 3146128,
+        "kind": "BEQ",
+        "target": 3146144,
+        "cond": 0
+      },
+      {
+        "pc": 3146130,
+        "kind": "BGT",
+        "target": 3146170,
+        "cond": 12
+      },
+      {
+        "pc": 3146134,
+        "kind": "BEQ",
+        "target": 3146350,
+        "cond": 0
+      },
+      {
+        "pc": 3146138,
+        "kind": "BEQ",
+        "target": 3146352,
+        "cond": 0
+      },
+      {
+        "pc": 3146142,
+        "kind": "BNE",
+        "target": 3146354,
+        "cond": 1
+      },
+      {
+        "pc": 3146172,
+        "kind": "BEQ",
+        "target": 3146400,
+        "cond": 0
+      },
+      {
+        "pc": 3146176,
+        "kind": "BEQ",
+        "target": 3146402,
+        "cond": 0
+      },
+      {
+        "pc": 3146180,
+        "kind": "BNE",
+        "target": 3146354,
+        "cond": 1
+      },
+      {
+        "pc": 3146210,
+        "kind": "B",
+        "target": 3146166,
+        "cond": null
+      },
+      {
+        "pc": 3146218,
+        "kind": "BCS",
+        "target": 3146230,
+        "cond": 2
+      },
+      {
+        "pc": 3146230,
+        "kind": "B",
+        "target": 3146354,
+        "cond": null
+      },
+      {
+        "pc": 3146258,
+        "kind": "BEQ",
+        "target": 3146452,
+        "cond": 0
+      },
+      {
+        "pc": 3146260,
+        "kind": "BGT",
+        "target": 3146368,
+        "cond": 12
+      },
+      {
+        "pc": 3146264,
+        "kind": "BEQ",
+        "target": 3146480,
+        "cond": 0
+      },
+      {
+        "pc": 3146266,
+        "kind": "BGT",
+        "target": 3146282,
+        "cond": 12
+      },
+      {
+        "pc": 3146270,
+        "kind": "BEQ",
+        "target": 3146398,
+        "cond": 0
+      },
+      {
+        "pc": 3146274,
+        "kind": "BEQ",
+        "target": 3146398,
+        "cond": 0
+      },
+      {
+        "pc": 3146278,
+        "kind": "BNE",
+        "target": 3146354,
+        "cond": 1
+      },
+      {
+        "pc": 3146280,
+        "kind": "B",
+        "target": 3146480,
+        "cond": null
+      },
+      {
+        "pc": 3146284,
+        "kind": "BEQ",
+        "target": 3146480,
+        "cond": 0
+      },
+      {
+        "pc": 3146288,
+        "kind": "BEQ",
+        "target": 3146496,
+        "cond": 0
+      },
+      {
+        "pc": 3146292,
+        "kind": "BNE",
+        "target": 3146354,
+        "cond": 1
+      },
+      {
+        "pc": 3146344,
+        "kind": "B",
+        "target": 3146356,
+        "cond": null
+      },
+      {
+        "pc": 3146346,
+        "kind": "B",
+        "target": 3146498,
+        "cond": null
+      },
+      {
+        "pc": 3146348,
+        "kind": "B",
+        "target": 3146878,
+        "cond": null
+      },
+      {
+        "pc": 3146350,
+        "kind": "B",
+        "target": 3146952,
+        "cond": null
+      },
+      {
+        "pc": 3146352,
+        "kind": "B",
+        "target": 3146976,
+        "cond": null
+      },
+      {
+        "pc": 3146354,
+        "kind": "B",
+        "target": 3146426,
+        "cond": null
+      },
+      {
+        "pc": 3146366,
+        "kind": "B",
+        "target": 3146166,
+        "cond": null
+      },
+      {
+        "pc": 3146374,
+        "kind": "BEQ",
+        "target": 3146398,
+        "cond": 0
+      },
+      {
+        "pc": 3146376,
+        "kind": "BGT",
+        "target": 3146404,
+        "cond": 12
+      },
+      {
+        "pc": 3146380,
+        "kind": "BEQ",
+        "target": 3146438,
+        "cond": 0
+      },
+      {
+        "pc": 3146388,
+        "kind": "BEQ",
+        "target": 3146542,
+        "cond": 0
+      },
+      {
+        "pc": 3146396,
+        "kind": "BNE",
+        "target": 3146426,
+        "cond": 1
+      },
+      {
+        "pc": 3146398,
+        "kind": "B",
+        "target": 3146482,
+        "cond": null
+      },
+      {
+        "pc": 3146400,
+        "kind": "B",
+        "target": 3146938,
+        "cond": null
+      }
+    ],
+    "event_code_effect": {
+      "r4": "incoming R0 (case156 delivery R1 = 0/18/20)",
+      "used_when": "arms that MOV r0,r4 before BL helpers / before BL 0x300714",
+      "vs_switch": "does NOT select switch arm; switch uses state word",
+      "e8l_diff_hyp": "R0=0/18/20 at parent entry only differ after an arm restores r4; with state=0 all take same state0 arm \u2014 paths converge"
+    }
+  },
+  "e6c_base_writers": [
+    {
+      "ldr_pc": 3039120,
+      "str_pc": 3039138,
+      "raw": 24616,
+      "kind": "STR_word_off0_to_E6C_base"
+    },
+    {
+      "ldr_pc": 3039120,
+      "str_pc": 3039150,
+      "raw": 24616,
+      "kind": "STR_word_off0_to_E6C_base"
+    },
+    {
+      "ldr_pc": 3122588,
+      "str_pc": 3122608,
+      "raw": 24583,
+      "kind": "STR_word_off0_to_E6C_base"
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195438,
+      "raw": 24620,
+      "kind": "STR_word_off0_to_E6C_base"
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195454,
+      "raw": 24620,
+      "kind": "STR_word_off0_to_E6C_base"
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195470,
+      "raw": 24620,
+      "kind": "STR_word_off0_to_E6C_base"
+    }
+  ],
+  "e6c_writer_count": 6,
+  "bp_spec": "p:0x300158,p:0x300182,p:0x300194,p:0x30026E,p:0x3004C8,p:0x3002BA,p:0x3002C0,p:0x300714,p:0x3001B8,e:0x2DFC3C,e:0x2DFCAC,e:0x30D300,q:0x2DC80C",
+  "hypotheses": [
+    {
+      "id": "PARENT_BRANCH_CONDITION_UNMET",
+      "why": "state==0 takes 0x3004C8 arm; never BL 0x300714"
+    },
+    {
+      "id": "PARENT_REQUIRES_QUEUE_SETUP",
+      "why": "secondary \u2014 7D8 touched but switch subject is 8D0 via 7D8 math"
+    },
+    {
+      "id": "MISSING_OBJECT_INIT_BEFORE_10102",
+      "why": "case310 needs E6C; parent needs non-zero state first \u2014 init order"
+    }
+  ],
+  "recommended_seq": [
+    "A: 10165 then case156 R1=18",
+    "B: 10165 then case156 R1=20",
+    "C: case310 then case156 R1=18",
+    "D: case310 then case156 R1=20",
+    "E: 10165 + case310 + case156 R1=18",
+    "F: 10165 + case310 + case156 R1=20"
+  ]
+}
