@@ -1,0 +1,2948 @@
+# v55 robotol ui_mode (ERW+0x8D0) static map
+
+- MRP: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\gwy\jjfb.mrp`
+- robotol decompressed: 253420 bytes
+- assumed ext_base: `0x2d8df4`
+- imm_8D0 literal sites: 97
+
+## Dispatch / splash VA → file offset
+
+- `handler_306305` `0x306305` → off `0x2d511` in_range=True
+- `dispatch_306344` `0x306344` → off `0x2d550` in_range=True
+- `bl_2EF86C` `0x30662c` → off `0x2d838` in_range=True
+- `splash_2EF86C` `0x2ef86c` → off `0x16a78` in_range=True
+
+## 0x306344 neighborhood (ui_mode read / branch)
+
+```text
+  0x0002d520: 1C0D
+  0x0002d522: 2800
+  0x0002d524: B087
+  0x0002d526: D002 Bcond cond=0 -> 0x2d52e
+  0x0002d528: 2000 MOVS r0,#0
+  0x0002d52a: B007
+  0x0002d52c: BDF0
+  0x0002d52e: 4EF4 LDR r6,[pc,#976] lit@0x2d900=0x7d8
+  0x0002d530: 2307 MOVS r3,#7
+  0x0002d532: 444E ADD/MOV high regs
+  0x0002d534: 56F0
+  0x0002d536: 2801
+  0x0002d538: D0F7 Bcond cond=0 -> 0x2d52a
+  0x0002d53a: 48F2 LDR r0,[pc,#968] lit@0x2d904=0xca7
+  0x0002d53c: 2700 MOVS r7,#0
+  0x0002d53e: 4448 ADD/MOV high regs
+  0x0002d540: 7007
+  0x0002d542: 2D00
+  0x0002d544: D163 Bcond cond=1 -> 0x2d60e
+  0x0002d546: F7F8
+  0x0002d548: FC2B
+  0x0002d54a: 48EF LDR r0,[pc,#956] lit@0x2d908=0xca8
+  0x0002d54c: 4CEF LDR r4,[pc,#956] lit@0x2d90c=0x1e209
+  0x0002d54e: 4448 ADD/MOV high regs
+  0x0002d550: 7007 <<<
+  0x0002d552: 48EB LDR r0,[pc,#940] lit@0x2d900=0x7d8
+  0x0002d554: 4448 ADD/MOV high regs
+  0x0002d556: 3080
+  0x0002d558: 6F80 LDR r0,[r0,#120]
+  0x0002d55a: 28D9
+  0x0002d55c: D06B Bcond cond=0 -> 0x2d636
+  0x0002d55e: DC44 Bcond cond=12 -> 0x2d5ea
+  0x0002d560: 28CB
+  0x0002d562: D069 Bcond cond=0 -> 0x2d638
+  0x0002d564: DC29 Bcond cond=12 -> 0x2d5ba
+  0x0002d566: 2805
+  0x0002d568: D067 Bcond cond=0 -> 0x2d63a
+  0x0002d56a: DC13 Bcond cond=12 -> 0x2d594
+  0x0002d56c: 2800
+  0x0002d56e: D065 Bcond cond=0 -> 0x2d63c
+  0x0002d570: 2801
+  0x0002d572: D064 Bcond cond=0 -> 0x2d63e
+  0x0002d574: 2803
+  0x0002d576: D063 Bcond cond=0 -> 0x2d640
+  0x0002d578: 2804
+  0x0002d57a: D172 Bcond cond=1 -> 0x2d662
+  0x0002d57c: 2100 MOVS r1,#0
+  0x0002d57e: 9100
+  0x0002d580: 9101
+  0x0002d582: 2200 MOVS r2,#0
+  0x0002d584: 9202
+  0x0002d586: 210B MOVS r1,#11
+  0x0002d588: 1C3B
+  0x0002d58a: 1C20
+  0x0002d58c: 6A32 LDR r2,[r6,#32]
+  0x0002d58e: F7FE
+  0x0002d590: F8E9
+  0x0002d592: E04F B -> 0x2d634
+  0x0002d594: 2844
+  0x0002d596: D065 Bcond cond=0 -> 0x2d664
+  0x0002d598: 2845
+  0x0002d59a: D064 Bcond cond=0 -> 0x2d666
+  0x0002d59c: 2846
+  0x0002d59e: D049 Bcond cond=0 -> 0x2d634
+```
+
+## 0x306305 neighborhood (10140 handler entry)
+
+```text
+  0x0002d500: 3A01
+  0x0002d502: 3901
+  0x0002d504: 4011
+  0x0002d506: 1A51
+  0x0002d508: 180D
+  0x0002d50a: 9802
+  0x0002d50c: 7800
+  0x0002d50e: 2800
+  0x0002d510: D1D2 Bcond cond=1 -> 0x2d4b8 <<<
+  0x0002d512: 1C28 <<<
+  0x0002d514: E7F1 B -> 0x2d4fa
+  0x0002d516: 0000
+  0x0002d518: 48F8 LDR r0,[pc,#992] lit@0x2d8fc=0xed8
+  0x0002d51a: B5F0
+  0x0002d51c: 4448 ADD/MOV high regs
+  0x0002d51e: 6800 LDR r0,[r0,#0]
+  0x0002d520: 1C0D
+  0x0002d522: 2800
+  0x0002d524: B087
+  0x0002d526: D002 Bcond cond=0 -> 0x2d52e
+  0x0002d528: 2000 MOVS r0,#0
+  0x0002d52a: B007
+  0x0002d52c: BDF0
+  0x0002d52e: 4EF4 LDR r6,[pc,#976] lit@0x2d900=0x7d8
+  0x0002d530: 2307 MOVS r3,#7
+  0x0002d532: 444E ADD/MOV high regs
+  0x0002d534: 56F0
+  0x0002d536: 2801
+  0x0002d538: D0F7 Bcond cond=0 -> 0x2d52a
+  0x0002d53a: 48F2 LDR r0,[pc,#968] lit@0x2d904=0xca7
+  0x0002d53c: 2700 MOVS r7,#0
+  0x0002d53e: 4448 ADD/MOV high regs
+  0x0002d540: 7007
+  0x0002d542: 2D00
+  0x0002d544: D163 Bcond cond=1 -> 0x2d60e
+  0x0002d546: F7F8
+  0x0002d548: FC2B
+  0x0002d54a: 48EF LDR r0,[pc,#956] lit@0x2d908=0xca8
+  0x0002d54c: 4CEF LDR r4,[pc,#956] lit@0x2d90c=0x1e209
+  0x0002d54e: 4448 ADD/MOV high regs
+```
+
+## imm_8D0 literal sites (candidate writers nearby)
+
+- lit@file `0x19b0` guest `0x2da7a4` nearby_STR=1
+  - STR@0x199c guest `0x2da790` r0,[r1,#0]
+```text
+  0x00001988: 6800 LDR r0,[r0,#0]
+  0x0000198a: 38FF
+  0x0000198c: 382D
+  0x0000198e: D00B Bcond cond=0 -> 0x19a8
+  0x00001990: F038
+  0x00001992: FDA8
+  0x00001994: 4907 LDR r1,[pc,#28] lit@0x19b4=0x24
+  0x00001996: 2000 MOVS r0,#0
+  0x00001998: 43C0
+  0x0000199a: 4449 ADD/MOV high regs
+  0x0000199c: 6008 STR r0,[r1,#0]
+  0x0000199e: 4906 LDR r1,[pc,#24] lit@0x19b8=0x7e0
+  0x000019a0: 2001 MOVS r0,#1
+  0x000019a2: 4449 ADD/MOV high regs
+  0x000019a4: 7008
+  0x000019a6: BD08
+  0x000019a8: 2000 MOVS r0,#0
+  0x000019aa: E7FC B -> 0x19a6
+  0x000019ac: 0E6C
+  0x000019ae: 0000
+  0x000019b0: 08D0 <<<
+  0x000019b2: 0000
+  0x000019b4: 0024
+  0x000019b6: 0000
+```
+- lit@file `0x3890` guest `0x2dc684` nearby_STR=3
+  - STR@0x3850 guest `0x2dc644` r0,[r2,#28]
+  - STR@0x3858 guest `0x2dc64c` r0,[r2,#28]
+  - STR@0x38a8 guest `0x2dc69c` r3,[r1,#0]
+```text
+  0x00003868: 73A5
+  0x0000386a: 2F01
+  0x0000386c: D100 Bcond cond=1 -> 0x3870
+  0x0000386e: 73A5
+  0x00003870: 4809 LDR r0,[pc,#36] lit@0x3898=0x7e0
+  0x00003872: 4448 ADD/MOV high regs
+  0x00003874: 7005
+  0x00003876: 4809 LDR r0,[pc,#36] lit@0x389c=0x7da
+  0x00003878: 4448 ADD/MOV high regs
+  0x0000387a: 7005
+  0x0000387c: F02D
+  0x0000387e: FE44
+  0x00003880: 2E00
+  0x00003882: D000 Bcond cond=0 -> 0x3886
+  0x00003884: 73A5
+  0x00003886: BDF8
+  0x00003888: 0CAC
+  0x0000388a: 0000
+  0x0000388c: 106C
+  0x0000388e: 0000
+  0x00003890: 08D0 <<<
+  0x00003892: 0000
+  0x00003894: 0228
+  0x00003896: 0000
+```
+- lit@file `0x3b8c` guest `0x2dc980` nearby_STR=1
+  - STR@0x3b5a guest `0x2dc94e` r0,[r1,#0]
+```text
+  0x00003b64: 3501
+  0x00003b66: 42B5
+  0x00003b68: DA00 Bcond cond=10 -> 0x3b6c
+  0x00003b6a: E760 B -> 0x3a2e
+  0x00003b6c: E771 B -> 0x3a52
+  0x00003b6e: 0000
+  0x00003b70: 0B54
+  0x00003b72: 0000
+  0x00003b74: 0B7D
+  0x00003b76: 0000
+  0x00003b78: 0C76
+  0x00003b7a: 0000
+  0x00003b7c: 0ED8
+  0x00003b7e: 0000
+  0x00003b80: 07EC
+  0x00003b82: 0000
+  0x00003b84: 0D74
+  0x00003b86: 0000
+  0x00003b88: 0CEE
+  0x00003b8a: 0000
+  0x00003b8c: 08D0 <<<
+  0x00003b8e: 0000
+  0x00003b90: B538
+  0x00003b92: 4D13 LDR r5,[pc,#76] lit@0x3be0=0xb50
+```
+- lit@file `0x41d8` guest `0x2dcfcc` nearby_STR=3
+  - STR@0x41b6 guest `0x2dcfaa` r1,[r0,#24]
+  - STR@0x41ba guest `0x2dcfae` r1,[r0,#28]
+  - STR@0x41c2 guest `0x2dcfb6` r1,[r0,#0]
+```text
+  0x000041b0: 2900
+  0x000041b2: D103 Bcond cond=1 -> 0x41bc
+  0x000041b4: 9904
+  0x000041b6: 6181 STR r1,[r0,#24]
+  0x000041b8: 9903
+  0x000041ba: 61C1 STR r1,[r0,#28]
+  0x000041bc: 4805 LDR r0,[pc,#20] lit@0x41d4=0x115c
+  0x000041be: 2100 MOVS r1,#0
+  0x000041c0: 4448 ADD/MOV high regs
+  0x000041c2: 6001 STR r1,[r0,#0]
+  0x000041c4: B005
+  0x000041c6: BDF0
+  0x000041c8: 11F8
+  0x000041ca: 0000
+  0x000041cc: 0CA3
+  0x000041ce: 0000
+  0x000041d0: 0E28
+  0x000041d2: 0000
+  0x000041d4: 115C
+  0x000041d6: 0000
+  0x000041d8: 08D0 <<<
+  0x000041da: 0000
+  0x000041dc: 0B5C
+  0x000041de: 0000
+```
+- lit@file `0x488c` guest `0x2dd680` nearby_STR=2
+  - STR@0x4852 guest `0x2dd646` r0,[r1,#0]
+  - STR@0x487e guest `0x2dd672` r4,[r5,#84]
+```text
+  0x00004864: 2306 MOVS r3,#6
+  0x00004866: 5EC1
+  0x00004868: 2304 MOVS r3,#4
+  0x0000486a: 5EC0
+  0x0000486c: 1C22
+  0x0000486e: F01D
+  0x00004870: FC19
+  0x00004872: E518 B -> 0x42a6
+  0x00004874: 6861 LDR r1,[r4,#4]
+  0x00004876: 3120
+  0x00004878: 7909
+  0x0000487a: 2901
+  0x0000487c: D188 Bcond cond=1 -> 0x4790
+  0x0000487e: 656C STR r4,[r5,#84]
+  0x00004880: 6E51 LDR r1,[r2,#100]
+  0x00004882: 3801
+  0x00004884: F031
+  0x00004886: FA12
+  0x00004888: E50D B -> 0x42a6
+  0x0000488a: 0000
+  0x0000488c: 08D0 <<<
+  0x0000488e: 0000
+  0x00004890: E217 B -> 0x4cc2
+  0x00004892: 0001
+```
+- lit@file `0x4970` guest `0x2dd764` nearby_STR=3
+  - STR@0x4944 guest `0x2dd738` r4,[r7,#100]
+  - STR@0x4986 guest `0x2dd77a` r0,[r4,#0]
+  - STR@0x498c guest `0x2dd780` r1,[r5,#0]
+```text
+  0x00004948: FC95
+  0x0000494a: 3401
+  0x0000494c: 42AC
+  0x0000494e: DBEE Bcond cond=11 -> 0x492e
+  0x00004950: 4804 LDR r0,[pc,#16] lit@0x4964=0xcac
+  0x00004952: 2309 MOVS r3,#9
+  0x00004954: 4448 ADD/MOV high regs
+  0x00004956: 3840
+  0x00004958: 56C1
+  0x0000495a: 2901
+  0x0000495c: D101 Bcond cond=1 -> 0x4962
+  0x0000495e: 2100 MOVS r1,#0
+  0x00004960: 7241
+  0x00004962: BDF8
+  0x00004964: 0CAC
+  0x00004966: 0000
+  0x00004968: 0FEC
+  0x0000496a: 0000
+  0x0000496c: 01A8
+  0x0000496e: 0000
+  0x00004970: 08D0 <<<
+  0x00004972: 0000
+  0x00004974: B5F0
+  0x00004976: 1C07
+```
+- lit@file `0x7aa0` guest `0x2e0894` nearby_STR=0
+```text
+  0x00007a78: 2102 MOVS r1,#2
+  0x00007a7a: 6882 LDR r2,[r0,#8]
+  0x00007a7c: 68C3 LDR r3,[r0,#12]
+  0x00007a7e: 4823 LDR r0,[pc,#140] lit@0x7b0c=0x1e213
+  0x00007a80: F023
+  0x00007a82: FE70
+  0x00007a84: E40C B -> 0x72a0
+  0x00007a86: 0000
+  0x00007a88: 478E
+  0x00007a8a: 0003
+  0x00007a8c: 477C
+  0x00007a8e: 0003
+  0x00007a90: 43FA
+  0x00007a92: 0003
+  0x00007a94: 106C
+  0x00007a96: 0000
+  0x00007a98: 01A8
+  0x00007a9a: 0000
+  0x00007a9c: 0824
+  0x00007a9e: 0000
+  0x00007aa0: 08D0 <<<
+  0x00007aa2: 0000
+  0x00007aa4: 4732
+  0x00007aa6: 0003
+```
+- lit@file `0x7ee8` guest `0x2e0cdc` nearby_STR=0
+```text
+  0x00007ec0: 4350
+  0x00007ec2: 0003
+  0x00007ec4: 3E5E
+  0x00007ec6: 0003
+  0x00007ec8: 0824
+  0x00007eca: 0000
+  0x00007ecc: E501 B -> 0x78d2
+  0x00007ece: 0001
+  0x00007ed0: 3E3A
+  0x00007ed2: 0003
+  0x00007ed4: E21F B -> 0x8316
+  0x00007ed6: 0001
+  0x00007ed8: 42AA
+  0x00007eda: 0003
+  0x00007edc: 0CEC
+  0x00007ede: 0000
+  0x00007ee0: 0A90
+  0x00007ee2: 0000
+  0x00007ee4: 4288
+  0x00007ee6: 0003
+  0x00007ee8: 08D0 <<<
+  0x00007eea: 0000
+  0x00007eec: E203 B -> 0x82f6
+  0x00007eee: 0001
+```
+- lit@file `0x83bc` guest `0x2e11b0` nearby_STR=0
+```text
+  0x00008394: FFE7
+  0x00008396: 2100 MOVS r1,#0
+  0x00008398: 2200 MOVS r2,#0
+  0x0000839a: 9202
+  0x0000839c: 9100
+  0x0000839e: 9101
+  0x000083a0: 6DA0 LDR r0,[r4,#88]
+  0x000083a2: 2102 MOVS r1,#2
+  0x000083a4: 6842 LDR r2,[r0,#4]
+  0x000083a6: 6883 LDR r3,[r0,#8]
+  0x000083a8: 4805 LDR r0,[pc,#20] lit@0x83c0=0x1e213
+  0x000083aa: F023
+  0x000083ac: F9DB
+  0x000083ae: E644 B -> 0x803a
+  0x000083b0: 41F8
+  0x000083b2: 0003
+  0x000083b4: 143C
+  0x000083b6: 0000
+  0x000083b8: 0CBC
+  0x000083ba: 0000
+  0x000083bc: 08D0 <<<
+  0x000083be: 0000
+  0x000083c0: E213 B -> 0x87ea
+  0x000083c2: 0001
+```
+- lit@file `0x9724` guest `0x2e2518` nearby_STR=4
+  - STR@0x96f2 guest `0x2e24e6` r0,[r4,#4]
+  - STR@0x9704 guest `0x2e24f8` r4,[r0,#4]
+  - STR@0x970a guest `0x2e24fe` r0,[r4,#0]
+  - STR@0x9710 guest `0x2e2504` r6,[r0,#68]
+```text
+  0x000096fc: FA5D
+  0x000096fe: 2111 MOVS r1,#17
+  0x00009700: 8001
+  0x00009702: 7086
+  0x00009704: 6044 STR r4,[r0,#4]
+  0x00009706: 2106 MOVS r1,#6
+  0x00009708: 70C1
+  0x0000970a: 6020 STR r0,[r4,#0]
+  0x0000970c: 4803 LDR r0,[pc,#12] lit@0x971c=0x106c
+  0x0000970e: 4448 ADD/MOV high regs
+  0x00009710: 6446 STR r6,[r0,#68]
+  0x00009712: 6820 LDR r0,[r4,#0]
+  0x00009714: F7FA
+  0x00009716: FDAE
+  0x00009718: E7C0 B -> 0x969c
+  0x0000971a: 0000
+  0x0000971c: 106C
+  0x0000971e: 0000
+  0x00009720: 0C6C
+  0x00009722: 0000
+  0x00009724: 08D0 <<<
+  0x00009726: 0000
+  0x00009728: 116C
+  0x0000972a: 0000
+```
+- lit@file `0xa2bc` guest `0x2e30b0` nearby_STR=0
+```text
+  0x0000a294: E501 B -> 0x9c9a
+  0x0000a296: 0001
+  0x0000a298: 01C8
+  0x0000a29a: 0000
+  0x0000a29c: 0C3C
+  0x0000a29e: 0000
+  0x0000a2a0: 11C4
+  0x0000a2a2: 0000
+  0x0000a2a4: 12DE
+  0x0000a2a6: 0003
+  0x0000a2a8: 0CDA
+  0x0000a2aa: 0000
+  0x0000a2ac: 0CDC
+  0x0000a2ae: 0000
+  0x0000a2b0: 0E64
+  0x0000a2b2: 0000
+  0x0000a2b4: 128A
+  0x0000a2b6: 0003
+  0x0000a2b8: 0BE0
+  0x0000a2ba: 0000
+  0x0000a2bc: 08D0 <<<
+  0x0000a2be: 0000
+  0x0000a2c0: 0FC6
+  0x0000a2c2: 0003
+```
+- lit@file `0xa6ac` guest `0x2e34a0` nearby_STR=1
+  - STR@0xa67a guest `0x2e346e` r0,[r1,#0]
+```text
+  0x0000a684: FD45
+  0x0000a686: E11D B -> 0xa8c4
+  0x0000a688: E231 B -> 0xaaee
+  0x0000a68a: 0001
+  0x0000a68c: C255
+  0x0000a68e: 0001
+  0x0000a690: E205 B -> 0xaa9e
+  0x0000a692: 0001
+  0x0000a694: 0DEC
+  0x0000a696: 0000
+  0x0000a698: 11C4
+  0x0000a69a: 0000
+  0x0000a69c: 11C0
+  0x0000a69e: 0000
+  0x0000a6a0: 0CB8
+  0x0000a6a2: 0000
+  0x0000a6a4: 0B5C
+  0x0000a6a6: 0000
+  0x0000a6a8: 0B60
+  0x0000a6aa: 0000
+  0x0000a6ac: 08D0 <<<
+  0x0000a6ae: 0000
+  0x0000a6b0: 0C75
+  0x0000a6b2: 0000
+```
+- lit@file `0xaef0` guest `0x2e3ce4` nearby_STR=0
+```text
+  0x0000aec8: FC4D
+  0x0000aeca: 4921 LDR r1,[pc,#132] lit@0xaf50=0xb7d
+  0x0000aecc: 2001 MOVS r0,#1
+  0x0000aece: 4449 ADD/MOV high regs
+  0x0000aed0: 7008
+  0x0000aed2: E0FC B -> 0xb0ce
+  0x0000aed4: E216 B -> 0xb304
+  0x0000aed6: 0001
+  0x0000aed8: E202 B -> 0xb2e0
+  0x0000aeda: 0001
+  0x0000aedc: 0F84
+  0x0000aede: 0000
+  0x0000aee0: 11C4
+  0x0000aee2: 0000
+  0x0000aee4: 0840
+  0x0000aee6: 0000
+  0x0000aee8: 05BA
+  0x0000aeea: 0003
+  0x0000aeec: 0BE0
+  0x0000aeee: 0000
+  0x0000aef0: 08D0 <<<
+  0x0000aef2: 0000
+  0x0000aef4: 055A
+  0x0000aef6: 0003
+```
+- lit@file `0xb35c` guest `0x2e4150` nearby_STR=0
+```text
+  0x0000b334: 017A
+  0x0000b336: 0003
+  0x0000b338: 11C0
+  0x0000b33a: 0000
+  0x0000b33c: 0B5C
+  0x0000b33e: 0000
+  0x0000b340: 0B60
+  0x0000b342: 0000
+  0x0000b344: E211 B -> 0xb76a
+  0x0000b346: 0001
+  0x0000b348: 0F08
+  0x0000b34a: 0000
+  0x0000b34c: E221 B -> 0xb792
+  0x0000b34e: 0001
+  0x0000b350: E217 B -> 0xb782
+  0x0000b352: 0001
+  0x0000b354: E501 B -> 0xad5a
+  0x0000b356: 0001
+  0x0000b358: 0BE0
+  0x0000b35a: 0000
+  0x0000b35c: 08D0 <<<
+  0x0000b35e: 0000
+  0x0000b360: FD7A
+  0x0000b362: 0002
+```
+- lit@file `0xbd50` guest `0x2e4b44` nearby_STR=6
+  - STR@0xbd22 guest `0x2e4b16` r6,[r1,#28]
+  - STR@0xbd24 guest `0x2e4b18` r7,[r1,#32]
+  - STR@0xbd28 guest `0x2e4b1c` r4,[r1,#32]
+  - STR@0xbd2e guest `0x2e4b22` r6,[r0,#0]
+  - STR@0xbd34 guest `0x2e4b28` r7,[r0,#0]
+  - STR@0xbd3a guest `0x2e4b2e` r4,[r0,#0]
+```text
+  0x0000bd28: 620C STR r4,[r1,#32]
+  0x0000bd2a: 481A LDR r0,[pc,#104] lit@0xbd94=0x1154
+  0x0000bd2c: 4448 ADD/MOV high regs
+  0x0000bd2e: 6006 STR r6,[r0,#0]
+  0x0000bd30: 4819 LDR r0,[pc,#100] lit@0xbd98=0x1158
+  0x0000bd32: 4448 ADD/MOV high regs
+  0x0000bd34: 6007 STR r7,[r0,#0]
+  0x0000bd36: 4819 LDR r0,[pc,#100] lit@0xbd9c=0xe1c
+  0x0000bd38: 4448 ADD/MOV high regs
+  0x0000bd3a: 6004 STR r4,[r0,#0]
+  0x0000bd3c: BDF8
+  0x0000bd3e: 0000
+  0x0000bd40: 0ED8
+  0x0000bd42: 0000
+  0x0000bd44: 0B5C
+  0x0000bd46: 0000
+  0x0000bd48: 0B60
+  0x0000bd4a: 0000
+  0x0000bd4c: 0C8E
+  0x0000bd4e: 0000
+  0x0000bd50: 08D0 <<<
+  0x0000bd52: 0000
+  0x0000bd54: 0CA3
+  0x0000bd56: 0000
+```
+- lit@file `0xc920` guest `0x2e5714` nearby_STR=0
+```text
+  0x0000c8f8: 0CAC
+  0x0000c8fa: 0000
+  0x0000c8fc: 0D22
+  0x0000c8fe: 0000
+  0x0000c900: 0B5C
+  0x0000c902: 0000
+  0x0000c904: 0B60
+  0x0000c906: 0000
+  0x0000c908: 0FA8
+  0x0000c90a: 0000
+  0x0000c90c: 11EC
+  0x0000c90e: 0000
+  0x0000c910: 0CA1
+  0x0000c912: 0000
+  0x0000c914: 1248
+  0x0000c916: 0000
+  0x0000c918: 0C9B
+  0x0000c91a: 0000
+  0x0000c91c: 0CB4
+  0x0000c91e: 0000
+  0x0000c920: 08D0 <<<
+  0x0000c922: 0000
+  0x0000c924: 0240
+  0x0000c926: 0000
+```
+- lit@file `0xdbbc` guest `0x2e69b0` nearby_STR=2
+  - STR@0xdb92 guest `0x2e6986` r0,[r1,#0]
+  - STR@0xdbd4 guest `0x2e69c8` r1,[r2,#0]
+```text
+  0x0000db94: 490B LDR r1,[pc,#44] lit@0xdbc4=0xcb7
+  0x0000db96: 2001 MOVS r0,#1
+  0x0000db98: 4449 ADD/MOV high regs
+  0x0000db9a: 7008
+  0x0000db9c: 2100 MOVS r1,#0
+  0x0000db9e: 1C28
+  0x0000dba0: F014
+  0x0000dba2: FAB6
+  0x0000dba4: 1C28
+  0x0000dba6: F01F
+  0x0000dba8: FA35
+  0x0000dbaa: B007
+  0x0000dbac: BDF0
+  0x0000dbae: 0000
+  0x0000dbb0: 0B5C
+  0x0000dbb2: 0000
+  0x0000dbb4: 0B60
+  0x0000dbb6: 0000
+  0x0000dbb8: D4B6 Bcond cond=4 -> 0xdb28
+  0x0000dbba: 0002
+  0x0000dbbc: 08D0 <<<
+  0x0000dbbe: 0000
+  0x0000dbc0: 0BE0
+  0x0000dbc2: 0000
+```
+- lit@file `0xdc0c` guest `0x2e6a00` nearby_STR=3
+  - STR@0xdbd4 guest `0x2e69c8` r1,[r2,#0]
+  - STR@0xdbdc guest `0x2e69d0` r1,[r2,#0]
+  - STR@0xdbe4 guest `0x2e69d8` r1,[r2,#0]
+```text
+  0x0000dbe4: 6011 STR r1,[r2,#0]
+  0x0000dbe6: 6880 LDR r0,[r0,#8]
+  0x0000dbe8: F022
+  0x0000dbea: FA0E
+  0x0000dbec: 2801
+  0x0000dbee: D104 Bcond cond=1 -> 0xdbfa
+  0x0000dbf0: 4809 LDR r0,[pc,#36] lit@0xdc18=0x2d4fa
+  0x0000dbf2: 4478 ADD/MOV high regs
+  0x0000dbf4: F016
+  0x0000dbf6: FCEE
+  0x0000dbf8: BD08
+  0x0000dbfa: 4808 LDR r0,[pc,#32] lit@0xdc1c=0x2d4fe
+  0x0000dbfc: 2100 MOVS r1,#0
+  0x0000dbfe: 4478 ADD/MOV high regs
+  0x0000dc00: F014
+  0x0000dc02: FA86
+  0x0000dc04: E7F8 B -> 0xdbf8
+  0x0000dc06: 0000
+  0x0000dc08: 0BE0
+  0x0000dc0a: 0000
+  0x0000dc0c: 08D0 <<<
+  0x0000dc0e: 0000
+  0x0000dc10: 0B5C
+  0x0000dc12: 0000
+```
+- lit@file `0xea10` guest `0x2e7804` nearby_STR=1
+  - STR@0xea2e guest `0x2e7822` r0,[r1,#0]
+```text
+  0x0000e9e8: 11F8
+  0x0000e9ea: 0000
+  0x0000e9ec: 115C
+  0x0000e9ee: 0000
+  0x0000e9f0: 07D9
+  0x0000e9f2: 0000
+  0x0000e9f4: 0011
+  0x0000e9f6: 0000
+  0x0000e9f8: 0B74
+  0x0000e9fa: 0000
+  0x0000e9fc: 0B78
+  0x0000e9fe: 0000
+  0x0000ea00: 0EE4
+  0x0000ea02: 0000
+  0x0000ea04: 01DC
+  0x0000ea06: 0000
+  0x0000ea08: 01E0
+  0x0000ea0a: 0000
+  0x0000ea0c: 0ED0
+  0x0000ea0e: 0000
+  0x0000ea10: 08D0 <<<
+  0x0000ea12: 0000
+  0x0000ea14: 0C7F
+  0x0000ea16: 0000
+```
+- lit@file `0xeb88` guest `0x2e797c` nearby_STR=3
+  - STR@0xeb52 guest `0x2e7946` r0,[r1,#84]
+  - STR@0xeb64 guest `0x2e7958` r0,[r1,#108]
+  - STR@0xeb7a guest `0x2e796e` r0,[r1,#0]
+```text
+  0x0000eb60: 4907 LDR r1,[pc,#28] lit@0xeb80=0x116c
+  0x0000eb62: 4449 ADD/MOV high regs
+  0x0000eb64: 66C8 STR r0,[r1,#108]
+  0x0000eb66: 4807 LDR r0,[pc,#28] lit@0xeb84=0xcec
+  0x0000eb68: 2100 MOVS r1,#0
+  0x0000eb6a: 4448 ADD/MOV high regs
+  0x0000eb6c: 85C4
+  0x0000eb6e: 8601
+  0x0000eb70: 8645
+  0x0000eb72: 4905 LDR r1,[pc,#20] lit@0xeb88=0x8d0
+  0x0000eb74: 8686
+  0x0000eb76: 2020 MOVS r0,#32
+  0x0000eb78: 4449 ADD/MOV high regs
+  0x0000eb7a: 6008 STR r0,[r1,#0]
+  0x0000eb7c: BDF8
+  0x0000eb7e: 0000
+  0x0000eb80: 116C
+  0x0000eb82: 0000
+  0x0000eb84: 0CEC
+  0x0000eb86: 0000
+  0x0000eb88: 08D0 <<<
+  0x0000eb8a: 0000
+  0x0000eb8c: B5F8
+  0x0000eb8e: 1C07
+```
+- lit@file `0xf6fc` guest `0x2e84f0` nearby_STR=1
+  - STR@0xf6d0 guest `0x2e84c4` r0,[r4,#72]
+```text
+  0x0000f6d4: 490D LDR r1,[pc,#52] lit@0xf70c=0xb60
+  0x0000f6d6: 68AA LDR r2,[r5,#8]
+  0x0000f6d8: 4448 ADD/MOV high regs
+  0x0000f6da: 6800 LDR r0,[r0,#0]
+  0x0000f6dc: 4449 ADD/MOV high regs
+  0x0000f6de: F020
+  0x0000f6e0: FC89
+  0x0000f6e2: 2801
+  0x0000f6e4: D090 Bcond cond=0 -> 0xf608
+  0x0000f6e6: 4806 LDR r0,[pc,#24] lit@0xf700=0xb78
+  0x0000f6e8: 4448 ADD/MOV high regs
+  0x0000f6ea: 6800 LDR r0,[r0,#0]
+  0x0000f6ec: F7F2
+  0x0000f6ee: FAD4
+  0x0000f6f0: B003
+  0x0000f6f2: BDF0
+  0x0000f6f4: 0ED8
+  0x0000f6f6: 0000
+  0x0000f6f8: 0CC0
+  0x0000f6fa: 0000
+  0x0000f6fc: 08D0 <<<
+  0x0000f6fe: 0000
+  0x0000f700: 0B78
+  0x0000f702: 0000
+```
+- lit@file `0xfa94` guest `0x2e8888` nearby_STR=0
+```text
+  0x0000fa6c: FFF9
+  0x0000fa6e: 2200 MOVS r2,#0
+  0x0000fa70: 9203
+  0x0000fa72: 22FF MOVS r2,#255
+  0x0000fa74: 2100 MOVS r1,#0
+  0x0000fa76: 9102
+  0x0000fa78: 9200
+  0x0000fa7a: 20FF MOVS r0,#255
+  0x0000fa7c: 9001
+  0x0000fa7e: 2207 MOVS r2,#7
+  0x0000fa80: 2108 MOVS r1,#8
+  0x0000fa82: 23FF MOVS r3,#255
+  0x0000fa84: 1C28
+  0x0000fa86: F01D
+  0x0000fa88: F9BF
+  0x0000fa8a: E7B9 B -> 0xfa00
+  0x0000fa8c: 0C44
+  0x0000fa8e: 0000
+  0x0000fa90: BD38
+  0x0000fa92: 0002
+  0x0000fa94: 08D0 <<<
+  0x0000fa96: 0000
+  0x0000fa98: 1314
+  0x0000fa9a: 0000
+```
+- lit@file `0x103d0` guest `0x2e91c4` nearby_STR=0
+```text
+  0x000103a8: 1409
+  0x000103aa: 47B8
+  0x000103ac: 230F MOVS r3,#15
+  0x000103ae: 4809 LDR r0,[pc,#36] lit@0x103d4=0x11ec
+  0x000103b0: 4448 ADD/MOV high regs
+  0x000103b2: 69C7 LDR r7,[r0,#28]
+  0x000103b4: 4803 LDR r0,[pc,#12] lit@0x103c4=0xcec
+  0x000103b6: 4448 ADD/MOV high regs
+  0x000103b8: 56C0
+  0x000103ba: 1C03
+  0x000103bc: 1C39
+  0x000103be: 4341
+  0x000103c0: E00C B -> 0x103dc
+  0x000103c2: 0000
+  0x000103c4: 0CEC
+  0x000103c6: 0000
+  0x000103c8: 01A8
+  0x000103ca: 0000
+  0x000103cc: 0EEC
+  0x000103ce: 0000
+  0x000103d0: 08D0 <<<
+  0x000103d2: 0000
+  0x000103d4: 11EC
+  0x000103d6: 0000
+```
+- lit@file `0x10bfc` guest `0x2e99f0` nearby_STR=0
+```text
+  0x00010bd4: 9200
+  0x00010bd6: 1843
+  0x00010bd8: 1C39
+  0x00010bda: 1C2A
+  0x00010bdc: 1C30
+  0x00010bde: F000
+  0x00010be0: F815
+  0x00010be2: 2800
+  0x00010be4: D105 Bcond cond=1 -> 0x10bf2
+  0x00010be6: 6A70 LDR r0,[r6,#36]
+  0x00010be8: 9907
+  0x00010bea: 4348
+  0x00010bec: 1945
+  0x00010bee: 3C01
+  0x00010bf0: D5E5 Bcond cond=5 -> 0x10bbe
+  0x00010bf2: B009
+  0x00010bf4: BDF0
+  0x00010bf6: 0000
+  0x00010bf8: 01A8
+  0x00010bfa: 0000
+  0x00010bfc: 08D0 <<<
+  0x00010bfe: 0000
+  0x00010c00: 0824
+  0x00010c02: 0000
+```
+- lit@file `0x125a0` guest `0x2eb394` nearby_STR=0
+```text
+  0x00012578: F012
+  0x0001257a: FFE0
+  0x0001257c: 490D LDR r1,[pc,#52] lit@0x125b4=0xeec
+  0x0001257e: 6AA0 LDR r0,[r4,#40]
+  0x00012580: 4449 ADD/MOV high regs
+  0x00012582: 3198
+  0x00012584: F005
+  0x00012586: FC4A
+  0x00012588: E7F4 B -> 0x12574
+  0x0001258a: 0000
+  0x0001258c: 0C6C
+  0x0001258e: 0000
+  0x00012590: E501 B -> 0x11f96
+  0x00012592: 0000
+  0x00012594: 0110
+  0x00012596: 0001
+  0x00012598: 07DA
+  0x0001259a: 0000
+  0x0001259c: 106C
+  0x0001259e: 0000
+  0x000125a0: 08D0 <<<
+  0x000125a2: 0000
+  0x000125a4: E203 B -> 0x129ae
+  0x000125a6: 0001
+```
+- lit@file `0x13648` guest `0x2ec43c` nearby_STR=0
+```text
+  0x00013620: F00D
+  0x00013622: FAA6
+  0x00013624: 1C01
+  0x00013626: 2000 MOVS r0,#0
+  0x00013628: 9000
+  0x0001362a: 4813 LDR r0,[pc,#76] lit@0x13678=0x290a0
+  0x0001362c: 3919
+  0x0001362e: 9101
+  0x00013630: 23FF MOVS r3,#255
+  0x00013632: 22FF MOVS r2,#255
+  0x00013634: 21FF MOVS r1,#255
+  0x00013636: 9402
+  0x00013638: 4478 ADD/MOV high regs
+  0x0001363a: F005
+  0x0001363c: FF41
+  0x0001363e: E01D B -> 0x1367c
+  0x00013640: 0EEC
+  0x00013642: 0000
+  0x00013644: 07DA
+  0x00013646: 0000
+  0x00013648: 08D0 <<<
+  0x0001364a: 0000
+  0x0001364c: 0818
+  0x0001364e: 0000
+```
+- lit@file `0x138b0` guest `0x2ec6a4` nearby_STR=0
+```text
+  0x00013888: F023
+  0x0001388a: FE34
+  0x0001388c: 2101 MOVS r1,#1
+  0x0001388e: 2000 MOVS r0,#0
+  0x00013890: F7FC
+  0x00013892: FE48
+  0x00013894: E5E9 B -> 0x1346a
+  0x00013896: 2101 MOVS r1,#1
+  0x00013898: 2001 MOVS r0,#1
+  0x0001389a: F7FC
+  0x0001389c: FE43
+  0x0001389e: E5E4 B -> 0x1346a
+  0x000138a0: E7FF B -> 0x138a2
+  0x000138a2: F001
+  0x000138a4: FB25
+  0x000138a6: E5E0 B -> 0x1346a
+  0x000138a8: 0F6C
+  0x000138aa: 0000
+  0x000138ac: 9014
+  0x000138ae: 0002
+  0x000138b0: 08D0 <<<
+  0x000138b2: 0000
+  0x000138b4: 0818
+  0x000138b6: 0000
+```
+- lit@file `0x15440` guest `0x2ee234` nearby_STR=0
+```text
+  0x00015418: F003
+  0x0001541a: FF66
+  0x0001541c: 1C20
+  0x0001541e: F017
+  0x00015420: FDF9
+  0x00015422: E7D1 B -> 0x153c8
+  0x00015424: 6FC6 LDR r6,[r0,#124]
+  0x00015426: 0002
+  0x00015428: 01A8
+  0x0001542a: 0000
+  0x0001542c: 0EEC
+  0x0001542e: 0000
+  0x00015430: 6F96 LDR r6,[r2,#120]
+  0x00015432: 0002
+  0x00015434: 6F70 LDR r0,[r6,#116]
+  0x00015436: 0002
+  0x00015438: 0DEC
+  0x0001543a: 0000
+  0x0001543c: 6F48 LDR r0,[r1,#116]
+  0x0001543e: 0002
+  0x00015440: 08D0 <<<
+  0x00015442: 0000
+  0x00015444: 6F34 LDR r4,[r6,#112]
+  0x00015446: 0002
+```
+- lit@file `0x15c7c` guest `0x2eea70` nearby_STR=0
+```text
+  0x00015c54: 2000 MOVS r0,#0
+  0x00015c56: 9004
+  0x00015c58: 2080 MOVS r0,#128
+  0x00015c5a: 5D40
+  0x00015c5c: E014 B -> 0x15c88
+  0x00015c5e: 0000
+  0x00015c60: 0818
+  0x00015c62: 0000
+  0x00015c64: 081C
+  0x00015c66: 0000
+  0x00015c68: 6A56 LDR r6,[r2,#36]
+  0x00015c6a: 0002
+  0x00015c6c: 11EC
+  0x00015c6e: 0000
+  0x00015c70: 6B16 LDR r6,[r2,#48]
+  0x00015c72: 0002
+  0x00015c74: 10EC
+  0x00015c76: 0000
+  0x00015c78: 0CEC
+  0x00015c7a: 0000
+  0x00015c7c: 08D0 <<<
+  0x00015c7e: 0000
+  0x00015c80: 0EEC
+  0x00015c82: 0000
+```
+- lit@file `0x17130` guest `0x2eff24` nearby_STR=0
+```text
+  0x00017108: 260A MOVS r6,#10
+  0x0001710a: F009
+  0x0001710c: FD31
+  0x0001710e: 1B47
+  0x00017110: 3F14
+  0x00017112: 2101 MOVS r1,#1
+  0x00017114: 2001 MOVS r0,#1
+  0x00017116: F7F9
+  0x00017118: FA05
+  0x0001711a: 9A08
+  0x0001711c: 1C31
+  0x0001711e: 9201
+  0x00017120: 1C3A
+  0x00017122: 1C20
+  0x00017124: 9500
+  0x00017126: 9B04
+  0x00017128: F000
+  0x0001712a: FD26
+  0x0001712c: B009
+  0x0001712e: BDF0
+  0x00017130: 08D0 <<<
+  0x00017132: 0000
+  0x00017134: 4942 LDR r1,[pc,#264] lit@0x17240=0x1c299102
+  0x00017136: 0002
+```
+- lit@file `0x17518` guest `0x2f030c` nearby_STR=0
+```text
+  0x000174f0: 9803
+  0x000174f2: 2800
+  0x000174f4: D002 Bcond cond=0 -> 0x174fc
+  0x000174f6: 9803
+  0x000174f8: F015
+  0x000174fa: FD8C
+  0x000174fc: B009
+  0x000174fe: BDF0
+  0x00017500: 01A8
+  0x00017502: 0000
+  0x00017504: 0CEC
+  0x00017506: 0000
+  0x00017508: 0C56
+  0x0001750a: 0000
+  0x0001750c: 11EC
+  0x0001750e: 0000
+  0x00017510: 0B78
+  0x00017512: 0000
+  0x00017514: 0DEC
+  0x00017516: 0000
+  0x00017518: 08D0 <<<
+  0x0001751a: 0000
+  0x0001751c: 0F6C
+  0x0001751e: 0000
+```
+- lit@file `0x17e10` guest `0x2f0c04` nearby_STR=0
+```text
+  0x00017de8: 4449 ADD/MOV high regs
+  0x00017dea: 7148
+  0x00017dec: B011
+  0x00017dee: BDF0
+  0x00017df0: 0C9C
+  0x00017df2: 0000
+  0x00017df4: 0284
+  0x00017df6: 0000
+  0x00017df8: 0286
+  0x00017dfa: 0000
+  0x00017dfc: 0288
+  0x00017dfe: 0000
+  0x00017e00: 0818
+  0x00017e02: 0000
+  0x00017e04: 081C
+  0x00017e06: 0000
+  0x00017e08: 4736
+  0x00017e0a: 0002
+  0x00017e0c: 01A8
+  0x00017e0e: 0000
+  0x00017e10: 08D0 <<<
+  0x00017e12: 0000
+  0x00017e14: 0F6C
+  0x00017e16: 0000
+```
+- lit@file `0x187ec` guest `0x2f15e0` nearby_STR=0
+```text
+  0x000187c4: 2300 MOVS r3,#0
+  0x000187c6: 3105
+  0x000187c8: 1C38
+  0x000187ca: F014
+  0x000187cc: FB3D
+  0x000187ce: 1C38
+  0x000187d0: F014
+  0x000187d2: FC20
+  0x000187d4: 1976
+  0x000187d6: 3401
+  0x000187d8: 2C02
+  0x000187da: DA00 Bcond cond=10 -> 0x187de
+  0x000187dc: E77A B -> 0x186d4
+  0x000187de: 2101 MOVS r1,#1
+  0x000187e0: 2001 MOVS r0,#1
+  0x000187e2: F7F7
+  0x000187e4: FE9F
+  0x000187e6: B00D
+  0x000187e8: BDF0
+  0x000187ea: 0000
+  0x000187ec: 08D0 <<<
+  0x000187ee: 0000
+  0x000187f0: 4932 LDR r1,[pc,#200] lit@0x188bc=0x20089204
+  0x000187f2: 0002
+```
+- lit@file `0x18af0` guest `0x2f18e4` nearby_STR=0
+```text
+  0x00018ac8: FFB9
+  0x00018aca: 2800
+  0x00018acc: D003 Bcond cond=0 -> 0x18ad6
+  0x00018ace: F008
+  0x00018ad0: F84F
+  0x00018ad2: 1C07
+  0x00018ad4: 3F37
+  0x00018ad6: 9A07
+  0x00018ad8: 1C2B
+  0x00018ada: 9200
+  0x00018adc: 1C32
+  0x00018ade: 1C39
+  0x00018ae0: 9805
+  0x00018ae2: F000
+  0x00018ae4: F80D
+  0x00018ae6: B009
+  0x00018ae8: BDF0
+  0x00018aea: 0000
+  0x00018aec: 0CEC
+  0x00018aee: 0000
+  0x00018af0: 08D0 <<<
+  0x00018af2: 0000
+  0x00018af4: 0F6C
+  0x00018af6: 0000
+```
+- lit@file `0x1965c` guest `0x2f2450` nearby_STR=0
+```text
+  0x00019634: 380A
+  0x00019636: 9912
+  0x00019638: 9203
+  0x0001963a: 9001
+  0x0001963c: 9400
+  0x0001963e: 6809 LDR r1,[r1,#0]
+  0x00019640: 1C3B
+  0x00019642: 1D32
+  0x00019644: 6828 LDR r0,[r5,#0]
+  0x00019646: F7FA
+  0x00019648: FAC1
+  0x0001964a: B00B
+  0x0001964c: BDF0
+  0x0001964e: 0000
+  0x00019650: 0818
+  0x00019652: 0000
+  0x00019654: 081C
+  0x00019656: 0000
+  0x00019658: 2F10
+  0x0001965a: 0002
+  0x0001965c: 08D0 <<<
+  0x0001965e: 0000
+  0x00019660: B510
+  0x00019662: 1C04
+```
+- lit@file `0x19968` guest `0x2f275c` nearby_STR=0
+```text
+  0x00019940: 2100 MOVS r1,#0
+  0x00019942: 9102
+  0x00019944: 9200
+  0x00019946: 20FF MOVS r0,#255
+  0x00019948: 9001
+  0x0001994a: 1CFA
+  0x0001994c: 1C29
+  0x0001994e: 23FF MOVS r3,#255
+  0x00019950: 1C20
+  0x00019952: F013
+  0x00019954: FA59
+  0x00019956: B00B
+  0x00019958: BDF0
+  0x0001995a: 0000
+  0x0001995c: 01A8
+  0x0001995e: 0000
+  0x00019960: 0E6C
+  0x00019962: 0000
+  0x00019964: 07E8
+  0x00019966: 0000
+  0x00019968: 08D0 <<<
+  0x0001996a: 0000
+  0x0001996c: 0C6C
+  0x0001996e: 0000
+```
+- lit@file `0x1c500` guest `0x2f52f4` nearby_STR=2
+  - STR@0x1c4e4 guest `0x2f52d8` r0,[r4,#84]
+  - STR@0x1c4f0 guest `0x2f52e4` r5,[r4,#84]
+```text
+  0x0001c4d8: 6809 LDR r1,[r1,#0]
+  0x0001c4da: 5808
+  0x0001c4dc: 2800
+  0x0001c4de: D00A Bcond cond=0 -> 0x1c4f6
+  0x0001c4e0: 4C10 LDR r4,[pc,#64] lit@0x1c524=0xf6c
+  0x0001c4e2: 444C ADD/MOV high regs
+  0x0001c4e4: 6560 STR r0,[r4,#84]
+  0x0001c4e6: F7EA
+  0x0001c4e8: FCAF
+  0x0001c4ea: 6830 LDR r0,[r6,#0]
+  0x0001c4ec: 2826
+  0x0001c4ee: D000 Bcond cond=0 -> 0x1c4f2
+  0x0001c4f0: 6565 STR r5,[r4,#84]
+  0x0001c4f2: 2001 MOVS r0,#1
+  0x0001c4f4: E6CD B -> 0x1c292
+  0x0001c4f6: 2000 MOVS r0,#0
+  0x0001c4f8: E6CB B -> 0x1c292
+  0x0001c4fa: 0000
+  0x0001c4fc: 0E6C
+  0x0001c4fe: 0000
+  0x0001c500: 08D0 <<<
+  0x0001c502: 0000
+  0x0001c504: E203 B -> 0x1c90e
+  0x0001c506: 0001
+```
+- lit@file `0x21690` guest `0x2fa484` nearby_STR=0
+```text
+  0x00021668: F7FE
+  0x0002166a: FD92
+  0x0002166c: 73A5
+  0x0002166e: 2012 MOVS r0,#18
+  0x00021670: F005
+  0x00021672: FE78
+  0x00021674: F014
+  0x00021676: F878
+  0x00021678: 69F8 LDR r0,[r7,#28]
+  0x0002167a: 2200 MOVS r2,#0
+  0x0002167c: 6801 LDR r1,[r0,#0]
+  0x0002167e: 6D30 LDR r0,[r6,#80]
+  0x00021680: 6800 LDR r0,[r0,#0]
+  0x00021682: F014
+  0x00021684: FC33
+  0x00021686: E6A8 B -> 0x213da
+  0x00021688: 116C
+  0x0002168a: 0000
+  0x0002168c: 0F84
+  0x0002168e: 0000
+  0x00021690: 08D0 <<<
+  0x00021692: 0000
+  0x00021694: 0D6C
+  0x00021696: 0000
+```
+- lit@file `0x217f0` guest `0x2fa5e4` nearby_STR=2
+  - STR@0x217bc guest `0x2fa5b0` r7,[r0,#0]
+  - STR@0x217d6 guest `0x2fa5ca` r4,[r6,#0]
+```text
+  0x000217c8: F005
+  0x000217ca: FDCC
+  0x000217cc: 3501
+  0x000217ce: 2D14
+  0x000217d0: DD07 Bcond cond=13 -> 0x217e2
+  0x000217d2: 2C14
+  0x000217d4: D002 Bcond cond=0 -> 0x217dc
+  0x000217d6: 6034 STR r4,[r6,#0]
+  0x000217d8: B003
+  0x000217da: BDF0
+  0x000217dc: F001
+  0x000217de: FCC8
+  0x000217e0: E7FA B -> 0x217d8
+  0x000217e2: 6830 LDR r0,[r6,#0]
+  0x000217e4: 42A0
+  0x000217e6: D1CF Bcond cond=1 -> 0x21788
+  0x000217e8: E7F6 B -> 0x217d8
+  0x000217ea: 0000
+  0x000217ec: 0E6C
+  0x000217ee: 0000
+  0x000217f0: 08D0 <<<
+  0x000217f2: 0000
+  0x000217f4: 0024
+  0x000217f6: 0000
+```
+- lit@file `0x2210c` guest `0x2faf00` nearby_STR=5
+  - STR@0x220ea guest `0x2faede` r1,[r4,#48]
+  - STR@0x220ee guest `0x2faee2` r0,[r4,#52]
+  - STR@0x220f2 guest `0x2faee6` r6,[r4,#48]
+  - STR@0x220f4 guest `0x2faee8` r7,[r4,#52]
+  - STR@0x220fc guest `0x2faef0` r0,[r1,#0]
+```text
+  0x000220e4: 3080
+  0x000220e6: 68C0 LDR r0,[r0,#12]
+  0x000220e8: 6981 LDR r1,[r0,#24]
+  0x000220ea: 6321 STR r1,[r4,#48]
+  0x000220ec: 69C0 LDR r0,[r0,#28]
+  0x000220ee: 6360 STR r0,[r4,#52]
+  0x000220f0: E001 B -> 0x220f6
+  0x000220f2: 6326 STR r6,[r4,#48]
+  0x000220f4: 6367 STR r7,[r4,#52]
+  0x000220f6: 4905 LDR r1,[pc,#20] lit@0x2210c=0x8d0
+  0x000220f8: 201A MOVS r0,#26
+  0x000220fa: 4449 ADD/MOV high regs
+  0x000220fc: 6008 STR r0,[r1,#0]
+  0x000220fe: BDF8
+  0x00022100: 0F6C
+  0x00022102: 0000
+  0x00022104: 0CEC
+  0x00022106: 0000
+  0x00022108: 116C
+  0x0002210a: 0000
+  0x0002210c: 08D0 <<<
+  0x0002210e: 0000
+  0x00022110: B5F8
+  0x00022112: 4A33 LDR r2,[pc,#204] lit@0x221e0=0x7da
+```
+- lit@file `0x221e8` guest `0x2fafdc` nearby_STR=4
+  - STR@0x221ac guest `0x2fafa0` r0,[r5,#116]
+  - STR@0x221ae guest `0x2fafa2` r7,[r5,#124]
+  - STR@0x221c2 guest `0x2fafb6` r7,[r5,#112]
+  - STR@0x221da guest `0x2fafce` r0,[r1,#0]
+```text
+  0x000221c0: FAD3
+  0x000221c2: 672F STR r7,[r5,#112]
+  0x000221c4: 6F68 LDR r0,[r5,#116]
+  0x000221c6: 1C21
+  0x000221c8: F017
+  0x000221ca: FD50
+  0x000221cc: E002 B -> 0x221d4
+  0x000221ce: 1C21
+  0x000221d0: F017
+  0x000221d2: FD4C
+  0x000221d4: 4904 LDR r1,[pc,#16] lit@0x221e8=0x8d0
+  0x000221d6: 2016 MOVS r0,#22
+  0x000221d8: 4449 ADD/MOV high regs
+  0x000221da: 6008 STR r0,[r1,#0]
+  0x000221dc: BDF8
+  0x000221de: 0000
+  0x000221e0: 07DA
+  0x000221e2: 0000
+  0x000221e4: 0CCC
+  0x000221e6: 0000
+  0x000221e8: 08D0 <<<
+  0x000221ea: 0000
+  0x000221ec: 0228
+  0x000221ee: 0000
+```
+- lit@file `0x222e4` guest `0x2fb0d8` nearby_STR=4
+  - STR@0x222aa guest `0x2fb09e` r4,[r7,#96]
+  - STR@0x222be guest `0x2fb0b2` r0,[r4,#0]
+  - STR@0x222d2 guest `0x2fb0c6` r0,[r4,#0]
+  - STR@0x222de guest `0x2fb0d2` r0,[r4,#0]
+```text
+  0x000222bc: 9800
+  0x000222be: 6020 STR r0,[r4,#0]
+  0x000222c0: F013
+  0x000222c2: FA52
+  0x000222c4: F013
+  0x000222c6: FA50
+  0x000222c8: 490A LDR r1,[pc,#40] lit@0x222f4=0xcac
+  0x000222ca: 2001 MOVS r0,#1
+  0x000222cc: 4449 ADD/MOV high regs
+  0x000222ce: 7208
+  0x000222d0: 30FF
+  0x000222d2: 6020 STR r0,[r4,#0]
+  0x000222d4: 2D01
+  0x000222d6: D1CB Bcond cond=1 -> 0x22270
+  0x000222d8: F013
+  0x000222da: FA46
+  0x000222dc: 2016 MOVS r0,#22
+  0x000222de: 6020 STR r0,[r4,#0]
+  0x000222e0: E7C6 B -> 0x22270
+  0x000222e2: 0000
+  0x000222e4: 08D0 <<<
+  0x000222e6: 0000
+  0x000222e8: 11EC
+  0x000222ea: 0000
+```
+- lit@file `0x22314` guest `0x2fb108` nearby_STR=3
+  - STR@0x222de guest `0x2fb0d2` r0,[r4,#0]
+  - STR@0x2230c guest `0x2fb100` r0,[r1,#0]
+  - STR@0x2232c guest `0x2fb120` r0,[r4,#120]
+```text
+  0x000222ec: 106C
+  0x000222ee: 0000
+  0x000222f0: 0F6C
+  0x000222f2: 0000
+  0x000222f4: 0CAC
+  0x000222f6: 0000
+  0x000222f8: B508
+  0x000222fa: F013
+  0x000222fc: FA35
+  0x000222fe: 4904 LDR r1,[pc,#16] lit@0x22310=0xcec
+  0x00022300: 2000 MOVS r0,#0
+  0x00022302: 4449 ADD/MOV high regs
+  0x00022304: 8388
+  0x00022306: 4903 LDR r1,[pc,#12] lit@0x22314=0x8d0
+  0x00022308: 20D6 MOVS r0,#214
+  0x0002230a: 4449 ADD/MOV high regs
+  0x0002230c: 6008 STR r0,[r1,#0]
+  0x0002230e: BD08
+  0x00022310: 0CEC
+  0x00022312: 0000
+  0x00022314: 08D0 <<<
+  0x00022316: 0000
+  0x00022318: B510
+  0x0002231a: 4C07 LDR r4,[pc,#28] lit@0x22338=0x858
+```
+- lit@file `0x22530` guest `0x2fb324` nearby_STR=1
+  - STR@0x224fa guest `0x2fb2ee` r0,[r4,#72]
+```text
+  0x00022508: 07DA
+  0x0002250a: 0000
+  0x0002250c: 0C6D
+  0x0002250e: 0000
+  0x00022510: 0C74
+  0x00022512: 0000
+  0x00022514: 0C72
+  0x00022516: 0000
+  0x00022518: 0C6C
+  0x0002251a: 0000
+  0x0002251c: 0C7B
+  0x0002251e: 0000
+  0x00022520: 0CF1
+  0x00022522: 0000
+  0x00022524: 0C44
+  0x00022526: 0000
+  0x00022528: 0AC8
+  0x0002252a: 0000
+  0x0002252c: 134D
+  0x0002252e: 0000
+  0x00022530: 08D0 <<<
+  0x00022532: 0000
+  0x00022534: 0BA0
+  0x00022536: 0000
+```
+- lit@file `0x22740` guest `0x2fb534` nearby_STR=3
+  - STR@0x22704 guest `0x2fb4f8` r0,[r7,#40]
+  - STR@0x2272e guest `0x2fb522` r0,[r1,#0]
+  - STR@0x22738 guest `0x2fb52c` r0,[r1,#24]
+```text
+  0x00022718: 5050
+  0x0002271a: DBF5 Bcond cond=11 -> 0x22708
+  0x0002271c: 1C20
+  0x0002271e: F017
+  0x00022720: FB39
+  0x00022722: 1C20
+  0x00022724: F00A
+  0x00022726: FC76
+  0x00022728: 4905 LDR r1,[pc,#20] lit@0x22740=0x8d0
+  0x0002272a: 2021 MOVS r0,#33
+  0x0002272c: 4449 ADD/MOV high regs
+  0x0002272e: 6008 STR r0,[r1,#0]
+  0x00022730: 4924 LDR r1,[pc,#144] lit@0x227c4=0xeec
+  0x00022732: 2000 MOVS r0,#0
+  0x00022734: 4449 ADD/MOV high regs
+  0x00022736: 3180
+  0x00022738: 6188 STR r0,[r1,#24]
+  0x0002273a: BDF8
+  0x0002273c: 0CBC
+  0x0002273e: 0000
+  0x00022740: 08D0 <<<
+  0x00022742: 0000
+  0x00022744: 9330
+  0x00022746: 0001
+```
+- lit@file `0x22d74` guest `0x2fbb68` nearby_STR=3
+  - STR@0x22d3c guest `0x2fbb30` r7,[r6,#36]
+  - STR@0x22d48 guest `0x2fbb3c` r0,[r1,#0]
+  - STR@0x22d4c guest `0x2fbb40` r0,[r6,#44]
+```text
+  0x00022d4c: 62F0 STR r0,[r6,#44]
+  0x00022d4e: BDF8
+  0x00022d50: 8E80
+  0x00022d52: 0001
+  0x00022d54: 8C60
+  0x00022d56: 0001
+  0x00022d58: 8EA4
+  0x00022d5a: 0001
+  0x00022d5c: 0810
+  0x00022d5e: 0000
+  0x00022d60: 8C44
+  0x00022d62: 0001
+  0x00022d64: 8C28
+  0x00022d66: 0001
+  0x00022d68: 8C0C
+  0x00022d6a: 0001
+  0x00022d6c: 8BF0
+  0x00022d6e: 0001
+  0x00022d70: 8BD4
+  0x00022d72: 0001
+  0x00022d74: 08D0 <<<
+  0x00022d76: 0000
+  0x00022d78: B5FF
+  0x00022d7a: 48DB LDR r0,[pc,#876] lit@0x230e8=0x116c
+```
+- lit@file `0x2315c` guest `0x2fbf50` nearby_STR=1
+  - STR@0x23176 guest `0x2fbf6a` r0,[r1,#0]
+```text
+  0x00023134: 270F MOVS r7,#15
+  0x00023136: 0000
+  0x00023138: 0C58
+  0x0002313a: 0000
+  0x0002313c: 0C5C
+  0x0002313e: 0000
+  0x00023140: 0C60
+  0x00023142: 0000
+  0x00023144: 0C64
+  0x00023146: 0000
+  0x00023148: 0C68
+  0x0002314a: 0000
+  0x0002314c: 0B74
+  0x0002314e: 0000
+  0x00023150: 88A4
+  0x00023152: 0001
+  0x00023154: 8898
+  0x00023156: 0001
+  0x00023158: 8FC0
+  0x0002315a: 0001
+  0x0002315c: 08D0 <<<
+  0x0002315e: 0000
+  0x00023160: E201 B -> 0x23566
+  0x00023162: 0000
+```
+- lit@file `0x23190` guest `0x2fbf84` nearby_STR=3
+  - STR@0x23176 guest `0x2fbf6a` r0,[r1,#0]
+  - STR@0x2318c guest `0x2fbf80` r0,[r1,#0]
+  - STR@0x231a8 guest `0x2fbf9c` r6,[r0,#0]
+```text
+  0x00023168: E209 B -> 0x2357e
+  0x0002316a: 0000
+  0x0002316c: E203 B -> 0x23576
+  0x0002316e: 0001
+  0x00023170: 4907 LDR r1,[pc,#28] lit@0x23190=0x8d0
+  0x00023172: 2014 MOVS r0,#20
+  0x00023174: 4449 ADD/MOV high regs
+  0x00023176: 6008 STR r0,[r1,#0]
+  0x00023178: 4806 LDR r0,[pc,#24] lit@0x23194=0xe6c
+  0x0002317a: 4448 ADD/MOV high regs
+  0x0002317c: 6E42 LDR r2,[r0,#100]
+  0x0002317e: 2A00
+  0x00023180: D005 Bcond cond=0 -> 0x2318e
+  0x00023182: 6E80 LDR r0,[r0,#104]
+  0x00023184: 2800
+  0x00023186: D002 Bcond cond=0 -> 0x2318e
+  0x00023188: 20FF MOVS r0,#255
+  0x0002318a: 301C
+  0x0002318c: 6008 STR r0,[r1,#0]
+  0x0002318e: 4770
+  0x00023190: 08D0 <<<
+  0x00023192: 0000
+  0x00023194: 0E6C
+  0x00023196: 0000
+```
+- lit@file `0x231b8` guest `0x2fbfac` nearby_STR=2
+  - STR@0x2318c guest `0x2fbf80` r0,[r1,#0]
+  - STR@0x231a8 guest `0x2fbf9c` r6,[r0,#0]
+```text
+  0x00023190: 08D0
+  0x00023192: 0000
+  0x00023194: 0E6C
+  0x00023196: 0000
+  0x00023198: B570
+  0x0002319a: 1C0D
+  0x0002319c: 1C04
+  0x0002319e: 1C16
+  0x000231a0: F012
+  0x000231a2: FAE2
+  0x000231a4: 4804 LDR r0,[pc,#16] lit@0x231b8=0x8d0
+  0x000231a6: 4448 ADD/MOV high regs
+  0x000231a8: 6006 STR r6,[r0,#0]
+  0x000231aa: F00F
+  0x000231ac: FBBD
+  0x000231ae: 4803 LDR r0,[pc,#12] lit@0x231bc=0xfec
+  0x000231b0: 4448 ADD/MOV high regs
+  0x000231b2: C030
+  0x000231b4: BD70
+  0x000231b6: 0000
+  0x000231b8: 08D0 <<<
+  0x000231ba: 0000
+  0x000231bc: 0FEC
+  0x000231be: 0000
+```
+- lit@file `0x23230` guest `0x2fc024` nearby_STR=5
+  - STR@0x2320e guest `0x2fc002` r0,[r7,#124]
+  - STR@0x23212 guest `0x2fc006` r0,[r1,#100]
+  - STR@0x2321c guest `0x2fc010` r0,[r1,#84]
+  - STR@0x23220 guest `0x2fc014` r0,[r5,#0]
+  - STR@0x23228 guest `0x2fc01c` r4,[r7,#120]
+```text
+  0x00023208: FA13
+  0x0002320a: 490E LDR r1,[pc,#56] lit@0x23244=0x116c
+  0x0002320c: 2000 MOVS r0,#0
+  0x0002320e: 67F8 STR r0,[r7,#124]
+  0x00023210: 4449 ADD/MOV high regs
+  0x00023212: 6648 STR r0,[r1,#100]
+  0x00023214: 4907 LDR r1,[pc,#28] lit@0x23234=0x228
+  0x00023216: 6828 LDR r0,[r5,#0]
+  0x00023218: 4449 ADD/MOV high regs
+  0x0002321a: 3980
+  0x0002321c: 6548 STR r0,[r1,#84]
+  0x0002321e: 2026 MOVS r0,#38
+  0x00023220: 6028 STR r0,[r5,#0]
+  0x00023222: 2001 MOVS r0,#1
+  0x00023224: 3620
+  0x00023226: 73B0
+  0x00023228: 67BC STR r4,[r7,#120]
+  0x0002322a: BDF8
+  0x0002322c: 07DA
+  0x0002322e: 0000
+  0x00023230: 08D0 <<<
+  0x00023232: 0000
+  0x00023234: 0228
+  0x00023236: 0000
+```
+- lit@file `0x232e8` guest `0x2fc0dc` nearby_STR=2
+  - STR@0x232fe guest `0x2fc0f2` r4,[r0,#76]
+  - STR@0x23300 guest `0x2fc0f4` r4,[r0,#84]
+```text
+  0x000232c0: F00E
+  0x000232c2: FDB0
+  0x000232c4: 2200 MOVS r2,#0
+  0x000232c6: 2100 MOVS r1,#0
+  0x000232c8: 9202
+  0x000232ca: 1C23
+  0x000232cc: 1C2A
+  0x000232ce: 9100
+  0x000232d0: 9101
+  0x000232d2: 210D MOVS r1,#13
+  0x000232d4: 4806 LDR r0,[pc,#24] lit@0x232f0=0x1e217
+  0x000232d6: F008
+  0x000232d8: FA45
+  0x000232da: B003
+  0x000232dc: BD30
+  0x000232de: 0000
+  0x000232e0: 01A8
+  0x000232e2: 0000
+  0x000232e4: 0824
+  0x000232e6: 0000
+  0x000232e8: 08D0 <<<
+  0x000232ea: 0000
+  0x000232ec: 0CEC
+  0x000232ee: 0000
+```
+- lit@file `0x23340` guest `0x2fc134` nearby_STR=2
+  - STR@0x23300 guest `0x2fc0f4` r4,[r0,#84]
+  - STR@0x23320 guest `0x2fc114` r0,[r1,#0]
+```text
+  0x00023318: 20FF MOVS r0,#255
+  0x0002331a: 4909 LDR r1,[pc,#36] lit@0x23340=0x8d0
+  0x0002331c: 302F
+  0x0002331e: 4449 ADD/MOV high regs
+  0x00023320: 6008 STR r0,[r1,#0]
+  0x00023322: 2100 MOVS r1,#0
+  0x00023324: 9100
+  0x00023326: 9101
+  0x00023328: 2200 MOVS r2,#0
+  0x0002332a: 21BA MOVS r1,#186
+  0x0002332c: 20F1 MOVS r0,#241
+  0x0002332e: 1C23
+  0x00023330: 0240
+  0x00023332: 9202
+  0x00023334: F008
+  0x00023336: FA16
+  0x00023338: B004
+  0x0002333a: BD10
+  0x0002333c: 0BEC
+  0x0002333e: 0000
+  0x00023340: 08D0 <<<
+  0x00023342: 0000
+  0x00023344: 4913 LDR r1,[pc,#76] lit@0x23394=0xcec
+  0x00023346: B508
+```
+- lit@file `0x233bc` guest `0x2fc1b0` nearby_STR=3
+  - STR@0x233a6 guest `0x2fc19a` r0,[r1,#4]
+  - STR@0x233aa guest `0x2fc19e` r0,[r1,#8]
+  - STR@0x233b2 guest `0x2fc1a6` r0,[r1,#0]
+```text
+  0x00023394: 0CEC
+  0x00023396: 0000
+  0x00023398: 85FE
+  0x0002339a: 0001
+  0x0002339c: 85EC
+  0x0002339e: 0001
+  0x000233a0: 4905 LDR r1,[pc,#20] lit@0x233b8=0x7a4
+  0x000233a2: 2064 MOVS r0,#100
+  0x000233a4: 4449 ADD/MOV high regs
+  0x000233a6: 6048 STR r0,[r1,#4]
+  0x000233a8: 2000 MOVS r0,#0
+  0x000233aa: 6088 STR r0,[r1,#8]
+  0x000233ac: 4903 LDR r1,[pc,#12] lit@0x233bc=0x8d0
+  0x000233ae: 2003 MOVS r0,#3
+  0x000233b0: 4449 ADD/MOV high regs
+  0x000233b2: 6008 STR r0,[r1,#0]
+  0x000233b4: 4770
+  0x000233b6: 0000
+  0x000233b8: 07A4
+  0x000233ba: 0000
+  0x000233bc: 08D0 <<<
+  0x000233be: 0000
+  0x000233c0: B530
+  0x000233c2: 1C04
+```
+- lit@file `0x23430` guest `0x2fc224` nearby_STR=7
+  - STR@0x233f8 guest `0x2fc1ec` r4,[r0,#24]
+  - STR@0x23404 guest `0x2fc1f8` r4,[r0,#48]
+  - STR@0x23406 guest `0x2fc1fa` r4,[r0,#52]
+  - STR@0x2340c guest `0x2fc200` r0,[r1,#0]
+  - STR@0x23414 guest `0x2fc208` r4,[r0,#44]
+  - STR@0x23446 guest `0x2fc23a` r0,[r1,#24]
+  - STR@0x2344c guest `0x2fc240` r1,[r2,#0]
+```text
+  0x00023408: 2027 MOVS r0,#39
+  0x0002340a: 4449 ADD/MOV high regs
+  0x0002340c: 6008 STR r0,[r1,#0]
+  0x0002340e: 4807 LDR r0,[pc,#28] lit@0x2342c=0x106c
+  0x00023410: 4448 ADD/MOV high regs
+  0x00023412: 3080
+  0x00023414: 62C4 STR r4,[r0,#44]
+  0x00023416: 4807 LDR r0,[pc,#28] lit@0x23434=0xcec
+  0x00023418: 4448 ADD/MOV high regs
+  0x0002341a: 6CC0 LDR r0,[r0,#76]
+  0x0002341c: 2800
+  0x0002341e: D002 Bcond cond=0 -> 0x23426
+  0x00023420: 6900 LDR r0,[r0,#16]
+  0x00023422: F015
+  0x00023424: FF01
+  0x00023426: BD10
+  0x00023428: 0F6C
+  0x0002342a: 0000
+  0x0002342c: 106C
+  0x0002342e: 0000
+  0x00023430: 08D0 <<<
+  0x00023432: 0000
+  0x00023434: 0CEC
+  0x00023436: 0000
+```
+- lit@file `0x2346c` guest `0x2fc260` nearby_STR=3
+  - STR@0x23446 guest `0x2fc23a` r0,[r1,#24]
+  - STR@0x2344c guest `0x2fc240` r1,[r2,#0]
+  - STR@0x23452 guest `0x2fc246` r0,[r1,#44]
+```text
+  0x00023444: 4449 ADD/MOV high regs
+  0x00023446: 6188 STR r0,[r1,#24]
+  0x00023448: 2128 MOVS r1,#40
+  0x0002344a: 444A ADD/MOV high regs
+  0x0002344c: 6011 STR r1,[r2,#0]
+  0x0002344e: 4908 LDR r1,[pc,#32] lit@0x23470=0x10ec
+  0x00023450: 4449 ADD/MOV high regs
+  0x00023452: 62C8 STR r0,[r1,#44]
+  0x00023454: 4807 LDR r0,[pc,#28] lit@0x23474=0xcec
+  0x00023456: 4448 ADD/MOV high regs
+  0x00023458: 6CC0 LDR r0,[r0,#76]
+  0x0002345a: 2800
+  0x0002345c: D002 Bcond cond=0 -> 0x23464
+  0x0002345e: 6900 LDR r0,[r0,#16]
+  0x00023460: F015
+  0x00023462: FEE2
+  0x00023464: BD08
+  0x00023466: 0000
+  0x00023468: 0F6C
+  0x0002346a: 0000
+  0x0002346c: 08D0 <<<
+  0x0002346e: 0000
+  0x00023470: 10EC
+  0x00023472: 0000
+```
+- lit@file `0x23658` guest `0x2fc44c` nearby_STR=6
+  - STR@0x23636 guest `0x2fc42a` r0,[r4,#64]
+  - STR@0x23644 guest `0x2fc438` r0,[r4,#48]
+  - STR@0x23650 guest `0x2fc444` r0,[r4,#48]
+  - STR@0x23654 guest `0x2fc448` r0,[r5,#0]
+  - STR@0x2366e guest `0x2fc462` r0,[r7,#76]
+  - STR@0x23670 guest `0x2fc464` r0,[r7,#72]
+```text
+  0x00023630: 2845
+  0x00023632: 444C ADD/MOV high regs
+  0x00023634: D000 Bcond cond=0 -> 0x23638
+  0x00023636: 6420 STR r0,[r4,#64]
+  0x00023638: 6B20 LDR r0,[r4,#48]
+  0x0002363a: 2800
+  0x0002363c: D003 Bcond cond=0 -> 0x23646
+  0x0002363e: F009
+  0x00023640: FCE9
+  0x00023642: 2000 MOVS r0,#0
+  0x00023644: 6320 STR r0,[r4,#48]
+  0x00023646: 4906 LDR r1,[pc,#24] lit@0x23660=0x17e70
+  0x00023648: 4479 ADD/MOV high regs
+  0x0002364a: 1C30
+  0x0002364c: F7DD
+  0x0002364e: F902
+  0x00023650: 6320 STR r0,[r4,#48]
+  0x00023652: 2045 MOVS r0,#69
+  0x00023654: 6028 STR r0,[r5,#0]
+  0x00023656: BD70
+  0x00023658: 08D0 <<<
+  0x0002365a: 0000
+  0x0002365c: 0BA0
+  0x0002365e: 0000
+```
+- lit@file `0x238e8` guest `0x2fc6dc` nearby_STR=0
+```text
+  0x000238c0: 8A58
+  0x000238c2: 0001
+  0x000238c4: 8A44
+  0x000238c6: 0001
+  0x000238c8: 8A42
+  0x000238ca: 0001
+  0x000238cc: 8102
+  0x000238ce: 0001
+  0x000238d0: 8A26
+  0x000238d2: 0001
+  0x000238d4: 0C6C
+  0x000238d6: 0000
+  0x000238d8: 8A06
+  0x000238da: 0001
+  0x000238dc: 89F0
+  0x000238de: 0001
+  0x000238e0: 89E6
+  0x000238e2: 0001
+  0x000238e4: 89DC
+  0x000238e6: 0001
+  0x000238e8: 08D0 <<<
+  0x000238ea: 0000
+  0x000238ec: B538
+  0x000238ee: F7DD
+```
+- lit@file `0x23974` guest `0x2fc768` nearby_STR=7
+  - STR@0x23946 guest `0x2fc73a` r0,[r1,#16]
+  - STR@0x2394c guest `0x2fc740` r0,[r1,#64]
+  - STR@0x2395a guest `0x2fc74e` r0,[r1,#0]
+  - STR@0x23962 guest `0x2fc756` r0,[r1,#108]
+  - STR@0x23984 guest `0x2fc778` r0,[r1,#24]
+  - STR@0x23986 guest `0x2fc77a` r2,[r1,#28]
+  - STR@0x2398a guest `0x2fc77e` r0,[r1,#36]
+```text
+  0x0002394c: 6408 STR r0,[r1,#64]
+  0x0002394e: F011
+  0x00023950: FF0B
+  0x00023952: 4908 LDR r1,[pc,#32] lit@0x23974=0x8d0
+  0x00023954: 20FF MOVS r0,#255
+  0x00023956: 302D
+  0x00023958: 4449 ADD/MOV high regs
+  0x0002395a: 6008 STR r0,[r1,#0]
+  0x0002395c: 4906 LDR r1,[pc,#24] lit@0x23978=0xe6c
+  0x0002395e: 2001 MOVS r0,#1
+  0x00023960: 4449 ADD/MOV high regs
+  0x00023962: 66C8 STR r0,[r1,#108]
+  0x00023964: F014
+  0x00023966: FA90
+  0x00023968: BD08
+  0x0002396a: 0000
+  0x0002396c: 0824
+  0x0002396e: 0000
+  0x00023970: 0D6C
+  0x00023972: 0000
+  0x00023974: 08D0 <<<
+  0x00023976: 0000
+  0x00023978: 0E6C
+  0x0002397a: 0000
+```
+- lit@file `0x239a0` guest `0x2fc794` nearby_STR=5
+  - STR@0x23962 guest `0x2fc756` r0,[r1,#108]
+  - STR@0x23984 guest `0x2fc778` r0,[r1,#24]
+  - STR@0x23986 guest `0x2fc77a` r2,[r1,#28]
+  - STR@0x2398a guest `0x2fc77e` r0,[r1,#36]
+  - STR@0x23998 guest `0x2fc78c` r0,[r1,#0]
+```text
+  0x00023978: 0E6C
+  0x0002397a: 0000
+  0x0002397c: 1C0A
+  0x0002397e: 4907 LDR r1,[pc,#28] lit@0x2399c=0x10ec
+  0x00023980: B508
+  0x00023982: 4449 ADD/MOV high regs
+  0x00023984: 6188 STR r0,[r1,#24]
+  0x00023986: 61CA STR r2,[r1,#28]
+  0x00023988: 2000 MOVS r0,#0
+  0x0002398a: 6248 STR r0,[r1,#36]
+  0x0002398c: F00E
+  0x0002398e: FFCC
+  0x00023990: 4903 LDR r1,[pc,#12] lit@0x239a0=0x8d0
+  0x00023992: 20FF MOVS r0,#255
+  0x00023994: 3019
+  0x00023996: 4449 ADD/MOV high regs
+  0x00023998: 6008 STR r0,[r1,#0]
+  0x0002399a: BD08
+  0x0002399c: 10EC
+  0x0002399e: 0000
+  0x000239a0: 08D0 <<<
+  0x000239a2: 0000
+  0x000239a4: B510
+  0x000239a6: B084
+```
+- lit@file `0x23a24` guest `0x2fc818` nearby_STR=9
+  - STR@0x239f6 guest `0x2fc7ea` r2,[r0,#84]
+  - STR@0x23a10 guest `0x2fc804` r1,[r0,#124]
+  - STR@0x23a12 guest `0x2fc806` r1,[r2,#108]
+  - STR@0x23a14 guest `0x2fc808` r1,[r0,#12]
+  - STR@0x23a16 guest `0x2fc80a` r5,[r0,#120]
+  - STR@0x23a18 guest `0x2fc80c` r6,[r0,#8]
+  - STR@0x23a20 guest `0x2fc814` r0,[r4,#0]
+  - STR@0x23a38 guest `0x2fc82c` r2,[r3,#36]
+```text
+  0x000239fc: 2835
+  0x000239fe: D001 Bcond cond=0 -> 0x23a04
+  0x00023a00: F011
+  0x00023a02: FEB2
+  0x00023a04: 4809 LDR r0,[pc,#36] lit@0x23a2c=0xeec
+  0x00023a06: 4A08 LDR r2,[pc,#32] lit@0x23a28=0x116c
+  0x00023a08: 2100 MOVS r1,#0
+  0x00023a0a: 4448 ADD/MOV high regs
+  0x00023a0c: 444A ADD/MOV high regs
+  0x00023a0e: 3280
+  0x00023a10: 67C1 STR r1,[r0,#124]
+  0x00023a12: 66D1 STR r1,[r2,#108]
+  0x00023a14: 60C1 STR r1,[r0,#12]
+  0x00023a16: 6785 STR r5,[r0,#120]
+  0x00023a18: 6086 STR r6,[r0,#8]
+  0x00023a1a: F00D
+  0x00023a1c: FD27
+  0x00023a1e: 2035 MOVS r0,#53
+  0x00023a20: 6020 STR r0,[r4,#0]
+  0x00023a22: BD70
+  0x00023a24: 08D0 <<<
+  0x00023a26: 0000
+  0x00023a28: 116C
+  0x00023a2a: 0000
+```
+- lit@file `0x23a70` guest `0x2fc864` nearby_STR=8
+  - STR@0x23a38 guest `0x2fc82c` r2,[r3,#36]
+  - STR@0x23a40 guest `0x2fc834` r2,[r3,#12]
+  - STR@0x23a46 guest `0x2fc83a` r0,[r2,#112]
+  - STR@0x23a4c guest `0x2fc840` r1,[r0,#44]
+  - STR@0x23a5a guest `0x2fc84e` r0,[r1,#0]
+  - STR@0x23a82 guest `0x2fc876` r0,[r1,#100]
+  - STR@0x23a88 guest `0x2fc87c` r0,[r1,#20]
+  - STR@0x23a8a guest `0x2fc87e` r0,[r1,#16]
+```text
+  0x00023a48: 4808 LDR r0,[pc,#32] lit@0x23a6c=0x126c
+  0x00023a4a: 4448 ADD/MOV high regs
+  0x00023a4c: 62C1 STR r1,[r0,#44]
+  0x00023a4e: F011
+  0x00023a50: FE8B
+  0x00023a52: 4907 LDR r1,[pc,#28] lit@0x23a70=0x8d0
+  0x00023a54: 20FF MOVS r0,#255
+  0x00023a56: 3006
+  0x00023a58: 4449 ADD/MOV high regs
+  0x00023a5a: 6008 STR r0,[r1,#0]
+  0x00023a5c: BD08
+  0x00023a5e: 0000
+  0x00023a60: 0228
+  0x00023a62: 0000
+  0x00023a64: 0D6C
+  0x00023a66: 0000
+  0x00023a68: 106C
+  0x00023a6a: 0000
+  0x00023a6c: 126C
+  0x00023a6e: 0000
+  0x00023a70: 08D0 <<<
+  0x00023a72: 0000
+  0x00023a74: B510
+  0x00023a76: 1C04
+```
+- lit@file `0x23a9c` guest `0x2fc890` nearby_STR=6
+  - STR@0x23a82 guest `0x2fc876` r0,[r1,#100]
+  - STR@0x23a88 guest `0x2fc87c` r0,[r1,#20]
+  - STR@0x23a8a guest `0x2fc87e` r0,[r1,#16]
+  - STR@0x23a90 guest `0x2fc884` r4,[r0,#0]
+  - STR@0x23aa8 guest `0x2fc89c` r0,[r4,#116]
+  - STR@0x23ab2 guest `0x2fc8a6` r0,[r4,#120]
+```text
+  0x00023a74: B510
+  0x00023a76: 1C04
+  0x00023a78: F011
+  0x00023a7a: FE76
+  0x00023a7c: 4905 LDR r1,[pc,#20] lit@0x23a94=0x106c
+  0x00023a7e: 2000 MOVS r0,#0
+  0x00023a80: 4449 ADD/MOV high regs
+  0x00023a82: 6648 STR r0,[r1,#100]
+  0x00023a84: 4904 LDR r1,[pc,#16] lit@0x23a98=0x126c
+  0x00023a86: 4449 ADD/MOV high regs
+  0x00023a88: 6148 STR r0,[r1,#20]
+  0x00023a8a: 6108 STR r0,[r1,#16]
+  0x00023a8c: 4803 LDR r0,[pc,#12] lit@0x23a9c=0x8d0
+  0x00023a8e: 4448 ADD/MOV high regs
+  0x00023a90: 6004 STR r4,[r0,#0]
+  0x00023a92: BD10
+  0x00023a94: 106C
+  0x00023a96: 0000
+  0x00023a98: 126C
+  0x00023a9a: 0000
+  0x00023a9c: 08D0 <<<
+  0x00023a9e: 0000
+  0x00023aa0: B510
+  0x00023aa2: 4C08 LDR r4,[pc,#32] lit@0x23ac4=0xfec
+```
+- lit@file `0x23ac8` guest `0x2fc8bc` nearby_STR=9
+  - STR@0x23a88 guest `0x2fc87c` r0,[r1,#20]
+  - STR@0x23a8a guest `0x2fc87e` r0,[r1,#16]
+  - STR@0x23a90 guest `0x2fc884` r4,[r0,#0]
+  - STR@0x23aa8 guest `0x2fc89c` r0,[r4,#116]
+  - STR@0x23ab2 guest `0x2fc8a6` r0,[r4,#120]
+  - STR@0x23ac0 guest `0x2fc8b4` r0,[r1,#0]
+  - STR@0x23ad6 guest `0x2fc8ca` r0,[r1,#4]
+  - STR@0x23ade guest `0x2fc8d2` r0,[r1,#8]
+```text
+  0x00023aa0: B510
+  0x00023aa2: 4C08 LDR r4,[pc,#32] lit@0x23ac4=0xfec
+  0x00023aa4: 2000 MOVS r0,#0
+  0x00023aa6: 444C ADD/MOV high regs
+  0x00023aa8: 6760 STR r0,[r4,#116]
+  0x00023aaa: 6FE0 LDR r0,[r4,#124]
+  0x00023aac: 2104 MOVS r1,#4
+  0x00023aae: F7F9
+  0x00023ab0: F949
+  0x00023ab2: 67A0 STR r0,[r4,#120]
+  0x00023ab4: F011
+  0x00023ab6: FE58
+  0x00023ab8: 4903 LDR r1,[pc,#12] lit@0x23ac8=0x8d0
+  0x00023aba: 20FF MOVS r0,#255
+  0x00023abc: 300E
+  0x00023abe: 4449 ADD/MOV high regs
+  0x00023ac0: 6008 STR r0,[r1,#0]
+  0x00023ac2: BD10
+  0x00023ac4: 0FEC
+  0x00023ac6: 0000
+  0x00023ac8: 08D0 <<<
+  0x00023aca: 0000
+  0x00023acc: B508
+  0x00023ace: F007
+```
+- lit@file `0x23b80` guest `0x2fc974` nearby_STR=4
+  - STR@0x23b42 guest `0x2fc936` r0,[r4,#12]
+  - STR@0x23b46 guest `0x2fc93a` r7,[r4,#16]
+  - STR@0x23b5a guest `0x2fc94e` r0,[r4,#72]
+  - STR@0x23b6e guest `0x2fc962` r0,[r4,#68]
+```text
+  0x00023b58: FCCB
+  0x00023b5a: 64A0 STR r0,[r4,#72]
+  0x00023b5c: B005
+  0x00023b5e: BDF0
+  0x00023b60: 2200 MOVS r2,#0
+  0x00023b62: 43D2
+  0x00023b64: 6FA1 LDR r1,[r4,#120]
+  0x00023b66: 1C04
+  0x00023b68: 6C40 LDR r0,[r0,#68]
+  0x00023b6a: F7DC
+  0x00023b6c: FCC1
+  0x00023b6e: 6460 STR r0,[r4,#68]
+  0x00023b70: E7F4 B -> 0x23b5c
+  0x00023b72: 0000
+  0x00023b74: 116C
+  0x00023b76: 0000
+  0x00023b78: 01A8
+  0x00023b7a: 0000
+  0x00023b7c: 0824
+  0x00023b7e: 0000
+  0x00023b80: 08D0 <<<
+  0x00023b82: 0000
+  0x00023b84: 0CEC
+  0x00023b86: 0000
+```
+- lit@file `0x23c88` guest `0x2fca7c` nearby_STR=1
+  - STR@0x23c5e guest `0x2fca52` r0,[r1,#0]
+```text
+  0x00023c60: B005
+  0x00023c62: BDF0
+  0x00023c64: 10EC
+  0x00023c66: 0000
+  0x00023c68: 0CEC
+  0x00023c6a: 0000
+  0x00023c6c: 7CFE
+  0x00023c6e: 0001
+  0x00023c70: 91E6
+  0x00023c72: 0001
+  0x00023c74: 91C2
+  0x00023c76: 0001
+  0x00023c78: 91C8
+  0x00023c7a: 0001
+  0x00023c7c: 7CB8
+  0x00023c7e: 0001
+  0x00023c80: 8C48
+  0x00023c82: 0001
+  0x00023c84: 0EEC
+  0x00023c86: 0000
+  0x00023c88: 08D0 <<<
+  0x00023c8a: 0000
+  0x00023c8c: B5FF
+  0x00023c8e: B087
+```
+- lit@file `0x24090` guest `0x2fce84` nearby_STR=1
+  - STR@0x24060 guest `0x2fce54` r0,[r1,#16]
+```text
+  0x00024068: 9806
+  0x0002406a: AA05
+  0x0002406c: 9202
+  0x0002406e: 9501
+  0x00024070: 9000
+  0x00024072: E057 B -> 0x24124
+  0x00024074: E077 B -> 0x24166
+  0x00024076: 0000
+  0x00024078: 0C6C
+  0x0002407a: 0000
+  0x0002407c: 11EC
+  0x0002407e: 0000
+  0x00024080: 7BF6
+  0x00024082: 0001
+  0x00024084: 0FEC
+  0x00024086: 0000
+  0x00024088: 0D6C
+  0x0002408a: 0000
+  0x0002408c: 7BD4
+  0x0002408e: 0001
+  0x00024090: 08D0 <<<
+  0x00024092: 0000
+  0x00024094: 07CC
+  0x00024096: 0000
+```
+- lit@file `0x24518` guest `0x2fd30c` nearby_STR=1
+  - STR@0x244f6 guest `0x2fd2ea` r0,[r7,#0]
+```text
+  0x000244f0: 4F09 LDR r7,[pc,#36] lit@0x24518=0x8d0
+  0x000244f2: 20D1 MOVS r0,#209
+  0x000244f4: 444F ADD/MOV high regs
+  0x000244f6: 6038 STR r0,[r7,#0]
+  0x000244f8: BDF8
+  0x000244fa: 0000
+  0x000244fc: 106C
+  0x000244fe: 0000
+  0x00024500: 7F12
+  0x00024502: 0001
+  0x00024504: 765A
+  0x00024506: 0001
+  0x00024508: 0C6C
+  0x0002450a: 0000
+  0x0002450c: 8AD2
+  0x0002450e: 0001
+  0x00024510: 7EBA
+  0x00024512: 0001
+  0x00024514: 75FE
+  0x00024516: 0001
+  0x00024518: 08D0 <<<
+  0x0002451a: 0000
+  0x0002451c: 07DE
+  0x0002451e: 0000
+```
+- lit@file `0x24598` guest `0x2fd38c` nearby_STR=4
+  - STR@0x2457c guest `0x2fd370` r0,[r1,#76]
+  - STR@0x24588 guest `0x2fd37c` r4,[r0,#0]
+  - STR@0x2458e guest `0x2fd382` r0,[r1,#0]
+  - STR@0x245b2 guest `0x2fd3a6` r0,[r1,#96]
+```text
+  0x00024570: 7D64
+  0x00024572: 0001
+  0x00024574: B510
+  0x00024576: 1C0C
+  0x00024578: 4906 LDR r1,[pc,#24] lit@0x24594=0xfec
+  0x0002457a: 4449 ADD/MOV high regs
+  0x0002457c: 64C8 STR r0,[r1,#76]
+  0x0002457e: F011
+  0x00024580: F8F3
+  0x00024582: 4805 LDR r0,[pc,#20] lit@0x24598=0x8d0
+  0x00024584: 4905 LDR r1,[pc,#20] lit@0x2459c=0x7a8
+  0x00024586: 4448 ADD/MOV high regs
+  0x00024588: 6004 STR r4,[r0,#0]
+  0x0002458a: 2000 MOVS r0,#0
+  0x0002458c: 4449 ADD/MOV high regs
+  0x0002458e: 6008 STR r0,[r1,#0]
+  0x00024590: BD10
+  0x00024592: 0000
+  0x00024594: 0FEC
+  0x00024596: 0000
+  0x00024598: 08D0 <<<
+  0x0002459a: 0000
+  0x0002459c: 07A8
+  0x0002459e: 0000
+```
+- lit@file `0x245d0` guest `0x2fd3c4` nearby_STR=7
+  - STR@0x245b2 guest `0x2fd3a6` r0,[r1,#96]
+  - STR@0x245b8 guest `0x2fd3ac` r0,[r2,#12]
+  - STR@0x245be guest `0x2fd3b2` r0,[r3,#0]
+  - STR@0x245c0 guest `0x2fd3b4` r5,[r2,#8]
+  - STR@0x245c2 guest `0x2fd3b6` r4,[r1,#92]
+  - STR@0x245e4 guest `0x2fd3d8` r0,[r1,#0]
+  - STR@0x245ee guest `0x2fd3e2` r0,[r1,#0]
+```text
+  0x000245a8: F8DF
+  0x000245aa: 4907 LDR r1,[pc,#28] lit@0x245c8=0x106c
+  0x000245ac: 4A07 LDR r2,[pc,#28] lit@0x245cc=0x126c
+  0x000245ae: 2000 MOVS r0,#0
+  0x000245b0: 4449 ADD/MOV high regs
+  0x000245b2: 6608 STR r0,[r1,#96]
+  0x000245b4: 4B06 LDR r3,[pc,#24] lit@0x245d0=0x8d0
+  0x000245b6: 444A ADD/MOV high regs
+  0x000245b8: 60D0 STR r0,[r2,#12]
+  0x000245ba: 20D9 MOVS r0,#217
+  0x000245bc: 444B ADD/MOV high regs
+  0x000245be: 6018 STR r0,[r3,#0]
+  0x000245c0: 6095 STR r5,[r2,#8]
+  0x000245c2: 65CC STR r4,[r1,#92]
+  0x000245c4: BD38
+  0x000245c6: 0000
+  0x000245c8: 106C
+  0x000245ca: 0000
+  0x000245cc: 126C
+  0x000245ce: 0000
+  0x000245d0: 08D0 <<<
+  0x000245d2: 0000
+  0x000245d4: B510
+  0x000245d6: 1C04
+```
+- lit@file `0x24610` guest `0x2fd404` nearby_STR=4
+  - STR@0x245e4 guest `0x2fd3d8` r0,[r1,#0]
+  - STR@0x245ee guest `0x2fd3e2` r0,[r1,#0]
+  - STR@0x2460c guest `0x2fd400` r0,[r1,#120]
+  - STR@0x2462c guest `0x2fd420` r1,[r2,#84]
+```text
+  0x000245e8: F965
+  0x000245ea: 490A LDR r1,[pc,#40] lit@0x24614=0x10ec
+  0x000245ec: 4449 ADD/MOV high regs
+  0x000245ee: 6008 STR r0,[r1,#0]
+  0x000245f0: F00F
+  0x000245f2: FB18
+  0x000245f4: 4908 LDR r1,[pc,#32] lit@0x24618=0xcec
+  0x000245f6: 2000 MOVS r0,#0
+  0x000245f8: 4449 ADD/MOV high regs
+  0x000245fa: 7048
+  0x000245fc: 4907 LDR r1,[pc,#28] lit@0x2461c=0x172be
+  0x000245fe: 4479 ADD/MOV high regs
+  0x00024600: 1C20
+  0x00024602: F7DC
+  0x00024604: F927
+  0x00024606: 4903 LDR r1,[pc,#12] lit@0x24614=0x10ec
+  0x00024608: 4449 ADD/MOV high regs
+  0x0002460a: 3980
+  0x0002460c: 6788 STR r0,[r1,#120]
+  0x0002460e: BD10
+  0x00024610: 08D0 <<<
+  0x00024612: 0000
+  0x00024614: 10EC
+  0x00024616: 0000
+```
+- lit@file `0x24684` guest `0x2fd478` nearby_STR=2
+  - STR@0x2464c guest `0x2fd440` r0,[r1,#84]
+  - STR@0x2465a guest `0x2fd44e` r2,[r0,#0]
+```text
+  0x0002465c: 2001 MOVS r0,#1
+  0x0002465e: 9000
+  0x00024660: 4809 LDR r0,[pc,#36] lit@0x24688=0xcec
+  0x00024662: 2100 MOVS r1,#0
+  0x00024664: 43C9
+  0x00024666: 9101
+  0x00024668: 9202
+  0x0002466a: 2336 MOVS r3,#54
+  0x0002466c: 4448 ADD/MOV high regs
+  0x0002466e: 5EC0
+  0x00024670: 1C03
+  0x00024672: 1C22
+  0x00024674: 2105 MOVS r1,#5
+  0x00024676: 4805 LDR r0,[pc,#20] lit@0x2468c=0x1e203
+  0x00024678: F007
+  0x0002467a: F874
+  0x0002467c: B004
+  0x0002467e: BD10
+  0x00024680: 116C
+  0x00024682: 0000
+  0x00024684: 08D0 <<<
+  0x00024686: 0000
+  0x00024688: 0CEC
+  0x0002468a: 0000
+```
+- lit@file `0x25ef4` guest `0x2fece8` nearby_STR=1
+  - STR@0x25f04 guest `0x2fecf8` r2,[r5,#20]
+```text
+  0x00025ecc: 4C08 LDR r4,[pc,#32] lit@0x25ef0=0xc6c
+  0x00025ece: 231C MOVS r3,#28
+  0x00025ed0: 444C ADD/MOV high regs
+  0x00025ed2: 56E0
+  0x00025ed4: 2800
+  0x00025ed6: D102 Bcond cond=1 -> 0x25ede
+  0x00025ed8: 7727
+  0x00025eda: F010
+  0x00025edc: FC1D
+  0x00025ede: B005
+  0x00025ee0: BDF0
+  0x00025ee2: 4C03 LDR r4,[pc,#12] lit@0x25ef0=0xc6c
+  0x00025ee4: 444C ADD/MOV high regs
+  0x00025ee6: 7727
+  0x00025ee8: E7F9 B -> 0x25ede
+  0x00025eea: 0000
+  0x00025eec: 11EC
+  0x00025eee: 0000
+  0x00025ef0: 0C6C
+  0x00025ef2: 0000
+  0x00025ef4: 08D0 <<<
+  0x00025ef6: 0000
+  0x00025ef8: E203 B -> 0x26302
+  0x00025efa: 0001
+```
+- lit@file `0x272b0` guest `0x3000a4` nearby_STR=0
+```text
+  0x00027288: F004
+  0x0002728a: FA6C
+  0x0002728c: 2801
+  0x0002728e: D001 Bcond cond=0 -> 0x27294
+  0x00027290: 2000 MOVS r0,#0
+  0x00027292: E7ED B -> 0x27270
+  0x00027294: 6820 LDR r0,[r4,#0]
+  0x00027296: 28D3
+  0x00027298: D003 Bcond cond=0 -> 0x272a2
+  0x0002729a: 6820 LDR r0,[r4,#0]
+  0x0002729c: 38FF
+  0x0002729e: 3802
+  0x000272a0: D101 Bcond cond=1 -> 0x272a6
+  0x000272a2: 2000 MOVS r0,#0
+  0x000272a4: E7E4 B -> 0x27270
+  0x000272a6: 2001 MOVS r0,#1
+  0x000272a8: E7E2 B -> 0x27270
+  0x000272aa: 2000 MOVS r0,#0
+  0x000272ac: E7E0 B -> 0x27270
+  0x000272ae: 0000
+  0x000272b0: 08D0 <<<
+  0x000272b2: 0000
+  0x000272b4: E204 B -> 0x276c0
+  0x000272b6: 0001
+```
+- lit@file `0x27cd0` guest `0x300ac4` nearby_STR=0
+```text
+  0x00027ca8: FD5D
+  0x00027caa: 1C20
+  0x00027cac: F000
+  0x00027cae: FED2
+  0x00027cb0: E65E B -> 0x27970
+  0x00027cb2: 2100 MOVS r1,#0
+  0x00027cb4: 2200 MOVS r2,#0
+  0x00027cb6: 9202
+  0x00027cb8: 9100
+  0x00027cba: 9101
+  0x00027cbc: 2143 MOVS r1,#67
+  0x00027cbe: 1C22
+  0x00027cc0: 1C2B
+  0x00027cc2: 1C30
+  0x00027cc4: F003
+  0x00027cc6: FD4E
+  0x00027cc8: 1C20
+  0x00027cca: F000
+  0x00027ccc: FEC3
+  0x00027cce: E64F B -> 0x27970
+  0x00027cd0: 08D0 <<<
+  0x00027cd2: 0000
+  0x00027cd4: E501 B -> 0x276da
+  0x00027cd6: 0001
+```
+- lit@file `0x28858` guest `0x30164c` nearby_STR=4
+  - STR@0x28818 guest `0x30160c` r0,[r1,#0]
+  - STR@0x2882a guest `0x30161e` r5,[r2,#12]
+  - STR@0x28830 guest `0x301624` r1,[r6,#36]
+  - STR@0x28838 guest `0x30162c` r0,[r6,#36]
+```text
+  0x00028830: 6271 STR r1,[r6,#36]
+  0x00028832: 42B9
+  0x00028834: DD8D Bcond cond=13 -> 0x28752
+  0x00028836: 2001 MOVS r0,#1
+  0x00028838: 6270 STR r0,[r6,#36]
+  0x0002883a: E76B B -> 0x28714
+  0x0002883c: E76A B -> 0x28714
+  0x0002883e: 0000
+  0x00028840: 126C
+  0x00028842: 0000
+  0x00028844: 0D6C
+  0x00028846: 0000
+  0x00028848: 0228
+  0x0002884a: 0000
+  0x0002884c: 106C
+  0x0002884e: 0000
+  0x00028850: C255
+  0x00028852: 0001
+  0x00028854: E202 B -> 0x28c5c
+  0x00028856: 0001
+  0x00028858: 08D0 <<<
+  0x0002885a: 0000
+  0x0002885c: B570
+  0x0002885e: 4C4E LDR r4,[pc,#312] lit@0x28998=0x1280
+```
+- lit@file `0x289a4` guest `0x301798` nearby_STR=0
+```text
+  0x0002897c: FEF3
+  0x0002897e: E001 B -> 0x28984
+  0x00028980: E001 B -> 0x28986
+  0x00028982: E003 B -> 0x2898c
+  0x00028984: E782 B -> 0x2888c
+  0x00028986: F7F8
+  0x00028988: FE9B
+  0x0002898a: E77F B -> 0x2888c
+  0x0002898c: 220D MOVS r2,#13
+  0x0002898e: 2106 MOVS r1,#6
+  0x00028990: 2001 MOVS r0,#1
+  0x00028992: F7F9
+  0x00028994: FCC1
+  0x00028996: E779 B -> 0x2888c
+  0x00028998: 1280
+  0x0002899a: 0000
+  0x0002899c: 106C
+  0x0002899e: 0000
+  0x000289a0: 4522
+  0x000289a2: 0001
+  0x000289a4: 08D0 <<<
+  0x000289a6: 0000
+  0x000289a8: E216 B -> 0x28dd8
+  0x000289aa: 0001
+```
+- lit@file `0x28aa0` guest `0x301894` nearby_STR=1
+  - STR@0x28a78 guest `0x30186c` r4,[r0,#12]
+```text
+  0x00028a78: 60C4 STR r4,[r0,#12]
+  0x00028a7a: 4809 LDR r0,[pc,#36] lit@0x28aa0=0x8d0
+  0x00028a7c: 4D09 LDR r5,[pc,#36] lit@0x28aa4=0xc6c
+  0x00028a7e: 4448 ADD/MOV high regs
+  0x00028a80: 6800 LDR r0,[r0,#0]
+  0x00028a82: 444D ADD/MOV high regs
+  0x00028a84: 2814
+  0x00028a86: D100 Bcond cond=1 -> 0x28a8a
+  0x00028a88: 732C
+  0x00028a8a: 4807 LDR r0,[pc,#28] lit@0x28aa8=0x11ec
+  0x00028a8c: 4448 ADD/MOV high regs
+  0x00028a8e: 68C0 LDR r0,[r0,#12]
+  0x00028a90: 2800
+  0x00028a92: D001 Bcond cond=0 -> 0x28a98
+  0x00028a94: F00E
+  0x00028a96: FDCA
+  0x00028a98: 732C
+  0x00028a9a: BD38
+  0x00028a9c: 0D6C
+  0x00028a9e: 0000
+  0x00028aa0: 08D0 <<<
+  0x00028aa2: 0000
+  0x00028aa4: 0C6C
+  0x00028aa6: 0000
+```
+- lit@file `0x296c4` guest `0x3024b8` nearby_STR=0
+```text
+  0x0002969c: F002
+  0x0002969e: F862
+  0x000296a0: E06D B -> 0x2977e
+  0x000296a2: E070 B -> 0x29786
+  0x000296a4: 11D0
+  0x000296a6: 0000
+  0x000296a8: 0C6C
+  0x000296aa: 0000
+  0x000296ac: 0EEC
+  0x000296ae: 0000
+  0x000296b0: 0DEC
+  0x000296b2: 0000
+  0x000296b4: 01A8
+  0x000296b6: 0000
+  0x000296b8: E213 B -> 0x29ae2
+  0x000296ba: 0001
+  0x000296bc: E217 B -> 0x29aee
+  0x000296be: 0001
+  0x000296c0: E204 B -> 0x29acc
+  0x000296c2: 0001
+  0x000296c4: 08D0 <<<
+  0x000296c6: 0000
+  0x000296c8: 0AB4
+  0x000296ca: 0000
+```
+- lit@file `0x2debc` guest `0x306cb0` nearby_STR=0
+```text
+  0x0002de94: 213A MOVS r1,#58
+  0x0002de96: 1C2B
+  0x0002de98: 1C30
+  0x0002de9a: 9202
+  0x0002de9c: F7FD
+  0x0002de9e: FC62
+  0x0002dea0: E0DF B -> 0x2e062
+  0x0002dea2: 2100 MOVS r1,#0
+  0x0002dea4: 9100
+  0x0002dea6: 9101
+  0x0002dea8: 2200 MOVS r2,#0
+  0x0002deaa: 2136 MOVS r1,#54
+  0x0002deac: 1C2B
+  0x0002deae: 1C30
+  0x0002deb0: 9202
+  0x0002deb2: F7FD
+  0x0002deb4: FC57
+  0x0002deb6: E0D4 B -> 0x2e062
+  0x0002deb8: 0C6C
+  0x0002deba: 0000
+  0x0002debc: 08D0 <<<
+  0x0002debe: 0000
+  0x0002dec0: 07DA
+  0x0002dec2: 0000
+```
+- lit@file `0x2e280` guest `0x307074` nearby_STR=0
+```text
+  0x0002e258: E46A B -> 0x2db30
+  0x0002e25a: 0000
+  0x0002e25c: E203 B -> 0x2e666
+  0x0002e25e: 0001
+  0x0002e260: E231 B -> 0x2e6c6
+  0x0002e262: 0001
+  0x0002e264: E211 B -> 0x2e68a
+  0x0002e266: 0001
+  0x0002e268: E205 B -> 0x2e676
+  0x0002e26a: 0001
+  0x0002e26c: E206 B -> 0x2e67c
+  0x0002e26e: 0001
+  0x0002e270: E204 B -> 0x2e67c
+  0x0002e272: 0001
+  0x0002e274: E217 B -> 0x2e6a6
+  0x0002e276: 0001
+  0x0002e278: 106C
+  0x0002e27a: 0000
+  0x0002e27c: E202 B -> 0x2e684
+  0x0002e27e: 0001
+  0x0002e280: 08D0 <<<
+  0x0002e282: 0000
+  0x0002e284: E221 B -> 0x2e6ca
+  0x0002e286: 0001
+```
+- lit@file `0x2e488` guest `0x30727c` nearby_STR=0
+```text
+  0x0002e460: F911
+  0x0002e462: 4807 LDR r0,[pc,#28] lit@0x2e480=0xcec
+  0x0002e464: 2307 MOVS r3,#7
+  0x0002e466: 4448 ADD/MOV high regs
+  0x0002e468: 3850
+  0x0002e46a: 56C0
+  0x0002e46c: 2800
+  0x0002e46e: D101 Bcond cond=1 -> 0x2e474
+  0x0002e470: F7E2
+  0x0002e472: FCE6
+  0x0002e474: F7E6
+  0x0002e476: FA32
+  0x0002e478: F7E9
+  0x0002e47a: F870
+  0x0002e47c: E71A B -> 0x2e2b4
+  0x0002e47e: 0000
+  0x0002e480: 0CEC
+  0x0002e482: 0000
+  0x0002e484: 0E6C
+  0x0002e486: 0000
+  0x0002e488: 08D0 <<<
+  0x0002e48a: 0000
+  0x0002e48c: 0A38
+  0x0002e48e: 0000
+```
+- lit@file `0x32710` guest `0x30b504` nearby_STR=2
+  - STR@0x326dc guest `0x30b4d0` r5,[r4,#40]
+  - STR@0x326f0 guest `0x30b4e4` r5,[r4,#36]
+```text
+  0x000326e8: 2800
+  0x000326ea: D002 Bcond cond=0 -> 0x326f2
+  0x000326ec: F7FE
+  0x000326ee: FFA0
+  0x000326f0: 6265 STR r5,[r4,#36]
+  0x000326f2: F7EE
+  0x000326f4: FFE5
+  0x000326f6: F7F2
+  0x000326f8: FF07
+  0x000326fa: BD38
+  0x000326fc: 4805 LDR r0,[pc,#20] lit@0x32714=0xcbc
+  0x000326fe: 2303 MOVS r3,#3
+  0x00032700: 4448 ADD/MOV high regs
+  0x00032702: 56C0
+  0x00032704: F7EF
+  0x00032706: FF32
+  0x00032708: E7F7 B -> 0x326fa
+  0x0003270a: 0000
+  0x0003270c: 0EEC
+  0x0003270e: 0000
+  0x00032710: 08D0 <<<
+  0x00032712: 0000
+  0x00032714: 0CBC
+  0x00032716: 0000
+```
+- lit@file `0x359bc` guest `0x30e7b0` nearby_STR=2
+  - STR@0x3597c guest `0x30e770` r5,[r4,#124]
+  - STR@0x3599e guest `0x30e792` r0,[r1,#80]
+```text
+  0x00035994: 4906 LDR r1,[pc,#24] lit@0x359b0=0x106c
+  0x00035996: 4448 ADD/MOV high regs
+  0x00035998: 6800 LDR r0,[r0,#0]
+  0x0003599a: 4449 ADD/MOV high regs
+  0x0003599c: 3980
+  0x0003599e: 6508 STR r0,[r1,#80]
+  0x000359a0: E742 B -> 0x35828
+  0x000359a2: 0000
+  0x000359a4: 0EEC
+  0x000359a6: 0000
+  0x000359a8: 0CDC
+  0x000359aa: 0000
+  0x000359ac: 11EC
+  0x000359ae: 0000
+  0x000359b0: 106C
+  0x000359b2: 0000
+  0x000359b4: 028C
+  0x000359b6: 0000
+  0x000359b8: 0DEC
+  0x000359ba: 0000
+  0x000359bc: 08D0 <<<
+  0x000359be: 0000
+  0x000359c0: B570
+  0x000359c2: 24FF MOVS r4,#255
+```
+- lit@file `0x38224` guest `0x311018` nearby_STR=1
+  - STR@0x3820c guest `0x311000` r0,[r1,#0]
+```text
+  0x000381fc: 4909 LDR r1,[pc,#36] lit@0x38224=0x8d0
+  0x000381fe: 75B7
+  0x00038200: 4449 ADD/MOV high regs
+  0x00038202: 6808 LDR r0,[r1,#0]
+  0x00038204: 8730
+  0x00038206: 83F7
+  0x00038208: 85B7
+  0x0003820a: 202F MOVS r0,#47
+  0x0003820c: 6008 STR r0,[r1,#0]
+  0x0003820e: BDF8
+  0x00038210: 01A8
+  0x00038212: 0000
+  0x00038214: 0E6C
+  0x00038216: 0000
+  0x00038218: 0C6C
+  0x0003821a: 0000
+  0x0003821c: 11EC
+  0x0003821e: 0000
+  0x00038220: 2710 MOVS r7,#16
+  0x00038222: 0000
+  0x00038224: 08D0 <<<
+  0x00038226: 0000
+  0x00038228: B510
+  0x0003822a: 1C04
+```
+- lit@file `0x3856c` guest `0x311360` nearby_STR=0
+```text
+  0x00038544: FCC1
+  0x00038546: E7ED B -> 0x38524
+  0x00038548: 2100 MOVS r1,#0
+  0x0003854a: 2200 MOVS r2,#0
+  0x0003854c: 9100
+  0x0003854e: 9101
+  0x00038550: 1C23
+  0x00038552: 2106 MOVS r1,#6
+  0x00038554: 9202
+  0x00038556: 480B LDR r0,[pc,#44] lit@0x38584=0x1e206
+  0x00038558: F7F3
+  0x0003855a: F904
+  0x0003855c: E7E2 B -> 0x38524
+  0x0003855e: 0000
+  0x00038560: 0C44
+  0x00038562: 0000
+  0x00038564: 1314
+  0x00038566: 0000
+  0x00038568: 131C
+  0x0003856a: 0000
+  0x0003856c: 08D0 <<<
+  0x0003856e: 0000
+  0x00038570: 0CE1
+  0x00038572: 0000
+```
+- lit@file `0x3897c` guest `0x311770` nearby_STR=0
+```text
+  0x00038954: 444F ADD/MOV high regs
+  0x00038956: 68B1 LDR r1,[r6,#8]
+  0x00038958: 00A0
+  0x0003895a: 5808
+  0x0003895c: 2130 MOVS r1,#48
+  0x0003895e: 5609
+  0x00038960: 2903
+  0x00038962: DB02 Bcond cond=11 -> 0x3896a
+  0x00038964: 6839 LDR r1,[r7,#0]
+  0x00038966: 2914
+  0x00038968: D101 Bcond cond=1 -> 0x3896e
+  0x0003896a: F000
+  0x0003896c: FCBD
+  0x0003896e: 3401
+  0x00038970: 42AC
+  0x00038972: DBF0 Bcond cond=11 -> 0x38956
+  0x00038974: BDF8
+  0x00038976: 0000
+  0x00038978: 11EC
+  0x0003897a: 0000
+  0x0003897c: 08D0 <<<
+  0x0003897e: 0000
+  0x00038980: B5F8
+  0x00038982: 4D41 LDR r5,[pc,#260] lit@0x38a88=0x1a8
+```
+- lit@file `0x38a94` guest `0x311888` nearby_STR=0
+```text
+  0x00038a6c: 6F28 LDR r0,[r5,#112]
+  0x00038a6e: 6B71 LDR r1,[r6,#52]
+  0x00038a70: 4288
+  0x00038a72: DA03 Bcond cond=10 -> 0x38a7c
+  0x00038a74: 1C20
+  0x00038a76: F7F1
+  0x00038a78: FFE5
+  0x00038a7a: E79C B -> 0x389b6
+  0x00038a7c: 4288
+  0x00038a7e: DD9A Bcond cond=13 -> 0x389b6
+  0x00038a80: 1C20
+  0x00038a82: F7F2
+  0x00038a84: F91F
+  0x00038a86: E796 B -> 0x389b6
+  0x00038a88: 01A8
+  0x00038a8a: 0000
+  0x00038a8c: 0F6C
+  0x00038a8e: 0000
+  0x00038a90: 116C
+  0x00038a92: 0000
+  0x00038a94: 08D0 <<<
+  0x00038a96: 0000
+  0x00038a98: 106C
+  0x00038a9a: 0000
+```
+- lit@file `0x38e0c` guest `0x311c00` nearby_STR=2
+  - STR@0x38df2 guest `0x311be6` r5,[r4,#112]
+  - STR@0x38df4 guest `0x311be8` r6,[r4,#108]
+```text
+  0x00038de4: 1C2B
+  0x00038de6: 444C ADD/MOV high regs
+  0x00038de8: 6EE0 LDR r0,[r4,#108]
+  0x00038dea: 6F21 LDR r1,[r4,#112]
+  0x00038dec: 1C32
+  0x00038dee: F7F6
+  0x00038df0: F895
+  0x00038df2: 6725 STR r5,[r4,#112]
+  0x00038df4: 66E6 STR r6,[r4,#108]
+  0x00038df6: E66C B -> 0x38ad2
+  0x00038df8: 0C6C
+  0x00038dfa: 0000
+  0x00038dfc: E209 B -> 0x39212
+  0x00038dfe: 0001
+  0x00038e00: 01A8
+  0x00038e02: 0000
+  0x00038e04: 0824
+  0x00038e06: 0000
+  0x00038e08: 087C
+  0x00038e0a: 0000
+  0x00038e0c: 08D0 <<<
+  0x00038e0e: 0000
+  0x00038e10: 106C
+  0x00038e12: 0000
+```
+- lit@file `0x390bc` guest `0x311eb0` nearby_STR=1
+  - STR@0x3908c guest `0x311e80` r5,[r0,#84]
+```text
+  0x00039094: E706 B -> 0x38ea4
+  0x00039096: 0000
+  0x00039098: 0CEC
+  0x0003909a: 0000
+  0x0003909c: 0C44
+  0x0003909e: 0000
+  0x000390a0: 11EC
+  0x000390a2: 0000
+  0x000390a4: 10EC
+  0x000390a6: 0000
+  0x000390a8: 01A8
+  0x000390aa: 0000
+  0x000390ac: E21F B -> 0x394ee
+  0x000390ae: 0001
+  0x000390b0: 0824
+  0x000390b2: 0000
+  0x000390b4: 396A
+  0x000390b6: 0000
+  0x000390b8: 0E6C
+  0x000390ba: 0000
+  0x000390bc: 08D0 <<<
+  0x000390be: 0000
+  0x000390c0: 0ABC
+  0x000390c2: 0000
+```
+- lit@file `0x39220` guest `0x312014` nearby_STR=6
+  - STR@0x391f2 guest `0x311fe6` r2,[r3,#4]
+  - STR@0x391f6 guest `0x311fea` r2,[r3,#8]
+  - STR@0x391fa guest `0x311fee` r2,[r4,#0]
+  - STR@0x39200 guest `0x311ff4` r0,[r3,#8]
+  - STR@0x39208 guest `0x311ffc` r0,[r3,#8]
+  - STR@0x39212 guest `0x312006` r0,[r3,#8]
+```text
+  0x000391f8: 2203 MOVS r2,#3
+  0x000391fa: 6022 STR r2,[r4,#0]
+  0x000391fc: 689A LDR r2,[r3,#8]
+  0x000391fe: 1810
+  0x00039200: 6098 STR r0,[r3,#8]
+  0x00039202: 2901
+  0x00039204: D101 Bcond cond=1 -> 0x3920a
+  0x00039206: 6858 LDR r0,[r3,#4]
+  0x00039208: 6098 STR r0,[r3,#8]
+  0x0003920a: 6858 LDR r0,[r3,#4]
+  0x0003920c: 6899 LDR r1,[r3,#8]
+  0x0003920e: 4281
+  0x00039210: DD00 Bcond cond=13 -> 0x39214
+  0x00039212: 6098 STR r0,[r3,#8]
+  0x00039214: F7F8
+  0x00039216: F978
+  0x00039218: F7F8
+  0x0003921a: F9B0
+  0x0003921c: BD10
+  0x0003921e: 0000
+  0x00039220: 08D0 <<<
+  0x00039222: 0000
+  0x00039224: 07A4
+  0x00039226: 0000
+```
+- lit@file `0x394a0` guest `0x312294` nearby_STR=0
+```text
+  0x00039478: 2100 MOVS r1,#0
+  0x0003947a: 1C20
+  0x0003947c: F7FD
+  0x0003947e: FFF2
+  0x00039480: 2101 MOVS r1,#1
+  0x00039482: 1C20
+  0x00039484: F7F3
+  0x00039486: FE48
+  0x00039488: E7B6 B -> 0x393f8
+  0x0003948a: 0000
+  0x0003948c: 08B8
+  0x0003948e: 0000
+  0x00039490: 117C
+  0x00039492: 0000
+  0x00039494: 10D8
+  0x00039496: 0000
+  0x00039498: 11F8
+  0x0003949a: 0000
+  0x0003949c: 0FCC
+  0x0003949e: 0000
+  0x000394a0: 08D0 <<<
+  0x000394a2: 0000
+  0x000394a4: 0001
+  0x000394a6: 8000
+```
+- lit@file `0x396bc` guest `0x3124b0` nearby_STR=1
+  - STR@0x396b0 guest `0x3124a4` r4,[r6,#124]
+```text
+  0x00039694: 6800 LDR r0,[r0,#0]
+  0x00039696: F7FD
+  0x00039698: FCA1
+  0x0003969a: E009 B -> 0x396b0
+  0x0003969c: 2100 MOVS r1,#0
+  0x0003969e: 2200 MOVS r2,#0
+  0x000396a0: 9100
+  0x000396a2: 9101
+  0x000396a4: 1C2B
+  0x000396a6: 210B MOVS r1,#11
+  0x000396a8: 9202
+  0x000396aa: 4809 LDR r0,[pc,#36] lit@0x396d0=0x1e203
+  0x000396ac: F7F2
+  0x000396ae: F85A
+  0x000396b0: 67F4 STR r4,[r6,#124]
+  0x000396b2: 703D
+  0x000396b4: E759 B -> 0x3956a
+  0x000396b6: 0000
+  0x000396b8: 0F6C
+  0x000396ba: 0000
+  0x000396bc: 08D0 <<<
+  0x000396be: 0000
+  0x000396c0: 01A8
+  0x000396c2: 0000
+```
+- lit@file `0x39a00` guest `0x3127f4` nearby_STR=3
+  - STR@0x399d4 guest `0x3127c8` r0,[r1,#0]
+  - STR@0x399da guest `0x3127ce` r5,[r4,#68]
+  - STR@0x399e0 guest `0x3127d4` r0,[r4,#68]
+```text
+  0x000399d8: E7B8 B -> 0x3994c
+  0x000399da: 6465 STR r5,[r4,#68]
+  0x000399dc: F7E3
+  0x000399de: FF50
+  0x000399e0: 6460 STR r0,[r4,#68]
+  0x000399e2: F7CA
+  0x000399e4: FF63
+  0x000399e6: 2001 MOVS r0,#1
+  0x000399e8: E7B0 B -> 0x3994c
+  0x000399ea: 2000 MOVS r0,#0
+  0x000399ec: E7AE B -> 0x3994c
+  0x000399ee: 0000
+  0x000399f0: 01A8
+  0x000399f2: 0000
+  0x000399f4: 116C
+  0x000399f6: 0000
+  0x000399f8: 0E6C
+  0x000399fa: 0000
+  0x000399fc: 0CEC
+  0x000399fe: 0000
+  0x00039a00: 08D0 <<<
+  0x00039a02: 0000
+  0x00039a04: B5F8
+  0x00039a06: 4F25 LDR r7,[pc,#148] lit@0x39a9c=0xcec
+```
+- lit@file `0x39aa0` guest `0x312894` nearby_STR=2
+  - STR@0x39a66 guest `0x31285a` r0,[r7,#80]
+  - STR@0x39a6a guest `0x31285e` r6,[r7,#76]
+```text
+  0x00039a78: 3980
+  0x00039a7a: 704C
+  0x00039a7c: E009 B -> 0x39a92
+  0x00039a7e: 3401
+  0x00039a80: 42B4
+  0x00039a82: DBDA Bcond cond=11 -> 0x39a3a
+  0x00039a84: 1C28
+  0x00039a86: F7EE
+  0x00039a88: FFE5
+  0x00039a8a: 2000 MOVS r0,#0
+  0x00039a8c: E7C2 B -> 0x39a14
+  0x00039a8e: F7D5
+  0x00039a90: F88F
+  0x00039a92: 1C28
+  0x00039a94: F7EE
+  0x00039a96: FFDE
+  0x00039a98: 2000 MOVS r0,#0
+  0x00039a9a: E7BB B -> 0x39a14
+  0x00039a9c: 0CEC
+  0x00039a9e: 0000
+  0x00039aa0: 08D0 <<<
+  0x00039aa2: 0000
+  0x00039aa4: B5F8
+  0x00039aa6: 4C1D LDR r4,[pc,#116] lit@0x39b1c=0xcec
+```
+- lit@file `0x39b20` guest `0x312914` nearby_STR=4
+  - STR@0x39ae8 guest `0x3128dc` r2,[r4,#76]
+  - STR@0x39aea guest `0x3128de` r6,[r4,#80]
+  - STR@0x39afc guest `0x3128f0` r0,[r4,#80]
+  - STR@0x39b00 guest `0x3128f4` r6,[r4,#76]
+```text
+  0x00039af8: FC35
+  0x00039afa: 6CE0 LDR r0,[r4,#76]
+  0x00039afc: 6520 STR r0,[r4,#80]
+  0x00039afe: 4808 LDR r0,[pc,#32] lit@0x39b20=0x8d0
+  0x00039b00: 64E6 STR r6,[r4,#76]
+  0x00039b02: 4448 ADD/MOV high regs
+  0x00039b04: 6800 LDR r0,[r0,#0]
+  0x00039b06: 2845
+  0x00039b08: D102 Bcond cond=1 -> 0x39b10
+  0x00039b0a: 2001 MOVS r0,#1
+  0x00039b0c: 7068
+  0x00039b0e: E001 B -> 0x39b14
+  0x00039b10: F7D5
+  0x00039b12: F84E
+  0x00039b14: 2000 MOVS r0,#0
+  0x00039b16: E7CC B -> 0x39ab2
+  0x00039b18: 2000 MOVS r0,#0
+  0x00039b1a: E7CA B -> 0x39ab2
+  0x00039b1c: 0CEC
+  0x00039b1e: 0000
+  0x00039b20: 08D0 <<<
+  0x00039b22: 0000
+  0x00039b24: B5F0
+  0x00039b26: 1C0F
+```
+- lit@file `0x39ed4` guest `0x312cc8` nearby_STR=0
+```text
+  0x00039eac: 43D2
+  0x00039eae: 215B MOVS r1,#91
+  0x00039eb0: 6840 LDR r0,[r0,#4]
+  0x00039eb2: F7FC
+  0x00039eb4: FB51
+  0x00039eb6: E7E4 B -> 0x39e82
+  0x00039eb8: 2301 MOVS r3,#1
+  0x00039eba: 1C22
+  0x00039ebc: 2100 MOVS r1,#0
+  0x00039ebe: F7C7
+  0x00039ec0: FBB7
+  0x00039ec2: E7DE B -> 0x39e82
+  0x00039ec4: F7F8
+  0x00039ec6: FC28
+  0x00039ec8: E7DB B -> 0x39e82
+  0x00039eca: 0000
+  0x00039ecc: 0FEC
+  0x00039ece: 0000
+  0x00039ed0: 07A8
+  0x00039ed2: 0000
+  0x00039ed4: 08D0 <<<
+  0x00039ed6: 0000
+  0x00039ed8: B5F0
+  0x00039eda: 49E7 LDR r1,[pc,#924] lit@0x3a278=0x7c8
+```
+- lit@file `0x3a27c` guest `0x313070` nearby_STR=3
+  - STR@0x3a244 guest `0x313038` r4,[r5,#0]
+  - STR@0x3a250 guest `0x313044` r4,[r5,#4]
+  - STR@0x3a270 guest `0x313064` r4,[r5,#84]
+```text
+  0x0003a254: FA35
+  0x0003a256: 480A LDR r0,[pc,#40] lit@0x3a280=0x116c
+  0x0003a258: 4448 ADD/MOV high regs
+  0x0003a25a: 3880
+  0x0003a25c: 6840 LDR r0,[r0,#4]
+  0x0003a25e: 2800
+  0x0003a260: D1BF Bcond cond=1 -> 0x3a1e2
+  0x0003a262: 4D07 LDR r5,[pc,#28] lit@0x3a280=0x116c
+  0x0003a264: 444D ADD/MOV high regs
+  0x0003a266: 6D68 LDR r0,[r5,#84]
+  0x0003a268: 2800
+  0x0003a26a: D0BA Bcond cond=0 -> 0x3a1e2
+  0x0003a26c: F7FD
+  0x0003a26e: F90C
+  0x0003a270: 656C STR r4,[r5,#84]
+  0x0003a272: F7FF
+  0x0003a274: FB59
+  0x0003a276: E65B B -> 0x39f30
+  0x0003a278: 07C8
+  0x0003a27a: 0000
+  0x0003a27c: 08D0 <<<
+  0x0003a27e: 0000
+  0x0003a280: 116C
+  0x0003a282: 0000
+```
+
+## Verdict seed
+
+- Install execute hooks on STR sites near imm_8D0 and on code that ADDs 0x8D0 to ERW base, then re-run natural (NO FORCE) to see which writer PCs are reached vs gated.
+- Focus: does ui_mode=0 branch at 0x306344 ever call a function that stores 0x45, or is that store only on a path never entered?

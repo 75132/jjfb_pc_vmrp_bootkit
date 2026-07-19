@@ -1,0 +1,85 @@
+00034: [JJFB_GWY_LAUNCH] cfg_index=36 target=gwy/jjfb.mrp
+00035: [JJFB_GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+00036: [JJFB_GWY_ROOT] mythroad_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\320x480
+00037: [JJFB_GWY_ROOT] gwy_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\320x480\gwy
+00038: [JJFB_GWY_ROOT] target=C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp
+00039: [JJFB_GWY_ROOT] resource_dirs=gifs,jjfbol,save,sound,...
+00041: [JJFB_GWY_LAUNCH] startGame/runapp equivalent called
+00042: [JJFB_MRP_ALIAS] enabled=1 request=cfunction.ext target=robotol.ext
+00048: [JJFB_FILEOPEN] guest="mythroad/system/gb16.uc2" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/system/gb16.uc2" ok=1 handle=1 mode=0 pc=0x280284 lr=0x90DC4
+00053: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00057: mr_get_method(1514)
+00060: [JJFB_FILEOPEN] guest="mythroad/sdk_key.dat" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/sdk_key.dat" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00064: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00068: mr_get_method(219)
+00074: [JJFB_MRP_ALIAS] patched ext_base=0x2AEB04 literal=0x2AEBD8 request=cfunction.ext target=robotol.ext method=ext_base_0xD4
+00078: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00082: mr_get_method(161178)
+00087: [JJFB_ROBOTOL_LOAD] ordinal=3 guest_ordinal=2 helper=0x304AED P=0x2AC8DC ext_base=0x2D8DF4 loader_helper=0x2AEB48 after_alias=1 source=br_log
+00092: [JJFB_START_HANDOFF] raw_ret=0x1 semantic=MR_IGNORE alias_applied=1 robotol_loaded=1 helper=0x304AED action=run_host_801_recovery
+00093: [JJFB_801_GUARD] robotol_loaded=1 alias_applied=1 robotol_helper=0x304AED action=run_host_801
+00095: [JJFB_801] synced guest EXT helper=0x304AED P=0x2AC8DC ER_RW=0x2B1858 ext=@2D8DF4
+00097: [JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+00098: [JJFB_801] ext_call code=6 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+00099: [JJFB_801] ext_call code=6 ret=0 out_len=0
+00100: [JJFB_801] host version(6) ret=0
+00101: [JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+00102: [JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+00103: [JJFB_801] ext_call code=8 ret=0 out_len=0
+00104: [JJFB_801] host appInfo(8) ret=0
+00123: [JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+00124: [JJFB_801] installed sendAppEvent hook @0x2829D4
+00134: [JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4 extMrTable=0x281EFC)
+00135: [JJFB_801] ext_call code=0 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+00137: [JJFB_SEND] extCode=0x1 app=0x64 code=0x0 param0=0x0 param1=0x0
+00139: [JJFB_SEND] extCode=0x10113 app=0x11F02 code=0x0 param0=0x27FCC0 param1=0x0
+00141: [JJFB_SEND] extCode=0x10113 app=0x11F03 code=0x0 param0=0x27FCC0 param1=0x0
+00143: [JJFB_SEND] extCode=0x10113 app=0x11F04 code=0x0 param0=0x27FCC0 param1=0x0
+00145: [JJFB_SEND] extCode=0x10102 app=0x1E200 code=0x30D301 param0=0x0 param1=0x0
+00148: [JJFB_SEND] extCode=0x10120 app=0x4 code=0x2829DC param0=0x0 param1=0x0
+00150: [JJFB_SEND] extCode=0x10140 app=0x5 code=0x2829DC param0=0x30630D param1=0x0
+00153: [JJFB_SEND] extCode=0x10162 app=0xE200 code=0x30D249 param0=0x0 param1=0x0
+00156: [JJFB_SEND] extCode=0x10165 app=0xE200 code=0x30D2F9 param0=0x0 param1=0x0
+00159: [JJFB_SEND] extCode=0x10800 app=0x4 code=0x0 param0=0x0 param1=0x0
+00161: [JJFB_801] ext_call code=0 ret=0 out_len=0
+00162: [JJFB_801] host mrc_init(0) ret=0
+00181: [JJFB_SEND] extCode=0x10130 app=0xAF000 code=0x0 param0=0x0 param1=0x0
+00193: [JJFB_SEND] extCode=0x10180 app=0x1 code=0x0 param0=0x0 param1=0x0
+00201: [JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x2829DC stack=0x0}
+00202: [JJFB_801] ext_call code=5 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+00215: [JJFB_801] ext_call code=5 ret=0 out_len=0
+00218: [JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED (timer)
+00232: [JJFB_801] ext_call code=2 ret=0 out_len=0
+00766: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion" ok=1 handle=2 mode=12 pc=0x280284 lr=0xA1AE4
+00784: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00826: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+00864: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01124: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01130: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01136: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/default.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/default.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01142: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/default2.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/default2.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01153: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01159: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01165: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/default.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/default.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01171: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/default2.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/default2.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01221: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01238: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01254: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01365: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01375: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01380: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=4 pc=0x280284 lr=0xA1AE4
+01391: [JJFB_801] ext_call code=2 ret=1 out_len=0
+01402: [JJFB_FILEOPEN_MISS] guest="mythroad/gwy/jjfbol/0@s0.map" tried=["C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/0@s0.map","mythroad/gwy/jjfbol/0@s0.map"] exists_before=0 mode=1 pc=0x280284 lr=0xA1AE4
+01403: [JJFB_FILEOPEN_AT] guest="mythroad/gwy/jjfbol/0@s0.map" miss mode=1 (member@pack / download cache)
+01414: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01424: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01429: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=4 pc=0x280284 lr=0xA1AE4
+01463: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downimage2.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downimage2.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01529: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01539: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01544: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfbol/downVersion.v" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/downVersion.v" ok=1 handle=2 mode=4 pc=0x280284 lr=0xA1AE4
+01576: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01591: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01606: [JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+01634: [JJFB_FILEOPEN_MISS] guest="mythroad/gwy/jjfbol/0@s0.map" tried=["C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfbol/0@s0.map","mythroad/gwy/jjfbol/0@s0.map"] exists_before=0 mode=4 pc=0x280284 lr=0xA1AE4
+01635: [JJFB_FILEOPEN_AT] guest="mythroad/gwy/jjfbol/0@s0.map" miss mode=4 (member@pack / download cache)

@@ -1,0 +1,32 @@
+[information]
+projectname=adbc.mrp
+filename=adbc.mrp
+appname=测试用例
+appid=12312
+version=1000
+visible=1
+cpu=3
+vendor=天使之翼
+description=测试用例！
+include= ${MRPBUILDER_HOME}\..\include,${MRPBUILDER_HOME}\..\include\plugins
+config=mtk240
+;,spr240
+plugin=app
+#分号，逗号也会注释
+
+[config_mtk240]
+output= res\res_mtk240.mrp
+bmp_mode=normal
+
+[config_spr240]
+output= res\res_spr240.mrp
+bmp_mode=spreadtrum
+
+
+[files]
+files01 = resource\bmp\titlebar.bmp
+files02 = resource\bmp\toolbar.bmp
+#下面的资源由excel表的codegen生成(mrp和h文件)，需要宏允许
+files03 = resource\res_str.mrp
+
+

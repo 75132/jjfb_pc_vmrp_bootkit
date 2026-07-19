@@ -1,0 +1,36 @@
+{
+  "vmver": "1968",
+  "imei": "864086040622841",
+  "hsman": "vmrp",
+  "hstype": "vmrp",
+  "key_len": 48,
+  "key_hex": "d6aaa1b23878829303d1b9bcca42e1839f9b63153641f4c4e9743434427125b29b31f52a08537f4bdd1b71ab70686d35",
+  "key_sha256": "5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436",
+  "parts": [
+    {
+      "part": 1,
+      "input_hex": "313936383430383630343036323238343100",
+      "input_len": 18,
+      "encoded_ascii": "BIZshdFmhdNmCdasBYiuCdea",
+      "encoded_len": 24,
+      "md5_hex": "d6aaa1b23878829303d1b9bcca42e183"
+    },
+    {
+      "part": 2,
+      "input_hex": "363430383630766d72706d7270",
+      "input_len": 13,
+      "encoded_ascii": "CYFmhdNmS1roRgroRa==",
+      "encoded_len": 20,
+      "md5_hex": "9f9b63153641f4c4e9743434427125b2"
+    },
+    {
+      "part": 3,
+      "input_hex": "303632323834766d72",
+      "input_len": 9,
+      "encoded_ascii": "BdNoBYVqS1ro",
+      "encoded_len": 12,
+      "md5_hex": "9b31f52a08537f4bdd1b71ab70686d35"
+    }
+  ],
+  "output": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\runtime\\vmrp_win32\\vmrp_win32_20220102\\mythroad\\240x320\\sdk_key.dat"
+}

@@ -1,0 +1,21 @@
+# Package Contents
+
+- `APPLY_AND_RUN.txt`
+- `README/01_HANDOFF_CONTEXT/LATEST_DIRECTION_v57.md`
+- `README_V57.md`
+- `RUN_V57_LIFECYCLE_SOURCE_COVERAGE.ps1`
+- `patches/v56_to_v57_lifecycle_source_coverage.patch`
+- `reports/v57_analyzer_simulated_command10002_success.md`
+- `reports/v57_analyzer_simulated_missing_sources.md`
+- `reports/v57_compile_comparison.md`
+- `reports/v57_lifecycle_source_implementation.md`
+- `reports/v57_lifecycle_source_static_map.md`
+- `reports/v57_patch_dry_run.md`
+- `reports/v57_simulated_command10002_success.log`
+- `reports/v57_simulated_missing_sources.log`
+- `runtime/vmrp_src_build_v27/vmrp-master/bridge.c`
+- `scripts/v51_generate_sdk_key.py`
+- `scripts/v53_audit_start_handoff.py`
+- `scripts/v55_map_uimode_writers.py`
+- `scripts/v57_analyze_lifecycle_source_log.py`
+- `scripts/v57_static_lifecycle_source_map.py`

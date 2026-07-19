@@ -1,0 +1,554 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+dsm_gm.mrp
+br_mem_get base=0x2829F4 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175760 bytes
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1135)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+mr_unzip
+[WARN]mr_cacheSync(0x002AE5E0, 320)
+--- ext: @002AE5E4
+_mr_c_function_new(002AE628, 20)  mr_c_function_P:002AC87C
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(34663)
+mr_unzip
+[WARN]mr_cacheSync(0x002B96E0, 49696)
+--- ext: @002B96EC
+_mr_c_function_new(002BAB3C, 12308)  mr_c_function_P:002B0F84
+--- r9: mr_c_function_P.start_of_ER_RW = @002B3FA0
+[INFO]mr_open(mythroad/usrConfig,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_platEx code=1222 in=@00000000 inlen=0 out=@002B3F3C outlen=@002B3F40 cb=@00000000
+[INFO]mr_open(mythroad/dsm_gm.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/dsm_gm.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(6713)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(261)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(384)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/resmng.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(774)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 992)
+[INFO]mr_open(mythroad/gwy/resmng.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(889)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 1312)
+[INFO]mr_open(mythroad/gwy/gui.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/reglogin.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(734)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/reglogin.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/dload.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(737)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/dload.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/pmsg.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(713)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/pmsg.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/rollscr.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(713)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/rollscr.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(787)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 960)
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/vdload.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(734)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/vdload.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/svrctrl.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(735)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 864)
+[INFO]mr_open(mythroad/gwy/svrctrl.mrp,12) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/embfrd.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(682)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 992)
+[INFO]mr_open(mythroad/gwy/font.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(872)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 1344)
+[WARN]mr_plat(code:1106, param:0) not impl!
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(384)
+mr_unzip
+[INFO]mr_closeNetwork
+[INFO]mr_platEx code=2011 in=@00000000 inlen=0 out=@00000000 outlen=@00000000 cb=@00000000
+[WARN]mr_platEx(code=2011, in=00000000, inlen=0) not impl!
+[WARN]mr_plat(code:1302, param:0) not impl!
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(384)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(384)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(58522)
+mr_unzip
+[WARN]mr_cacheSync(0x002C58E0, 91616)
+[INFO]mr_open(mythroad/gwy/hotchat.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(599)
+mr_unzip
+[WARN]mr_cacheSync(0x002DC920, 704)
+[WARN]mr_plat(code:1327, param:0) not impl!
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(99)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/sound/msg.mid,10) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/resmng.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/resmng.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(8865)
+mr_unzip
+[WARN]mr_cacheSync(0x002DC920, 12288)
+[INFO]mr_open(mythroad/gwy/gifs/gifdesc.info,10) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/reglogin.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/reglogin.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(25484)
+mr_unzip
+[WARN]mr_cacheSync(0x002E01A0, 36608)
+[WARN]mr_plat(code:1327, param:0) not impl!
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(10374)
+mr_unzip
+[WARN]mr_cacheSync(0x0067A360, 14368)
+[INFO]mr_open(mythroad/system/userinfo2.sys,1) fd is: 0
+[INFO]mr_open(mythroad/system/userinfo.sys,1) fd is: 0
+[INFO]mr_platEx code=1307 in=@00000000 inlen=0 out=@002B3AD4 outlen=@002B3AD0 cb=@00000000
+[INFO]mr_open(mythroad/gwy/rollscr.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/rollscr.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(20674)
+mr_unzip
+[WARN]mr_cacheSync(0x002E9AE0, 30304)
+[INFO]mr_open(mythroad/gwy/cfg.bin,1) fd is: 2
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(27036)
+mr_unzip
+[WARN]mr_cacheSync(0x002FBF60, 41312)
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/font.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_open(mythroad/gwy/font.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(2413)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C80, 4096)
+[INFO]mr_open(mythroad/system/gb12.uc2,1) fd is: 2
+[INFO]mr_platEx code=1305 in=@002B3CEC inlen=1 out=@002B3CE0 outlen=@002B3CE8 cb=@002B3CDC
+[INFO]mr_open(mythroad/gwy/xaqd.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(647)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/sanguo.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(599)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 704)
+[INFO]mr_open(mythroad/gwy/gkdxy.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(649)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/zsol.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(596)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 704)
+[INFO]mr_open(mythroad/gwy/wxjwq.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(658)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/ssjx.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(1226)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 1568)
+[INFO]mr_open(mythroad/gwy/ssjx.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/xyol.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(652)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/yxlm.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(648)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/gwy/ajss.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(649)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/spacetime.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(657)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/tlbb.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(599)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 704)
+[INFO]mr_open(mythroad/gwy/tyol.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(648)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/gwy/smd.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(1216)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 1568)
+[INFO]mr_open(mythroad/gwy/smd.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/wapgame.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(602)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 704)
+[INFO]mr_open(mythroad/gwy/cacddz.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(599)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 704)
+[INFO]mr_open(mythroad/gwy/sgmj.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(648)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 768)
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/,1) fd is: 0
+[INFO]mr_close(0): ret:-1
+[INFO]mr_open(mythroad/gwy/assg.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(1219)
+mr_unzip
+[WARN]mr_cacheSync(0x002F1C60, 1568)
+[INFO]mr_open(mythroad/gwy/assg.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(99)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(225)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_xajh4.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gamelist.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(443)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_sgzc3.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_kdxy.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_zsol03.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_xjwq.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_ssjx01.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_sgmc3.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_xyj1.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_yxlm.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_xblt.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_mpsc1.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_ajol5.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_cyqy2.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_tlbb11.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_tyol2.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_sxz.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_czzx2.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_cac_ddz.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_flsg.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_dwol02.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_wyzq.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_rmyy.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_qpyz.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_mpkj.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_sns_grd.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gifs/gg_ng_assg.gif,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(83)
+mr_unzip
+[INFO]mr_open(mythroad/gwy/dload.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/dload.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(8771)
+mr_unzip
+[WARN]mr_cacheSync(0x0031EB80, 11808)
+After app init, memory left:30712
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',NULL): 0x0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_initNetwork(mod:cmnet)
+my_initNetwork(0x000A647C, 'cmnet')
+my_initNetworkAsync(): 0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:1, ip:1862341012, port:21002, type:1)
+my_connect() type: async
+my_connect('111.1.17.148', 21002)
+my_connect(0x6F011194) fail
+[INFO]getSocketState(1)
+my_getSocketState(1): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:2, ip:-744755998, port:20000, type:1)
+my_connect() type: async
+my_connect('211.155.236.226', 20000)
+my_connect(0xD39BECE2) fail
+[INFO]getSocketState(2)
+my_getSocketState(2): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:3, ip:-744755997, port:20000, type:1)
+my_connect() type: async
+my_connect('211.155.236.227', 20000)
+my_connect(0xD39BECE3) fail
+[INFO]getSocketState(3)
+my_getSocketState(3): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/gwy/gui.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(490)
+mr_unzip
+[INFO]mr_closeNetwork
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_closeSocket(1)
+[INFO]mr_closeSocket(2)
+[INFO]mr_closeSocket(3)
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_initNetwork(mod:cmnet)
+my_initNetwork(0x000A647C, 'cmnet')
+my_initNetworkAsync(): 0
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:4, ip:1862341012, port:21002, type:1)
+my_connect() type: async
+my_connect('111.1.17.148', 21002)
+my_connect(0x6F011194) fail
+[INFO]getSocketState(4)
+my_getSocketState(4): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:5, ip:-744755997, port:20000, type:1)
+my_connect() type: async
+my_connect('211.155.236.227', 20000)
+[INFO]getSocketState(5)
+my_connect(0xD39BECE3) fail
+my_getSocketState(5): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_socket(type:0, protocol:0)
+[INFO]mr_connect(s:6, ip:-744755998, port:20000, type:1)
+my_connect() type: async
+my_connect('211.155.236.226', 20000)
+[INFO]getSocketState(6)
+my_getSocketState(6): 2
+my_connect(0xD39BECE2) fail
+[INFO]mr_closeSocket(4)
+[INFO]mr_closeSocket(5)
+[INFO]getSocketState(6)
+my_getSocketState(6): -1
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_closeNetwork
+[INFO]mr_open(mythroad/system/statis.sys,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/system/statis.sys,10) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_closeSocket(6)
+key:1073742048
+key:1073742048
+key:1073742048
+key:1073742048

@@ -1,0 +1,10 @@
+{
+  "main": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\runtime\\vmrp_win32\\vmrp_win32_20220102\\main.exe",
+  "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+  "param_va": "0x40d6e8",
+  "target_call": "0x225f",
+  "arg_off": "0x2246",
+  "old": "c744240c00000000",
+  "new": "c744240ce8d64000",
+  "patched_sha1": "2baeff25bc9282dc103d95315ee83e97156ff56a"
+}

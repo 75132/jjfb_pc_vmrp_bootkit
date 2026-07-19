@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v11 已确认源码补丁成功，但本机没 mingw32-make，且 v11 的 printf 换行有 bug。现在跑 v12：
+
+优先跑二进制补丁：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_BINARY_PATCH_AND_BOOT_V12.ps1
+
+如果提示无法安全 patch，再跑源码构建：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SOURCE_BUILD_PATCHED_VMRP_V12.ps1
+
+跑完发 logs\binary_patch_feedback_*.zip 或 logs\source_build_feedback_*.zip。

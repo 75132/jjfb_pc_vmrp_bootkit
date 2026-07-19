@@ -1,0 +1,208 @@
+[JJFB_GWY_LAUNCH] cfg_index=36 target=gwy/jjfb.mrp source=descriptor_launcher evidence=DOCUMENTED
+[JJFB_PARAM] napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_RUNAPP] source=descriptor_launcher target=gwy/jjfb.mrp spawned=pending evidence=DOCUMENTED
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0xC00000
+START_ADDRESS:0x80000, END_ADDRESS:0xE80000
+TOTAL_MEMORY:0xE00000(14680064)
+initMemoryManager: baseAddress:0x280000 len: 0xC00000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[DATA_INIT_RESPONSIBILITY] CODE_alloc=DSM/loadCode status=observed evidence=OBSERVED RW_template_copy=guest_mr_c_function_load status=not_observed evidence=DOCUMENTED BSS_zero=guest_mr_c_function_load status=not_observed evidence=DOCUMENTED relocation=UNKNOWN status=unknown evidence=UNKNOWN R9_set=helper_path_fixR9 status=pending evidence=DOCUMENTED entry_call=DSM_BLX status=confirmed evidence=OBSERVED host_duty=P_alloc_and_host_helper_R9_only note=nested_RW_not_host note=no_guest_mutation
+[CFUNCTION_LOAD_CONTRACT] allocates_er_rw=yes initializes_er_rw=yes publishes_er_rw=yes requires_module_entry_first=unknown evidence=DOCUMENTED note=guest_mrc_malloc_then_P_fill er_rw_metadata_timing_gate=blocked
+[ER_RW_TIMELINE] seq=1 module=dsm module_id=0 event=LOADCODE_ENTER base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=2 module=dsm module_id=0 event=LOADCODE_EXIT base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=3 module=? module_id=0 event=CODE_IMAGE_MAPPED base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[FIXR9_STAGE_CONTRACT] stage=bootstrap r9_contract=UNKNOWN evidence=UNKNOWN note=not_extrapolate_helper bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=mr_c_function_load r9_contract=CREATES_CALLEE_ER_RW evidence=DOCUMENTED bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=helper r9_contract=CALLEE_ER_RW evidence=DOCUMENTED bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=callback r9_contract=UNKNOWN evidence=UNKNOWN bootstrap_entry_r9_gate=blocked
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0xA4178 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[CFUNCTION_NEW] stage=ENTER caller_module=unknown caller_offset=0x0 module=unknown r0=0xA4178 r1=0x14 r2=0x0 r3=0x0 p_len=20 p_guest=0x2803E4 sp=0x0 lr=0x0 cpsr=0x0 origin=HOST_BRIDGE evidence=OBSERVED
+[CFUNCTION_NEW] note=p_struct_guest=0x2803E4 len=20 helper_is_input_r0=1
+[ER_RW_TIMELINE] seq=4 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x0 size=0 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CALLBACK_FRAME] boundary=HOST_CALLBACK_RETURN callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre=0x0 leave=0x0 resume=0x0 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=1 changed=no r4_pre=0x80008 r4_post=0x80008 r9_pre=0x0 r9_post=0x0 r10_pre=0x0 r10_post=0x0 sp_pre=0x27FFF0 sp_post=0x27FFF0 cpsr_t_pre=0 cpsr_t_post=0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=1 module= module_id=0 cfn_path=HOST_MAP_FUNC call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 helper=0xA4178 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[EXT_DATA_ALLOC] module=? kind=UNKNOWN base=0x2803FC size=9684 allocator=GUEST caller_module=? caller_offset=0 evidence=OBSERVED
+[ER_RW_TIMELINE] seq=5 module=? module_id=0 event=ER_RW_ALLOC base=0x2803FC size=9684 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=6 module=? module_id=0 event=ER_RW_INIT base=0x280400 size=280 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+-----> r9:@00280400
+[ER_RW_TIMELINE] seq=7 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[ER_RW_TIMELINE] seq=8 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[R9_SCOPE] stage=NOOP scope_id=0 owns_frame=no requested_by=bridge_mr_extHelper requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=bridge_mr_extHelper owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=NORMAL_GUEST_RETURN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[ER_RW_TIMELINE] seq=9 module=? module_id=0 event=HELPER_CALL base=0x0 size=0 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=17405190
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=reg_primary scope=mrp_member result=HIT reason=reg_ext_primary
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[MODULE_REGISTRY] module_id=3 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=3 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=3 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=3 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=3 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=3 event=ER_RW_PUBLISH base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=3 event=ER_RW_PUBLISH_SOURCE source=LOADER_DOCUMENTED base=0x280400 size=9680 er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[ER_RW_PRODUCER] module=cfunction.ext module_id=3 base=0x280400 size=9680 producer_kind=ALLOC producer_module=? producer_offset=0x0 seq=5 evidence=OBSERVED note=no_hardcoded_address
+[ER_RW_BIRTH_CORR] er_rw_base=0x280400 size=9680 match_ord=5 match_kind=ER_RW_ALLOC entry_ord=0 blocked_ord=0 relation=BEFORE_ENTRY evidence=OBSERVED note=no_hardcoded_address
+[EXT_LOAD] module_id=3 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/jjfb.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[ER_RW_TIMELINE] seq=11 module=cfunction.ext module_id=3 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=3 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[ER_RW_TIMELINE] seq=12 module=cfunction.ext module_id=3 event=ER_RW_PUBLISH base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=3 event=ER_RW_PUBLISH_SOURCE source=MR_C_FUNCTION_LOAD base=0x280400 size=9680 er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[EXT_ENTRY] module_id=3 method=1 return=0
+[MODULE_REGISTRY] module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=3 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=3 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=LEGAL_HELPER_EVENT_WITH_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=3 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=3 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+[R9_CONTRACT] stage=MR_HELPER module=? r9=0x280400 er_rw=0x280400 classification=DSM_RW evidence=OBSERVED
+[R9_WRITE] event_seq=1 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x0 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=? to=cfunction.ext old_r9=0x0 new_r9=0x280400 call_kind=MR_HELPER depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=1 owns_frame=yes requested_kind=MR_HELPER caller=? callee=cfunction.ext current_r9=0x0 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=DSM_R9_GUARD_ATTACH code=[0x80000,0xD1154) module_id=3 evidence=DOCUMENTED note=block_hook_r9_only
+[ER_RW_TIMELINE] seq=13 module=cfunction.ext module_id=3 event=R9_SWITCH_ENTER base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1664 got=1664 eof=0
+[VM_FILE_SEEK] handle=2 pos=1921 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1514 got=1514 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+_mr_readFile reallen:3787
+mr_unzip
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1664 got=1664 eof=0
+[VM_FILE_SEEK] handle=2 pos=3458 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=219 got=219 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+_mr_readFile reallen:232
+mr_unzip
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=2 code_base=0x2AEB00 code_size=320 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2AEB08 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[EXT_LOAD] module_id=2 load_id=3 stage=MAPPED code_base=0x2AEB00 code_size=320 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=2 code=[0x2AEB00,0x2AEC40) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE
+[ER_RW_TIMELINE] seq=14 module=mrc_loader.ext module_id=2 event=CODE_IMAGE_MAPPED base=0x2AEB00 size=320 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[WARN]mr_cacheSync(0x002AEB00, 320)
+[GUEST_EXT] ext_base=0x2AEB04
+[EXT_LOAD] module_id=2 stage=RAW_BASE_REFINE aligned=0x2AEB00 raw=0x2AEB04 pad=0x4 code_size=316 header_entry=0x2AEB0C evidence=DOCUMENTED source=mythroad.c:case800_input1_vs_cacheSync_align
+[EXT_MAP] module_id=2 code_base=0x2AEB04 code_size=316 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2AEB0C result=OK reason=raw_base_refine
+[JJFB_SHELL_EXT] package=mrc_loader.ext member=mrc_loader.ext loaded=yes base=0x2AEB04 size=316 evidence=DOCUMENTED note=raw_base_refine
+--- ext: @002AEB04
+[R9_SWITCH_BLOCKED] reason=CALLEE_ER_RW_NOT_AVAILABLE module=mrc_loader.ext call_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee_id=2 depth=1 module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked r9_policy=OBSERVE_ONLY evidence=DOCUMENTED note=no_dsm_r9_fallback
+[R9_SCOPE] stage=ENTER scope_id=2 frame_id=0 owns_frame=no requested_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee=mrc_loader.ext current_r9=0x0 target_r9=0x0 result=BLOCKED_NO_ER_RW frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=15 module=mrc_loader.ext module_id=2 event=DSM_FIRST_MODULE_ENTRY_SELECT base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=16 module=mrc_loader.ext module_id=2 event=R9_SWITCH_BLOCKED base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=17 module=mrc_loader.ext module_id=2 event=DSM_FIRST_MODULE_ENTRY_CALL base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_PRE_ENTRY_META] module=mrc_loader.ext module_id=2 present=no field=registry_start_of_er_rw value=0x0 map_guest_rw=0x0 entry_r9=0x280400 evidence=OBSERVED note=caller_dsm_P_not_callee
+[R9_SWITCH_BLOCKED_OUTCOME] outcome=SWITCH_BLOCKED_ENTRY_EXECUTED_WITH_CALLER_R9 entry_deferred=no entry_executed=yes effective_r9=0x280400 caller_r9=0x280400 callee_er_rw=0x0 module=mrc_loader.ext module_id=2 call_kind=BOOTSTRAP_ENTRY seq=16 evidence=OBSERVED note=switch_fail_closed_not_entry_fail_closed er_rw_metadata_timing_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked
+[CROSS_MODULE_CALL] transfer_id=1 hop=DSM_TO_LOADER from_module=dsm:cfunction.ext from_module_id=3 from_pc=0x89B78 to_module=mrc_loader.ext to_module_id=2 target=0x2AEB0C target_offset=0x8 r0=0x0 r1=0x2AEB0C lr=0x89B78 evidence=OBSERVED
+[R0_LAYER] stage=DSM_TO_DISPATCH r0=0x0 dispatch_module=mrc_loader.ext
+[CFUNCTION_NEW] stage=EXIT return_r0=0x0 return_r1=0x0 return_r2=0x0 return_r3=0x0 registered_helper=0xA4178 helper_eq_return_r0=0 writes_count=0 note=preempted
+[CFUNCTION_NEW] stage=ENTER caller_module=unknown caller_offset=0x0 module=mrc_loader.ext r0=0x2AEB48 r1=0x14 r2=0x0 r3=0x0 p_len=20 p_guest=0x2AC8DC sp=0x0 lr=0x0 cpsr=0x0 origin=LOG_PARSE evidence=OBSERVED
+[CFUNCTION_NEW] note=p_struct_guest=0x2AC8DC len=20 helper_is_input_r0=1
+[ER_RW_TIMELINE] seq=18 module=mrc_loader.ext module_id=2 event=MR_C_FUNCTION_NEW base=0x0 size=0 helper=0x2AEB48 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=19 module=mrc_loader.ext module_id=2 event=MR_C_FUNCTION_LOAD_ENTER base=0x0 size=0 helper=0x2AEB48 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=0 module_id=0 module=mrc_loader.ext slot=0x0 slot_name= call_pc=0x0 continuation_pc=0x0 continuation_file_offset=0x0 r0=0x0 r1=0x0 r2=0x0 r3=0x0 r4=0x0 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x0 lr=0x0 cpsr=0x0 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x2AEB48 p_len=20 p_guest=0x2AC8DC rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=2 helper=0x2AEB48 header_entry_candidate=0x2AEB0C chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB48
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=REGISTERED size=232
+[CFUNCTION_NEW] stage=EXIT return_r0=0x0 return_r1=0x0 return_r2=0x0 return_r3=0x0 registered_helper=0x2AEB48 helper_eq_return_r0=0 writes_count=0 note=api_returns_status_helper_is_input evidence=OBSERVED
+[HELPER_HANDOFF] stage=RETURN helper=0x2AEB48 consumer_module=unknown note=helper_is_register_input_not_return_r0 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8DC len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+[EXT_ENTRY] module_id=2 method=0 return=0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB48
+[EXT_ENTRY_POINTS] module_id=2 image_base=0x2AEB04 header_entry_candidate=0x2AEB0C chunk_field_04=0x0 registered_helper=0x2AEB48 observed_first_pc=0x2AEB34 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=2 load_id=3 helper=0x2AEB48 entry_pc=0x2AEB34 module_offset=0x30 method=0 r0=0x0 r1=0x2AEB0C r2=0x3A r3=0x27FB5C r9=0x280400 er_rw=0x280400 sp=0x27FD88 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=3 header_entry_candidate=0x2AEB0C chunk_field_04=0x0 registered_helper=0x2AEB48 entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x2AEB34 dispatch_module=mrc_loader.ext dispatch_offset=0x30 callee_module=mrc_loader.ext first_executed_pc=0x2AEB34 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=mrc_loader.ext module_id=2 image_base=0x2AEB04 header_raw=0x2AEB0C header_norm=0x2AEB0C chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0x2AEB48 helper_norm=0x2AEB48 observed_first_pc_raw=0x2AEB34 observed_norm=0x2AEB34 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=mrc_loader.ext module=mrc_loader.ext module_id=2 module_offset=0x30 pc=0x2AEB34 helper=0x2AEB48 target=0x2AEB34 origin=GUEST_NESTED r0=0x0 r1=0x2AEB0C r2=0x3A r3=0x27FB5C r9=0x280400 sp=0x27FD88 lr=0xA2548 cpsr=0x600001D3 caller_module=dsm:cfunction.ext caller_of

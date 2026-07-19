@@ -1,0 +1,15 @@
+restored clean main from C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.before_direct_call_hook_v14.exe
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+sha1_before=b40de8e3c9e9c37bbc993625e7d9be6465abb289 size=262554
+image_base=0x400000 bridge=_bridge_dsm_mr_start_dsm va=0x4067bc
+direct calls to bridge=['0x225f']
+dsm_off=0xa8e5 dsm_va=0x40c2e5
+start_off=0xa8f0 start_va=0x40c2f0
+callsite 0x225f score=60 around=0424bec24000e8a66b0000b8ffffffffe991000000a13ce04000890424e8e1360000a13ce04000890424e80c3d000085c0756ec70424cdc24000e8726b0000a13ce04000890424e82e020000c745f4e5c24000c745f0f0c24000a13ce04000c744240c000000008b55f0895424088b55f489542404890424e8583900008945ec8b45ec8944240c8b45f0894424088b45f489442404c70424fcc24000e8206b0000b800000000c9c3905589e58b550c8b450889108b4508c74004000000008b45088b50048b450889
+selected_call=0x225f score=60
+param_off=0xbce8 param_va=0x40d6e8 section=.rdata
+patched_arg at 0x2246 desc=mov [esp+0x0c],0 old=c744240c00000000 new=c744240ce8d64000
+changed printf NULL marker to ARGP at 0xa91e
+param=napptype=0_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+backup=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.before_direct_arg_patch_v15.exe
+patched=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.direct_arg_patch_v15.exe sha1=612e043dcda174cb56e973f9a13ea4dacf867d8f

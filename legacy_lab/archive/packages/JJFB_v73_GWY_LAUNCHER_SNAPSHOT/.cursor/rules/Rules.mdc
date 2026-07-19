@@ -1,0 +1,358 @@
+---
+alwaysApply: true
+---
+
+# JJFB / GWY Launcher Shim Rules
+
+## Project Goal
+
+This project is NOT about recreating or redesigning the UI of the game "机甲风暴".
+
+The goal is:
+
+- emulate the launch behavior of the Maopao/GWY online-game shell;
+- bypass the forced-update blocker of the GWY shell;
+- reconstruct the `startGame/runapp` launch contract for `gwy/jjfb.mrp`;
+- keep the original game files unchanged;
+- allow the original `gwy/jjfb.mrp` to run naturally.
+
+Main route:
+
+```text
+GWY shell launch chain
+→ cfg index=36
+→ startGame / runapp
+→ correct cwd/root/resource root
+→ load gwy/jjfb.mrp
+→ mrc_loader.ext
+→ robotol.ext
+→ original game self-runs
+```
+
+---
+
+## Hard Rules
+
+### 1. Do not modify original game logic
+
+Never modify the logic of:
+
+```text
+gwy/jjfb.mrp
+robotol.ext
+mrc_loader.ext
+```
+
+Do not patch game behavior unless explicitly marked as a temporary diagnostic probe.
+
+### 2. Do not fake game UI
+
+Forbidden as official solution:
+
+```text
+host overlay UI
+fake slogo
+fake loadingbar
+fake progress animation
+fake text/status messages
+manually drawing game UI
+```
+
+The UI must come from the original game resources and original game flow.
+
+### 3. Do not use internal game-state forcing as final solution
+
+Forbidden as official solution:
+
+```text
+force ui_mode=0x45
+manual AC8 write
+manual progress_count write
+progress driver
+manual 0x2EF86C tail jump
+```
+
+These may only be used as temporary probes and must be clearly labeled as probes.
+
+### 4. Do not treat v43-v48 splash experiments as the main route
+
+The previous splash/UI work is diagnostic only.  
+Do not keep optimizing:
+
+```text
+slogo position
+loadingbar position
+chrome details
+310BB4 pixel-perfect behavior
+2EC6B0 UI behavior
+```
+
+unless it directly affects the GWY launcher shim.
+
+---
+
+## Correct Main Route
+
+### Build GWY Launcher Shim
+
+Create/maintain a mode:
+
+```text
+JJFB_GWY_LAUNCHER_MODE=1
+```
+
+This mode should:
+
+```text
+1. avoid entering the GWY shell UI;
+2. avoid the GWY forced-update blocker;
+3. simulate the post-update/no-update state of the GWY shell;
+4. use cfg index=36;
+5. pass the exact game launch parameters;
+6. set correct cwd/root/resource root;
+7. load the original gwy/jjfb.mrp;
+8. allow mrc_loader.ext and robotol.ext to run naturally.
+```
+
+---
+
+## cfg index=36 Contract
+
+Known game entry:
+
+```text
+title    = 机甲风暴(火爆公测)
+target   = gwy/jjfb.mrp
+icon     = ng_jjfb.gif
+napptype = 12
+nextid   = 482
+ncode    = 512
+narg     = 0
+narg1    = 1
+nmrpname = gwy/jjfb.mrp
+```
+
+Required parameter string:
+
+```text
+napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+```
+
+This is the primary launch contract.
+
+---
+
+## Resource Root Rules
+
+The complete GWY resource directory must be preserved.
+
+Expected structure:
+
+```text
+game_files/
+  mythroad/
+    320x480/          # active pack (preferred)
+      gwy/
+        gifs/
+        jjfbol/
+        save/
+        sound/
+        ...
+    240x320/          # legacy identical jjfb content
+```
+
+Path model:
+
+```text
+mythroad_root = game_files/mythroad/320x480
+gwy_root      = game_files/mythroad/320x480/gwy
+target_mrp    = game_files/mythroad/320x480/gwy/jjfb.mrp
+```
+
+Guest path mapping must support:
+
+```text
+gwy/jjfb.mrp
+gwy/jjfbol/...
+gwy/gifs/...
+gwy/save/...
+gwy/sound/...
+```
+
+If startup/UI/resources are abnormal, check `FILEOPEN_MISS` and path mapping first.
+
+---
+
+## Required Logs
+
+Use concise, useful logs:
+
+```text
+[JJFB_GWY_LAUNCH]
+[JJFB_GWY_ROOT]
+[JJFB_CFG36]
+[JJFB_STARTGAME]
+[JJFB_RUNAPP]
+[JJFB_PARAM]
+[JJFB_CWD]
+[JJFB_FILEOPEN]
+[JJFB_FILEOPEN_MISS]
+[JJFB_STRCOM]
+[JJFB_LOADER]
+[JJFB_ROBOTOL]
+[JJFB_GAME_SELF]
+[JJFB_NET]
+[JJFB_BLOCKER]
+```
+
+Avoid noisy logs:
+
+```text
+per-character string xref logs
+every SPLASH_ENTER
+pixel dumps
+unbounded 2EC6B0 dumps
+loadingbar character-by-character traces
+```
+
+---
+
+## File Open Trace Requirement
+
+Every important file open must resolve guest path to host path:
+
+```text
+[JJFB_FILEOPEN] guest="gwy/jjfb.mrp" host="...\240x320\gwy\jjfb.mrp" ok=1 pc=... lr=...
+[JJFB_FILEOPEN] guest="gwy/jjfbol/..." host="...\240x320\gwy\jjfbol\..." ok=1/0 pc=... lr=...
+[JJFB_FILEOPEN_MISS] guest="..." tried=[...] pc=... lr=...
+```
+
+Large numbers of misses mean the root/path mapping is wrong.
+
+---
+
+## Allowed Platform Compatibility Fixes
+
+Allowed because they emulate platform capability, not game UI:
+
+```text
+guest LCD 240x320 (JJFB native layout)
+SDL window 320x480 stretch present
+resource root game_files/mythroad/320x480
+2F9968=240
+2F995C=320
+RGB565 0xF81F colorkey
+obj=0 blit skip/no dirty
+0x10134 returns pixel pointer
+_mr_c_load
+_strCom 601/800/801
+mrc_loader.ext load support
+robotol.ext load support
+basic timer/event dispatch
+MRP file/path APIs
+```
+
+---
+
+## Update Layer Distinction
+
+Always distinguish two update layers:
+
+### GWY shell forced update
+
+```text
+gwy/gbrwcore/gamelist/vdload shell update
+```
+
+This is the blocker to bypass or simulate as already passed.
+
+### JJFB game self update/check
+
+```text
+jjfb.mrp internal check/update/login/network flow
+```
+
+Do not bypass as the official solution. Let the original game handle it.
+
+---
+
+## Docs / Reports / Packages (opt-in)
+
+Do **not** create these every round by default:
+
+```text
+reports/vXX_*.md
+README/01_HANDOFF_CONTEXT/LATEST_DIRECTION_*.md
+packages/JJFB_vXX_*.zip
+```
+
+Only write markdown reports, handoff direction docs, or zip packages when the user **explicitly** asks (e.g. “写报告”“打包”“出 vXX 文档”).
+
+Allowed without asking:
+
+```text
+code / scripts needed to advance the launch chain
+RUN_*.ps1 when useful to reproduce a run
+logs/*.txt produced by running the app (runtime evidence)
+```
+
+When the user does ask for a report, include:
+
+```text
+1. goal
+2. modified files
+3. new env vars
+4. run command
+5. key logs
+6. conclusion
+7. disproved assumptions
+8. current blocker
+9. next minimal task
+```
+
+---
+
+## Preferred Next Tasks
+
+Prioritize (code / evidence, not docs):
+
+```text
+1. GWY launcher mode startup
+2. full resource-root path mapping
+3. startGame/runapp / loader / event contract gaps
+```
+
+Do not prioritize:
+
+```text
+slogo/loadingbar polishing
+progress animation forcing
+chrome restoration
+UI-only event scans
+writing reports or zipping packages unprompted
+```
+
+---
+
+## Drift Detection
+
+If the work starts saying:
+
+```text
+"continue fixing slogo position"
+"make loadingbar animation complete by writing progress"
+"force 0x45 UI"
+"host draw temporary UI"
+"restore 310BB4 first"
+```
+
+immediately redirect to:
+
+```text
+Return to GWY Launcher Shim:
+reconstruct the GWY startGame/runapp launch contract,
+resource root,
+file-path mapping,
+and loader context,
+so original jjfb.mrp runs naturally.
+```

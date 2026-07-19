@@ -1,0 +1,16 @@
+{
+  "main": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\runtime\\vmrp_win32\\vmrp_win32_20220102\\main.exe",
+  "bridge_call_off": "0x225f",
+  "start_off": "0xa8f0",
+  "start_va": "0x40c2f0",
+  "start_ref": "0x223d",
+  "old_ext_ref": "f0c24000",
+  "ext_name": "mrc_loader.ext",
+  "ext_va": "0x40d6e8",
+  "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+  "param_va": "0x40d6ff",
+  "arg_off": "0x2246",
+  "old_arg": "c744240c00000000",
+  "new_arg": "c744240cffd64000",
+  "patched_sha1": "99a39408273f4804f4bc8c22713ebc21e137f9ff"
+}

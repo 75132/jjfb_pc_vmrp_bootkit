@@ -1,0 +1,38 @@
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+sha1_before=b40de8e3c9e9c37bbc993625e7d9be6465abb289 size=262554
+image_base=0x400000 ptrsym=0x33800 numsym=2283 syms=1921
+sections:
+1 .text hdr=0x178 va=0x1000 raw=0x400 rawsz=0x8e00 chars=0x60500060
+2 .data hdr=0x1a0 va=0xa000 raw=0x9200 rawsz=0x1400 chars=0xc0600040
+3 .rdata hdr=0x1c8 va=0xc000 raw=0xa600 rawsz=0x1800 chars=0x40300040
+4 .bss hdr=0x1f0 va=0xe000 raw=0x0 rawsz=0x0 chars=0xc0600080
+5 .idata hdr=0x218 va=0xf000 raw=0xbe00 rawsz=0x1000 chars=0xc0300040
+6 .CRT hdr=0x240 va=0x10000 raw=0xce00 rawsz=0x200 chars=0xc0300040
+7 .tls hdr=0x268 va=0x11000 raw=0xd000 rawsz=0x200 chars=0xc0300040
+8 /4 hdr=0x290 va=0x12000 raw=0xd200 rawsz=0x200 chars=0x42400040
+9 /19 hdr=0x2b8 va=0x13000 raw=0xd400 rawsz=0x1d600 chars=0x42100040
+10 /31 hdr=0x2e0 va=0x31000 raw=0x2aa00 rawsz=0x1e00 chars=0x42100040
+11 /45 hdr=0x308 va=0x33000 raw=0x2c800 rawsz=0x3a00 chars=0x42100040
+12 /57 hdr=0x330 va=0x37000 raw=0x30200 rawsz=0x1a00 chars=0x42300040
+13 /70 hdr=0x358 va=0x39000 raw=0x31c00 rawsz=0x600 chars=0x42100040
+14 /81 hdr=0x380 va=0x3a000 raw=0x32200 rawsz=0x1400 chars=0x42100040
+15 /92 hdr=0x3a8 va=0x3c000 raw=0x33600 rawsz=0x200 chars=0x42100040
+interesting symbols:
+143 _startVmrp sec=1 val=0x1dad va=0x402dad
+336 _bridge_dsm_mr_start_dsm sec=1 val=0x57bc va=0x4067bc
+548 _main sec=1 val=0x8d20 va=0x409d20
+bridge symbol selected: _bridge_dsm_mr_start_dsm va=0x4067bc
+dsm_off=0xa8e5 dsm_va=0x40c2e5
+start_off=0xa8f0 start_va=0x40c2f0
+direct calls to bridge=['0x225f'] count=1
+dsm_refs=['0x2236']
+start_refs=['0x223d']
+callsite 0x225f score=60 around=00a13ce04000890424e8e1360000a13ce04000890424e80c3d000085c0756ec70424cdc24000e8726b0000a13ce04000890424e82e020000c745f4e5c24000c745f0f0c24000a13ce04000c744240c000000008b55f0895424088b55f489542404890424e8583900008945ec8b45ec8944240c8b45f0894424088b45f489442404c70424fcc24000e8206b0000b800000000c9c3905589e58b550c8b450889108b4508c74004000000008b45088b50048b45088950088b45108b55088910905dc35589e557565383
+selected_call=0x225f va=0x402e5f score=60
+cave_off=0xbce8 cave_va=0x40d6e8 section=.rdata param_va=0x40d708
+section chars .rdata: 0x40300040->0x60300040
+changed printf NULL marker to HOOK at 0xa91e
+wrapper_va=0x40d6e8 wrapper_bytes=c744241008d74000e9c790ffff
+param=napptype=0_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+backup=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.before_direct_call_hook_v14.exe
+patched=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.direct_call_hook_v14.exe sha1=9068559e1c1d4eab5d3ec60b5d5314ac5c8526f5

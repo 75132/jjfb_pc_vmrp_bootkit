@@ -1,0 +1,12 @@
+给 OpenClaw：
+
+v15 已确认第 4 参数补丁写入成功，但 param 内容用的是 napptype=0，没推进。cfg.bin 里 jjfb 记录更像 napptype=12。
+
+现在跑 v16 多参数候选，第一优先：
+napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_PARAM_VARIANTS_V16.ps1
+
+跑完发：
+logs\param_variants_feedback_*.zip

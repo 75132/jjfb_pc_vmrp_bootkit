@@ -1,0 +1,22 @@
+
+ev=0x0 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x1 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x2 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x3 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x4 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x5 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x6 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x7 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x8 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x10 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x11 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x12 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x13 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x14 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x15 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x18 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x1A tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x20 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x24 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4
+ev=0x28 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x?
+ev=0x30 tail=0 prog_w=0 ac8_w=0 str=0 max_pc=0x2EFAF4

@@ -1,0 +1,62 @@
+[
+  {
+    "tag": "mr_c_load_filename",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_mr_c_load_filename_20260715_172549.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_mr_c_load_filename_netstat_20260715_172549.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_mrc_loader": false,
+    "has_connect": false,
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "mr_c_buf_filename",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_mr_c_buf_filename_20260715_172610.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_mr_c_buf_filename_netstat_20260715_172610.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_mrc_loader": false,
+    "has_connect": false,
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "com_filename",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_com_filename_20260715_172631.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_com_filename_netstat_20260715_172631.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_mrc_loader": false,
+    "has_connect": false,
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "strcom_filename",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_strcom_filename_20260715_172652.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_strcom_filename_netstat_20260715_172652.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_mrc_loader": false,
+    "has_connect": false,
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "gc0_baseline",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_gc0_baseline_20260715_172714.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdk_branch_gc0_baseline_netstat_20260715_172714.txt",
+    "alive": false,
+    "stdout_len": 2671,
+    "tail": ":0x800000(8388608)\ninitMemoryManager: baseAddress:0x280000 len: 0x600000\next call _mr_c_function_new(0xA4088[671880], 0x14[20])\n==========================REG=================================\n R0=0x000A4088\tR1=0x00000014\t R2=0x00280068\t R3=0x00000000\tN:0\n R4=0x00080008\tR5=0x00000000\t R6=0x00000000\t R7=0x00000000\tZ:1\n R8=0x00000000\tR9=0x00000000\tR10=0x00000000\tR11=0x00000000\tC:1\nR12=0x00000000\tSP=0x0027FFF0\t LR=0x00080034\t PC=0x00280068\tV:0\n==============================================================\n-----> r9:@00280400\nbridge_dsm_init success\n==========================REG=================================\n R0=0x0134640D\tR1=0x00000001\t R2=0x002803B4\t R3=0x0000000C\tN:1\n R4=0x00000000\tR5=0x00000000\t R6=0x00000000\t R7=0x00000000\tZ:0\n R8=0x00000000\tR9=0x00000000\tR10=0x00000000\tR11=0x00000000\tC:1\nR12=0x000CF570\tSP=0x00280000\t LR=0x00090D1C\t PC=0x00080000\tV:0\n==============================================================\ndsm_gm.mrp\nbr_mem_get base=0x282A4C len=4194304(4096 kb) =================\ngot Origin_LG_mem_len:4194304\nTotal memory:4194304\n[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1\n[INFO]font load suc fd=1\nUsed by VM(include screen buffer):175832 bytes\n[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2\n[INFO]mr_close(2): ret:0\nmr_get_method(1482)\nmr_unzip\n[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2\n[INFO]mr_close(2): ret:0\nAfter app init, memory left:4010608\nbridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',V21P): 0x0\n>>> Tracing mem_invalid mem_type:UC_MEM_FETCH_UNMAPPED at 0x0, size:0x1, value:0x0\n==========================REG=================================\n R0=0x00000000\tR1=0x00000001\t R2=0x002A835C\t R3=0x0000000C\tN:0\n R4=0x002A824C\tR5=0x002A835C\t R6=0x0000000C\t R7=0x00280670\tZ:1\n R8=0x00000001\tR9=0x00280400\tR10=0x00000060\tR11=0x002A8364\tC:1\nR12=0x00000000\tSP=0x0027FDD0\t LR=0x00089B80\t PC=0x00000000\tV:0\n==============================================================\nFailed on uc_emu_start() with error returned: 8 (Invalid memory fetch (UC_ERR_FETCH_UNMAPPED))\n",
+    "has_mrc_loader": false,
+    "has_connect": false,
+    "has_target_net": false,
+    "interesting": false
+  }
+]

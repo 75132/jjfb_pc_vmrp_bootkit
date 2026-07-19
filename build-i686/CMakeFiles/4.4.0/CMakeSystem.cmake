@@ -1,0 +1,15 @@
+set(CMAKE_HOST_SYSTEM "Windows-10.0.19045")
+set(CMAKE_HOST_SYSTEM_NAME "Windows")
+set(CMAKE_HOST_SYSTEM_VERSION "10.0.19045")
+set(CMAKE_HOST_SYSTEM_PROCESSOR "AMD64")
+
+include("C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/cmake/toolchains/mingw-i686.cmake")
+
+set(CMAKE_SYSTEM "Windows")
+set(CMAKE_SYSTEM_NAME "Windows")
+set(CMAKE_SYSTEM_VERSION "")
+set(CMAKE_SYSTEM_PROCESSOR "i686")
+
+set(CMAKE_CROSSCOMPILING "TRUE")
+
+set(CMAKE_SYSTEM_LOADED 1)

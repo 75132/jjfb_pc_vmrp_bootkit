@@ -1,0 +1,152 @@
+--- a/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
++++ b/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+@@ -3377,7 +3377,7 @@
+ static int jjfb_ctx_mem_hook_installed;
+ /* v55: natural ui_mode=0x45 writer chain coverage (NO FORCE). */
+ static int jjfb_uimode_writer_hooks_installed;
+-static uc_hook jjfb_uimode_writer_hooks[12];
++static uc_hook jjfb_uimode_writer_hooks[64];
+ static int jjfb_allow_chrome;          /* env: JJFB_ALLOW_CHROME=1 */
+ static int jjfb_chrome_skip_310bb4 = 1;/* env: JJFB_CHROME_SKIP_310BB4=0 to observe */
+ static uint32_t jjfb_chrome_allow_calls = 0; /* env: JJFB_CHROME_ALLOW_CALLS (default 30 when enabled) */
+@@ -3967,6 +3967,9 @@
+     uint32_t b58 = 0, db0 = 0, f134d = 0;
+     static uint32_t n_writer, n_2fc03c, n_2dadc4, n_2dae00, n_2dae24;
+     static uint32_t n_30ee50, n_2fecaa, n_2e4066, n_305ef4;
++    static uint32_t n_event_dispatch, n_queue_2dc80c, n_queue_2e7b7c;
++    static uint32_t n_reset_entry, n_reset_calls, n_family_dispatch;
++    static uint32_t n_cb_register, n_cb_entry, n_cb_tail, n_periodic_gate;
+     (void)size;
+     (void)user_data;
+     uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+@@ -4036,6 +4039,75 @@
+         printf("[JJFB_GAME_SELF] caller_305EF4 #%u lr=0x%X -> 2DADC4 "
+                "f134d=%u B70=%u\n", n_305ef4, lr, f134d, b70);
+         break;
++    case 0x2DC80C:
++        n_queue_2dc80c++;
++        printf("[JJFB_V56_QUEUE] drain_2DC80C ENTER #%u lr=0x%X\n", n_queue_2dc80c, lr);
++        break;
++    case 0x2E7B7C:
++        n_queue_2e7b7c++;
++        printf("[JJFB_V56_QUEUE] drain_2E7B7C ENTER #%u lr=0x%X\n", n_queue_2e7b7c, lr);
++        break;
++    case 0x2DC8D4:
++    case 0x2E7B9E:
++    case 0x2E2520: {
++        uint32_t ev[5] = {0,0,0,0,0};
++        n_event_dispatch++;
++        if (r0 && uc_mem_read(uc, r0, ev, sizeof(ev)) == UC_ERR_OK) {
++            printf("[JJFB_V56_EVENT] #%u site=0x%X ptr=0x%X code=%u(0x%X) "
++                   "p0=0x%X p1=0x%X p2=0x%X p3=0x%X lr=0x%X%s\n",
++                   n_event_dispatch, (uint32_t)address, r0, ev[0], ev[0],
++                   ev[1], ev[2], ev[3], ev[4], lr,
++                   (ev[0] == 5 || ev[0] == 12) ? " TARGETS_2DADC4" : "");
++        } else {
++            printf("[JJFB_V56_EVENT] #%u site=0x%X ptr=0x%X unreadable lr=0x%X\n",
++                   n_event_dispatch, (uint32_t)address, r0, lr);
++        }
++        break;
++    }
++    case 0x30D300:
++        n_family_dispatch++;
++        if (n_family_dispatch <= 12 || r0 == 0xC0 || (n_family_dispatch % 100) == 0)
++            printf("[JJFB_V56_FAMILY] dispatch #%u app=0x%X code=0x%X p0=0x%X p1=0x%X lr=0x%X%s\n",
++                   n_family_dispatch, r0, r1, r2, r3, lr,
++                   r0 == 0xC0 ? " TARGETS_2FEBBC" : "");
++        break;
++    case 0x2FEBBC:
++        n_reset_entry++;
++        printf("[JJFB_V56_RESET] entry_2FEBBC #%u lr=0x%X r0-r3=0x%X,0x%X,0x%X,0x%X\n",
++               n_reset_entry, lr, r0, r1, r2, r3);
++        break;
++    case 0x2DCC60: case 0x2DCCC4: case 0x2DCD4E: case 0x2DCDEE:
++    case 0x2DCF4C: case 0x2DD626: case 0x2DDA82: case 0x2E02E0:
++    case 0x2E351A: case 0x2E7528: case 0x2E77B4: case 0x2E799E:
++    case 0x2FBED6: case 0x30DC44:
++        n_reset_calls++;
++        printf("[JJFB_V56_RESET] call_2FEBBC #%u pc=0x%X lr=0x%X r0-r3=0x%X,0x%X,0x%X,0x%X\n",
++               n_reset_calls, (uint32_t)address, lr, r0, r1, r2, r3);
++        break;
++    case 0x2F5390:
++    case 0x2F53AC:
++    case 0x30D128:
++    case 0x3054A4:
++        n_cb_register++;
++        printf("[JJFB_V56_CALLBACK] register #%u pc=0x%X lr=0x%X "
++               "r0-r3=0x%X,0x%X,0x%X,0x%X%s\n",
++               n_cb_register, (uint32_t)address, lr, r0, r1, r2, r3,
++               (r3 == 0x2F5405 || r3 == 0x2F5404) ? " CALLBACK_2F5404" : "");
++        break;
++    case 0x2F5404:
++        n_cb_entry++;
++        printf("[JJFB_V56_CALLBACK] entry_2F5404 #%u lr=0x%X r0-r3=0x%X,0x%X,0x%X,0x%X\n",
++               n_cb_entry, lr, r0, r1, r2, r3);
++        break;
++    case 0x2F5734:
++        n_cb_tail++;
++        printf("[JJFB_V56_CALLBACK] tail_call_305EB8 #%u lr=0x%X\n", n_cb_tail, lr);
++        break;
++    case 0x305EB8:
++        n_periodic_gate++;
++        printf("[JJFB_V56_PERIODIC] entry_305EB8 #%u lr=0x%X f134d=%u B70=%u B58=0x%X DB0=0x%X\n",
++               n_periodic_gate, lr, f134d, b70, b58, db0);
++        break;
+     default:
+         break;
+     }
+@@ -4044,16 +4116,20 @@
+ 
+ static void jjfb_install_uimode_writer_hooks(uc_engine *uc) {
+     static const uint32_t addrs[] = {
+-        0x2FC418, /* writer entry: ends with store ui_mode=0x45 */
+-        0x2FC448, /* STR r0,[r5,#0] ui_mode store */
+-        0x2FC03C, /* init helper that BL writer */
+-        0x2DADC4, /* gated init */
+-        0x2DAE00, /* B70 gate check */
+-        0x2DAE24, /* BL 2FC03C after B70!=0 */
+-        0x30EE50, /* alternate writer caller */
+-        0x2FECA2, /* BL 2DADC4 */
+-        0x2E4066, /* BL 2DADC4 */
+-        0x305EF4  /* BL 2DADC4 (near 134D gate) */
++        /* v55 natural writer chain */
++        0x2FC418, 0x2FC448, 0x2FC03C, 0x2DADC4, 0x2DAE00, 0x2DAE24,
++        0x30EE50, 0x2FECA2, 0x2E4066, 0x305EF4,
++        /* v56 event queue -> 2E2520 -> event 5/12 -> 2E4066 */
++        0x2DC80C, 0x2DC8D4, 0x2E7B7C, 0x2E7B9E, 0x2E2520,
++        /* v56 reset/start function 2FEBBC and every direct BL site */
++        0x2FEBBC, 0x2DCC60, 0x2DCCC4, 0x2DCD4E, 0x2DCDEE,
++        0x2DCF4C, 0x2DD626, 0x2DDA82, 0x2E02E0, 0x2E351A,
++        0x2E7528, 0x2E77B4, 0x2E799E, 0x2FBED6, 0x30DC44,
++        /* v56 family dispatcher: app 0xC0 selects 30DC44 */
++        0x30D300,
++        /* v56 callback registration/invocation -> 305EB8 -> 305EF4 */
++        0x2F5390, 0x2F53AC, 0x30D128, 0x3054A4,
++        0x2F5404, 0x2F5734, 0x305EB8
+     };
+     uint32_t i;
+     uc_err err;
+@@ -4066,8 +4142,8 @@
+             printf("[JJFB_GAME_SELF] hook 0x%X failed err=%u\n", addrs[i], err);
+     }
+     jjfb_uimode_writer_hooks_installed = 1;
+-    printf("[JJFB_GAME_SELF] uimode_writer coverage installed "
+-           "(2FC418/2FC03C/2DADC4/B70/callers)\n");
++    printf("[JJFB_V56_UPSTREAM] coverage installed "
++           "(event_queue/event5_12/family_C0/reset_2FEBBC/callback_2F5404/305EB8/writer)\n");
+     fflush(stdout);
+ }
+ 
+@@ -5294,8 +5370,10 @@
+         jjfb_dump_robotol_state(uc, "post-handler");
+     }
+ 
+-    /* After a few ticks, poke mrc_event once to leave idle splash. */
+-    if (jjfb_handler_tick == 5) {
++    /* v56 pure coverage: optionally suppress the historical synthetic event=0. */
++    if (jjfb_handler_tick == 5 && !(getenv("JJFB_DISABLE_MRC_EVENT0_INJECT") &&
++        getenv("JJFB_DISABLE_MRC_EVENT0_INJECT")[0] &&
++        getenv("JJFB_DISABLE_MRC_EVENT0_INJECT")[0] != '0')) {
+         printf("[JJFB_SEND] inject mrc_event(0,0,0) via helper code=1\n");
+         fflush(stdout);
+         /* Build mini event in guest mem: code,p0,p1,p2,p3 */

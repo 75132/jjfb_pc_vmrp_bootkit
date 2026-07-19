@@ -1,0 +1,163 @@
+﻿[JJFB_SDK_KEY] vmver=1968 IMEI=864086040622841 hsman=vmrp hstype=vmrp
+[JJFB_SDK_KEY] canonical=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\sdk_key.dat len=48 sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436
+[JJFB_MRP_ORIGINAL] source=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320\gwy\jjfb.mrp sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_GWY_LAUNCH] cfg_index=36 target=gwy/jjfb.mrp
+[JJFB_GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_GWY_ROOT] mythroad_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320
+[JJFB_GWY_ROOT] gwy_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\gwy
+[JJFB_GWY_ROOT] target=C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp
+[JJFB_GWY_ROOT] resource_dirs=gifs,jjfbol,save,sound,...
+[JJFB_STARTGAME] startGame/runapp equivalent=bridge_dsm_mr_start_dsm
+[JJFB_GWY_LAUNCH] startGame/runapp equivalent called
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=gwy/jjfb.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] guest="mythroad/system/gb16.uc2" host="mythroad/system/gb16.uc2" ok=1 handle=1 mode=0 pc=0x280284 lr=0x90DC4
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+mr_unzip
+[JJFB_FILE] open file=mythroad/sdk_key.dat mode=1
+[JJFB_FILEOPEN] guest="mythroad/sdk_key.dat" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/sdk_key.dat" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+--- ext: @002AEB04
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+read file  "cfunction.ext" err, code=3006
+[DEBUG]mr_exit() called by mythroad!
+[INFO]mr_close(1): ret:0
+[JJFB_EXIT] br_exit called (Lua Exit / mythroad exit), suppressing process exit
+After app init, memory left:4040672
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x0
+bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr',SRCV): 0x0
+[JJFB_CFG36] nextid=482 ncode=512 napptype=12 narg=0 narg1=1 appid=400101 appver=12
+[JJFB_801] synced guest EXT helper=0x2AEB48 P=0x2AC8DC ER_RW=0x0 ext=@2AEB04
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x0 len=0 type=0 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2AEB04 len=1968 P=0x2AC8DC erw=0x0 helper=0x2AEB48
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x0 len=0 type=0 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8DC erw=0x0 helper=0x2AEB48
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x0 len=0 type=0 chunk=0x0 stack=0x0}
+[JJFB_801] installed sendAppEvent hook @0x2829D4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x74 0x802B0 -> 0x280078
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1D8 0x81040 -> 0x2801DC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1DC 0x81078 -> 0x2801E0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E0 0x810B0 -> 0x2801E4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E4 0x810E8 -> 0x2801E8
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E8 0x80278 -> 0x2801EC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1EC 0x802E8 -> 0x2801F0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x200 0x811C8 -> 0x280204
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC fixed 8 gfx slots (GOT left as shadow; host mr_table=0x280004)
+[JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4 extMrTable=0x281EFC)
+[JJFB_801] ext_call code=0 input=0x2AEB04 len=1968 P=0x2AC8DC erw=0x0 helper=0x2AEB48
+[JJFB_801] ext_call code=0 ret=0 out_len=0
+[JJFB_801] host mrc_init(0) ret=0
+[JJFB_SEND] ARM robotol timer period=50 RUNNING=1
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] inject mrc_event(0,0,0) via helper code=1
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=1 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 1
+[INFO]mr_close(1): ret:0
+read file  "cfunction.ext" err, code=3006
+[JJFB_SEND] inject event ret=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x0 helper=0x2AEB48 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_2EF86C_COV] summary hit_halfwords=0/586 max_pc=0x0 last_pc=0x0 2EFB00_hits=0 2EFB06_hits=0 2EFC40_hits=0 first_gap_after_hit=0x0 force_r4=0 force_b6c=0
+[JJFB_2EFC_GATE] not reached, last_pc=0x0 last_lr=0x0 skip_hint_pc=0x0 2EFB00_hits=0 2EFB06_hits=0

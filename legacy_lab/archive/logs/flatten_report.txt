@@ -1,0 +1,183 @@
+src_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad
+src_240_exists=True
+src_240_gwy_mrp=True
+src_240_jjfb=True
+vmrp_mythroad_roots:
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gamelist.mrp
+deleted cache C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\app.cfg
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad:
+  atxllq.mrp 227114 sha1=81477639dc
+  box.mrp 50434 sha1=643f2575dc
+  dsm_gm.mrp 41315 sha1=be3a25f431
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  gxrxd.mrp 200536 sha1=c55f8e7524
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  lines.mrp 81244 sha1=e465d335fe
+  mpc.mrp 188194 sha1=ea9973c657
+  mpqp.mrp 281660 sha1=ddf73cfaab
+  QQDSM2007.mrp 113827 sha1=b74d364679
+  shot.mrp 100742 sha1=d6f752c8d3
+  tetris.mrp 41327 sha1=45d33270e3
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\gamelist.mrp
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\gamelist.mrp
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\gamelist.mrp
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\gamelist.mrp
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\gamelist.mrp
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy
+alias 240x320\gwy.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy.mrp
+alias 240x320\gwy\jjfb.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\jjfb.mrp
+alias 240x320\gwy\gamelist.mrp -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gamelist.mrp
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\sdk_key.dat
+created C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad\gwy\sdk_key.dat
+root mrp listing for C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad\240x320\.disk\a\mythroad:
+  gamelist.mrp 72620 sha1=142b4487f2
+  gwy.mrp 56345 sha1=7f5f52e8a6
+  gwyaz.mrp 284649 sha1=ec827d5b58
+  hxsg.mrp 285344 sha1=f9a3375d69
+  jjfb.mrp 414602 sha1=c6a0cbda0c
+  mpqp.mrp 281660 sha1=ddf73cfaab

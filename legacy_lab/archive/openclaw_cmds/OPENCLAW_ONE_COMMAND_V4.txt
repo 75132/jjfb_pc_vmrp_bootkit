@@ -1,0 +1,12 @@
+给 OpenClaw：
+
+当前日志证明 vmrp 会固定启动 mythroad/dsm_gm.mrp，命令行参数无效。现在用 v4 强制替换 dsm_gm：
+
+1. 解压到 jjfb_pc_vmrp_bootkit 根目录覆盖
+2. 先跑：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_BOOT_GWY_V4.ps1
+3. 如果无网络/无变化，再跑：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_BOOT_GAMELIST_V4.ps1
+4. 最后再跑：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_BOOT_JJFB_V4.ps1
+5. 回传 logs/direct_replace_feedback_*.zip

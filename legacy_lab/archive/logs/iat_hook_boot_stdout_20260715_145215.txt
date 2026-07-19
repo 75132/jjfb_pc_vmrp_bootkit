@@ -1,0 +1,47 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+dsm_gm.mrp
+br_mem_get base=0x2829F4 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175760 bytes
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+mr_unzip
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+start.mr:143: cann`t find sdk key!
+After app init, memory left:4009896
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',NULL): 0x0

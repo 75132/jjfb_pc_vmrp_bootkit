@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v16 结果所有候选无网络，但因为 stdout 重定向+kill，日志不完整。现在跑 v17 实时观察版，不 kill 进程。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_LIVE_BOOT_JJFB_V17.ps1
+
+让窗口开着，截图 vmrp 窗口，并发：
+logs\live_boot_feedback_*.zip
+
+重点观察是否停在标题/loading/黑屏，能否按 Enter/方向键/数字键5继续。

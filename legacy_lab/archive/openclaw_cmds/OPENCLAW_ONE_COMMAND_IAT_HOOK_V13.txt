@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v12 直接改 NULL 参数失败，main.exe 没被改。现在 v13 改成 IAT hook：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_IAT_HOOK_AND_BOOT_V13.ps1
+
+跑完发：
+logs\iat_hook_feedback_*.zip
+
+恢复：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_RESTORE_MAIN_EXE_V13.ps1

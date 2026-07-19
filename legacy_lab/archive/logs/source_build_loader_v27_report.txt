@@ -1,0 +1,44 @@
+ENV_OK=True
+vmrp.c candidates:
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_build_v27\vmrp-master\vmrp.c
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_build_v27\vmrp-master\mythroad\build\vmrp.c
+patching C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_build_v27\vmrp-master\vmrp.c
+decl_inserted=1 call_replaced=1 changed=True
+patched copy=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\vmrp_v27_patched.c
+repo=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_build_v27\vmrp-master
+repo files:
+.clang-format
+.gitignore
+bridge.c
+debug.c
+fileLib.c
+LICENSE
+main.c
+Makefile
+memory.c
+network.c
+rbtree.c
+README.md
+utils.c
+vmrp.c
+where mingw32-make rc=0
+C:\msys64\ucrt64\bin\mingw32-make.exe
+
+mingw32-make clean rc=0
+rm *.o
+process_begin: CreateProcess(NULL, rm *.o, ...) failed.
+make (e=2): ϵͳ�Ҳ���ָ�����ļ���
+mingw32-make: [Makefile:33: clean] Error 2 (ignored)
+
+mingw32-make rc=2
+gcc -g -Wall -DNETWORK_SUPPORT -DVMRP -m32 -c network.c
+In file included from ./header/bridge.h:10,
+                 from ./header/network.h:5,
+                 from network.c:6:
+./header/utils.h:16:10: fatal error: ../windows/unicorn-1.0.2-win32/include/unicorn/unicorn.h: No such file or directory
+   16 | #include "../windows/unicorn-1.0.2-win32/include/unicorn/unicorn.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+mingw32-make: *** [Makefile:29: network.o] Error 1
+
+NO_BUILT_EXE: see build log; install MSYS2/MinGW dependencies then rerun.

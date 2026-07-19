@@ -1,0 +1,16 @@
+{
+  "profile_id": "catalog",
+  "resource_root": "C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480",
+  "cfg_index": 35,
+  "target_mrp": "gwy/gkdxy.mrp",
+  "entry_member": "start.mr",
+  "param": "napptype=0_nextid=10496_ncode=0_narg=125376_narg1=0_nmrpname=gwy/gkdxy.mrp_gwyblink",
+  "napptype": 0,
+  "nextid": 10496,
+  "ncode": 0,
+  "narg": 125376,
+  "narg1": 0,
+  "appid": 479960,
+  "appver": 8,
+  "target_sha256": "2736ddce10710c615d603b013adae8090a2e938c0f016c74b6e6442def3b6c38"
+}

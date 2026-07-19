@@ -1,0 +1,18 @@
+[information]
+projectname=helloworld.mpr
+filename=helloworld.mrp
+appname=sdk秘钥
+appid=30044
+version=1000
+visible=1
+cpu=3
+vendor=开发者
+description=开发者手机秘钥，不会报未找到sdkkey
+config=mtk
+
+[config_mtk]
+bmp_mode=normal
+output=sdkkey.mrp
+
+[files]
+file01 = helloworld.mr(name=start.mr)

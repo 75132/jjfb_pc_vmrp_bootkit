@@ -1,0 +1,92 @@
+[
+  {
+    "tag": "pc113_line163",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc113_line163_20260715_174757.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc113_line163_netstat_20260715_174757.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc122_line165",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc122_line165_20260715_174814.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc122_line165_netstat_20260715_174814.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc124_line166",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc124_line166_20260715_174830.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc124_line166_netstat_20260715_174830.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc129_line168",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc129_line168_20260715_174846.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc129_line168_netstat_20260715_174846.txt",
+    "alive": false,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc132_line169",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc132_line169_20260715_174901.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc132_line169_netstat_20260715_174901.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc136_line171",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc136_line171_20260715_174918.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc136_line171_netstat_20260715_174918.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc147_line172",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc147_line172_20260715_174934.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc147_line172_netstat_20260715_174934.txt",
+    "alive": false,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc148_line174",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc148_line174_20260715_174949.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc148_line174_netstat_20260715_174949.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  },
+  {
+    "tag": "pc150_line175",
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc150_line175_20260715_175005.txt",
+    "netstat": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\skip_loader_pc150_line175_netstat_20260715_175005.txt",
+    "alive": true,
+    "stdout_len": 459,
+    "tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n",
+    "has_target_net": false,
+    "interesting": false
+  }
+]

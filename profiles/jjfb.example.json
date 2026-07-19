@@ -1,0 +1,47 @@
+{
+  "id": "gwy.jjfb.original",
+  "resource_root": "game_files/mythroad/320x480",
+  "target": {
+    "mrp": "gwy/jjfb.mrp",
+    "entry_member": "start.mr",
+    "expected_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+    "appid": 400101,
+    "appver": 12
+  },
+  "launch": {
+    "source": "cfg.bin",
+    "cfg_index": 36,
+    "params": {
+      "napptype": 12,
+      "nextid": 482,
+      "ncode": 512,
+      "narg": 0,
+      "narg1": 1,
+      "nmrpname": "gwy/jjfb.mrp",
+      "flags": ["gwyblink"]
+    }
+  },
+  "identity": {
+    "vmver": 1968,
+    "imei": "864086040622841",
+    "manufacturer": "vmrp",
+    "model": "vmrp"
+  },
+  "display": {
+    "guest_width": 240,
+    "guest_height": 320,
+    "window_width": 320,
+    "window_height": 480,
+    "pixel_format": "RGB565"
+  },
+  "compatibility": {
+    "member_aliases": {
+      "cfunction.ext": "robotol.ext"
+    },
+    "accepted_entry_returns": [0, 1],
+    "notes": [
+      "Alias is a compatibility-profile rule, not a guest-memory patch.",
+      "Return 1 is accepted only after the target EXT was actually resolved and registered."
+    ]
+  }
+}

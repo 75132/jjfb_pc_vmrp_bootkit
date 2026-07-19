@@ -1,0 +1,18 @@
+[information]
+projectname=helloworld.mpr
+filename=helloworld.mrp
+appname=helloworld
+appid=1000
+version=1000
+visible=1
+cpu=3
+vendor=默水瓶
+description=这是一个helloworld程序
+config=mtk
+
+[config_mtk]
+bmp_mode=normal
+output=bin\helloworld.mrp
+
+[files]
+file01 = src\helloworld.mr(name=start.mr)

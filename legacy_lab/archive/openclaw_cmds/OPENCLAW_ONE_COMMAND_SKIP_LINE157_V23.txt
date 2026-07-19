@@ -1,0 +1,13 @@
+给 OpenClaw：
+
+v22 已成功跳过 sdk 错误分支，进入 line157，但卡在：
+start.mr:157: err:call global `_mr_c_load' (object)
+
+v23 做控制流探测：继续保留 sdk error skip，再把 line157 也 JMP 掉，看下一层是什么。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SKIP_LINE157_V23.ps1
+
+发：
+logs\skip_line157_v23_feedback_*.zip
+以及窗口截图。

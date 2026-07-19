@@ -1,0 +1,4 @@
+started C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+pid=27920
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\localnet_vmrp_stdout_20260715_121815.txt
+waiting 90s for network...

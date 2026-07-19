@@ -1,0 +1,10 @@
+这次结果已经证明文件能被 vmrp 扫到了。现在用 v3 精简版：
+
+1. 解压到原 jjfb_pc_vmrp_bootkit 根目录覆盖
+2. 运行：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_QUICKFIX_V3.ps1
+3. vmrp 打开后，在列表最前面点：
+   001_gwy.mrp
+   002_gamelist.mrp
+   000_jjfb.mrp
+4. 发 logs/quickfix_feedback_*.zip

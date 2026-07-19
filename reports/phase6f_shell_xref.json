@@ -1,0 +1,478 @@
+{
+  "gwy_root": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy",
+  "packages": [
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\cfg.bin",
+      "exists": true,
+      "members": [
+        {
+          "name": "cfg.bin",
+          "hits": [
+            {
+              "needle": "gwy/jjfb.mrp",
+              "offset": 10943,
+              "context": "................gwy/jjfb.mrp................................"
+            }
+          ],
+          "hit_count": 1
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\gamelist.mrp",
+      "exists": true,
+      "members": [
+        {
+          "name": "start.mr",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 755,
+              "context": "trCom..Y........cfunction.ext.. ........................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 477,
+              "context": "GetSysInfo......_strCom..!.............vmver..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 737,
+              "context": "._mr_c_buf......_strCom..Y........cfunction.ext.. ....."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1478,
+              "context": "i......iii......_strCom..!.......>.........}..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1840,
+              "context": ".....t_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2005,
+              "context": ".....s_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2170,
+              "context": ".....r_ret......_strCom..!............................."
+            },
+            {
+              "needle": "TestCom",
+              "offset": 1365,
+              "context": "times...........TestCom....................._t......str"
+            }
+          ],
+          "hit_count": 8
+        },
+        {
+          "name": "gamelist.ext",
+          "hits": [
+            {
+              "needle": "gwyblink",
+              "offset": 82208,
+              "context": "type=%d_nurl=%s_gwyblink....napptype=%d_nextid=%d_ncode="
+            },
+            {
+              "needle": "gwyblink",
+              "offset": 82280,
+              "context": "=%d_nmrpname=%s_gwyblink....%s/%s...cfunction.ext...star"
+            },
+            {
+              "needle": "gwyblink",
+              "offset": 82352,
+              "context": ".....%.s........gwyblink....napptype....entry...nextid.."
+            },
+            {
+              "needle": "napptype",
+              "offset": 82188,
+              "context": "b.......gwy.GPT.napptype=%d_nurl=%s_gwyblink....napptype"
+            },
+            {
+              "needle": "napptype",
+              "offset": 82220,
+              "context": "=%s_gwyblink....napptype=%d_nextid=%d_ncode=%d_narg=%d_n"
+            },
+            {
+              "needle": "napptype",
+              "offset": 82364,
+              "context": "....gwyblink....napptype....entry...nextid..ncode...narg"
+            },
+            {
+              "needle": "nextid",
+              "offset": 82232,
+              "context": "....napptype=%d_nextid=%d_ncode=%d_narg=%d_narg1=%d_nm"
+            },
+            {
+              "needle": "nextid",
+              "offset": 82384,
+              "context": "type....entry...nextid..ncode...narg....narg1...nmrpna"
+            },
+            {
+              "needle": "ncode",
+              "offset": 82242,
+              "context": "pe=%d_nextid=%d_ncode=%d_narg=%d_narg1=%d_nmrpname=%s"
+            },
+            {
+              "needle": "ncode",
+              "offset": 82392,
+              "context": "entry...nextid..ncode...narg....narg1...nmrpname....g"
+            },
+            {
+              "needle": "ncode",
+              "offset": 90085,
+              "context": "/x-www-form-urlencoded;charset=UTF-8...%s %s HTTP/1.1"
+            },
+            {
+              "needle": "nmrpname",
+              "offset": 82268,
+              "context": "arg=%d_narg1=%d_nmrpname=%s_gwyblink....%s/%s...cfunctio"
+            },
+            {
+              "needle": "nmrpname",
+              "offset": 82416,
+              "context": "narg....narg1...nmrpname....gwy/%s.mrp..nappid..%s.mrp.."
+            },
+            {
+              "needle": "cfunction",
+              "offset": 82300,
+              "context": "link....%s/%s...cfunction.ext...start.mr.....%.s.%.s....."
+            }
+          ],
+          "hit_count": 14
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\gbrwcore.mrp",
+      "exists": true,
+      "members": [
+        {
+          "name": "start.mr",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 755,
+              "context": "trCom..Y........cfunction.ext.. ........................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 477,
+              "context": "GetSysInfo......_strCom..!.............vmver..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 737,
+              "context": "._mr_c_buf......_strCom..Y........cfunction.ext.. ....."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1478,
+              "context": "i......iii......_strCom..!.......>.........}..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1840,
+              "context": ".....t_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2005,
+              "context": ".....s_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2170,
+              "context": ".....r_ret......_strCom..!............................."
+            },
+            {
+              "needle": "TestCom",
+              "offset": 1365,
+              "context": "times...........TestCom....................._t......str"
+            }
+          ],
+          "hit_count": 8
+        },
+        {
+          "name": "gbrwcore.ext",
+          "hits": [
+            {
+              "needle": "startGame",
+              "offset": 140248,
+              "context": "lib.alert...lib.startGame...lib.exitbrw.lib.reportresult."
+            },
+            {
+              "needle": "runapp",
+              "offset": 140484,
+              "context": "lib.loadurl.lib.runapp..FALSE...base64..get.%s&retcode"
+            },
+            {
+              "needle": "ncode",
+              "offset": 146769,
+              "context": "/x-www-form-urlencoded;charset=UTF-8...%s %s HTTP/1.1"
+            },
+            {
+              "needle": "cfunction",
+              "offset": 142812,
+              "context": ">H..file:///....cfunction.ext...logo.ext....start.mr....s"
+            },
+            {
+              "needle": "download",
+              "offset": 140456,
+              "context": "lientInfo...lib.download....lib.loadurl.lib.runapp..FALS"
+            },
+            {
+              "needle": "download",
+              "offset": 142392,
+              "context": "....://.:...sky_download:........./.....>B..%s&nwid=%u&h"
+            },
+            {
+              "needle": "download",
+              "offset": 145700,
+              "context": "ie..http/cookie.download....http....download/dwnlist.dat"
+            },
+            {
+              "needle": "download",
+              "offset": 145720,
+              "context": "load....http....download/dwnlist.dat....gbrw/...[2......"
+            },
+            {
+              "needle": "isFileOnServerNewer",
+              "offset": 140376,
+              "context": "checkmrpver.lib.isFileOnServerNewer.lib.getmrpver...lib.getFileVers"
+            },
+            {
+              "needle": "getFileVersion",
+              "offset": 140416,
+              "context": "getmrpver...lib.getFileVersion..lib.getClientInfo...lib.downlo"
+            },
+            {
+              "needle": "getClientInfo",
+              "offset": 140436,
+              "context": "ileVersion..lib.getClientInfo...lib.download....lib.loadurl.l"
+            }
+          ],
+          "hit_count": 11
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\gbrwshell.mrp",
+      "exists": true,
+      "members": [
+        {
+          "name": "start.mr",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 577,
+              "context": "trCom..Y........cfunction.ext.. ........................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 360,
+              "context": "GetSysInfo......_strCom..!.............vmver..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 559,
+              "context": "._mr_c_buf......_strCom..Y........cfunction.ext.. ....."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1300,
+              "context": "i......iii......_strCom..!.......>.........}..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1662,
+              "context": ".....t_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1827,
+              "context": ".....s_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1992,
+              "context": ".....r_ret......_strCom..!............................."
+            },
+            {
+              "needle": "TestCom",
+              "offset": 1187,
+              "context": "times...........TestCom....................._t......str"
+            }
+          ],
+          "hit_count": 8
+        },
+        {
+          "name": "gbrwshell.ext",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 39888,
+              "context": "...B..(.........cfunction.ext...logo.ext....shell.mr....s"
+            },
+            {
+              "needle": "download",
+              "offset": 44113,
+              "context": "on/sky-mrp.gbrw/download...Z:..%s/DOWNLOADLIST%d...gbrw/"
+            },
+            {
+              "needle": "download",
+              "offset": 44153,
+              "context": "ADLIST%d...gbrw/download...%s/TMPDOWNLOADLIST%d....MRPG."
+            }
+          ],
+          "hit_count": 3
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\vdload.mrp",
+      "exists": true,
+      "members": [
+        {
+          "name": "start.mr",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 755,
+              "context": "trCom..Y........cfunction.ext.. ........................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 477,
+              "context": "GetSysInfo......_strCom..!.............vmver..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 737,
+              "context": "._mr_c_buf......_strCom..Y........cfunction.ext.. ....."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1478,
+              "context": "i......iii......_strCom..!.......>.........}..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1840,
+              "context": ".....t_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2005,
+              "context": ".....s_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2170,
+              "context": ".....r_ret......_strCom..!............................."
+            },
+            {
+              "needle": "TestCom",
+              "offset": 1365,
+              "context": "times...........TestCom....................._t......str"
+            }
+          ],
+          "hit_count": 8
+        },
+        {
+          "name": "vdload.ext",
+          "hits": [
+            {
+              "needle": "simpleDownload",
+              "offset": 12169,
+              "context": "inueDownload.../simpleDownload.vld.spd.skymobiapp.com..MRPG..."
+            },
+            {
+              "needle": "continueDownload",
+              "offset": 12149,
+              "context": "%x%x.t........./continueDownload.../simpleDownload.vld.spd.skymo"
+            },
+            {
+              "needle": "dl_confirm",
+              "offset": 12097,
+              "context": "biapp.com:6009./dl_confirm.vld\\%x%x%x../...\\%x%x.i.\\%x%x.t"
+            }
+          ],
+          "hit_count": 3
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+      "exists": true,
+      "members": [
+        {
+          "name": "start.mr",
+          "hits": [
+            {
+              "needle": "_strCom",
+              "offset": 972,
+              "context": ".....close......_strCom...........vmver......string...."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 1517,
+              "context": "._mr_c_buf......_strCom..Y........mrc_loader.ext.. ...."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2419,
+              "context": "i......iii......_strCom..!.......>.........}..........."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2781,
+              "context": ".....t_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 2946,
+              "context": ".....s_ret......_strCom..!............................."
+            },
+            {
+              "needle": "_strCom",
+              "offset": 3111,
+              "context": ".....r_ret......_strCom..!............................."
+            },
+            {
+              "needle": "TestCom",
+              "offset": 2306,
+              "context": "times...........TestCom....................._t......str"
+            }
+          ],
+          "hit_count": 7
+        },
+        {
+          "name": "mrc_loader.ext",
+          "hits": [
+            {
+              "needle": "cfunction",
+              "offset": 212,
+              "context": "....../.....0...cfunction.ext......."
+            }
+          ],
+          "hit_count": 1
+        },
+        {
+          "name": "reg.ext",
+          "hits": [
+            {
+              "needle": "robotol",
+              "offset": 2104,
+              "context": "................robotol.ext.moduletest.ext..mainmenumod"
+            }
+          ],
+          "hit_count": 1
+        }
+      ]
+    }
+  ]
+}

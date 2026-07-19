@@ -1,0 +1,17 @@
+给 OpenClaw：
+
+v20 已经不报 sdk 错，但仍然白屏。判断是原错误分支可能是 return _error(...)，v20 变成 return _gc(0)，还是直接返回，没有进入 mrc_loader.ext 加载流程。
+
+v21 测试把错误分支直接导向 loader：
+_mr_c_load("mrc_loader.ext")
+_mr_c_buf("mrc_loader.ext")
+_com("mrc_loader.ext")
+_strCom("mrc_loader.ext")
+_gc(0)
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SDK_BRANCH_VARIANTS_V21.ps1
+
+发：
+logs\sdk_branch_variants_feedback_*.zip
+以及窗口截图。

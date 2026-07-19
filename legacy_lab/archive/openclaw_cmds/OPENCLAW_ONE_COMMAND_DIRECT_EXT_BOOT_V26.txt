@@ -1,0 +1,12 @@
+给 OpenClaw：
+
+v25/v24 说明继续 patch start.mr 没意义，卡点是 _mr_c_load/hsman loader。现在 v26 不走 start.mr，直接把 vmrp 的 extName 从 start.mr 改为 mrc_loader.ext，尝试直接启动 jjfb 内部 C/EXT loader：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_DIRECT_EXT_BOOT_V26.ps1
+
+发：
+logs\direct_ext_boot_v26_feedback_*.zip
+以及窗口截图。
+
+恢复：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_RESTORE_V26.ps1

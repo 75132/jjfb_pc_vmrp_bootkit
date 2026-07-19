@@ -1,0 +1,2 @@
+dsm_gm<=jjfb C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320\gwy\jjfb.mrp
+sdk_key=g:u2

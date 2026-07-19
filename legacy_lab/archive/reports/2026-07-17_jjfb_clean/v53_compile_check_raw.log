@@ -1,0 +1,77 @@
+bridge.c: In function 'br_mr_malloc':
+bridge.c:168:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  168 |     SET_RET_V((uint32_t)NULL);
+      |               ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'br_memcpy':
+bridge.c:188:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  188 |     SET_RET_V((uint32_t)memcpy(getMrpMemPtr(dst), getMrpMemPtr(src), n));
+      |               ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'br_memset':
+bridge.c:197:15: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  197 |     SET_RET_V((uint32_t)memset(getMrpMemPtr(dst), value, n));
+      |               ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'br_readdir':
+bridge.c:1894:19: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 1894 |         SET_RET_V((uint32_t)NULL);
+      |                   ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'br_mr_initNetwork':
+bridge.c:1923:34: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 1923 |     SET_RET_V(my_initNetwork(uc, (void *)cb, getMrpMemPtr(mode), (void *)userData));
+      |                                  ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c:1923:66: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 1923 |     SET_RET_V(my_initNetwork(uc, (void *)cb, getMrpMemPtr(mode), (void *)userData));
+      |                                                                  ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'br_mr_getHostByName':
+bridge.c:1971:56: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 1971 |     SET_RET_V(my_getHostByName(uc, getMrpMemPtr(name), (void *)cb, (void *)userData));
+      |                                                        ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c:1971:68: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 1971 |     SET_RET_V(my_getHostByName(uc, getMrpMemPtr(name), (void *)cb, (void *)userData));
+      |                                                                    ^
+bridge.c:41:23: note: in definition of macro 'SET_RET_V'
+   41 |         uint32_t _v = ret;                    \
+      |                       ^~~
+bridge.c: In function 'jjfb_splash_cov_summary':
+bridge.c:3656:45: warning: variable 'last_hit' set but not used [-Wunused-but-set-variable]
+ 3656 |     uint32_t i, blocks = 0, first_miss = 0, last_hit = 0;
+      |                                             ^~~~~~~~
+bridge.c: In function 'bridge_dsm_mr_start_dsm':
+bridge.c:6045:36: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 6045 |     mr_start_dsm_param->filename = (char *)copyStrToMrp(filename);
+      |                                    ^
+bridge.c:6046:31: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 6046 |     mr_start_dsm_param->ext = (char *)copyStrToMrp(ext);
+      |                               ^
+bridge.c:6047:41: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+ 6047 |     mr_start_dsm_param->entry = entry ? (char *)copyStrToMrp(entry) : NULL;
+      |                                         ^
+bridge.c:6052:29: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 6052 |     my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->filename));
+      |                             ^
+bridge.c:6055:29: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 6055 |     my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->ext));
+      |                             ^
+bridge.c:6059:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+ 6059 |         my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->entry));
+      |                                 ^

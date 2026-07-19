@@ -1,0 +1,13 @@
+给 OpenClaw：
+
+v17 截图证明 g:u2 仍然会报 cann`t find sdk key，之前 v8 是误判。
+现在 v18 直接 patch jjfb.mrp 内部 start.mr：把常量 _error 改成 _gc，绕过 sdk_key abort，再启动观察。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_JJFB_SDK_BYPASS_LIVE_V18.ps1
+
+发：
+logs\sdk_bypass_feedback_*.zip
+以及 vmrp 窗口截图。
+
+这一步只做本地模拟器启动绕过，不连官方服务器。

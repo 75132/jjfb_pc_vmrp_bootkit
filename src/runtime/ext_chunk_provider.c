@@ -1,0 +1,509 @@
+#include "gwy_launcher/ext_chunk_provider.h"
+#include "gwy_launcher/ext_gwy_shell_native_exec.h"
+#include "gwy_launcher/ext_loader.h"
+#include "gwy_launcher/module_registry.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    uint32_t helper;
+    uint64_t module_id;
+    char name[48];
+    uint32_t code_base;
+    uint32_t code_size;
+    uint32_t p_guest;
+    void *p_host;
+    uint32_t chunk_guest;
+    void *chunk_host;
+    uint32_t init_func;
+    int published;
+} ChunkRec;
+
+static struct {
+    int mode_known;
+    GwyExtChunkProviderMode mode;
+    int slot_trace;
+    void *uc;
+    uint32_t sendappevent_guest;
+    uint32_t mr_table_guest;
+    int finalized;
+    int any_published;
+    uint32_t last_chunk_guest;
+    char last_module[48];
+    ChunkRec recs[8];
+    int rec_n;
+    int contract_emitted;
+} g_prov;
+
+static int env_is_1(const char *k) {
+    const char *e = getenv(k);
+    return e && e[0] == '1';
+}
+
+static void parse_mode(void) {
+    const char *e;
+    if (g_prov.mode_known) return;
+    g_prov.mode = GWY_EXTCHUNK_OFF;
+    e = getenv("JJFB_EXTCHUNK_PROVIDER");
+    if (e && e[0]) {
+        if (strcmp(e, "gbrwcore_only") == 0) g_prov.mode = GWY_EXTCHUNK_GBRWCORE_ONLY;
+        else if (strcmp(e, "gbrwcore_wxjwq") == 0) g_prov.mode = GWY_EXTCHUNK_GBRWCORE_WXJWQ;
+        else if (strcmp(e, "gwy_shell") == 0 || strcmp(e, "shell_core") == 0)
+            g_prov.mode = GWY_EXTCHUNK_GWY_SHELL;
+        else if (strcmp(e, "shell_and_game") == 0)
+            g_prov.mode = GWY_EXTCHUNK_SHELL_AND_GAME;
+        else if (strcmp(e, "game_package") == 0)
+            g_prov.mode = GWY_EXTCHUNK_GAME_PACKAGE;
+        else if (e[0] == '1') g_prov.mode = GWY_EXTCHUNK_GBRWCORE_ONLY;
+    }
+    g_prov.slot_trace = env_is_1("JJFB_EXTCHUNK_SLOT_TRACE") || (g_prov.mode != GWY_EXTCHUNK_OFF);
+    g_prov.mode_known = 1;
+}
+
+const char *ext_chunk_provider_mode_name(GwyExtChunkProviderMode m) {
+    switch (m) {
+    case GWY_EXTCHUNK_GBRWCORE_ONLY: return "gbrwcore_only";
+    case GWY_EXTCHUNK_GBRWCORE_WXJWQ: return "gbrwcore_wxjwq";
+    case GWY_EXTCHUNK_GWY_SHELL: return "gwy_shell";
+    case GWY_EXTCHUNK_SHELL_AND_GAME: return "shell_and_game";
+    case GWY_EXTCHUNK_GAME_PACKAGE: return "game_package";
+    default: return "off";
+    }
+}
+
+void ext_chunk_provider_reset(void) {
+    void *uc = g_prov.uc;
+    uint32_t sa = g_prov.sendappevent_guest;
+    uint32_t mt = g_prov.mr_table_guest;
+    memset(&g_prov, 0, sizeof(g_prov));
+    g_prov.uc = uc;
+    g_prov.sendappevent_guest = sa;
+    g_prov.mr_table_guest = mt;
+}
+
+void ext_chunk_provider_bind_uc(void *uc) { g_prov.uc = uc; }
+
+void ext_chunk_provider_set_sendappevent_guest(uint32_t guest_addr) {
+    g_prov.sendappevent_guest = guest_addr;
+}
+
+void ext_chunk_provider_set_mr_table_guest(uint32_t guest_addr) {
+    g_prov.mr_table_guest = guest_addr;
+}
+
+uint32_t ext_chunk_provider_mr_table_guest(void) { return g_prov.mr_table_guest; }
+
+int ext_chunk_provider_enabled(void) {
+    parse_mode();
+    return g_prov.mode != GWY_EXTCHUNK_OFF;
+}
+
+GwyExtChunkProviderMode ext_chunk_provider_mode(void) {
+    parse_mode();
+    return g_prov.mode;
+}
+
+int ext_chunk_provider_published(void) { return g_prov.any_published; }
+uint32_t ext_chunk_provider_last_chunk_guest(void) { return g_prov.last_chunk_guest; }
+
+static int name_has(const char *s, const char *n) {
+    return s && n && strstr(s, n) != NULL;
+}
+
+static int mode_applies_name(const char *name) {
+    parse_mode();
+    if (g_prov.mode == GWY_EXTCHUNK_OFF) return 0;
+    if (g_prov.mode == GWY_EXTCHUNK_GBRWCORE_ONLY || g_prov.mode == GWY_EXTCHUNK_GBRWCORE_WXJWQ)
+        return name_has(name, "gbrwcore");
+    if (g_prov.mode == GWY_EXTCHUNK_GWY_SHELL)
+        return name_has(name, "gbrwcore") || name_has(name, "gamelist") || name_has(name, "gbrwshell");
+    if (g_prov.mode == GWY_EXTCHUNK_SHELL_AND_GAME)
+        return name_has(name, "gbrwcore") || name_has(name, "gamelist") ||
+               name_has(name, "gbrwshell") || name_has(name, "mrc_loader") ||
+               name_has(name, "robotol") || name_has(name, "mmochat");
+    if (g_prov.mode == GWY_EXTCHUNK_GAME_PACKAGE)
+        return name_has(name, "mrc_loader") || name_has(name, "robotol") ||
+               name_has(name, "mmochat");
+    return 0;
+}
+
+static int helper_in_gbrwcore(uint32_t helper) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    const GwyLoadedModule *gm;
+    if (!reg || !helper) return 0;
+    gm = module_registry_find_by_helper(reg, helper);
+    if (!gm) gm = module_registry_find_by_code_addr(reg, helper);
+    if (!gm) return 0;
+    return name_has(gm->requested_name, "gbrwcore") || name_has(gm->resolved_name, "gbrwcore");
+}
+
+static int mode_applies_helper(uint32_t helper) {
+    parse_mode();
+    if (g_prov.mode == GWY_EXTCHUNK_OFF) return 0;
+    if (g_prov.mode == GWY_EXTCHUNK_GBRWCORE_ONLY || g_prov.mode == GWY_EXTCHUNK_GBRWCORE_WXJWQ)
+        return helper_in_gbrwcore(helper);
+    if (g_prov.mode == GWY_EXTCHUNK_GWY_SHELL || g_prov.mode == GWY_EXTCHUNK_SHELL_AND_GAME ||
+        g_prov.mode == GWY_EXTCHUNK_GAME_PACKAGE) {
+        ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+        const GwyLoadedModule *gm;
+        if (!reg) return 0;
+        gm = module_registry_find_by_helper(reg, helper);
+        if (!gm) gm = module_registry_find_by_code_addr(reg, helper);
+        if (!gm) return 0;
+        return mode_applies_name(gm->resolved_name[0] ? gm->resolved_name : gm->requested_name);
+    }
+    return 0;
+}
+
+int ext_chunk_provider_want(uint32_t helper) {
+    parse_mode();
+    if (g_prov.mode == GWY_EXTCHUNK_OFF || !helper) return 0;
+    return mode_applies_helper(helper);
+}
+
+static void emit_contract_once(void) {
+    if (g_prov.contract_emitted) return;
+    g_prov.contract_emitted = 1;
+    printf("[JJFB_EXTCHUNK_CONTRACT] struct=mrc_extChunk_st check_off=0x0 init_func_off=0x4 "
+           "event_off=0x8 sendAppEvent_off=0x28 check_magic=0x%X size=0x%X "
+           "source=mr_helper.h+doc/ext_important evidence=DOCUMENTED\n",
+           GWY_MRC_EXTCHUNK_CHECK, (unsigned)GWY_MRC_EXTCHUNK_BYTES);
+    fflush(stdout);
+}
+
+static ChunkRec *find_by_p(uint32_t p_guest) {
+    int i;
+    if (!p_guest) return NULL;
+    for (i = 0; i < g_prov.rec_n; i++) {
+        if (g_prov.recs[i].p_guest == p_guest) return &g_prov.recs[i];
+    }
+    return NULL;
+}
+
+static ChunkRec *find_by_helper(uint32_t helper) {
+    int i;
+    if (!helper) return NULL;
+    for (i = 0; i < g_prov.rec_n; i++) {
+        if ((g_prov.recs[i].helper & ~1u) == (helper & ~1u)) return &g_prov.recs[i];
+    }
+    return NULL;
+}
+
+static ChunkRec *add_rec(void) {
+    if (g_prov.rec_n >= 8) return NULL;
+    return &g_prov.recs[g_prov.rec_n++];
+}
+
+static void fill_chunk(GwyMrcExtChunk *ch, uint32_t helper, uint32_t code_base, uint32_t code_size,
+                       uint32_t p_guest, uint32_t p_len) {
+    memset(ch, 0, sizeof(*ch));
+    ch->check = GWY_MRC_EXTCHUNK_CHECK;
+    ch->init_func = code_base ? (code_base + 8u) : 0;
+    ch->event = helper;
+    ch->code_buf = code_base;
+    ch->code_len = code_size;
+    ch->global_p_buf = p_guest;
+    ch->global_p_len = p_len ? p_len : 20u;
+    ch->send_app_event = g_prov.sendappevent_guest;
+    ch->ext_mr_table = g_prov.mr_table_guest;
+}
+
+static void publish_to_p(void *p_host, uint32_t p_guest, uint32_t chunk_guest, const char *reason,
+                         const char *module) {
+    uint32_t old_v = 0;
+    if (!p_host || !chunk_guest) return;
+    /* Host view of mr_c_function_st — same MRP memory as guest. */
+    {
+        uint32_t *words = (uint32_t *)p_host;
+        old_v = words[3]; /* +0x0C */
+        words[3] = chunk_guest;
+    }
+    g_prov.any_published = 1;
+    g_prov.last_chunk_guest = chunk_guest;
+    if (module && module[0])
+        snprintf(g_prov.last_module, sizeof(g_prov.last_module), "%.47s", module);
+    printf("[JJFB_EXTCHUNK_PUBLISH] module=%s P=0x%X off=0x0C old=0x%X new=0x%X reason=%s "
+           "evidence=DOCUMENTED\n",
+           module ? module : "?", p_guest, old_v, chunk_guest, reason ? reason : "?");
+    fflush(stdout);
+}
+
+static void emit_slots(const char *module, const GwyMrcExtChunk *ch) {
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x04 value=0x%X meaning=init_func "
+           "evidence=DOCUMENTED\n",
+           module ? module : "?", ch->init_func);
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x08 value=0x%X meaning=event_helper "
+           "evidence=DOCUMENTED\n",
+           module ? module : "?", ch->event);
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x28 value=0x%X meaning=sendAppEvent "
+           "evidence=DOCUMENTED\n",
+           module ? module : "?", ch->send_app_event);
+    fflush(stdout);
+}
+
+static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void *p_host,
+                              void *chunk_host, uint32_t chunk_guest, const char *reason) {
+    ModuleRegistry *reg;
+    const GwyLoadedModule *gm;
+    ChunkRec *rec;
+    GwyMrcExtChunk *ch;
+    uint32_t code_base = 0, code_size = 0;
+    uint64_t mid = 0;
+    const char *mn = "gbrwcore.ext";
+    LauncherError err;
+    (void)uc;
+
+    parse_mode();
+    if (!ext_chunk_provider_enabled()) return 0;
+    if (!mode_applies_helper(helper) && !helper_in_gbrwcore(helper)) return 0;
+    if (!p_guest || !p_host || !chunk_host || !chunk_guest) return 0;
+
+    emit_contract_once();
+
+    reg = gwy_ext_loader_bound_registry();
+    gm = reg ? module_registry_find_by_helper(reg, helper) : NULL;
+    if (!gm && reg) gm = module_registry_find_by_code_addr(reg, helper);
+    if (gm) {
+        mid = gm->module_id;
+        code_base = gm->map.guest_code_base;
+        code_size = gm->map.guest_code_size;
+        mn = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
+        if (!mode_applies_name(mn)) return 0;
+    } else if (!helper_in_gbrwcore(helper) && g_prov.mode != GWY_EXTCHUNK_GWY_SHELL) {
+        /* Allow gbrwcore helper before registry bind if PC in typical shell range — skip if unknown. */
+        if (!mode_applies_helper(helper)) return 0;
+    }
+
+    rec = find_by_p(p_guest);
+    if (!rec) rec = find_by_helper(helper);
+    if (!rec) {
+        rec = add_rec();
+        if (!rec) return 0;
+        memset(rec, 0, sizeof(*rec));
+    }
+    rec->helper = helper;
+    rec->module_id = mid;
+    snprintf(rec->name, sizeof(rec->name), "%.47s", mn);
+    rec->code_base = code_base;
+    rec->code_size = code_size;
+    rec->p_guest = p_guest;
+    rec->p_host = p_host;
+    rec->chunk_guest = chunk_guest;
+    rec->chunk_host = chunk_host;
+
+    ch = (GwyMrcExtChunk *)chunk_host;
+    fill_chunk(ch, helper, code_base, code_size, p_guest, 20u);
+    rec->init_func = ch->init_func;
+
+    printf("[JJFB_EXTCHUNK_ALLOC] module=%s module_id=%llu guest=0x%X size=0x%X helper=0x%X "
+           "evidence=DOCUMENTED\n",
+           mn, (unsigned long long)mid, chunk_guest, (unsigned)GWY_MRC_EXTCHUNK_BYTES, helper);
+    emit_slots(mn, ch);
+    publish_to_p(p_host, p_guest, chunk_guest, reason, mn);
+    rec->published = 1;
+
+    if (reg && mid && ch->init_func) {
+        launcher_error_clear(&err);
+        module_registry_set_chunk_field_04(reg, mid, ch->init_func, &err);
+    }
+    return 1;
+}
+
+int ext_chunk_provider_try_reuse(void *uc, uint32_t helper, uint32_t p_guest, void *p_host) {
+    ChunkRec *rec;
+    parse_mode();
+    if (!ext_chunk_provider_enabled() || !helper) return 0;
+    rec = find_by_helper(helper);
+    if (!rec) rec = find_by_p(p_guest);
+    if (!rec || !rec->chunk_host || !rec->chunk_guest) return 0;
+    if (p_guest) rec->p_guest = p_guest;
+    if (p_host) rec->p_host = p_host;
+    return ensure_and_publish(uc, helper, rec->p_guest, rec->p_host, rec->chunk_host,
+                              rec->chunk_guest, "platform_publication_restore");
+}
+
+int ext_chunk_provider_on_c_function_new(void *uc, uint32_t helper, uint32_t p_guest, void *p_host,
+                                         void *chunk_host, uint32_t chunk_guest) {
+    return ensure_and_publish(uc, helper, p_guest, p_host, chunk_host, chunk_guest,
+                              "mr_c_function_new_contract");
+}
+
+void ext_chunk_provider_on_module_registered(const char *module_name, uint64_t module_id,
+                                             uint32_t helper, uint32_t code_base, uint32_t code_size,
+                                             uint32_t p_guest, void *p_host) {
+    ChunkRec *rec;
+    parse_mode();
+    if (!ext_chunk_provider_enabled()) return;
+    if (!mode_applies_name(module_name)) return;
+    rec = find_by_helper(helper);
+    if (!rec) rec = find_by_p(p_guest);
+    if (!rec || !rec->chunk_host || !rec->chunk_guest) return;
+    if (code_base) {
+        rec->code_base = code_base;
+        rec->code_size = code_size;
+    }
+    if (p_guest) {
+        rec->p_guest = p_guest;
+        if (p_host) rec->p_host = p_host;
+    }
+    rec->module_id = module_id;
+    if (module_name) {
+        snprintf(rec->name, sizeof(rec->name), "%.47s", module_name);
+    }
+    ensure_and_publish(g_prov.uc, helper, rec->p_guest, rec->p_host, rec->chunk_host,
+                       rec->chunk_guest, "ext_register_contract");
+}
+
+void ext_chunk_provider_on_pxc_cleared(uint32_t p_guest, uint32_t pc) {
+    ChunkRec *rec;
+    parse_mode();
+    if (!ext_chunk_provider_enabled() || !p_guest) return;
+    rec = find_by_p(p_guest);
+    if (!rec || !rec->chunk_guest || !rec->p_host) return;
+    printf("[JJFB_EXTCHUNK_REPUBLISH] P=0x%X cleared_at_pc=0x%X chunk=0x%X "
+           "reason=platform_publication_restore evidence=TARGET_OBSERVED\n",
+           p_guest, pc, rec->chunk_guest);
+    fflush(stdout);
+    ensure_and_publish(g_prov.uc, rec->helper, rec->p_guest, rec->p_host, rec->chunk_host,
+                       rec->chunk_guest, "platform_publication_restore");
+}
+
+void ext_chunk_provider_after_entry_order(uint32_t helper) {
+    ChunkRec *rec;
+    uint32_t *words;
+    parse_mode();
+    if (!ext_chunk_provider_enabled() || !helper) return;
+    rec = find_by_helper(helper);
+    if (!rec || !rec->p_host || !rec->chunk_guest) return;
+    words = (uint32_t *)rec->p_host;
+    if (words[3] != 0) return;
+    printf("[JJFB_EXTCHUNK_REPUBLISH] P=0x%X cleared_at_pc=0 chunk=0x%X "
+           "reason=platform_publication_restore evidence=TARGET_OBSERVED\n",
+           rec->p_guest, rec->chunk_guest);
+    fflush(stdout);
+    ensure_and_publish(g_prov.uc, rec->helper, rec->p_guest, rec->p_host, rec->chunk_host,
+                       rec->chunk_guest, "platform_publication_restore");
+}
+
+void ext_chunk_provider_on_slot28_call(uint32_t pc, uint32_t r0, uint32_t r1, uint32_t r2,
+                                       uint32_t r3, uint32_t r4, uint32_t ret) {
+    parse_mode();
+    if (!g_prov.slot_trace && !ext_chunk_provider_enabled()) return;
+    printf("[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X r4=0x%X "
+           "ret=0x%X evidence=TARGET_OBSERVED\n",
+           pc, r0, r1, r2, r3, r4, ret);
+    fflush(stdout);
+    ext_gwy_shell_native_exec_on_slot28(pc, r0, r1, r2, r3, ret);
+}
+
+void ext_chunk_provider_finalize(const char *stop_reason) {
+    parse_mode();
+    if (g_prov.finalized || g_prov.mode == GWY_EXTCHUNK_OFF) return;
+    g_prov.finalized = 1;
+    printf("[JJFB_6N_SUMMARY] mode=%s published=%s last_chunk=0x%X stop=%s "
+           "evidence=TARGET_OBSERVED\n",
+           ext_chunk_provider_mode_name(g_prov.mode), g_prov.any_published ? "yes" : "no",
+           g_prov.last_chunk_guest, stop_reason ? stop_reason : "?");
+    fflush(stdout);
+}
+
+uint32_t ext_chunk_provider_last_p_guest(void) {
+    int i;
+    for (i = g_prov.rec_n - 1; i >= 0; i--) {
+        if (g_prov.recs[i].p_guest) return g_prov.recs[i].p_guest;
+    }
+    return 0;
+}
+
+const char *ext_chunk_provider_last_module(void) {
+    int i;
+    if (g_prov.last_module[0]) return g_prov.last_module;
+    for (i = g_prov.rec_n - 1; i >= 0; i--) {
+        if (g_prov.recs[i].name[0]) return g_prov.recs[i].name;
+    }
+    return "";
+}
+
+int ext_chunk_provider_lookup_p(uint32_t p_guest, void **out_p_host, uint32_t *out_helper,
+                                uint32_t *out_chunk_guest) {
+    ChunkRec *rec = find_by_p(p_guest);
+    if (!rec) return 0;
+    if (out_p_host) *out_p_host = rec->p_host;
+    if (out_helper) *out_helper = rec->helper;
+    if (out_chunk_guest) *out_chunk_guest = rec->chunk_guest;
+    return 1;
+}
+
+int ext_chunk_provider_set_var_fields(uint32_t p_guest, uint32_t var_buf, uint32_t var_len) {
+    ChunkRec *rec = find_by_p(p_guest);
+    GwyMrcExtChunk *ch;
+    if (!rec || !rec->chunk_host || !var_buf || !var_len) return 0;
+    ch = (GwyMrcExtChunk *)rec->chunk_host;
+    ch->var_buf = var_buf;
+    ch->var_len = var_len;
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x14 value=0x%X meaning=var_buf "
+           "evidence=DOCUMENTED\n",
+           rec->name[0] ? rec->name : "?", var_buf);
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x18 value=0x%X meaning=var_len "
+           "evidence=DOCUMENTED\n",
+           rec->name[0] ? rec->name : "?", var_len);
+    fflush(stdout);
+    return 1;
+}
+
+int ext_chunk_provider_peek_p_er_rw(uint32_t p_guest, uint32_t *out_base, uint32_t *out_len) {
+    ChunkRec *rec = find_by_p(p_guest);
+    uint32_t *words;
+    if (!rec || !rec->p_host) return 0;
+    words = (uint32_t *)rec->p_host;
+    if (out_base) *out_base = words[0];
+    if (out_len) *out_len = words[1];
+    return 1;
+}
+
+static ChunkRec *find_by_chunk(uint32_t chunk_guest) {
+    int i;
+    if (!chunk_guest) return NULL;
+    for (i = 0; i < g_prov.rec_n; i++) {
+        if (g_prov.recs[i].chunk_guest == chunk_guest) return &g_prov.recs[i];
+    }
+    return NULL;
+}
+
+int ext_chunk_provider_lookup_chunk(uint32_t chunk_guest, void **out_chunk_host) {
+    ChunkRec *rec = find_by_chunk(chunk_guest);
+    if (!rec) return 0;
+    if (out_chunk_host) *out_chunk_host = rec->chunk_host;
+    return 1;
+}
+
+int ext_chunk_provider_set_timer_field(uint32_t chunk_guest, uint32_t timer_id) {
+    ChunkRec *rec = find_by_chunk(chunk_guest);
+    GwyMrcExtChunk *ch;
+    if (!rec || !rec->chunk_host) return 0;
+    ch = (GwyMrcExtChunk *)rec->chunk_host;
+    ch->timer = timer_id;
+    printf("[JJFB_EXTCHUNK_SLOT] module=%s off=0x24 value=0x%X meaning=timer "
+           "evidence=DOCUMENTED\n",
+           rec->name[0] ? rec->name : "?", timer_id);
+    fflush(stdout);
+    return 1;
+}
+
+int ext_chunk_provider_timer_dispatch_target(uint32_t chunk_guest, uint32_t *out_helper,
+                                            uint32_t *out_p_guest, uint32_t *out_erw) {
+    ChunkRec *rec = find_by_chunk(chunk_guest);
+    GwyMrcExtChunk *ch;
+    uint32_t erw = 0;
+    if (!rec || !rec->chunk_host) return 0;
+    ch = (GwyMrcExtChunk *)rec->chunk_host;
+    if (!ch->event || !ch->global_p_buf) return 0;
+    erw = ch->var_buf;
+    if (!erw)
+        (void)ext_chunk_provider_peek_p_er_rw(ch->global_p_buf, &erw, NULL);
+    if (out_helper) *out_helper = ch->event;
+    if (out_p_guest) *out_p_guest = ch->global_p_buf;
+    if (out_erw) *out_erw = erw;
+    return 1;
+}

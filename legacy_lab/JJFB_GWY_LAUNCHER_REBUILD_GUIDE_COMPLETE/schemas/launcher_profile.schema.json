@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/jjfb/launcher_profile.schema.json",
+  "title": "Mythroad/GWY Launcher Compatibility Profile",
+  "type": "object",
+  "required": ["id", "resource_root", "target", "launch", "identity", "display"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9._-]+$"},
+    "resource_root": {"type": "string"},
+    "target": {
+      "type": "object",
+      "required": ["mrp", "entry_member"],
+      "properties": {
+        "mrp": {"type": "string"},
+        "entry_member": {"type": "string"},
+        "expected_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "launch": {
+      "type": "object",
+      "required": ["source", "cfg_index", "params"],
+      "properties": {
+        "source": {"enum": ["cfg.bin", "explicit"]},
+        "cfg_index": {"type": "integer", "minimum": 0},
+        "params": {
+          "type": "object",
+          "required": ["napptype", "nextid", "ncode", "narg", "narg1", "nmrpname", "flags"],
+          "properties": {
+            "napptype": {"type": "integer"},
+            "nextid": {"type": "integer"},
+            "ncode": {"type": "integer"},
+            "narg": {"type": "integer"},
+            "narg1": {"type": "integer"},
+            "nmrpname": {"type": "string"},
+            "flags": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "required": ["vmver", "imei", "manufacturer", "model"],
+      "properties": {
+        "vmver": {"type": "integer"},
+        "imei": {"type": "string"},
+        "manufacturer": {"type": "string"},
+        "model": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "display": {
+      "type": "object",
+      "required": ["guest_width", "guest_height", "window_width", "window_height", "pixel_format"],
+      "properties": {
+        "guest_width": {"type": "integer"},
+        "guest_height": {"type": "integer"},
+        "window_width": {"type": "integer"},
+        "window_height": {"type": "integer"},
+        "pixel_format": {"enum": ["RGB565"]}
+      },
+      "additionalProperties": false
+    },
+    "compatibility": {
+      "type": "object",
+      "properties": {
+        "member_aliases": {"type": "object", "additionalProperties": {"type": "string"}},
+        "accepted_entry_returns": {"type": "array", "items": {"type": "integer"}},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

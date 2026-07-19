@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v23 证明 sdk skip 成功，当前卡在 line157 的 _mr_c_load/hsman object。v23 的 target_net=True 是误判，netstat 里不是 20000/21002。
+
+v24 自动测试 line157 之后多个跳转目标，确认是否还有 MRP 文件层面的推进空间：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SKIP_LOADER_VARIANTS_V24.ps1
+
+发：
+logs\skip_loader_variants_v24_feedback_*.zip
+以及窗口截图。

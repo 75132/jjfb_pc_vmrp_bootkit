@@ -1,0 +1,3 @@
+checking file runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+checking file runtime/vmrp_src_build_v27/vmrp-master/vmrp.c
+checking file runtime/vmrp_src_build_v27/vmrp-master/header/bridge.h

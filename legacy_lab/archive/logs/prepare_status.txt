@@ -1,0 +1,9 @@
+game_src=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad
+jjfb_exists=False
+exes=['C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\runtime\\vmrp_win32\\vmrp_win32_20220102\\main.exe']
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\fs\mythroad
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\wasm\dist\fs\mythroad
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\mythroad
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\fs\mythroad
+copied mythroad to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\wasm\dist\fs\mythroad

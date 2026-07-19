@@ -1,0 +1,26 @@
+[
+  {
+    "i": 0,
+    "has_target": false,
+    "process_alive": true,
+    "netstat": "skip_sdk_error_v22_netstat_00_20260715_173555.txt"
+  },
+  {
+    "i": 1,
+    "has_target": false,
+    "process_alive": true,
+    "netstat": "skip_sdk_error_v22_netstat_01_20260715_173605.txt"
+  },
+  {
+    "i": 2,
+    "has_target": false,
+    "process_alive": true,
+    "netstat": "skip_sdk_error_v22_netstat_02_20260715_173615.txt"
+  },
+  {
+    "i": 3,
+    "has_target": true,
+    "process_alive": true,
+    "netstat": "skip_sdk_error_v22_netstat_03_20260715_173625.txt"
+  }
+]

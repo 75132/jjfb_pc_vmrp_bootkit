@@ -1,0 +1,21 @@
+bridge.c: In function 'jjfb_splash_cov_summary':
+bridge.c:4600:45: warning: variable 'last_hit' set but not used [-Wunused-but-set-variable=]
+ 4600 |     uint32_t i, blocks = 0, first_miss = 0, last_hit = 0;
+      |                                             ^~~~~~~~
+bridge.c: In function 'jjfb_hook_uimode_writer':
+bridge.c:5210:18: warning: unused variable 'r2' [-Wunused-variable]
+ 5210 |         uint32_t r2 = 0, slot = 0, fn = 0;
+      |                  ^~
+bridge.c: At top level:
+bridge.c:4325:17: warning: 'jjfb_310bb4_dump_n' defined but not used [-Wunused-variable]
+ 4325 | static uint32_t jjfb_310bb4_dump_n = 0; /* env: JJFB_310BB4_DUMP_N (default 1 when enabled) */
+      |                 ^~~~~~~~~~~~~~~~~~
+bridge.c:3955:13: warning: 'jjfb_screen_draw_ascii' defined but not used [-Wunused-function]
+ 3955 | static void jjfb_screen_draw_ascii(int32_t x, int32_t y, uint8_t ch, uint16_t fg, uint16_t bg) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+bridge.c:3343:17: warning: 'jjfb_ret0_stub_addr' defined but not used [-Wunused-variable]
+ 3343 | static uint32_t jjfb_ret0_stub_addr; /* thumb: movs r0,#0; bx lr */
+      |                 ^~~~~~~~~~~~~~~~~~~
+bridge.c:734:16: warning: 'jjfb_splash_flow_hook' defined but not used [-Wunused-variable]
+  734 | static uc_hook jjfb_splash_flow_hook;
+      |                ^~~~~~~~~~~~~~~~~~~~~

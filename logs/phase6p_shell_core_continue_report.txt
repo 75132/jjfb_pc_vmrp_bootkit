@@ -1,0 +1,27 @@
+﻿phase=6P
+jjfb_hash=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+pack=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\packages\JJFB_phase6p_shell_core_continue_pack_20260719_063215.zip
+
+# Phase 6P Verdict
+
+- **verdict:** `HIGH_SUCCESS`
+- **class:** `SHELL_NATIVE_RUNAPP_OR_EXPORT`
+- **shell_chain_continue:** `True`
+- **gamelist started:** `True`
+- **cfg36 / post_update:** `False`
+- **export_call / native runapp / jjfb natural:** `True`
+- **SLOT_CALL:** `0`
+- **mythroad exit:** `False`
+
+## Evidence
+
+- Exit classify: **TARGET_OBSERVED**
+- `mr_start_dsm` gamelist continue: **DOCUMENTED** platform API
+- Continue reason must be `continue_after_gbrwcore_init` (not natural guest write)
+
+## Tags
+
+- EXIT_SOURCE lines: 1
+- SHELL_CORE_CONTINUE: 2
+- SHELL_CORE_MODULE: 6
+

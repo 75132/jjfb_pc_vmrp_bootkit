@@ -1,0 +1,6 @@
+[JJFB_V57_FAMILY_REG] ext=0x10102 family=0x1E200 handler=0x30D301 handler_code=0x30D300 source_lr=0x304936
+[JJFB_V57_TICK_REG] ext=0x10140 type=5 chunk=0x2829DC handler=0x30630D handler_code=0x30630C expected_static=0x30630C
+[JJFB_V57_TICK_CALL] source=host_periodic handler=0x30630D handler_code=0x30630C r0=0 r1=0 call=1
+[JJFB_V57_TICK_HANDLER] entry_30630C #1 r0=0x0 r1=0x0 r2=0x0 r3=0x0 ui_mode=0x0 lr=0x80000
+[JJFB_V57_FAMILY_SOURCE] source=guest_sendAppEvent ext=0x1E209 app=0x9 code=0x0 p0=0x0 p1=0x0 wrapper_lr=0x30456D site_lr=0x302C0F
+[JJFB_V56_FAMILY] dispatch #1 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000

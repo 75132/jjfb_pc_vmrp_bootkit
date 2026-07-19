@@ -1,0 +1,8 @@
+给 OpenClaw：
+
+v9 结果：sdk_key 已过，但 jjfb 只有 PNG warning，没有进网络。现在探测 _mr_param/gwyblink 文件型上下文：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_JJFB_PARAM_PROBE_V10.ps1
+
+跑完发：
+logs\jjfb_param_probe_feedback_*.zip

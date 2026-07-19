@@ -1,0 +1,14 @@
+给 OpenClaw：
+
+现在的问题已经定位：文件放在 mythroad/240x320/，但 vmrp 启动器只扫 mythroad/ 根目录，所以列表里没有机甲风暴/网游。
+
+把这个 fix 包解压到原 jjfb_pc_vmrp_bootkit 根目录覆盖，然后运行：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_FLATTEN_AND_LAUNCH.ps1
+
+窗口出来后，优先点：
+1. gwy.mrp / 冒泡 / 网游
+2. gamelist.mrp
+3. jjfb.mrp
+
+跑完发 logs/flatten_feedback_*.zip。

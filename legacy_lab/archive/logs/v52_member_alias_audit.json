@@ -1,0 +1,27 @@
+{
+  "mrp": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\runtime\\vmrp_win32\\vmrp_win32_20220102\\mythroad\\240x320\\gwy\\jjfb.mrp",
+  "mrp_size": 414602,
+  "mrp_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+  "entry_count": 50,
+  "missing_required": [],
+  "cfunction_member_present": false,
+  "start_compressed_len": 1514,
+  "mrc_loader_compressed_len": 219,
+  "mrc_loader_decompressed_len": 232,
+  "robotol_compressed_len": 161178,
+  "robotol_offset": 231594,
+  "loader_request_literal": "cfunction.ext",
+  "loader_literal_offset": 212,
+  "loader_entry_offset": 8,
+  "literal_from_helper_delta": 204,
+  "expected_delta_hex": "0xCC",
+  "checks": {
+    "required_members": true,
+    "cfunction_absent": true,
+    "canonical_lengths": true,
+    "loader_decompressed_232": true,
+    "literal_at_0xD4": true,
+    "helper_delta_0xCC": true
+  },
+  "strict_ok": true
+}

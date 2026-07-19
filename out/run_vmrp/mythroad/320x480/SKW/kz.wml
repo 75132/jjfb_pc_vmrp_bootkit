@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" "http://www.wapforum.org/DTD/wml_1.1.xml">
+<wml>                                                                                             
+<a href="mtt:bookmark">书签</a>|<a href="mtt:qq">聊天</a>|
+<a href="file://e:\SKW\bz.wml">导航</a>|<a href="mtt:config">设置</a><br/> 
+-----------------<br/>                                        
+<a href="http://mrpyx.cn/download/upload/dp/pub-zhousx@sk.mrp">窗口版UC</a>|<a href="http://mrpyx.cn/adlink/book_view.asp?id=204&sid=">新QQ浏览器</a><br/>
+
+<a href="http://wap.talk9999.com/register/agentReg.jsp?f=405001143&key=405001143">WAP免费在线网络电话</a><br/>
+<a href="http://mrpyx.cn/ad/dg.asp">喜迎淘宝周年送大礼</a><br/>
+<a href="http://daguu.com/refer?cf=333">学生网络兼职日赚上百</a>
+<br/>
+<a href="http://3g.t.sohu.com/comment.do?i=592035412&src=1600300009&sf=1">玩搜狐微博送百元话费</a><br/>
+<a href="http://fs.hanfenggame.com/reg.jsp?cid=100089">最刺激的男女修仙网游</a><br/>
+<a href="http://fs.hanfenggame.com/reg.jsp?cid=100089">纵横天地，一世枭雄</a>
+
+<mttmore title="★腾讯应用★" src="icon_file.gif" checked="shrink">
+<p>
+<span style="color:#FFA500;">☆拉好友进QQ群☆</span><br/>
+你的QQ群号：<br/><input name="qh" maxlength="10" value="" format="*M"/><br/>好友的QQ号：<br/><input name="qq" maxlength="30" value="" format="*M"/><br/><a href='http://kiss.3g.qq.com/activeQQ/mqq/createGroup/inviteJoinGroup.jsp?g_f=2653&groupID=0&groupName=$(qh)&groupCode=$(qh)&friendQQ=$(qq)&pageNo=1'>[点击开始拉人]</a><br/>
+<input type="text" format="*m" name="key" size="6" value="QQ"/><anchor><go href="http://u.yicha.cn/union/x.jsp?site=2145945741&amp;p=p" method="get" accept-charset="utf-8"><postfield name="keyword" value="$(key)"/></go>搜索</anchor>
+<br/>
+<a href="http://fwd.3g.qq.com:8080/forward.jsp?bid=125&g_key=">QQ头像自定义</a>
+<br/>
+<span style="color:#FFA500;">☆QQ家园.应用☆</span><br/>
+<a href="http://jwt.3g.qq.com/task/taskInfo.sc?sid=">精武堂</a>|
+<a href="http://cw.3g.qq.com/index.jsp?channel=homeb&sid=">爱宠国</a>
+<br/>
+<a href="http://mw.3g.qq.com/gameLogin.jsp?">美味小镇</a>|
+<a href="http://garden.3g.qq.com/garden/my_garden.jsp?sid=">QQ花园</a>
+<br/>
+<span style="color:#FFA500;">☆QQ空间.应用☆</span><br/>
+<a href="http://fwd.3g.qq.com:8080/forward.jsp?bid=146">QQ农场</a>|
+<a href="http://mc4.z.qq.com/mc/main.jsp?">QQ牧场</a>
+<br/>
+<a href="http://hymm.z.qq.com/frienddeal/index.jsp?sid=">好友买卖</a>|
+<a href="http://blog60.z.qq.com/go_qshow.jsp?sid=">魔法卡片</a>
+<br/>
+<a href="http://car.z.qq.com/parkcar/index.jsp?sid=">QQ抢车位</a>
+</p>
+</mttmore>
+
+<mttmore title="★斯凯工具★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http://www.dovely.tk/tools/cd/ci.php">在线中英翻译词典</a><br/>
+<a href="http://wap.im-bau.de/tools/gqq/index.php">永久挂3gQQ系统</a><br/>
+<a href="http://www.dovely.tk/tools/javagc/index.php">JAVA共存制作系统</a><br/>
+<a href="http://www.dovely.tk/tools/zip/index.php">ZIP在线解压</a><br/>
+<a href="http://www.dovely.tk/tools/zxjfh/index.php">在线简繁火转换系统</a><br/>
+<a href="http://www.mrpyx.cn/wap/yjhz.php">Email轰炸系统-斯凯版</a><br/>
+<a href="http://www.mrpyx.cn/wap/yytk.php">QQ空间音乐查询系统</a><br/>
+<a href="http://www.mrpyx.cn/wap/fx/index.asp">WEB飞信网页版</a><br/>
+<a href="http://www.mrpyx.cn/wap/tpbtm.php">图片半透明生成</a><br/>
+<a href="http://www.mrpyx.cn/wap/ymck.php">网页源码查看</a><br/>
+<a href="http://www.mrpyx.cn/wap/ymip.php">域名IP查询</a><br/>
+<a href="http://www.mrpyx.cn/wap/zfjzm.php">在线加解密</a><br/>
+
+</p>
+</mttmore>
+
+<mttmore title="★便民查询★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http://tools.3gwen.com:80/tools/?myid=&x=mme8.com&wap20=&t=06872">艺术签名</a>|
+<a href="http://infoapp.3g.qq.com/g/s?sid=HVyKQiM8lf7HL4fea9TfZw==&aid=astro_hl&fr=nav">黄历查询</a>
+<br/>
+<a href="http://qq.ip138.com/train/index.wml">火车时刻</a>
+<a href="http://now.3g.cn/foryou/weather/tianqi.aspx?waped=2">天气预报</a>
+<br/>
+<a href="http://now.3g.cn/foryou/areacode.aspx?sid=&wid=0&lid=27&waped=2">城市区号</a>|
+<a href="http://3gyy.net.cn/u/youbian.php?fr=3g_bianmin&waped=2">邮编查询</a>
+<br/>
+<a href="http://auto.3g.cn/weizhang.aspx?sid=01F51E1F412&wid=0&waped=2">交通违法</a>|
+<a href="http://3gyy.net.cn/u/chengyu.php?fr=3g_bianmin&waped=2">成语查询</a>
+<br/>
+<a href="http://caipiao.3g.cn/handindex.aspx?sid=00951B3B124&waped=2&gaid=T3BlcmE%3d">福利彩票</a>|
+<a href="http://now.3g.cn/foryou/bank.aspx?sid=&wid=0&lid=25&waped=2">银行利息</a>
+<br/>
+<a href="http://wap6.3g.qq.com/g/s?sid=Z50VV6163TbJOMkXUX4bTA==&aid=navService&s_it=1&t=97209">便民服务</a>|
+<a href="http://wap.3g.qq.com/g/s?sid=LhhjpBWs88zJOMkXUX4bTA%3D%3D&aid=mobileAddr">归属地查询</a>
+<br/>
+<a href="http://wap.id5.cn/same/index.jsp?pld=GZT">同名同姓查询</a>
+</p>
+</mttmore>
+
+
+
+<mttmore title="★手机银行★" src="icon_file.gif" checked="shrink">
+<p>
+<div style="background-color:#e1edf7">☆手机银行☆</div><br/>	
+<a href="http://mobile.cmbchina.com/mbank/ui/wap/portal.aspx">招商银行</a>|
+<a href="http://wap.ccb.com/">建设银行</a>
+<br/>
+<a href="http://wap.abchina.com/Portal/logon/Index.aspx">农业银行</a>|
+<a href="http://wap.cib.com.cn/home/00000.wml">兴业银行</a>
+<br/>
+<a href="http://wap.icbc.com.cn/000002/icbc/default.xhtml">工商银行</a>|
+<a href="http://wap.cebbank.com/">光大银行</a>
+<br/>
+<a href="http://wap.spdb.com.cn/">浦发银行</a>|
+<a href="http://mbs.boc.cn/">中国银行</a>
+<br/>
+<div style="background-color:#e1edf7">☆电话银行☆</div><br/>
+中国工商银行 95588
+<br/>
+招行银行 95555
+<br/>
+中国农业银行 95599
+<br/>
+中国银行 95566
+<br/>
+建行手机银行 95533
+<br/>
+中国民生银行 95568
+<br/>
+中国光大银行 95595
+<br/>
+中信银行 95558
+<br/>
+中国交通银行 95559
+<br/>
+兴业银行 95561
+<br/>
+上海浦东发展银行 95528
+<br/>
+华夏银行 95577
+<br/>
+深圳发展银行 95501
+<br/>
+广东发展银行 95508
+<br/>
+北京银行 01096169
+<br/>
+中国邮政储蓄银行 01066419837 或 95580
+<br/>
+上海银行 021962888
+<br/>
+宁波银行 96528
+<br/>
+宁波银行-上海 962528
+<br/>
+南京银行 02596400
+<br/>
+深圳平安银行 961202 或 40066-99999
+</p>
+</mttmore>
+
+
+<mttmore title="★博客空间★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http://wap.blog.163.com/">网易博客</a>|
+<a href="http://3g.sina.com.cn/3g/blog/">新浪博客</a>
+<br/>
+<a href="http://wap.sohu.com/blog/">搜狐博客</a>|
+<a href="http://mblog.ifeng.com/1207921.html?v=1">凤凰博客</a>
+<br/>
+<a href="http://3g.sina.com.cn/prog/wapsite/sso/login.php?ns=1&revalid=2&backURL=%2Fdpool%2Fttt%2Fhome.php&backTitle=%D0%C2%C0%CB%CE%A2%B2%A9&vt=&PHPSESSID=97812f9f77fc30ec6c9a2e6b165a15d3">新浪微博</a>|
+<a href="http://ti.3g.qq.com/g/s?sid=xdhWTXWi6vHJOMkXUX4bTA==&aid=3gen&g_f=1747&s_it=1&icfa=home_navi">腾讯微博</a>
+<br/>
+<a href="http://3g.163.com/t/session">网易微博</a>|
+<a href="http://3g.t.sohu.com/comment.do?i=592035412&src=1600300009&sf=1">搜狐微博</a>
+</p>
+</mttmore>
+
+
+<mttmore title="★手机邮箱★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http:///m.mail.163.com/auth/?wml=1">网易邮箱</a>|	
+<a href="http://3g.sina.com.cn/prog/wapsite/wapmail/logon.php">新浪邮箱</a>
+<br/>
+<a href="http://wapmail.189.cn/webmail/">189邮箱</a>|
+<a href="http://wap.mail.3g.cn/">3G邮箱</a>
+<br/>
+<a href="http://m.mail.163.com/auth/?wml=1&domain=126.com">126邮箱</a>|
+<a href="http://m.ejoint.net:4080/wapmail/index.php?pop_sess=57293533">WAP随身邮</a>
+<br/>
+WAP随身邮说明：选择了邮箱后缀就不必填邮件服务器。如果自设，邮件服务器一般为邮箱域名前加pop.或pop3.例如myname@163.com,用户名输入myname@163.com,密码输入邮箱密码,邮件服务器输入pop.163.com。
+将该页面存为书签，登录后不退出邮箱，下次可直接从书签进入，不必再输入用户名、密码。
+</p>
+</mttmore>
+
+<mttmore title="★搜索引擎★" src="icon_file.gif" checked="shrink">
+<p>
+	<a href="http://m.baidu.com/">百度</a>|
+	<a href="http://u.yicha.cn/union/x.jsp?site=2145945741&p=p&keyword=QQ">易查</a>|
+	<a href="http://wap.soso.com/">搜搜</a>|
+	<a href="http://ad2.easou.com">宜搜</a>
+</p>
+</mttmore>
+
+<mttmore title="★在线工具★" src="icon_file.gif" checked="shrink">
+<p>
+<div style="background-color:#e1edf7">☆图片设计类☆</div><br/>
+<a href="http://tools.3gwen.com/tools/newqm.asp">免费艺签</a>|
+<a href="http://tools.3gwen.com/tools/picqm.asp">背景艺签</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/gifgdz.asp">滚动文字</a>|
+<a href="http://tools.3gwen.com/tools/shtp.asp">神奇图片</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/ssst.asp">绚丽闪图</a>|
+<a href="http://tools.3gwen.com/tools/qqyz.asp">搞笑彩图</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/mhsz.asp">魔幻闪字</a>|
+<a href="http://tools.3gwen.com/tools/czx56.asp">漂亮彩字</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/nhsz.asp">霓虹闪字</a>|
+<a href="http://tools.3gwen.com/tools/logo.asp">动画logo</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/dchk.asp">彩信贺卡</a>|
+<a href="http://tools.3gwen.com/tools/daoy.asp">3D倒影字</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/huoyan.asp">火焰文字</a>|
+<a href="http://tools.3gwen.com/tools/jpcz.asp">精品彩字</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/ywq.asp">英文签名</a>|
+<a href="http://tools.3gwen.com/tools/font.asp">字体生成</a>
+<br/>
+<div style="background-color:#e1edf7">☆文字设计☆</div><br/>
+<a href="http://tools.3gwen.com/tools/cts.asp">作藏头诗</a>|
+<a href="http://tools.3gwen.com/tools/xqs.asp">生成情书</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/xsj.asp">帮您写诗</a>|
+<a href="http://tools.3gwen.com/tools/fgmp3.asp">音乐分割</a>
+<br/>
+<div style="background-color:#e1edf7">☆实用查询☆</div><br/>
+<a href="http://tools.3gwen.com/tools/zhcx.asp">综合查询</a>|
+<a href="http://tools.3gwen.com/tools/zhyl.asp">粤语翻译</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/zxfy.asp">在线翻译</a>|
+<a href="http://tools.3gwen.com/tools/dhcx.asp">电话位置</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/cer.asp">在线签证</a>|
+<a href="http://tools.3gwen.com/tools/sxxz.asp">生肖查询</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/tmtx.asp">同名同性</a>|
+<a href="http://tools.3gwen.com/tools/ydclcx.asp">彩铃查询</a>
+<br/>
+<div style="background-color:#e1edf7">☆文字转换☆</div><br/>
+<a href="http://tools.3gwen.com/tools/ztzh.asp">汉字转换</a>|
+<a href="http://tools.3gwen.com/tools/replace_str.asp">字符替换</a>
+<br/>
+<a href="http://tools.3gwen.com/tools/bmzh.asp">编码转换</a>|
+<a href="http://tools.3gwen.com/tools/yy.asp">字转声音</a>
+</p>
+</mttmore>
+                                                
+</card>
+</wml>

@@ -1,0 +1,30 @@
+{
+  "sdl2": {
+    "version": "2.0.10",
+    "path": "third_party/deps/SDL2-2.0.10",
+    "arch": "i686-w64-mingw32",
+    "source_note": "Vendored from legacy_lab runtime windows SDK tree; binary dependency only."
+  },
+  "unicorn": {
+    "version": "1.0.2-win32",
+    "path": "third_party/deps/unicorn-1.0.2-win32",
+    "arch": "win32",
+    "source_note": "Vendored from legacy_lab runtime windows SDK tree; binary dependency only."
+  },
+  "vmrp_upstream": {
+    "path": "third_party/vmrp_upstream",
+    "bridge_c_bytes": 51718,
+    "note": "Clean Mythroad/vmrp baseline. Do not replace with modified bridge from build_v27."
+  },
+  "toolchain": {
+    "os": "Windows",
+    "triplet": "i686-w64-mingw32",
+    "c_standard": "11",
+    "generator": "Ninja",
+    "msys2_package_hints": [
+      "mingw-w64-i686-gcc",
+      "mingw-w64-i686-cmake",
+      "mingw-w64-i686-ninja"
+    ]
+  }
+}

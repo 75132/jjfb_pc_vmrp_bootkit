@@ -1,0 +1,26 @@
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+mythroad=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+merged 240x320/gwy -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy
+jjfb_sources:
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320\gwy\jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+  C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\000_jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+backup original dsm_gm -> dsm_gm.before_jjfb_only.mrp sha1=7f5f52e8a624
+REPLACED dsm_gm.mrp <= jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\jjfbol\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\gwy\sdk_key.dat
+final key files:
+  dsm_gm.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  jjfb.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  gwy/jjfb.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  sdk_key.dat: exists=True size=15 sha1=65cc4c0b6cf9
+  gwy/sdk_key.dat: exists=True size=15 sha1=65cc4c0b6cf9
+  mrc_loader.ext: exists=False size= sha1=
+  robotol.ext: exists=False size= sha1=
+  gwy/mrc_loader.ext: exists=False size= sha1=
+  gwy/robotol.ext: exists=False size= sha1=

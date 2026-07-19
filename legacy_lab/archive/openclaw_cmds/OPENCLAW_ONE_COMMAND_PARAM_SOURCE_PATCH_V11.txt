@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v10 证明外部 _mr_param 文件无效，必须改 vmrp 源码里 bridge_dsm_mr_start_dsm 的第三参数。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_PATCH_VMRP_PARAM_V11.ps1
+
+跑完发：
+logs\vmrp_param_patch_feedback_*.zip
+
+这一步不跑游戏，只 patch/尝试编译/扫描 main.exe callsite。

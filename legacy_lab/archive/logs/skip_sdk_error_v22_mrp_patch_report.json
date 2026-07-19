@@ -1,0 +1,37 @@
+{
+  "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+  "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_sdk_error_v22.mrp",
+  "start_off": "0x781",
+  "old_comp_size": 1514,
+  "new_comp_size": 1510,
+  "old_decomp_len": 3787,
+  "new_decomp_len": 3787,
+  "size_field_updated_to": 1510,
+  "sanity_decomp_len": 3787,
+  "bytecode_patch": {
+    "target_pc": 109,
+    "patched": [
+      {
+        "line": 143,
+        "pc": 100,
+        "target_pc": 109,
+        "skip": 8,
+        "off": "0xdff",
+        "old": "45080003",
+        "new": "14028000"
+      },
+      {
+        "line": 147,
+        "pc": 105,
+        "target_pc": 109,
+        "skip": 3,
+        "off": "0xe13",
+        "old": "45080001",
+        "new": "d4008000"
+      }
+    ],
+    "main_code_off": "0xc73",
+    "ncode": 150
+  },
+  "sha1": "3bcc40b39601b83992447bc4de4259c2ccfadb30"
+}

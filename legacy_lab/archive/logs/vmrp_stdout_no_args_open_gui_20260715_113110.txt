@@ -1,0 +1,462 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+dsm_gm.mrp
+br_mem_get base=0x2829F4 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175760 bytes
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(12576)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(13124)
+mr_unzip
+[INFO]mr_platEx code=1201 in=@002AC88C inlen=1 out=@0027FDA0 outlen=@0027FDA4 cb=@0027FD9C
+load  tim ss is 
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(51)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(3078)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(6685)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(2858)
+mr_unzip
+[INFO]mr_open(mythroad/app.cfg,1) fd is: 0
+LoadTable:mr_open "app.cfg" err
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1816)
+mr_unzip
+[INFO]mr_open(mythroad/applist.mrp,1) fd is: 0
+version is 0
+[INFO]mr_findStart(mythroad/)
+[INFO]mr_findGetNext 1 .
+[INFO]mr_findGetNext 1 ..
+[INFO]mr_findGetNext 1 .tmp
+[INFO]mr_findGetNext 1 240x320
+[INFO]mr_findGetNext 1 atxllq.mrp
+[INFO]mr_open(mythroad/atxllq.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 box.mrp
+[INFO]mr_open(mythroad/box.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 disk
+[INFO]mr_findGetNext 1 dsm_gm.mrp
+[INFO]mr_findGetNext 1 gwy
+[INFO]mr_findGetNext 1 gxrxd.mrp
+[INFO]mr_open(mythroad/gxrxd.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 lines.mrp
+[INFO]mr_open(mythroad/lines.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 mpc.mrp
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 QQDSM2007.mrp
+[INFO]mr_open(mythroad/qqdsm2007.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 sdk_key.dat
+[INFO]mr_findGetNext 1 shot.mrp
+[INFO]mr_open(mythroad/shot.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 system
+[INFO]mr_findGetNext 1 tetris.mrp
+[INFO]mr_open(mythroad/tetris.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_findGetNext 1 (NULL)
+After app init, memory left:3840936
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',NULL): 0x0
+func ..
+func ..
+[INFO]mr_open(mythroad/app.cfg,1) fd is: 0
+LoadTable:mr_open "app.cfg" err
+func ..
+[INFO]mr_open(mythroad/app.cfg,10) fd is: 2
+[INFO]mr_close(2): ret:0
+func ..
+func ..
+func ..
+TcpDownFunc..locNetSetV ,
+0
+string.new
+true
+
+[INFO]mr_initNetwork(mod:cmwap)
+my_initNetwork(0x000A647C, 'cmwap')
+my_initNetworkAsync(): 0
+[INFO]mr_socket(type:0, protocol:0)
+mr_socket, 1
+[INFO]mr_connect(s:1, ip:167772332, port:80, type:0)
+#############3: wap.skmeg.com
+[INFO]mr_send 1 CONNECT wap.skmeg.com:13230 HTTP/1.1
+User-Agent: MyApp/0.1
+
+
+net:fail in
+[INFO]mr_closeSocket(1)
+[INFO]mr_closeNetwork
+mouse click 
+func ..
+[INFO]mr_closeNetwork
+func ..
+func ..
+func ..
+func ..
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[INFO]mr_closeNetwork
+br_mem_get base=0x2829D4 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 2
+[INFO]font load suc fd=2
+Used by VM(include screen buffer):175760 bytes
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(1018)
+mr_unzip
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+mr_get_method(13635)
+mr_unzip
+[WARN]mr_cacheSync(0x002B7B40, 19936)
+--- ext: @002B7B44
+_mr_c_function_new(002B7BF4, 8212)  mr_c_function_P:002B0C4C
+--- r9: mr_c_function_P.start_of_ER_RW = @002AC860
+[INFO]mr_remove(mythroad/plugins) ret:-1
+[INFO]mr_mkDir(mythroad/plugins)
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2BFC outlen=@002B2BF8 cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2BFC, 002B2BF8
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+read file  "#807022#*" err, code=3006
+MEM-I:total:4194304,iTop:237336,ctrl:614400
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2AB8 outlen=@002B2AB4 cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2AB8, 002B2AB4
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_close(3): ret:0
+[WARN]mr_plat(code:1106, param:0) not impl!
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2AD0 outlen=@002B2ACC cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2AD0, 002B2ACC
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_close(3): ret:0
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2B20 outlen=@002B2B1C cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2B20, 002B2B1C
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2990 outlen=@002B298C cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2990, 002B298C
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_close(3): ret:0
+mr_get_method(84332)
+mr_unzip
+[WARN]mr_cacheSync(0x002BC900, 157760)
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_mkDir(mythroad/mrcc)
+[INFO]mr_remove(mythroad/mrcc/cfg.dat) ret:-1
+[INFO]mr_open(mythroad/mrcc/cfg.dat,12) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_mkDir(mythroad/c/)
+[INFO]mr_open(mythroad/mrcc/cfg.dat,12) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B28A8 outlen=@002B28A4 cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B28A8, 002B28A4
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_close(3): ret:0
+mr_get_method(475)
+mr_unzip
+[INFO]mr_remove(mythroad/c/print.txt) ret:-1
+[INFO]mr_open(mythroad/c/print.txt,12) fd is: 3
+[INFO]mr_mkDir(mythroad/c/例程)
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/1.bmp,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/base.h,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/ctype.h,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/sound.h,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/模版.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/欢迎.txt,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/更新说明.txt,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/BMP图片显示.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/helloworld.h,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/helloworld.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/MP3播放.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/unicode转gb2312.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/编辑框.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/菜单.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/定时器.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/对话框，文件查找.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/内存与震动.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/屏幕坐标.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/时间日期.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/数组与排序.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/c/例程/贪吃蛇.c,12) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/mrcc/cfg.dat,12) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/c/欢迎.txt,1) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_open(mythroad/mrcc/cfg.dat,12) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2A40 outlen=@002B2A3C cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2A40, 002B2A3C
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 3
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_close(3): ret:0
+mrc_verifyMrpCertificate_V1 as Normal MODE ret = 2 errorcode = 0
+mrc_verifyMrpCertificate_V1 as DBG MODE  ret = 0, errocode = 0
+After app init, memory left:3365184
+[INFO]mr_open(mythroad/mrcc/cfg.dat,12) fd is: 3
+[INFO]mr_close(3): ret:0
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2B80 outlen=@002B2B7C cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2B80, 002B2B7C
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_remove(mythroad/plugins/dump0) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump1) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump2) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump3) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump4) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump5) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump6) ret:-1
+[INFO]mr_remove(mythroad/plugins/dump7) ret:-1
+[INFO]mr_platEx code=1204 in=@002AC924 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+[INFO]mr_closeNetwork
+[INFO]mr_platEx code=1204 in=@002BC37C inlen=1 out=@002B2BB8 outlen=@002B2BB4 cb=@00000000
+[INFO]dsmSwitchPath 'Y', 1, 002B2BB8, 002B2BB4
+[WARN]dsmSwitchPathBuf: y 'c:/mythroad/'
+[INFO]mr_platEx code=1204 in=@002AC8E4 inlen=12 out=@00000000 outlen=@00000000 cb=@00000000
+[INFO]dsmSwitchPath 'c:/mythroad/', 12, 00000000, 00000000
+[WARN]SetDsmWorkPath():'mythroad/'
+MEM-E:vmTop:851744,aTop:724072
+br_mem_get base=0x2829D4 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 3
+[INFO]font load suc fd=3
+Used by VM(include screen buffer):175760 bytes
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(12576)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(13124)
+mr_unzip
+[INFO]mr_platEx code=1201 in=@002AC86C inlen=1 out=@0027FDC0 outlen=@0027FDC4 cb=@0027FDBC
+load  tim ss is 
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(51)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(3078)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(6685)
+mr_unzip
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(2858)
+mr_unzip
+[INFO]mr_open(mythroad/app.cfg,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+mr_get_method(1816)
+mr_unzip
+[INFO]mr_open(mythroad/applist.mrp,1) fd is: 0
+version is 0
+[INFO]mr_findStart(mythroad/)
+[INFO]mr_findGetNext 1 .
+[INFO]mr_findGetNext 1 ..
+[INFO]mr_findGetNext 1 .tmp
+[INFO]mr_findGetNext 1 240x320
+[INFO]mr_findGetNext 1 app.cfg
+[INFO]mr_findGetNext 1 atxllq.mrp
+[INFO]mr_open(mythroad/atxllq.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 box.mrp
+[INFO]mr_open(mythroad/box.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 c
+[INFO]mr_findGetNext 1 disk
+[INFO]mr_findGetNext 1 dsm_gm.mrp
+[INFO]mr_findGetNext 1 gwy
+[INFO]mr_findGetNext 1 gxrxd.mrp
+[INFO]mr_open(mythroad/gxrxd.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 lines.mrp
+[INFO]mr_open(mythroad/lines.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 mpc.mrp
+[INFO]mr_open(mythroad/mpc.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 mrcc
+[INFO]mr_findGetNext 1 plugins
+[INFO]mr_findGetNext 1 QQDSM2007.mrp
+[INFO]mr_open(mythroad/qqdsm2007.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 sdk_key.dat
+[INFO]mr_findGetNext 1 shot.mrp
+[INFO]mr_open(mythroad/shot.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 system
+[INFO]mr_findGetNext 1 tetris.mrp
+[INFO]mr_open(mythroad/tetris.mrp,1) fd is: 4
+[INFO]mr_close(4): ret:0
+[INFO]mr_findGetNext 1 (NULL)
+After app init, memory left:3840936

@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "cfg_exact_type12",
+    "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "c2d372fb9db549ffb2051cb1b2ad2503a66fedd4"
+  },
+  {
+    "tag": "cfg_type12_name_jjfb",
+    "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "dd92ef2e7d159a4c5722156b3f72b63c06a4bdf9"
+  },
+  {
+    "tag": "cfg_type12_narg1_0",
+    "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=0_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "a83f12d544645382794a2c7075ed2705486fb56f"
+  },
+  {
+    "tag": "cfg_type12_code512_hexstyle",
+    "param": "napptype=12_nextid=482_ncode=512_narg=512_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "cbc12b9b978a75a844e6ea7d84256e1267cd0d82"
+  },
+  {
+    "tag": "type0_control",
+    "param": "napptype=0_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "78e489a584dfffe457c0a4285c571c73130c7bbf"
+  },
+  {
+    "tag": "type1_control",
+    "param": "napptype=1_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "ca7438386383906e2cb7959de865375fc475b7ac"
+  },
+  {
+    "tag": "only_gwyblink",
+    "param": "gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "b01ed1781a6bf44385da05e0d6f609ad0927fbb7"
+  },
+  {
+    "tag": "b_format_type12",
+    "param": "bapptype=12_bextid=482_bcode=512_barg=0_barg1=1_bmrpname=gwy/jjfb.mrp_gwyblink",
+    "param_va": "0x40d6e8",
+    "target_call": "0x225f",
+    "arg_off": "0x2246",
+    "old": "c744240c00000000",
+    "new": "c744240ce8d64000",
+    "patched_sha1": "6eb9120a7b417d44c0b244e3d2627257c8eb8f15"
+  }
+]

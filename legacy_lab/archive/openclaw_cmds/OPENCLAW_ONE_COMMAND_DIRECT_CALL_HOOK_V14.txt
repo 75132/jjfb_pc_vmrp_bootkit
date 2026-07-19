@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v13 失败是因为 bridge_dsm_mr_start_dsm 不是导入函数，而是 main.exe 内部/静态符号。现在 v14 解析 COFF 符号表并 hook direct call：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_DIRECT_CALL_HOOK_AND_BOOT_V14.ps1
+
+跑完发：
+logs\direct_call_hook_feedback_*.zip
+
+恢复：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_RESTORE_MAIN_EXE_V14.ps1

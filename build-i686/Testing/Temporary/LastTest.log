@@ -1,0 +1,34 @@
+Start testing: Jul 19 15:57 中国标准时间
+----------------------------------------------------------
+1/41 Testing: smoke
+1/41 Test: smoke
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_smoke.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"smoke" start time: Jul 19 15:57 中国标准时间
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.93 sec
+----------------------------------------------------------
+Test Passed.
+"smoke" end time: Jul 19 15:57 中国标准时间
+"smoke" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/41 Testing: ext_er_rw_bind_restore
+33/41 Test: ext_er_rw_bind_restore
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_er_rw_bind_restore.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_er_rw_bind_restore" start time: Jul 19 15:57 中国标准时间
+Output:
+----------------------------------------------------------
+test_ext_er_rw_bind_restore OK
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"ext_er_rw_bind_restore" end time: Jul 19 15:57 中国标准时间
+"ext_er_rw_bind_restore" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jul 19 15:57 中国标准时间

@@ -1,0 +1,272 @@
+[
+  {
+    "idx": 0,
+    "off": "0x2e4",
+    "tag": 4,
+    "val": "_com"
+  },
+  {
+    "idx": 1,
+    "off": "0x2ee",
+    "tag": 3,
+    "val": 3629
+  },
+  {
+    "idx": 2,
+    "off": "0x2f3",
+    "tag": 3,
+    "val": 2913
+  },
+  {
+    "idx": 3,
+    "off": "0x2f8",
+    "tag": 4,
+    "val": "_mr_c_load"
+  },
+  {
+    "idx": 4,
+    "off": "0x308",
+    "tag": 4,
+    "val": "gc_times"
+  },
+  {
+    "idx": 5,
+    "off": "0x316",
+    "tag": 3,
+    "val": 0
+  },
+  {
+    "idx": 6,
+    "off": "0x31b",
+    "tag": 4,
+    "val": "dealevent"
+  },
+  {
+    "idx": 7,
+    "off": "0x32a",
+    "tag": 4,
+    "val": "dealtimer"
+  },
+  {
+    "idx": 8,
+    "off": "0x339",
+    "tag": 4,
+    "val": "suspend"
+  },
+  {
+    "idx": 9,
+    "off": "0x346",
+    "tag": 4,
+    "val": "resume"
+  },
+  {
+    "idx": 10,
+    "off": "0x352",
+    "tag": 4,
+    "val": "sysinfo"
+  },
+  {
+    "idx": 11,
+    "off": "0x35f",
+    "tag": 4,
+    "val": "GetSysInfo"
+  },
+  {
+    "idx": 12,
+    "off": "0x36f",
+    "tag": 4,
+    "val": "hsman"
+  },
+  {
+    "idx": 13,
+    "off": "0x37a",
+    "tag": 4,
+    "val": "sdk"
+  },
+  {
+    "idx": 14,
+    "off": "0x383",
+    "tag": 4,
+    "val": "file"
+  },
+  {
+    "idx": 15,
+    "off": "0x38d",
+    "tag": 4,
+    "val": "open"
+  },
+  {
+    "idx": 16,
+    "off": "0x397",
+    "tag": 4,
+    "val": "sdk_key.dat"
+  },
+  {
+    "idx": 17,
+    "off": "0x3a8",
+    "tag": 3,
+    "val": 1
+  },
+  {
+    "idx": 18,
+    "off": "0x3ad",
+    "tag": 4,
+    "val": "read"
+  },
+  {
+    "idx": 19,
+    "off": "0x3b7",
+    "tag": 3,
+    "val": 500
+  },
+  {
+    "idx": 20,
+    "off": "0x3bc",
+    "tag": 4,
+    "val": "close"
+  },
+  {
+    "idx": 21,
+    "off": "0x3c7",
+    "tag": 4,
+    "val": "_strCom"
+  },
+  {
+    "idx": 22,
+    "off": "0x3d4",
+    "tag": 3,
+    "val": 501
+  },
+  {
+    "idx": 23,
+    "off": "0x3d9",
+    "tag": 4,
+    "val": "vmver"
+  },
+  {
+    "idx": 24,
+    "off": "0x3e4",
+    "tag": 4,
+    "val": "string"
+  },
+  {
+    "idx": 25,
+    "off": "0x3f0",
+    "tag": 4,
+    "val": "sub"
+  },
+  {
+    "idx": 26,
+    "off": "0x3f9",
+    "tag": 4,
+    "val": "IMEI"
+  },
+  {
+    "idx": 27,
+    "off": "0x403",
+    "tag": 3,
+    "val": 3
+  },
+  {
+    "idx": 28,
+    "off": "0x408",
+    "tag": 3,
+    "val": 2
+  },
+  {
+    "idx": 29,
+    "off": "0x40d",
+    "tag": 3,
+    "val": 7
+  },
+  {
+    "idx": 30,
+    "off": "0x412",
+    "tag": 4,
+    "val": "hstype"
+  },
+  {
+    "idx": 31,
+    "off": "0x41e",
+    "tag": 3,
+    "val": 9
+  },
+  {
+    "idx": 32,
+    "off": "0x423",
+    "tag": 3,
+    "val": 14
+  },
+  {
+    "idx": 33,
+    "off": "0x428",
+    "tag": 4,
+    "val": "_error"
+  },
+  {
+    "idx": 34,
+    "off": "0x434",
+    "tag": 4,
+    "val": "cann`t find sdk key!"
+  },
+  {
+    "idx": 35,
+    "off": "0x44e",
+    "tag": 3,
+    "val": 801
+  },
+  {
+    "idx": 36,
+    "off": "0x453",
+    "tag": 3,
+    "val": 6
+  },
+  {
+    "idx": 37,
+    "off": "0x458",
+    "tag": 4,
+    "val": "_gc"
+  },
+  {
+    "idx": 38,
+    "off": "0x461",
+    "tag": 4,
+    "val": ""
+  },
+  {
+    "idx": 39,
+    "off": "0x467",
+    "tag": 4,
+    "val": "_mr_param"
+  },
+  {
+    "idx": 40,
+    "off": "0x476",
+    "tag": 4,
+    "val": "subV"
+  },
+  {
+    "idx": 41,
+    "off": "0x480",
+    "tag": 4,
+    "val": "pack"
+  },
+  {
+    "idx": 42,
+    "off": "0x48a",
+    "tag": 4,
+    "val": "iii"
+  },
+  {
+    "idx": 43,
+    "off": "0x493",
+    "tag": 3,
+    "val": 5001
+  },
+  {
+    "idx": 44,
+    "off": "0x498",
+    "tag": 4,
+    "val": "Exit"
+  }
+]

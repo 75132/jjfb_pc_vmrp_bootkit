@@ -1,0 +1,5 @@
+started C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+mode=gwy
+pid=30056
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\direct_replace_gwy_stdout_20260715_120339.txt
+Wait 45s. If window opens, observe UI. Mock will log network if any.

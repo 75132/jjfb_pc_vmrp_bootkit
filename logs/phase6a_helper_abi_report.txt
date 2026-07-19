@@ -1,0 +1,39 @@
+﻿Phase 6A Nested Helper ABI Conformance
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+caller_module=unknown
+caller_offset=0x0
+call_site_present=True
+thunk_enter_present=False
+call_site_r0=0x0
+thunk_r0=0x0
+robotol_enter_r0=0x0
+r0_became_zero_at=CALL_SITE_BEFORE
+thunk_drop=false
+call_site_origin=LR_PROXY
+caller_disasm_movs_r0_imm=True
+caller_disasm_blx_rm=True
+entry_ne_helper=False
+field28_layout_class=unknown_or_partial_chunk
+field28_dest_blx=True
+case=C_guest_null_r0
+phase6b_field_list=Phase6B_candidate_fields(DOCUMENTED_names_only): mr_c_function_st{start_of_ER_RW,ER_RW_Length,ext_type,mrc_extChunk*,stack}; mrc_extChunk{check,init_func,event,code_buf,code_len,var_buf,var_len,global_p_buf,global_p_len,timer,sendAppEvent@field_28,extMrTable@field_2c}. Do not fill until bootstrap path confirmed. Live: field_28 loaded then BLX (function-pointer-like).
+cross_target=gwy.mrp saw loader/helper tags (nested enter r0 not parsed)
+hypothesis_r0_is_mr_c_function_st=confirmed_DOCUMENTED (MR_C_FUNCTION/TestCom801); live_robotol_enter_r0=0 so not satisfied
+hypothesis_field28_sendAppEvent=probable (DOCUMENTED mrc_extChunk+0x28) given BLX-after-LDR; not confirmed (no +0x2c seen in window)
+hypothesis_P_from_c_function_new=confirmed_DOCUMENTED
+hypothesis_caller_should_pass_P=probable_DOCUMENTED; live DSM BLX r1 with r0 from r4 == 0 at nested enter
+hypothesis_thunk_drops_r0=false (first CALL_SITE is LR_PROXY/guest with r0=0; later internal GUEST_CALL ignored)
+fix_applied=none (Case A not proven; no fake P; no PlatformRegistry)
+note=observe-only ABI proof path; next=Phase6B only if context bootstrap proven required
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+resource_hash_unchanged=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+dsm_code_image=PASS DSM_CODE_IMAGE missing
+robotol_registered=PASS robotol REGISTERED missing
+helper_abi_enter=PASS ROBOTOL_ENTER missing
+caller_module_named=PASS caller_module/offset missing
+ext_fault_or_summary=PASS EXT_FAULT / HELPER_ABI_SUMMARY missing
+field28_analysis=PASS FIELD28 analysis missing
+helper_abi_summary=PASS HELPER_ABI_SUMMARY missing
+no_low_va_map_hack=PASS low VA map hack suspected
+failed_lifecycle=PASS FAILED ENTRY_EXECUTION missing
+cross_target_ran=PASS cross-target log empty

@@ -1,0 +1,305 @@
+﻿[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=dsm_gm.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+dsm_gm.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1513)
+mr_unzip
+[JJFB_FILE] open file=mythroad/sdk_key.dat mode=1
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(217)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+--- ext: @002AEB1C
+_mr_c_function_new(002AEB60, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+mr_unzip
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+--- ext: @002D8DEC
+_mr_c_function_new(00304AE5, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1850
+After app init, memory left:3748208
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x0
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',SRCV): 0x0
+[JJFB_801] synced guest EXT helper=0x304AE5 P=0x2AC8D4 ER_RW=0x2B1850 ext=@2D8DEC
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] installed sendAppEvent hook @0x2829D4
+[JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4)
+[JJFB_801] ext_call code=0 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_SEND] extCode=0x1 app=0x64 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat/probe code=1 arg=100
+[JJFB_SEND] extCode=0x10113 app=0x11F02 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] installed ret1 stub @0x282A34
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes: 0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00 00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F02 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F03 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes: 0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00 00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F03 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F04 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes: 0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00 00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F04 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10102 app=0x1E200 code=0x30D2F9 param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10102 family=0x1E200 handler=0x30D2F9
+[JJFB_SEND] dump plat_a2 @0x30D2F9 64 bytes: B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B 18 1B 5A 5B 00 9F 44 01 F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43 07 48 07 4E 07 52 07 58
+[JJFB_SEND] plat 0x10102 alloc 123392 -> 0x682A54
+[JJFB_SEND] extCode=0x10120 app=0x4 code=0x2829DC param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10120 type=4 chunk/handler=0x2829DC
+[JJFB_SEND] extCode=0x10140 app=0x5 code=0x2829DC param0=0x306305 param1=0x0
+[JJFB_SEND] dump 10140_handler @0x306305 32 bytes: 48 F0 B5 48 44 00 68 0D 1C 00 28 87 B0 02 D0 00 20 07 B0 F0 BD F4 4E 07 23 4E 44 F0 56 01 28 F7
+[JJFB_SEND] register 0x10140 type=5 chunk=0x2829DC handler=0x306305
+[JJFB_SEND] extCode=0x10162 app=0xE200 code=0x30D241 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D241 64 bytes: 20 70 47 F0 B5 04 1C 0E 1C 00 25 85 B0 03 95 F7 F7 26 FA 20 49 00 23 49 44 08 60 1F 49 49 44 4A 6A 01 3A 4A 62 C8 6E 00 28 0B DD 01 38 C8 66 00 2A 00 DC CB 66 1A 49 01 20 49 44 08 70 00 20 05
+[JJFB_SEND] plat 0x10162 alloc 57856 -> 0x6A0C5C
+[JJFB_SEND] extCode=0x10165 app=0xE200 code=0x30D2F1 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D2F1 64 bytes: B5 FF F7 A7 FF 08 BD 70 B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B 18 1B 5A 5B 00 9F 44 01 F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43
+[JJFB_SEND] plat 0x10165 alloc 57856 -> 0x6AEE64
+[JJFB_SEND] extCode=0x10800 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10800 arg=0x4
+[JJFB_801] ext_call code=0 ret=0 out_len=0
+[JJFB_801] host mrc_init(0) ret=0
+[JJFB_SEND] ARM robotol timer period=50 RUNNING=1
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] pre-handler state=0(0x0) timeA=223 timeB=223 tick=1
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #1 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x9 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=9 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=9 code=0x0
+[JJFB_SEND] call fam@0x30D2F9 r0=9 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=0(0x0) timeA=223 timeB=223 tick=1
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] inject mrc_event(0,0,0) via helper code=1
+[JJFB_SEND] inject event ret=0
+[JJFB_SEND] FORCE state 0 -> 1 (splash nudge)
+[JJFB_SEND] plat 0x10138 heap #1 free=2097152 (site=0x2D9A6B out5=0x27FF84)
+[JJFB_SEND] 10138 dbg erw=0x2B1850 r9=0x2B1850 ED8=0 7DC=1 7DD=1 7D9=1 @11=1 *out5=2097152
+[JJFB_SEND] plat 0x10132 alloc #1 sz=4 -> block 0x282A24
+[JJFB_SEND] plat 0x10132 alloc #2 sz=4 -> block 0x282A2C
+[JJFB_SEND] plat 0x10132 alloc #3 sz=4 -> block 0x28003C
+[JJFB_SEND] plat 0x10132 alloc #4 sz=4 -> block 0x280044
+[JJFB_SEND] plat 0x10132 alloc #5 sz=4 -> block 0x28003C
+[JJFB_SEND] plat 0x10132 alloc #6 sz=4 -> block 0x280044
+[JJFB_SEND] pre-handler state=1(0x1) timeA=1235 timeB=1235 tick=21
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #21 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=1235 timeB=1235 tick=21
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=2243 timeB=2243 tick=41
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #41 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x280044
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x28003C
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=2243 timeB=2243 tick=41
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] plat 0x10132 alloc #100 sz=4 -> block 0x280044
+[JJFB_SEND] pre-handler state=1(0x1) timeA=3244 timeB=3244 tick=61
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #61 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=3244 timeB=3244 tick=61
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=4248 timeB=4248 tick=81
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #81 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x280044
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x28003C
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=4248 timeB=4248 tick=81
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=5251 timeB=5251 tick=101
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #101 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=5251 timeB=5251 tick=101
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] plat 0x10132 alloc #200 sz=4 -> block 0x280044
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=6259 timeB=6259 tick=121
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #121 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x280044
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x28003C
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=6259 timeB=6259 tick=121
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=7261 timeB=7261 tick=141
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #141 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=7261 timeB=7261 tick=141
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] plat 0x10132 alloc #300 sz=4 -> block 0x280044
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=8268 timeB=8268 tick=161
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #161 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x280044
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10133 free block=0x28003C
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=8268 timeB=8268 tick=161
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler state=1(0x1) timeA=9272 timeB=9272 tick=181
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] timer tick #181 -> handler 0x10140
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x18 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=24 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=24 code=0x0
+[JJFB_SEND] app24 -> 0x3130EC(code=0) via fam
+[JJFB_SEND] call fam@0x30D2F9 r0=24 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x280044 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10132 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] extCode=0x10133 app=0x28003C code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_SEND] post-handler state=1(0x1) timeA=9272 timeB=9272 tick=181
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+

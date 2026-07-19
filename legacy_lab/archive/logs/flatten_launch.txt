@@ -1,0 +1,4 @@
+launched C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+pid=6788
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\vmrp_flatten_stdout_20260715_114023.txt
+请在 vmrp 窗口列表中点 gwy.mrp / gamelist.mrp / jjfb.mrp。

@@ -1,0 +1,21 @@
+﻿Phase 6B-A3 Chunk Construction Provenance
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+case=D
+case_legend=A_observer_late|B_block_copy|C_static_template|D_wrong_identity|E_missing_bootstrap|F_corrupt_field|G_unknown
+cross_target_gwy=provenance_tags_seen
+cross_target_wxjwq=provenance_tags_seen
+header_entry_candidate=observe_compare_only
+chunk_field_04=raw_last_seen_chunk_plus4
+fix_applied=none (no chunk/context create; no PlatformRegistry; no r0 poke)
+phase6b_b_gate=only_Case_E_with_DOCUMENTED_or_CROSS_TARGET
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+chunk_record=PASS ExtChunkRecord missing
+chunk_snapshot=PASS CHUNK_SNAPSHOT missing
+chunk_write_or_none=PASS CHUNK_WRITE or NONE missing
+entry_transfer=PASS ENTRY_TRANSFER missing
+chunk_ptr_or_field=PASS chunk ptr/field typing missing
+provenance_case=PASS CHUNK_PROVENANCE_CASE missing
+no_fake_context=PASS fake context / PlatformRegistry suspected
+no_r0_poke=PASS r0 poke suspected
+xt_gwy=PASS gwy.mrp log empty
+xt_wxjwq=PASS wxjwq log empty

@@ -1,0 +1,20 @@
+mode=gwy
+mythroad=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+alias 000_jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+alias 001_gwy.mrp size=56345 sha1=7f5f52e8a624
+alias 002_gamelist.mrp size=72620 sha1=142b4487f2f8
+alias jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+alias gwy.mrp size=56345 sha1=7f5f52e8a624
+alias gamelist.mrp size=72620 sha1=142b4487f2f8
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\sdk_key.dat
+backup original dsm_gm -> dsm_gm.original.mrp sha1=be3a25f4311e
+REPLACED dsm_gm.mrp <= 001_gwy.mrp size=56345 sha1=7f5f52e8a624
+root targets:
+  dsm_gm.mrp size=56345 sha1=7f5f52e8a624
+  001_gwy.mrp size=56345 sha1=7f5f52e8a624
+  002_gamelist.mrp size=72620 sha1=142b4487f2f8
+  000_jjfb.mrp size=414602 sha1=c6a0cbda0ce8
+  gwy.mrp size=56345 sha1=7f5f52e8a624
+  gamelist.mrp size=72620 sha1=142b4487f2f8
+  jjfb.mrp size=414602 sha1=c6a0cbda0ce8

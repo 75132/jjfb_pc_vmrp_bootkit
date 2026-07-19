@@ -1,0 +1,12 @@
+{
+  "root": "<self_test>/negative_fixed_address_fixture",
+  "ok": false,
+  "findings": [
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/main.c",
+      "line": 9,
+      "match": "0x2DADC4"
+    }
+  ]
+}

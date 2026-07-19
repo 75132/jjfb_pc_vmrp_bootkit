@@ -1,0 +1,58 @@
+[
+  {
+    "file": "bridge.c",
+    "base_bytes": 51718,
+    "current_bytes": 385208,
+    "added_lines": "8773",
+    "deleted_lines": "889"
+  },
+  {
+    "file": "vmrp.c",
+    "base_bytes": 5535,
+    "current_bytes": 14637,
+    "added_lines": "360",
+    "deleted_lines": "183"
+  },
+  {
+    "file": "fileLib.c",
+    "base_bytes": 5485,
+    "current_bytes": 18067,
+    "added_lines": "357",
+    "deleted_lines": "25"
+  },
+  {
+    "file": "main.c",
+    "base_bytes": 10395,
+    "current_bytes": 12587,
+    "added_lines": "59",
+    "deleted_lines": "15"
+  },
+  {
+    "file": "network.c",
+    "base_bytes": 15715,
+    "current_bytes": 17589,
+    "added_lines": "50",
+    "deleted_lines": "0"
+  },
+  {
+    "file": "memory.c",
+    "base_bytes": 6013,
+    "current_bytes": 9179,
+    "added_lines": "104",
+    "deleted_lines": "6"
+  },
+  {
+    "file": "utils.c",
+    "base_bytes": 8534,
+    "current_bytes": 8534,
+    "added_lines": "0",
+    "deleted_lines": "0"
+  },
+  {
+    "file": "rbtree.c",
+    "base_bytes": 10370,
+    "current_bytes": 10370,
+    "added_lines": "0",
+    "deleted_lines": "0"
+  }
+]

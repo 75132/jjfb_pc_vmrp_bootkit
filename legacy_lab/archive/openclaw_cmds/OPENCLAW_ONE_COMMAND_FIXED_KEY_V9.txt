@@ -1,0 +1,8 @@
+给 OpenClaw：
+
+v8 已找到 sdk_key：g:u2。现在固定 key 长时间直接启动 jjfb：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_BOOT_JJFB_FIXED_KEY_V9.ps1
+
+观察窗口是否进入机甲风暴/loading/登录/连接服务器。
+跑完发 logs\jjfb_fixed_key_feedback_*.zip。

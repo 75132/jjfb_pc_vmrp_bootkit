@@ -1,0 +1,22 @@
+﻿Phase 6B-A7 DSM Module Record Handoff Contract
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+case=HELPER_NOT_DISPATCH_TARGET
+case_legend=REGISTER_FINALIZE_MISSING|WRONG_RECORD_ASSOCIATION|WRONG_FIELD_READ|HELPER_ADDRESS_ENCODING|HELPER_NOT_DISPATCH_TARGET|GENERIC_HANDOFF_MISSING|UNKNOWN
+evidence=DOCUMENTED
+documented_no_dsm_dispatch_write=True
+xt_second_hop_vs_helper=unknown
+cross_target_gwy=contract_tags_seen
+cross_target_wxjwq=contract_tags_seen
+fix_applied=none (no DSM record write; no second-hop redirect; no PlatformRegistry)
+phase6b_b_gate=blocked
+Q1_dispatch_record_offset=unknown_reverse_miss Q2_internal_entry_writer=CODE_IMAGE_LOAD_RETURN Q3_cfunction_stores_helper=HOST_GLOBAL_mr_c_function_DOCUMENTED Q4_finalize_exists=no Q5_finalize_should_update_dispatch=DOCUMENTED_no_mythroad_c_function_new_does_not Q6_why_not_updated=DOCUMENTED_api_has_no_dsm_dispatch_write Q8_xt_second_hop_vs_helper=unknown Q9_helper_is_second_hop_target=no_DOCUMENTED Q10_evidence=DOCUMENTED Q11_no_guest_mutation=yes Q12_phase6b_b_gate=blocked
+jjfb_hash=PASS ok
+cfn_side_effect=PASS ok
+contract_case=PASS ok
+finalize_or_none=PASS ok
+record_or_write=PASS ok
+phase6b_b_gate_line=PASS ok
+no_fake_context=PASS ok
+no_record_overwrite=PASS ok
+xt_gwy=PASS ok
+xt_wxjwq=PASS ok

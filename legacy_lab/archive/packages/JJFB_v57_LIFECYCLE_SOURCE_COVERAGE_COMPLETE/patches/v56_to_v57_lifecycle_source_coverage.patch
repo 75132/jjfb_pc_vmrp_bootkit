@@ -1,0 +1,248 @@
+--- a/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
++++ b/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+@@ -3377,7 +3377,7 @@
+ static int jjfb_ctx_mem_hook_installed;
+ /* v55: natural ui_mode=0x45 writer chain coverage (NO FORCE). */
+ static int jjfb_uimode_writer_hooks_installed;
+-static uc_hook jjfb_uimode_writer_hooks[64];
++static uc_hook jjfb_uimode_writer_hooks[96];
+ static int jjfb_allow_chrome;          /* env: JJFB_ALLOW_CHROME=1 */
+ static int jjfb_chrome_skip_310bb4 = 1;/* env: JJFB_CHROME_SKIP_310BB4=0 to observe */
+ static uint32_t jjfb_chrome_allow_calls = 0; /* env: JJFB_CHROME_ALLOW_CALLS (default 30 when enabled) */
+@@ -3962,6 +3962,7 @@
+  * callers 0x2FECA2 / 0x2E4066 / 0x305EF4; alt 0x30EE50. */
+ static void jjfb_hook_uimode_writer(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+     uint32_t lr = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, r5 = 0;
++    uint32_t r6 = 0, r7 = 0, sp = 0;
+     uint32_t mode = 0;
+     uint8_t b70 = 0;
+     uint32_t b58 = 0, db0 = 0, f134d = 0;
+@@ -3970,6 +3971,9 @@
+     static uint32_t n_event_dispatch, n_queue_2dc80c, n_queue_2e7b7c;
+     static uint32_t n_reset_entry, n_reset_calls, n_family_dispatch;
+     static uint32_t n_cb_register, n_cb_entry, n_cb_tail, n_periodic_gate;
++    static uint32_t n_ext_entry, n_ext_case, n_method1, n_method5;
++    static uint32_t n_lifecycle_cmd, n_cmd10002, n_tick_handler;
++    static uint32_t n_reg_init, n_reg_10102, n_reg_10140;
+     (void)size;
+     (void)user_data;
+     uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+@@ -3979,6 +3983,9 @@
+     uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+     uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+     uc_reg_read(uc, UC_ARM_REG_R5, &r5);
++    uc_reg_read(uc, UC_ARM_REG_R6, &r6);
++    uc_reg_read(uc, UC_ARM_REG_R7, &r7);
++    uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+     if (jjfb_guest_ext_erw) {
+         uc_mem_read(uc, jjfb_guest_ext_erw + JJFB_ERW_UI_MODE, &mode, 4);
+         uc_mem_read(uc, jjfb_guest_ext_erw + 0xB70, &b70, 1);
+@@ -4108,6 +4115,88 @@
+         printf("[JJFB_V56_PERIODIC] entry_305EB8 #%u lr=0x%X f134d=%u B70=%u B58=0x%X DB0=0x%X\n",
+                n_periodic_gate, lr, f134d, b70, b58, db0);
+         break;
++    case 0x304914:
++        n_reg_init++;
++        printf("[JJFB_V57_REG_INIT] mrc_init_registration_block #%u lr=0x%X\n",
++               n_reg_init, lr);
++        break;
++    case 0x304932:
++        n_reg_10102++;
++        printf("[JJFB_V57_REG_CONTRACT] call_10102 #%u ext=0x%X family=0x%X "
++               "handler=0x%X handler_code=0x%X lr=0x%X\n",
++               n_reg_10102, r0, r1, r2, r2 & ~1u, lr);
++        break;
++    case 0x304998:
++        n_reg_10140++;
++        printf("[JJFB_V57_REG_CONTRACT] call_10140 #%u ext=0x%X type=0x%X "
++               "chunk=0x%X handler=0x%X handler_code=0x%X lr=0x%X\n",
++               n_reg_10140, r0, r1, r2, r3, r3 & ~1u, lr);
++        break;
++    case 0x304AEC:
++        n_ext_entry++;
++        printf("[JJFB_V57_ROBOTOL_EXT] entry #%u method=%u(0x%X) input=0x%X len=%u "
++               "P=0x%X lr=0x%X\n",
++               n_ext_entry, r1, r1, r2, r3, r0, lr);
++        break;
++    case 0x304B04:
++        n_ext_case++;
++        printf("[JJFB_V57_ROBOTOL_EXT] dispatch #%u method=%u(0x%X) input_r6=0x%X "
++               "saved_r7=0x%X lr=0x%X\n",
++               n_ext_case, r0, r0, r6, r7, lr);
++        break;
++    case 0x304B30: {
++        uint32_t payload[3] = {0,0,0};
++        n_method1++;
++        if (r6 && uc_mem_read(uc, r6, payload, sizeof(payload)) == UC_ERR_OK) {
++            printf("[JJFB_V57_ROBOTOL_EXT] method1 #%u payload_cmd=%u(0x%X) "
++                   "arg1=0x%X arg2=0x%X input=0x%X%s\n",
++                   n_method1, payload[0], payload[0], payload[1], payload[2], r6,
++                   payload[0] == 10002 ? " TARGETS_CALLBACK_REGISTER" : "");
++        } else {
++            printf("[JJFB_V57_ROBOTOL_EXT] method1 #%u input=0x%X unreadable\n",
++                   n_method1, r6);
++        }
++        break;
++    }
++    case 0x303E14:
++        n_lifecycle_cmd++;
++        if (r0 == 10002) n_cmd10002++;
++        printf("[JJFB_V57_LIFECYCLE_CMD] entry_303E14 #%u cmd=%u(0x%X) "
++               "arg1=0x%X arg2=0x%X lr=0x%X%s\n",
++               n_lifecycle_cmd, r0, r0, r1, r2, lr,
++               r0 == 10002 ? " TARGETS_2F5390" : "");
++        break;
++    case 0x304406:
++        printf("[JJFB_V57_LIFECYCLE_CMD] compare_10000_10002 cmd=%u(0x%X) "
++               "lr=0x%X\n", r0, r0, lr);
++        break;
++    case 0x304418:
++        printf("[JJFB_V57_LIFECYCLE_CMD] command10002_branch #%u -> 2F5390 "
++               "cmd=%u lr=0x%X\n", n_cmd10002, r0, lr);
++        break;
++    case 0x304B5A:
++        n_method5++;
++        printf("[JJFB_V57_ROBOTOL_EXT] method5_dispatch #%u -> 3053B8/2F5390 "
++               "r0-r3=0x%X,0x%X,0x%X,0x%X lr=0x%X\n",
++               n_method5, r0, r1, r2, r3, lr);
++        break;
++    case 0x3053B8:
++    case 0x3053BA:
++        printf("[JJFB_V57_CALLBACK_SOURCE] direct_method5 pc=0x%X lr=0x%X "
++               "-> 2F5390\n", (uint32_t)address, lr);
++        break;
++    case 0x30630C:
++        n_tick_handler++;
++        if (n_tick_handler <= 12 || (n_tick_handler % 100) == 0)
++            printf("[JJFB_V57_TICK_HANDLER] entry_30630C #%u r0=0x%X r1=0x%X "
++                   "r2=0x%X r3=0x%X ui_mode=0x%X lr=0x%X\n",
++                   n_tick_handler, r0, r1, r2, r3, mode, lr);
++        break;
++    case 0x30634E:
++        printf("[JJFB_V57_TICK_HANDLER] state_switch_30634E loaded_r0=0x%X ui_mode=0x%X "
++               "r0-r3=0x%X,0x%X,0x%X,0x%X lr=0x%X\n",
++               r0, mode, r0, r1, r2, r3, lr);
++        break;
+     default:
+         break;
+     }
+@@ -4119,17 +4208,21 @@
+         /* v55 natural writer chain */
+         0x2FC418, 0x2FC448, 0x2FC03C, 0x2DADC4, 0x2DAE00, 0x2DAE24,
+         0x30EE50, 0x2FECA2, 0x2E4066, 0x305EF4,
+-        /* v56 event queue -> 2E2520 -> event 5/12 -> 2E4066 */
++        /* v56 event/family/reset/callback upstream */
+         0x2DC80C, 0x2DC8D4, 0x2E7B7C, 0x2E7B9E, 0x2E2520,
+-        /* v56 reset/start function 2FEBBC and every direct BL site */
+         0x2FEBBC, 0x2DCC60, 0x2DCCC4, 0x2DCD4E, 0x2DCDEE,
+         0x2DCF4C, 0x2DD626, 0x2DDA82, 0x2E02E0, 0x2E351A,
+         0x2E7528, 0x2E77B4, 0x2E799E, 0x2FBED6, 0x30DC44,
+-        /* v56 family dispatcher: app 0xC0 selects 30DC44 */
+         0x30D300,
+-        /* v56 callback registration/invocation -> 305EB8 -> 305EF4 */
+         0x2F5390, 0x2F53AC, 0x30D128, 0x3054A4,
+-        0x2F5404, 0x2F5734, 0x305EB8
++        0x2F5404, 0x2F5734, 0x305EB8,
++        /* v57 platform registration + robotol EXT lifecycle sources */
++        0x304914, 0x304932, 0x304998,
++        0x304AEC, 0x304B04, 0x304B30,
++        0x303E14, 0x304406, 0x304418,
++        0x304B5A, 0x3053B8, 0x3053BA,
++        /* v57 correct 0x10140 handler (not 0x303E14) */
++        0x30630C, 0x30634E
+     };
+     uint32_t i;
+     uc_err err;
+@@ -4142,8 +4235,8 @@
+             printf("[JJFB_GAME_SELF] hook 0x%X failed err=%u\n", addrs[i], err);
+     }
+     jjfb_uimode_writer_hooks_installed = 1;
+-    printf("[JJFB_V56_UPSTREAM] coverage installed "
+-           "(event_queue/event5_12/family_C0/reset_2FEBBC/callback_2F5404/305EB8/writer)\n");
++    printf("[JJFB_V57_SOURCE_COVERAGE] coverage installed "
++           "(family_C0_ingress/robotol_method1_cmd10002/method5/callback_register/real_10140_handler)\n");
+     fflush(stdout);
+ }
+ 
+@@ -5150,6 +5243,10 @@
+         jjfb_pending_1e200 = 0;
+         if ((jjfb_handler_tick % 20) == 1 || (a != 9 && a != 0x18)) {
+             printf("[JJFB_SEND] flush 0x1E200 fam app=%u code=0x%X\n", a, c);
++            printf("[JJFB_V57_FAMILY_INVOKE] source=guest_deferred_1e209 handler=0x%X "
++                   "app=0x%X code=0x%X p0=0x%X p1=0x%X%s\n",
++                   jjfb_plat_handler_1e200, a, c, p0, p1,
++                   a == 0xC0 ? " APP_C0" : "");
+             fflush(stdout);
+         }
+         jjfb_in_guest_handler = 1;
+@@ -5348,7 +5445,14 @@
+                    r0b, r1b, r2b, r3b, spb);
+             fflush(stdout);
+         }
+-        /* r1=0 selects the periodic path inside the handler. */
++        /* Existing host periodic call. v57 logs it but does not add lifecycle commands. */
++        if (jjfb_10140_calls <= 8 || (jjfb_10140_calls % 20) == 1) {
++            printf("[JJFB_V57_TICK_CALL] source=host_periodic handler=0x%X "
++                   "handler_code=0x%X r0=0 r1=0 call=%u\n",
++                   jjfb_plat_handler_10140, jjfb_plat_handler_10140 & ~1u,
++                   jjfb_10140_calls);
++            fflush(stdout);
++        }
+         jjfb_run_guest_thumb(uc, jjfb_plat_handler_10140, 0, 0);
+         if (jjfb_guest_ext_erw) {
+             uc_mem_read(uc, jjfb_guest_ext_erw + JJFB_ERW_STATE_EARLY, &after_mode, 4);
+@@ -5479,14 +5583,16 @@
+  */
+ static void br_jjfb_sendAppEvent(BridgeMap *o, uc_engine *uc) {
+     uint32_t extCode, app, code, param0, param1 = 0;
+-    uint32_t sp;
++    uint32_t sp, lr = 0, site_lr = 0;
+     (void)o;
+     uc_reg_read(uc, UC_ARM_REG_R0, &extCode);
+     uc_reg_read(uc, UC_ARM_REG_R1, &app);
+     uc_reg_read(uc, UC_ARM_REG_R2, &code);
+     uc_reg_read(uc, UC_ARM_REG_R3, &param0);
+     uc_reg_read(uc, UC_ARM_REG_SP, &sp);
++    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+     uc_mem_read(uc, sp, &param1, 4);
++    uc_mem_read(uc, sp + 0x24, &site_lr, 4);
+ 
+     /* Throttle spammy plat lines. */
+     {
+@@ -5536,6 +5642,8 @@
+         if (extCode == 0x10102 && code && (code & ~1u) > 0x1000) {
+             jjfb_plat_handler_1e200 = code;
+             printf("[JJFB_SEND] register 0x10102 family=0x%X handler=0x%X\n", app, code);
++            printf("[JJFB_V57_FAMILY_REG] ext=0x10102 family=0x%X handler=0x%X "
++                   "handler_code=0x%X source_lr=0x%X\n", app, code, code & ~1u, lr);
+             fflush(stdout);
+         }
+         jjfb_dump_guest(uc, "plat_a2", code, 64);
+@@ -5585,6 +5693,9 @@
+                app, code, param0, param1, jjfb_plat_handler_10140, lr);
+         printf("[JJFB_SEND] register 0x10140 type=%u chunk=0x%X handler=0x%X\n",
+                app, code, jjfb_plat_handler_10140);
++        printf("[JJFB_V57_TICK_REG] ext=0x10140 type=%u chunk=0x%X handler=0x%X "
++               "handler_code=0x%X expected_static=0x30630C\n",
++               app, code, jjfb_plat_handler_10140, jjfb_plat_handler_10140 & ~1u);
+         fflush(stdout);
+         SET_RET_V(1);
+         return;
+@@ -5873,10 +5984,14 @@
+         SET_RET_V(0);
+         return;
+     }
+-    /* Seen from 0x10140 handler: plat(0x1E209, app, ...).
+-     * 0x10102 registered family dispatcher @0x30D2F9 (switch on app).
+-     * Defer call to avoid nested uc_emu_start while inside 0x10140. */
++    /* Seen from guest code: plat(0x1E209, app, ...).
++     * v57 records the real guest callsite separately from platform-originated
++     * family callbacks. No app/code is synthesized here. */
+     if (extCode == 0x1E209 || (extCode >= 0x1E200 && extCode <= 0x1E2FF)) {
++        printf("[JJFB_V57_FAMILY_SOURCE] source=guest_sendAppEvent ext=0x%X app=0x%X "
++               "code=0x%X p0=0x%X p1=0x%X wrapper_lr=0x%X site_lr=0x%X%s\n",
++               extCode, app, code, param0, param1, lr, site_lr,
++               app == 0xC0 ? " APP_C0" : "");
+         if ((jjfb_handler_tick % 20) == 1 || (app != 9 && app != 0x18)) {
+             printf("[JJFB_SEND] plat UI/ops 0x%X arg=%u code=0x%X p0=0x%X p1=0x%X (fam=0x%X)\n",
+                    extCode, app, code, param0, param1, jjfb_plat_handler_1e200);

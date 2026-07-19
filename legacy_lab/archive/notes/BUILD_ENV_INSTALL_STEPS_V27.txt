@@ -1,0 +1,32 @@
+# v27 编译环境检查/安装
+
+先在 PowerShell 检查：
+
+where mingw32-make
+where gcc
+where pkg-config
+
+如果都找不到，安装 MSYS2：
+
+1. 安装 MSYS2 到 C:\msys64
+2. 打开「MSYS2 MinGW 32-bit」
+3. 执行：
+
+pacman -Syu
+
+如果它要求关闭窗口，关闭后重新打开「MSYS2 MinGW 32-bit」，再执行：
+
+pacman -S --needed base-devel mingw-w64-i686-toolchain mingw-w64-i686-SDL2 mingw-w64-i686-unicorn
+
+4. 把下面两个目录加入 Windows PATH：
+
+C:\msys64\mingw32\bin
+C:\msys64\usr\bin
+
+5. 重新打开 PowerShell，回到 bootkit 目录：
+
+cd C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit
+
+6. 再运行：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SOURCE_BUILD_LOADER_V27.ps1

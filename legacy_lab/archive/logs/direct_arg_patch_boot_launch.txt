@@ -1,0 +1,4 @@
+started C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+pid=31372
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\direct_arg_patch_boot_stdout_20260715_151351.txt
+waiting 120s

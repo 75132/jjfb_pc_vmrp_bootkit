@@ -1,0 +1,36 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+[VM_FILE_BIND] runtime=1 svc=15904918
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MRP_MEMBER_VIEW] reg_primary failed package=gwy/gamelist.mrp: no reg.ext primary gwy/gamelist.mrp
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" backend=canonical mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=MISS handle=0
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=1 pos=365 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=1018 got=1018 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=1 pos=2058 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=98264 got=98264 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok

@@ -1,0 +1,248 @@
+﻿[JJFB_SDK_KEY] vmver=1968 IMEI=864086040622841 hsman=vmrp hstype=vmrp
+[JJFB_SDK_KEY] canonical=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\sdk_key.dat len=48 sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436
+[JJFB_MRP_ORIGINAL] source=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320\gwy\jjfb.mrp sha256_before=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 sha256_after=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[JJFB_V60_LIFECYCLE] contract=family_app2_timerCreate_then_mrc_resume no_FORCE no_C0_inject
+[JJFB_V59_LIFECYCLE] contract=mrc_resume_code5_once_after_init
+[JJFB_GAME_SELF] contract=trace_natural_upstream_trigger_2FC418 no_FORCE
+[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_GWY_LAUNCH] cfg_index=36 target=gwy/jjfb.mrp
+[JJFB_GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_GWY_ROOT] mythroad_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320
+[JJFB_GWY_ROOT] gwy_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\240x320\gwy
+[JJFB_GWY_ROOT] target=C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp
+[JJFB_GWY_ROOT] resource_dirs=gifs,jjfbol,save,sound,...
+[JJFB_STARTGAME] startGame/runapp equivalent=bridge_dsm_mr_start_dsm
+[JJFB_GWY_LAUNCH] startGame/runapp equivalent called
+[JJFB_MRP_ALIAS] enabled=1 request=cfunction.ext target=robotol.ext
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=gwy/jjfb.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] guest="mythroad/system/gb16.uc2" host="mythroad/system/gb16.uc2" ok=1 handle=1 mode=0 pc=0x280284 lr=0x90DC4
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+mr_unzip
+[JJFB_FILE] open file=mythroad/sdk_key.dat mode=1
+[JJFB_FILEOPEN] guest="mythroad/sdk_key.dat" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/sdk_key.dat" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+[JJFB_GUEST_EXT] observed ext_base=0x2AEB04
+--- ext: @002AEB04
+[JJFB_GUEST_EXT] ordinal=1 role=mrc_loader helper=0x2AEB48 P=0x2AC8DC ext_base=0x2AEB04 len=20
+[JJFB_MRP_ALIAS] patched ext_base=0x2AEB04 literal=0x2AEBD8 request=cfunction.ext target=robotol.ext method=ext_base_0xD4
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/240x320/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+mr_unzip
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+[JJFB_GUEST_EXT] observed ext_base=0x2D8DF4
+--- ext: @002D8DF4
+[JJFB_ROBOTOL_LOAD] ordinal=3 guest_ordinal=2 helper=0x304AED P=0x2AC8DC ext_base=0x2D8DF4 loader_helper=0x2AEB48 after_alias=1 source=br_log
+_mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1858
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x1
+bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr',SRCV): 0x1
+[JJFB_START_HANDOFF] raw_ret=0x1 semantic=MR_IGNORE alias_applied=1 robotol_loaded=1 helper=0x304AED action=run_host_801_recovery
+[JJFB_801_GUARD] robotol_loaded=1 alias_applied=1 robotol_helper=0x304AED action=run_host_801
+[JJFB_CFG36] nextid=482 ncode=512 napptype=12 narg=0 narg1=1 appid=400101 appver=12
+[JJFB_801] synced guest EXT helper=0x304AED P=0x2AC8DC ER_RW=0x2B1858 ext=@2D8DF4
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_V56_UPSTREAM] coverage installed (event_queue/event5_12/family_C0/reset_2FEBBC/callback_2F5404/305EB8/writer)
+[JJFB_V57_SRC] coverage installed (call_2F5390/BL_3054A4/cmp_C0/movs_C0) NO_INJECT NO_FORCE
+[JJFB_V58_FN] coverage installed (reg_304AEC/C0_2ED8E4_2F5CA4/callers) NO_INJECT NO_FORCE
+[JJFB_V60_TIMER] coverage installed (30CBBC/timerCreate/ERW8C4) family_app2_before_resume
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] installed sendAppEvent hook @0x2829D4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x74 0x802B0 -> 0x280078
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1D8 0x81040 -> 0x2801DC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1DC 0x81078 -> 0x2801E0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E0 0x810B0 -> 0x2801E4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E4 0x810E8 -> 0x2801E8
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E8 0x80278 -> 0x2801EC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1EC 0x802E8 -> 0x2801F0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x200 0x811C8 -> 0x280204
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC fixed 8 gfx slots (GOT left as shadow; host mr_table=0x280004)
+[JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4 extMrTable=0x281EFC)
+[JJFB_801] ext_call code=0 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_V58_FN] fn_304AEC_reg #1 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x0,0x2D8DF4,0x7B0
+[JJFB_SEND] extCode=0x1 app=0x64 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat/probe code=1 arg=100
+[JJFB_SEND] extCode=0x10113 app=0x11F02 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_SEND] installed ret1 stub @0x282A34
+[JJFB_SEND] dump 10113_param0 @0x27FCC0 64 bytes:
+  0F 27 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 1D 49 30 00 07 FF FF FF E0 FC 27 00
+  00 00 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 2D 4B 30 00 58 18 2B 00 DC C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F02 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F03 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FCC0 64 bytes:
+  0F 27 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 1D 49 30 00 07 FF FF FF E0 FC 27 00
+  00 00 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 2D 4B 30 00 58 18 2B 00 DC C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F03 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F04 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FCC0 64 bytes:
+  0F 27 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 1D 49 30 00 07 FF FF FF E0 FC 27 00
+  00 00 00 00 00 00 00 00 DC C8 2A 00 F4 8D 2D 00 B0 07 00 00 2D 4B 30 00 58 18 2B 00 DC C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F04 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10102 app=0x1E200 code=0x30D301 param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10102 family=0x1E200 handler=0x30D301
+[JJFB_SEND] dump plat_a2 @0x30D301 64 bytes:
+  B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B 18 1B 5A 5B 00 9F 44 01
+  F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43 07 48 07 4E 07 52 07 58
+[JJFB_SEND] plat 0x10102 alloc 123392 -> 0x682A5C
+[JJFB_SEND] extCode=0x10120 app=0x4 code=0x2829DC param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10120 type=4 chunk/handler=0x2829DC
+[JJFB_SEND] extCode=0x10140 app=0x5 code=0x2829DC param0=0x30630D param1=0x0
+[JJFB_SEND] dump 10140_handler @0x30630D 32 bytes:
+  48 F0 B5 48 44 00 68 0D 1C 00 28 87 B0 02 D0 00 20 07 B0 F0 BD F4 4E 07 23 4E 44 F0 56 01 28 F7
+[JJFB_10140_REG] app=0x5 code=0x2829DC param0=0x30630D param1=0x0 handler=0x30630D lr=0x304589
+[JJFB_SEND] register 0x10140 type=5 chunk=0x2829DC handler=0x30630D
+[JJFB_SEND] extCode=0x10162 app=0xE200 code=0x30D249 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D249 64 bytes:
+  20 70 47 F0 B5 04 1C 0E 1C 00 25 85 B0 03 95 F7 F7 26 FA 20 49 00 23 49 44 08 60 1F 49 49 44 4A
+  6A 01 3A 4A 62 C8 6E 00 28 0B DD 01 38 C8 66 00 2A 00 DC CB 66 1A 49 01 20 49 44 08 70 00 20 05
+[JJFB_SEND] plat 0x10162 alloc 57856 -> 0x6A0C64
+[JJFB_SEND] extCode=0x10165 app=0xE200 code=0x30D2F9 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D2F9 64 bytes:
+  B5 FF F7 A7 FF 08 BD 70 B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B
+  18 1B 5A 5B 00 9F 44 01 F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43
+[JJFB_SEND] plat 0x10165 alloc 57856 -> 0x6AEE6C
+[JJFB_SEND] extCode=0x10800 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10800 arg=0x4
+[JJFB_801] ext_call code=0 ret=0 out_len=0
+[JJFB_801] host mrc_init(0) ret=0
+[JJFB_V60_LIFECYCLE] family app=2 via handler=0x30D301 (app2→30E15E→30CBBC timerCreate; not C0)
+[JJFB_SEND] flush 0x1E200 fam app=2 code=0x0
+[JJFB_V56_FAMILY] dispatch #1 app=0x2 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_V60_TIMER] fn_30CBBC_init #1 pc=0x30CBBC lr=0x30E163 r0-r3=0x2,0x0,0x0,0xE3C
+[JJFB_SEND] plat 0x10138 heap #1 free=2097152 (site=0x2D9A73 out5=0x27FC7C)
+[JJFB_SEND] plat 0x10132 alloc #1 sz=80 -> block 0x6BD074
+[JJFB_SEND] plat 0x10132 alloc #2 sz=144 -> block 0x6BD0CC
+[JJFB_SEND] plat 0x10132 alloc #3 sz=34 -> block 0x6BD164
+[JJFB_SEND] plat 0x10132 alloc #4 sz=1004 -> block 0x6BD18C
+[JJFB_SEND] plat 0x10132 alloc #5 sz=34 -> block 0x6BD57C
+[JJFB_SEND] plat 0x10132 alloc #6 sz=204 -> block 0x6BD5A4
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A833C param0=0x0 param1=0x2B214C
+[JJFB_12340] site_lr(sp+24)=0x305EA1 wrapper_lr=0x304589
+[JJFB_12340] n=1 app=0x1 code=0x2A833C p0=0x0 p1=0x2B214C p2=0x2B2150 lr=0x304589 before1=0 before2=0 write_h=16
+[JJFB_SEND] dump 12340_code @0x2A833C 64 bytes:
+  5B BD 00 00 78 00 00 00 68 59 02 00 70 00 00 00 34 30 38 36 30 34 30 36 32 32 38 34 31 00 00 00
+  F8 59 02 00 40 00 00 00 57 78 62 00 04 00 00 00 31 39 36 38 00 BC 2A 00 2C 9B 2A 00 04 00 00 00
+[JJFB_SEND] dump 12340_p1 @0x2B214C 32 bytes:
+  10 00 00 00 00 00 00 00 00 00 00 00 64 0C 6A 00 6C EE 6A 00 00 00 00 00 00 00 00 00 02 00 00 00
+[JJFB_SEND] extCode=0x11F00 app=0x10 code=0x3E8 param0=0x0 param1=0x0
+[JJFB_FIRST_SCREEN] cleared guest RGB565 to dark (no host overlay)
+[JJFB_CODE_OBJ] ptr=0x3E8 hash=0xE6A1D1C5 tag=0x0 +0C=0 +10=0x0 len=+14:0 ref34=0x0 ascii=""
+[JJFB_SEND] dump 11F00_code100 @0x3E8 256 bytes:
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[JJFB_DRAW_TEXT] 11F00 #1 app=0x10 code=0x3E8 xy=0,0 glyphs=6 ascii=0 block=6 48x16 p1=0x0 p2=0x0 p3=0x0 dirty=1
+[JJFB_DEBUG_PRESENT] from 11F00 dirty 0,0 240x320 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_SEND] extCode=0x10130 app=0xAF000 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x10130 app=0xAF000 code=0x0 p0=0x0 p1=0x0
+[JJFB_SEND] plat 0x10138 heap #2 free=2097152 (site=0x30D019 out5=0x27FCCC)
+[INFO]mr_mkDir(mythroad/gwy/jjfbol/)
+[JJFB_V60_TIMER] mrc_timerCreate #2 pc=0x305404 lr=0x30D08B r0-r3=0x0,0x2802A4,0x24,0x0
+[JJFB_V60_TIMER] mrc_timerCreate #3 pc=0x305404 lr=0x30D091 r0-r3=0x2A8340,0x0,0x959A0,0x0
+[JJFB_SEND] plat 0x10138 heap #3 free=2097152 (site=0x2D9A73 out5=0x27FC74)
+[JJFB_V56_CALLBACK] register #1 pc=0x30D128 lr=0x30D113 r0-r3=0x2A8340,0x0,0x1,0x27FCE0 ERW8C4=0x2A8340
+[JJFB_V57_SRC] BL_3054A4 #1 pc=0x30D136 lr=0x30D113 r0-r3=0x2A8340,0x50,0x0,0x2F5405 CALLBACK_2F5404
+[JJFB_V56_CALLBACK] register #2 pc=0x3054A4 lr=0x30D13B r0-r3=0x2A8340,0x50,0x0,0x2F5405 ERW8C4=0x2A8340 CALLBACK_2F5404
+[JJFB_SEND] extCode=0x2829DC app=0x1 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x1 code=0x0 p0=0x0 p1=0x0
+[JJFB_SEND] extCode=0x2829DC app=0x0 code=0x0 param0=0x50 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x0 code=0x0 p0=0x50 p1=0x0
+[JJFB_SEND] extCode=0x10180 app=0x1 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x10180 app=0x1 code=0x0 p0=0x0 p1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x3 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=3 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_SEND] flush 0x1E200 fam app=3 code=0x0
+[JJFB_V56_FAMILY] dispatch #2 app=0x3 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_V60_LIFECYCLE] after family app=2 ERW+0x8C4 timer=0x2A8340 OK
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x2829DC stack=0x0}
+[JJFB_801] ext_call code=5 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_V58_FN] fn_304AEC_reg #2 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x5,0x0,0x0
+[JJFB_V58_FN] BL_3053B8 #1 pc=0x304B5A lr=0x304B03 r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V58_FN] fn_3053B8_wrap #3 pc=0x3053B8 lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V57_SRC] call_2F5390_prep #1 pc=0x3053BA lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V57_SRC] call_2F5390_prep #2 pc=0x3053BA lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V56_CALLBACK] register #3 pc=0x2F5390 lr=0x3053BF r0-r3=0x5,0x2B1858,0x0,0x48 ERW8C4=0x2A8340
+[JJFB_DRAW] DrawRect #1 0,0 240x320 rgb=0,0,0 (raw h=0x140)
+[JJFB_DEBUG_PRESENT] from DrawRect dirty 0,0 240x320 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_V56_CALLBACK] register #4 pc=0x2F53AC lr=0x303CA7 r0-r3=0x0,0x0,0x1,0x140 ERW8C4=0x2A8340
+[JJFB_V57_SRC] BL_3054A4 #2 pc=0x2F53BC lr=0x303CA7 r0-r3=0x2A8340,0x50,0x0,0x2F5405 CALLBACK_2F5404
+[JJFB_V56_CALLBACK] register #5 pc=0x3054A4 lr=0x2F53C1 r0-r3=0x2A8340,0x50,0x0,0x2F5405 ERW8C4=0x2A8340 CALLBACK_2F5404
+[JJFB_SEND] extCode=0x2829DC app=0x1 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x1 code=0x0 p0=0x0 p1=0x0
+[JJFB_SEND] extCode=0x2829DC app=0x0 code=0x0 param0=0x50 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x0 code=0x0 p0=0x50 p1=0x0
+[JJFB_801] ext_call code=5 ret=0 out_len=0
+[JJFB_V59_LIFECYCLE] mrc_resume(5) after init ret=0 (targets robotol 304B5A→2F5390 register path)
+[JJFB_SEND] ARM robotol timer period=50 RUNNING=1
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED (timer)
+[JJFB_V58_FN] fn_304AEC_reg #4 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #3 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #6 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_SEND] extCode=0x2829DC app=0x1 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x1 code=0x0 p0=0x0 p1=0x0
+[JJFB_SEND] extCode=0x2829DC app=0x0 code=0x0 param0=0x50 param1=0x0
+[JJFB_SEND] unhandled plat/msg 0x2829DC app=0x0 code=0x0 p0=0x50 p1=0x0
+[JJFB_V56_CALLBACK] entry_2F5404 #1 lr=0x3056D5 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] extCode=0x1E209 app=0x7 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_SEND] flush 0x1E200 fam app=7 code=0x0
+[JJFB_V56_FAMILY] dispatch #3 app=0x7 code=0x0 p0=0x0 p1=0x0 lr=0x80000

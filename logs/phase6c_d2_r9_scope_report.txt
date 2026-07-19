@@ -1,0 +1,45 @@
+﻿Phase 6C-D2 Nested CFN R9 Scope Ownership Audit
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+nested_r9_scope_gate=open
+module_r9_switch_gate=open
+guest_callback_frame_gate=blocked
+bootstrap_entry_r9_gate=blocked
+phase6b_b_gate=blocked
+er_rw_metadata_timing_gate=blocked
+abi_class=EMU_YIELD_MISCLASSIFIED_AS_RETURN_FIXED
+next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+mode=d3_tokenized_balance_accepted
+Q1_first_r9_writer=NONE_BALANCED callsite=CROSS_MODULE_MRP_TO_DSM_NOOP
+Q2_event_seq=unknown
+Q3_frame_id=unknown
+Q4_enter_pushed=no
+Q5_leave_same_frame=noop_balanced
+Q6_top_frame_owner=MR_HELPER
+Q7_emu_exit_reason=YIELD_TO_NESTED_GUEST
+Q8_guest_prologue_r9_write=no
+Q9_scope_level_interference=no_balanced
+Q10_nested_r9_scope_gate=open next=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+Q11_observe_only=superseded_by_d3
+Q12_old_new_r9=unknown->unknown
+jjfb_hash=PASS ok
+r9_scope_enter=PASS ok
+r9_scope_leave_or_noop=PASS ok
+r9_write=PASS ok
+already_switched=PASS ok
+foreign_pop_or_d3_noop=PASS ok
+first_zero_or_balanced=PASS ok
+scope_class_or_balance=PASS ok
+scope_interference_or_balance=PASS ok
+nested_r9_scope_gate=PASS ok
+module_r9_switch_gate=PASS ok
+guest_callback_frame_gate=PASS ok
+bootstrap_entry_r9_gate=PASS ok
+phase6b_b_gate=PASS ok
+er_rw_timing_gate=PASS ok
+observe_or_balanced=PASS ok
+no_guest_mutation=PASS ok
+emu_yield=PASS ok
+fault_or_progress=PASS ok
+class_allowed=PASS ok
+next_fix_gated=PASS ok
+open_fix_tokenized=PASS ok

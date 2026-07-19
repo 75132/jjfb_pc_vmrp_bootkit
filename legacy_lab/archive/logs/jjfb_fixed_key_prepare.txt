@@ -1,0 +1,22 @@
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+mythroad=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+sdk_key=b'g:u2' sha1=c0d64c43aa023a14a4546288fab5d07f9ca9b9d9
+merged 240x320 -> C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+merged 240x320/gwy
+backup dsm_gm -> dsm_gm.before_fixed_key_v9.mrp sha1=c6a0cbda0ce8
+REPLACED dsm_gm <= jjfb size=414602 sha1=c6a0cbda0ce8
+wrote sdk_key.dat size=4 sha1=c0d64c43aa02
+wrote gwy/sdk_key.dat size=4 sha1=c0d64c43aa02
+wrote gwy/jjfbol/sdk_key.dat size=4 sha1=c0d64c43aa02
+wrote 240x320/sdk_key.dat size=4 sha1=c0d64c43aa02
+wrote 240x320/gwy/sdk_key.dat size=4 sha1=c0d64c43aa02
+wrote 240x320/gwy/jjfbol/sdk_key.dat size=4 sha1=c0d64c43aa02
+alias 000_jjfb.mrp sha1=c6a0cbda0ce8
+alias gwy.mrp sha1=7f5f52e8a624
+alias gamelist.mrp sha1=142b4487f2f8
+final files:
+  dsm_gm.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  jjfb.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  gwy/jjfb.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+  sdk_key.dat: exists=True size=4 sha1=c0d64c43aa02
+  gwy/sdk_key.dat: exists=True size=4 sha1=c0d64c43aa02

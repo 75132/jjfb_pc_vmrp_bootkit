@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v24 全部候选无 mrc_loader / robotol / 20000 / 21002。结论：继续 patch jjfb.mrp 没意义，下一步定位并修 PC vmrp 的 _mr_c_load / hsman / C loader 支持。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_LOADER_SOURCE_AUDIT_V25.ps1
+
+发：
+logs\loader_source_audit_v25_feedback_*.zip
+
+这一步不启动游戏，只生成源码/字节码/二进制定位报告。

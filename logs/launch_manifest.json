@@ -1,0 +1,16 @@
+{
+  "profile_id": "cli",
+  "resource_root": ".\game_files\mythroad\320x480",
+  "cfg_index": 36,
+  "target_mrp": "gwy/jjfb.mrp",
+  "entry_member": "start.mr",
+  "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+  "napptype": 12,
+  "nextid": 482,
+  "ncode": 512,
+  "narg": 0,
+  "narg1": 1,
+  "appid": 400101,
+  "appver": 12,
+  "target_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036"
+}

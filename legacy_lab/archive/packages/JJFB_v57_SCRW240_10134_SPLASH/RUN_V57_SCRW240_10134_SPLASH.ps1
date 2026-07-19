@@ -1,0 +1,201 @@
+# JJFB v57 - SCRW=240 + 10134 size-map + splash present (docx)
+param(
+  [int]$Seconds = 25,
+  [switch]$SkipBuild,
+  [switch]$SkipResourceCopy,
+  [string]$VmVer = "1968",
+  [string]$Imei = "864086040622841",
+  [string]$HsMan = "vmrp",
+  [string]$HsType = "vmrp"
+)
+
+$ErrorActionPreference = "Stop"
+$root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$rt = Join-Path $root "runtime\vmrp_win32\vmrp_win32_20220102"
+$src = Join-Path $root "runtime\vmrp_src_build_v27\vmrp-master"
+$resourceSrc = Join-Path $root "game_files\mythroad\240x320"
+$mythroadRoot = Join-Path $rt "mythroad\240x320"
+$gwyRoot = Join-Path $mythroadRoot "gwy"
+$logDir = Join-Path $root "logs"
+$reportDir = Join-Path $root "reports"
+$stdoutPath = Join-Path $rt "jjfb_loader_stdout.txt"
+$stderrPath = Join-Path $rt "jjfb_loader_stderr.txt"
+$out = Join-Path $logDir "v57_scrw240_splash_stdout.txt"
+$errOut = Join-Path $logDir "v57_scrw240_splash_stderr.txt"
+$keyManifest = Join-Path $logDir "v57_sdk_key_manifest.json"
+$auditJson = Join-Path $logDir "v57_start_handoff_audit.json"
+$auditReport = Join-Path $reportDir "v57_start_handoff_static_audit.md"
+$reportOut = Join-Path $reportDir "v57_scrw240_splash_run_result.md"
+$keyCanonical = Join-Path $mythroadRoot "sdk_key.dat"
+$keyHexFallback = "d6aaa1b23878829303d1b9bcca42e1839f9b63153641f4c4e9743434427125b29b31f52a08537f4bdd1b71ab70686d35"
+
+New-Item -ItemType Directory -Force -Path $logDir, $reportDir, $mythroadRoot, $gwyRoot | Out-Null
+
+Write-Host "=== JJFB v57 SCRW240 / 10134 / splash (docx) ==="
+Write-Host "project=$root"
+Write-Host "docx SCRW=240; 10134 size-map; DrawRect axis_remap; original splash blit+refresh"
+Write-Host "NOT host FORCE mem-write of ui_mode"
+
+$bridgeSource = Join-Path $src "bridge.c"
+$vmrpSource = Join-Path $src "vmrp.c"
+foreach ($required in @($bridgeSource, $vmrpSource)) {
+  if (-not (Test-Path $required)) { throw "v57 source missing: $required" }
+}
+$bridgeText = [IO.File]::ReadAllText($bridgeSource)
+if (-not $bridgeText.Contains("jjfb_bmp_req_from_bytes") -or
+    -not $bridgeText.Contains("axis_remap") -or
+    -not $bridgeText.Contains("jjfb_gwy_present_splash_assets") -or
+    -not $bridgeText.Contains("[JJFB_GWY_SPLASH]")) {
+  throw "v57 SCRW240/10134/splash overlay missing in bridge.c"
+}
+
+$canonicalSourceMrp = Join-Path $resourceSrc "gwy\jjfb.mrp"
+if (-not (Test-Path $canonicalSourceMrp)) {
+  throw "canonical source target missing: $canonicalSourceMrp"
+}
+
+if (-not $SkipResourceCopy) {
+  Write-Host "[1/6] Copy full canonical mythroad/240x320 tree"
+  & robocopy $resourceSrc $mythroadRoot /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP
+  $rc = $LASTEXITCODE
+  if ($rc -ge 8) { throw "robocopy failed with exit code $rc" }
+} else {
+  Write-Host "[1/6] Resource copy skipped"
+}
+
+$runtimeMrp = Join-Path $gwyRoot "jjfb.mrp"
+if (-not (Test-Path $runtimeMrp)) { throw "runtime canonical target missing: $runtimeMrp" }
+$sourceHash = (Get-FileHash -Algorithm SHA256 $canonicalSourceMrp).Hash.ToLowerInvariant()
+$runtimeHash = (Get-FileHash -Algorithm SHA256 $runtimeMrp).Hash.ToLowerInvariant()
+if ($sourceHash -ne $runtimeHash) {
+  throw "runtime jjfb.mrp differs from canonical: source=$sourceHash runtime=$runtimeHash"
+}
+Write-Host "[JJFB_MRP_ORIGINAL] sha256=$runtimeHash"
+
+$python = Get-Command python -ErrorAction SilentlyContinue
+if (-not $python) { $python = Get-Command py -ErrorAction SilentlyContinue }
+if (-not $python) { throw "Python 3 is required" }
+
+Write-Host "[2/6] Audit canonical MRP"
+$auditScript = Join-Path $root "scripts\v53_audit_start_handoff.py"
+if ($python.Name -eq "py.exe" -or $python.Name -eq "py") {
+  & $python.Source -3 $auditScript $runtimeMrp --source-root $src --strict --output $auditReport --json $auditJson
+} else {
+  & $python.Source $auditScript $runtimeMrp --source-root $src --strict --output $auditReport --json $auditJson
+}
+if ($LASTEXITCODE -ne 0) { throw "static audit failed" }
+
+Write-Host "[3/6] Deploy sdk_key.dat"
+$generator = Join-Path $root "scripts\v51_generate_sdk_key.py"
+if (Test-Path $generator) {
+  if ($python.Name -eq "py.exe" -or $python.Name -eq "py") {
+    & $python.Source -3 $generator --vmver $VmVer --imei $Imei --hsman $HsMan --hstype $HsType --output $keyCanonical --report $keyManifest
+  } else {
+    & $python.Source $generator --vmver $VmVer --imei $Imei --hsman $HsMan --hstype $HsType --output $keyCanonical --report $keyManifest
+  }
+  if ($LASTEXITCODE -ne 0) { throw "sdk key generator failed" }
+} else {
+  [byte[]]$bytes = for ($i = 0; $i -lt $keyHexFallback.Length; $i += 2) {
+    [Convert]::ToByte($keyHexFallback.Substring($i, 2), 16)
+  }
+  [IO.File]::WriteAllBytes($keyCanonical, $bytes)
+}
+foreach ($target in @(
+  $keyCanonical,
+  (Join-Path $gwyRoot "sdk_key.dat"),
+  (Join-Path $gwyRoot "jjfbol\sdk_key.dat"),
+  (Join-Path $rt "mythroad\sdk_key.dat"),
+  (Join-Path $rt "mythroad\gwy\sdk_key.dat"),
+  (Join-Path $rt "mythroad\gwy\jjfbol\sdk_key.dat")
+)) {
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
+  if ($target -ne $keyCanonical) { Copy-Item -Force $keyCanonical $target }
+}
+$keyHash = (Get-FileHash -Algorithm SHA256 $keyCanonical).Hash.ToLowerInvariant()
+
+$env:Path = "C:\msys64\mingw32\bin;" + $env:Path
+$env:JJFB_GWY_LAUNCHER_MODE = "1"
+$env:JJFB_MRP_ALIAS_CFUNCTION_ROBOTOL = "1"
+$env:JJFB_ACCEPT_START_IGNORE_AFTER_ROBOTOL = "1"
+$env:JJFB_GWY_BRINGUP = "1"
+$env:JJFB_GWY_SPLASH_BLIT = "1"
+$env:JJFB_AXIS_FIX = "1"
+$env:JJFB_MYTHROAD_ROOT = $mythroadRoot
+$env:JJFB_GWY_ROOT = $gwyRoot
+$env:JJFB_GWY_PARAM = "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink"
+$env:JJFB_SCREEN_W = "240"
+$env:JJFB_SCREEN_H = "320"
+$env:JJFB_FORCE_UI_MODE = "0"
+$env:JJFB_FORCE_SPLASH_NUDGE = "0"
+
+foreach ($name in @(
+  "JJFB_FORCE_2EFC_TAIL", "JJFB_FORCE_R4", "JJFB_FORCE_B6C", "JJFB_FORCE_134D", "JJFB_FORCE_AC8_GATE",
+  "JJFB_PROGRESS_DRIVER", "JJFB_PROGRESS_SCAN", "JJFB_PROGRESS_NUDGE",
+  "JJFB_EVENT_CODE", "JJFB_SLOGO_NUDGE", "JJFB_SPLASH_HOST_BLIT",
+  "JJFB_310BB4_HOST_BLIT", "JJFB_ALLOW_CHROME", "JJFB_CHROME_ALLOW_CALLS",
+  "JJFB_AC8_MODE", "JJFB_SPLASH_AC8_MODE", "JJFB_SKIP_LUA_801_0", "JJFB_FORCE_START_DSM_SUCCESS"
+)) {
+  Remove-Item ("Env:" + $name) -ErrorAction SilentlyContinue
+}
+
+Write-Host "[4/6] Build v57"
+$mainExe = Join-Path $rt "main.exe"
+if (-not $SkipBuild) {
+  Push-Location $src
+  try {
+    $sources = @("network.c", "fileLib.c", "vmrp.c", "utils.c", "rbtree.c", "bridge.c", "memory.c", "main.c")
+    foreach ($source in $sources) {
+      $obj = [System.IO.Path]::ChangeExtension($source, ".o")
+      Remove-Item $obj -Force -ErrorAction SilentlyContinue
+      & gcc -g -Wall -DNETWORK_SUPPORT -DVMRP -m32 -c $source -o $obj
+      if ($LASTEXITCODE -ne 0) { throw "compile failed: $source" }
+    }
+    New-Item -ItemType Directory -Force -Path "bin" | Out-Null
+    & gcc -g -Wall -DNETWORK_SUPPORT -DVMRP -m32 -o ./bin/main `
+      network.o fileLib.o vmrp.o utils.o rbtree.o bridge.o memory.o main.o `
+      ./windows/unicorn-1.0.2-win32/unicorn.lib `
+      -lpthread -lm -lws2_32 -lz -lmingw32 -mconsole `
+      -L./windows/SDL2-2.0.10/i686-w64-mingw32/lib/ -lSDL2main -lSDL2
+    if ($LASTEXITCODE -ne 0) { throw "link failed" }
+    Copy-Item -Force "bin\main.exe" $mainExe
+  } finally {
+    Pop-Location
+  }
+} else {
+  if (-not (Test-Path $mainExe)) { throw "-SkipBuild but main.exe missing" }
+}
+
+Write-Host "[5/6] Run with GWY bring-up"
+Remove-Item $stdoutPath, $stderrPath -Force -ErrorAction SilentlyContinue
+$p = Start-Process -FilePath $mainExe -WorkingDirectory $rt -PassThru
+Write-Host "pid=$($p.Id)"
+Start-Sleep -Seconds $Seconds
+if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
+Start-Sleep -Milliseconds 500
+if (-not (Test-Path $stdoutPath)) { throw "stdout not produced: $stdoutPath" }
+
+$afterHash = (Get-FileHash -Algorithm SHA256 $runtimeMrp).Hash.ToLowerInvariant()
+if ($afterHash -ne $runtimeHash) { throw "jjfb.mrp changed during run" }
+
+$header = @(
+  "[JJFB_SDK_KEY] vmver=$VmVer sha256=$keyHash",
+  "[JJFB_MRP_ORIGINAL] sha256=$runtimeHash",
+  "[JJFB_GWY_SPLASH] contract=docx_SCRW240+10134_size_map+axis_remap+original_blit no_FORCE"
+) -join "`r`n"
+$rawLog = [IO.File]::ReadAllText($stdoutPath)
+[IO.File]::WriteAllText($out, $header + "`r`n" + $rawLog, [Text.Encoding]::UTF8)
+if (Test-Path $stderrPath) { Copy-Item -Force $stderrPath $errOut }
+Write-Host "saved $out"
+
+Write-Host "[6/6] Analyze"
+$analyzer = Join-Path $root "scripts\v57_analyze_scrw240_splash_log.py"
+if ($python.Name -eq "py.exe" -or $python.Name -eq "py") {
+  & $python.Source -3 $analyzer $out --markdown $reportOut
+} else {
+  & $python.Source $analyzer $out --markdown $reportOut
+}
+
+Select-String -Path $out -Pattern "JJFB_GWY_SPLASH|JJFB_10134_BMP|axis_remap|size-map|JJFB_GWY_BRINGUP|FORCE state|BMP_LOAD|host mrc_init" |
+  Select-Object -First 120 | ForEach-Object { $_.Line }
+Write-Host "---"
+Write-Host "report: $reportOut"

@@ -1,0 +1,3 @@
+1. 解压到项目根目录并覆盖同名文件。
+2. 运行：.\RUN_V57_LIFECYCLE_SOURCE_COVERAGE.ps1 -Seconds 25
+3. 查看 reports\v57_lifecycle_source_run_result.md

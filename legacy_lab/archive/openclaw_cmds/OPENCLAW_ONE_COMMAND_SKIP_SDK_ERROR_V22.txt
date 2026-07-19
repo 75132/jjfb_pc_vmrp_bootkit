@@ -1,0 +1,11 @@
+给 OpenClaw：
+
+v21 证明替换错误分支函数名不对，会出现 _mr_c_buf nil / _strCom 参数错误。
+现在 v22 直接改 start.mr 字节码控制流，跳过 line143/line147 的 sdk error + return，进入 line157 正常流程。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SKIP_SDK_ERROR_V22.ps1
+
+发：
+logs\skip_sdk_error_v22_feedback_*.zip
+以及 vmrp 窗口截图。

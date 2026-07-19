@@ -1,0 +1,2057 @@
+[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=dsm_gm.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+dsm_gm.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1513)
+mr_unzip
+[JJFB_FILE] open file=mythroad/sdk_key.dat mode=1
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(217)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+--- ext: @002AEB1C
+_mr_c_function_new(002AEB60, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+mr_unzip
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+--- ext: @002D8DEC
+_mr_c_function_new(00304AE5, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1850
+After app init, memory left:3748208
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x0
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',SRCV): 0x0
+[JJFB_801] synced guest EXT helper=0x304AE5 P=0x2AC8D4 ER_RW=0x2B1850 ext=@2D8DEC
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] installed sendAppEvent hook @0x2829D4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x74 0x802B0 -> 0x280078
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1D8 0x81040 -> 0x2801DC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1DC 0x81078 -> 0x2801E0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E0 0x810B0 -> 0x2801E4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E4 0x810E8 -> 0x2801E8
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E8 0x80278 -> 0x2801EC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1EC 0x802E8 -> 0x2801F0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x200 0x811C8 -> 0x280204
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC fixed 8 gfx slots (GOT left as shadow; host mr_table=0x280004)
+[JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4 extMrTable=0x281EFC)
+[JJFB_801] ext_call code=0 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_SEND] extCode=0x1 app=0x64 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat/probe code=1 arg=100
+[JJFB_SEND] extCode=0x10113 app=0x11F02 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] installed ret1 stub @0x282A34
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes:
+  0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00
+  00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F02 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F03 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes:
+  0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00
+  00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F03 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10113 app=0x11F04 code=0x0 param0=0x27FF98 param1=0x0
+[JJFB_SEND] dump 10113_param0 @0x27FF98 64 bytes:
+  0F 27 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 15 49 30 00 07 FF FF FF B8 FF 27 00
+  00 00 00 00 00 00 00 00 D4 C8 2A 00 EC 8D 2D 00 B0 07 00 00 25 4B 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] plat query 0x10113 id=0x11F04 -> stub@0x282A35
+[JJFB_SEND] extCode=0x10102 app=0x1E200 code=0x30D2F9 param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10102 family=0x1E200 handler=0x30D2F9
+[JJFB_SEND] dump plat_a2 @0x30D2F9 64 bytes:
+  B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B 18 1B 5A 5B 00 9F 44 01
+  F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43 07 48 07 4E 07 52 07 58
+[JJFB_SEND] plat 0x10102 alloc 123392 -> 0x682A54
+[JJFB_SEND] extCode=0x10120 app=0x4 code=0x2829DC param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10120 type=4 chunk/handler=0x2829DC
+[JJFB_SEND] extCode=0x10140 app=0x5 code=0x2829DC param0=0x306305 param1=0x0
+[JJFB_SEND] dump 10140_handler @0x306305 32 bytes:
+  48 F0 B5 48 44 00 68 0D 1C 00 28 87 B0 02 D0 00 20 07 B0 F0 BD F4 4E 07 23 4E 44 F0 56 01 28 F7
+[JJFB_10140_REG] app=0x5 code=0x2829DC param0=0x306305 param1=0x0 handler=0x306305 lr=0x304581
+[JJFB_SEND] register 0x10140 type=5 chunk=0x2829DC handler=0x306305
+[JJFB_SEND] extCode=0x10162 app=0xE200 code=0x30D241 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D241 64 bytes:
+  20 70 47 F0 B5 04 1C 0E 1C 00 25 85 B0 03 95 F7 F7 26 FA 20 49 00 23 49 44 08 60 1F 49 49 44 4A
+  6A 01 3A 4A 62 C8 6E 00 28 0B DD 01 38 C8 66 00 2A 00 DC CB 66 1A 49 01 20 49 44 08 70 00 20 05
+[JJFB_SEND] plat 0x10162 alloc 57856 -> 0x6A0C5C
+[JJFB_SEND] extCode=0x10165 app=0xE200 code=0x30D2F1 param0=0x0 param1=0x0
+[JJFB_SEND] dump plat_a2 @0x30D2F1 64 bytes:
+  B5 FF F7 A7 FF 08 BD 70 B5 0C 1C 19 1C FF 23 84 B0 15 1C 58 33 98 42 09 9A 08 9E 04 D2 03 A3 1B
+  18 1B 5A 5B 00 9F 44 01 F0 E4 F8 04 07 10 07 1E 07 22 07 26 07 2B 07 32 07 36 07 3A 07 3E 07 43
+[JJFB_SEND] plat 0x10165 alloc 57856 -> 0x6AEE64
+[JJFB_SEND] extCode=0x10800 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10800 arg=0x4
+[JJFB_801] ext_call code=0 ret=0 out_len=0
+[JJFB_801] host mrc_init(0) ret=0
+[JJFB_SEND] ARM robotol timer period=50 RUNNING=1
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5 (timer)
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_STARTUP_PHASE] tick=1 why=timer ui_mode=0x0 ac8=0 prog=0 bar=0x0 textbar=0x0 loadingbar=0x0 drew=0
+[JJFB_SEND] pre-handler state=0(0x0) ui_mode=0x0 tick=1 uptime=267
+[JJFB_FIRST_SCREEN] state_change 0 -> 0 (tick=1 why=pre-handler)
+[JJFB_FIRST_SCREEN] ui_mode_change 0x0 -> 0x0 (tick=1) (0x45=splash/slogo)
+[JJFB_FIRST_SCREEN] #1 state pre-handler
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler drawGate 7D8+0xC=0(0x0) hwD14=0 drawFP@1510=0x270F
+[JJFB_1510_WRITE] observed change old=0x0 new=0x270F (pre-handler)
+[JJFB_SEND] pre-handler screen 824w=0 828y=0 830h=0 834w=0
+[JJFB_SEND] pre-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_TIMER_DISPATCH] tick=1 handler=0x306305 calls=1 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_SEND] extCode=0x1E209 app=0x9 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=9 code=0x0 p0=0x0 p1=0x0 (fam=0x30D2F9)
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_SEND] flush 0x1E200 fam app=9 code=0x0
+[JJFB_SEND] call fam@0x30D2F9 r0=9 r1=0x0 r2=0x0 r3=0x0
+[JJFB_SEND] fam@0x30D2F9 ret=0
+[JJFB_TIMER_DISPATCH] tick=1 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_SEND] post-handler state=0(0x0) ui_mode=0x0 tick=1 uptime=294
+[JJFB_FIRST_SCREEN] #2 state post-handler
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] post-handler drawGate 7D8+0xC=0(0x0) hwD14=0 drawFP@1510=0x270F
+[JJFB_SEND] post-handler screen 824w=0 828y=0 830h=0 834w=0
+[JJFB_SEND] post-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_TIMER_DISPATCH] tick=2 handler=0x306305 calls=2 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=2 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_TIMER_DISPATCH] tick=3 handler=0x306305 calls=3 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=3 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_TIMER_DISPATCH] tick=4 handler=0x306305 calls=4 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=4 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_TIMER_DISPATCH] tick=5 handler=0x306305 calls=5 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=5 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_SEND] inject mrc_event(0,0,0) via helper code=1
+[JJFB_SEND] inject event ret=0
+[JJFB_TIMER_DISPATCH] tick=6 handler=0x306305 calls=6 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=6 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_TIMER_DISPATCH] tick=7 handler=0x306305 calls=7 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=7 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_TIMER_DISPATCH] tick=8 handler=0x306305 calls=8 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_TIMER_DISPATCH] tick=8 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_FIRST_SCREEN] FORCE state/ui_mode 0x0 -> 0x45 (splash path; slogo/loadingbar @0x2EF86C)
+[JJFB_SEND] call 0x2FC8B8 to enable refresh gate C44
+[JJFB_CHROME] enabled allow_calls=4 skip_310bb4=1
+[JJFB_310_SWEEP] installed range 0x310B00..0x310C80
+[JJFB_CTX_WRITE] watching tbl slot @0x2D8DEC (303d94 source)
+[JJFB_SLOGO_XREF] watching string @0x3142DC (slogo!157!58.bmp)
+[JJFB_SLOGO_XREF] also watching loadingbar str @0x314314
+[JJFB_OBJ_BIND_PC] watching code @0x2D9580..0x2D95A0
+[JJFB_PTR_STORE] watching heap stores @0x600000..0x7F0000
+[JJFB_PTR_STORE] watching erw/mid stores @0x280000..0x360000
+[JJFB_2EF86C_COV] installed 0x2EF86C..0x2EFD00
+[JJFB_2EFC_DISASM] bytes 0x2EFC40..0x2EFC9F:
+  002EFC40: 06 AA 00 92 00 22 00 21 28 1C 07 AB 16 F0 10 F9
+  002EFC50: 06 98 30 1A 38 E0 00 00 A0 0B 00 00 DA 07 00 00
+  002EFC60: 18 08 00 00 1C 08 00 00 0E 4A 02 00 C8 0A 00 00
+  002EFC70: 80 49 02 00 6C 49 02 00 58 49 02 00 3A 49 02 00
+  002EFC80: D8 12 00 00 5D 01 00 00 6C 0B 00 00 4D 13 00 00
+  002EFC90: DD 07 00 00 EA 48 02 00 C8 48 02 00 A4 48 02 00
+[JJFB_2EFC_DISASM] NOTE: 0x2EFC58=word 0xBA0 and 0x2EFC6C=word 0xAC8 are LITERAL POOL data (after B @0x2EFC54), not STR writers.
+[JJFB_2EFC_DISASM] epilogue bytes 0x2EFAE0..0x2EFB1F:
+  002EFAE0: 0C 2E DC DB 68 48 6E 4E 48 44 00 68 7E 44 00 28
+  002EFAF0: 09 D1 00 2C 90 D0 6B 4A 31 1C 4A 44 12 68 20 1C
+  002EFB00: 90 47 00 28 88 D0 09 F0 2F FF 1E 35 66 49 00 22
+  002EFB10: 08 90 05 96 79 44 50 4F 4F 44 38 6B 0D F0 A0 FE
+
+[JJFB_2EFC_DISASM] 002EFC40: h=0xAA06
+[JJFB_2EFC_DISASM] 002EFC42: h=0x9200
+[JJFB_2EFC_DISASM] 002EFC44: h=0x2200
+[JJFB_2EFC_DISASM] 002EFC46: h=0x2100
+[JJFB_2EFC_DISASM] 002EFC48: h=0x1C28
+[JJFB_2EFC_DISASM] 002EFC4A: h=0xAB07
+[JJFB_2EFC_DISASM] 002EFC4C: T32? 0xF016 0xF910
+[JJFB_2EFC_DISASM] 002EFC50: h=0x9806
+[JJFB_2EFC_DISASM] 002EFC52: h=0x1A30
+[JJFB_2EFC_DISASM] 002EFC54: B -> 0x2EFCC8 (h=0xE038)
+[JJFB_2EFC_DISASM] 002EFC56: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC58: h=0x0BA0
+[JJFB_2EFC_DISASM] 002EFC5A: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC5C: h=0x07DA
+[JJFB_2EFC_DISASM] 002EFC5E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC60: h=0x0818
+[JJFB_2EFC_DISASM] 002EFC62: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC64: h=0x081C
+[JJFB_2EFC_DISASM] 002EFC66: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC68: LDR r2,[pc,#0x38] lit@0x2EFCA4=0x143C
+[JJFB_2EFC_DISASM] 002EFC6A: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC6C: h=0x0AC8
+[JJFB_2EFC_DISASM] 002EFC6E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC70: LDR r1,[pc,#0x200] lit@0x2EFE74=0x444F9805
+[JJFB_2EFC_DISASM] 002EFC72: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC74: LDR r1,[pc,#0x1B0] lit@0x2EFE28=0x68C1FE41
+[JJFB_2EFC_DISASM] 002EFC76: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC78: LDR r1,[pc,#0x160] lit@0x2EFDDC=0xF0144853
+[JJFB_2EFC_DISASM] 002EFC7A: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC7C: LDR r1,[pc,#0xE8] lit@0x2EFD68=0x1C2A9001
+[JJFB_2EFC_DISASM] 002EFC7E: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC80: h=0x12D8
+[JJFB_2EFC_DISASM] 002EFC82: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC84: h=0x015D
+[JJFB_2EFC_DISASM] 002EFC86: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC88: h=0x0B6C
+[JJFB_2EFC_DISASM] 002EFC8A: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC8C: h=0x134D
+[JJFB_2EFC_DISASM] 002EFC8E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC90: h=0x07DD
+[JJFB_2EFC_DISASM] 002EFC92: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC94: LDR r0,[pc,#0x3A8] lit@0x2F0040=0x9E109911
+[JJFB_2EFC_DISASM] 002EFC96: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC98: LDR r0,[pc,#0x320] lit@0x2EFFBC=0x23069A09
+[JJFB_2EFC_DISASM] 002EFC9A: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC9C: LDR r0,[pc,#0x290] lit@0x2EFF30=0x1E21F
+[JJFB_2EFC_DISASM] 002EFC9E: h=0x0002
+[JJFB_30680C] sweep installed 0x306800..0x3068C0
+[JJFB_UI] installed probes through 2f4494/303d94/310bb4/305bf4/30680c
+[JJFB_SEND] drawFP@1510 natural=0x270F (no seed)
+[JJFB_SEND] FP 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_SEND] seed draw/screen 7D8+0xC=240 +0x10=320 +0x4c=240 +0x58h=320 +0x5cw=240 hwD14=1
+[JJFB_UI_DISPATCH] #1 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #2 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #1 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #3 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_AC8] watching ERW+0xAC8 @0x2B2318 (slogo gate)
+[JJFB_PROGRESS] watching count @0x2B241C (BA0+0x2C; NOT loadingbar slot)
+[JJFB_PROGRESS] watching count READ @0x2B241C
+[JJFB_UIMODE] watching state/ui_mode @0x2B2120 (ERW+0x8D0)
+[JJFB_STARTUP_STR] watching check_net_timeout @0x313B30
+[JJFB_STARTUP_STR] watching conn_fail @0x313C48
+[JJFB_STARTUP_STR] watching connecting @0x313C5C
+[JJFB_STARTUP_STR] watching dl_resource @0x313C74
+[JJFB_STARTUP_STR] watching check_update_list @0x313CF4
+[JJFB_STARTUP_STR] watching logging_in @0x314204
+[JJFB_ERW_WRITE] watching ERW+0x800..0xC50 @0x2B2050..0x2B24A0 (ui_mode/AC8/BA0/progress)
+[JJFB_XREF_SCAN] begin literal scan for ui_mode/AC8/progress/strings
+[JJFB_XREF_LIT] name=imm_BA0 value=0xBA0 at=0x2EFC58
+[JJFB_XREF_LIT] name=imm_AC8 value=0xAC8 at=0x2EFC6C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2EFF1C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2F0304
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x306CA8
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x30706C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x307274
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2DA79C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x31200C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x31228C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x3124A8
+[JJFB_XREF_LIT] name=imm_BA0 value=0xBA0 at=0x312588
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x3127EC
+[JJFB_XREF_LIT] name=imm_2C value=0x2C at=0x31394C
+[JJFB_XREF_LIT] name=imm_8D0 total_hits=14
+[JJFB_XREF_LIT] name=imm_AC8 total_hits=1
+[JJFB_XREF_LIT] name=imm_BA0 total_hits=2
+[JJFB_XREF_LIT] name=imm_2C total_hits=1
+[JJFB_XREF_LIT] name=str_check_net total_hits=0
+[JJFB_XREF_LIT] name=str_conn_fail total_hits=0
+[JJFB_XREF_LIT] name=str_connecting total_hits=0
+[JJFB_XREF_LIT] name=str_dl_res total_hits=0
+[JJFB_XREF_LIT] name=str_check_update total_hits=0
+[JJFB_XREF_LIT] name=str_logging total_hits=0
+[JJFB_XREF_LIT] name=str_slogo total_hits=0
+[JJFB_XREF_LIT] name=str_loadingbar total_hits=0
+[JJFB_XREF_DUMP] around 0x2EFC58:
+  002EFC48: 28 1C 07 AB 16 F0 10 F9 06 98 30 1A 38 E0 00 00
+  002EFC58: A0 0B 00 00 DA 07 00 00 18 08 00 00 1C 08 00 00
+  002EFC68: 0E 4A 02 00 C8 0A 00 00 80 49 02 00 6C 49 02 00
+  002EFC78: 58 49 02 00 3A 49 02 00 D8 12 00 00 5D 01 00 00
+[JJFB_XREF_DUMP] around 0x2EFC6C:
+  002EFC5C: DA 07 00 00 18 08 00 00 1C 08 00 00 0E 4A 02 00
+  002EFC6C: C8 0A 00 00 80 49 02 00 6C 49 02 00 58 49 02 00
+  002EFC7C: 3A 49 02 00 D8 12 00 00 5D 01 00 00 6C 0B 00 00
+  002EFC8C: 4D 13 00 00 DD 07 00 00 EA 48 02 00 C8 48 02 00
+[JJFB_XREF_DUMP] around 0x2EFA20:
+  002EFA10: 01 28 03 D1 FA F7 0A F9 0B B0 F0 BD 00 25 ED 43
+  002EFA20: 2B 1C 9C 49 1A 1C 79 44 8B 4F 4F 44 B8 6A E9 F7
+  002EFA30: 55 FC 2B 1C 98 49 1A 1C 79 44 B8 62 38 6A E9 F7
+  002EFA40: 4D FC 2B 1C 95 49 1A 1C 79 44 38 62 78 6A E9 F7
+[JJFB_XREF_DUMP] around 0x2EFA90:
+  002EFA80: 08 23 02 90 FA 5E 00 91 31 1C 01 92 2A 1C 00 23
+  002EFA90: 38 1C FC F7 0D FE 06 35 37 1C 1C 37 00 26 70 00
+  002EFAA0: 80 19 6D 49 80 00 86 46 49 44 C8 6A BE 44 B0 42
+  002EFAB0: 15 DD 08 6A 84 46 00 28 11 D0 60 46 0A 23 C0 5E
+[JJFB_XREF_SCAN] done
+[JJFB_SPLASH_FLOW] sparse sites installed
+[JJFB_2EF86C_COV] first pc=0x2EF86C lr=0x306631 r0=0x45 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF86E lr=0x306631 r0=0x45 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF870 lr=0x306631 r0=0x45 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_DIM] #1 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_2EF86C_COV] first pc=0x2EF874 lr=0x2EF875 r0=0xF0 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_DIM] #2 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_2EF86C_COV] first pc=0x2EF878 lr=0x2EF879 r0=0x140 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF87A lr=0x2EF879 r0=0xBA0 r1=0x0 r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF87C lr=0x2EF879 r0=0xBA0 r1=0x7DA r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF87E lr=0x2EF879 r0=0x2B23F0 r1=0x7DA r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF880 lr=0x2EF879 r0=0x2B23F0 r1=0x7DA r2=0xFFFFFFFF r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF88C lr=0x2EF879 r0=0x818 r1=0x2B202A r2=0x27FFB4 r3=0x2B199C
+[JJFB_2EF86C_COV] first pc=0x2EF89C lr=0x2EF879 r0=0x3142AC r1=0x0 r2=0x0 r3=0x27FFB8
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=1 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=0 before2=0 write_h=16
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  10 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 00 00 00 00 00 00 00 00
+[JJFB_AC8_READ] #1 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_2EF86C_COV] first pc=0x2EF9EC lr=0x304619 r0=0x15D r1=0x682A4C r2=0x2A8464 r3=0x0
+[JJFB_2EF86C_COV] first pc=0x2EFA0C lr=0x304619 r0=0x7DD r1=0x682A4C r2=0x2A8464 r3=0x0
+[JJFB_2EF86C_COV] first pc=0x2EFA1C lr=0x304619 r0=0x0 r1=0x682A4C r2=0x2A8464 r3=0x0
+[JJFB_2EF86C_COV] first pc=0x2EFA2C lr=0x304619 r0=0x0 r1=0x314314 r2=0xFFFFFFFF r3=0xFFFFFFFF
+[JJFB_BMP_REQ] name=loadingbar!201!29.bmp w=201 h=29 bytes=0x2D8A lr=0x2EFA33
+[JJFB_FIRST_SCREEN] #4 bmp_req loadingbar!201!29.bmp
+[JJFB_310BB4_RESOURCE] 2d92dc #1 lr=0x2EFA33 r0=0x0 r1(name)=0x314314 r2=0xFFFFFFFF r3=0xFFFFFFFF name="loadingbar!201!29.bmp"
+[JJFB_FIRST_SCREEN] #5 2d92dc_name loadingbar!201!29.bmp
+[JJFB_SLOGO_XREF] #1 tag=LOADINGBAR_STR addr=0x314314 pc=0xAC178 lr=0x2D92F5 r0=0x314314 r1=0x314314 r2=0xFFFFFFFF r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #2 tag=LOADINGBAR_STR addr=0x314315 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314315 r2=0x6C r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #3 tag=LOADINGBAR_STR addr=0x314316 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314316 r2=0x6F r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #4 tag=LOADINGBAR_STR addr=0x314317 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314317 r2=0x61 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #5 tag=LOADINGBAR_STR addr=0x314318 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314318 r2=0x64 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #6 tag=LOADINGBAR_STR addr=0x314319 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314319 r2=0x69 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #7 tag=LOADINGBAR_STR addr=0x31431A pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431A r2=0x6E r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #8 tag=LOADINGBAR_STR addr=0x31431B pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431B r2=0x67 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #9 tag=LOADINGBAR_STR addr=0x31431C pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431C r2=0x62 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #10 tag=LOADINGBAR_STR addr=0x31431D pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431D r2=0x61 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #11 tag=LOADINGBAR_STR addr=0x31431E pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431E r2=0x72 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #12 tag=LOADINGBAR_STR addr=0x31431F pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x31431F r2=0x21 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #13 tag=LOADINGBAR_STR addr=0x314320 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314320 r2=0x32 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #14 tag=LOADINGBAR_STR addr=0x314321 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314321 r2=0x30 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #15 tag=LOADINGBAR_STR addr=0x314322 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314322 r2=0x31 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #16 tag=LOADINGBAR_STR addr=0x314323 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314323 r2=0x21 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #17 tag=LOADINGBAR_STR addr=0x314324 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314324 r2=0x32 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #18 tag=LOADINGBAR_STR addr=0x314325 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314325 r2=0x39 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #19 tag=LOADINGBAR_STR addr=0x314326 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314326 r2=0x2E r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #20 tag=LOADINGBAR_STR addr=0x314327 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314327 r2=0x62 r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SLOGO_XREF] #21 tag=LOADINGBAR_STR addr=0x314328 pc=0xAC17C lr=0x2D92F5 r0=0x314314 r1=0x314328 r2=0x6D r3=0xFFFFFFFF ui_mode=0x45
+[JJFB_SEND] plat 0x10138 heap #1 free=2097152 (site=0x2D9A6B out5=0x27FF34)
+[JJFB_SEND] 10138 dbg erw=0x2B1850 r9=0x2B1850 ED8=0 7DC=1 7DD=1 7D9=1 @11=1 *out5=2097152
+[JJFB_SEND] plat 0x10132 alloc #1 sz=26 -> block 0x6BD06C
+[JJFB_SLOGO_XREF] #22 tag=LOADINGBAR_STR addr=0x314314 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x6BD086 r2=0xFFFFFFFF r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #23 tag=LOADINGBAR_STR addr=0x314315 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x6C r2=0x2B r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #24 tag=LOADINGBAR_STR addr=0x314316 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x6F r2=0x2E r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #25 tag=LOADINGBAR_STR addr=0x314317 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x61 r2=0x20 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #26 tag=LOADINGBAR_STR addr=0x314318 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x64 r2=0x23 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #27 tag=LOADINGBAR_STR addr=0x314319 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x69 r2=0x28 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #28 tag=LOADINGBAR_STR addr=0x31431A pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x6E r2=0x2D r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #29 tag=LOADINGBAR_STR addr=0x31431B pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x67 r2=0x26 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #30 tag=LOADINGBAR_STR addr=0x31431C pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x62 r2=0x21 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #31 tag=LOADINGBAR_STR addr=0x31431D pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x61 r2=0x20 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #32 tag=LOADINGBAR_STR addr=0x31431E pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x72 r2=0x31 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #33 tag=LOADINGBAR_STR addr=0x31431F pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x21 r2=0xFFFFFFE0 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #34 tag=LOADINGBAR_STR addr=0x314320 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x32 r2=0xFFFFFFF1 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #35 tag=LOADINGBAR_STR addr=0x314321 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x30 r2=0xFFFFFFEF r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #36 tag=LOADINGBAR_STR addr=0x314322 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x31 r2=0xFFFFFFF0 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #37 tag=LOADINGBAR_STR addr=0x314323 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x21 r2=0xFFFFFFE0 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #38 tag=LOADINGBAR_STR addr=0x314324 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x32 r2=0xFFFFFFF1 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #39 tag=LOADINGBAR_STR addr=0x314325 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x39 r2=0xFFFFFFF8 r3=0x0 ui_mode=0x45
+[JJFB_SLOGO_XREF] #40 tag=LOADINGBAR_STR addr=0x314326 pc=0x2D9300 lr=0x2D9ACB r0=0x6BD070 r1=0x2E r2=0xFFFFFFED r3=0x0 ui_mode=0x45
+[JJFB_SEND] plat 0x10132 alloc #2 sz=12 -> block 0x282A24
+[JJFB_SEND] plat 0x10132 alloc #3 sz=8 -> block 0x282A3C
+[JJFB_SEND] plat 0x10132 alloc #4 sz=7 -> block 0x282A3C
+[JJFB_SEND] plat 0x10132 alloc #5 sz=24 -> block 0x6BD08C
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x2D8A code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] cache jjfb_bmp_cache/loadingbar!201!29.bmp.rgb565 -> 11658 bytes
+[JJFB_10134_BMP] #1 name=loadingbar!201!29.bmp w=201 h=29 bytes=0x2D8A guest_pixels=0x6BD0AC loaded=1
+[JJFB_FIRST_SCREEN] #6 10134_bmp loadingbar!201!29.bmp
+[JJFB_BMP_OBJ_READ] watching name=loadingbar!201!29.bmp which=pixels [0x6BD0AC,0x6BD0AF]
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6BD0AC
+[JJFB_OBJ_BIND_PC] #1 pc=0x2D9580 lr=0x304581 r0=0x6BD0AC r1=0x2B2D70 r2=0x2D8A r3=0x2B2C70 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #2 pc=0x2D9582 lr=0x304581 r0=0x6BD0AC r1=0x2B2D70 r2=0x2D8A r3=0x94D88 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #3 pc=0x2D9584 lr=0x304581 r0=0x6BD0AC r1=0x2B2D70 r2=0x2D8A r3=0x94D88 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #4 pc=0x2D9586 lr=0x2D9587 r0=0x6BD0AC r1=0x2B5AFA r2=0xFFFFFFFF r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #5 pc=0x2D9588 lr=0x2D9587 r0=0x2B2D70 r1=0x2B5AFA r2=0xFFFFFFFF r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #6 pc=0x2D958C lr=0x304601 r0=0x393170 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #7 pc=0x2D958E lr=0x304601 r0=0x1 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND] #1 name=loadingbar!201!29.bmp pixels=0x6BD0AC store@0x6BD094 obj~=0x6BD090 pc=0x2D958E lr=0x304601 sp=0x27FF60
+[JJFB_BMP_OBJ] name=loadingbar!201!29.bmp obj=0x6BD090 +00=0x2D8A +04=0x6BD0AC +08=0x1D00C9 +0C=0x0 +10=0x0 +14=0x0 +18=0x2D8A +1C=0xF81FF81F
+[JJFB_BMP_OBJ_READ] watching name=loadingbar!201!29.bmp which=obj [0x6BD090,0x6BD093]
+[JJFB_BMP_OBJ_READ] watching name=loadingbar!201!29.bmp which=obj+4 [0x6BD094,0x6BD097]
+[JJFB_BMP_OBJ_READ] watching name=loadingbar!201!29.bmp which=pixels [0x6BD0AC,0x6BD0AF]
+[JJFB_OBJ_BIND_PC] #8 pc=0x2D9590 lr=0x304601 r0=0x1 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #9 pc=0x2D9592 lr=0x304601 r0=0x1 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #10 pc=0x2D9594 lr=0x304601 r0=0x6BD090 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36 r4=0x6BD090 r5=0x6BD0AC r6=0x0 r7=0x2B2164
+[JJFB_SPLASH_FLOW] #1 pc=0x2EFA32 lr=0x304601 r0=0x6BD090 r1=0x232F0 r2=0x2B5AFC r3=0x6BFE36
+[JJFB_SPLASH_FLOW] #2 pc=0x2EFA34 lr=0x304601 r0=0x6BD090 r1=0x232F0 r2=0x2B5AFC r3=0xFFFFFFFF
+[JJFB_PARENT_STORE] #1 name=loadingbar!201!29.bmp obj=0x6BD090 -> slot@0x2B2418 pc=0x2EFA3A lr=0x304601 sp=0x27FF90
+[JJFB_BMP_OBJ_READ] watching name=loadingbar!201!29.bmp which=parent_slot [0x2B2418,0x2B241B]
+[JJFB_ERW_WRITE] #1 off=0xBC8 tag=loadingbar_obj old=0x0 new=0x6BD090 size=4 pc=0x2EFA3A lr=0x304601 tick=10
+[JJFB_2EF86C_COV] first pc=0x2EFA3C lr=0x304601 r0=0x6BD090 r1=0x314304 r2=0xFFFFFFFF r3=0xFFFFFFFF
+[JJFB_BMP_REQ] name=bar!16!18.bmp w=16 h=18 bytes=0x240 lr=0x2EFA43
+[JJFB_FIRST_SCREEN] #7 bmp_req bar!16!18.bmp
+[JJFB_310BB4_RESOURCE] 2d92dc #2 lr=0x2EFA43 r0=0x0 r1(name)=0x314304 r2=0xFFFFFFFF r3=0xFFFFFFFF name="bar!16!18.bmp"
+[JJFB_FIRST_SCREEN] #8 2d92dc_name bar!16!18.bmp
+[JJFB_SEND] plat 0x10132 alloc #6 sz=18 -> block 0x6BD06C
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x240 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] cache jjfb_bmp_cache/bar!16!18.bmp.rgb565 -> 576 bytes
+[JJFB_10134_BMP] #2 name=bar!16!18.bmp w=16 h=18 bytes=0x240 guest_pixels=0x6BFE5C loaded=1
+[JJFB_FIRST_SCREEN] #9 10134_bmp bar!16!18.bmp
+[JJFB_BMP_OBJ_READ] watching name=bar!16!18.bmp which=pixels [0x6BFE5C,0x6BFE5F]
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6BFE5C
+[JJFB_OBJ_BIND_PC] #11 pc=0x2D9580 lr=0x304581 r0=0x6BFE5C r1=0x2AC978 r2=0x240 r3=0x2B2C70 r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #12 pc=0x2D9582 lr=0x304581 r0=0x6BFE5C r1=0x2AC978 r2=0x240 r3=0x94D88 r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #13 pc=0x2D9584 lr=0x304581 r0=0x6BFE5C r1=0x2AC978 r2=0x240 r3=0x94D88 r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #14 pc=0x2D9586 lr=0x2D9587 r0=0x6BFE5C r1=0x2ACBB8 r2=0xFFFFFFFF r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #15 pc=0x2D9588 lr=0x2D9587 r0=0x2AC978 r1=0x2ACBB8 r2=0xFFFFFFFF r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #16 pc=0x2D958C lr=0x304601 r0=0x393170 r1=0x718 r2=0x2ACBBC r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #17 pc=0x2D958E lr=0x304601 r0=0x1 r1=0x718 r2=0x2ACBBC r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND] #2 name=bar!16!18.bmp pixels=0x6BFE5C store@0x6BFE44 obj~=0x6BFE40 pc=0x2D958E lr=0x304601 sp=0x27FF60
+[JJFB_BMP_OBJ] name=bar!16!18.bmp obj=0x6BFE40 +00=0x240 +04=0x6BFE5C +08=0x120010 +0C=0x0 +10=0x0 +14=0x0 +18=0x240 +1C=0x0
+[JJFB_BMP_OBJ_READ] watching name=bar!16!18.bmp which=obj [0x6BFE40,0x6BFE43]
+[JJFB_BMP_OBJ_READ] watching name=bar!16!18.bmp which=obj+4 [0x6BFE44,0x6BFE47]
+[JJFB_BMP_OBJ_READ] watching name=bar!16!18.bmp which=pixels [0x6BFE5C,0x6BFE5F]
+[JJFB_OBJ_BIND_PC] #18 pc=0x2D9590 lr=0x304601 r0=0x1 r1=0x718 r2=0x2ACBBC r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #19 pc=0x2D9592 lr=0x304601 r0=0x1 r1=0x718 r2=0x2ACBBC r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #20 pc=0x2D9594 lr=0x304601 r0=0x6BFE40 r1=0x718 r2=0x2ACBBC r3=0x6C009C r4=0x6BFE40 r5=0x6BFE5C r6=0x0 r7=0x2B2164
+[JJFB_SPLASH_FLOW] #3 pc=0x2EFA42 lr=0x304601 r0=0x6BFE40 r1=0x718 r2=0x2ACBBC r3=0x6C009C
+[JJFB_SPLASH_FLOW] #4 pc=0x2EFA44 lr=0x304601 r0=0x6BFE40 r1=0x718 r2=0x2ACBBC r3=0xFFFFFFFF
+[JJFB_PARENT_STORE] #2 name=bar!16!18.bmp obj=0x6BFE40 -> slot@0x2B2410 pc=0x2EFA4A lr=0x304601 sp=0x27FF90
+[JJFB_BMP_OBJ_READ] watching name=bar!16!18.bmp which=parent_slot [0x2B2410,0x2B2413]
+[JJFB_ERW_WRITE] #2 off=0xBC0 tag=bar_obj old=0x0 new=0x6BFE40 size=4 pc=0x2EFA4A lr=0x304601 tick=10
+[JJFB_2EF86C_COV] first pc=0x2EFA4C lr=0x304601 r0=0x6BFE40 r1=0x3142F0 r2=0xFFFFFFFF r3=0xFFFFFFFF
+[JJFB_BMP_REQ] name=textbar!120!30.bmp w=120 h=30 bytes=0x1C20 lr=0x2EFA53
+[JJFB_FIRST_SCREEN] #10 bmp_req textbar!120!30.bmp
+[JJFB_310BB4_RESOURCE] 2d92dc #3 lr=0x2EFA53 r0=0x0 r1(name)=0x3142F0 r2=0xFFFFFFFF r3=0xFFFFFFFF name="textbar!120!30.bmp"
+[JJFB_FIRST_SCREEN] #11 2d92dc_name textbar!120!30.bmp
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x1C20 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] cache jjfb_bmp_cache/textbar!120!30.bmp.rgb565 -> 7200 bytes
+[JJFB_10134_BMP] #3 name=textbar!120!30.bmp w=120 h=30 bytes=0x1C20 guest_pixels=0x6C00C4 loaded=1
+[JJFB_FIRST_SCREEN] #12 10134_bmp textbar!120!30.bmp
+[JJFB_BMP_OBJ_READ] watching name=textbar!120!30.bmp which=pixels [0x6C00C4,0x6C00C7]
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C00C4
+[JJFB_OBJ_BIND_PC] #21 pc=0x2D9580 lr=0x304581 r0=0x6C00C4 r1=0x2B2D70 r2=0x1C20 r3=0x2B2C70 r4=0x6C00A8 r5=0x6C00C4 r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #22 pc=0x2D9582 lr=0x304581 r0=0x6C00C4 r1=0x2B2D70 r2=0x1C20 r3=0x94D88 r4=0x6C00A8 r5=0x6C00C4 r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #23 pc=0x2D9584 lr=0x304581 r0=0x6C00C4 r1=0x2B2D70 r2=0x1C20 r3=0x94D88 r4=0x6C00A8 r5=0x6C00C4 r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND_PC] #24 pc=0x2D9586 lr=0x2D9587 r0=0x6C00C4 r1=0x2B4990 r2=0xFFFFFFFF r3=0x6C1CE4 r4=0x6C00A8 r5=0x6C00C4 r6=0x0 r7=0x2B2164
+[JJFB_OBJ_BIND] #3 name=textbar!120!30.bmp pixels=0x6C00C4 store@0x6C00AC obj~=0x6C00A8 pc=0x2D958E lr=0x304601 sp=0x27FF60
+[JJFB_BMP_OBJ] name=textbar!120!30.bmp obj=0x6C00A8 +00=0x1C20 +04=0x6C00C4 +08=0x1E0078 +0C=0x0 +10=0x0 +14=0x0 +18=0x1C20 +1C=0x41624162
+[JJFB_BMP_OBJ_READ] watching name=textbar!120!30.bmp which=obj [0x6C00A8,0x6C00AB]
+[JJFB_BMP_OBJ_READ] watching name=textbar!120!30.bmp which=obj+4 [0x6C00AC,0x6C00AF]
+[JJFB_BMP_OBJ_READ] watching name=textbar!120!30.bmp which=pixels [0x6C00C4,0x6C00C7]
+[JJFB_SPLASH_FLOW] #5 pc=0x2EFA52 lr=0x304601 r0=0x6C00A8 r1=0x24458 r2=0x2B4994 r3=0x6C1CE4
+[JJFB_PARENT_STORE] #3 name=textbar!120!30.bmp obj=0x6C00A8 -> slot@0x2B2414 pc=0x2EFA52 lr=0x304601 sp=0x27FF90
+[JJFB_BMP_OBJ_READ] watching name=textbar!120!30.bmp which=parent_slot [0x2B2414,0x2B2417]
+[JJFB_ERW_WRITE] #3 off=0xBC4 tag=textbar_obj old=0x0 new=0x6C00A8 size=4 pc=0x2EFA52 lr=0x304601 tick=10
+[JJFB_SPLASH_FLOW] #6 pc=0x2EFA54 lr=0x304601 r0=0x6C00A8 r1=0x24458 r2=0x2B4994 r3=0x6C1CE4
+[JJFB_SPLASH_FLOW] #7 pc=0x2EFA54 lr=0x304601 r0=0x6C00A8 r1=0x24458 r2=0x2B4994 r3=0x6C1CE4
+[JJFB_DIM] #3 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_BMP_OBJ_READ] #1 name=loadingbar!201!29.bmp which=parent_slot addr=0x2B2418 pc=0x2EFA58 lr=0x2EFA59 r0=0xF0 r1=0x24458 r2=0x2B4994 r3=0x6C1CE4 r4=0x0 r5=0xFFFFFFFF r6=0x2B2028 r7=0x2B23F0 sp=0x27FF90
+[JJFB_2EF86C_COV] first pc=0x2EFA5C lr=0x2EFA59 r0=0xF0 r1=0x6BD090 r2=0x2B4994 r3=0x8
+[JJFB_DIM] #4 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_2EF86C_COV] first pc=0x2EFA6C lr=0x2EFA6B r0=0x140 r1=0x0 r2=0x2B4994 r3=0x8
+[JJFB_BMP_OBJ_READ] #2 name=loadingbar!201!29.bmp which=parent_slot addr=0x2B2418 pc=0x2EFA6C lr=0x2EFA6B r0=0x140 r1=0x0 r2=0x2B4994 r3=0x8 r4=0x0 r5=0x140 r6=0x13 r7=0x2B23F0 sp=0x27FF90
+[JJFB_2EF86C_COV] first pc=0x2EFA7C lr=0x2EFA6B r0=0x1D r1=0x0 r2=0x0 r3=0xA
+[JJFB_2EF86C_COV] first pc=0x2EFA8C lr=0x2EFA6B r0=0x1D r1=0x13 r2=0xC9 r3=0x8
+[JJFB_2EC6B0] #1 lr=0x2EFA97 obj=0x6BD090 x=19 y=220 flags=0x0 sp0=0x0 sp4=0xC9 sp8=0x1D fp150C=0x270F name=loadingbar!201!29.bmp
+[JJFB_COLORKEY] name=loadingbar!201!29.bmp key=0xF81F source=obj+1C
+[JJFB_BLIT_KEYED] name=loadingbar!201!29.bmp x=19 y=220 w=201 h=29 drawn=5627 skipped=202 tag=2EC6B0_BLIT
+[JJFB_DIRTY_RECT] tag=2EC6B0_BLIT name=loadingbar!201!29.bmp x=19 y=220 w=201 h=29
+[JJFB_DEBUG_PRESENT] from 2EC6B0_BLIT dirty 19,220 201x29 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=2EC6B0_BLIT name=- x=19 y=220 w=201 h=29 (present)
+[JJFB_LAYOUT] loadingbar x=19 y=220 (expect x=(240-201)/2=19 y=320-100=220)
+[JJFB_2EC6B0_GUARD] bad fp150C=0x270F -> host blit, r0=0x1 (1) ret lr
+[JJFB_2EF86C_COV] first pc=0x2EFA9C lr=0x2EFA97 r0=0x1 r1=0x13 r2=0xDC r3=0x0
+[JJFB_PROGRESS] #1 pc=0x2EFA9E idx=0 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #1 value=0 pc=0x2EFAAA lr=0x0 tick=10
+[JJFB_2EF86C_COV] first pc=0x2EFAAC lr=0x0 r0=0x0 r1=0x2B23F0 r2=0xDC r3=0x0
+[JJFB_PROGRESS] #2 pc=0x2EFA9E idx=1 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #2 value=0 pc=0x2EFAAA lr=0xC tick=10
+[JJFB_PROGRESS] #3 pc=0x2EFA9E idx=2 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #3 value=0 pc=0x2EFAAA lr=0x18 tick=10
+[JJFB_PROGRESS] #4 pc=0x2EFA9E idx=3 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #4 value=0 pc=0x2EFAAA lr=0x24 tick=10
+[JJFB_PROGRESS] #5 pc=0x2EFA9E idx=4 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #5 value=0 pc=0x2EFAAA lr=0x30 tick=10
+[JJFB_PROGRESS] #6 pc=0x2EFA9E idx=5 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #6 value=0 pc=0x2EFAAA lr=0x3C tick=10
+[JJFB_PROGRESS] #7 pc=0x2EFA9E idx=6 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #7 value=0 pc=0x2EFAAA lr=0x48 tick=10
+[JJFB_PROGRESS] #8 pc=0x2EFA9E idx=7 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #8 value=0 pc=0x2EFAAA lr=0x54 tick=10
+[JJFB_PROGRESS] #9 pc=0x2EFA9E idx=8 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #9 value=0 pc=0x2EFAAA lr=0x60 tick=10
+[JJFB_PROGRESS] #10 pc=0x2EFA9E idx=9 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #10 value=0 pc=0x2EFAAA lr=0x6C tick=10
+[JJFB_PROGRESS] #11 pc=0x2EFA9E idx=10 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #11 value=0 pc=0x2EFAAA lr=0x78 tick=10
+[JJFB_PROGRESS] #12 pc=0x2EFA9E idx=11 count=0 bar_obj=0x6BFE40 y=226 xbase=47 name=bar!16!18.bmp SKIP(count<=idx)
+[JJFB_PROGRESS_READ] #12 value=0 pc=0x2EFAAA lr=0x84 tick=10
+[JJFB_2EF86C_COV] first pc=0x2EFAEC lr=0xB3 r0=0x0 r1=0x2B23F0 r2=0xDC r3=0x0
+[JJFB_UI] enter 0x2e87ac #1 lr=0x3066B5
+[JJFB_ERW_WRITE] #4 off=0xC50 tag=erw old=0x0 new=0x48B size=4 pc=0x2E87EA lr=0x2E87C3 tick=10
+[JJFB_DIM] #5 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI_DISPATCH] #3 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #4 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #2 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #13 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_DIM] #6 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_DIM] #7 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=2 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #2 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_DIM] #8 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI] enter 0x2f4494 #1 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #1 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2F4494_ALLOW] #1 allow_left=3 mode=2 lr=0x2EA169
+[JJFB_BMP_REQ] name=wy_jiao1!11!11.bmp w=11 h=11 bytes=0xF2 lr=0x2F44C1
+[JJFB_310BB4_RESOURCE] 2d92dc #4 lr=0x2F44C1 r0=0x0 r1(name)=0x31350C r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao1!11!11.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xF2 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao1!11!11.bmp bytes=242
+[JJFB_10134_BMP] #4 name=wy_jiao1!11!11.bmp w=11 h=11 bytes=0xF2 guest_pixels=0x6C1D0C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C1D0C
+[JJFB_OBJ_BIND_PC] #40 pc=0x2D9594 lr=0x304601 r0=0x6C1CF0 r1=0x830 r2=0x2ACAA4 r3=0x6C1DFE r4=0x6C1CF0 r5=0x6C1D0C r6=0x0 r7=0x2B2164
+[JJFB_ERW_WRITE] #5 off=0xA64 tag=erw old=0x0 new=0x6C1CF0 size=4 pc=0x2F44C0 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao12!11!11.bmp w=11 h=11 bytes=0xF2 lr=0x2F44D5
+[JJFB_310BB4_RESOURCE] 2d92dc #5 lr=0x2F44D5 r0=0x0 r1(name)=0x3134F8 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao12!11!11.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xF2 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao12!11!11.bmp bytes=242
+[JJFB_10134_BMP] #5 name=wy_jiao12!11!11.bmp w=11 h=11 bytes=0xF2 guest_pixels=0x6C1E24 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C1E24
+[JJFB_ERW_WRITE] #6 off=0xA68 tag=erw old=0x0 new=0x6C1E08 size=4 pc=0x2F44D4 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_xian1!15!7.bmp w=15 h=7 bytes=0xD2 lr=0x2F44E5
+[JJFB_310BB4_RESOURCE] 2d92dc #6 lr=0x2F44E5 r0=0x0 r1(name)=0x3134E4 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_xian1!15!7.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xD2 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_xian1!15!7.bmp bytes=210
+[JJFB_10134_BMP] #6 name=wy_xian1!15!7.bmp w=15 h=7 bytes=0xD2 guest_pixels=0x6C1F3C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C1F3C
+[JJFB_ERW_WRITE] #7 off=0xA6C tag=erw old=0x0 new=0x6C1F20 size=4 pc=0x2F44E4 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao0!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F44FB
+[JJFB_310BB4_RESOURCE] 2d92dc #7 lr=0x2F44FB r0=0x0 r1(name)=0x3134D0 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao0!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao0!10!10.bmp bytes=200
+[JJFB_10134_BMP] #7 name=wy_jiao0!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C2034 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2034
+[JJFB_ERW_WRITE] #8 off=0xA58 tag=erw old=0x0 new=0x6C2018 size=4 pc=0x2F44FA lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao02!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F4513
+[JJFB_310BB4_RESOURCE] 2d92dc #8 lr=0x2F4513 r0=0x0 r1(name)=0x3134BC r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao02!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao02!10!10.bmp bytes=200
+[JJFB_10134_BMP] #8 name=wy_jiao02!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C2124 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2124
+[JJFB_OBJ_BIND_PC] #80 pc=0x2D9594 lr=0x304601 r0=0x6C2108 r1=0x858 r2=0x2ACA7C r3=0x6C21EC r4=0x6C2108 r5=0x6C2124 r6=0x0 r7=0x2B2164
+[JJFB_ERW_WRITE] #9 off=0xA5C tag=erw old=0x0 new=0x6C2108 size=4 pc=0x2F4512 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_xian0!15!6.bmp w=15 h=6 bytes=0xB4 lr=0x2F452B
+[JJFB_310BB4_RESOURCE] 2d92dc #9 lr=0x2F452B r0=0x0 r1(name)=0x3134A8 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_xian0!15!6.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xB4 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_xian0!15!6.bmp bytes=180
+[JJFB_10134_BMP] #9 name=wy_xian0!15!6.bmp w=15 h=6 bytes=0xB4 guest_pixels=0x6C2214 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2214
+[JJFB_ERW_WRITE] #10 off=0xA60 tag=erw old=0x0 new=0x6C21F8 size=4 pc=0x2F452A lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao2!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F4543
+[JJFB_310BB4_RESOURCE] 2d92dc #10 lr=0x2F4543 r0=0x0 r1(name)=0x313494 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao2!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao2!10!10.bmp bytes=200
+[JJFB_10134_BMP] #10 name=wy_jiao2!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C22EC loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C22EC
+[JJFB_ERW_WRITE] #11 off=0xA70 tag=erw old=0x0 new=0x6C22D0 size=4 pc=0x2F4542 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao22!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F455B
+[JJFB_310BB4_RESOURCE] 2d92dc #11 lr=0x2F455B r0=0x0 r1(name)=0x313480 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao22!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao22!10!10.bmp bytes=200
+[JJFB_10134_BMP] #11 name=wy_jiao22!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C23DC loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C23DC
+[JJFB_ERW_WRITE] #12 off=0xA74 tag=erw old=0x0 new=0x6C23C0 size=4 pc=0x2F455A lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_xian2!15!5.bmp w=15 h=5 bytes=0x96 lr=0x2F4573
+[JJFB_310BB4_RESOURCE] 2d92dc #12 lr=0x2F4573 r0=0x0 r1(name)=0x31346C r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_xian2!15!5.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x96 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_xian2!15!5.bmp bytes=150
+[JJFB_10134_BMP] #12 name=wy_xian2!15!5.bmp w=15 h=5 bytes=0x96 guest_pixels=0x6C24CC loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C24CC
+[JJFB_OBJ_BIND_PC] #120 pc=0x2D9594 lr=0x304601 r0=0x6C24B0 r1=0x8C0 r2=0x2ACA14 r3=0x6C2562 r4=0x6C24B0 r5=0x6C24CC r6=0x0 r7=0x2B2164
+[JJFB_ERW_WRITE] #13 off=0xA78 tag=erw old=0x0 new=0x6C24B0 size=4 pc=0x2F4572 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao3!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F458B
+[JJFB_310BB4_RESOURCE] 2d92dc #13 lr=0x2F458B r0=0x0 r1(name)=0x313458 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao3!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao3!10!10.bmp bytes=200
+[JJFB_10134_BMP] #13 name=wy_jiao3!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C258C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C258C
+[JJFB_ERW_WRITE] #14 off=0xA7C tag=erw old=0x0 new=0x6C2570 size=4 pc=0x2F458A lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao32!10!10.bmp w=10 h=10 bytes=0xC8 lr=0x2F45A7
+[JJFB_310BB4_RESOURCE] 2d92dc #14 lr=0x2F45A7 r0=0x0 r1(name)=0x313444 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao32!10!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xC8 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao32!10!10.bmp bytes=200
+[JJFB_10134_BMP] #14 name=wy_jiao32!10!10.bmp w=10 h=10 bytes=0xC8 guest_pixels=0x6C267C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C267C
+[JJFB_ERW_WRITE] #15 off=0xA80 tag=erw old=0x0 new=0x6C2660 size=4 pc=0x2F45A6 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_xian3!15!5.bmp w=15 h=5 bytes=0x96 lr=0x2F45BF
+[JJFB_310BB4_RESOURCE] 2d92dc #15 lr=0x2F45BF r0=0x0 r1(name)=0x313430 r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_xian3!15!5.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x96 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_xian3!15!5.bmp bytes=150
+[JJFB_10134_BMP] #15 name=wy_xian3!15!5.bmp w=15 h=5 bytes=0x96 guest_pixels=0x6C276C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C276C
+[JJFB_ERW_WRITE] #16 off=0xA84 tag=erw old=0x0 new=0x6C2750 size=4 pc=0x2F45BE lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=wy_jiao5!11!11.bmp w=11 h=11 bytes=0xF2 lr=0x2F45D7
+[JJFB_310BB4_RESOURCE] 2d92dc #16 lr=0x2F45D7 r0=0x0 r1(name)=0x31341C r2=0xFFFFFFFF r3=0xFFFFFFFF name="wy_jiao5!11!11.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xF2 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=wy_jiao5!11!11.bmp bytes=242
+[JJFB_10134_BMP] #16 name=wy_jiao5!11!11.bmp w=11 h=11 bytes=0xF2 guest_pixels=0x6C282C loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C282C
+[JJFB_OBJ_BIND_PC] #160 pc=0x2D9594 lr=0x304601 r0=0x6C2810 r1=0x840 r2=0x2ACA94 r3=0x6C291E r4=0x6C2810 r5=0x6C282C r6=0x0 r7=0x2B2164
+[JJFB_ERW_WRITE] #17 off=0xA88 tag=erw old=0x0 new=0x6C2810 size=4 pc=0x2F45D6 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=jiantou!12!15.bmp w=12 h=15 bytes=0x168 lr=0x2F45EF
+[JJFB_310BB4_RESOURCE] 2d92dc #17 lr=0x2F45EF r0=0x0 r1(name)=0x313408 r2=0xFFFFFFFF r3=0xFFFFFFFF name="jiantou!12!15.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0x168 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=jiantou!12!15.bmp bytes=360
+[JJFB_10134_BMP] #17 name=jiantou!12!15.bmp w=12 h=15 bytes=0x168 guest_pixels=0x6C2944 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2944
+[JJFB_ERW_WRITE] #18 off=0x8A4 tag=erw old=0x0 new=0x6C2928 size=4 pc=0x2F45EE lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=jiantou_t!12!10.bmp w=12 h=10 bytes=0xF0 lr=0x2F4607
+[JJFB_310BB4_RESOURCE] 2d92dc #18 lr=0x2F4607 r0=0x0 r1(name)=0x3133F4 r2=0xFFFFFFFF r3=0xFFFFFFFF name="jiantou_t!12!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xF0 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=jiantou_t!12!10.bmp bytes=240
+[JJFB_10134_BMP] #18 name=jiantou_t!12!10.bmp w=12 h=10 bytes=0xF0 guest_pixels=0x6C2AD4 loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2AD4
+[JJFB_ERW_WRITE] #19 off=0x8A8 tag=erw old=0x0 new=0x6C2AB8 size=4 pc=0x2F4606 lr=0x304601 tick=11
+[JJFB_BMP_REQ] name=jiantou_x!12!10.bmp w=12 h=10 bytes=0xF0 lr=0x2F461F
+[JJFB_310BB4_RESOURCE] 2d92dc #19 lr=0x2F461F r0=0x0 r1(name)=0x3133E0 r2=0xFFFFFFFF r3=0xFFFFFFFF name="jiantou_x!12!10.bmp"
+[JJFB_FILE] open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_SEND] extCode=0x10134 app=0xF0 code=0x0 param0=0x0 param1=0x0
+[JJFB_BMP_LOAD] mrp mythroad/gwy/jjfb.mrp name=jiantou_x!12!10.bmp bytes=240
+[JJFB_10134_BMP] #19 name=jiantou_x!12!10.bmp w=12 h=10 bytes=0xF0 guest_pixels=0x6C2BEC loaded=1
+[JJFB_10134_SITE] lr=0x304581 code=0x0 p0=0x0 p1=0x0
+[JJFB_10134_RET] mode=pixels r0=0x6C2BEC
+[JJFB_ERW_WRITE] #20 off=0x8AC tag=erw old=0x0 new=0x6C2BD0 size=4 pc=0x2F461E lr=0x304601 tick=11
+[JJFB_UI] 2f4494@46d6 #1 r4=0x6C24B0 r5=0x6C22D0 obj+0xa=5 (before 303d94)
+[JJFB_UI] enter 0x303d94 #1 lr=0x2F4709 r0=0xBE r1=10 r2=41 r3=0x23
+[JJFB_303D94] ctx_slot=0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 DrawRect=0x2801EC
+[JJFB_303D94] ldr r7 prep #1 tbl=0x281EFC (r0-1C0) slot=+1E8 -> 0x2801EC r0=0x2820BC (expect mr_table)
+[JJFB_UI] 303d94 blx r7=#1 r7=0x2801EC r0=0xBE r1=10 r2=41
+[JJFB_DRAW] DrawRect #1 190,10 41x35 rgb=16,49,58 (raw h=0x23)
+[JJFB_DEBUG_PRESENT] from DrawRect dirty 190,10 41x35 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_310_SWEEP] hit #1 pc=0x310BB4 lr=0x2F4761 sp=0x27FEC8
+[JJFB_310BB4] #1 lr=0x2F4761 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4761 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 00 00 00 00 E3 99 2D 00 00 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=15 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 15,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=15 y=185 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4761
+[JJFB_310_SWEEP] hit #2 pc=0x310BB4 lr=0x2F4797 sp=0x27FEC8
+[JJFB_310BB4] #2 lr=0x2F4797 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4797 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 00 00 00 00 E3 99 2D 00 00 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=15 y=231 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 15,231 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=15 y=231 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4797
+[JJFB_310_SWEEP] hit #3 pc=0x310BB4 lr=0x2F47E9 sp=0x27FEC8
+[JJFB_310BB4] #3 lr=0x2F47E9 r0=0x6C24B0 r1=185 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F47E9 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 00 00 00 00 E3 99 2D 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=30 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 30,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=30 y=185 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F47E9
+[JJFB_310_SWEEP] hit #4 pc=0x310BB4 lr=0x2F4829 sp=0x27FEC8
+[JJFB_310BB4] #4 lr=0x2F4829 r0=0x6C24B0 r1=231 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4829 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 00 00 00 00 E3 99 2D 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=30 y=231 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 30,231 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=30 y=231 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4829
+[JJFB_310_SWEEP] hit #5 pc=0x310B5C lr=0x2F4877 sp=0x27FEC8
+[JJFB_310BB4] #5 lr=0x2F4877 r0=0x6C24B0 r1=195 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 00 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=195 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,195 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=195 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4877
+[JJFB_310_SWEEP] hit #6 pc=0x310BB4 lr=0x2F493F sp=0x27FEC8
+[JJFB_310BB4] #6 lr=0x2F493F r0=0x6C24B0 r1=195 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 00 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=195 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 45,195 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=45 y=195 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F493F
+[JJFB_310_SWEEP] hit #7 pc=0x310B5C lr=0x2F4877 sp=0x27FEC8
+[JJFB_310BB4] #7 lr=0x2F4877 r0=0x6C24B0 r1=210 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 00 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=210 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,210 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=210 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4877
+[JJFB_310_SWEEP] hit #8 pc=0x310BB4 lr=0x2F493F sp=0x27FEC8
+[JJFB_310BB4] #8 lr=0x2F493F r0=0x6C24B0 r1=210 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 00 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=210 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 45,210 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=45 y=210 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F493F
+[JJFB_310BB4] #9 lr=0x2F498D r0=0x6C24B0 r1=225 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F498D sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 01 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=225 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,225 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=225 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F498D
+[JJFB_310BB4] #10 lr=0x2F49D5 r0=0x6C24B0 r1=225 r2=45 r3=0x1 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F49D5 sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=45 r3=0x1 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=225 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 45,225 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=45 y=225 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F49D5
+[JJFB_310BB4] #11 lr=0x2F49F5 r0=0x6C22D0 r1=185 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F49F5 sp=0x27FEC8 r0=0x6C22D0 r1=185 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0A 00 00 00 0A 00 00 00 06 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=185 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F49F5
+[JJFB_310BB4] #12 lr=0x2F4A1D r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A1D sp=0x27FEC8 r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=226 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,226 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=226 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4A1D
+[JJFB_310BB4] #13 lr=0x2F4A45 r0=0x6C23C0 r1=185 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A45 sp=0x27FEC8 r0=0x6C23C0 r1=185 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 00 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=40 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 40,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=40 y=185 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4A45
+[JJFB_310BB4] #14 lr=0x2F4A71 r0=0x6C23C0 r1=226 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A71 sp=0x27FEC8 r0=0x6C23C0 r1=226 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=40 y=226 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 40,226 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=40 y=226 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4A71
+[JJFB_2EC6B0] #2 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #3 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #4 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #5 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_UI] enter 0x2e87ac #2 lr=0x3066B5
+[JJFB_ERW_WRITE] #21 off=0xC4C tag=erw old=0x0 new=0x330 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=11
+[JJFB_DIM] #9 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI_DISPATCH] #5 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #6 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #3 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #14 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_DIM] #10 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_DIM] #11 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=3 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #3 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_DIM] #12 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI] enter 0x2f4494 #2 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #2 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2F4494_ALLOW] #2 allow_left=2 mode=2 lr=0x2EA169
+[JJFB_UI] 2f4494@46d6 #2 r4=0x6C24B0 r5=0x6C22D0 obj+0xa=5 (before 303d94)
+[JJFB_UI] enter 0x303d94 #2 lr=0x2F4709 r0=0xBE r1=10 r2=41 r3=0x23
+[JJFB_303D94] ctx_slot=0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 DrawRect=0x2801EC
+[JJFB_303D94] ldr r7 prep #2 tbl=0x281EFC (r0-1C0) slot=+1E8 -> 0x2801EC r0=0x2820BC (expect mr_table)
+[JJFB_UI] 303d94 blx r7=#2 r7=0x2801EC r0=0xBE r1=10 r2=41
+[JJFB_DRAW] DrawRect #2 190,10 41x35 rgb=16,49,58 (raw h=0x23)
+[JJFB_DEBUG_PRESENT] from DrawRect dirty 190,10 41x35 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_310BB4] #15 lr=0x2F4761 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4761 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=15 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 15,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=15 y=185 w=10 h=10 (present)
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4761
+[JJFB_310BB4] #16 lr=0x2F4797 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4797 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=15 y=231 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4797
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F47E9 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=30 y=185 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4829 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=30 y=231 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=195 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=195 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=210 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=210 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F498D sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 01 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=225 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F49D5 sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=45 r3=0x1 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=45 y=225 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F49F5 sp=0x27FEC8 r0=0x6C22D0 r1=185 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0A 00 00 00 0A 00 00 00 06 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A1D sp=0x27FEC8 r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A45 sp=0x27FEC8 r0=0x6C23C0 r1=185 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 00 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A71 sp=0x27FEC8 r0=0x6C23C0 r1=226 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_2EC6B0] #6 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #7 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #8 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #9 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_UI] enter 0x2e87ac #3 lr=0x3066B5
+[JJFB_ERW_WRITE] #22 off=0xC4C tag=erw old=0x330 new=0x537 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=12
+[JJFB_DIM] #13 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI_DISPATCH] #7 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #8 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #4 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #15 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_DIM] #14 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_DIM] #15 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=4 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #4 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_DIM] #16 pc=0x2F9968 natural=320 -> ret 240 (screen=240x320)
+[JJFB_UI] enter 0x2f4494 #3 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #3 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2F4494_ALLOW] #3 allow_left=1 mode=2 lr=0x2EA169
+[JJFB_UI] 2f4494@46d6 #3 r4=0x6C24B0 r5=0x6C22D0 obj+0xa=5 (before 303d94)
+[JJFB_UI] enter 0x303d94 #3 lr=0x2F4709 r0=0xBE r1=10 r2=41 r3=0x23
+[JJFB_303D94] ctx_slot=0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 DrawRect=0x2801EC
+[JJFB_303D94] ldr r7 prep #3 tbl=0x281EFC (r0-1C0) slot=+1E8 -> 0x2801EC r0=0x2820BC (expect mr_table)
+[JJFB_UI] 303d94 blx r7=#3 r7=0x2801EC r0=0xBE r1=10 r2=41
+[JJFB_DRAW] DrawRect #3 190,10 41x35 rgb=16,49,58 (raw h=0x23)
+[JJFB_DEBUG_PRESENT] from DrawRect dirty 190,10 41x35 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4761 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4797 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F47E9 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4829 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F498D sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 01 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F49D5 sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=45 r3=0x1 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F49F5 sp=0x27FEC8 r0=0x6C22D0 r1=185 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0A 00 00 00 0A 00 00 00 06 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_DEBUG_PRESENT] from 310BB4_BLIT dirty 5,185 10x10 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_DIRTY_RECT] tag=310BB4_BLIT name=- x=5 y=185 w=10 h=10 (present)
+[JJFB_310BB4] #40 lr=0x2F4A1D r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A1D sp=0x27FEC8 r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_BLIT] name=wy_jiao2!10!10.bmp x=5 y=226 w=10 h=10 src=0x6C22EC clip=10x10
+[JJFB_310BB4_GUARD] skip body, return to lr=0x2F4A1D
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A45 sp=0x27FEC8 r0=0x6C23C0 r1=185 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 00 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A71 sp=0x27FEC8 r0=0x6C23C0 r1=226 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_2EC6B0] #10 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #11 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #12 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #13 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_UI] enter 0x2e87ac #4 lr=0x3066B5
+[JJFB_ERW_WRITE] #23 off=0xC4C tag=erw old=0x537 new=0x691 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=13
+[JJFB_UI_DISPATCH] #9 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #10 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #5 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #16 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=5 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #5 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #4 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #4 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2F4494_ALLOW] #4 allow_left=0 mode=2 lr=0x2EA169
+[JJFB_UI] 2f4494@46d6 #4 r4=0x6C24B0 r5=0x6C22D0 obj+0xa=5 (before 303d94)
+[JJFB_UI] enter 0x303d94 #4 lr=0x2F4709 r0=0xBE r1=10 r2=41 r3=0x23
+[JJFB_303D94] ctx_slot=0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 DrawRect=0x2801EC
+[JJFB_303D94] ldr r7 prep #4 tbl=0x281EFC (r0-1C0) slot=+1E8 -> 0x2801EC r0=0x2820BC (expect mr_table)
+[JJFB_UI] 303d94 blx r7=#4 r7=0x2801EC r0=0xBE r1=10 r2=41
+[JJFB_DRAW] DrawRect #4 190,10 41x35 rgb=16,49,58 (raw h=0x23)
+[JJFB_DEBUG_PRESENT] from DrawRect dirty 190,10 41x35 (host debug; DispUpEx/mrc_refreshScreen untouched)
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4761 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4797 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=15 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F47E9 sp=0x27FEC8 r0=0x6C24B0 r1=185 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 03 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4829 sp=0x27FEC8 r0=0x6C24B0 r1=231 r2=30 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 01 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 01 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=195 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 00 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F4877 sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0F 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F493F sp=0x27FEC8 r0=0x6C24B0 r1=210 r2=45 r3=0xF r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 01 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F498D sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 01 00 00 00 05 00 00 00 02 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F49D5 sp=0x27FEC8 r0=0x6C24B0 r1=225 r2=45 r3=0x1 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  05 00 00 00 06 02 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310B5C lr=0x2F49F5 sp=0x27FEC8 r0=0x6C22D0 r1=185 r2=5 r3=0x0 r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  00 00 00 00 0A 00 00 00 0A 00 00 00 06 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A1D sp=0x27FEC8 r0=0x6C22D0 r1=226 r2=5 r3=0xA r4=0x6C24B0 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A45 sp=0x27FEC8 r0=0x6C23C0 r1=185 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 00 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_310BB4_ENTER] pc=0x310BB4 lr=0x2F4A71 sp=0x27FEC8 r0=0x6C23C0 r1=226 r2=40 r3=0xA r4=0x32 r5=0x6C22D0 r6=0x5 r7=0x6C23C0
+[JJFB_DUMP] 310BB4_sp_0x00 @0x27FEC8 64 bytes:
+  0A 00 00 00 06 04 00 00 00 00 00 00 00 00 00 00 1F F8 00 00 02 00 00 00 02 00 00 00 2D 00 00 00
+  3A 00 00 00 02 00 00 00 0A 00 00 00 32 00 00 00 0A 00 00 00 EC 00 00 00 B9 00 00 00 B9 00 00 00
+[JJFB_SEND] dump 310BB4_r5_obj @0x6C22D0 128 bytes:
+  C8 00 00 00 EC 22 6C 00 0A 00 0A 00 00 00 00 00 01 00 00 00 00 00 00 00 C8 00 00 00 1F F8 1F F8
+  1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 FC 67
+  FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8 20 01 FC 67
+  FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 09 12
+[JJFB_SEND] dump 310BB4_r5_p4 @0x6C22EC 128 bytes:
+  1F F8 1F F8 1F F8 1F F8 1F F8 20 01 20 01 20 01 20 01 20 01 1F F8 1F F8 1F F8 1F F8 20 01 FC 67
+  FC 67 FC 67 FC 67 FC 67 1F F8 1F F8 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 1F F8 1F F8
+  20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 8C 12 1F F8 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12
+  09 12 09 12 20 01 FC 67 FC 67 8C 12 8C 12 8C 12 8C 12 09 12 87 11 87 11 20 01 FC 67 8C 12 8C 12
+[JJFB_2EC6B0] #14 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #15 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #16 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #17 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_UI] enter 0x2e87ac #5 lr=0x3066B5
+[JJFB_ERW_WRITE] #24 off=0xC4C tag=erw old=0x691 new=0x80A size=4 pc=0x2E87F0 lr=0x2E87C3 tick=14
+[JJFB_UI_DISPATCH] #11 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #12 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #6 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #17 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=6 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #6 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #5 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #5 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2EC6B0] #18 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #19 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #20 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #21 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_UI] enter 0x2e87ac #6 lr=0x3066B5
+[JJFB_ERW_WRITE] #25 off=0xC4C tag=erw old=0x80A new=0x87F size=4 pc=0x2E87F0 lr=0x2E87C3 tick=15
+[JJFB_STARTUP_PHASE] tick=16 why=timer ui_mode=0x45 ac8=0 prog=0 bar=0x6BFE40 textbar=0x6C00A8 loadingbar=0x6BD090 drew=0
+[JJFB_UI_DISPATCH] #13 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #14 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #7 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #18 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=7 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #7 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #6 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #6 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2EC6B0] #22 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #23 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=236 y=5 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #24 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_2EC6B0] #25 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_ERW_WRITE] #26 off=0xC4C tag=erw old=0x87F new=0x8EE size=4 pc=0x2E87F0 lr=0x2E87C3 tick=16
+[JJFB_UI_DISPATCH] #15 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #16 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #8 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #19 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_12340] site_lr(sp+24)=0x305E99 wrapper_lr=0x304581
+[JJFB_12340] n=8 app=0x1 code=0x2A845C p0=0x0 p1=0x27FFB8 p2=0x27FFB4 lr=0x304581 before1=56 before2=2621368 write_h=0
+[JJFB_SEND] dump 12340_code @0x2A845C 64 bytes:
+  4F 60 4E EC 00 00 00 00 00 00 00 00 04 00 00 00 96 C1 3D AA 14 00 00 00 43 59 46 6D 68 64 4E 6D
+  53 31 72 6F 52 67 72 6F 52 61 3D 3D 00 00 00 00 03 00 00 00 EC 8D 2D 00 03 00 00 00 EC DD 03 00
+[JJFB_SEND] dump 12340_p1 @0x27FFB8 32 bytes:
+  38 00 00 00 09 E2 01 00 00 00 00 00 28 20 2B 00 00 00 00 00 31 66 30 00 50 18 2B 00 D4 C8 2A 00
+[JJFB_SEND] dump 12340_p1 str="8"
+[JJFB_AC8_READ] #8 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #7 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #7 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2EC6B0] #26 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #27 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #28 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #29 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_ERW_WRITE] #27 off=0xC4C tag=erw old=0x8EE new=0x966 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=17
+[JJFB_UI_DISPATCH] #17 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #18 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #9 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #20 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #9 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #8 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_CTX] chrome-bypass dump #8 slot@0x2D8DEC tbl=0x281EFC fp@+1E8=0x2801EC mr_table=0x280004 expect_DrawRect=0x2801EC
+[JJFB_2EC6B0] #30 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #31 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #32 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #33 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_ERW_WRITE] #28 off=0xC4C tag=erw old=0x966 new=0x9CA size=4 pc=0x2E87F0 lr=0x2E87C3 tick=18
+[JJFB_UI_DISPATCH] #19 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #20 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #10 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #21 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #10 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #9 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_2EC6B0] #34 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #35 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #36 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #37 lr=0x2E9D03 obj=0x0 x=236 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_ERW_WRITE] #29 off=0xC4C tag=erw old=0x9CA new=0xA5E size=4 pc=0x2E87F0 lr=0x2E87C3 tick=19
+[JJFB_UI_DISPATCH] #21 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #22 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #11 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #22 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #11 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #10 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_2EC6B0] #38 lr=0x2E9C73 obj=0x0 x=185 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #39 lr=0x2E9CA5 obj=0x0 x=236 y=5 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0] #40 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_ERW_WRITE] #30 off=0xC4C tag=erw old=0xA5E new=0xAD4 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=20
+[JJFB_SEND] pre-handler state=69(0x45) ui_mode=0x45 tick=21 uptime=4019
+[JJFB_FIRST_SCREEN] state_change 0 -> 69 (tick=21 why=pre-handler)
+[JJFB_FIRST_SCREEN] ui_mode_change 0x0 -> 0x45 (tick=21) (0x45=splash/slogo)
+[JJFB_FIRST_SCREEN] #23 state pre-handler
+[JJFB_SEND] pre-handler gates C44=1 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler drawGate 7D8+0xC=240(0xF0) hwD14=1 drawFP@1510=0x270F
+[JJFB_SEND] pre-handler screen 824w=240 828y=0 830h=320 834w=240
+[JJFB_SEND] pre-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_TIMER_DISPATCH] tick=21 handler=0x306305 calls=21 before ui_mode=0x45 ac8=0 prog=0 r0-r3=0x0,0x2B1850,0x0,0x38 sp=0x280000
+[JJFB_SEND] call guest handler@0x306305 r0=0x0 r1=0x0
+[JJFB_UI_DISPATCH] #23 pc=0x306344 lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B20A8,0x13,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x45
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #24 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #12 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #24 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #12 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #11 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_ERW_WRITE] #31 off=0xC4C tag=erw old=0xAD4 new=0xB37 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=21
+[JJFB_SEND] guest handler@0x306305 ret=0
+[JJFB_TIMER_DISPATCH] tick=21 after ui_mode=0x45 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_SEND] post-handler state=69(0x45) ui_mode=0x45 tick=21 uptime=4122
+[JJFB_FIRST_SCREEN] #25 state post-handler
+[JJFB_SEND] post-handler gates C44=1 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] post-handler drawGate 7D8+0xC=240(0xF0) hwD14=1 drawFP@1510=0x270F
+[JJFB_SEND] post-handler screen 824w=240 828y=0 830h=320 834w=240
+[JJFB_SEND] post-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #26 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #13 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #26 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #13 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_UI] enter 0x2f4494 #12 lr=0x2EA169 y=5 w=51 mode=2 flagA64=0x6C1CF0 (nop chrome; blit loop blocks present)
+[JJFB_ERW_WRITE] #32 off=0xC4C tag=erw old=0xB37 new=0xB96 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=22
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #28 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #14 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #27 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #14 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #33 off=0xC4C tag=erw old=0xB96 new=0xBEB size=4 pc=0x2E87F0 lr=0x2E87C3 tick=23
+[JJFB_ERW_WRITE] #34 off=0x8EC tag=erw old=0x0 new=0x8C size=4 pc=0x3043D4 lr=0x304243 tick=23
+[JJFB_ERW_WRITE] #35 off=0x8F0 tag=erw old=0x0 new=0x88 size=4 pc=0x3043D4 lr=0x304243 tick=23
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #30 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #15 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #28 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #15 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #36 off=0xC4C tag=erw old=0xBEB new=0xC58 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=24
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #32 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #16 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #29 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #16 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #37 off=0xC4C tag=erw old=0xC58 new=0xCAB size=4 pc=0x2E87F0 lr=0x2E87C3 tick=25
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #34 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #17 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #30 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #17 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #38 off=0xC4C tag=erw old=0xCAB new=0xD04 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=26
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #36 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #18 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #31 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #18 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #39 off=0xC4C tag=erw old=0xD04 new=0xD64 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=27
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #38 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #19 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #32 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #19 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #40 off=0xC4C tag=erw old=0xD64 new=0xDBD size=4 pc=0x2E87F0 lr=0x2E87C3 tick=28
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #40 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #20 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #33 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_DIM] #80 pc=0x2F995C natural=240 -> ret 320 (screen=240x320)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #20 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #41 off=0xC4C tag=erw old=0xDBD new=0xE15 size=4 pc=0x2E87F0 lr=0x2E87C3 tick=29
+[JJFB_2EF86C_COV] summary hit_halfwords=129/586 max_pc=0x2EFAF4 last_pc=0x2EFA1A 2EFC40_hits=0 first_gap_after_hit=0x2EF872
+[JJFB_2EFC_GATE] not reached, last_pc=0x2EFA1A last_lr=0x2E9D29 skip_hint_pc=0x2EFAF4
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #42 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #21 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #34 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #21 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_2EC6B0] #80 lr=0x2E9CD7 obj=0x0 x=185 y=50 flags=0x0 sp0=0x0 sp4=0x0 sp8=0x0 fp150C=0x270F name=-
+[JJFB_2EC6B0_SKIP] obj=0 x=185 y=50 -> no blit/dirty, r0=0 ret lr
+[JJFB_ERW_WRITE] #42 off=0xC4C tag=erw old=0xE15 new=0xE7B size=4 pc=0x2E87F0 lr=0x2E87C3 tick=30
+[JJFB_STARTUP_PHASE] tick=31 why=timer ui_mode=0x45 ac8=0 prog=0 bar=0x6BFE40 textbar=0x6C00A8 loadingbar=0x6BD090 drew=0
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #44 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #22 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #35 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #22 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #43 off=0xC4C tag=erw old=0xE7B new=0xECF size=4 pc=0x2E87F0 lr=0x2E87C3 tick=31
+[JJFB_EVENT_CODE] override at 0x30662C r1=0x13 -> 0x0
+[JJFB_UI_DISPATCH] #46 pc=0x30662C lr=0x306337 ui_mode=0x45 ac8=0 prog=0 target=0x2EF86C event_r1=0x0 r0-r3=0x45,0x0,0xFFFFFFFF,0x2B199C r4-r7=0x1E209,0x0,0x2B2028,0x0
+[JJFB_DISPATCH_30662C] ui_mode=0x45 event=0x0
+[JJFB_UI_DISPATCH] ui_mode=0x45 target=0x2EF86C caller=0x306631 ac8=0 event=0x0
+[JJFB_FIRST_SCREEN] SPLASH_ENTER #23 lr=0x306631 ui_mode=0x45 ac8=0 r0=0x45 r1=0x0
+[JJFB_FIRST_SCREEN] #36 splash_fn 0x2EF86C
+[JJFB_SPLASH_PHASE] ac8=0 phase=loading? pc=0x2EF86C (natural)
+[JJFB_SEND] extCode=0x12340 app=0x1 code=0x2A845C param0=0x0 param1=0x27FFB8
+[JJFB_AC8_READ] #23 value=0 pc=0x2EF8A4 lr=0x304619
+[JJFB_ERW_WRITE] #44 off=0xC4C tag=erw old=0xECF new=0xF7D size=4 pc=0x2E87F0 lr=0x2E87C3 tick=32

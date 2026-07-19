@@ -1,0 +1,12 @@
+给 OpenClaw：
+
+v18 白屏原因：start.mr 新 gzip 实际 1504，但 MRP 文件表仍写 1514，尾部补零导致 gzip footer 错位，所以 cannot read start.mr。
+
+v19 修正：重新 gzip 后同步更新 MRP 文件表的 start.mr 压缩大小，不再补零伪造大小。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_JJFB_SDK_BYPASS_V19.ps1
+
+发：
+logs\sdk_bypass_v19_feedback_*.zip
+以及 vmrp 窗口截图。

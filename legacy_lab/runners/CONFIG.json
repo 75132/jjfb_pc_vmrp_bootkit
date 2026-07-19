@@ -1,0 +1,39 @@
+{
+  "vmrp_release_url": "https://github.com/vmrp/vmrp/releases/download/1.0.0/vmrp_win32_20220102.zip",
+  "vmrp_zip": "runtime/vmrp_win32_20220102.zip",
+  "vmrp_extract_dir": "runtime/vmrp_win32",
+  "game_source_dir": "game_files/mythroad",
+  "mythroad_active_pack": "game_files/mythroad/320x480",
+  "guest_lcd": "240x320",
+  "sdl_window": "320x480",
+  "primary_runner": "RUN_JJFB.ps1",
+  "runner_impl": "RUN_V71_PRESENT_COALESCE.ps1",
+  "jjfb_gwy": {
+    "launcher_mode": 1,
+    "cfg_index": 36,
+    "target_mrp": "gwy/jjfb.mrp",
+    "param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+    "alias_cfunction_robotol": 1,
+    "notes": "Do not patch jjfb.mrp / robotol.ext / mrc_loader.ext. Shell update bypass only; game self-update stays."
+  },
+  "sdk_key_content": "123456789012345",
+  "target_mrps": [
+    "gwy/jjfb.mrp",
+    "gwy.mrp"
+  ],
+  "mr_param_candidates": [
+    "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink"
+  ],
+  "mock_ports": [
+    21002,
+    21003,
+    20000,
+    6009
+  ],
+  "host_domains_to_localhost": [
+    "spd.skymobiapp.com",
+    "sta.proxy.51mrp.com",
+    "bcs.duapp.com"
+  ],
+  "test_wait_seconds": 25
+}

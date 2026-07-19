@@ -1,0 +1,75 @@
+﻿[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=dsm_gm.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+dsm_gm.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_LOADER] trying open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1513)
+mr_unzip
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_LOADER] trying open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(217)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+--- ext: @002AEB1C
+_mr_c_function_new(002AEB60, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_LOADER] trying open file=mythroad/dsm_gm.mrp mode=1
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+mr_unzip
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+--- ext: @002D8DEC
+_mr_c_function_new(00304AE5, 20)  mr_c_function_P:002AC8D4
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1850
+After app init, memory left:3748208
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x0
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr',SRCV): 0x0
+[JJFB_801] synced guest EXT helper=0x304AE5 P=0x2AC8D4 ER_RW=0x2B1850 ext=@2D8DEC
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_801] P@0x2AC8D4 = {ER_RW=0x2B1850 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=0 input=0x2D8DEC len=1968 P=0x2AC8D4 erw=0x2B1850 helper=0x304AE5
+[JJFB_801] ext_call code=0 ret=1 out_len=0
+[JJFB_801] host mrc_init(0) ret=1
+

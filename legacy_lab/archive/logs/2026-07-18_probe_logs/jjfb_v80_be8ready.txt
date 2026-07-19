@@ -1,0 +1,716 @@
+[JJFB_LOADER] main start
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x800000
+START_ADDRESS:0x80000, END_ADDRESS:0xA80000
+TOTAL_MEMORY:0xA00000(10485760)
+[JJFB_V84_SCREEN] guest=240x320 window=320x480 resource via JJFB_MYTHROAD_ROOT (stretch present; no layout force)
+initMemoryManager: baseAddress:0x280000 len: 0x800000
+[JJFB_LOADER] _mr_c_function_new #1 helper=000a4088 len=20
+ext call _mr_c_function_new(0xA4088[671880], 0x14[20])
+==========================REG=================================
+ R0=0x000A4088	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_LOADER] mr_c_function_load done, r9/ER_RW=@00280400
+-----> r9:@00280400
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF570	SP=0x00280000	 LR=0x00090D1C	 PC=0x00080000	V:0
+==============================================================
+[JJFB_GWY_LAUNCH] cfg_index=36 target=gwy/jjfb.mrp
+[JJFB_GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_GWY_ROOT] mythroad_root=c:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\320x480
+[JJFB_GWY_ROOT] gwy_root=c:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\320x480\gwy
+[JJFB_GWY_ROOT] target=c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp
+[JJFB_GWY_ROOT] resource_dirs=gifs,jjfbol,save,sound,...
+[JJFB_STARTGAME] startGame/runapp equivalent=bridge_dsm_mr_start_dsm
+[JJFB_GWY_LAUNCH] startGame/runapp equivalent called
+[JJFB_MRP_ALIAS] enabled=1 request=cfunction.ext target=robotol.ext
+[JJFB_LOADER] bridge_dsm_mr_start_dsm filename=gwy/jjfb.mrp extName=start.mr entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] guest="mythroad/system/gb16.uc2" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/system/gb16.uc2" ok=1 handle=1 mode=0 pc=0x280284 lr=0x90DC4
+[INFO]mr_open(mythroad/system/gb16.uc2,0) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[JJFB_MRP_CTX] last_open guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp"
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+mr_unzip
+[JJFB_FILE] open file=mythroad/sdk_key.dat mode=1
+[JJFB_FILEOPEN] guest="mythroad/sdk_key.dat" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/sdk_key.dat" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[INFO]mr_close(2): ret:0
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[JJFB_MRP_CTX] last_open guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp"
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+mr_unzip
+[WARN]mr_cacheSync(0x002AEB00, 320)
+[JJFB_GUEST_EXT] observed ext_base=0x2AEB04
+--- ext: @002AEB04
+[JJFB_GUEST_EXT] ordinal=1 role=mrc_loader helper=0x2AEB48 P=0x2AC8DC ext_base=0x2AEB04 len=20
+[JJFB_MRP_ALIAS] patched ext_base=0x2AEB04 literal=0x2AEBD8 request=cfunction.ext target=robotol.ext method=ext_base_0xD4
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILE] open file=mythroad/gwy/jjfb.mrp mode=1
+[JJFB_FILEOPEN] guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp" ok=1 handle=2 mode=1 pc=0x280284 lr=0xA1AE4
+[JJFB_MRP_CTX] last_open guest="mythroad/gwy/jjfb.mrp" host="c:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_win32/vmrp_win32_20220102/mythroad/320x480/gwy/jjfb.mrp"
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+mr_unzip
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+[JJFB_GUEST_EXT] observed ext_base=0x2D8DF4
+--- ext: @002D8DF4
+[JJFB_ROBOTOL_LOAD] ordinal=3 guest_ordinal=2 helper=0x304AED P=0x2AC8DC ext_base=0x2D8DF4 loader_helper=0x2AEB48 after_alias=1 source=br_log
+_mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1858
+[JJFB_LOADER] bridge_dsm_mr_start_dsm ret=0x1
+bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr',SRCV): 0x1
+[JJFB_START_HANDOFF] raw_ret=0x1 semantic=MR_IGNORE alias_applied=1 robotol_loaded=1 helper=0x304AED action=run_host_801_recovery
+[JJFB_801_GUARD] robotol_loaded=1 alias_applied=1 robotol_helper=0x304AED action=run_host_801
+[JJFB_CFG36] nextid=482 ncode=512 napptype=12 narg=0 narg1=1 appid=400101 appver=12
+[JJFB_801] synced guest EXT helper=0x304AED P=0x2AC8DC ER_RW=0x2B1858 ext=@2D8DF4
+[JJFB_V81_SCREEN] seed geom once 240x320 y828=0 why=ext_call
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=6 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_801] ext_call code=6 ret=0 out_len=0
+[JJFB_801] host version(6) ret=0
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] ext_call code=8 input=0x2829D4 len=16 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_801] ext_call code=8 ret=0 out_len=0
+[JJFB_801] host appInfo(8) ret=0
+[JJFB_V56_UPSTREAM] coverage installed (event_queue/event5_12/family_C0/reset_2FEBBC/callback_2F5404/305EB8/writer)
+[JJFB_V57_SRC] coverage installed (call_2F5390/BL_3054A4/cmp_C0/movs_C0) NO_INJECT NO_FORCE
+[JJFB_V58_FN] coverage installed (reg_304AEC/C0_2ED8E4_2F5CA4/callers) NO_INJECT NO_FORCE
+[JJFB_V60_TIMER] coverage installed (30CBBC/timerCreate/ERW8C4) family_app2_before_resume
+[JJFB_V61_NEST] defer_1E209_during_ext_call (fix nested emu hang on first timer/app7)
+[JJFB_V62_FLAG] coverage installed (15D/B71/B70 writers + enriched 305EB8 gates) NO_FORCE NO_INJECT
+[JJFB_V63_PATH_A] contract=opt_in_MENU_RETURN_or_MOUSE_MOVE_once via JJFB_PATH_A_EVENT_ONCE=5|12 (PROBE; mrc_event 1..5 is no-op)
+[JJFB_V64_ENQ] contract=opt_in_10165_enqueue_once via JJFB_V64_ENQUEUE_ONCE=1 (30D2F8→B54; not FORCE)
+[JJFB_V67_DRAIN] contract=trace_2E2520_ret_and_312C0C_dequeue +2FC26C_alt_path +bad_drawFP150C_skip_BLX NO_FORCE NO_INJECT
+[JJFB_V68_CHROME] contract=nop_real_entry_2F449C (was mid-BL 2F4494; stop flicker / finish Path A) NO_FORCE
+[JJFB_V69_DRAWFP] contract=10113_11F02_03_04_write__DrawBitmap to_out +br__DrawBitmap NO_FORCE
+[JJFB_V70_PLAT] contract=10180_userinfo_blob_for_2F65BC +10130_large_alloc_noop_ok NO_FORCE NO_C0
+[JJFB_V71_PRESENT] contract=coalesce_SDL_until_timer_or_DispUpEx coalesce=1 (set JJFB_PRESENT_IMMEDIATE=1 to restore mid-frame present)
+[JJFB_V72_FLICKER] contract=skip_fullscreen_black_DrawRect keep_previous_frame NO_FORCE
+[JJFB_V73_FREEZE] contract=hold_SDL_after_leave_2FC26C while_B71_eq_0 enable=0 (JJFB_PRESENT_FREEZE=1 to enable)
+[JJFB_V74_B58] contract=second_101AB_one_record_after_2FC26C enable=0 (default OFF; JJFB_V74_B58_SECOND=1) NO_FORCE
+[JJFB_V75_B70] contract=family_C0_after_B71_via_1E200 enable=1 (default ON like APP2; JJFB_FAMILY_C0_AFTER_B71=0) NO_FORCE_B70_BYTE
+[JJFB_V80_HOLD44] contract=skip_2FC26C_while_ui_mode_0x44 enable=1 (default ON; JJFB_V80_HOLD_44=0) NO_FORCE_UIMODE (3122d8 early-outs if mode==3)
+[JJFB_V80_BE8] contract=shell_net_ready_BE8_2_to_3_once enable=1 (default ON; JJFB_V80_BE8_READY=0)
+[JJFB_V62_FLAG] mem watch ERW+0x15D/0xB71/0xB70 installed
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x0 stack=0x0}
+[JJFB_801] installed sendAppEvent hook @0x2829D4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x74 0x802B0 -> 0x280078
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1D8 0x81040 -> 0x2801DC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1DC 0x81078 -> 0x2801E0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E0 0x810B0 -> 0x2801E4
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E4 0x810E8 -> 0x2801E8
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1E8 0x80278 -> 0x2801EC
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x1EC 0x802E8 -> 0x2801F0
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC +0x200 0x811C8 -> 0x280204
+[JJFB_CTX] heal(synth_chunk) shadow@0x281EFC fixed 8 gfx slots (GOT left as shadow; host mr_table=0x280004)
+[JJFB_V77_NET] heal(synth_chunk) shadow@0x281EFC fixed 9 net slots initNetwork_fp=0x280148
+[JJFB_801] synthesized mrc_extChunk @0x2829DC -> P+0xc (send=@0x2829D4 extMrTable=0x281EFC)
+[JJFB_801] ext_call code=0 input=0x2D8DF4 len=1968 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_V58_FN] fn_304AEC_reg #1 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x0,0x2D8DF4,0x7B0
+[JJFB_SEND] extCode=0x1 app=0x64 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat/probe code=1 arg=100
+[JJFB_SEND] extCode=0x10113 app=0x11F02 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_V69_10113] id=0x11F02 -> _DrawBitmap fp=0x2801E4 out@0x27FCC0 (ERW draw slots 1508/150C/1510)
+[JJFB_SEND] extCode=0x10113 app=0x11F03 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_V69_10113] id=0x11F03 -> _DrawBitmap fp=0x2801E4 out@0x27FCC0 (ERW draw slots 1508/150C/1510)
+[JJFB_SEND] extCode=0x10113 app=0x11F04 code=0x0 param0=0x27FCC0 param1=0x0
+[JJFB_V69_10113] id=0x11F04 -> _DrawBitmap fp=0x2801E4 out@0x27FCC0 (ERW draw slots 1508/150C/1510)
+[JJFB_SEND] extCode=0x10102 app=0x1E200 code=0x30D301 param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10102 family=0x1E200 handler=0x30D301
+[JJFB_SEND] plat 0x10102 alloc 123392 -> 0x682A5C
+[JJFB_SEND] extCode=0x10120 app=0x4 code=0x2829DC param0=0x0 param1=0x0
+[JJFB_SEND] register 0x10120 type=4 chunk/handler=0x2829DC
+[JJFB_SEND] extCode=0x10140 app=0x5 code=0x2829DC param0=0x30630D param1=0x0
+[JJFB_10140_REG] app=0x5 code=0x2829DC param0=0x30630D param1=0x0 handler=0x30630D lr=0x304589
+[JJFB_SEND] register 0x10140 type=5 chunk=0x2829DC handler=0x30630D
+[JJFB_SEND] extCode=0x10162 app=0xE200 code=0x30D249 param0=0x0 param1=0x0
+[JJFB_V64_ENQ] note 0x10162 code=0x30D249 size=0xE200 (sibling alloc)
+[JJFB_SEND] plat 0x10162 alloc 57856 -> 0x6A0C64
+[JJFB_SEND] extCode=0x10165 app=0xE200 code=0x30D2F9 param0=0x0 param1=0x0
+[JJFB_V64_ENQ] register 0x10165 enqueue_handler=0x30D2F9 size=0xE200 (targets 30D24C→2E4D6C→B54→2DC80C→2E2520 Path A)
+[JJFB_SEND] plat 0x10165 alloc 57856 -> 0x6AEE6C
+[JJFB_SEND] extCode=0x10800 app=0x4 code=0x0 param0=0x0 param1=0x0
+[JJFB_SEND] plat 0x10800 arg=0x4
+[JJFB_801] ext_call code=0 ret=0 out_len=0
+[JJFB_801] host mrc_init(0) ret=0
+[JJFB_V60_LIFECYCLE] family app=2 via handler=0x30D301 (app2→30E15E→30CBBC timerCreate; not C0)
+[JJFB_SEND] flush 0x1E200 fam app=2 code=0x0
+[JJFB_V56_FAMILY] dispatch #1 app=0x2 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_V60_TIMER] fn_30CBBC_init #1 pc=0x30CBBC lr=0x30E163 r0-r3=0x2,0x0,0x0,0xE3C
+[JJFB_SEND] plat 0x10138 heap #1 free=2097152 (site=0x2D9A73 out5=0x27FC7C)
+[JJFB_SEND] plat 0x10132 alloc #1 sz=80 -> block 0x6BD074 lr=0x304589
+[JJFB_SEND] plat 0x10132 alloc #2 sz=144 -> block 0x6BD0CC lr=0x304589
+[JJFB_V62_FLAG] writer #1 pc=0x30CCF4 lr=0x305E55 strb_15D=1_in_30CBBC r0-r3=0x2B19B5,0x88,0x6BD0D0,0x2B1868 before 15D=0 B71=0 B70=0
+[JJFB_V62_FLAG] mem_write ERW+0x15D size=1 new=0x1 pc=0x30CCF4 lr=0x305E55
+[JJFB_SEND] plat 0x10132 alloc #3 sz=34 -> block 0x282A24 lr=0x304589
+[JJFB_SEND] plat 0x10132 alloc #4 sz=1004 -> block 0x6BD164 lr=0x304589
+[JJFB_SEND] plat 0x10132 alloc #5 sz=34 -> block 0x6BD554 lr=0x304589
+[JJFB_SEND] plat 0x10132 alloc #6 sz=204 -> block 0x6BD57C lr=0x304589
+[JJFB_12340] site_lr(sp+24)=0x305EA1 wrapper_lr=0x304589
+[JJFB_12340] n=1 app=0x1 code=0x2A833C p0=0x0 p1=0x2B214C p2=0x2B2150 lr=0x304589 before1=0 before2=0 write_h=16
+[JJFB_V86_11F00] glyph_block=0 gb16=1 (default: block OFF, gb16 ON)
+[JJFB_DRAW_TEXT] 11F00 #1 xy=0,0 skip_binary_obj len_field=0 printable%=0 nul=6 (no glyph_block)
+[JJFB_V86_11F00] skip rich-text obj (no speculative string blit); platDrawChar bridge armed
+[JJFB_SEND] extCode=0x10130 app=0xAF000 code=0x0 param0=0x0 param1=0x0
+[JJFB_V70_10130] alloc sz=0xAF000 -> 0x6BD68C (ret ignored by 30CFEE)
+[JJFB_SEND] plat 0x10138 heap #2 free=2097152 (site=0x30D019 out5=0x27FCCC)
+[INFO]mr_mkDir(mythroad/gwy/jjfbol/)
+[JJFB_V60_TIMER] mrc_timerCreate #2 pc=0x305404 lr=0x30D08B r0-r3=0x0,0x2802A4,0x24,0x0
+[JJFB_V60_TIMER] mrc_timerCreate #3 pc=0x305404 lr=0x30D091 r0-r3=0x2A8340,0x0,0x959A0,0x0
+[JJFB_V62_FLAG] writer #2 pc=0x2FE854 lr=0x30D0B1 strb_B71=0_in_2FE82C r0-r3=0x2B23C9,0x2B19B4,0xFFFFFFFF,0x0 before 15D=1 B71=0 B70=0
+[JJFB_V62_FLAG] mem_write ERW+0xB71 size=1 new=0x0 pc=0x2FE854 lr=0x30D0B1
+[JJFB_SEND] plat 0x10138 heap #3 free=2097152 (site=0x2D9A73 out5=0x27FC74)
+[JJFB_V56_CALLBACK] register #1 pc=0x30D128 lr=0x30D113 r0-r3=0x2A8340,0x0,0x1,0x27FCE0 ERW8C4=0x2A8340
+[JJFB_V57_SRC] BL_3054A4 #1 pc=0x30D136 lr=0x30D113 r0-r3=0x2A8340,0x50,0x0,0x2F5405 CALLBACK_2F5404
+[JJFB_V56_CALLBACK] register #2 pc=0x3054A4 lr=0x30D13B r0-r3=0x2A8340,0x50,0x0,0x2F5405 ERW8C4=0x2A8340 CALLBACK_2F5404
+[JJFB_SEND] extCode=0x10180 app=0x1 code=0x0 param0=0x0 param1=0x0
+[JJFB_V70_10180] app=0x1 -> blob@0x76C75C (2F65BC userinfo; was unhandled ret=1)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=3 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=3 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] flush 0x1E200 fam app=3 code=0x0
+[JJFB_V56_FAMILY] dispatch #2 app=0x3 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_V60_LIFECYCLE] after family app=2 ERW+0x8C4 timer=0x2A8340 OK
+[JJFB_V62_FLAG] after family app=2 15D=1 B71=0 B70=0 134D=0 (305EB8 needs 15D==1 B71!=0 134D==0)
+[JJFB_801] P@0x2AC8DC = {ER_RW=0x2B1858 len=5404 type=1 chunk=0x2829DC stack=0x0}
+[JJFB_801] ext_call code=5 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED
+[JJFB_V58_FN] fn_304AEC_reg #2 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x5,0x0,0x0
+[JJFB_V58_FN] BL_3053B8 #1 pc=0x304B5A lr=0x304B03 r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V58_FN] fn_3053B8_wrap #3 pc=0x3053B8 lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V57_SRC] call_2F5390_prep #1 pc=0x3053BA lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V57_SRC] call_2F5390_prep #2 pc=0x3053BA lr=0x304B5F r0-r3=0x5,0x2B1858,0x0,0x48
+[JJFB_V56_CALLBACK] register #3 pc=0x2F5390 lr=0x3053BF r0-r3=0x5,0x2B1858,0x0,0x48 ERW8C4=0x2A8340
+[JJFB_DRAW] DrawRect #1 0,0 240x320 rgb=0,0,0 (raw h=0x140)
+[JJFB_V80_PRESENT] fullscreen clear #1 B71=0 (buffer wipe; SDL still coalesced)
+[JJFB_DRAW] DrawRect coalesce #1 dirty 0,0 240x320 (defer present)
+[JJFB_V56_CALLBACK] register #4 pc=0x2F53AC lr=0x303CA7 r0-r3=0x0,0x0,0x1,0x140 ERW8C4=0x2A8340
+[JJFB_V57_SRC] BL_3054A4 #2 pc=0x2F53BC lr=0x303CA7 r0-r3=0x2A8340,0x50,0x0,0x2F5405 CALLBACK_2F5404
+[JJFB_V56_CALLBACK] register #5 pc=0x3054A4 lr=0x2F53C1 r0-r3=0x2A8340,0x50,0x0,0x2F5405 ERW8C4=0x2A8340 CALLBACK_2F5404
+[JJFB_801] ext_call code=5 ret=0 out_len=0
+[JJFB_V59_LIFECYCLE] mrc_resume(5) after init ret=0 (targets robotol 304B5A→2F5390 register path)
+[JJFB_SEND] ARM robotol timer period=50 RUNNING=1
+[JJFB_801] ext_call code=2 input=0x0 len=0 P=0x2AC8DC erw=0x2B1858 helper=0x304AED (timer)
+[JJFB_V58_FN] fn_304AEC_reg #4 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #3 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #6 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #1 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #1 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #1 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #1 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #1 bmp=0x282A54 0,0 240x320
+[JJFB_DRAW] drawBitmap #2 bmp=0x282A54 0,0 240x320
+[JJFB_801] ext_call code=2 ret=0 out_len=0
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V56_FAMILY] dispatch #3 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_STARTUP_PHASE] tick=1 why=timer ui_mode=0x0 ac8=0 prog=0 bar=0x0 textbar=0x0 loadingbar=0x0 drew=0
+[JJFB_SEND] pre-handler state=0(0x0) ui_mode=0x0 tick=1 uptime=563
+[JJFB_FIRST_SCREEN] state_change 0 -> 0 (tick=1 why=pre-handler)
+[JJFB_FIRST_SCREEN] ui_mode_change 0x0 -> 0x0 (tick=1) (0x45=splash/slogo)
+[JJFB_FIRST_SCREEN] #1 state pre-handler
+[JJFB_SEND] pre-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] pre-handler drawGate 7D8+0xC=0(0x0) hwD14=0 drawFP@1510=0x2801E4
+[JJFB_1510_WRITE] observed change old=0x0 new=0x2801E4 (pre-handler)
+[JJFB_SEND] pre-handler screen 824w=320 828y=0 830h=240 834w=320
+[JJFB_SEND] pre-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_TIMER_DISPATCH] tick=1 handler=0x30630D calls=1 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_SEND] call guest handler@0x30630D r0=0x0 r1=0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=9 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_SEND] guest handler@0x30630D ret=0
+[JJFB_SEND] flush 0x1E200 fam app=9 code=0x0
+[JJFB_SEND] call fam@0x30D301 r0=9 r1=0x0 r2=0x0 r3=0x0
+[JJFB_V56_FAMILY] dispatch #4 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_SEND] fam@0x30D301 ret=0
+[JJFB_TIMER_DISPATCH] tick=1 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_SEND] post-handler state=0(0x0) ui_mode=0x0 tick=1 uptime=592
+[JJFB_FIRST_SCREEN] #2 state post-handler
+[JJFB_SEND] post-handler gates C44=0 C9D=0 CD1=0 CF5=0 ptr11B0=0x0
+[JJFB_SEND] post-handler drawGate 7D8+0xC=0(0x0) hwD14=0 drawFP@1510=0x2801E4
+[JJFB_SEND] post-handler screen 824w=320 828y=0 830h=240 834w=320
+[JJFB_SEND] post-handler fp 144C(memset)=0x94DF8 1450(strlen)=0xAC178
+[JJFB_V71_PRESENT] flush #1 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #5 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #4 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #7 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #2 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #2 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #2 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #2 lr=0x305EC3
+[JJFB_SEND] plat UI/ops 0x1E209 arg=9 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_DRAW] drawBitmap #3 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_SEND] flush 0x1E200 fam app=9 code=0x0
+[JJFB_SEND] call fam@0x30D301 r0=9 r1=0x0 r2=0x0 r3=0x0
+[JJFB_V56_FAMILY] dispatch #5 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_SEND] fam@0x30D301 ret=0
+[JJFB_TIMER_DISPATCH] tick=2 handler=0x30630D calls=2 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_V56_FAMILY] dispatch #6 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=2 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #2 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #6 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #5 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #8 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #3 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #3 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #3 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #3 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #4 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V56_FAMILY] dispatch #7 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=3 handler=0x30630D calls=3 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_V56_FAMILY] dispatch #8 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=3 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #3 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #7 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #6 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #9 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #4 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #4 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #4 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #4 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #5 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V56_FAMILY] dispatch #9 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=4 handler=0x30630D calls=4 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_V56_FAMILY] dispatch #10 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=4 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #4 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #8 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #7 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #10 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #5 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #5 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #5 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #5 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #6 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V56_FAMILY] dispatch #11 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=5 handler=0x30630D calls=5 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_V56_FAMILY] dispatch #12 app=0x9 code=0x0 p0=0x0 p1=0x0 lr=0x80000
+[JJFB_TIMER_DISPATCH] tick=5 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #5 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #9 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #8 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #11 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #6 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #6 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #6 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #6 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #7 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_TIMER_DISPATCH] tick=6 handler=0x30630D calls=6 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_TIMER_DISPATCH] tick=6 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #6 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #10 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #9 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #12 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #7 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #7 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #7 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #7 lr=0x305EC3
+[JJFB_DRAW] drawBitmap #8 bmp=0x282A54 0,0 240x320
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_TIMER_DISPATCH] tick=7 handler=0x30630D calls=7 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_TIMER_DISPATCH] tick=7 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #7 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #11 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #10 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #13 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #8 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #8 lr=0x304589
+[JJFB_V56_PERIODIC] entry_305EB8 #8 lr=0x2F5739 15D=1 B71=0 f134d=0 B70=0 B58=0x76C710 DB0=0x0 fail_B71_eq_0
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #8 lr=0x305EC3
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_TIMER_DISPATCH] tick=8 handler=0x30630D calls=8 before ui_mode=0x0 ac8=0 prog=0 r0-r3=0x0,0x0,0x0,0xE7C sp=0x27FD28
+[JJFB_TIMER_DISPATCH] tick=8 after ui_mode=0x0 ac8=0 prog=0 delta_mode=0 delta_ac8=0 delta_prog=0
+[JJFB_V71_PRESENT] flush #8 from timer dirty 0,0 240x320 (coalesce; no mid-frame black)
+[JJFB_V58_FN] fn_304AEC_reg #12 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #11 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #14 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #9 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #9 lr=0x304589
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #9 lr=0x305EC3
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V58_FN] fn_304AEC_reg #13 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #12 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #15 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #10 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #10 lr=0x304589
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #10 lr=0x305EC3
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_V81_SCREEN] fixed SCREEN=240x320 mythroad via JJFB_MYTHROAD_ROOT
+[JJFB_GAME_SELF] natural_mode=1 gwy=1 no_force_ui_mode state=0x0 tick=10
+[JJFB_FIRST_SCREEN] NO FORCE ui_mode (natural) state=0x0 tick=10
+[JJFB_CTX_WRITE] watching tbl slot @0x2D8DF4 (303d94 source)
+[JJFB_SLOGO_XREF] watching string @0x3142DC (slogo!157!58.bmp)
+[JJFB_SLOGO_XREF] also watching loadingbar str @0x314314
+[JJFB_OBJ_BIND_PC] watching code @0x2D9580..0x2D95A0
+[JJFB_PTR_STORE] watching heap stores @0x600000..0xA00000
+[JJFB_PTR_STORE] watching erw/mid stores @0x280000..0x360000
+[JJFB_2EF86C_COV] installed 0x2EF86C..0x2EFD00
+[JJFB_2EFC_DISASM] bytes 0x2EFC40..0x2EFC9F:
+  002EFC40: 05 1C 04 98 16 F0 E0 F8 06 AA 00 92 00 22 00 21
+  002EFC50: 28 1C 07 AB 16 F0 10 F9 06 98 30 1A 38 E0 00 00
+  002EFC60: A0 0B 00 00 DA 07 00 00 18 08 00 00 1C 08 00 00
+  002EFC70: 0E 4A 02 00 C8 0A 00 00 80 49 02 00 6C 49 02 00
+  002EFC80: 58 49 02 00 3A 49 02 00 D8 12 00 00 5D 01 00 00
+  002EFC90: 6C 0B 00 00 4D 13 00 00 DD 07 00 00 EA 48 02 00
+[JJFB_2EFC_DISASM] NOTE: 0x2EFC58=word 0xBA0 and 0x2EFC6C=word 0xAC8 are LITERAL POOL data (after B @0x2EFC54), not STR writers.
+[JJFB_2EFC_DISASM] gate bytes 0x2EFA50..0x2EFAFF:
+  002EFA50: 79 44 38 62 78 6A E9 F7 45 FC 78 62 09 F0 88 FF
+  002EFA60: B9 6A 08 23 C9 5E 40 1A C1 0F 08 18 46 10 09 F0
+  002EFA70: 79 FF 05 1C BF 6A 64 3D 00 2F 10 D0 0A 23 F8 5E
+  002EFA80: 00 22 00 21 03 91 04 92 08 23 02 90 FA 5E 00 91
+  002EFA90: 31 1C 01 92 2A 1C 00 23 38 1C FC F7 0D FE 06 35
+  002EFAA0: 37 1C 1C 37 00 26 70 00 80 19 6D 49 80 00 86 46
+  002EFAB0: 49 44 C8 6A BE 44 B0 42 15 DD 08 6A 84 46 00 28
+  002EFAC0: 11 D0 60 46 0A 23 C0 5E 00 22 00 21 02 90 60 46
+  002EFAD0: 03 91 04 92 08 23 C2 5E 00 91 00 23 01 92 2A 1C
+  002EFAE0: 71 46 FC F7 E9 FD 01 36 0C 2E DC DB 68 48 6E 4E
+  002EFAF0: 48 44 00 68 7E 44 00 28 09 D1 00 2C 90 D0 6B 4A
+
+[JJFB_GATE_DISASM] 002EFA52: STR r0,[r7,#0x20]
+[JJFB_GATE_DISASM] 002EFA54: LDR r0,[r7,#0x24]
+[JJFB_GATE_DISASM] 002EFA5A: STR r0,[r7,#0x24]
+[JJFB_GATE_DISASM] 002EFA60: LDR r1,[r7,#0x28]
+[JJFB_GATE_DISASM] 002EFA62: MOVS r3,#0x8
+[JJFB_GATE_DISASM] 002EFA74: LDR r7,[r7,#0x28]
+[JJFB_GATE_DISASM] 002EFA78: CMP r7,#0x0
+[JJFB_GATE_DISASM] 002EFA7A: Bcond cond=0 -> 0x2EFA9E
+[JJFB_GATE_DISASM] 002EFA7C: MOVS r3,#0xA
+[JJFB_GATE_DISASM] 002EFA80: MOVS r2,#0x0
+[JJFB_GATE_DISASM] 002EFA82: MOVS r1,#0x0
+[JJFB_GATE_DISASM] 002EFA88: MOVS r3,#0x8
+[JJFB_GATE_DISASM] 002EFA96: MOVS r3,#0x0
+[JJFB_GATE_DISASM] 002EFAA4: MOVS r6,#0x0
+[JJFB_GATE_DISASM] 002EFAB2: LDR r0,[r1,#0x2C]
+[JJFB_GATE_DISASM] 002EFAB8: Bcond cond=13 -> 0x2EFAE6
+[JJFB_GATE_DISASM] 002EFABA: LDR r0,[r1,#0x20]
+[JJFB_GATE_DISASM] 002EFABE: CMP r0,#0x0
+[JJFB_GATE_DISASM] 002EFAC0: Bcond cond=0 -> 0x2EFAE6
+[JJFB_GATE_DISASM] 002EFAC4: MOVS r3,#0xA
+[JJFB_GATE_DISASM] 002EFAC8: MOVS r2,#0x0
+[JJFB_GATE_DISASM] 002EFACA: MOVS r1,#0x0
+[JJFB_GATE_DISASM] 002EFAD4: MOVS r3,#0x8
+[JJFB_GATE_DISASM] 002EFADA: MOVS r3,#0x0
+[JJFB_GATE_DISASM] 002EFAE8: CMP r6,#0xC
+[JJFB_GATE_DISASM] 002EFAEA: Bcond cond=11 -> 0x2EFAA6
+[JJFB_GATE_DISASM] 002EFAF2: LDR r0,[r0,#0x0]
+[JJFB_GATE_DISASM] 002EFAF6: CMP r0,#0x0
+[JJFB_GATE_DISASM] 002EFAF8: Bcond cond=1 -> 0x2EFB0E
+[JJFB_GATE_DISASM] 002EFAFA: CMP r4,#0x0
+[JJFB_GATE_DISASM] 002EFAFC: Bcond cond=0 -> 0x2EFA20
+[JJFB_2EFC_DISASM] deep bytes 0x2EFB00..0x2EFB7F:
+  002EFB00: 31 1C 4A 44 12 68 20 1C 90 47 00 28 88 D0 09 F0
+  002EFB10: 2F FF 1E 35 66 49 00 22 08 90 05 96 79 44 50 4F
+  002EFB20: 4F 44 38 6B 0D F0 A0 FE 43 1C 01 D0 61 4C 7C 44
+  002EFB30: 4D 48 06 AA 00 92 48 44 02 68 4C 48 07 AB 48 44
+  002EFB40: 01 68 20 1C 16 F0 98 F9 06 9E 0A 36 09 F0 10 FF
+  002EFB50: 79 6A 08 23 C9 5E 40 1A C1 0F 08 18 47 10 29 1C
+  002EFB60: 38 1C 02 F0 07 FB 06 98 FF 23 30 1A C1 0F 08 18
+  002EFB70: 40 10 84 46 08 98 07 99 AC 44 40 1A C1 0F 08 18
+
+[JJFB_DEEP_DISASM] 002EFB00: ADDS r1,r6,#0
+[JJFB_DEEP_DISASM] 002EFB02: ADD r2,r9
+[JJFB_DEEP_DISASM] 002EFB04: LDR r2,[r2,#0x0]
+[JJFB_DEEP_DISASM] 002EFB06: ADDS r0,r4,#0
+[JJFB_DEEP_DISASM] 002EFB08: BX/BLX r2
+[JJFB_DEEP_DISASM] 002EFB0A: CMP r0,#0x0
+[JJFB_DEEP_DISASM] 002EFB0C: Bcond cond=0 -> 0x2EFA20
+[JJFB_DEEP_DISASM] 002EFB14: LDR r1,[pc,#0x198] lit@0x2EFCB0=0x24814
+[JJFB_DEEP_DISASM] 002EFB16: MOVS r2,#0x0
+[JJFB_DEEP_DISASM] 002EFB1C: ADD r1,r15
+[JJFB_DEEP_DISASM] 002EFB1E: LDR r7,[pc,#0x140] lit@0x2EFC60=0xBA0
+[JJFB_DEEP_DISASM] 002EFB20: ADD r7,r9
+[JJFB_DEEP_DISASM] 002EFB22: LDR r0,[r7,#0x30]
+[JJFB_DEEP_DISASM] 002EFB28: ADDS r3,r0,#1
+[JJFB_DEEP_DISASM] 002EFB2A: Bcond cond=0 -> 0x2EFB30
+[JJFB_DEEP_DISASM] 002EFB2C: LDR r4,[pc,#0x184] lit@0x2EFCB4=0x24806
+[JJFB_DEEP_DISASM] 002EFB2E: ADD r4,r15
+[JJFB_DEEP_DISASM] 002EFB30: LDR r0,[pc,#0x134] lit@0x2EFC68=0x818
+[JJFB_DEEP_DISASM] 002EFB36: ADD r0,r9
+[JJFB_DEEP_DISASM] 002EFB38: LDR r2,[r0,#0x0]
+[JJFB_DEEP_DISASM] 002EFB3A: LDR r0,[pc,#0x130] lit@0x2EFC6C=0x81C
+[JJFB_DEEP_DISASM] 002EFB3E: ADD r0,r9
+[JJFB_DEEP_DISASM] 002EFB40: LDR r1,[r0,#0x0]
+[JJFB_DEEP_DISASM] 002EFB42: ADDS r0,r4,#0
+[JJFB_DEEP_DISASM] 002EFB50: LDR r1,[r7,#0x24]
+[JJFB_DEEP_DISASM] 002EFB52: MOVS r3,#0x8
+[JJFB_DEEP_DISASM] 002EFB5E: ADDS r1,r5,#0
+[JJFB_DEEP_DISASM] 002EFB60: ADDS r0,r7,#0
+[JJFB_DEEP_DISASM] 002EFB68: MOVS r3,#0xFF
+[JJFB_DEEP_DISASM] 002EFB78: ADD r12,r5
+[JJFB_2EFC_DISASM] AC8-tail bytes 0x2EFBA0..0x2EFC3F:
+  002EFBA0: 20 1C 16 F0 2B F8 3B 48 00 23 48 44 C0 56 00 28
+  002EFBB0: 22 DD 41 48 48 44 00 68 0F F0 C6 FB 04 1C 01 1C
+  002EFBC0: 3E 48 78 44 E9 F7 7A FD 3D 49 79 44 E9 F7 76 FD
+  002EFBD0: 05 90 20 1C 16 F0 18 F9 37 48 48 44 00 68 64 28
+  002EFBE0: 06 DB 2C 49 00 20 49 44 08 70 33 49 49 44 08 60
+  002EFBF0: 06 98 2C 18 14 34 02 E0 06 98 2C 18 14 34 1D 48
+  002EFC00: 48 44 01 68 00 29 00 DC 0A E7 2E 48 64 23 48 44
+  002EFC10: 00 68 41 1A 59 43 E9 F7 62 E9 0F F0 95 FB 04 90
+  002EFC20: 21 1C 38 1C 02 F0 A6 FA 27 49 79 44 05 98 E9 F7
+  002EFC30: 45 FD 04 99 E9 F7 42 FD 24 49 79 44 E9 F7 3E FD
+
+[JJFB_AC8TAIL_DISASM] 002EFBA6: LDR r0,[pc,#0xEC] lit@0x2EFC94=0x134D
+[JJFB_AC8TAIL_DISASM] 002EFBA8: MOVS r3,#0x0
+[JJFB_AC8TAIL_DISASM] 002EFBAA: ADD r0,r9
+[JJFB_AC8TAIL_DISASM] 002EFBAE: CMP r0,#0x0
+[JJFB_AC8TAIL_DISASM] 002EFBB0: Bcond cond=13 -> 0x2EFBF8
+[JJFB_AC8TAIL_DISASM] 002EFBB2: LDR r0,[pc,#0x104] lit@0x2EFCB8=0x1350
+[JJFB_AC8TAIL_DISASM] 002EFBB4: ADD r0,r9
+[JJFB_AC8TAIL_DISASM] 002EFBB6: LDR r0,[r0,#0x0]
+[JJFB_AC8TAIL_DISASM] 002EFBC0: LDR r0,[pc,#0xF8] lit@0x2EFCBC=0x2477E
+[JJFB_AC8TAIL_DISASM] 002EFBC2: ADD r0,r15
+[JJFB_AC8TAIL_DISASM] 002EFBC8: LDR r1,[pc,#0xF4] lit@0x2EFCC0=0x24772
+[JJFB_AC8TAIL_DISASM] 002EFBCA: ADD r1,r15
+[JJFB_AC8TAIL_DISASM] 002EFBD8: LDR r0,[pc,#0xDC] lit@0x2EFCB8=0x1350
+[JJFB_AC8TAIL_DISASM] 002EFBDA: ADD r0,r9
+[JJFB_AC8TAIL_DISASM] 002EFBDC: LDR r0,[r0,#0x0]
+[JJFB_AC8TAIL_DISASM] 002EFBDE: CMP r0,#0x64
+[JJFB_AC8TAIL_DISASM] 002EFBE0: Bcond cond=11 -> 0x2EFBF0
+[JJFB_AC8TAIL_DISASM] 002EFBE2: LDR r1,[pc,#0xB0] lit@0x2EFC94=0x134D
+[JJFB_AC8TAIL_DISASM] 002EFBE4: MOVS r0,#0x0
+[JJFB_AC8TAIL_DISASM] 002EFBE6: ADD r1,r9
+[JJFB_AC8TAIL_DISASM] 002EFBEA: LDR r1,[pc,#0xCC] lit@0x2EFCB8=0x1350
+[JJFB_AC8TAIL_DISASM] 002EFBEC: ADD r1,r9
+[JJFB_AC8TAIL_DISASM] 002EFBEE: STR r0,[r1,#0x0]
+[JJFB_AC8TAIL_DISASM] 002EFBF6: B -> 0x2EFBFE
+[JJFB_AC8TAIL_DISASM] 002EFBFE: LDR r0,[pc,#0x74] lit@0x2EFC74=0xAC8
+[JJFB_AC8TAIL_DISASM] 002EFC00: ADD r0,r9
+[JJFB_AC8TAIL_DISASM] 002EFC02: LDR r1,[r0,#0x0]
+[JJFB_AC8TAIL_DISASM] 002EFC04: CMP r1,#0x0
+[JJFB_AC8TAIL_DISASM] 002EFC06: Bcond cond=12 -> 0x2EFC0A
+[JJFB_AC8TAIL_DISASM] 002EFC08: B -> 0x2EFA20
+[JJFB_AC8TAIL_DISASM] 002EFC0A: LDR r0,[pc,#0xB8] lit@0x2EFCC4=0xA98
+[JJFB_AC8TAIL_DISASM] 002EFC0C: MOVS r3,#0x64
+[JJFB_AC8TAIL_DISASM] 002EFC0E: ADD r0,r9
+[JJFB_AC8TAIL_DISASM] 002EFC10: LDR r0,[r0,#0x0]
+[JJFB_AC8TAIL_DISASM] 002EFC28: LDR r1,[pc,#0x9C] lit@0x2EFCC8=0x24726
+[JJFB_AC8TAIL_DISASM] 002EFC2A: ADD r1,r15
+[JJFB_AC8TAIL_DISASM] 002EFC38: LDR r1,[pc,#0x90] lit@0x2EFCCC=0x24712
+[JJFB_AC8TAIL_DISASM] 002EFC3A: ADD r1,r15
+[JJFB_2EFC_DISASM] 002EFC40: h=0x1C05
+[JJFB_2EFC_DISASM] 002EFC42: h=0x9804
+[JJFB_2EFC_DISASM] 002EFC44: T32? 0xF016 0xF8E0
+[JJFB_2EFC_DISASM] 002EFC48: h=0xAA06
+[JJFB_2EFC_DISASM] 002EFC4A: h=0x9200
+[JJFB_2EFC_DISASM] 002EFC4C: h=0x2200
+[JJFB_2EFC_DISASM] 002EFC4E: h=0x2100
+[JJFB_2EFC_DISASM] 002EFC50: h=0x1C28
+[JJFB_2EFC_DISASM] 002EFC52: h=0xAB07
+[JJFB_2EFC_DISASM] 002EFC54: T32? 0xF016 0xF910
+[JJFB_2EFC_DISASM] 002EFC58: h=0x9806
+[JJFB_2EFC_DISASM] 002EFC5A: h=0x1A30
+[JJFB_2EFC_DISASM] 002EFC5C: B -> 0x2EFCD0 (h=0xE038)
+[JJFB_2EFC_DISASM] 002EFC5E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC60: h=0x0BA0
+[JJFB_2EFC_DISASM] 002EFC62: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC64: h=0x07DA
+[JJFB_2EFC_DISASM] 002EFC66: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC68: h=0x0818
+[JJFB_2EFC_DISASM] 002EFC6A: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC6C: h=0x081C
+[JJFB_2EFC_DISASM] 002EFC6E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC70: LDR r2,[pc,#0x38] lit@0x2EFCAC=0x143C
+[JJFB_2EFC_DISASM] 002EFC72: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC74: h=0x0AC8
+[JJFB_2EFC_DISASM] 002EFC76: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC78: LDR r1,[pc,#0x200] lit@0x2EFE7C=0x444F9805
+[JJFB_2EFC_DISASM] 002EFC7A: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC7C: LDR r1,[pc,#0x1B0] lit@0x2EFE30=0x68C1FE41
+[JJFB_2EFC_DISASM] 002EFC7E: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC80: LDR r1,[pc,#0x160] lit@0x2EFDE4=0xF0144853
+[JJFB_2EFC_DISASM] 002EFC82: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC84: LDR r1,[pc,#0xE8] lit@0x2EFD70=0x1C2A9001
+[JJFB_2EFC_DISASM] 002EFC86: h=0x0002
+[JJFB_2EFC_DISASM] 002EFC88: h=0x12D8
+[JJFB_2EFC_DISASM] 002EFC8A: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC8C: h=0x015D
+[JJFB_2EFC_DISASM] 002EFC8E: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC90: h=0x0B6C
+[JJFB_2EFC_DISASM] 002EFC92: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC94: h=0x134D
+[JJFB_2EFC_DISASM] 002EFC96: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC98: h=0x07DD
+[JJFB_2EFC_DISASM] 002EFC9A: h=0x0000
+[JJFB_2EFC_DISASM] 002EFC9C: LDR r0,[pc,#0x3A8] lit@0x2F0048=0x9E109911
+[JJFB_2EFC_DISASM] 002EFC9E: h=0x0002
+[JJFB_CLAMP] installed memset-guard @0x94E0C
+[JJFB_10132_STORM] wrapper skip hook @0x304550..0x3045C0
+[JJFB_2D99AC] reject-absurd-size hook @0x2D99AC
+[JJFB_305E30] reject-absurd-product hook @0x305E30
+[JJFB_308D98] clamp-be32 hooks @0x308DB2 / 0x308DDA
+[JJFB_SVC_AB] putchar hook @0x2D92AE
+[JJFB_IDIV0] guard @0x2D8EDC (aeabi div)
+[JJFB_MAP_MISS] empty-load@0x2F6BB8 + null-buf@0x309B00 + idiv@2FE50E/26
+[JJFB_30680C] sweep installed 0x306800..0x3068C0
+[JJFB_UI] installed probes through 2f449c/303d9c/310bb4/305bf4/30680c
+[JJFB_AC8] watching ERW+0xAC8 @0x2B2320 (slogo gate)
+[JJFB_PROGRESS] watching count @0x2B2424 (BA0+0x2C; NOT loadingbar slot)
+[JJFB_PROGRESS] watching count READ @0x2B2424
+[JJFB_UIMODE] watching state/ui_mode @0x2B2128 (ERW+0x8D0)
+[JJFB_STARTUP_STR] watching check_net_timeout @0x313B30
+[JJFB_STARTUP_STR] watching conn_fail @0x313C48
+[JJFB_STARTUP_STR] watching connecting @0x313C5C
+[JJFB_STARTUP_STR] watching dl_resource @0x313C74
+[JJFB_STARTUP_STR] watching check_update_list @0x313CF4
+[JJFB_STARTUP_STR] watching logging_in @0x314204
+[JJFB_ERW_WRITE] watching ERW+0x800..0x1400 @0x2B2058..0x2B2C58 (ui_mode/AC8/BA0/progress/B6C/134D)
+[JJFB_XREF_SCAN] begin literal scan for ui_mode/AC8/progress/strings
+[JJFB_XREF_LIT] name=imm_BA0 value=0xBA0 at=0x2EFC60
+[JJFB_XREF_LIT] name=imm_AC8 value=0xAC8 at=0x2EFC74
+[JJFB_XREF_LIT] name=imm_B6C value=0xB6C at=0x2EFC90
+[JJFB_XREF_LIT] name=imm_134D value=0x134D at=0x2EFC94
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2EFF24
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2F030C
+[JJFB_XREF_LIT] name=imm_134D value=0x134D at=0x305F04
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x306CB0
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x307074
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x30727C
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x2DA7A4
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x312014
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x312294
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x3124B0
+[JJFB_XREF_LIT] name=imm_BA0 value=0xBA0 at=0x312590
+[JJFB_XREF_LIT] name=imm_134D value=0x134D at=0x312594
+[JJFB_XREF_LIT] name=imm_8D0 value=0x8D0 at=0x3127F4
+[JJFB_XREF_LIT] name=imm_2C value=0x2C at=0x313954
+[JJFB_XREF_LIT] name=imm_BA0 value=0xBA0 at=0x2EA5EC
+[JJFB_XREF_LIT] name=imm_8D0 total_hits=29
+[JJFB_XREF_LIT] name=imm_AC8 total_hits=1
+[JJFB_XREF_LIT] name=imm_BA0 total_hits=3
+[JJFB_XREF_LIT] name=imm_B6C total_hits=1
+[JJFB_XREF_LIT] name=imm_2C total_hits=1
+[JJFB_XREF_LIT] name=imm_134D total_hits=3
+[JJFB_XREF_LIT] name=str_check_net total_hits=0
+[JJFB_XREF_LIT] name=str_conn_fail total_hits=0
+[JJFB_XREF_LIT] name=str_connecting total_hits=0
+[JJFB_XREF_LIT] name=str_dl_res total_hits=0
+[JJFB_XREF_LIT] name=str_check_update total_hits=0
+[JJFB_XREF_LIT] name=str_logging total_hits=0
+[JJFB_XREF_LIT] name=str_slogo total_hits=0
+[JJFB_XREF_LIT] name=str_loadingbar total_hits=0
+[JJFB_XREF_DUMP] around 0x2EFC58:
+  002EFC48: 06 AA 00 92 00 22 00 21 28 1C 07 AB 16 F0 10 F9
+  002EFC58: 06 98 30 1A 38 E0 00 00 A0 0B 00 00 DA 07 00 00
+  002EFC68: 18 08 00 00 1C 08 00 00 0E 4A 02 00 C8 0A 00 00
+  002EFC78: 80 49 02 00 6C 49 02 00 58 49 02 00 3A 49 02 00
+[JJFB_XREF_DUMP] around 0x2EFC6C:
+  002EFC5C: 38 E0 00 00 A0 0B 00 00 DA 07 00 00 18 08 00 00
+  002EFC6C: 1C 08 00 00 0E 4A 02 00 C8 0A 00 00 80 49 02 00
+  002EFC7C: 6C 49 02 00 58 49 02 00 3A 49 02 00 D8 12 00 00
+  002EFC8C: 5D 01 00 00 6C 0B 00 00 4D 13 00 00 DD 07 00 00
+[JJFB_XREF_DUMP] around 0x2EFC88:
+  002EFC78: 80 49 02 00 6C 49 02 00 58 49 02 00 3A 49 02 00
+  002EFC88: D8 12 00 00 5D 01 00 00 6C 0B 00 00 4D 13 00 00
+  002EFC98: DD 07 00 00 EA 48 02 00 C8 48 02 00 A4 48 02 00
+  002EFCA8: B8 47 02 00 3C 14 00 00 14 48 02 00 06 48 02 00
+[JJFB_XREF_DUMP] around 0x2EFC8C:
+  002EFC7C: 6C 49 02 00 58 49 02 00 3A 49 02 00 D8 12 00 00
+  002EFC8C: 5D 01 00 00 6C 0B 00 00 4D 13 00 00 DD 07 00 00
+  002EFC9C: EA 48 02 00 C8 48 02 00 A4 48 02 00 B8 47 02 00
+  002EFCAC: 3C 14 00 00 14 48 02 00 06 48 02 00 50 13 00 00
+[JJFB_XREF_DUMP] around 0x305EFC:
+  00305EEC: 00 28 01 DD 01 38 88 63 D4 F7 66 FF 08 BD 00 00
+  00305EFC: 5C 01 00 00 71 0B 00 00 4D 13 00 00 90 0A 00 00
+  00305F0C: F8 B5 04 1C 58 48 01 26 48 44 00 68 0D 1C A0 42
+  00305F1C: 04 D1 20 1C 0A F0 7E FA 01 20 F8 BD 0C 23 E0 56
+[JJFB_XREF_DUMP] around 0x31258C:
+  0031257C: 01 68 0A 31 01 60 64 29 F9 DD 64 21 01 60 F6 E7
+  0031258C: B8 08 00 00 A0 0B 00 00 4D 13 00 00 50 13 00 00
+  0031259C: 98 0F 00 00 38 B5 04 1C 40 6A 04 25 00 28 04 D0
+  003125AC: AC 21 09 56 00 29 00 DD 08 25 81 69 A2 6A 91 42
+[JJFB_XREF_DUMP] around 0x312588:
+  00312578: 01 60 38 BD 01 68 0A 31 01 60 64 29 F9 DD 64 21
+  00312588: 01 60 F6 E7 B8 08 00 00 A0 0B 00 00 4D 13 00 00
+  00312598: 50 13 00 00 98 0F 00 00 38 B5 04 1C 40 6A 04 25
+  003125A8: 00 28 04 D0 AC 21 09 56 00 29 00 DD 08 25 81 69
+[JJFB_XREF_SCAN] done
+[JJFB_UI_DISPATCH] #1 pc=0x306344 lr=0x30633F ui_mode=0x0 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B2500,0x13,0xFFFFFFFF,0x2B19A4 r4-r7=0x1E209,0x0,0x2B2030,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x0
+[JJFB_DIM] #1 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_V58_FN] fn_304AEC_reg #14 pc=0x304AEC lr=0x80000 r0-r3=0x2AC8DC,0x2,0x0,0x0
+[JJFB_V57_SRC] BL_3054A4 #13 pc=0x3056C6 lr=0x30561B r0-r3=0x2A8340,0x0,0x0,0x0
+[JJFB_V56_CALLBACK] register #16 pc=0x3054A4 lr=0x3056CB r0-r3=0x2A8340,0x0,0x0,0x0 ERW8C4=0x2A8340
+[JJFB_V56_CALLBACK] entry_2F5404 #11 lr=0x3056D5 ui_mode=0x0 BE8=0 r0-r3=0x0,0x2F5405,0x0,0x0
+[JJFB_SEND] plat UI/ops 0x1E209 arg=7 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=7 code=0x0 (avoid nested emu during guest)
+[JJFB_SEND] plat UI/ops 0x1E209 arg=5 code=0x0 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_V61_NEST] defer 1E209 app=5 code=0x0 (avoid nested emu during guest)
+[JJFB_V56_CALLBACK] tail_call_305EB8 #11 lr=0x304589
+[JJFB_V56_QUEUE] drain_2DC80C ENTER #11 lr=0x305EC3
+[JJFB_DIM] #2 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_UI_DISPATCH] #2 pc=0x306344 lr=0x30633F ui_mode=0x0 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B2500,0x13,0xFFFFFFFF,0x2B19A4 r4-r7=0x1E209,0x0,0x2B2030,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x0
+[JJFB_DIM] #3 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_V61_NEST] flush deferred 1E200 after ext_call code=2
+[JJFB_UI_DISPATCH] #3 pc=0x306344 lr=0x30633F ui_mode=0x0 ac8=0 prog=0 target=dispatch_head event_r1=0x13 r0-r3=0x2B2500,0x13,0xFFFFFFFF,0x2B19A4 r4-r7=0x1E209,0x0,0x2B2030,0x0
+[JJFB_HANDLER_306344] event_code_before=0x13 ui_mode=0x0
+[JJFB_DIM] #4 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_V58_FN] fn_304AEC_reg #15 pc=0x304AEC lr=0x89B80 r0-r3=0x2AC8DC,0x1,0x2A83FC,0xC
+[JJFB_DIM] #5 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_DIM] #6 pc=0x2F9968 natural=240 -> ret 240 (screen=240x320)
+[JJFB_SEND] plat UI/ops 0x1E21F arg=10 code=0x1 p0=0x0 p1=0x0 (fam=0x30D301)
+[JJFB_SEND] flush 0x1E200 fam app=10 code=0x1

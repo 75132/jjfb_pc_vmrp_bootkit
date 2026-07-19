@@ -1,0 +1,23 @@
+﻿gcc -g -Wall -DNETWORK_SUPPORT -DVMRP -m32 -o ./bin/main network.o fileLib.o vmrp.o utils.o rbtree.o bridge.o memory.o main.o ./windows/unicorn-1.0.2-win32/unicorn.lib  -lpthread -lm \
+	-lws2_32 -lmingw32 -mconsole -L./windows/SDL2-2.0.10/i686-w64-mingw32/lib/ -lSDL2main -lSDL2
+mingw32-make : C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/16.1.0/../../../../i686-w64-mingw32/bin/ld.exe: bridge
+.o: in function `jjfb_mrp_load_rgb565':
+所在位置 C:\Users\24231\AppData\Local\Temp\ps-script-b8cb6629-e8f2-4d50-9010-0567a4d8d404.ps1:106 字符: 1
++ mingw32-make -j4 2>&1 | Out-File -FilePath "c:\Users\24231\Desktop\jj ...
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:/msys64/mingw...p_load_rgb565'::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/runtime/vmrp_src_build_v27/vmrp-master/bridge.c:1918:(.text+0x6a00): undefi
+ned reference to `uncompress'
+C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/16.1.0/../../../../i686-w64-mingw32/bin/ld.exe: C:/Users/24231/Deskto
+p/jjfb_pc_vmrp_bootkit/runtime/vmrp_src_build_v27/vmrp-master/bridge.c:1933:(.text+0x6aa0): undefined reference to `inf
+lateInit2_'
+C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/16.1.0/../../../../i686-w64-mingw32/bin/ld.exe: C:/Users/24231/Deskto
+p/jjfb_pc_vmrp_bootkit/runtime/vmrp_src_build_v27/vmrp-master/bridge.c:1935:(.text+0x6abf): undefined reference to `inf
+late'
+C:/msys64/mingw32/bin/../lib/gcc/i686-w64-mingw32/16.1.0/../../../../i686-w64-mingw32/bin/ld.exe: C:/Users/24231/Deskto
+p/jjfb_pc_vmrp_bootkit/runtime/vmrp_src_build_v27/vmrp-master/bridge.c:1939:(.text+0x6aee): undefined reference to `inf
+lateEnd'
+collect2.exe: error: ld returned 1 exit status
+mingw32-make: *** [Makefile:22: main] Error 1

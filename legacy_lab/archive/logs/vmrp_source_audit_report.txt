@@ -1,0 +1,202 @@
+extracted source to C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25
+source hits=4771
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1251 [bridge_dsm_mr_start_dsm] int32_t bridge_dsm_mr_start_dsm(uc_engine *uc, char *filename, char *ext, char *entry) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1002 [mr_load]     BRIDGE_FUNC_MAP(0x1D0, MAP_FUNC, _mr_load_sms_cfg, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:36 [mr_c_function] typedef struct mr_c_function_P_t {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:42 [mr_c_function] } mr_c_function_P_t;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:45 [mr_c_function] static mr_c_function_P_t *mr_c_function_P;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:45 [mr_c_function] static mr_c_function_P_t *mr_c_function_P;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:60 [mr_c_function] static void br__mr_c_function_new(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:61 [mr_c_function]     // typedef int32 (*T__mr_c_function_new)(MR_C_FUNCTION f, int32 len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:69 [mr_c_function]     mr_c_function_P = my_mallocExt(p_len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:70 [mr_c_function]     memset(mr_c_function_P, 0, p_len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:72 [mr_c_function]     uint32_t v = toMrpMemAddr(mr_c_function_P);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:911 [mr_c_function]     BRIDGE_FUNC_MAP(0x64, MAP_FUNC, _mr_c_function_new, NULL, br__mr_c_function_new, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:911 [mr_c_function]     BRIDGE_FUNC_MAP(0x64, MAP_FUNC, _mr_c_function_new, NULL, br__mr_c_function_new, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1196 [mr_c_function]     // 执行ext内的mr_c_function_load()
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1199 [mr_c_function]     // mr_c_function.start_of_ER_RW 会被写入r9(SB)，指向的内存是用来存放全局变量的
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1200 [mr_c_function]     printf("-----> r9:@%p\n", mr_c_function_P->start_of_ER_RW);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1206 [mr_c_function]     uint32_t v = toMrpMemAddr(mr_c_function_P);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1234 [mr_c_function]     uc_reg_write(uc, UC_ARM_REG_R9, &mr_c_function_P->start_of_ER_RW);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:39 [ext]     int32 ext_type;         // ext启动类型，为1时表示ext启动
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:39 [ext]     int32 ext_type;         // ext启动类型，为1时表示ext启动
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:39 [ext]     int32 ext_type;         // ext启动类型，为1时表示ext启动
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:40 [ext]     void *mrc_extChunk;     // ext模块描述段，下面的结构体。
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:40 [ext]     void *mrc_extChunk;     // ext模块描述段，下面的结构体。
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:50 [ext] static uint32_t mr_extHelper_addr;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:65 [ext]     printf("ext call %s(0x%X[%u], 0x%X[%u])\n", o->name, p_f, p_f, p_len, p_len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:68 [ext]     mr_extHelper_addr = p_f;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:84 [ext]         LOG("ext call %s(0x%X[%u]) ret=0x%X[%u]\n", o->name, len, len, ret, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:97 [ext]     LOG("ext call %s(0x%X[%u], 0x%X[%u])\n", o->name, p, p, len, len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:149 [ext]     LOG("ext call %s(0x%X, %d, %d, %u, %u)\n", o->name, bmp, x, y, w, h);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:160 [ext]     LOG("ext call %s(0x%X[%s], 0x%X): %d\n", o->name, filename, filenameStr, mode, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:169 [ext]     LOG("ext call %s(%d): %d\n", o->name, f, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:181 [ext]     LOG("ext call %s(0x%X, 0x%X, 0x%X)\n", o->name, f, p, l);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:182 [ext]     LOG("ext call %s([%u], [%u], [%u])\n", o->name, f, p, l);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:200 [ext]     LOG("ext call %s(%d, 0x%X, %u): %d\n", o->name, f, p, l, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:211 [ext]     LOG("ext call %s(%d, %d, 0x%X): %d\n", o->name, f, pos, method, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:220 [ext]     LOG("ext call %s(%s)\n", o->name, filenameStr);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:229 [ext]     LOG("ext call %s(%s)\n", o->name, filenameStr);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:240 [ext]     LOG("ext call %s(%s, %s)\n", o->name, oldnameStr, newnameStr);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:249 [ext]     LOG("ext call %s(%s)\n", o->name, nameStr);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:258 [ext]     LOG("ext call %s(%s)\n", o->name, nameStr);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:272 [ext]     LOG("ext call %s(): 0x%X[%u]\n", o->name, ret, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:282 [ext]     // LOG("ext call %s('%s')\n", o->name, str);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:293 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:314 [ext]     LOG("ext call %s(0x%X, 0x%X)\n", o->name, mem, mem_len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:321 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:327 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:335 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:340 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:347 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:355 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:363 [ext]     LOG("ext call %s(%d)\n", o->name, ms);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:370 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:378 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:395 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:410 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:418 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:426 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:440 [ext]     LOG("ext call %s(): %d \n", o->name, ret);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:446 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:457 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:465 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:471 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:481 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:493 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:503 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:515 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:541 [ext]     LOG("ext call %s(%d)\n", o->name, s);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:574 [ext]     LOG("ext call %s(%d, 0x%x, %d, %d)\n", o->name, type, data, dataLen, loop);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:597 [ext]     LOG("ext call %s(%d)\n", o->name, type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:616 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:632 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:655 [ext] text [IN]对话框内容，unicode编码，网络字节序
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:661 [ext] EM_JS(int32, js_mr_dialogCreate, (const char *title, const char *text, int32 type), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:662 [ext]     return js_dialogCreate(title, text, type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:667 [ext]     // int32 (*mr_dialogCreate)(const char *title, const char *text, int32 type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:668 [ext]     uint32_t title, text;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:671 [ext]     uc_reg_read(uc, UC_ARM_REG_R1, &text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:673 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:675 [ext]     SET_RET_V(js_mr_dialogCreate(getMrpMemPtr(title), getMrpMemPtr(text), type));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:691 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:703 [ext] text [IN]对话框内容，unicode编码，网络字节序
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:708 [ext] EM_JS(int32, js_mr_dialogRefresh, (int32 dialog, const char *title, const char *text, int32 type), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:709 [ext]     return js_dialogRefresh(dialog, title, text, type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:714 [ext]     // int32 (*mr_dialogRefresh)(int32 dialog, const char *title, const char *text, int32 type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:715 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:717 [ext]     uint32_t title, text;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:720 [ext]     uc_reg_read(uc, UC_ARM_REG_R2, &text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:723 [ext]     SET_RET_V(js_mr_dialogRefresh(dialog, getMrpMemPtr(title), getMrpMemPtr(text), type));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:732 [ext] text [IN]文本框内容，unicode编码，网络字节序
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:742 [ext] EM_JS(int32, js_mr_textCreate, (const char *title, const char *text, int32 type), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:742 [ext] EM_JS(int32, js_mr_textCreate, (const char *title, const char *text, int32 type), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:743 [ext]     return js_textCreate(title, text, type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:743 [ext]     return js_textCreate(title, text, type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:747 [ext] static void br_mr_textCreate(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:748 [ext]     // int32 (*mr_textCreate)(const char *title, const char *text, int32 type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:748 [ext]     // int32 (*mr_textCreate)(const char *title, const char *text, int32 type);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:749 [ext]     uint32_t title, text;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:752 [ext]     uc_reg_read(uc, UC_ARM_REG_R1, &text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:754 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:756 [ext]     SET_RET_V(js_mr_textCreate(getMrpMemPtr(title), getMrpMemPtr(text), type));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:756 [ext]     SET_RET_V(js_mr_textCreate(getMrpMemPtr(title), getMrpMemPtr(text), type));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:763 [ext] EM_JS(int32, js_mr_textRelease, (int32 handle), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:764 [ext]     return js_textRelease(handle);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:768 [ext] static void br_mr_textRelease(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:769 [ext]     // int32 (*mr_textRelease)(int32 handle);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:772 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:774 [ext]     SET_RET_V(js_mr_textRelease(handle));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:781 [ext] EM_JS(int32, js_mr_textRefresh, (int32 handle, const char *title, const char *text), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:781 [ext] EM_JS(int32, js_mr_textRefresh, (int32 handle, const char *title, const char *text), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:782 [ext]     return js_textRefresh(handle, title, text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:782 [ext]     return js_textRefresh(handle, title, text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:786 [ext] static void br_mr_textRefresh(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:787 [ext]     // int32 (*mr_textRefresh)(int32 handle, const char *title, const char *text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:787 [ext]     // int32 (*mr_textRefresh)(int32 handle, const char *title, const char *text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:788 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:790 [ext]     uint32_t title, text;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:793 [ext]     uc_reg_read(uc, UC_ARM_REG_R2, &text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:795 [ext]     SET_RET_V(js_mr_textRefresh(handle, getMrpMemPtr(title), getMrpMemPtr(text)));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:795 [ext]     SET_RET_V(js_mr_textRefresh(handle, getMrpMemPtr(title), getMrpMemPtr(text)));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:810 [ext] text [IN]文本框内容，unicode编码，网络字节序
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:815 [ext]    编辑框用来显示并提供用户编辑文字信息。text是编辑框显示的初始内容。当编辑框显示时，
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:821 [ext] EM_JS(int32, js_mr_editCreate, (const char *title, const char *text, int32 type, int32 max_size), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:822 [ext]     return js_editCreate(title, text, type, max_size);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:827 [ext]     // int32 (*mr_editCreate)(const char *title, const char *text, int32 type, int32 max_size);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:828 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:830 [ext]     uint32_t title, text;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:832 [ext]     uc_reg_read(uc, UC_ARM_REG_R1, &text);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:836 [ext]     SET_RET_V(js_mr_editCreate(getMrpMemPtr(title), getMrpMemPtr(text), type, max_size));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:838 [ext]     SET_RET_V(editCreate(getMrpMemPtr(title), getMrpMemPtr(text), type, max_size));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:850 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:865 [ext] EM_JS(const char *, js_mr_editGetText, (int32 edit), {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:866 [ext]     return js_editGetText(edit);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:870 [ext] static void br_mr_editGetText(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:871 [ext]     // const char *(*mr_editGetText)(int32 edit);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:872 [ext]     LOG("ext call %s()\n", o->name);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:876 [ext]     char *str = (char *)js_mr_editGetText(edit);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:879 [ext]     char *str = editGetText(edit);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:938 [ext]     BRIDGE_FUNC_MAP(0xD0, MAP_FUNC, mr_findGetNext, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:958 [ext]     BRIDGE_FUNC_MAP(0x120, MAP_FUNC, mr_textCreate, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:959 [ext]     BRIDGE_FUNC_MAP(0x124, MAP_FUNC, mr_textRelease, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:960 [ext]     BRIDGE_FUNC_MAP(0x128, MAP_FUNC, mr_textRefresh, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:963 [ext]     BRIDGE_FUNC_MAP(0x134, MAP_FUNC, mr_editGetText, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1009 [ext]     BRIDGE_FUNC_MAP(0x1EC, MAP_FUNC, _DrawText, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1014 [ext]     BRIDGE_FUNC_MAP(0x200, MAP_FUNC, _DrawTextEx, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1082 [ext]     BRIDGE_FUNC_MAP(0xb4, MAP_FUNC, mr_textCreate, NULL, br_mr_textCreate, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1082 [ext]     BRIDGE_FUNC_MAP(0xb4, MAP_FUNC, mr_textCreate, NULL, br_mr_textCreate, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1083 [ext]     BRIDGE_FUNC_MAP(0xb8, MAP_FUNC, mr_textRelease, NULL, br_mr_textRelease, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1083 [ext]     BRIDGE_FUNC_MAP(0xb8, MAP_FUNC, mr_textRelease, NULL, br_mr_textRelease, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1084 [ext]     BRIDGE_FUNC_MAP(0xbc, MAP_FUNC, mr_textRefresh, NULL, br_mr_textRefresh, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1084 [ext]     BRIDGE_FUNC_MAP(0xbc, MAP_FUNC, mr_textRefresh, NULL, br_mr_textRefresh, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1087 [ext]     BRIDGE_FUNC_MAP(0xc8, MAP_FUNC, mr_editGetText, NULL, br_mr_editGetText, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1087 [ext]     BRIDGE_FUNC_MAP(0xc8, MAP_FUNC, mr_editGetText, NULL, br_mr_editGetText, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1189 [ext] uc_err bridge_ext_init(uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1193 [ext]     v = 1;  // 传参数1 使用mr_extHelper，因为mr_helper会有刷屏操作
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1196 [ext]     // 执行ext内的mr_c_function_load()
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1204 [ext] static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input, uint32_t input_len) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1205 [ext]     // int32 (*mr_extHelper)(void* P, int32 code, uint8* input, int32 input_len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1212 [ext]     runCode(uc, mr_extHelper_addr, CODE_ADDRESS, false);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1221 [ext]     return bridge_mr_extHelper(uc, 1, toMrpMemAddr(mr_c_event), sizeof(event_t));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1233 [ext]     // 因为回调不是从mr_extHelper调用，因此需要手动设置r9
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1251 [ext] int32_t bridge_dsm_mr_start_dsm(uc_engine *uc, char *filename, char *ext, char *entry) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1258 [ext]     mr_start_dsm_param->ext = (char *)copyStrToMrp(ext);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1258 [ext]     mr_start_dsm_param->ext = (char *)copyStrToMrp(ext);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1266 [ext]     my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->ext));
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1267 [ext]     mr_start_dsm_param->ext = NULL;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:153 [mr_open] static void br_mr_open(BridgeMap *o, uc_engine *uc) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:154 [mr_open]     // typedef int32 (*T_mr_open)(const char* filename,  uint32 mode);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:926 [mr_open]     BRIDGE_FUNC_MAP(0xA0, MAP_FUNC, mr_open, NULL, NULL, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\bridge.c:1047 [mr_open]     BRIDGE_FUNC_MAP(0x30, MAP_FUNC, open, NULL, br_mr_open, 0),
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:35 [ext] static char *holdEditText = NULL;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:39 [ext] void saveEditText(char *str) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:54 [ext]     if (holdEditText != NULL) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:55 [ext]         my_freeExt(holdEditText);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:56 [ext]         holdEditText = NULL;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:59 [ext]     holdEditText = my_mallocExt(len + 1);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:60 [ext]     memcpy(holdEditText, str, len);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:61 [ext]     holdEditText[len] = '\0';
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:64 [ext] int32_t editCreate(const char *title, const char *text, int32_t type, int32_t max_size) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:67 [ext]     SDL_Log("title: '%s', text: '%s', type: %d, max_size: %d", title, text, type, max_size);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:67 [ext]     SDL_Log("title: '%s', text: '%s', type: %d, max_size: %d", title, text, type, max_size);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:68 [ext]     if (SDL_SetClipboardText(text) == 0) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:68 [ext]     if (SDL_SetClipboardText(text) == 0) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:78 [ext]     if (holdEditText != NULL) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:79 [ext]         my_freeExt(holdEditText);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:80 [ext]         holdEditText = NULL;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:85 [ext] char *editGetText(int32 edit) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:86 [ext]     SDL_Log("editGetText(): '%s'", holdEditText);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:86 [ext]     SDL_Log("editGetText(): '%s'", holdEditText);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:87 [ext]     return holdEditText;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:263 [ext]                                 char *str = SDL_GetClipboardText();
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\main.c:264 [ext]                                 saveEditText(str);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:10 [ext]     uint32 next;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:34 [ext]     LG_mem_free.next = 0;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:36 [ext]     ((LG_mem_free_t *)LG_mem_base)->next = LG_mem_len;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:55 [ext]     LG_mem_free_t *previous, *nextfree, *l;
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:67 [ext]     if (LG_mem_base + LG_mem_free.next > LG_mem_end) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:72 [ext]     nextfree = (LG_mem_free_t *)(LG_mem_base + previous->next);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:72 [ext]     nextfree = (LG_mem_free_t *)(LG_mem_base + previous->next);
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:73 [ext]     while ((char *)nextfree < LG_mem_end) {
+C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_src_audit_v25\vmrp-master\memory.c:74 [ext]         if (nextfree->len == len) {

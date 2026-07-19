@@ -1,0 +1,46 @@
+﻿Phase 6C-C Bootstrap Entry R9 ABI Contract Recovery
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+bootstrap_entry_r9_gate=blocked
+module_r9_switch_gate=open
+phase6b_b_gate=blocked
+er_rw_metadata_timing_gate=blocked
+abi_class=BOOTSTRAP_PRESERVE_CALLER_R9_DOCUMENTED
+r9_causality=R9_NOT_USED_BEFORE_FAULT
+fault_address_expr=r4+0x27
+entry_identity=THUNK
+next_allowed_fix=PRESERVE_CALLER_R9_POLICY
+xt_pattern=ABSENT
+mode=observe_only
+Q1_fault_address_expr=r4+0x27
+Q2_r9_in_dataflow=no
+Q3_r9_causality=R9_NOT_USED_BEFORE_FAULT
+Q4_bootstrap_path=
+[BOOTSTRAP_PATH] entry_offset=0x1C mr_c_function_load_reached=no c_function_new_seen=yes blocking_branch_offset=0x0 condition_source=ARGUMENT condition_value=0x0 fault_before_load=no evidence=OBSERVED bootstrap_entry_r9_gate=blocked
+Q5_bootstrap_proto=
+[BOOTSTRAP_PROTO] r0_role=ZERO_COMMAND_OR_NULL r0=0x0 r1_role=UNKNOWN r1=0x2D8DFC r2_role=UNKNOWN r2=0x12 r3_role=UNKNOWN r3=0x27FB74 stack_args=unknown evidence=OBSERVED note=no_preset_context bootstrap_entry_r9_gate=blocked
+Q6_entry_identity=THUNK
+Q7_static_base=
+[BOOTSTRAP_STATIC_BASE] base=0x280400 source=CALLER_R9 available_before_entry=yes documented=no used_by_entry=unknown evidence=OBSERVED note=no_er_rw_delta_guess bootstrap_entry_r9_gate=blocked
+Q8_fixr9_stages=
+emitted_bootstrap_helper_callback
+Q9_xt_pattern=ABSENT
+Q10_class=BOOTSTRAP_PRESERVE_CALLER_R9_DOCUMENTED next_allowed_fix=PRESERVE_CALLER_R9_POLICY note=R9_causal_but_no_DOCUMENTED_CROSS_TARGET_fix
+Q11_observe_only=yes no_r9_invent no_early_er_rw no_defer_entry
+Q12_gates=bootstrap_entry_r9_gate=blocked;module_r9_switch_gate=open;phase6b_b_gate=blocked;er_rw_metadata_timing_gate=blocked
+jjfb_hash=PASS ok
+bootstrap_r9_abi=PASS ok
+call_kind_bootstrap=PASS ok
+bootstrap_fault=PASS ok
+bootstrap_r9_use=PASS ok
+bootstrap_path=PASS ok
+bootstrap_proto=PASS ok
+bootstrap_entry_identity=PASS ok
+fixr9_stage=PASS ok
+bootstrap_abi_class=PASS ok
+bootstrap_entry_r9_gate=PASS ok
+module_r9_switch_gate=PASS ok
+phase6b_b_gate=PASS ok
+er_rw_timing_gate=PASS ok
+no_guest_mutation=PASS ok
+xt_wxjwq=PASS ok
+next_fix_gated=PASS ok

@@ -1,0 +1,3 @@
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+mythroad=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+dsm=jjfb sha1=c6a0cbda0ce8 sdk_key=g:u2

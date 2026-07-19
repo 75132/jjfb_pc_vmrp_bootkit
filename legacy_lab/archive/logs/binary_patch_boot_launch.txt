@@ -1,0 +1,4 @@
+started patched main C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+pid=5024
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\binary_patch_boot_stdout_20260715_144436.txt
+waiting 90s

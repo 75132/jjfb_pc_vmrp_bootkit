@@ -1,0 +1,15 @@
+给 OpenClaw：
+
+v14 补丁写入成功，但 wrapper hook 后运行没有推进。v15 改成最小改动：直接把 call 前的
+c7 44 24 0c 00 00 00 00
+改成
+c7 44 24 0c <startParamVA>
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_DIRECT_ARG_PATCH_AND_BOOT_V15.ps1
+
+跑完发：
+logs\direct_arg_patch_feedback_*.zip
+
+恢复：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_RESTORE_MAIN_EXE_V15.ps1

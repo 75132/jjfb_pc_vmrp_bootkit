@@ -1,0 +1,22 @@
+{
+  "success": {
+    "idx": 0,
+    "name": "cfg_record36_ascii_g:u2",
+    "sha1": "c0d64c43aa023a14a4546288fab5d07f9ca9b9d9",
+    "size": 4,
+    "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdkkey_try_000_cfg_record36_ascii_g_u2_20260715_130721.txt",
+    "failed_sdk_key": false,
+    "text_tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n"
+  },
+  "tries": [
+    {
+      "idx": 0,
+      "name": "cfg_record36_ascii_g:u2",
+      "sha1": "c0d64c43aa023a14a4546288fab5d07f9ca9b9d9",
+      "size": 4,
+      "stdout": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\sdkkey_try_000_cfg_record36_ascii_g_u2_20260715_130721.txt",
+      "failed_sdk_key": false,
+      "text_tail": "libpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\nlibpng warning: iCCP: known incorrect sRGB profile\n"
+    }
+  ]
+}

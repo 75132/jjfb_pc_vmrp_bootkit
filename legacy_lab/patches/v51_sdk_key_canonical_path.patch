@@ -1,0 +1,18 @@
+--- a/runtime/vmrp_src_build_v27/vmrp-master/fileLib.c
++++ b/runtime/vmrp_src_build_v27/vmrp-master/fileLib.c
+@@ -117,6 +117,15 @@
+             jjfb_join(candidate, sizeof(candidate), root, guest);
+             snprintf(canonical, sizeof(canonical), "%s", candidate);
+             if (my_path_exists(candidate)) goto found;
++        } else if (strncmp(guest, "mythroad/", sizeof("mythroad/") - 1) == 0) {
++            /* Generic Mythroad paths such as mythroad/sdk_key.dat belong to
++             * the selected 240x320 root when that file exists there.  v50
++             * handled mythroad/gwy/ paths specially but otherwise fell through to
++             * the legacy process-CWD copy, so a stale 4-byte sdk_key.dat won. */
++            rel = guest + (sizeof("mythroad/") - 1);
++            jjfb_join(candidate, sizeof(candidate), root, rel);
++            snprintf(canonical, sizeof(canonical), "%s", candidate);
++            if (my_path_exists(candidate)) goto found;
+         } else if (gwy_root && *gwy_root) {
+             jjfb_join(candidate, sizeof(candidate), gwy_root, guest);
+             snprintf(canonical, sizeof(canonical), "%s", candidate);

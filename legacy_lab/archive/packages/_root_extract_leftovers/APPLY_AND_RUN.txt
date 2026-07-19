@@ -1,0 +1,3 @@
+1. 将本包内容覆盖到 jjfb_pc_vmrp_bootkit 项目根目录。
+2. PowerShell 执行：.\RUN_V56_UPSTREAM_TRIGGER_COVERAGE.ps1 -Seconds 25
+3. 打开 reports\v56_upstream_trigger_run_result.md。

@@ -1,0 +1,488 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2803E4 len=32 is_chunk=0
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x8 value=0x1 writer_module=unknown writer_offset=0x0 target_class=unknown
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x4 value=0x25D0 writer_module=unknown writer_offset=0x0 target_class=guest_data
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x0 value=0x280400 writer_module=unknown writer_offset=0x0 target_class=unknown
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=14ac45a8
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=profile_alias scope=mrp_member result=HIT
+[EXT_RESOLVE] profile=jjfb-400101-v12-original
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_VIEW_DECODE] member=cfunction.ext stored_size=161178 unpacked_size=253420 result=OK sha_source=robotol.ext
+[MRP_MEMBER_VIEW] installed package=gwy/jjfb.mrp view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=4 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=4 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/jjfb.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=4 method=1 return=0
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=4 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=4 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=WRONG_HELPER_CALL_MISSING_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=4 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=4 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=1951 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1514 got=1514 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+_mr_readFile reallen:3787
+mr_unzip
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=3488 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=219 got=219 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+_mr_readFile reallen:232
+mr_unzip
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=2 code_base=0x2AEB00 code_size=320 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2AEB08 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[EXT_LOAD] module_id=2 load_id=3 stage=MAPPED code_base=0x2AEB00 code_size=320 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=2 code=[0x2AEB00,0x2AEC40) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE
+[WARN]mr_cacheSync(0x002AEB00, 320)
+[GUEST_EXT] ext_base=0x2AEB04
+--- ext: @002AEB04
+[CROSS_MODULE_CALL] transfer_id=1 hop=DSM_TO_LOADER from_module=dsm:cfunction.ext from_module_id=4 from_pc=0x89B78 to_module=mrc_loader.ext to_module_id=2 target=0x2AEB0C target_offset=0xC r0=0x0 r1=0x2AEB0C lr=0x89B78 evidence=OBSERVED
+[R0_LAYER] stage=DSM_TO_DISPATCH r0=0x0 dispatch_module=mrc_loader.ext
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x2AEB48 p_len=20 p_guest=0x2AC8DC rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=2 helper=0x2AEB48 header_entry_candidate=0x2AEB08 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB48
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=REGISTERED size=232
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8DC len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2AC8DC len=32 is_chunk=0
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+[EXT_ENTRY] module_id=2 method=0 return=0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB48
+[EXT_ENTRY_POINTS] module_id=2 image_base=0x2AEB00 header_entry_candidate=0x2AEB08 chunk_field_04=0x0 registered_helper=0x2AEB48 observed_first_pc=0x2AEB34 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=2 load_id=3 helper=0x2AEB48 entry_pc=0x2AEB34 module_offset=0x34 method=0 r0=0x0 r1=0x2AEB0C r2=0x3A r3=0x27FB5C r9=0x280400 er_rw=0x280400 sp=0x27FD88 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=4 header_entry_candidate=0x2AEB08 chunk_field_04=0x0 registered_helper=0x2AEB48 entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x2AEB34 dispatch_module=mrc_loader.ext dispatch_offset=0x34 callee_module=mrc_loader.ext first_executed_pc=0x2AEB34 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=mrc_loader.ext module_id=2 image_base=0x2AEB00 header_raw=0x2AEB08 header_norm=0x2AEB08 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0x2AEB48 helper_norm=0x2AEB48 observed_first_pc_raw=0x2AEB34 observed_norm=0x2AEB34 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=mrc_loader.ext module=mrc_loader.ext module_id=2 module_offset=0x34 pc=0x2AEB34 helper=0x2AEB48 target=0x2AEB34 origin=GUEST_NESTED r0=0x0 r1=0x2AEB0C r2=0x3A r3=0x27FB5C r9=0x280400 sp=0x27FD88 lr=0xA2548 cpsr=0x600001D3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[CROSS_MODULE_CALL] transfer_id=2 hop=DSM_TO_LOADER from_module=dsm:cfunction.ext from_module_id=4 from_pc=0xA2548 to_module=mrc_loader.ext to_module_id=2 target=0x2AEB34 target_offset=0x34 r0=0x0 r1=0x2AEB0C lr=0xA2548 evidence=OBSERVED
+[R0_LAYER] stage=DSM_TO_DISPATCH r0=0x0 dispatch_module=mrc_loader.ext
+[HELPER_ABI] stage=CALL_SITE_BEFORE nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=2 module_offset=0x22544 pc=0xA2544 helper=0x0 target=0x2AEB34 origin=LR_PROXY r0=0x0 r1=0x2AEB0C r2=0x3A r3=0x27FB5C r9=0x280400 sp=0x27FD88 lr=0xA2548 cpsr=0x600001D3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[HELPER_ABI_CALLER_DISASM] call_pc=0xA2544 thumb=0 window=±30
+[HELPER_ABI_CALLER_DISASM]   off=-30 addr=0xA24CC raw=0xE59F1024 LDR r1, [r15, #0x24]
+[HELPER_ABI_CALLER_DISASM]   off=-29 addr=0xA24D0 raw=0xE08F1001 .word 0xE08F1001
+[HELPER_ABI_CALLER_DISASM]   off=-28 addr=0xA24D4 raw=0xE580100C STR r1, [r0, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=-27 addr=0xA24D8 raw=0xE3A01000 MOV r1, #0x0
+[HELPER_ABI_CALLER_DISASM]   off=-26 addr=0xA24DC raw=0xE5801010 STR r1, [r0, #0x10]
+[HELPER_ABI_CALLER_DISASM]   off=-25 addr=0xA24E0 raw=0xE5801014 STR r1, [r0, #0x14]
+[HELPER_ABI_CALLER_DISASM]   off=-24 addr=0xA24E4 raw=0xE12FFF1E .word 0xE12FFF1E
+[HELPER_ABI_CALLER_DISASM]   off=-23 addr=0xA24E8 raw=0x0000C194 .word 0x0000C194
+[HELPER_ABI_CALLER_DISASM]   off=-22 addr=0xA24EC raw=0x00001D7C .word 0x00001D7C
+[HELPER_ABI_CALLER_DISASM]   off=-21 addr=0xA24F0 raw=0x00004FD4 .word 0x00004FD4
+[HELPER_ABI_CALLER_DISASM]   off=-20 addr=0xA24F4 raw=0x0000C16C .word 0x0000C16C
+[HELPER_ABI_CALLER_DISASM]   off=-19 addr=0xA24F8 raw=0x0000A9D8 .word 0x0000A9D8
+[HELPER_ABI_CALLER_DISASM]   off=-18 addr=0xA24FC raw=0xE92D000F .word 0xE92D000F
+[HELPER_ABI_CALLER_DISASM]   off=-17 addr=0xA2500 raw=0xE92D4010 .word 0xE92D4010
+[HELPER_ABI_CALLER_DISASM]   off=-16 addr=0xA2504 raw=0xE24DDF82 .word 0xE24DDF82
+[HELPER_ABI_CALLER_DISASM]   off=-15 addr=0xA2508 raw=0xE28D0F85 .word 0xE28D0F85
+[HELPER_ABI_CALLER_DISASM]   off=-14 addr=0xA250C raw=0xE58D0004 STR r0, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-13 addr=0xA2510 raw=0xE28D4008 .word 0xE28D4008
+[HELPER_ABI_CALLER_DISASM]   off=-12 addr=0xA2514 raw=0xE1A00004 .word 0xE1A00004
+[HELPER_ABI_CALLER_DISASM]   off=-11 addr=0xA2518 raw=0xE28D3004 .word 0xE28D3004
+[HELPER_ABI_CALLER_DISASM]   off=-10 addr=0xA251C raw=0xE59D2210 LDR r2, [r13, #0x210]
+[HELPER_ABI_CALLER_DISASM]   off=-9 addr=0xA2520 raw=0xE3A01F80 MOV r1, #0x200
+[HELPER_ABI_CALLER_DISASM]   off=-8 addr=0xA2524 raw=0xEB002A87 .word 0xEB002A87
+[HELPER_ABI_CALLER_DISASM]   off=-7 addr=0xA2528 raw=0xE3A00000 MOV r0, #0x0
+[HELPER_ABI_CALLER_DISASM]   off=-6 addr=0xA252C raw=0xE58D0004 STR r0, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-5 addr=0xA2530 raw=0xE59F001C LDR r0, [r15, #0x1C]
+[HELPER_ABI_CALLER_DISASM]   off=-4 addr=0xA2534 raw=0xE0800009 .word 0xE0800009
+[HELPER_ABI_CALLER_DISASM]   off=-3 addr=0xA2538 raw=0xE5900000 LDR r0, [r0, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=-2 addr=0xA253C raw=0xE5901004 LDR r1, [r0, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-1 addr=0xA2540 raw=0xE1A00004 .word 0xE1A00004
+[HELPER_ABI_CALLER_DISASM] * off=+0 addr=0xA2544 raw=0xE12FFF31 BLX r1
+[HELPER_ABI_CALLER_DISASM]   off=+1 addr=0xA2548 raw=0xE28DDF82 .word 0xE28DDF82
+[HELPER_ABI_CALLER_DISASM]   off=+2 addr=0xA254C raw=0xE49D4004 LDR r4, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=+3 addr=0xA2550 raw=0xE49DF014 LDR r15, [r13, #0x14]
+[HELPER_ABI_CALLER_DISASM]   off=+4 addr=0xA2554 raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+5 addr=0xA2558 raw=0xE59F000C LDR r0, [r15, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=+6 addr=0xA255C raw=0xE0800009 .word 0xE0800009
+[HELPER_ABI_CALLER_DISASM]   off=+7 addr=0xA2560 raw=0xE5900000 LDR r0, [r0, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=+8 addr=0xA2564 raw=0xE5900010 LDR r0, [r0, #0x10]
+[HELPER_ABI_CALLER_DISASM]   off=+9 addr=0xA2568 raw=0xE12FFF10 .word 0xE12FFF10
+[HELPER_ABI_CALLER_DISASM]   off=+10 addr=0xA256C raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+11 addr=0xA2570 raw=0xE59F300C LDR r3, [r15, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=+12 addr=0xA2574 raw=0xE0833009 .word 0xE0833009
+[HELPER_ABI_CALLER_DISASM]   off=+13 addr=0xA2578 raw=0xE5933000 LDR r3, [r3, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=+14 addr=0xA257C raw=0xE5933038 LDR r3, [r3, #0x38]
+[HELPER_ABI_CALLER_DISASM]   off=+15 addr=0xA2580 raw=0xE12FFF13 .word 0xE12FFF13
+[HELPER_ABI_CALLER_DISASM]   off=+16 addr=0xA2584 raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+17 addr=0xA2588 raw=0xE92D40F8 .word 0xE92D40F8
+[HELPER_ABI_CALLER_DISASM]   off=+18 addr=0xA258C raw=0xE1A05000 .word 0xE1A05000
+[HELPER_ABI_CALLER_DISASM]   off=+19 addr=0xA2590 raw=0xE1510002 .word 0xE1510002
+[HELPER_ABI_CALLER_DISASM]   off=+20 addr=0xA2594 raw=0xE1A00002 .word 0xE1A00002
+[HELPER_ABI_CALLER_DISASM]   off=+21 addr=0xA2598 raw=0xE1A06001 .word 0xE1A06001
+[HELPER_ABI_CALLER_DISASM]   off=+22 addr=0xA259C raw=0x91A07006 .word 0x91A07006
+[HELPER_ABI_CALLER_DISASM]   off=+23 addr=0xA25A0 raw=0x81A07000 .word 0x81A07000
+[HELPER_ABI_CALLER_DISASM]   off=+24 addr=0xA25A4 raw=0xE3550000 .word 0xE3550000
+[HELPER_ABI_CALLER_DISASM]   off=+25 addr=0xA25A8 raw=0x08BD40F8 .word 0x08BD40F8
+[HELPER_ABI_CALLER_DISASM]   off=+26 addr=0xA25AC raw=0x0AFFFC87 .word 0x0AFFFC87
+[HELPER_ABI_CALLER_DISASM]   off=+27 addr=0xA25B0 raw=0xE3500000 .word 0xE3500000
+[HELPER_ABI_CALLER_DISASM]   off=+28 addr=0xA25B4 raw=0x1A000004 .word 0x1A000004
+[HELPER_ABI_CALLER_DISASM]   off=+29 addr=0xA25B8 raw=0xE1A01006 .word 0xE1A01006
+[HELPER_ABI_CALLER_DISASM]   off=+30 addr=0xA25BC raw=0xE1A00005 .word 0xE1A00005
+[CHUNK_PTR_TRACE] reconstruct=pc_rel_add_r9 lit=0x2084 r9=0x280400 slot=0x282484 chunk=0x280254 evidence=OBSERVED
+[CHUNK_PTR_TRACE] reconstruct_field04_mismatch cand=0x280254 at4=0x280258 dsm_target=0x2AEB34 note=observe_anyway
+[CHUNK_FIELD_04_WRITE] chunk_base=0x280254 value=0x2AEB34 writer_module=NONE writer_offset=0x0 module=mrc_loader.ext note=NONE_BEFORE_SELECT
+[DSM_ENTRY_SELECT] source=chunk_field_0x4 entry_va=0x2AEB34 entry_module=mrc_loader.ext entry_offset=0x34 registered_helper=0x2AEB48 header_entry_candidate=0x2AEB08 chunk_field_04=0x2AEB34 match=chunk_field_04 r0_source=explicit_zero r0_value=0x0 r1_target=0x2AEB34 caller_module=dsm:cfunction.ext caller_offset=0x22544 evidence=OBSERVED+DOCUMENTED_chunk_plus4 chunk_field_04_writer=NONE_BEFORE_SELECT chunk_base=0x280254 chunk_reg=r0
+[BOOTSTRAP_SEQ] event=DSM_ENTRY_SELECT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT
+[ENTRY_TRANSFER] dispatch_target=0x2AEB34 dispatch_module=mrc_loader.ext dispatch_offset=0x34 callee_module=mrc_loader.ext first_executed_pc=0x2AEB34 r0=0x0 stage=CALL_SITE_BEFORE raw_target=0x2AEB34
+[ENTRY_OBJECT_TRACE] stage=FIELD_LOAD base_reg=r0 base_value=0x280254 field_offset=0x4 field_value=0x2AEB34 field_live_peek=0x280258 dispatch_target=0x2AEB34 r0_at_blx=0x0
+[ENTRY_OBJECT_TRACE] stage=BASE_SOURCE source=pc_rel_add_r9 source_address=0x282484 producer_module=dsm:cfunction.ext producer_offset=0x22544 caller_module=dsm:cfunction.ext caller_offset=0x22544
+[ADDR_CLASS] role=entry_object_base va=0x280254 class=STACK module=stack offset=0x0 module_id=0
+[ADDR_CLASS] role=entry_object_field_04 va=0x2AEB34 class=MODULE_CODE module=mrc_loader.ext offset=0x34 module_id=2
+[ADDR_CLASS] role=dispatch_target va=0x2AEB34 class=MODULE_CODE module=mrc_loader.ext offset=0x34 module_id=2
+[ENTRY_TRANSFER] dispatch_target=0x2AEB34 dispatch_module=mrc_loader.ext dispatch_offset=0x34 callee_module=mrc_loader.ext first_executed_pc=0x2AEB34 r0=0x0 stage=CALL_SITE_BEFORE equals_observed_first=1
+[ENTRY_OBJECT_KIND] kind=FUNCTION_TABLE confidence=CANDIDATE field_matches_dispatch=0 base_class=STACK dispatch_class=MODULE_CODE
+[OBJECT_IDENTITY_CASE] case=A legend=A_loader_dispatcher|B_trampoline|C_base_wrong|D_descriptor_or_table|E_attrib_bug dispatch_module=mrc_loader.ext dispatch_offset=0x34 object_kind=FUNCTION_TABLE dsm_direct_robotol=no r0_at_dsm_blx=0x0 candidate_wrong=0 phase6b_b_gate=blocked
+[ENTRY_RECONCILE] module=mrc_loader.ext module_id=2 image_base=0x2AEB00 header_raw=0x2AEB08 header_norm=0x2AEB08 chunk_field_04_raw=0x2AEB34 chunk_field_04_norm=0x2AEB34 helper_raw=0x2AEB48 helper_norm=0x2AEB48 observed_first_pc_raw=0x2AEB34 observed_norm=0x2AEB34 relation=HEADER_ENTRY_WRONG dsm_select_correct=no chunk_field_04_writer=NONE_BEFORE_SELECT
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=mrc_loader.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 dsm_match=chunk_field_04 dsm_select_correct=no fix_applied=none phase6b_b_gate=blocked
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=231624 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=161178 got=161178 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+_mr_readFile reallen:253420
+mr_unzip
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=3 code_base=0x2D8DE0 code_size=253504 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2D8DE8 result=OK
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=MAPPED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[EXT_LOAD] module_id=3 load_id=4 stage=MAPPED code_base=0x2D8DE0 code_size=253504 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=3 code=[0x2D8DE0,0x316C20) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+[GUEST_EXT] ext_base=0x2D8DF4
+--- ext: @002D8DF4
+[CROSS_MODULE_CALL] transfer_id=3 hop=DSM_TO_ROBOTOL from_module=dsm:cfunction.ext from_module_id=4 from_pc=0x89B78 to_module=robotol.ext to_module_id=3 target=0x2D8DFC target_offset=0x1C r0=0x0 r1=0x2D8DFC lr=0x89B78 evidence=OBSERVED
+[DSM_DIRECT_TARGET] module_id=3 module=robotol.ext target=0x2D8DFC relation=DIRECT_TARGET_IS_INTERNAL_ENTRY helper=0x0 observed_first=0x0 evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=4 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303B90 to_module=dsm:cfunction.ext to_module_id=4 target=0x89CF4 target_offset=0x9CF4 r0=0x304AED r1=0x14 lr=0x2D8E0C evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x304AED p_len=20 p_guest=0x0 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=3 helper=0x304AED header_entry_candidate=0x2D8DE8 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=REGISTERED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AED
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=REGISTERED size=253420
+[GUEST_CFUNCTION_NEW] module_id=3 helper=0x304AED p_len=20 reason=region_indirect
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x304AED p_len=20 p_guest=0x2AC8DC rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8DC len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x280254 len=64 is_chunk=1
+_mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
+[EXT_ENTRY] module_id=3 method=0 return=0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=ENTRY_CALLED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AED
+[EXT_ENTRY_POINTS] module_id=3 image_base=0x2D8DE0 header_entry_candidate=0x2D8DE8 chunk_field_04=0x0 registered_helper=0x304AED observed_first_pc=0x303B92 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=3 load_id=4 helper=0x304AED entry_pc=0x303B92 module_offset=0x2ADB2 method=0 r0=0x0 r1=0x2D8DFC r2=0x3A r3=0x27FB4C r9=0x280400 er_rw=0x280400 sp=0x27FD78 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=4 header_entry_candidate=0x2D8DE8 chunk_field_04=0x0 registered_helper=0x304AED entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x303B92 dispatch_module=robotol.ext dispatch_offset=0x2ADB2 callee_module=robotol.ext first_executed_pc=0x303B92 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=robotol.ext module_id=3 image_base=0x2D8DE0 header_raw=0x2D8DE8 header_norm=0x2D8DE8 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0x304AED helper_norm=0x304AEC observed_first_pc_raw=0x303B92 observed_norm=0x303B92 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=robotol.ext module=robotol.ext module_id=3 module_offset=0x2ADB2 pc=0x303B92 helper=0x304AED target=0x303B92 origin=GUEST_NESTED r0=0x0 r1=0x2D8DFC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[CROSS_MODULE_CALL] transfer_id=5 hop=DSM_TO_ROBOTOL from_module=dsm:cfunction.ext from_module_id=4 from_pc=0xA2548 to_module=robotol.ext to_module_id=3 target=0x303B92 target_offset=0x2ADB2 r0=0x0 r1=0x2D8DFC lr=0xA2548 evidence=OBSERVED
+[DSM_DIRECT_TARGET] module_id=3 module=robotol.ext target=0x303B92 relation=DIRECT_TARGET_IS_INTERNAL_ENTRY helper=0x304AED observed_first=0x303B92 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x303BB6 target=0x2D8F38 arg0=0x3045B9 arg1=0x281F7C
+[CROSS_MODULE_CALL] transfer_id=6 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303BC4 to_module=dsm:cfunction.ext to_module_id=4 target=0x80160 target_offset=0x160 r0=0x1520 r1=0x80160 lr=0x303BBB evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=7 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303BEC to_module=dsm:cfunction.ext to_module_id=4 target=0x94F04 target_offset=0x14F04 r0=0x2B1858 r1=0x0 lr=0x303BC7 evidence=OBSERVED
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1858
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x304AFE target=0x2D8EE8 arg0=0x2B1858 arg1=0x280400
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x304AFE target=0x2D8EE8 arg0=0x2B1858 arg1=0x280400
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x304B24 target=0x2D98E5 arg0=0x0 arg1=0x2B2C48
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D990E target=0x304559 arg0=0x1 arg1=0x64
+>>> Tracing mem_invalid mem_type:UC_MEM_READ_UNMAPPED at 0x28, size:0x4, value:0x0
+==========================REG=================================
+ R0=0x00000000	R1=0x00000064	 R2=0x00000000	 R3=0x002AC8DC	N:0
+ R4=0x00000001	R5=0x00000064	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x002B1858	R10=0x00000040	R11=0x002AD95C	C:0
+R12=0x00000000	SP=0x0027FD28	 LR=0x002D9913	 PC=0x00304580	V:0
+==============================================================
+[EXT_FAULT] access_type=19 invalid_address=0x28 access_size=4 fault_pc=0x304580 module_offset=0x2B7A0 module_id=3 load_id=4 code_base=0x2D8DE0 code_size=253504 lr=0x2D9913 sp=0x27FD28 cpsr=0x400001F3 caller_module=robotol.ext caller_offset=0xB32
+[EXT_FAULT_REGS] r0=0x0 r1=0x64 r2=0x0 r3=0x2AC8DC r4=0x1 r5=0x64 r6=0x0 r7=0x0 r8=0x0 r9=0x2B1858 r10=0x40 r11=0x2AD95C r12=0x0 sp=0x27FD28 lr=0x2D9913 pc=0x304580
+[HELPER_ABI_SUMMARY] call_site_r0=0x0 thunk_r0=0x0 enter_r0=0x0 r0_became_zero_at=CALL_SITE_BEFORE thunk_drop=false call_site_origin=LR_PROXY
+[EXT_FAULT_CLASS] root_cause=ENTRY_ARGUMENT
+[BOOTSTRAP_CLASSIFY] entry_class=WRONG_ENTRY_SELECTION primary=A field28_writer=NONE_BEFORE_FAULT p_candidate=0x2AC8DC chunk_candidate=0x280254 bootstrap_seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER note_v49=HYPOTHESIS_only_not_copied phase6b_gate=no_context_create
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=robotol.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 fix_applied=none phase6b_b_gate=blocked
+[BOOTSTRAP_SEQ] event=FAULT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>FAULT
+[EXT_FAIL] module_id=3 stage=ENTRY_EXECUTION access=UC_MEM_READ_UNMAPPED fault_pc=0x304580 module_offset=0x2B7A0 invalid_address=0x28 access_size=4 method=0 caller_pc=0xA2548 base_reg=r0 base_value=0x0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=FAILED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AED
+[EXT_FAULT_DISASM] window_pc=0x304580 thumb=1
+[EXT_FAULT_DISASM]   off=-20 addr=0x304558 raw=0x0000B5F0 .hword 0xB5F0
+[EXT_FAULT_DISASM]   off=-19 addr=0x30455A raw=0x00001C0D .hword 0x1C0D
+[EXT_FAULT_DISASM]   off=-18 addr=0x30455C raw=0x00001C04 .hword 0x1C04
+[EXT_FAULT_DISASM]   off=-17 addr=0x30455E raw=0x00001C16 .hword 0x1C16
+[EXT_FAULT_DISASM]   off=-16 addr=0x304560 raw=0x00004A0A .hword 0x4A0A
+[EXT_FAULT_DISASM]   off=-15 addr=0x304562 raw=0x0000B085 .hword 0xB085
+[EXT_FAULT_DISASM]   off=-14 addr=0x304564 raw=0x0000469C .hword 0x469C
+[EXT_FAULT_DISASM]   off=-13 addr=0x304566 raw=0x0000447A .hword 0x447A
+[EXT_FAULT_DISASM]   off=-12 addr=0x304568 raw=0x0000980B LDR r0, [r13, #0x2C]
+[EXT_FAULT_DISASM]   off=-11 addr=0x30456A raw=0x0000990C LDR r1, [r13, #0x30]
+[EXT_FAULT_DISASM]   off=-10 addr=0x30456C raw=0x00009F0A LDR r7, [r13, #0x28]
+[EXT_FAULT_DISASM]   off=-9 addr=0x30456E raw=0x00006BD3 LDR r3, [r2, #0x3C]
+[EXT_FAULT_DISASM]   off=-8 addr=0x304570 raw=0x00002202 .hword 0x2202
+[EXT_FAULT_DISASM]   off=-7 addr=0x304572 raw=0x00009203 .hword 0x9203
+[EXT_FAULT_DISASM]   off=-6 addr=0x304574 raw=0x00009102 .hword 0x9102
+[EXT_FAULT_DISASM]   off=-5 addr=0x304576 raw=0x00009001 .hword 0x9001
+[EXT_FAULT_DISASM]   off=-4 addr=0x304578 raw=0x00009700 .hword 0x9700
+[EXT_FAULT_DISASM]   off=-3 addr=0x30457A raw=0x000068D8 LDR r0, [r3, #0xC]
+[EXT_FAULT_DISASM]   off=-2 addr=0x30457C raw=0x00001C29 .hword 0x1C29
+[EXT_FAULT_DISASM]   off=-1 addr=0x30457E raw=0x00001C32 .hword 0x1C32
+[EXT_FAULT_DISASM] * off=+0 addr=0x304580 raw=0x00006A87 LDR r7, [r0, #0x28]
+[EXT_FAULT_INSN] fault_instruction=LDR r7, [r0, #0x28] base_register=r0 base_value=0x0 imm=0x28 effective_address=0x28 dest_or_src=r7
+[EXT_FAULT_DISASM]   off=+1 addr=0x304582 raw=0x00001C20 .hword 0x1C20
+[EXT_FAULT_DISASM]   off=+2 addr=0x304584 raw=0x00004663 .hword 0x4663
+[EXT_FAULT_DISASM]   off=+3 addr=0x304586 raw=0x000047B8 .hword 0x47B8
+[EXT_FAULT_DISASM]   off=+4 addr=0x304588 raw=0x0000B005 .hword 0xB005
+[EXT_FAULT_DISASM]   off=+5 addr=0x30458A raw=0x0000BDF0 .hword 0xBDF0
+[EXT_FAULT_DISASM]   off=+6 addr=0x30458C raw=0x00004852 .hword 0x4852
+[EXT_FAULT_DISASM]   off=+7 addr=0x30458E raw=0x0000FFFD .hword 0xFFFD
+[EXT_FAULT_DISASM]   off=+8 addr=0x304590 raw=0x00001C03 .hword 0x1C03
+[EXT_FAULT_DISASM]   off=+9 addr=0x304592 raw=0x00004808 .hword 0x4808
+[EXT_FAULT_DISASM]   off=+10 addr=0x304594 raw=0x0000B510 .hword 0xB510
+[EXT_FAULT_DISASM]   off=+11 addr=0x304596 raw=0x00002200 .hword 0x2200
+[EXT_FAULT_DISASM]   off=+12 addr=0x304598 raw=0x00004478 .hword 0x4478
+[EXT_FAULT_DISASM]   off=+13 addr=0x30459A raw=0x00006BC4 LDR r4, [r0, #0x3C]
+[EXT_FAULT_DISASM]   off=+14 addr=0x30459C raw=0x0000B084 .hword 0xB084
+[EXT_FAULT_DISASM]   off=+15 addr=0x30459E raw=0x00002100 .hword 0x2100
+[EXT_FAULT_DISASM]   off=+16 addr=0x3045A0 raw=0x00009101 .hword 0x9101
+[EXT_FAULT_DISASM]   off=+17 addr=0x3045A2 raw=0x00009102 .hword 0x9102
+[EXT_FAULT_DISASM]   off=+18 addr=0x3045A4 raw=0x00009203 .hword 0x9203
+[EXT_FAULT_DISASM]   off=+19 addr=0x3045A6 raw=0x00009200 .hword 0x9200
+[EXT_FAULT_DISASM]   off=+20 addr=0x3045A8 raw=0x000068E0 LDR r0, [r4, #0xC]
+[HELPER_ABI_FIELD28] fault_pc=0x304580 dest_rt=7 scan_forward=24
+[HELPER_ABI_FIELD28] r0_offsets saw_00=0 saw_04=0 saw_0c=0 saw_28=1 saw_2c=0
+[HELPER_ABI_FIELD28] dest_use blx=1 store=0 further_ldr=1
+[HELPER_ABI_FIELD28] layout_class=unknown_or_partial_chunk field_28=unconfirmed note=mr_c_function_st_len20_cannot_hold_0x28
+[HELPER_ABI_FIELD28] UnknownEntryContext candidate: field_00=? field_04=? field_0c=? field_28=seen field_2c=?
+[EXT_FAULT_RING] count=128
+[EXT_FAULT_RING] i=0 pc=0x2D92BC off=0x4DC r0=0x284 r1=0x281F7C r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1D3
+[EXT_FAULT_RING] i=1 pc=0x2D92C0 off=0x4E0 r0=0x284 r1=0x1298 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1D3
+[EXT_FAULT_RING] i=2 pc=0x2D92C4 off=0x4E4 r0=0x151C r1=0x1298 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1D3
+[EXT_FAULT_RING] i=3 pc=0x303BBA off=0x2ADDA r0=0x151C r1=0x1298 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=4 pc=0x303BBC off=0x2ADDC r0=0x151C r1=0x2AC8DC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=5 pc=0x303BBE off=0x2ADDE r0=0x151C r1=0x2AC8DC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=6 pc=0x303BC0 off=0x2ADE0 r0=0x151C r1=0x281EFC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=7 pc=0x303BC2 off=0x2ADE2 r0=0x1520 r1=0x281EFC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=8 pc=0x303BC4 off=0x2ADE4 r0=0x1520 r1=0x80160 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BBB cpsr=0x1F3
+[EXT_FAULT_RING] i=9 pc=0x303BC6 off=0x2ADE6 r0=0x2B1854 r1=0x30320 r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x800001F3
+[EXT_FAULT_RING] i=10 pc=0x303BC8 off=0x2ADE8 r0=0x2B1854 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x800001F3
+[EXT_FAULT_RING] i=11 pc=0x303BCA off=0x2ADEA r0=0x2B1854 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=12 pc=0x303BCC off=0x2ADEC r0=0x2B1854 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=13 pc=0x303BCE off=0x2ADEE r0=0x2B1854 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=14 pc=0x303BD0 off=0x2ADF0 r0=0x2B1854 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=15 pc=0x303BD2 off=0x2ADF2 r0=0x2B1854 r1=0x151C r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=16 pc=0x303BD4 off=0x2ADF4 r0=0x2B1854 r1=0x151C r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=17 pc=0x303BD6 off=0x2ADF6 r0=0x2AC8DC r1=0x151C r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=18 pc=0x303BD8 off=0x2ADF8 r0=0x2AC8DC r1=0x2B1854 r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=19 pc=0x303BDA off=0x2ADFA r0=0x2AC8DC r1=0x2B1858 r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x1F3
+[EXT_FAULT_RING] i=20 pc=0x303BDC off=0x2ADFC r0=0x2AC8DC r1=0x2B1858 r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x1F3
+[EXT_FAULT_RING] i=21 pc=0x303BDE off=0x2ADFE r0=0x2AC8DC r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x1F3
+[EXT_FAULT_RING] i=22 pc=0x303BE0 off=0x2AE00 r0=0x2B1858 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x1F3
+[EXT_FAULT_RING] i=23 pc=0x303BE2 off=0x2AE02 r0=0x2B1858 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=24 pc=0x303BE4 off=0x2AE04 r0=0x2B1858 r1=0x2AC8DC r2=0x959A0 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=25 pc=0x303BE6 off=0x2AE06 r0=0x2B1858 r1=0x2AC8DC r2=0x151C r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=26 pc=0x303BE8 off=0x2AE08 r0=0x2B1858 r1=0x281EFC r2=0x151C r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=27 pc=0x303BEA off=0x2AE0A r0=0x2B1858 r1=0x281EFC r2=0x151C r3=0x94F04 r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x200001F3
+[EXT_FAULT_RING] i=28 pc=0x303BEC off=0x2AE0C r0=0x2B1858 r1=0x0 r2=0x151C r3=0x94F04 r9=0x280400 sp=0x27FD78 lr=0x303BC7 cpsr=0x600001F3
+[EXT_FAULT_RING] i=29 pc=0x303BEE off=0x2AE0E r0=0x2B1858 r1=0x2B2D74 r2=0xFFFFFFFF r3=0x0 r9=0x280400 sp=0x27FD78 lr=0x303BEF cpsr=0x800001F3
+[EXT_FAULT_RING] i=30 pc=0x303BF0 off=0x2AE10 r0=0x0 r1=0x2B2D74 r2=0xFFFFFFFF r3=0x0 r9=0x280400 sp=0x27FD78 lr=0x303BEF cpsr=0x400001F3
+[EXT_FAULT_RING] i=31 pc=0x303B9C off=0x2ADBC r0=0x0 r1=0x2B2D74 r2=0xFFFFFFFF r3=0x0 r9=0x280400 sp=0x27FD78 lr=0x303BEF cpsr=0x400001F3
+[EXT_FAULT_RING] i=32 pc=0x2D8E0C off=0x2C r0=0x0 r1=0x2B2D74 r2=0xFFFFFFFF r3=0x27FB74 r9=0x280400 sp=0x27FD88 lr=0x303BEF cpsr=0x400001D3
+[EXT_FAULT_RING] i=33 pc=0x304AEC off=0x2BD0C r0=0x2AC8DC r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD90 lr=0x89BF0 cpsr=0x600001F3
+[EXT_FAULT_RING] i=34 pc=0x304AEE off=0x2BD0E r0=0x2AC8DC r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x600001F3
+[EXT_FAULT_RING] i=35 pc=0x304AF0 off=0x2BD10 r0=0x2AC8DC r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=36 pc=0x304AF2 off=0x2BD12 r0=0x2AC8DC r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=37 pc=0x304AF4 off=0x2BD14 r0=0x2AC8DC r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=38 pc=0x304AF6 off=0x2BD16 r0=0x2B1858 r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=39 pc=0x304AF8 off=0x2BD18 r0=0x2B1858 r1=0x6 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=40 pc=0x304AFA off=0x2BD1A r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=41 pc=0x304AFC off=0x2BD1C r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=42 pc=0x304AFE off=0x2BD1E r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x400001F3
+[EXT_FAULT_RING] i=43 pc=0x2D92D0 off=0x4F0 r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x280400 sp=0x27FD68 lr=0x304B03 cpsr=0x400001D3
+[EXT_FAULT_RING] i=44 pc=0x2D92D4 off=0x4F4 r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001D3
+[EXT_FAULT_RING] i=45 pc=0x304B02 off=0x2BD22 r0=0x2B1858 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=46 pc=0x304B04 off=0x2BD24 r0=0x6 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=47 pc=0x304B06 off=0x2BD26 r0=0x6 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=48 pc=0x304B08 off=0x2BD28 r0=0x6 r1=0x280400 r2=0x1 r3=0x7B0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=49 pc=0x304B0A off=0x2BD2A r0=0x6 r1=0x280400 r2=0x1 r3=0x304B10 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=50 pc=0x304B0C off=0x2BD2C r0=0x6 r1=0x280400 r2=0x1 r3=0x27 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=51 pc=0x304B0E off=0x2BD2E r0=0x6 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=52 pc=0x304B60 off=0x2BD80 r0=0x6 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=53 pc=0x304B62 off=0x2BD82 r0=0x13F0 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=54 pc=0x304B64 off=0x2BD84 r0=0x2B2C48 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=55 pc=0x304B66 off=0x2BD86 r0=0x2B2C48 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=56 pc=0x304B74 off=0x2BD94 r0=0x2B2C48 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=57 pc=0x304B76 off=0x2BD96 r0=0x2B2C48 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=58 pc=0x304B78 off=0x2BD98 r0=0x2B2C48 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD7C lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=59 pc=0x304B7A off=0x2BD9A r0=0x0 r1=0x280400 r2=0x1 r3=0x4E r9=0x2B1858 sp=0x27FD7C lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=60 pc=0x304B7C off=0x2BD9C r0=0x0 r1=0x280400 r2=0x1 r3=0x4E r9=0x280400 sp=0x27FD7C lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=61 pc=0x304AEC off=0x2BD0C r0=0x2AC8DC r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD90 lr=0x89BF0 cpsr=0x600001F3
+[EXT_FAULT_RING] i=62 pc=0x304AEE off=0x2BD0E r0=0x2AC8DC r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x600001F3
+[EXT_FAULT_RING] i=63 pc=0x304AF0 off=0x2BD10 r0=0x2AC8DC r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x400001F3
+[EXT_FAULT_RING] i=64 pc=0x304AF2 off=0x2BD12 r0=0x2AC8DC r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=65 pc=0x304AF4 off=0x2BD14 r0=0x2AC8DC r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=66 pc=0x304AF6 off=0x2BD16 r0=0x2B1858 r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD6C lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=67 pc=0x304AF8 off=0x2BD18 r0=0x2B1858 r1=0x0 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=68 pc=0x304AFA off=0x2BD1A r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=69 pc=0x304AFC off=0x2BD1C r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x1F3
+[EXT_FAULT_RING] i=70 pc=0x304AFE off=0x2BD1E r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD68 lr=0x89BF0 cpsr=0x400001F3
+[EXT_FAULT_RING] i=71 pc=0x2D92D0 off=0x4F0 r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x280400 sp=0x27FD68 lr=0x304B03 cpsr=0x400001D3
+[EXT_FAULT_RING] i=72 pc=0x2D92D4 off=0x4F4 r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001D3
+[EXT_FAULT_RING] i=73 pc=0x304B02 off=0x2BD22 r0=0x2B1858 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=74 pc=0x304B04 off=0x2BD24 r0=0x0 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x400001F3
+[EXT_FAULT_RING] i=75 pc=0x304B06 off=0x2BD26 r0=0x0 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=76 pc=0x304B08 off=0x2BD28 r0=0x0 r1=0x280400 r2=0x2AD954 r3=0x0 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=77 pc=0x304B0A off=0x2BD2A r0=0x0 r1=0x280400 r2=0x2AD954 r3=0x304B10 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=78 pc=0x304B0C off=0x2BD2C r0=0x0 r1=0x280400 r2=0x2AD954 r3=0x5 r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x800001F3
+[EXT_FAULT_RING] i=79 pc=0x304B0E off=0x2BD2E r0=0x0 r1=0x280400 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=80 pc=0x304B1C off=0x2BD3C r0=0x0 r1=0x280400 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=81 pc=0x304B1E off=0x2BD3E r0=0x0 r1=0x13F0 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=82 pc=0x304B20 off=0x2BD40 r0=0x0 r1=0x13F0 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=83 pc=0x304B22 off=0x2BD42 r0=0x0 r1=0x2B2C48 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=84 pc=0x304B24 off=0x2BD44 r0=0x0 r1=0x2B2C48 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B03 cpsr=0x1F3
+[EXT_FAULT_RING] i=85 pc=0x2D98E4 off=0xB04 r0=0x0 r1=0x2B2C48 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD68 lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=86 pc=0x2D98E6 off=0xB06 r0=0x0 r1=0x2B2C48 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=87 pc=0x2D98E8 off=0xB08 r0=0x0 r1=0x2B2C48 r2=0x2AD954 r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=88 pc=0x2D98EA off=0xB0A r0=0x0 r1=0x2B2C48 r2=0x1C r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=89 pc=0x2D98EC off=0xB0C r0=0x0 r1=0x2B2C48 r2=0x1C r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=90 pc=0x2D98EE off=0xB0E r0=0x281EFC r1=0x2B2C48 r2=0x1C r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x1F3
+[EXT_FAULT_RING] i=91 pc=0x2D98F0 off=0xB10 r0=0x281EFC r1=0x0 r2=0x1C r3=0xA r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x400001F3
+[EXT_FAULT_RING] i=92 pc=0x2D98F2 off=0xB12 r0=0x281EFC r1=0x0 r2=0x1C r3=0x94F04 r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x400001F3
+[EXT_FAULT_RING] i=93 pc=0x2D98F4 off=0xB14 r0=0x14EC r1=0x0 r2=0x1C r3=0x94F04 r9=0x2B1858 sp=0x27FD5C lr=0x304B29 cpsr=0x400001F3
+[EXT_FAULT_RING] i=94 pc=0x2D98F6 off=0xB16 r0=0x14EC r1=0x0 r2=0x1C r3=0x94F04 r9=0x2B1858 sp=0x27FD50 lr=0x304B29 cpsr=0x400001F3
+[EXT_FAULT_RING] i=95 pc=0x2D98F8 off=0xB18 r0=0x2B2D44 r1=0x0 r2=0x1C r3=0x94F04 r9=0x2B1858 sp=0x27FD50 lr=0x304B29 cpsr=0x400001F3
+[EXT_FAULT_RING] i=96 pc=0x2D98FA off=0xB1A r0=0x2B2D44 r1=0x2B2D60 r2=0xFFFFFFFF r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x800001F3
+[EXT_FAULT_RING] i=97 pc=0x2D98FC off=0xB1C r0=0x2B2D44 r1=0x2B2D60 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=98 pc=0x2D98FE off=0xB1E r0=0x0 r1=0x2B2D60 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=99 pc=0x2D9900 off=0xB20 r0=0x0 r1=0x2B2D60 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=100 pc=0x2D9902 off=0xB22 r0=0x0 r1=0x14EC r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=101 pc=0x2D9904 off=0xB24 r0=0x0 r1=0x14EC r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=102 pc=0x2D9906 off=0xB26 r0=0x0 r1=0x2B2D44 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=103 pc=0x2D9908 off=0xB28 r0=0x0 r1=0x2B2D44 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x400001F3
+[EXT_FAULT_RING] i=104 pc=0x2D990A off=0xB2A r0=0x0 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x1F3
+[EXT_FAULT_RING] i=105 pc=0x2D990C off=0xB2C r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x1F3
+[EXT_FAULT_RING] i=106 pc=0x2D990E off=0xB2E r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D98FB cpsr=0x1F3
+[EXT_FAULT_RING] i=107 pc=0x304558 off=0x2B778 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD50 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=108 pc=0x30455A off=0x2B77A r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD3C lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=109 pc=0x30455C off=0x2B77C r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD3C lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=110 pc=0x30455E off=0x2B77E r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD3C lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=111 pc=0x304560 off=0x2B780 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x2B1858 sp=0x27FD3C lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=112 pc=0x304562 off=0x2B782 r0=0x1 r1=0x64 r2=0xFFFD4852 r3=0x0 r9=0x2B1858 sp=0x27FD3C lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=113 pc=0x304564 off=0x2B784 r0=0x1 r1=0x64 r2=0xFFFD4852 r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=114 pc=0x304566 off=0x2B786 r0=0x1 r1=0x64 r2=0xFFFD4852 r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=115 pc=0x304568 off=0x2B788 r0=0x1 r1=0x64 r2=0x2D8DBC r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=116 pc=0x30456A off=0x2B78A r0=0x2B2D44 r1=0x64 r2=0x2D8DBC r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=117 pc=0x30456C off=0x2B78C r0=0x2B2D44 r1=0x0 r2=0x2D8DBC r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=118 pc=0x30456E off=0x2B78E r0=0x2B2D44 r1=0x0 r2=0x2D8DBC r3=0x0 r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=119 pc=0x304570 off=0x2B790 r0=0x2B2D44 r1=0x0 r2=0x2D8DBC r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+[EXT_FAULT_RING] i=120 pc=0x304572 off=0x2B792 r0=0x2B2D44 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=121 pc=0x304574 off=0x2B794 r0=0x2B2D44 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=122 pc=0x304576 off=0x2B796 r0=0x2B2D44 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=123 pc=0x304578 off=0x2B798 r0=0x2B2D44 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=124 pc=0x30457A off=0x2B79A r0=0x2B2D44 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=125 pc=0x30457C off=0x2B79C r0=0x0 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=126 pc=0x30457E off=0x2B79E r0=0x0 r1=0x64 r2=0x2 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x1F3
+[EXT_FAULT_RING] i=127 pc=0x304580 off=0x2B7A0 r0=0x0 r1=0x64 r2=0x0 r3=0x2AC8DC r9=0x2B1858 sp=0x27FD28 lr=0x2D9913 cpsr=0x400001F3
+Failed on uc_emu_start() with error returned: 6 (Invalid memory read (UC_ERR_READ_UNMAPPED))

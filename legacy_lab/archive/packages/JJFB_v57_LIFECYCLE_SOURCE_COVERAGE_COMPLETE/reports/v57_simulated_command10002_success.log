@@ -1,0 +1,8 @@
+[JJFB_V57_FAMILY_REG] ext=0x10102 family=0x1E200 handler=0x30D301 handler_code=0x30D300 source_lr=0x304936
+[JJFB_V57_TICK_REG] ext=0x10140 type=5 chunk=0x2829DC handler=0x30630D handler_code=0x30630C expected_static=0x30630C
+[JJFB_V57_ROBOTOL_EXT] entry #1 method=1(0x1) input=0x290000 len=12 P=0x2803E4 lr=0x80000
+[JJFB_V57_ROBOTOL_EXT] dispatch #1 method=1(0x1) input_r6=0x290000 saved_r7=0x0 lr=0x80000
+[JJFB_V57_ROBOTOL_EXT] method1 #1 payload_cmd=10002(0x2712) arg1=0x0 arg2=0x0 input=0x290000 TARGETS_CALLBACK_REGISTER
+[JJFB_V57_LIFECYCLE_CMD] entry_303E14 #1 cmd=10002(0x2712) arg1=0x0 arg2=0x0 lr=0x304B47 TARGETS_2F5390
+[JJFB_V57_LIFECYCLE_CMD] command10002_branch #1 -> 2F5390 cmd=10002 lr=0x303E15
+[JJFB_V56_CALLBACK] register #1 pc=0x2F53AC lr=0x30441D r0-r3=0x0,0x0,0x1,0x2F5405 CALLBACK_2F5404

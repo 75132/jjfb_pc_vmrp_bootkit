@@ -1,0 +1,135 @@
+2012.4.30 by：天使之翼
+2022.3.4重新整理
+ 
+ 本示例的斯凯SDK安装于C:\SKYMOBI\SDS4CPv2.0，vs的项目属性与之关联
+ 
+目录结构  
+
+1.sfw目录：SGL框架头文件
+         Common 通用的函数模块
+         Controls smp_控件模块
+         Gui 核心模块
+         Tsui 天使之翼开发的控件模块
+         
+2.lib目录的
+         SGL_WIN32.lib          vs链接用的库，项目》属性》链接器
+         sgllib_mtkt240.lib，   编译依赖的库
+
+3.resource目录，  mrp开发用到的字图音表格，一键生成资源包与h文件，参照《Mythroad程序员开发指南（卷一：入门）》快速入门，游戏实战，游戏实现，字符读取
+
+
+
+SGL新增加的东西：
+1.屏幕缓冲区管理模块：screenbuf.c  使用的双缓冲技术，像listview scrollview 这样的控件
+双缓冲可以使用拓展内存，或者主内存，编译开关 config.h ->USE_EXRAM
+sgldef.h
+
+2.TOAST模块：用于弹出即时消息
+
+3.字库管理模块：font.c 封装了各种字库，绘制文本接口使用font.h提供的接口
+
+
+
+
+重大改变：
+开发者驱动SGL模式：看paltform.h 接口
+
+
+
+//框架函数定义
+int32 SGL_onInit(void);
+int32 SGL_onEvent(int32 code, int32 p0, int32 p1);
+int32 SGL_onPause(void);
+int32 SGL_onResume(void);
+int32 SGL_onExit(void);
+
+由开发者去调用SGL框架函数，
+其中这些函数又分别对应开发者的应用框架函数 ：
+int InitApplication(VOID); 
+int ExitApplication(VOID);
+int PauseApplication(VOID);
+int ResumeApplication(VOID);
+
+event 函数没有
+
+当 SGL_onInit 完毕时 会调用 InitApplication
+
+
+未完成的东西
+1.皮肤解决方案：各种控件皮肤自定义如何实现
+2.完善的窗口刷新管理，SGL并不完善，最明显的就是 窗口重叠绘制覆盖问题，需要处理裁切
+
+
+
+简单例子：
+int32 MRC_EXT_INIT(void)
+{
+	SGL_onInit();
+
+	return MR_SUCCESS;
+}
+
+int32 MRC_EXT_EXIT(void)
+{	
+	SGL_onExit();
+
+	return MR_SUCCESS;
+}
+
+int32 mrc_appEvent(int32 code, int32 param0, int32 param1)
+{//计费状态下，自动返回
+	SGL_onEvent(code, param0, param1);
+
+	return MR_SUCCESS;
+}
+
+int32 mrc_appPause()
+{//计费状态下，自动返回
+	SGL_onPause();
+
+	return MR_SUCCESS;	
+}
+
+int32 mrc_appResume()
+{
+	SGL_onResume();
+
+	return MR_SUCCESS;
+}
+
+
+
+extern LRESULT TestWnd_WndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+
+
+//应用初始化
+int InitApplication(VOID)
+{
+	HWND hWnd;
+
+	hWnd = SGL_CreateWindow(TestWnd_WndProc, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 
+		0, 0, 0);
+	SGL_AddChildWindow(HWND_DESKTOP, hWnd);
+	SGL_UpdateWindow(hWnd);
+
+	return 0;
+}
+
+int ExitApplication(VOID)
+{
+	return 0;
+}
+
+
+int PauseApplication(VOID)
+{
+	// TODO: Add your code here!
+	return 0;
+}
+
+
+int ResumeApplication(VOID)
+{
+	// TODO: Add your code here!
+	return 0;
+}

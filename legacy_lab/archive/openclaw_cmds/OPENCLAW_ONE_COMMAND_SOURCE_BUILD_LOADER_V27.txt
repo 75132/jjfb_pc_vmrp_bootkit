@@ -1,0 +1,16 @@
+给 OpenClaw：
+
+用户选择 A：改/编译 vmrp 源码。v27 走源码编译路线：
+1 下载 vmrp source
+2 patch bridge_dsm_mr_start_dsm 第四参数
+3 mingw32-make 编译
+4 编译成功则部署 main.exe
+5 使用只跳过 sdk 错误分支的 jjfb.mrp，让它正常走 line157 _mr_c_load/hsman
+
+先跑：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_SOURCE_BUILD_LOADER_V27.ps1
+
+如果提示 mingw32-make not found，就按 BUILD_ENV_INSTALL_STEPS_V27.txt 安装 MSYS2/MinGW 32-bit 后重跑。
+
+发：
+logs\source_build_loader_v27_feedback_*.zip

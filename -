@@ -1,0 +1,88 @@
+{
+  "path": "c:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\320x480\\gwy\\gbrwshell.mrp",
+  "sha256": "3cc99e87680b7ebb94dc6f4c3d765d4480a0595650ee97e3c5463400d1819916",
+  "size": 33152,
+  "header_length": 240,
+  "first_data_offset": 470,
+  "internal_name": "brwshell.mrp",
+  "display_name": "冒泡浏览器shell",
+  "appid_le": 400101,
+  "appver_le": 2009,
+  "flags": 7,
+  "appid_be": 400101,
+  "appver_be": 2009,
+  "members": [
+    {
+      "name": "start.mr",
+      "offset": 499,
+      "stored_length": 917,
+      "decoded_length": 2240,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "fmfolder.bmp",
+      "offset": 1437,
+      "stored_length": 156,
+      "decoded_length": 448,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "fmcmmn.bmp",
+      "offset": 1612,
+      "stored_length": 253,
+      "decoded_length": 448,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "fmback.bmp",
+      "offset": 1884,
+      "stored_length": 157,
+      "decoded_length": 448,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "progbar.bmp",
+      "offset": 2061,
+      "stored_length": 106,
+      "decoded_length": 108,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "listf.bmp",
+      "offset": 2185,
+      "stored_length": 65,
+      "decoded_length": 116,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "fmimg.bmp",
+      "offset": 2268,
+      "stored_length": 302,
+      "decoded_length": 448,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "reg.ext",
+      "offset": 2586,
+      "stored_length": 598,
+      "decoded_length": 628,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "gbrwshell.ext",
+      "offset": 3206,
+      "stored_length": 29946,
+      "decoded_length": 45216,
+      "encoding": "gzip",
+      "reserved": 0
+    }
+  ]
+}

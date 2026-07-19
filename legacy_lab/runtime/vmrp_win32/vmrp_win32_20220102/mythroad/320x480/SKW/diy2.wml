@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><style type="text/css">
+      body, div, p, h1, h2, em, span, a{margin:0;padding:0;}
+      .hd{background-gradtop-color:#d6dfe7; background-gradbottom-color:#acc5e4; padding:5px;}
+  </style>
+
+<title>龙星浏览器</title>
+
+</head>
+<body style="padding:0;">
+<div id = "InputBg_9984" class="hd">
+<input src="icon_search.gif" value="" maxlength="255" id="Search_9984" format="m" align="left" homepage="true" size = "4"/>
+<input src="icon_url.gif" value="" maxlength="255" id="InputUrl_9984" format="m" align="fill" homepage="true"/><br/>
+</div>
+
+<div id="quick_entrance" style="text-align:center; background-color: #d5d8da;" >
+<a href = "http://wap.xxmrp.cn"> <img src = "xxmrp.png"/> </a><br/>
+<p><a href="http://3g.ddwang.net">手机刷钻网</a>|<a href="http://wap.ddwang.net">MRP斯凯下载</a></br></p>
+<a href="http://wap.ddwang.net/pub-zhousx@0.mrp">UC浏览器8.2官方正版.mrp</a><br/>
+</div>
+<mttmore title="本地应用" src="icon_site.gif" checked="shrink">
+<mttmore title="自定义txt" src="icon_file.gif" checked="shrink">
+</p>
+<a href="file://e:\xxmrp\diy1.txt">页一</a>|
+<a href="file://e:\xxmrp\diy2.txt">页二</a>|
+<a href="file://e:\xxmrp\diy3.txt">页三</a>|
+<a href="file://e:\xxmrp\diy4.txt">页四</a>
+<br/>
+<a href="file://e:\xxmrp\diy5.txt">页五</a>|
+<a href="file://e:\xxmrp\diy6.txt">页六</a>|
+<a href="file://e:\xxmrp\diy7.txt">页七</a>|
+<a href="file://e:\xxmrp\diy8.txt">页八</a>
+<br/>
+<a href="file://e:\xxmrp\diy9.txt">页九</a>|
+<a href="file://e:\xxmrp\diy10.txt">页十</a>|
+<a href="file://e:\xxmrp\diy11.txt">十一</a>|
+<a href="file://e:\xxmrp\diy12.txt">十二</a>
+<br/>
+<a href="file://e:\xxmrp\diy13.txt">十三</a>|
+<a href="file://e:\xxmrp\diy14.txt">十四</a>|
+<a href="file://e:\xxmrp\diy15.txt">十五</a>|
+<a href="file://e:\xxmrp\diy16.txt">十六</a>
+<br/>
+<a href="file://e:\xxmrp\diy17.txt">十七</a>|
+<a href="file://e:\xxmrp\diy18.txt">十八</a>|
+<a href="file://e:\xxmrp\diy19.txt">十九</a>|
+<a href="file://e:\xxmrp\diy20.txt">二十</a>
+<br/>
+提示：您可以把自己的存的或自己做的网页重命名为“diy1--28.txt”，放入mythroad\xxmrp文件夹中，然后点击对应的链接就可以打开对应的网页。如把一个名为diy1.txt的网页放入mythroad/xxmrp文件夹中，再点击“页一”就可以打开这个网页。
+</p>
+</mttmore>
+<mttmore title="自定义wml" src="icon_file.gif" checked="shrink">
+</p>
+<a href="file://e:\xxmrp\diy1.WML">页一</a>|
+<a href="file://e:\xxmrp\diy2.WML">页二</a>|
+<a href="file://e:\xxmrp\diy3.WML">页三</a>|
+<a href="file://e:\xxmrp\diy4.WML">页四</a>
+<br/>
+<a href="file://e:\xxmrp\diy5.WML">页五</a>|
+<a href="file://e:\xxmrp\diy6.WML">页六</a>|
+<a href="file://e:\xxmpr\diy7.WML">页七</a>|
+<a href="file://e:\xxmrp\diy8.WML">页八</a>
+<br/>
+<a href="file://e:\xxmrp\diy9.WML">页九</a>|
+<a href="file://e:\xxmrp\diy10.WML">页十</a>|
+<a href="file://e:\xxmrp\diy11.WML">十一</a>|
+<a href="file://e:\xxmrp\diy12.WML">十二</a>
+<br/>
+<a href="file://e:\xxmpr\diy13.WML">十三</a>|
+<a href="file://e:\xxmrp\diy14.WML">十四</a>|
+<a href="file://e:\xxmrp\diy15.WML">十五</a>|
+<a href="file://e:\xxmrp\diy16.WML">十六</a>
+<br/>
+<a href="file://e:\xxmrp\diy17.WML">十七</a>|
+<a href="file://e:\xxmrp\diy18.WML">十八</a>|
+<a href="file://e:\xxmrp\diy19.WML">十九</a>|
+<a href="file://e:\xxmrp\diy20.WML">二十</a>
+<br/>
+提示：您可以把自己的存的记事本重命名为“diy1--20.WML”，放入mythroad\xxmrp文件夹中，然后点击对应的链接就可以打开对应的文件。如把一个名为diy1.WML的记事本放入mythroad/xxmrp文件夹中，再点击“页一”就可以打开这个记事本了！<br/>  </p>  </p></mttmore>
+</div>
+</mttmore>
+<mttmore title="网络应用" src="icon_site.gif" checked="shrink">
+<mttmore title="自助建站" src="icon_file.gif" checked="shrink">
+</p>
+
+下面提供的是我收集的自助建站的链接：
+
+
+<a href="http://wap.wap.ai">思图建站</a>|<a href="http://wap.wep.cc">维普建站</a>
+<br/>
+<a href="http://wap.sh501.com">米饭建站</a>|<a href="http://wap.wapss.cn">新世纪建站</a>
+<br/>
+<a href="http://wap.sez.cc">帝国建站</a>|<a href="http://wap.xss.so">驿动力建站</a>
+<br/>
+<a href="http://wap.1t3.cn">蛙朴建站</a>|<a href="http://wap.wapss.cn">智科通建站</a>
+<br/>
+<a href="http://tyawap.com">天涯建站</a>|<a href="http://wap.csrzx.com">城市人建站</a>
+<br/>
+<a href="http://9waps.com">G网建站</a>|<a href="http://3g.khlye.com">快活林建站</a>
+
+
+
+</p>
+</mttmore>
+
+
+<mttmore title="图文制作" src="icon_file.gif" checked="shrink">
+</p>
+  
+<a href="http://3gsd8.com/diy/hycz.asp?curl=wap.xxmrp.cn">火焰彩字</a>.
+<a href="http://3gsd8.com/diy/qqbq.asp?curl=wap.xxmrp.cn">ＱＱ表情</a>
+<br/>
+<a href="http://3gsd8.com/diy/czx.asp?curl=wap.xxmrp.cn">精品彩字</a>.
+<a href="http://3gsd8.com/diy/bzqm.asp?curl=wap.xxmrp.cn">壁纸签名</a>
+<br/>
+<a href="http://3gsd8.com/diy/mmscard.asp?curl=wap.xxmrp.cn">个性贺卡</a>.
+<a href="http://3gsd8.com/diy/czzf.asp?curl=wap.xxmrp.cn">彩信图片</a>
+<br/>
+<a href="http://3gsd8.com/diy/wlxp.asp?curl=wap.xxmrp.cn">未来相片</a>.
+<a href="http://3gsd8.compicdy.asp?curl=wap.xxmrp.cn">图片倒影</a>
+<br/>
+<a href="http://3gsd8.com/diy/sdhk.asp?curl=wap.xxmrp.cn">圣诞贺卡</a>.
+<a href="http://3gsd8.com/diy/bssz.asp?curl=wap.xxmrp.cn">八色闪字</a>
+<br/>
+<a href="http://3gsd8.com/diy/dgsx.asp?curl=wap.xxmrp.cn">动感闪信</a>.
+<a href="http://3gsd8.com/diy/xyqm.asp?curl=wap.xxmrp.cn">炫耀签名</a>
+<br/>
+<a href="http://3gsd8.com/tools/gxzj.asp?curl=wap.xxmrp.cn">搞笑证件</a>.
+<a href="http://3gsd8.com/diy/ysqm.asp?curl=wap.xxmrp.cn">艺术签名</a>
+<br/>
+<a href="http://3gsd8.com/diy/3dtion.asp?curl=wap.xxmrp.cn">3D彩字酷</a>.
+<a href="http://3gsd8.com/diy/mmsdiy.asp?curl=wap.xxmrp.cn">彩信贺卡</a>
+<br/>
+<a href="http://3gsd8.com/diy/hqyz.asp?curl=wap.xxmrp.cn">婚庆印章</a>.
+<a href="http://3gsd8.com/diy/zxyz.asp?curl=wap.xxmrp.cn">在线印章</a>
+<br/>
+<a href="http://3gsd8.com/diy/wbzz.asp?curl=wap.xxmrp.cn">动态网标</a>.
+<a href="http://3gsd8.com/diy/jtwbzz.asp?curl=wap.xxmrp.cn">静态网标</a>
+<br/>
+<a href="http://3gsd8.com/diy/cshc.asp?curl=wap.xxmrp.cn">彩声合成</a>.
+<a href="http://3gsd8.com/diy/fzlsz.asp?curl=wap.xxmrp.cn">非主流闪</a>
+<br/>
+<a href="http://3gsd8.com/diy/dzst.asp?curl=wap.xxmrp.cn">透明闪字</a>.
+<a href="http://3gsd8.com/diy/wzdy.asp?curl=wap.xxmrp.cn">文字倒影</a>
+<br/>
+<a href="http://3gsd8.com/diy/mail.asp?curl=wap.xxmrp.cn">邮箱图标</a>.
+<a href="http://3gsd8.com/diy/mhcx.asp?curl=wap.xxmrp.cn">魔幻彩信</a>
+<br/>
+<a href="http://3gsd8.com/diy/mxqm.asp?curl=wap.xxmrp.cn">明星签名</a>.
+<a href="http://3gsd8.com/diy/fgwz.asp?curl=wap.xxmrp.cn">发光文字</a>
+<br/>
+<a href="http://3gsd8.com/diy/piccy.asp?curl=wap.xxmrp.cn">图片重影</a>.
+<a href="http://3gsd8.com/diy/mfqm.asp?curl=wap.xxmrp.cn">免费签名</a>
+<br/>
+<a href="http://3gsd8.com/diy/jpcz.asp?curl=wap.xxmrp.cn">极品闪字</a>.
+<a href="http://3gsd8.com/diy/zgx.asp?curl=wap.xxmrp.cn">做中国心</a>
+<br/>
+<a href="http://3gsd8.com/diy/tdwz.asp?curl=wap.xxmrp.cn">跳动文字</a>.
+<a href="http://3gsd8.com/diy/tpyj.asp?curl=wap.xxmrp.cn">图片圆角</a>
+<br/>
+<a href="http://3gsd8.com/diy/jpcz.asp?curl=wap.xxmrp.cn">极品彩字</a>.
+<a href="http://3gsd8.com/diy/cts.asp?curl=wap.xxmrp.cn">做藏头诗</a>
+
+</p>
+</mttmore>
+
+<mttmore title="超酷工具" src="icon_file.gif" checked="shrink">
+</p>
+<a href="http://3gsd8.com/diy/ConvertTest.asp?curl=wap.xxmrp.cn">声音格式转换</a>
+<br/>
+<a href="http://3gsd8.com/diy/Transfmp3.asp?curl=wap.xxmrp.cn">文字铃声合成</a>
+<br/>
+<a href="http://3gsd8.com/diy/ClipTest.asp?curl=wap.xxmrp.cn">音乐剪辑</a>.
+<a href="http://3gsd8.com/diy/cooltu.asp?curl=wap.xxmrp.cn">酷头明星</a>
+<br/>
+<a href="http://3gsd8.com/diy/mzyx.asp?curl=wap.xxmrp.cn">名字印象</a>.
+<a href="http://3gsd8.com/diy/qqzj.asp?curl=wap.xxmrp.cn">ＱＱ证件</a>
+<br/>
+<a href="http://3gsd8.com/diy/kgty.asp?curl=wap.xxmrp.cn">咔咕图语</a>.
+<a href="http://3gsd8.com/diy/mp3.asp?curl=wap.xxmrp.cn">文字转Mp3</a>
+</a>
+
+
+
+
+
+
+
+
+</p>
+</mttmore>
+
+
+
+<mttmore title="超靓系统" src="icon_file.gif" checked="shrink">
+
+</p>
+
+<a href="http://3gsd8.com/cmcc/spcx.asp?curl=wap.xxmrp.cn">SP商查询</a>.
+<a href="http://3gsd8.com/cmcc/dxzd.asp?curl=wap.xxmrp.cn">短信炸弹</a>
+<br/>
+<a href="http://3gsd8.com/cmcc/lmzh.asp?curl=wap.xxmrp.cn">乱码转换</a>.
+<a href="http://3gsd8.com/cmcc/xsqy.asp?curl=wap.xxmrp.cn">姓氏起源</a>
+<br/>
+<a href="http://3gsd8.com/cmcc/tsfh.asp?curl=wap.xxmrp.cn">特殊符号</a>.
+<a href="http://3gsd8.com/cmcc/szxt.asp?curl=wap.xxmrp.cn">刷钻系统</a>
+<br/>
+<a href="http://3gsd8.com/cmcc/sjb.asp?curl=wap.xxmrp.cn">发手机报</a>.
+<a href="http://3gsd8.com/cmcc/sms.asp?curl=wap.xxmrp.cn">免费短信</a>
+<br/>
+<a href="http://3gsd8.com/cmcc/mfdg.asp?curl=wap.xxmrp.cn">免费点歌</a>.
+<a href="http://3gsd8.com/cmcc/sms.asp?curl=wap.xxmrp.cn">免费短信</a>
+<br/>
+<a href="http://3gsd8.com/cmcc/clcx.asp?curl=wap.xxmrp.cn">彩铃查询</a>.
+<a href="http://3gsd8.com/cmcc/proxy.asp?curl=wap.xxmrp.cn">免费IP代理</a>
+</p>
+</mttmore>
+
+
+
+
+<mttmore title="超级查询" src="icon_file.gif" checked="shrink">
+</p>
+<a href="http://3gsd8.com/wap/jwxk.asp?curl=wap.xxmrp.cn">入网许可</a>.
+<a href="http://3gsd8.com/wap/xqcx.asp?curl=wap.xxmrp.cn">星期查询</a>
+<br/>
+<a href="http://3gsd8.com/wap/xlzh.asp?curl=wap.xxmrp.cn">迅雷转换</a>.
+<a href="http://3gsd8.com/wap/czcy.asp?curl=wap.xxmrp.cn">本草纲目</a>
+<br/>
+<a href="http://3gsd8.com/wap/wzzh.asp?curl=wap.xxmrp.cn">文字转换</a>.
+<a href="http://3gsd8.com/wap/mail.asp?curl=wap.xxmrp.cn">邮件发送</a>
+<br/>
+<a href="http://3gsd8.com/wap/txmcx.asp?curl=wap.xxmrp.cn">查条形码</a>.
+<a href="http://3gsd8.com/wap/djs.asp?curl=wap.xxmrp.cn">时间倒计</a>
+<br/>
+<a href="http://3gsd8.com/wap/huilv.asp?curl=wap.xxmrp.cn">汇率查询</a>.
+<a href="http://3gsd8.com/wap/ipym.asp?curl=wap.xxmrp.cn">ＩＰ域名</a>
+<br/>
+<a href="http://3gsd8.com/wap/lccx.asp?curl=wap.xxmrp.cn">列车查询</a>.
+<a href="http://3gsd8.com/wap/mrmy.asp?curl=wap.xxmrp.cn">名人名言</a>
+<br/>
+<a href="http://3gsd8.com/wap/weather.asp?curl=wap.xxmrp.cn">天气预报</a>.
+<a href="http://3gsd8.com/wap/ipcx.asp?curl=wap.xxmrp.cn">ＩＰ地址</a>
+<br/>
+<a href="http://3gsd8.com/wap/jsq.asp?curl=wap.xxmrp.cn">在线计算</a>.
+<a href="http://3gsd8.com/wap/hlcx.asp?curl=wap.xxmrp.cn">今日黄历</a>
+<br/>
+<a href="http://3gsd8.com/wap/bacx.asp?curl=wap.xxmrp.cn">域名备案</a>.
+<a href="http://3gsd8.com/wap/cpdby.asp?curl=wap.xxmrp.cn">彩票大全</a>
+<br/>
+<a href="http://3gsd8.com/wap/mfqm.asp?curl=wap.xxmrp.cn">免费起名</a>.
+<a href="http://3gsd8.com/wap/xhzd.asp?curl=wap.xxmrp.cn">新华字典</a>
+<br/>
+<a href="http://3gsd8.com/wap/cycd.asp?curl=wap.xxmrp.cn">成语词典</a>.
+<a href="http://3gsd8.com/wap/zhcd.asp?curl=wap.xxmrp.cn">中华词典</a>
+
+</p>
+</mttmore>
+
+
+
+
+
+<mttmore title="美妙短信" src="icon_file.gif" checked="shrink">
+</p>
+
+<a href="http://3gsd8.com/sms/new.asp?pov=&amp;idss=">最新</a>|
+<a href="http://3gsd8.com/sms/all.asp?pov=&amp;idss=">排行</a>|
+<a href="http://3gsd8.com/sms/search.asp?pov=&amp;idss=">搜索</a>
+<br/>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=1">[淡 淡 友 情]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=2">[祝 福 妙 语]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=3">[节 日 贺 语]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=4">[整 到 你 死]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=5">[笑 话 连 连]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=6">[日 常 问 候]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=7">[生 日 快 乐]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=8">[不 忘 亲 情]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=9">[妙 语 经 典]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=10">[对 话 对 联]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=11">[真 情 告 白]</a>
+<br/>
+<a href="http://3gsd8.com/sms/list.asp?pov=&amp;idss=&amp;ids=15">[猜 字 解 迷]</a>
+<br/>
+<br/>
+<a href="http://3gsd8.com/sms/add.asp?pov=&amp;idss=">[上 传 短 信]</a><br/>
+
+
+
+</p>
+</mttmore>
+
+
+<mttmore title="时代星测" src="icon_file.gif" checked="shrink">
+</p>
+<a href="http://3gsd8.com/xzzb/mrxz.asp?curl=wap.xxmrp.cn">每日星座</a>.
+<a href="http://3gsd8.com/xzzb/sxxj.asp?curl=wap.xxmrp.cn">生肖详解</a>
+<br/>
+<a href="http://3gsd8.com/xzzb/xmcs.asp?curl=wap.xxmrp.cn">姓名测算</a>.
+<a href="http://3gsd8.com/xzzb/hmcs.asp?curl=wap.xxmrp.cn">测手机号</a>
+<br/>
+<a href="http://3gsd8.com/xzzb/bzcs.asp?curl=wap.xxmrp.cn">八字测算</a>.
+<a href="http://3gsd8.com/xzzb/cgsm.asp?curl=wap.xxmrp.cn">称骨算命</a>
+<br/>
+<a href="http://3gsd8.com/xzzb/czsm.asp?curl=wap.xxmrp.cn">测字算命</a>.
+<a href="http://3gsd8.com/xzzb/srmm.asp?curl=wap.xxmrp.cnk">生日密码</a>
+<br/>
+<a href="http://3gsd8.com/xzzb/zgjm.asp?curl=wap.xxmrp.cn">周公解梦</a>.
+<a href="http://3gsd8.com/xzzb/srpd.asp?curl=wap.xxmrp.cn">生日配对</a>
+<br/>
+
+
+</p>
+</mttmore>
+<mttmore title="腾讯产品" src="icon_site.gif" checked="shrink">
+<div class="hd">
+	<a href="http://info7.3g.qq.com/g/s?aid=index">腾讯官方</a>.
+	<a href="http://pt.3g.qq.com/s?aid=nLoginmb&g_ut=1&go_url=http%3A%2F%2Fti.3g.qq.com%2Fg%2Fs%3Faid%3Dloginjump">腾讯微博</a><br/>
+	<a href="http://info.3g.qq.com/g/s?aid=template&amp;tid=news_h&amp;s_it=1">腾讯新闻</a>.
+	<a href="http://sqq2.3g.qq.com/login.jsp?sid=8H+PjyiJG4rJOMkXUX4bTA==">超级QQ</a><br/>
+        <a href="http://f.qq.com/login.php">QQ校友</a>.
+	<a href="http://q.3g.qq.com/g/s?sid=mZkIdK44qJ3JOMkXUX4bTA==&aid=nLogin&only3g=1&r=43609&go_url=http%3A%2F%2Fwenwen.3g.qq.com%3A80%2Fqzone%2Fhome.jsp%3Fsid%3D">我的问问</a>
+<br/>
+	<a href="http://res3.3g.qq.com/g/s?sid=LB7C7uU%20Mn/X7gJ1yDF0Ww==&aid=nr_index&s_it=1&g_f=288">手机QQ浏览器</a>
+<br/>
+<a href="http://fwd.3g.qq.com:8080/forward.jsp?bid=146">QQ农场</a>
+<br/>
+<a href="http://pt.3g.qq.com/s?aid=nLogin3gqq">3GQQ</a>.
+	<a href="http://blog44.z.qq.com/blog.jsp?B_UID=1021122535&fc=-1&3g_sid=">QQ空间</a>.
+	<a href="http://w.mail.qq.com">QQ邮箱</a>.
+	<a href="http://house13.3g.qq.com/g/my_home.jsp?sid=">QQ家园</a><br/>
+	<a href="http://jwt.3g.qq.com/task/taskInfo.sc?sid=">精武堂</a>.
+	<a href="http://cw.3g.qq.com/index.jsp?channel=homeb&sid=">爱宠国</a>.
+	<a href="http://garden.3g.qq.com/garden/my_garden.jsp?sid=">花园</a>.
+	<a href="http://mw.3g.qq.com/gameLogin.jsp?">美味小镇</a><br/>
+	<a href="http://fwd.3g.qq.com:8080/forward.jsp?bid=146">QQ农场</a>.
+	<a href="http://mc4.z.qq.com/mc/main.jsp?B_UID=">QQ牧场</a><br/>
+	<a href="http://car.z.qq.com/parkcar/index.jsp?sid=">QQ抢车位</a>.
+	<a href="http://app51.z.qq.com/frienddeal/index.jsp?B_UID=1021122535&sid=">好友买卖</a>
+</div>
+</mttmore>
+<mttmore title="个性图文" src="icon_file.gif" checked="shrink">
+</p>
+
+
+<a href="http://3g.skybl.cn/diy/cssz.asp?fox=wap.xxmrp.cn">彩色闪字</a>.
+<a href="http://3g.skybl.cn/diy/qm.asp?fox=wap.xxmrp.cn">艺术签名</a>
+
+<br/>
+
+<a href="http://3g.skybl.cn/diy/tmst.asp?fox=wap.xxmrp.cn">透明闪图</a>.
+<a href="http://3g.skybl.cn/diy/lt.asp?fox=wap.xxmrp.cn">立体闪字</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/8ssz.asp?fox=wap.xxmrp.cn">八色闪字</a>.
+<a href="http://3g.skybl.cn/diy/fzl.asp?fox=wap.xxmrp.cn">非主流闪</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/tmwz.asp?fox=wap.xxmrp.cn">透明徽章</a>.
+<a href="http://3g.skybl.cn/diy/cts.asp?fox=wap.xxmrp.cn">做藏头诗</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/fzlqm.asp?fox=wap.xxmrp.cn">非主流签</a>.
+<a href="http://3g.skybl.cn/diy/xp.asp?fox=wap.xxmrp.cn">未来照片</a>
+<br/>
+
+<a href="http://3g.skybl.cn/diy/3zst.asp?fox=wap.xxmrp.cn">三字闪图</a>.
+<a href="http://3g.skybl.cn/diy/shengdan.asp?fox=wap.xxmrp.cn">祝福贺卡</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/wmst.asp?fox=wap.xxmrp.cn">网名闪图</a>.
+<a href="http://3g.skybl.cn/diy/yz.asp?fox=wap.xxmrp.cn">个性印章</a>
+
+<br/>
+<a href="http://3g.skybl.cn/cs/wb.asp?fox=wap.xxmrp.cn">五笔编码查询系统</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/wzzmp3.asp?fox=wap.xxmrp.cn">文字转真人语音MP3</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/zhwz.asp?fox=wap.xxmrp.cn">文字转换其他字体器</a>
+<br/>
+<a href="http://3g.skybl.cn/diy/cts.asp?fox=wap.xxmrp.cn">姓名作诗-文字藏头诗</a>
+
+</p>
+</mttmore>
+
+<mttmore title="娱乐测试" src="icon_file.gif" checked="shrink">
+</p>
+
+<a href="http://3g.skybl.cn/cs/cf.asp?fox=wap.xxmrp.cn">成分测试</a>.
+<a href="http://3g.skybl.cn/cs/pk.asp?fox=wap.xxmrp.cn">姓名ＰＫ</a>
+
+<br/>
+<a href="http://3g.skybl.cn/cs/xmgz.asp?fox=wap.xxmrp.cn">姓名估值</a>.
+<a href="http://3g.skybl.cn/cs/tmtx.asp?fox=wap.xxmrp.cn">同名同姓</a>
+
+<br/>
+<a href="http://3g.skybl.cn/cs/rpcs.asp?fox=wap.xxmrp.cn">人品测试</a>.
+<a href="http://3g.skybl.cn/cs/xmjx.asp?fox=wap.xxmrp.cn">姓名吉凶</a>
+
+<br/>
+<a href="http://3g.skybl.cn/cs/qq/qqgz.asp?fox=wap.xxmrp.cn">ＱＱ估值</a>.
+<a href="http://3g.skybl.cn/cs/hmgz.asp?fox=wap.xxmrp.cn">号码估值</a>
+
+<br/>
+<a href="http://3g.skybl.cn/cs/yycs.asp?fox=wap.xxmrp.cn">姻缘测试</a>.
+<a href="http://3g.skybl.cn/cs/sjjx.asp?fox=wap.xxmrp.cn">手机吉凶</a>
+
+
+</p>
+</mttmore>
+
+<mttmore title="网上冲浪" src="icon_site.gif" checked="shrink">
+<div class="hd">
+<input src="icon_file.gif" value="www." maxlength="255" id="InputUrl_9984" format="a" align="fill" homepage="true"/><br/>
+<form action="http://gate.baidu.com/" method="get"><br/><input src="icon_file.gif" type="text" name="&m=0&src" size="11" maxlength="100" value="http://www."><br/><input type="submit" value="百度转码WWW网址"><br/></form><br/>
+<form action="http://a.139.com/1.2.3.50/wfm/history.php" method="get"><input type="text" name="go_url" size="11" maxlength="255" value="http://www."><input type="submit" value="139访问"><br/></form>
+<form action="http://gate.baidu.com/tc" method="get"><input type="text" name="src" size="11" maxlength="255" value="http://www."><input type="submit" value="百度访问"><br/></form>
+<form action="http://www.google.com.hk/gwt/x" method="get"><input type="text" name="u" size="11" maxlength="255" value="http://www."><input type="hidden" name="hl" value="zh_cn"/><input type="submit" value="谷歌访问"><br/></form>
+<form action="http://wap.soso.com/sweb/detail.jsp" method="get"><input type="text" name="url" size="11" maxlength="255" value="http://www."><input type="submit" value="搜搜访问"><br/></form>
+<form action="http://59.151.101.56/p/pd.do" method="get"><input type="text" name="url" size="11" maxlength="255" value="http://www."><input type="submit" value="易查访问"><br/></form>
+</p>
+</div>
+</mttmore>
+<mttmore title="移动免流" src="icon_site.gif" checked="shrink"><div style="padding-left:3;padding-right:3;">-免流网站-<br/><a href="http://mnews.i139.cn">手机报网</a>.<a href="http://wap.cmread.com">手机阅读</a><br/><a href="http://211.136.165.53/mobiletv.jsp">手机视频</a>.<a href="http://f.10086.cn">手机飞信</a><br/><a href="http://wapmnews.i139.cn">移动快讯</a>.<a href="http://wap.12530.com">12530音乐</a><br/>-移动综合-<br/><a href="http://wap.monternet.com">移动梦网</a>.<a href="http://wapmail.139.com">139邮箱</a><br/><a href="http://wap.10086.com">掌上营业厅</a><br/>
+</div>
+</mttmore>
+<mttmore title="移动梦网" src="icon_site.gif" checked="shrink">
+<div class="hd">
+	<a href="http://wap.monternet.com/">梦网首页</a>.
+	<a href="http://211.138.245.86/">话费查询</a>
+<br/>
+	<a href="http://wap.12580.com">12580信息</a>.
+	<a href="http://f.10086.cn/im/login/login.action">移动飞信</a>
+</div>
+</mttmore>
+<mttmore title="压缩浏览" src="icon_site.gif" checked="shrink"><div style="padding-left:3;padding-right:3;">本系统为压缩浏览网页,使其网页经其服务器压缩后打开,从而达到节流效果.<br/>================<br/>
+<a href="http://e.ewwap.com/m.asp">易网压缩浏览器</a><br/>
+<a href="http://3g.mrp.name/login.php?r=904">星星压缩浏览器</a><br/>
+</div></mttmore>
+<mttmore title="搜索站点" src="icon_site.gif" checked="shrink">
+<div class="hd">
+	<a href="http://m.baidu.com/">百度</a>.
+	<a href="http://www.google.com.hk/m?gl=CN&hl=zh_CN&source=ihp">谷歌</a>.
+	<a href="http://wap.iask.com/">爱问</a>.
+	<a href="http://yicha.cn/">易查</a>
+<br/>
+     <a href="http://wap.sogou.com/sogou/">搜狗</a>.
+	<a href="http://wap.soso.com/">搜搜</a>.
+	<a href="http://m.youdao.com/">有道</a>.
+	<a href="http://wap.bing.com/">必应</a>
+<br/>
+     <a href="http://wap.easou.com/">超级</a>.
+	<a href="http://wap.roboo.com/">儒豹</a>.
+	<a href="http://wap.easou.com/">宜搜</a>.
+	<a href="http://3gyy.net.cn">YY</a>
+</div>
+</mttmore>
+<mttmore title="手机邮箱" src="icon_site.gif" checked="shrink">
+<div class="hd">
+	<a href="http://m.mail.163.com/auth/?wml=1">网易邮箱</a>.
+	<a href="http://3g.sina.com.cn/prog/wapsite/wapmail/logon.php">新浪邮箱</a>
+<br/>
+	<a href="http://wap.yahoo.com.cn/portal/ylogin/loginindex.php">雅虎</a>.
+	<a href="http://wap.mail.sohu.com/">搜狐</a>.
+     <a href="http://mail.wo.com.cn/smsmail/login.html">联通</a>.
+	<a href="=http://m.ejoint.net:4080/wapmail/index.php?pop_sess=42481403">随身</a>
+<br/>
+	<a href="http://wapmail.10086.cn/">139邮箱</a>.
+	<a href="http://wapmail.189.cn/webmail/">189邮箱</a>
+<br/>
+     <a href="http://m.mail.163.com/auth/?wml=1&domain=126.com">126邮箱</a>.
+	<a href="http://wap.mail.3g.cn/">3G邮箱</a>
+<br/>
+     <a href="http://mobile.msn.com/hm/folder.aspx ">☆Hotmail邮箱☆</a>
+</div>
+</mttmore>
+</div>
+</mttmore>
+
+<mttmore title="复制类型" src="icon_site.gif" checked="shrink">
+<mttmore title="★特殊符号★" src="icon_search.gif" checked="shrink"><div style="padding-left:3;padding-right:3;">
+请在输入框中修改好，再按5键选择复制!<BR/><SPAN STYLE="color:purple;">符号列表:√卍☆★○⊙●〓■◆□◇▲△┋｜∷♀♂‖∴∵※＆№％‰∩∪⌒∏∑∈￠∮＄∽∽＄∮￠∈∑∏⌒∪∩‰％№＆※∵∴‖♂♀∷｜┋△▲◇□◆■〓●⊙○★☆卍√</SPAN><BR/>
+<form accept-charset="utf-8" action="/" method="post">
+<INPUT TYPE="text" name="url" VALUE="√卍☆★○⊙●〓■◆□◇▲△┋｜∷♀♂‖∴∵※＆№％‰∩∪⌒∏∑∈￠∮＄∽∽＄∮￠∈∑∏⌒∪∩‰％№＆※∵∴‖♂♀∷｜┋△▲◇□◆■〓●⊙○★☆卍√"/><BR/><SPAN STYLE="color:yellow;">符号列表:┌┬┐├┼┤└┴┘┌─┐││└─┘┏┳┓┣╋┫┗┻┛┏━┓┃┃┗━┛</SPAN>
+<INPUT TYPE="text" name="url" VALUE="┌┬┐├┼┤└┴┘┌─┐││└─┘┏┳┓┣╋┫┗┻┛┏━┓┃┃┗━┛"/><BR/><SPAN STYLE="color:blue;">符号列表:┌ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫ壹贰叁肆伍陆柒捌玖拾佰仟万亿①②③④⑤⑥⑦⑧⑨⑩</SPAN>
+<INPUT TYPE="text" name="url" VALUE="ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫ壹贰叁肆伍陆柒捌玖拾佰仟万亿①②③④⑤⑥⑦⑧⑨⑩"/><BR/><SPAN STYLE="color:red;">符号列表:＋－‰％≠＝×∞</SPAN>
+<INPUT TYPE="text" name="url" VALUE="＋－‰％≠＝×∞"/><BR/>
+</p>
+</div>
+</mttmore>
+<mttmore title="★字画符★" src="icon_tag.gif" checked="shrink">
+<P>
+<DIV STYLE="background-color:#80FF00"><SPAN STYLE="color:#FF0000;">字画符</SPAN></DIV><BR/>
+<SPAN STYLE="color:#0000FF;">菜单-工具，复制选中文字，或者按5键复制选中文字</SPAN><BR/><A HREF=".">[b][br]┏━┓┊开┊精┊[br]┃真┃┊心┊彩┊[br]┃棒┃┊快┊无┊[br]┗━┛┊乐┊限┊[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓┏━┓[br]┃精┃┃不┃┃支┃[br]┃典┃┃错┃┃持┃[br]┗━┛┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓┏━┓[br]┃楼┃┃强┃┃支┃[br]┃主┃┃大┃┃持┃[br]┗━┛┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┊回┊发┊[br]┃支┃┊贴┊贴┊[br]┃持┃┊是┊是┊[br]┗━┛┊神┊人┊[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓[br]┃我┃┃你┃[br]┃爱┃┃呢┃[br]┃你┃┃？┃[br]┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┊步┊恭┊[br]┃偷┃┊步┊喜┊[br]┃笑┃┊高┊发┊[br]┗━┛┊升┊财┊[br][/b]</A><A HREF=".">[b][br]┏━┓[br]┃微┃[br]┃笑┃[br]┃我┃[br]┃们┃[br]┃大┃[br]┃家┃[br]┃支┃[br]┃持┃[br]┃你┃[br]┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓[br]┃共┃┃我┃[br]┃创┃┃们┃[br]┃文┃┃手┃[br]┃明┃┃牵┃[br]┃，┃┃手┃[br]┃斯┃┃一┃[br]┃软┃┃起┃[br]┃家┃┃努┃[br]┃园┃┃力┃[br]┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓[br]┃问┃┃直┃[br]┃世┃┃叫┃[br]┃间┃┃人┃[br]┃情┃┃生┃[br]┃为┃┃死┃[br]┃何┃┃相┃[br]┃物┃┃许┃[br]┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓┏━┓[br]┃牡┃┃做┃[br]┃丹┃┃鬼┃[br]┃花┃┃也┃[br]┃下┃┃风┃[br]┃死┃┃流┃[br]┗━┛┗━┛[br][/b]</A><A HREF=".">[b][br]┏━┓[br]┃请┃[br]┃给┃[br]┃我┃[br]┃次┃[br]┃机┃[br]┃会┃[br]┃我┃[br]┃真┃[br]┃的┃[br]┃很┃[br]┃爱┃[br]┃你┃[br]┃！┃[br]┗━┛[br][/b]</A><A HREF=".">[br]┏┳┓[br]┣╋┫[br]┗┻┛[br]</A><A HREF=".">[br]┏━┓[br]┃[tab]┃[br]┗━┛[br]</A>
+</p>
+</div>
+</mttmore>
+<mttmore title="☆UBB代码大全☆" src="icon_url.gif" checked="shrink">
+<P>
+<DIV STYLE="background-color:#80FF00"><SPAN STYLE="color:#FF0000;">柯林UBB代码</SPAN></DIV><BR/>
+<SPAN STYLE="color:#0000FF;">菜单-工具，复制选中文字，或者按5键复制选中文字</SPAN><BR/>
+<A HREF=".">[users=0_20_2_0]最新会员注册[users=0_20_1_0]最新会员动态[article=1235_1_1_9]公告</A><BR/>
+<A HREF=".">倒记天数[codo]2012_12_21[/codo]</A><BR/>
+<SPAN STYLE="color:#FF0000;">当UC浏览器访问不显示：</SPAN><BR/><A HREF=".">[nouc]QQ广告内容[/nouc]</A><BR/>
+<SPAN STYLE="color:#FF0000;">显示搜索框</SPAN><BR/> 
+<A HREF=".">输入框：[input=长度大小]说明[/input]</A> 
+<SPAN STYLE="color:#FF0000;">例：[input=15]输入关键字[/input]</SPAN></a> 
+<A HREF=".">搜索按钮：[ancho=功能模块标识]说明[/ancho]</A> 
+<SPAN STYLE="color:#FF0000;">目前16个功能模块搜索按钮如下：</SPAN><BR/> 
+<A HREF=".">[ancho=article]文章搜索[/ancho]</A> 
+<A HREF=".">[ancho=bbs]论坛搜索[/ancho]</A> 
+<A HREF=".">[ancho=picture]图片搜索[/ancho]</A> 
+<A HREF=".">[ancho=ring]铃声搜索[/ancho]</A> 
+<A HREF=".">[ancho=video]视频搜索[/ancho]</A> 
+<A HREF=".">[ancho=download]下载搜索[/ancho]</A> 
+<A HREF=".">[ancho=album]相册搜索[/ancho]</A> 
+<A HREF=".">[ancho=link]友链搜索[/ancho]</A> 
+<A HREF=".">[ancho=yuehui]约会搜索[/ancho]</A> 
+<A HREF=".">[ancho=shop]商店搜索[/ancho]</A> 
+<A HREF=".">[ancho=airplane]航班搜索[/ancho]</A> 
+<A HREF=".">[ancho=hotel]酒店搜索[/ancho]</A> 
+<A HREF=".">[ancho=guessbook]留言搜索[/ancho]</A> 
+<A HREF=".">[ancho=paimai]拍卖搜索[/ancho]</A> 
+<A HREF=".">[ancho=wml]自写代码搜索[/ancho]</A> 
+<A HREF=".">[ancho=search]用户搜索[/ancho]</A> 
+<A HREF=".">[ancho=card]名片搜索[/ancho]</A> 
+<A HREF=".">[ancho=class]栏目搜索[/ancho]</A><BR/> 
+<A HREF=".">高级使用：取得输入框值[urlancho=地址_参数]说明[/urlancho]</A><BR/> 
+<A HREF="."><span style="color:#FF0000;">例.百度搜索原地址:http://wap.baidu.com/baidu?word=XXXXX [input=15]美女[/input][urlancho=http://wap.baidu.com/baidu_word]百度搜索[/urlancho]</A> 
+<BR/>
+<SPAN STYLE="color:#FF0000;">提示：一个页面建议只使用一个输入框！</SPAN><BR/> 
+<SPAN STYLE="color:#FF0000;">显示栏目特别按钮</SPAN><BR/>
+<SPAN STYLE="color:#FF0000;">功能模块标识请看上面的“显示搜索框”</SPAN><BR/> 
+<A HREF=".">搜索:[search=功能模块标识_栏目ID]说明[/search]</A> 
+<A HREF=".">最新:[new=功能模块标识_栏目ID]说明[/new]</A> 
+<A HREF=".">热点:[hot=功能模块标识_栏目ID]说明[/hot]</A> 
+<A HREF=".">精华:[good=功能模块标识_栏目ID]说明[/good]</A> 
+<A HREF=".">N天前:[days=功能模块标识_栏目ID_天数]说明[/days]</A> 
+<SPAN STYLE="color:#FF0000;">例如你的一个论坛栏目ID为988，以上应用为:[search=bbs_988]XX栏目搜索[/search]</SPAN><BR/> 
+<A HREF=".">[new=bbs_988]XX栏目最新[/new]</A> 
+<A HREF=".">[hot=bbs_988]XX栏目人气[/hot]</A> 
+<A HREF=".">[good=bbs_988]XX栏目精华[/good]</A> 
+<A HREF=".">[days=bbs_988_1]XX栏目今天发表[/days]</A> 
+<A HREF=".">直接拨号：[call]手机号码[/call]换行：[br]分頁：[next]空格：[tab]</A>
+<A HREF=".">链接：[url=URL地址]链接标题[/url]</A>
+<A HREF=".">图片下载连接：[ url=http://连接地址][ img]图片地址[ /img][ /url]</A><BR/>
+<SPAN STYLE="color:#FF0000;">注意：如果链接站内地址，请在"URL地址"后面加上"&sid=[@sid]"，以防手机掉线情况发生。</SPAN><BR/> 
+<A HREF=".">显示站内信息条数：[message]</A>
+<A HREF=".">自动显隐站内信息：[automsg]</A>
+<A HREF=".">图片：[img]图片URL地址[/img]</A>
+<A HREF=".">居左[left]居中[center]居右[right]加粗[b]内容[/b]斜体[i]内容[/i]下划线[u]内容[/u]返回上级[back]返回上级[/back]</A>
+<A HREF=".">日期时间[now]年份[year]月份[month]当天[day]时钟[hour]分钟[minute]秒钟[second]日期[date]时间[time]星期[weekday]农历[ttcc]问候[hello]</A><BR/> 
+<SPAN STYLE="color:#FF0000;">显示特殊内容</SPAN><BR/>
+<A HREF=".">登录可见内容:[login]输入内容[/login]手机可见内容:[mobi]输入内容[/mobi]</A>
+<A HREF=".">金钱可见内容:[coin=金钱数]输入内容[/coin]等级可见内容:[grade=等级]输入内容[/grade]</A><BR/>
+<SPAN STYLE="color:#FF00FF;">以下只适用于论坛内容帖处录入:</SPAN> 
+<A HREF=".">付费可见内容:[buy=金钱数]输入内容[/buy]</A> 
+<A HREF=".">回复可见内容:[reply]输入内容[/reply]</A><BR/>
+<SPAN STYLE="color:#FF0000;">访问量统计API</SPAN><BR/> 
+<A HREF=".">第几位访问者:[vtotal]昨日访问量[vyestaday]今日访问量[vtoday]本周访问量[vweek]本月访问量[vmonth]总访问量[vtotal]当前在线人数[online]</A> 
+<A HREF=".">所有网站流量:[valltotal]</A>
+<A HREF=".">聊天室在线数:[chat=栏目ID]</A><BR/>
+<A HREF=".">[left]文字[/left]文字 左对齐</A> 
+<A HREF=".">[center]文字[/center]居中.[right]文字[/right] 右对齐.文字引用文字[quote].[movl]文字[/movl] 文字左移.[movlr]文字[/movlr] 文字左右移.[movr]文字[/movr] 文字右移</A> 
+<A HREF=".">[url=链接地址]链接文字【/url】 超级链接</A> 
+<A HREF=".">[code]文字[/code] 代码</A> 
+<A HREF=".">[img]图片地址[/IMG] 贴图</A> 
+<A HREF=".">[mail]文字[/mail] EMAIL地址</A> 
+<A HREF=".">[hide]文字[/hide] 隐藏回复可见内容，只能用于主题帖</A>
+<SPAN STYLE="color:#FF0000;">高级API</SPAN><BR/>
+<A HREF=".">流水号[fid]网站ID[siteid]当前页栏目ID[classid]</A> 
+
+<SPAN STYLE="color:#FF0000;">(以下用户登录后有效)</SPAN><BR/>
+<A HREF=".">用户ID[userid]用户名[username]昵称[nickname]站内信息条数[message]显隐站内信息[automsg]用户MD5密码[password]</A> 
+<SPAN STYLE="color:#FF0000;">显示下拉框</SPAN><BR/>
+<A HREF=".">下拉链接：[sel name=英文名称][option=链接地址]中文名称[/option][/sel]</A><BR/> 
+<SPAN STYLE="color:#FF0000;">例：以下为显示天气预报下拉链接</SPAN><BR/> 
+<A HREF=".">[sel name=city][option=utility/weather/show.asp?id=010&siteid=[siteid]&sid=[sid]]北京[/option][/sel]</A> 
+<SPAN STYLE="color:#FF0000;">此代码任何地方不能有换行符或回车！</SPAN> 
+</p>
+</div>
+</mttmore>
+<a href="http://wap.xxmrp.cn/bbs/book_list.asp?siteid=1000&classid=1963&action=&sid=">龙星浏览器更新/反馈</a>
+</body>
+</html>

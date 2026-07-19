@@ -1,0 +1,13 @@
+--- a/vmrp.c
++++ b/vmrp.c
+@@ -875,8 +875,11 @@ int startVmrp() {
+     dumpREG(uc);
+     char *filename = "dsm_gm.mrp";
+     char *extName = "start.mr";
+-    uint32_t ret = bridge_dsm_mr_start_dsm(uc, filename, extName, NULL);
+-    printf("bridge_dsm_mr_start_dsm('%s','%s',NULL): 0x%X\n", filename, extName, ret);
++    char *startParam = "napptype=0_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink";
++    uint32_t ret = bridge_dsm_mr_start_dsm(uc, filename, extName, startParam);
++    printf("bridge_dsm_mr_start_dsm('%s','%s','%s'): 0x%X\n", filename, extName, startParam, ret);
+
+ }

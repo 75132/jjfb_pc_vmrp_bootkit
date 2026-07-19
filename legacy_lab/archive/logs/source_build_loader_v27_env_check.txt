@@ -1,0 +1,18 @@
+$ cmd /c where mingw32-make
+rc=0
+C:\msys64\ucrt64\bin\mingw32-make.exe
+
+
+$ cmd /c where gcc
+rc=0
+C:\msys64\ucrt64\bin\gcc.exe
+
+
+$ cmd /c where pkg-config
+rc=0
+C:\msys64\ucrt64\bin\pkg-config.exe
+
+
+$ cmd /c where sdl2-config
+rc=0
+C:\msys64\ucrt64\bin\sdl2-config

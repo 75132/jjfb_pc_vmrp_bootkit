@@ -1,0 +1,13 @@
+给 OpenClaw：
+
+v19 已修复 MRP size，但 _gc 传了字符串，报 bad argument。v20 同时改：
+_error -> _gc
+"cann`t find sdk key!" -> integer 0
+实际变为 _gc(0)。
+
+运行：
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_JJFB_SDK_BYPASS_V20.ps1
+
+发：
+logs\sdk_bypass_v20_feedback_*.zip
+以及 vmrp 窗口截图。

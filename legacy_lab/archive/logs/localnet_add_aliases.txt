@@ -1,0 +1,14 @@
+﻿Using interface: WLAN
+New-NetIPAddress added: 111.1.17.148/32 on WLAN
+New-NetIPAddress added: 111.1.17.146/32 on WLAN
+New-NetIPAddress added: 211.155.236.226/32 on WLAN
+
+ifIndex IPAddress       PrefixLength PrefixOrigin SuffixOrigin AddressState PolicyStore
+------- ---------       ------------ ------------ ------------ ------------ -----------
+12      211.155.236.226           32 Manual       Manual       Tentative    ActiveStore
+12      111.1.17.148              32 Manual       Manual       Tentative    ActiveStore
+12      111.1.17.146              32 Manual       Manual       Tentative    ActiveStore
+
+
+
+firewall rule added for C:\Users\24231\AppData\Local\Programs\Python\Python39\python.exe

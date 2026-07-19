@@ -1,0 +1,21 @@
+﻿Phase 5C live ext lifecycle
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+robotol_final_state=REGISTERED
+classification_case=A
+guest_nested_c_function_new=True
+cfunction_read_3004=False
+cfunction_read_3006=False
+guest_call_observer_attach=True
+guest_call_observer_indirect=False
+3004_root_cause=LOOKUP invalid_name_len after torn index; fix=insert_at=first_data+12
+note=5C-A no 3004; 5C-B observe nested helper via code region (no ordinal)
+cfunction_alias=PASS alias/view missing
+robotol_extracted=PASS robotol EXTRACTED missing
+dsm_origin_separate=PASS DSM origin row missing
+no_ordinal_identity=PASS ordinal language found
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+resource_hash_unchanged=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+view_provenance=PASS member-view provenance missing
+no_cfunction_3004=PASS guest LOOKUP 3004 still present (torn index)
+robotol_stop_classified=PASS state=REGISTERED case=A
+robotol_at_least_mapped=PASS stop=REGISTERED (want >=MAPPED after 3004 fix)

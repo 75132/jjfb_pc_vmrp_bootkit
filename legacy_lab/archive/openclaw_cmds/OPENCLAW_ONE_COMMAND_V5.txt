@@ -1,0 +1,13 @@
+给 OpenClaw：
+
+这次不是失败，PC vmrp 已经直接启动 gwy 并且连 111.1.17.148:21002 了。mock 没收到是因为 IP 是字面量，hosts 无效。
+
+现在用 v5：
+
+1. 解压到 jjfb_pc_vmrp_bootkit 根目录覆盖
+2. 管理员 PowerShell 运行：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_GWY_LOCAL_NET_V5_ADMIN.ps1
+3. 跑完发：
+   logs/localnet_feedback_*.zip
+4. 测完恢复：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_RESTORE_LOCAL_NET_V5_ADMIN.ps1

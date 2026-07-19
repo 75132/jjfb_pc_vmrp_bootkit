@@ -1,0 +1,21 @@
+[information]
+projectname=helloworld.mpr
+filename=mrht.mrp
+appname=mr语言3画图
+
+appid=30045
+version=1000
+visible=1
+cpu=3
+vendor=风的影子
+
+description=测试程序
+
+config=mtk
+
+[config_mtk]
+bmp_mode=normal
+output=bin\mr_htu.mrp
+
+[files]
+file01 = src\helloworld.mr(name=start.mr)

@@ -1,0 +1,1757 @@
+[
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc113_line163.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1510,
+    "bytecode_patch": {
+      "target_pc": 113,
+      "target_line": 163,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 113,
+          "target_line": 163,
+          "skip": 12,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "14038000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 113,
+          "target_line": 163,
+          "skip": 7,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "d4018000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 113,
+          "target_line": 163,
+          "skip": 3,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "d4008000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "e3b6d152f7657e3e56997c4e6413151926627c0d"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc122_line165.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1511,
+    "bytecode_patch": {
+      "target_pc": 122,
+      "target_line": 165,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 122,
+          "target_line": 165,
+          "skip": 21,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "54058000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 122,
+          "target_line": 165,
+          "skip": 16,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "14048000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 122,
+          "target_line": 165,
+          "skip": 12,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "14038000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "3366116a82041114f07570dc081c8f9ddfa5dfcc"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc124_line166.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1511,
+    "bytecode_patch": {
+      "target_pc": 124,
+      "target_line": 166,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 124,
+          "target_line": 166,
+          "skip": 23,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "d4058000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 124,
+          "target_line": 166,
+          "skip": 18,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "94048000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 124,
+          "target_line": 166,
+          "skip": 14,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "94038000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "edb7eb07a9daa6fdfb030016407335441db3ff50"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc129_line168.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1510,
+    "bytecode_patch": {
+      "target_pc": 129,
+      "target_line": 168,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 129,
+          "target_line": 168,
+          "skip": 28,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "14078000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 129,
+          "target_line": 168,
+          "skip": 23,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "d4058000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 129,
+          "target_line": 168,
+          "skip": 19,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "d4048000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "03073852fd3f9684dcf45b5ec2b4f021d676518a"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc132_line169.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1512,
+    "bytecode_patch": {
+      "target_pc": 132,
+      "target_line": 169,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 132,
+          "target_line": 169,
+          "skip": 31,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "d4078000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 132,
+          "target_line": 169,
+          "skip": 26,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "94068000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 132,
+          "target_line": 169,
+          "skip": 22,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "94058000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "5d79288d97c90b18a1312fe929bf23d4b7c802be"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc136_line171.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1513,
+    "bytecode_patch": {
+      "target_pc": 136,
+      "target_line": 171,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 136,
+          "target_line": 171,
+          "skip": 35,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "d4088000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 136,
+          "target_line": 171,
+          "skip": 30,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "94078000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 136,
+          "target_line": 171,
+          "skip": 26,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "94068000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "3aae4c237403408163cb47572487a6af4ce49848"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc147_line172.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1514,
+    "bytecode_patch": {
+      "target_pc": 147,
+      "target_line": 172,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 147,
+          "target_line": 172,
+          "skip": 46,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "940b8000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 147,
+          "target_line": 172,
+          "skip": 41,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "540a8000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 147,
+          "target_line": 172,
+          "skip": 37,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "54098000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "9458fc65fb9b47705ee325770e6d2dc74e136e8b"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc148_line174.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1514,
+    "bytecode_patch": {
+      "target_pc": 148,
+      "target_line": 174,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 148,
+          "target_line": 174,
+          "skip": 47,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "d40b8000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 148,
+          "target_line": 174,
+          "skip": 42,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "940a8000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 148,
+          "target_line": 174,
+          "skip": 38,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "94098000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "1e5f6f1961f33b6d451595b77199358fc1b88150"
+  },
+  {
+    "src": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\240x320\\gwy\\jjfb.mrp",
+    "out": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\logs\\jjfb_skip_loader_pc150_line175.mrp",
+    "old_comp_size": 1514,
+    "new_comp_size": 1513,
+    "bytecode_patch": {
+      "target_pc": 150,
+      "target_line": 175,
+      "patches": [
+        {
+          "pc": 100,
+          "line": 143,
+          "target_pc": 150,
+          "target_line": 175,
+          "skip": 49,
+          "off": "0xdff",
+          "old": "45080003",
+          "new": "540c8000"
+        },
+        {
+          "pc": 105,
+          "line": 147,
+          "target_pc": 150,
+          "target_line": 175,
+          "skip": 44,
+          "off": "0xe13",
+          "old": "45080001",
+          "new": "140b8000"
+        },
+        {
+          "pc": 109,
+          "line": 157,
+          "target_pc": 150,
+          "target_line": 175,
+          "skip": 40,
+          "off": "0xe23",
+          "old": "c5000000",
+          "new": "140a8000"
+        }
+      ],
+      "line_groups": [
+        {
+          "pc": 1,
+          "line": 2
+        },
+        {
+          "pc": 5,
+          "line": 24
+        },
+        {
+          "pc": 6,
+          "line": 5
+        },
+        {
+          "pc": 7,
+          "line": 60
+        },
+        {
+          "pc": 9,
+          "line": 96
+        },
+        {
+          "pc": 10,
+          "line": 68
+        },
+        {
+          "pc": 11,
+          "line": 101
+        },
+        {
+          "pc": 12,
+          "line": 98
+        },
+        {
+          "pc": 13,
+          "line": 106
+        },
+        {
+          "pc": 14,
+          "line": 103
+        },
+        {
+          "pc": 15,
+          "line": 111
+        },
+        {
+          "pc": 16,
+          "line": 108
+        },
+        {
+          "pc": 17,
+          "line": 129
+        },
+        {
+          "pc": 20,
+          "line": 132
+        },
+        {
+          "pc": 24,
+          "line": 134
+        },
+        {
+          "pc": 29,
+          "line": 135
+        },
+        {
+          "pc": 31,
+          "line": 136
+        },
+        {
+          "pc": 34,
+          "line": 137
+        },
+        {
+          "pc": 36,
+          "line": 138
+        },
+        {
+          "pc": 51,
+          "line": 139
+        },
+        {
+          "pc": 75,
+          "line": 140
+        },
+        {
+          "pc": 98,
+          "line": 142
+        },
+        {
+          "pc": 100,
+          "line": 143
+        },
+        {
+          "pc": 103,
+          "line": 144
+        },
+        {
+          "pc": 104,
+          "line": 145
+        },
+        {
+          "pc": 105,
+          "line": 147
+        },
+        {
+          "pc": 108,
+          "line": 148
+        },
+        {
+          "pc": 109,
+          "line": 157
+        },
+        {
+          "pc": 113,
+          "line": 163
+        },
+        {
+          "pc": 122,
+          "line": 165
+        },
+        {
+          "pc": 124,
+          "line": 166
+        },
+        {
+          "pc": 129,
+          "line": 168
+        },
+        {
+          "pc": 132,
+          "line": 169
+        },
+        {
+          "pc": 136,
+          "line": 171
+        },
+        {
+          "pc": 147,
+          "line": 172
+        },
+        {
+          "pc": 148,
+          "line": 174
+        },
+        {
+          "pc": 150,
+          "line": 175
+        }
+      ],
+      "main_code_off": "0xc73",
+      "ncode": 150
+    },
+    "sha1": "32832383ee5c6e4436df5c1695dc85b95ecfcffd"
+  }
+]

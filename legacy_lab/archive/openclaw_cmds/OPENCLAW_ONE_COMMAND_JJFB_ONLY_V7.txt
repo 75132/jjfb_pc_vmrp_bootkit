@@ -1,0 +1,12 @@
+给 OpenClaw：
+
+路线纠正：先不跑 portproxy，不跑 gwy 社区网络。现在只测试“PC 模拟器直接启动 jjfb”。
+
+1. 解压到 jjfb_pc_vmrp_bootkit 根目录覆盖
+2. 运行：
+   powershell -ExecutionPolicy Bypass -File .\RUN_PC_BOOT_JJFB_ONLY_V7.ps1
+3. 观察 vmrp 窗口是否出现机甲风暴/loading/登录/连接超时
+4. 发：
+   logs/jjfb_only_feedback_*.zip
+
+不需要管理员。

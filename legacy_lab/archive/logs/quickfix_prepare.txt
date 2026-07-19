@@ -1,0 +1,29 @@
+src=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320
+dst=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+alias gwy\jjfb.mrp -> 000_jjfb.mrp 414602 sha1=c6a0cbda0c
+alias gwy.mrp -> 001_gwy.mrp 56345 sha1=7f5f52e8a6
+alias gwy\gamelist.mrp -> 002_gamelist.mrp 72620 sha1=142b4487f2
+alias gwy\jjfb.mrp -> jjfb.mrp 414602 sha1=c6a0cbda0c
+alias gwy.mrp -> gwy.mrp 56345 sha1=7f5f52e8a6
+alias gwy\gamelist.mrp -> gamelist.mrp 72620 sha1=142b4487f2
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\sdk_key.dat
+root mrp list:
+  000_jjfb.mrp size=414602 sha1=c6a0cbda0c
+  001_gwy.mrp size=56345 sha1=7f5f52e8a6
+  002_gamelist.mrp size=72620 sha1=142b4487f2
+  atxllq.mrp size=227114 sha1=81477639dc
+  box.mrp size=50434 sha1=643f2575dc
+  dsm_gm.mrp size=41315 sha1=be3a25f431
+  gamelist.mrp size=72620 sha1=142b4487f2
+  gwy.mrp size=56345 sha1=7f5f52e8a6
+  gwyaz.mrp size=284649 sha1=ec827d5b58
+  gxrxd.mrp size=200536 sha1=c55f8e7524
+  hxsg.mrp size=285344 sha1=f9a3375d69
+  jjfb.mrp size=414602 sha1=c6a0cbda0c
+  lines.mrp size=81244 sha1=e465d335fe
+  mpc.mrp size=188194 sha1=ea9973c657
+  mpqp.mrp size=281660 sha1=ddf73cfaab
+  QQDSM2007.mrp size=113827 sha1=b74d364679
+  shot.mrp size=100742 sha1=d6f752c8d3
+  tetris.mrp size=41327 sha1=45d33270e3

@@ -1,0 +1,30 @@
+
+//begin the bitmaps
+#define BMP_FILE 0
+#define BMP_DIR 1
+#define BMP_ARCHIVE 2
+#define BMP_AUDIO 3
+#define BMP_HIDDEN 4
+#define BMP_IMAGE 5
+#define BMP_TEXT 6
+#define BMP_VIDEO 7
+#define BMP_MRP 8
+#define BMP_ERROR 9
+#define BMP_LOGO_STAR 10
+#define BMP_TITLEBAR 11
+#define BMP_TOOLBAR 12
+#define BMP_IC_TIL_MAIN 13
+#define BMP_IC_TIL_ABOUT 14
+#define BMP_IC_TIL_FBRW 15
+#define BMP_IC_TIL_SET 16
+#define BMP_UP 17
+#define BMP_BOOK 18
+#define BMP_MORE 19
+#define BMP_OPEN 20
+#define BMP_RECENT 21
+#define BMP_THEME 22
+#define BMP_EJ 23
+#define BMP_STAR 24
+#define BMP_HEART 25
+
+#define RES_BITMAP_COUNT 26

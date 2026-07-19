@@ -1,0 +1,3 @@
+ZIP=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\packages\JJFB_v55_UIMODE_WRITER_COVERAGE.zip
+SHA256=8f21b96e0d58a1724254a6970b06e215ca8e7f31e9d70bb4c66870a05f8c07a8
+files=10

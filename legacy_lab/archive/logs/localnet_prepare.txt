@@ -1,0 +1,17 @@
+main=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\main.exe
+mythroad=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad
+alias 001_gwy.mrp <= gwy.mrp 56345 7f5f52e8a624
+alias 002_gamelist.mrp <= gwy\gamelist.mrp 72620 142b4487f2f8
+alias 000_jjfb.mrp <= gwy\jjfb.mrp 414602 c6a0cbda0ce8
+alias gwy.mrp <= gwy.mrp 56345 7f5f52e8a624
+alias gamelist.mrp <= gwy\gamelist.mrp 72620 142b4487f2f8
+alias jjfb.mrp <= gwy\jjfb.mrp 414602 c6a0cbda0ce8
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\sdk_key.dat
+wrote C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\runtime\vmrp_win32\vmrp_win32_20220102\mythroad\gwy\sdk_key.dat
+REPLACED dsm_gm.mrp <= 001_gwy.mrp 56345 7f5f52e8a624
+targets:
+dsm_gm.mrp: exists=True size=56345 sha1=7f5f52e8a624
+001_gwy.mrp: exists=True size=56345 sha1=7f5f52e8a624
+002_gamelist.mrp: exists=True size=72620 sha1=142b4487f2f8
+000_jjfb.mrp: exists=True size=414602 sha1=c6a0cbda0ce8
+gwy/cfg.bin: exists=True size=20728 sha1=a92a136ffeaf

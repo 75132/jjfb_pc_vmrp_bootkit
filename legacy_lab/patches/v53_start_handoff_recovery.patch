@@ -1,0 +1,236 @@
+--- a/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
++++ b/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+@@ -57,14 +57,18 @@
+ static start_t *mr_start_dsm_param;
+ static uint32_t mr_extHelper_addr;
+ 
+-/* v52: keep the original jjfb.mrp untouched while satisfying the historical
+- * mrc_loader request for cfunction.ext.  The canonical package stores the
+- * actual game EXT as robotol.ext; the 232-byte mrc_loader contains the request
+- * literal at helper+0xCC (file offset 0xD4, entry at +8). */
+-static int jjfb_v52_alias_applied;
+-static int jjfb_v52_robotol_loaded;
+-static uint32_t jjfb_v52_loader_helper;
+-static uint32_t jjfb_v52_robotol_helper;
++/* v53: keep the original jjfb.mrp untouched while satisfying the historical
++ * mrc_loader request for cfunction.ext.  Guest mrc_loader/robotol registration
++ * happens inside Mythroad's own _mr_c_function_table, not through the outer
++ * bridge callback.  Track the guest log stream and patch the request literal at
++ * ext_base+0xD4 after mrc_loader is registered. */
++static int jjfb_v53_alias_applied;
++static int jjfb_v53_robotol_loaded;
++static uint32_t jjfb_v53_loader_helper;
++static uint32_t jjfb_v53_robotol_helper;
++static uint32_t jjfb_v53_last_guest_ext_base;
++static uint32_t jjfb_v53_last_guest_ext_P;
++static unsigned jjfb_v53_guest_ext_ordinal;
+ 
+ static int jjfb_bridge_env_true(const char *name) {
+     const char *v = getenv(name);
+@@ -73,55 +77,53 @@
+            strcmp(v, "false") != 0 && strcmp(v, "FALSE") != 0;
+ }
+ 
+-static int jjfb_patch_mrc_loader_member_alias(uc_engine *uc, uint32_t helper) {
++static int jjfb_patch_mrc_loader_member_alias(uc_engine *uc, uint32_t ext_base) {
+     static const char old_name[] = "cfunction.ext";
+     static const char new_name[sizeof(old_name)] = "robotol.ext";
+-    const uint32_t expected = helper + 0xCC;
++    const uint32_t expected = ext_base + 0xD4;
+     uint32_t lo, hi, addr;
+     char probe[sizeof(old_name)];
+ 
+-    if (!uc || helper < CODE_ADDRESS || helper >= END_ADDRESS) return 0;
++    if (!uc || ext_base < CODE_ADDRESS || ext_base >= END_ADDRESS) return 0;
+ 
+-    /* Fast path proven by the canonical 232-byte mrc_loader.ext audit. */
++    /* Canonical mrc_loader.ext: request literal is at file/ext offset 0xD4. */
+     if (expected >= CODE_ADDRESS && expected + sizeof(probe) <= END_ADDRESS &&
+         uc_mem_read(uc, expected, probe, sizeof(probe)) == UC_ERR_OK &&
+         memcmp(probe, old_name, sizeof(old_name)) == 0) {
+         if (uc_mem_write(uc, expected, new_name, sizeof(new_name)) == UC_ERR_OK) {
+-            printf("[JJFB_MRP_ALIAS] patched helper=0x%X literal=0x%X "
+-                   "request=cfunction.ext target=robotol.ext method=known_offset\n",
+-                   helper, expected);
++            printf("[JJFB_MRP_ALIAS] patched ext_base=0x%X literal=0x%X "
++                   "request=cfunction.ext target=robotol.ext method=ext_base_0xD4\n",
++                   ext_base, expected);
+             fflush(stdout);
+             return 1;
+         }
+     }
+ 
+-    /* Defensive fallback for a loader build with the same literal at a nearby
+-     * offset.  Patch only the exact NUL-terminated request nearest this helper. */
+-    lo = helper > 0x1000 ? helper - 0x1000 : CODE_ADDRESS;
+-    if (lo < CODE_ADDRESS) lo = CODE_ADDRESS;
+-    hi = helper + 0x4000;
++    /* Defensive fallback stays within the 232-byte loader image neighborhood. */
++    lo = ext_base;
++    hi = ext_base + 0x400;
+     if (hi > END_ADDRESS - sizeof(probe)) hi = END_ADDRESS - sizeof(probe);
+     for (addr = lo; addr <= hi; addr++) {
+         if (uc_mem_read(uc, addr, probe, sizeof(probe)) != UC_ERR_OK) continue;
+         if (memcmp(probe, old_name, sizeof(old_name)) != 0) continue;
+         if (uc_mem_write(uc, addr, new_name, sizeof(new_name)) != UC_ERR_OK) break;
+-        printf("[JJFB_MRP_ALIAS] patched helper=0x%X literal=0x%X "
+-               "request=cfunction.ext target=robotol.ext method=near_scan\n",
+-               helper, addr);
++        printf("[JJFB_MRP_ALIAS] patched ext_base=0x%X literal=0x%X "
++               "request=cfunction.ext target=robotol.ext method=ext_base_scan\n",
++               ext_base, addr);
+         fflush(stdout);
+         return 1;
+     }
+ 
+-    printf("[JJFB_MRP_ALIAS] patch_miss helper=0x%X expected=0x%X "
+-           "request=cfunction.ext\n", helper, expected);
++    printf("[JJFB_MRP_ALIAS] patch_miss ext_base=0x%X expected=0x%X "
++           "request=cfunction.ext\n", ext_base, expected);
+     fflush(stdout);
+     return 0;
+ }
+ 
+-int jjfb_mrp_alias_applied(void) { return jjfb_v52_alias_applied; }
+-int jjfb_robotol_ext_loaded(void) { return jjfb_v52_robotol_loaded; }
++int jjfb_mrp_alias_applied(void) { return jjfb_v53_alias_applied; }
++int jjfb_robotol_ext_loaded(void) { return jjfb_v53_robotol_loaded; }
+ uint32_t jjfb_current_ext_helper(void) { return mr_extHelper_addr; }
+-uint32_t jjfb_robotol_ext_helper(void) { return jjfb_v52_robotol_helper; }
++uint32_t jjfb_robotol_ext_helper(void) { return jjfb_v53_robotol_helper; }
+ 
+ static const char MUTEX_LOCK_FAIL[] = "mutex lock fail";
+ static const char MUTEX_UNLOCK_FAIL[] = "mutex unlock fail";
+@@ -143,22 +145,6 @@
+     printf("ext call %s(0x%X[%u], 0x%X[%u])\n", o->name, p_f, p_f, p_len, p_len);
+     dumpREG(uc);
+ 
+-    if (jjfb_bridge_env_true("JJFB_MRP_ALIAS_CFUNCTION_ROBOTOL")) {
+-        if (!jjfb_v52_alias_applied && jjfb_c_function_new_count == 2) {
+-            jjfb_v52_loader_helper = p_f;
+-            jjfb_v52_alias_applied = jjfb_patch_mrc_loader_member_alias(uc, p_f);
+-        } else if (jjfb_v52_alias_applied && !jjfb_v52_robotol_loaded &&
+-                   jjfb_c_function_new_count == 3 &&
+-                   p_f != jjfb_v52_loader_helper) {
+-            jjfb_v52_robotol_loaded = 1;
+-            jjfb_v52_robotol_helper = p_f;
+-            printf("[JJFB_ROBOTOL_LOAD] ordinal=%d helper=0x%X "
+-                   "loader_helper=0x%X after_alias=1\n",
+-                   jjfb_c_function_new_count, p_f, jjfb_v52_loader_helper);
+-            fflush(stdout);
+-        }
+-    }
+-
+     mr_extHelper_addr = p_f;
+     mr_c_function_P = my_mallocExt(p_len);
+     memset(mr_c_function_P, 0, p_len);
+@@ -1676,6 +1662,45 @@
+     SET_RET_V(ret);
+ }
+ 
++static void jjfb_v53_probe_guest_log(uc_engine *uc, const char *str) {
++    uint32_t value = 0, helper = 0, P = 0;
++    unsigned len = 0;
++
++    if (!str || !jjfb_bridge_env_true("JJFB_MRP_ALIAS_CFUNCTION_ROBOTOL")) return;
++
++    if (sscanf(str, "--- ext: @%x", &value) == 1) {
++        jjfb_v53_last_guest_ext_base = value;
++        printf("[JJFB_GUEST_EXT] observed ext_base=0x%X\n", value);
++        fflush(stdout);
++        return;
++    }
++
++    if (sscanf(str, "_mr_c_function_new(%x, %u)  mr_c_function_P:%x",
++               &helper, &len, &P) == 3) {
++        jjfb_v53_guest_ext_ordinal++;
++        jjfb_v53_last_guest_ext_P = P;
++        if (jjfb_v53_guest_ext_ordinal == 1) {
++            jjfb_v53_loader_helper = helper;
++            printf("[JJFB_GUEST_EXT] ordinal=1 role=mrc_loader helper=0x%X P=0x%X "
++                   "ext_base=0x%X len=%u\n",
++                   helper, P, jjfb_v53_last_guest_ext_base, len);
++            jjfb_v53_alias_applied = jjfb_patch_mrc_loader_member_alias(
++                uc, jjfb_v53_last_guest_ext_base);
++        } else if (jjfb_v53_alias_applied && !jjfb_v53_robotol_loaded &&
++                   helper != jjfb_v53_loader_helper) {
++            jjfb_v53_robotol_loaded = 1;
++            jjfb_v53_robotol_helper = helper;
++            printf("[JJFB_ROBOTOL_LOAD] ordinal=3 guest_ordinal=%u helper=0x%X "
++                   "P=0x%X ext_base=0x%X loader_helper=0x%X after_alias=1 "
++                   "source=br_log\n",
++                   jjfb_v53_guest_ext_ordinal, helper, P,
++                   jjfb_v53_last_guest_ext_base, jjfb_v53_loader_helper);
++            fflush(stdout);
++        }
++        return;
++    }
++}
++
+ static void br_log(BridgeMap *o, uc_engine *uc) {
+     // void (*log)(char *msg);
+     uint32_t msg;
+@@ -1683,6 +1708,7 @@
+ 
+     char *str = (char *)getMrpMemPtr(msg);
+     // LOG("ext call %s('%s')\n", o->name, str);
++    jjfb_v53_probe_guest_log(uc, str);
+     puts(str);
+     // dumpREG(uc);
+ }
+--- a/runtime/vmrp_src_build_v27/vmrp-master/vmrp.c
++++ b/runtime/vmrp_src_build_v27/vmrp-master/vmrp.c
+@@ -210,6 +210,7 @@
+ 
+         int gwy_launcher_mode = jjfb_env_true("JJFB_GWY_LAUNCHER_MODE");
+         int member_alias_mode = jjfb_env_true("JJFB_MRP_ALIAS_CFUNCTION_ROBOTOL");
++        int start_ignore_handoff_mode = jjfb_env_true("JJFB_ACCEPT_START_IGNORE_AFTER_ROBOTOL");
+         char *filename = gwy_launcher_mode ? "gwy/jjfb.mrp" : "dsm_gm.mrp";
+         // char *filename = "winmine.mrp";
+         char *extName = "start.mr";
+@@ -239,9 +240,31 @@
+         uint32_t ret = bridge_dsm_mr_start_dsm(uc, filename, extName, startParam);
+         printf("bridge_dsm_mr_start_dsm('%s','%s',SRCV): 0x%X\n", filename, extName, ret);
+ 
+-        /* Lua _strCom(801,"",0) crashes/fails inside robotol; C path does 6 → 8 → 0.
+-         * With only6 MRP, code=6 already ran in Lua. Finish init from host. */
+-        if (ret == MR_SUCCESS) {
++        /* The original start.mr executes robotol's internal 801 code=0.  On this
++         * platform that path returns MR_IGNORE (1) after robotol is already loaded,
++         * because appInfo/mrc_extChunk are not yet supplied.  Do not globally coerce
++         * the return value: accept it only when the alias and robotol postconditions
++         * prove that the second-stage EXT registration completed, then recover the
++         * platform contract from host with 6 -> 8 -> 0. */
++        int start_handoff_ready = (ret == MR_SUCCESS);
++        if (!start_handoff_ready && start_ignore_handoff_mode &&
++            ret == MR_IGNORE && member_alias_mode &&
++            jjfb_mrp_alias_applied() && jjfb_robotol_ext_loaded()) {
++            start_handoff_ready = 1;
++            printf("[JJFB_START_HANDOFF] raw_ret=0x%X semantic=MR_IGNORE "
++                   "alias_applied=1 robotol_loaded=1 helper=0x%X "
++                   "action=run_host_801_recovery\n",
++                   ret, jjfb_robotol_ext_helper());
++            fflush(stdout);
++        } else if (ret != MR_SUCCESS) {
++            printf("[JJFB_START_HANDOFF] raw_ret=0x%X alias_applied=%d "
++                   "robotol_loaded=%d recovery_enabled=%d action=stop_before_host_801\n",
++                   ret, jjfb_mrp_alias_applied(), jjfb_robotol_ext_loaded(),
++                   start_ignore_handoff_mode);
++            fflush(stdout);
++        }
++
++        if (start_handoff_ready) {
+             /* v51 could call 801 while mr_extHelper_addr still pointed at the
+              * 232-byte mrc_loader.  In alias mode, require the post-alias EXT
+              * registration before treating code=0 as robotol mrc_init. */
+--- a/runtime/vmrp_src_build_v27/vmrp-master/header/bridge.h
++++ b/runtime/vmrp_src_build_v27/vmrp-master/header/bridge.h
+@@ -56,7 +56,7 @@
+ int jjfb_robotol_timer_active(void);
+ void jjfb_arm_robotol_timer(uint16_t period_ms);
+ void jjfb_on_robotol_timer_tick(uc_engine *uc);
+-/* v52 MRP-member alias state: cfunction.ext request -> robotol.ext. */
++/* v53 guest-log MRP-member alias state: cfunction.ext request -> robotol.ext. */
+ int jjfb_mrp_alias_applied(void);
+ int jjfb_robotol_ext_loaded(void);
+ uint32_t jjfb_current_ext_helper(void);

@@ -1,0 +1,27 @@
+﻿Phase 6B-A5 Dispatcher Semantics & Second-Hop Provenance
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+case=A
+case_legend=A_cmd_ok_wrong_entry|B_helper_match|C_reg_mismatch|D_missing_desc|E_method_dispatch|F_unknown
+r0_role_proto=COMMAND
+r0_dsm_to_loader=0x0
+r0_dsm_to_robotol=0x0
+second_hop_target_source=unknown
+dsm_direct_relation=DIRECT_TARGET_IS_INTERNAL_ENTRY
+cross_target_gwy=ran_minimal
+cross_target_wxjwq=dispatch_tags_seen
+fix_applied=none (no chunk/context create; no PlatformRegistry; no r0 poke)
+phase6b_b_gate=blocked
+Q1_dispatcher_r0_role=COMMAND Q2_dispatch_enter_exit=OBSERVED Q3_second_hop_source=unknown Q4_r0_loader_vs_robotol=0x0/0x0 Q5_dsm_direct_relation=DIRECT_TARGET_IS_INTERNAL_ENTRY Q6_ptr_write=NONE Q7_hop_case=A Q8_no_fake_context=yes Q9_phase6b_b=blocked Q10_evidence=OBSERVED
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+dispatch_enter=PASS DISPATCH_CALL ENTER missing
+dispatch_exit=PASS DISPATCH_CALL EXIT missing
+dispatch_proto=PASS DISPATCH_PROTO missing
+transfer_or_second=PASS transfer_id>=2 / SECOND_HOP missing
+ptr_write_or_none=PASS MODULE_POINTER_WRITE missing
+dsm_direct=PASS dsm_direct_target missing
+r0_semantics=PASS need R0_SEMANTICS x2
+hop_case=PASS DISPATCH_HOP_CASE missing
+no_fake_context=PASS fake context / PlatformRegistry suspected
+no_r0_poke=PASS r0 poke suspected
+xt_gwy=PASS gwy.mrp log empty
+xt_wxjwq=PASS wxjwq log empty

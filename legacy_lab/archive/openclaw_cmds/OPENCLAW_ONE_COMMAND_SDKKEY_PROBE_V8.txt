@@ -1,0 +1,10 @@
+给 OpenClaw：
+
+v7 结果说明 jjfb 已经直接启动，但 sdk_key.dat 内容无效。现在跑 v8 自动探测 sdk_key 候选：
+
+powershell -ExecutionPolicy Bypass -File .\RUN_PC_JJFB_SDKKEY_PROBE_V8.ps1
+
+跑完发：
+logs\sdkkey_probe_feedback_*.zip
+
+这次不要跑 portproxy，不要跑 gwy。
