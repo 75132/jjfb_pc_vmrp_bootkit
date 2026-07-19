@@ -250,6 +250,14 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     printf("[JJFB_DRAW] api=mr_drawBitmap bmp=0x%X x=%d y=%d w=%u h=%u "
            "evidence=DOCUMENTED\n",
            bmp, (int)x, (int)y, w, h);
+    {
+        uint32_t pc = 0, lr = 0;
+        uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+        uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+        printf("[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x%X lr=0x%X r0=0x%X r1=%d r2=%d r3=%u "
+               "h=%u sp=0x%X surface=0x%X note=real_platform_draw evidence=OBSERVED\n",
+               pc, lr, bmp, (int)x, (int)y, w, h, sp, bmp);
+    }
     printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
     fflush(stdout);
     guiDrawBitmap(getMrpMemPtr(bmp), x, y, w, h);

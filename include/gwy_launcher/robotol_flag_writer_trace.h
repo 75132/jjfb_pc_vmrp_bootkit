@@ -70,9 +70,18 @@ extern "C" {
  *
  * E8Q-Fast: R1=20 success arm + C44 nonzero unlock (0x2FC8CE); see RUN_E8Q_FAST.ps1
  *
+ * E8U-DisplayFirst (NOT product success):
+ *   JJFB_DISPLAY_FIRST=1           — arm idle-gate branch assist + draw watch
+ *   JJFB_BYPASS_C9D_GATE=1         — at PC 0x3066C6 (C9D BNE), continue 0x3066C8 (no C9D poke)
+ *   JJFB_BYPASS_CF5_GATE=1         — optional: after C9D assist, force success @ 0x306740
+ *   JJFB_FAST_UI_UPSTREAM=2E2520   — call real event dispatcher with captured UI object
+ *   JJFB_FAST_UI_OBJECT_R0=0x..    — explicit UI object for 0x2E4788 (never r0=0)
+ *   JJFB_E8U_SCREENSHOT=path.bmp   — first nontrivial guiDrawBitmap → SDL_SaveBMP
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.
+ * DISPLAY_FIRST must not poke C9D/CF5 memory or paint framebuffer from host.
  */
 
 int robotol_flag_writer_trace_enabled(void);

@@ -89,6 +89,7 @@ char *editGetText(int32 edit) {
 }
 
 void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
+    static int s_first_real_saved = 0;
     SDL_Surface *surface = SDL_GetWindowSurface(window);
     if (SDL_MUSTLOCK(surface)) {
         if (SDL_LockSurface(surface) != 0) printf("SDL_LockSurface err\n");
@@ -108,6 +109,40 @@ void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
     if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
     if (SDL_UpdateWindowSurface(window) != 0)
         printf("SDL_UpdateWindowSurface err\n");
+
+    /* E8U-DisplayFirst: save first non-trivial frame from real draw path (not host paint). */
+    if (!s_first_real_saved && bmp && w > 0 && h > 0) {
+        const char *df = getenv("JJFB_DISPLAY_FIRST");
+        int nontrivial = 0;
+        int32_t j, i;
+        uint32_t black = 0, white = 0, other = 0;
+        for (j = 0; j < h && j < SCREEN_HEIGHT; j++) {
+            for (i = 0; i < w && i < SCREEN_WIDTH; i++) {
+                uint16_t c = *(bmp + ((x + i) + (y + j) * SCREEN_WIDTH));
+                if (c == 0) black++;
+                else if (c == 0xFFFFu) white++;
+                else other++;
+            }
+        }
+        nontrivial = (other > 16) || (black > 0 && white > 0 && (black + white) > 64);
+        if (nontrivial) {
+            const char *path = getenv("JJFB_E8U_SCREENSHOT");
+            if (!path || !path[0]) path = "screenshots/e8u_first_real_frame.bmp";
+            if (SDL_SaveBMP(surface, path) == 0) {
+                s_first_real_saved = 1;
+                printf("[JJFB_E8U_FIRST_REAL_FRAME] path=%s x=%d y=%d w=%d h=%d "
+                       "black=%u white=%u other=%u note=real_guiDrawBitmap "
+                       "display_first=%s evidence=OBSERVED\n",
+                       path, (int)x, (int)y, (int)w, (int)h, black, white, other,
+                       (df && df[0] == '1') ? "1" : "0");
+                fflush(stdout);
+            } else {
+                printf("[JJFB_E8U_FIRST_REAL_FRAME] save_fail path=%s err=%s evidence=OBSERVED\n",
+                       path, SDL_GetError());
+                fflush(stdout);
+            }
+        }
+    }
 }
 
 #ifdef __EMSCRIPTEN__
