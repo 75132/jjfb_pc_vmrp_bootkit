@@ -32,6 +32,7 @@
 #include "gwy_launcher/platform_call_census.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
+#include "gwy_launcher/robotol_flag_writer_trace.h"
 #include "gwy_launcher/vm_runtime.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdint.h>
@@ -150,6 +151,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_call_census_reset();
     robotol_idle_watch_reset();
     robotol_idle_watch_bind_uc(uc);
+    robotol_flag_writer_trace_reset();
+    robotol_flag_writer_trace_bind_uc(uc);
 }
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
@@ -527,6 +530,8 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         platform_call_census_dump("lifecycle_tick");
     }
     robotol_idle_watch_set_tick(g_lifecycle_ticks);
+    robotol_flag_writer_trace_set_tick(g_lifecycle_ticks);
+    robotol_flag_writer_trace_try_arm(uc);
     if (g_lifecycle_ticks == 1u)
         robotol_idle_watch_note_stage(uc, "first_10140_tick");
     else if (g_lifecycle_ticks == 40u)
@@ -544,6 +549,8 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         }
         robotol_idle_watch_try_10165_probe(uc);
     }
+    /* E8F: writer BP summary + sibling/counterfactual after tick returns (depth 0). */
+    robotol_flag_writer_trace_on_lifecycle(uc, g_lifecycle_ticks);
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }

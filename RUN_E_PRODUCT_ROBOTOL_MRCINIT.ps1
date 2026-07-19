@@ -161,7 +161,11 @@ $e8bMode = ($env:JJFB_E8B_MODE -eq '1')
 $e8cMode = ($env:JJFB_E8C_MODE -eq '1')
 $e8dMode = ($env:JJFB_E8D_MODE -eq '1')
 $e8eMode = ($env:JJFB_E8E_MODE -eq '1')
-if ($e8eMode) {
+$e8fMode = ($env:JJFB_E8F_MODE -eq '1')
+if ($e8fMode) {
+  # Writer BP + sibling/counterfactual; stop on DRAW, idle-flag unlock, or tick25 (summary).
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_E8F_WRITER_SUMMARY\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8eMode) {
   # ABI probe + FE8 watch; FE8/queue writes are expected — stop only on idle-flag unlock, DRAW, or tick40.
   $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e8dMode) {
