@@ -45,7 +45,7 @@ R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
 [JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
-[VM_FILE_BIND] runtime=1 svc=155e4c80
+[VM_FILE_BIND] runtime=1 svc=183d4eb0
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
@@ -441,6 +441,12 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [R9_SCOPE] stage=LEAVE scope_id=8 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=4 actual_top_frame_id=4 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=4 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D990E target=0x304559 arg0=0x1 arg1=0x64
+[JJFB_E8C_IDLE_WATCH] armed=1 er_rw=0x2B1854 offset_base=0x2B1858 size=0x151C owner=robotol.ext nflags=5 range=0x2B249C..0x2B2A0B evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B249C off=0xC44 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B24F5 off=0xC9D width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B2529 off=0xCD1 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B254D off=0xCF5 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B2A08 off=0x11B0 width=4 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x1 app=0x64 arg2=0x0 arg3=0x0 ret=0 kind=STATUS name=default_status evidence=DOCUMENTED
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r4=0x1 ret=0x0 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=11 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=5 scope_id=9 host_callsite=enter guest_pc=0x2D998C guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
@@ -469,6 +475,7 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [JJFB_PLAT_CALL] code=0x10113 app=0x11F04 arg2=0x0 out=0x27FD30 fp=0x2801E4 wrote=1 ret=0 kind=GRAPHICS_FP name=plat_10113_graphics_fp evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10113 r1=0x11F04 r2=0x0 r3=0x27FD30 r4=0x10113 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304932 target=0x304559 arg0=0x10102 arg1=0x1E200
+[JJFB_E8D_HANDLER_MAP] code=0x10102 family=0x1E200 handler=0x30D301 role=family_register evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10102 family=0x1E200 handler=0x30D301 ret=1 kind=REGISTER name=plat_10102_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x1E200 r2=0x30D301 r3=0x0 r4=0x10102 ret=0x1 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=14 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=6 scope_id=10 host_callsite=enter guest_pc=0x304952 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
@@ -484,9 +491,11 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [R9_SCOPE] stage=LEAVE scope_id=10 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=6 actual_top_frame_id=6 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=6 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30496A target=0x304559 arg0=0x10120 arg1=0x4
+[JJFB_E8D_HANDLER_MAP] code=0x10120 family=0x4 handler=0x682A5C role=? evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10120 family=0x4 handler=0x682A5C ret=1 kind=REGISTER name=plat_10120_bind evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682A5C r3=0x0 r4=0x10120 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304998 target=0x304559 arg0=0x10140 arg1=0x5
+[JJFB_E8D_HANDLER_MAP] code=0x10140 family=0x5 handler=0x30630D role=lifecycle_period evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10140 family=0x5 handler=0x30630D ret=1 kind=REGISTER name=plat_10140_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10140 r1=0x5 r2=0x682A5C r3=0x30630D r4=0x10140 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049A6 target=0x304651 arg0=0x1 arg1=0x5
@@ -503,10 +512,12 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [R9_SCOPE] stage=LEAVE scope_id=11 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=7 actual_top_frame_id=7 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=7 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049D2 target=0x304559 arg0=0x10162 arg1=0xE200
+[JJFB_E8D_HANDLER_MAP] code=0x10162 family=0xE200 handler=0x30D249 role=alloc_or_enqueue evidence=CROSS_TARGET+docs/06
 [PLATFORM_ALLOC] code=0x10162 size=0xE200 buf=0x30D249 ret=0x682AA4 tag_u16=0 name=plat_10162_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10162 app=0xE200 size=0xE200 ret=0x682AA4 kind=ALLOC name=plat_10162_alloc handler=0x30D249 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10162 r1=0xE200 r2=0x30D249 r3=0x0 r4=0x10162 ret=0x682AA4 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049F8 target=0x304559 arg0=0x10165 arg1=0xE200
+[JJFB_E8D_HANDLER_MAP] code=0x10165 family=0xE200 handler=0x30D2F9 role=enqueue_event evidence=CROSS_TARGET+docs/06
 [PLATFORM_ALLOC] code=0x10165 size=0xE200 buf=0x30D2F9 ret=0x690CAC tag_u16=0 name=plat_10165_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10165 app=0xE200 size=0xE200 ret=0x690CAC kind=ALLOC name=plat_10165_alloc handler=0x30D2F9 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10165 r1=0xE200 r2=0x30D2F9 r3=0x0 r4=0x10165 ret=0x690CAC evidence=TARGET_OBSERVED
@@ -620,6 +631,7 @@ After app init, memory left:3748952
 [JJFB_PLAT_CALL] code=0x10113 app=0x11F04 arg2=0x0 out=0x27FFA0 fp=0x2801E4 wrote=1 ret=0 kind=GRAPHICS_FP name=plat_10113_graphics_fp evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10113 r1=0x11F04 r2=0x0 r3=0x27FFA0 r4=0x10113 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304932 target=0x304559 arg0=0x10102 arg1=0x1E200
+[JJFB_E8D_HANDLER_MAP] code=0x10102 family=0x1E200 handler=0x30D301 role=family_register evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10102 family=0x1E200 handler=0x30D301 ret=1 kind=REGISTER name=plat_10102_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x1E200 r2=0x30D301 r3=0x0 r4=0x10102 ret=0x1 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=28 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=13 scope_id=17 host_callsite=enter guest_pc=0x304952 guest_module=cfunction.ext depth_before=3 depth_after=4 evidence=OBSERVED
@@ -635,9 +647,11 @@ After app init, memory left:3748952
 [R9_SCOPE] stage=LEAVE scope_id=17 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=13 actual_top_frame_id=13 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=4 depth_after=3 old_r9=0x280400 new_r9=0x2B1858 generation=13 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=3 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30496A target=0x304559 arg0=0x10120 arg1=0x4
+[JJFB_E8D_HANDLER_MAP] code=0x10120 family=0x4 handler=0x682A5C role=? evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10120 family=0x4 handler=0x682A5C ret=1 kind=REGISTER name=plat_10120_bind evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682A5C r3=0x0 r4=0x10120 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304998 target=0x304559 arg0=0x10140 arg1=0x5
+[JJFB_E8D_HANDLER_MAP] code=0x10140 family=0x5 handler=0x30630D role=lifecycle_period evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10140 family=0x5 handler=0x30630D ret=1 kind=REGISTER name=plat_10140_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10140 r1=0x5 r2=0x682A5C r3=0x30630D r4=0x10140 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049A6 target=0x304651 arg0=0x1 arg1=0x5
@@ -654,10 +668,12 @@ After app init, memory left:3748952
 [R9_SCOPE] stage=LEAVE scope_id=18 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=14 actual_top_frame_id=14 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=4 depth_after=3 old_r9=0x280400 new_r9=0x2B1858 generation=14 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=3 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049D2 target=0x304559 arg0=0x10162 arg1=0xE200
+[JJFB_E8D_HANDLER_MAP] code=0x10162 family=0xE200 handler=0x30D249 role=alloc_or_enqueue evidence=CROSS_TARGET+docs/06
 [PLATFORM_ALLOC] code=0x10162 size=0xE200 buf=0x30D249 ret=0x69EECC tag_u16=0 name=plat_10162_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10162 app=0xE200 size=0xE200 ret=0x69EECC kind=ALLOC name=plat_10162_alloc handler=0x30D249 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10162 r1=0xE200 r2=0x30D249 r3=0x0 r4=0x10162 ret=0x69EECC evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049F8 target=0x304559 arg0=0x10165 arg1=0xE200
+[JJFB_E8D_HANDLER_MAP] code=0x10165 family=0xE200 handler=0x30D2F9 role=enqueue_event evidence=CROSS_TARGET+docs/06
 [PLATFORM_ALLOC] code=0x10165 size=0xE200 buf=0x30D2F9 ret=0x6AD0D4 tag_u16=0 name=plat_10165_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10165 app=0xE200 size=0xE200 ret=0x6AD0D4 kind=ALLOC name=plat_10165_alloc handler=0x30D2F9 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10165 r1=0xE200 r2=0x30D2F9 r3=0x0 r4=0x10165 ret=0x6AD0D4 evidence=TARGET_OBSERVED
@@ -670,6 +686,13 @@ After app init, memory left:3748952
 [EXT_ENTRY] module_id=3 method=0 return=0
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AED
 [JJFB_MRC_INIT] module=robotol.ext helper=0x304AED method=0 ret=0 route=mr_extHelper evidence=DOCUMENTED source=mythroad.c:case_801
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8D_ERW_DIFF] stage=after_mrc_init base=0x2B1858 win=0xC00..0x11FF changed=0 first_off=0x0 tick=0 evidence=OBSERVED
+[JJFB_E8D_ERW_FLAGS] stage=after_mrc_init 0xC44=0x0 0xC9D=0x0 0xCD1=0x0 0xCF5=0x0 0x11B0=0x0 evidence=OBSERVED
 [JJFB_INIT_SEQ] delivered ret6=0 ret8=0 ret0=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=START_DSM_RETURN filename=gwy/jjfb.mrp ret=0 evidence=DOCUMENTED
 [JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return reason=no_timer_api_call_seen arm_count=0 evidence=TARGET_OBSERVED
@@ -677,8 +700,7 @@ After app init, memory left:3748952
 [JJFB_LIFECYCLE] op=ARM period_ms=50 handler=0x30630D family=0x5 reason=10140_registered_no_classic_timer evidence=CROSS_TARGET+docs/06
 bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=37316 loop_iter=1 timers_active=1 next_due_ms=64996683 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=37316 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=39137 loop_iter=1 timers_active=1 next_due_ms=67419197 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
@@ -690,11 +712,11 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=1 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=0 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=1 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[JJFB_PLAT_CENSUS_SUMMARY] reason=lifecycle_tick draw=0 refresh=6 file_miss=0 networkish=0 1e209_trace_calls=1 tick=1 evidence=OBSERVED
+[JJFB_PLAT_CENSUS_SUMMARY] reason=lifecycle_tick draw=0 refresh=6 file_miss=0 networkish=0 1e209_trace_calls=0 tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x1 app=0x64 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10113 app=0x11F02 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10113 app=0x11F03 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
@@ -708,14 +730,61 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_PLAT_CENSUS] code=0x10162 app=0xE200 caller_pc=0x304589 ret=0x69EECC count=1 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10165 app=0xE200 caller_pc=0x304589 ret=0x6AD0D4 count=1 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x1E209 app=0x9 caller_pc=0x304589 ret=0x0 count=1 first_tick=1 last_tick=1 evidence=OBSERVED
-[R9_WRITE] event_seq=34 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8D_ERW_DIFF] stage=first_10140_tick base=0x2B1858 win=0xC00..0x11FF changed=0 first_off=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8D_ERW_FLAGS] stage=first_10140_tick 0xC44=0x0 0xC9D=0x0 0xCD1=0x0 0xCF5=0x0 0x11B0=0x0 evidence=OBSERVED
+[R9_WRITE] event_seq=34 old=0x2B1858 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8D_10165_FIRE] candidate=ZERO_ARGS handler=0x30D2F9 family=0xE200 r9=0x2B1858 note=observe_only_hypothesis evidence=HYPOTHESIS+docs/06_enqueue
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D2FA target=0x30D24D arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D258 target=0x3046A9 arg0=0x0 arg1=0x0
+[R9_WRITE] event_seq=35 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=15 scope_id=19 host_callsite=enter guest_pc=0x3046B4 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=19 frame_id=15 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=15 top_frame_kind=RUNTIME_ENTRY generation=15 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x3046B4 return_pc=0x3046B6 frame_id=15 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=15 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x3046B4 to_module=dsm:cfunction.ext to_module_id=5 target=0x805F8 target_offset=0x5F8 r0=0x805F8 r1=0x0 lr=0x30D25D evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x3046B4 function_entry_pc=0x805F8 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=19 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=15 actual_top_frame_id=15 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=15 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=15 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=36 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x3046B6 return_pc=0x3046B6 call_pc=0x3046B4 cur_r9=0x280400 lr=0x3046B7 executed=1 owns_r9_pop=1 side_depth=0 frame_id=15 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=37 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=15 scope_id=19 host_callsite=mrp_return_from_dsm_helper guest_pc=0x3046B4 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=19 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=15 actual_top_frame_id=15 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=15 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D296 target=0x305605 arg0=0x0 arg1=0x2B2030
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x305606 target=0x305445 arg0=0x0 arg1=0x2B2030
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D2AC target=0x304559 arg0=0x101AB arg1=0x0
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x101AB r1=0x0 r2=0x27FFE0 r3=0x2 r4=0x101AB ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D2BE target=0x31103D arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x31104A target=0x2FA11D arg0=0x27FFC8 arg1=0x27FFA4
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x311088 target=0x306079 arg0=0x63 arg1=0x27FFC8
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x3060E2 target=0x2FA159 arg0=0x27FFC8 arg1=0x1
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D2CE target=0x31103D arg0=0xFFFFFFFF arg1=0x1
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x31104A target=0x2FA11D arg0=0x27FFC8 arg1=0x27FFA4
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x311088 target=0x306079 arg0=0x69 arg1=0x27FFC8
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D2D8 target=0x2E4D6D arg0=0xFFFFFFFE arg1=0x0
+[JJFB_E8D_10165_FIRE_DONE] candidate=ZERO_ARGS ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 evidence=OBSERVED
+[R9_WRITE] event_seq=38 old=0x2B1858 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=after_10165_probe evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=after_10165_probe evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=after_10165_probe evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=after_10165_probe evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=after_10165_probe evidence=OBSERVED
+[JJFB_E8D_ERW_DIFF] stage=after_10165_probe base=0x2B1858 win=0xC00..0x11FF changed=2 first_off=0xFE8 tick=1 evidence=OBSERVED
+[JJFB_E8D_ERW_FLAGS] stage=after_10165_probe 0xC44=0x0 0xC9D=0x0 0xCD1=0x0 0xCF5=0x0 0x11B0=0x0 evidence=OBSERVED
+[R9_WRITE] event_seq=39 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=41854 loop_iter=6 timers_active=1 next_due_ms=67419271 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=35 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=40 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=2 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -723,20 +792,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=2 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=1 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=2 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=36 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=2 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=2 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=2 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=2 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=2 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=41 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=38482 loop_iter=9 timers_active=1 next_due_ms=64996714 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=38482 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=37 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=42 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=3 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -744,18 +816,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=3 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=2 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=3 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=38 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=3 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=3 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=3 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=3 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=3 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=43 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=43078 loop_iter=11 timers_active=1 next_due_ms=67419225 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=39 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=44 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=4 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -763,18 +841,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=4 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=3 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=4 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=40 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=4 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=4 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=4 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=4 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=4 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=45 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=41 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=46 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=5 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -782,20 +865,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=5 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=4 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=5 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=42 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=5 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=5 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=5 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=5 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=5 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=47 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=39621 loop_iter=16 timers_active=1 next_due_ms=64996715 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=39621 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=44352 loop_iter=15 timers_active=1 next_due_ms=67419228 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=43 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=48 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=6 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -803,18 +890,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=6 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=5 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=6 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=44 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=6 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=6 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=6 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=6 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=6 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=49 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=45 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=50 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=7 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -822,18 +914,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=7 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=6 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=7 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=46 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=7 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=7 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=7 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=7 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=7 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=51 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=45548 loop_iter=19 timers_active=1 next_due_ms=67419229 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=47 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=52 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=8 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -841,20 +939,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=8 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=7 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=8 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=48 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=8 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=8 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=8 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=8 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=8 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=53 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=40804 loop_iter=22 timers_active=1 next_due_ms=64996714 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=40804 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=49 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=54 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=9 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -862,18 +963,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=9 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=8 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=9 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=50 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=9 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=9 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=9 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=9 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=9 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=55 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=46702 loop_iter=23 timers_active=1 next_due_ms=67419229 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=51 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=56 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=10 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -881,18 +988,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=10 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=9 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=10 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=52 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=10 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=10 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=10 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=10 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=10 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=57 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=53 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=58 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=11 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -900,20 +1012,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=11 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=10 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=11 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=54 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=11 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=11 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=11 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=11 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=11 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=59 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=41934 loop_iter=28 timers_active=1 next_due_ms=64996713 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=41934 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=47941 loop_iter=27 timers_active=1 next_due_ms=67419215 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=55 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=60 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=12 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -921,18 +1037,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=12 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=11 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=12 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=56 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=12 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=12 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=12 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=12 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=12 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=61 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=57 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=62 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=13 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -940,18 +1061,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=13 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=12 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=13 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=58 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=13 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=13 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=13 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=13 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=13 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=63 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=49191 loop_iter=32 timers_active=1 next_due_ms=67419227 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=59 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=64 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=14 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -959,20 +1086,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=14 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=13 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=14 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=60 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=14 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=14 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=14 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=14 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=14 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=65 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=43092 loop_iter=34 timers_active=1 next_due_ms=64996715 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=43092 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=61 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=66 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=15 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -980,18 +1110,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=15 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=14 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=15 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=62 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=15 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=15 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=15 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=15 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=15 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=67 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=50327 loop_iter=36 timers_active=1 next_due_ms=67419230 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=63 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=68 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=16 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -999,20 +1135,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=16 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=15 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=16 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=64 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=16 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=16 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=16 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=16 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=16 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=69 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=44106 loop_iter=38 timers_active=1 next_due_ms=64996714 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=44106 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=65 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=70 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=17 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1020,18 +1159,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=17 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=16 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=17 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=66 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=17 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=17 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=17 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=17 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=17 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=71 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=51407 loop_iter=40 timers_active=1 next_due_ms=67419226 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=67 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=72 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=18 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1039,18 +1184,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=18 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=17 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=18 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=68 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=18 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=18 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=18 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=18 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=18 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=73 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=69 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=74 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=19 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1058,20 +1208,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=19 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=18 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=19 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=70 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=19 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=19 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=19 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=19 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=19 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=75 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=45296 loop_iter=44 timers_active=1 next_due_ms=64996713 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=45296 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=52651 loop_iter=44 timers_active=1 next_due_ms=67419229 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=71 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=76 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=20 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1079,18 +1233,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=20 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=19 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=20 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=72 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=20 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=20 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=20 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=20 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=20 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=77 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=73 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=78 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=21 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1098,18 +1257,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=21 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=20 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=21 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=74 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=21 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=21 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=21 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=21 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=21 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=79 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=53740 loop_iter=48 timers_active=1 next_due_ms=67419231 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=75 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=80 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=22 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1117,20 +1282,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=22 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=21 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=22 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=76 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=22 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=22 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=22 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=22 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=22 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=81 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=46369 loop_iter=49 timers_active=1 next_due_ms=64996754 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[JJFB_TIMER_POLL] t_ms=46369 active=1 due=0 fired=0 reason=not_due period_ms=50 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=77 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=82 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=23 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1138,18 +1306,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=23 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=22 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=23 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=78 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=23 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=23 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=23 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=23 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=23 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=83 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=54938 loop_iter=52 timers_active=1 next_due_ms=67419231 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=79 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=84 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=24 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1157,18 +1331,23 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=24 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=23 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=24 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[R9_WRITE] event_seq=80 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=24 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=24 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=24 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=24 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=24 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=85 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=81 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=86 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=25 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
@@ -1176,11 +1355,11 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_PLAT_1E209] tick=25 caller_pc=0x304589 R0=0x1E209 R1=0x9 R2=0x0 R3=0x0 ret=0x0 note=observe_only_no_ret_mutation evidence=OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=24 note=observe_only_no_ret_mutation evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
 [JJFB_LIFECYCLE] op=FIRE_DONE tick=25 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
-[JJFB_PLAT_CENSUS_SUMMARY] reason=lifecycle_tick draw=0 refresh=6 file_miss=0 networkish=0 1e209_trace_calls=25 tick=25 evidence=OBSERVED
+[JJFB_PLAT_CENSUS_SUMMARY] reason=lifecycle_tick draw=0 refresh=6 file_miss=0 networkish=0 1e209_trace_calls=0 tick=25 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x1 app=0x64 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10113 app=0x11F02 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10113 app=0x11F03 caller_pc=0x304589 ret=0x0 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
@@ -1192,4 +1371,390 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_PLAT_CENSUS] code=0x10165 app=0xE200 caller_pc=0x304589 ret=0x690CAC count=1 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10800 app=0x4 caller_pc=0x304589 ret=0x1 count=2 first_tick=1 last_tick=1 evidence=OBSERVED
 [JJFB_PLAT_CENSUS] code=0x10162 app=0xE200 caller_pc=0x304589 ret=0x69EECC count=1 first_tick=1 last_tick=1 evidence=OBSERVED
-[JJFB_PLAT_CENSUS] code=0x10165 app=0xE200 caller_pc=0x304589 ret=0x6AD0D4 count=1 first_tick=1 last_tick=1 evi
+[JJFB_PLAT_CENSUS] code=0x10165 app=0xE200 caller_pc=0x304589 ret=0x6AD0D4 count=1 first_tick=1 last_tick=1 evidence=OBSERVED
+[JJFB_PLAT_CENSUS] code=0x1E209 app=0x9 caller_pc=0x304589 ret=0x0 count=25 first_tick=1 last_tick=25 evidence=OBSERVED
+[JJFB_PLAT_CENSUS] code=0x101AB app=0x0 caller_pc=0x304589 ret=0x0 count=1 first_tick=1 last_tick=1 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=25 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=25 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=25 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=25 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=25 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=87 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=56464 loop_iter=56 timers_active=1 next_due_ms=67419227 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=88 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=26 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=25 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=26 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=26 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=26 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=26 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=26 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=26 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=89 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=90 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=27 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=26 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=27 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=27 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=27 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=27 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=27 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=27 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=91 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=57722 loop_iter=60 timers_active=1 next_due_ms=67419227 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=92 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=28 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=27 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=28 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=28 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=28 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=28 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=28 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=28 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=93 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=94 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=29 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=28 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=29 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=29 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=29 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=29 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=29 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=29 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=95 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=58887 loop_iter=64 timers_active=1 next_due_ms=67419228 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=96 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=30 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=29 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=30 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=30 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=30 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=30 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=30 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=30 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=97 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=98 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=31 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=30 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=31 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=31 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=31 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=31 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=31 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=31 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=99 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=60056 loop_iter=68 timers_active=1 next_due_ms=67419229 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=100 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=32 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=31 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=32 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=32 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=32 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=32 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=32 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=32 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=101 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=102 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=33 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=32 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=33 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=33 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=33 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=33 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=33 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=33 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=103 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=61160 loop_iter=72 timers_active=1 next_due_ms=67419226 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=104 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=34 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=33 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=34 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=34 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=34 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=34 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=34 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=34 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=105 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=106 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=35 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=34 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=35 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=35 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=35 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=35 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=35 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=35 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=107 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=62318 loop_iter=76 timers_active=1 next_due_ms=67419226 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=108 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=36 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=35 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=36 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=36 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=36 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=36 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=36 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=36 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=109 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=110 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=37 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=36 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=37 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=37 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=37 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=37 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=37 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=37 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=111 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=63452 loop_iter=80 timers_active=1 next_due_ms=67419231 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=112 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=38 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=37 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=38 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=38 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=38 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=38 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=38 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=38 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=113 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=114 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=39 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=38 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=39 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=39 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=39 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=39 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=39 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=39 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=lifecycle_fire_done evidence=OBSERVED
+[R9_WRITE] event_seq=115 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[JJFB_POST_START_LOOP] t_ms=64732 loop_iter=84 timers_active=1 next_due_ms=67419229 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=116 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=40 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306640 target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306646 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306656 target=0x3102E9 arg0=0x4 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30666A target=0x304559 arg0=0x1E209 arg1=0x9
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_E8C_HELPER_FX] r0=0x1E209 r1=0x9 ret=0x0 watched_writes=0 tick=39 note=observe_only_no_ret_mutation evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306752 target=0x2F9965 arg0=0x0 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x306760 target=0x2F2A09 arg0=0x0 arg1=0x0
+[JJFB_LIFECYCLE] op=FIRE_DONE tick=40 ok=1 end=stop_at_base pc_after=0x80000 r0_after=0x0 r9_after=0x2B1858 sp_after=0x280000 uc_err=0 detail=- evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=40 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=tick_40 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=40 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=tick_40 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=40 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=tick_40 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=40 addr=0x2B254D off=0xCF5 val=0x0 writes=0 last_writer=0x0 reason=tick_40 evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=40 addr=0x2B2A08 off=0x11B0 val=0x0 writes=0 last_writer=0x0 reason=tick_40 evidence=OBSERVED
+[JJFB_E8D_ERW_DIFF] stage=tick_40 base=0x2B1858 win=0xC00..0x11FF changed=0 first_off=0x0 tick=40 evidence=OBSERVED
+[JJFB_E8D_ERW_FLAGS] stage=tick_40 0xC44=0x0 0xC9D=0x0 0xCD1=0x0 0xCF5=0x0 0x11B0=0x0 evidence=OBSERVED
+[R9_WRITE] event_seq=117 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[R9_WRITE] event_seq=118 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_LIFECYCLE] op=FIRE tick=41 handler=0x30630D r0=0 r1=

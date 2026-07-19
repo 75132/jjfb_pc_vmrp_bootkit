@@ -31,6 +31,7 @@
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/platform_call_census.h"
 #include "gwy_launcher/handler_forensic.h"
+#include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/vm_runtime.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdint.h>
@@ -147,6 +148,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_helper_r9_scope_valid = 0;
     memset(&g_helper_r9_scope, 0, sizeof(g_helper_r9_scope));
     platform_call_census_reset();
+    robotol_idle_watch_reset();
+    robotol_idle_watch_bind_uc(uc);
 }
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
@@ -185,6 +188,7 @@ void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *
         uint32_t pg = ext_chunk_provider_last_p_guest();
         if (pg)
             ext_er_rw_bind_restore_peek_and_bind(pg, "mr_c_function_st_metadata_bind");
+        robotol_idle_watch_note_stage(uc, "after_er_rw_bind");
     }
 }
 
@@ -292,6 +296,7 @@ void gwy_ext_obs_c_function_new_ex(uint32_t helper,
             uint32_t pg = ext_chunk_provider_last_p_guest();
             if (pg)
                 ext_er_rw_bind_restore_peek_and_bind(pg, "platform_er_rw_publication_restore");
+            robotol_idle_watch_note_stage(NULL, "after_platform_er_rw");
         }
     }
 }
@@ -506,6 +511,16 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         (g_lifecycle_ticks == 1u || (g_lifecycle_ticks % 25u) == 0u)) {
         platform_call_census_dump("lifecycle_tick");
     }
+    robotol_idle_watch_set_tick(g_lifecycle_ticks);
+    if (g_lifecycle_ticks == 1u)
+        robotol_idle_watch_note_stage(uc, "first_10140_tick");
+    else if (g_lifecycle_ticks == 40u)
+        robotol_idle_watch_note_stage(uc, "tick_40");
+    else
+        robotol_idle_watch_snap(uc, "lifecycle_fire_done");
+    /* After first tick returns, try one-shot 10165 enqueue probe (guest depth exiting). */
+    if (g_lifecycle_ticks == 1u)
+        robotol_idle_watch_try_10165_probe(uc);
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
@@ -646,6 +661,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     else
         call.known_chunk = ext_chunk_provider_last_chunk_guest();
     platform_send_app_event_classify(&call, &result);
+    robotol_idle_watch_helper_fx_begin(r0, r1);
+    robotol_idle_watch_try_arm(uc);
 
     if (env_flag("JJFB_TIMER_ARM_TRACE") &&
         (result.kind == GWY_PLAT_KIND_TIMER_START || result.kind == GWY_PLAT_KIND_TIMER_STOP ||
@@ -680,8 +697,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
     } else if (result.kind == GWY_PLAT_KIND_REGISTER) {
         ret = result.status_ret;
-        if (result.reg_handler)
+        if (result.reg_handler) {
             (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
+        }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X family=0x%X handler=0x%X ret=%d kind=REGISTER "
                    "name=%s evidence=%s\n",
@@ -721,8 +740,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             }
         }
         /* 0x10165/10162: alloc size in R1 + optional enqueue handler in R2. */
-        if (result.reg_handler)
+        if (result.reg_handler) {
             (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
+        }
         printf("[PLATFORM_ALLOC] code=0x%X size=0x%X buf=0x%X ret=0x%X tag_u16=%u name=%s "
                "evidence=%s\n",
                r0, result.alloc_size, r2, ret, (unsigned)result.alloc_u16_at0,
@@ -798,6 +819,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
     if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
         platform_call_census_note_refresh();
+    robotol_idle_watch_helper_fx_end(r0, r1, ret);
     /* Poll after every plat call — SDL timers do not run during nested emu. */
     gwy_ext_obs_timer_poll(uc);
     return ret;
@@ -854,6 +876,8 @@ void gwy_ext_obs_helper_call(uint32_t helper, uint32_t method, int32_t ret_value
                    "route=mr_extHelper evidence=DOCUMENTED source=mythroad.c:case_801\n",
                    mn, helper, (int)ret_value);
             fflush(stdout);
+            /* E8D: ER_RW snapshot after mrc_init; 10165 probe deferred to timer poll. */
+            robotol_idle_watch_note_stage(NULL, "after_mrc_init");
         }
     }
 }

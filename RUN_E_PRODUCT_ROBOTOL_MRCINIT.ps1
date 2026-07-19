@@ -158,7 +158,15 @@ $e4Mode = ($env:JJFB_ROBOTOL_RETRY_AFTER_CONTEXT_RESTORE -eq '1')
 $e5Mode = ($env:JJFB_E5_SCHEDULER_MODE -eq '1')
 $e7Mode = ($env:JJFB_E7_LIFECYCLE_MODE -eq '1')
 $e8bMode = ($env:JJFB_E8B_MODE -eq '1')
-if ($e8bMode) {
+$e8cMode = ($env:JJFB_E8C_MODE -eq '1')
+$e8dMode = ($env:JJFB_E8D_MODE -eq '1')
+if ($e8dMode) {
+  # After 10165 probe (tick1), continue to tick=40 for ER_RW diffs unless DRAW/transition.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8cMode) {
+  # Flag transition, DRAW, tick=600, or fatal — boot needs ~35s wall.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8bMode) {
   # Long post-handler observe: DRAW, tick>=25 (census dump), or wall-clock Seconds.
   $stopPat = '\[JJFB_DRAW\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=25\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e7Mode) {
