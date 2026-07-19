@@ -85,6 +85,13 @@ extern "C" {
  *   JJFB_E8V_CALL_2E993C=1         — Case C: FAST call R9-only 0x2E993C after first idle OK
  *   Pair with DISPLAY_FIRST + C9D bypass (Case A base). No C9D/CF5 poke / no fake DRAW.
  *
+ * E8W-FirstFrame (NOT product success):
+ *   JJFB_E8W_MODE=1                — F6C embedded struct (F70/F74) acquire + re-enter 0x2E88CC
+ *   JJFB_FAST_F6C_OBJECT_ASSIST=1  — map scratch table, set R9+F74 (structural only)
+ *   JJFB_E8W_REENTER_E88CC=1       — re-enter 0x2E88CC after F70/F74 nonzero (default w/ assist)
+ *   Gate: open if F74!=0 OR F70!=0 (not a heap object at [R9+F6C]).
+ *   No C9D/CF5 poke / no fake DRAW / no framebuffer paint.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

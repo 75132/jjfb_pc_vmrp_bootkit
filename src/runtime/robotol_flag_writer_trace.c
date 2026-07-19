@@ -124,6 +124,15 @@ static struct {
     uint32_t e8v_f6c_p4;
     uint32_t e8v_f6c_p8;
     int16_t e8v_d14_s16;
+    /* E8W-FirstFrame: F6C embedded struct (F70/F74) acquire + re-enter 0x2E88CC. */
+    int e8w_mode;
+    int e8w_f6c_assist; /* JJFB_FAST_F6C_OBJECT_ASSIST — structural only */
+    int e8w_f6c_assist_done;
+    int e8w_reenter_e88cc;
+    int e8w_reenter_done;
+    uint32_t e8w_writer_hit_n;
+    uint32_t e8w_f74_assist;
+    uint32_t e8w_scratch_base;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -519,6 +528,27 @@ int robotol_flag_writer_trace_enabled(void) {
                    g_e8f.display_first);
             fflush(stdout);
         }
+        /* E8W-FirstFrame: F70/F74 gate + optional structural F74 assist. */
+        g_e8f.e8w_mode = env1("JJFB_E8W_MODE");
+        g_e8f.e8w_f6c_assist = env1("JJFB_FAST_F6C_OBJECT_ASSIST");
+        g_e8f.e8w_reenter_e88cc = env1("JJFB_E8W_REENTER_E88CC") || g_e8f.e8w_f6c_assist;
+        if (g_e8f.e8w_mode) {
+            g_e8f.e8v_mode = 1;
+            g_e8f.e8v_e88cc_trace = 1;
+            if (!g_e8f.display_first) {
+                g_e8f.display_first = env1("JJFB_DISPLAY_FIRST");
+                g_e8f.bypass_c9d_gate = env1("JJFB_BYPASS_C9D_GATE");
+                if (g_e8f.display_first && !g_e8f.bypass_c9d_gate) g_e8f.bypass_c9d_gate = 1;
+            }
+            if (!g_e8f.display_first) {
+                g_e8f.display_first = 1;
+                g_e8f.bypass_c9d_gate = 1;
+            }
+            printf("[JJFB_E8W_FIRSTFRAME] enabled=1 f6c_assist=%d reenter=%d "
+                   "note=F70_F74_embedded_struct NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS\n",
+                   g_e8f.e8w_f6c_assist, g_e8f.e8w_reenter_e88cc);
+            fflush(stdout);
+        }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
                         g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
@@ -526,7 +556,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         (g_e8f.e8k_10102_case != 0) || (g_e8f.counterfactual[0] != '\0') ||
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
-                        g_e8f.e8v_mode;
+                        g_e8f.e8v_mode || g_e8f.e8w_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -615,6 +645,7 @@ static int find_robotol_r9(void *uc, uint32_t *r9_out) {
 #ifdef GWY_HAVE_UNICORN
 static void e8v_dump_e88cc_context(uc_engine *uc, uint32_t r9, uint32_t lr, const char *why);
 static void on_e8v_e88cc_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data);
+static void e8w_install_f6c_assist(void *uc, uint32_t r9);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -875,6 +906,17 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             } else {
                 why = "epilogue";
             }
+            /* E8W Case C: on F70/F74 early-out, install structural F74 and retry gate. */
+            if (bp->pc == 0x2E8914u && g_e8f.e8w_f6c_assist && !g_e8f.e8w_f6c_assist_done && r9) {
+                uint32_t retry_pc = 0x2E8903u; /* thumb: reload r5=R9+F6C then re-check F74 */
+                e8w_install_f6c_assist(uc, r9);
+                printf("[JJFB_E8W_GATE_RETRY] from=0x2E8914 to=0x2E8902 F74=0x%X "
+                       "note=FAST_OBJECT_ASSIST_retry_gate evidence=HYPOTHESIS\n",
+                       g_e8f.e8w_f74_assist);
+                fflush(stdout);
+                uc_reg_write(uc, UC_ARM_REG_PC, &retry_pc);
+                return;
+            }
             if (bp->pc == 0x2E8914u || (bp->pc == 0x2E88E6u && g_e8f.e8v_d14_s16 > 0) ||
                 bp->pc == 0x2E898Cu) {
                 g_e8f.e8v_early_exit_n++;
@@ -898,6 +940,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
                    "r2=0x%X r3=0x%X tick=%u hit=%u note=drawish_bl_target evidence=OBSERVED\n",
                    bp->pc, lr, r0, r1, r2, r3, g_e8f.tick, g_e8f.e8v_draw_cand_n);
+            if (bp->pc == 0x2F2854u)
+                printf("[JJFB_E8W_DRAW_SITE] site=0x2F2854 tick=%u evidence=OBSERVED\n",
+                       g_e8f.tick);
+            else if (bp->pc == 0x305BFCu)
+                printf("[JJFB_E8W_DRAW_SITE] site=0x305BFC tick=%u evidence=OBSERVED\n",
+                       g_e8f.tick);
+            else
+                printf("[JJFB_E8W_DRAW_SITE] site=0x2EA058 tick=%u evidence=OBSERVED\n",
+                       g_e8f.tick);
             fflush(stdout);
         } else if (bp->pc == 0x2E8980u || bp->pc == 0x2E89A8u || bp->pc == 0x2E8A22u ||
                    bp->pc == 0x2E8A44u || bp->pc == 0x2FF908u || bp->pc == 0x305E78u ||
@@ -908,6 +959,23 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[JJFB_E8V_PATH_HIT] pc=0x%X lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                    "tick=%u note=scheduler_sidepath_not_platform_draw evidence=OBSERVED\n",
                    bp->pc, lr, r0, r1, r2, r3, g_e8f.tick);
+            fflush(stdout);
+        }
+        /* E8W: F6C/F70/F74 writer sites (observe-only). */
+        if (g_e8f.e8w_mode &&
+            (bp->pc == 0x2D9CFCu || bp->pc == 0x2FBD18u || bp->pc == 0x2E8920u ||
+             bp->pc == 0x30AA32u || bp->pc == 0x30AA34u || bp->pc == 0x30AA42u ||
+             bp->pc == 0x311AA6u || bp->pc == 0x311AB8u || bp->pc == 0x311AC4u)) {
+            uint32_t f70 = 0, f74 = 0, w0 = 0;
+            g_e8f.e8w_writer_hit_n++;
+            if (r9) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF6Cu, &w0);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF70u, &f70);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF74u, &f74);
+            }
+            printf("[JJFB_E8W_F6C_WRITER] pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
+                   "F6C_w0=0x%X F70=0x%X F74=0x%X tick=%u hit=%u evidence=OBSERVED\n",
+                   bp->pc, lr, r0, r1, w0, f70, f74, g_e8f.tick, g_e8f.e8w_writer_hit_n);
             fflush(stdout);
         }
     }
@@ -1157,45 +1225,51 @@ static void on_e8m_parent_insn(uc_engine *uc, uint64_t address, uint32_t size, v
     }
 }
 
-/* E8V: dump 0x2E88CC object/gate fields (R9+0xF6C / R9+0xD14). */
+/* E8V/E8W: dump 0x2E88CC gate fields.
+ * Corrected: R9+0xF6C is EMBEDDED struct base; gate reads F70/F74 adjacent words. */
 static void e8v_dump_e88cc_context(uc_engine *uc, uint32_t r9, uint32_t lr, const char *why) {
-    uint32_t f6c = 0, p0 = 0, p4 = 0, p8 = 0, a818 = 0, a81c = 0, a1a8 = 0;
+    uint32_t w0 = 0, f70 = 0, f74 = 0, a818 = 0, a81c = 0, a1a8 = 0, scroll = 0;
     uint8_t f7da = 0;
     int16_t d14 = 0;
     uint8_t d14b[2];
     if (!r9) return;
-    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF6Cu, &f6c);
-    if (f6c) {
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, f6c, &p0);
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, f6c + 4u, &p4);
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, f6c + 8u, &p8);
-    }
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF6Cu, &w0);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF70u, &f70);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF74u, &f74);
     if (guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xCECu + 0x28u, d14b, 2))
         d14 = (int16_t)(uint16_t)(d14b[0] | ((uint16_t)d14b[1] << 8));
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x818u, &a818);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x81Cu, &a81c);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x1A8u, &a1a8);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x1A8u + 0x58u, &scroll);
     (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0x7DAu, &f7da, 1);
-    g_e8f.e8v_f6c_base = f6c;
-    g_e8f.e8v_f6c_p4 = p4;
-    g_e8f.e8v_f6c_p8 = p8;
+    g_e8f.e8v_f6c_base = w0;
+    g_e8f.e8v_f6c_p4 = f70;
+    g_e8f.e8v_f6c_p8 = f74;
     g_e8f.e8v_d14_s16 = d14;
     printf("[JJFB_E8V_E88CC_CTX] why=%s r9=0x%X lr=0x%X F6C=0x%X F6C_0=0x%X F6C_4=0x%X "
            "F6C_8=0x%X D14_s16=%d R9_818=0x%X R9_81C=0x%X R9_1A8=0x%X R9_7DA=0x%X "
-           "note=object_gate_for_draw_path evidence=OBSERVED\n",
-           why ? why : "?", r9, lr, f6c, p0, p4, p8, (int)d14, a818, a81c, a1a8, f7da);
-    if (!f6c || (!p4 && !p8)) {
+           "note=F6C_4_is_F70_F6C_8_is_F74 evidence=OBSERVED\n",
+           why ? why : "?", r9, lr, w0, w0, f70, f74, (int)d14, a818, a81c, a1a8, f7da);
+    printf("[JJFB_E8W_F6C_WORDS] F6C_w0=0x%X F70=0x%X F74=0x%X scroll200=0x%X "
+           "note=gate_open_if_F74_or_F70_nonzero evidence=DOCUMENTED\n",
+           w0, f70, f74, scroll);
+    if (!f70 && !f74) {
         printf("[JJFB_E8V_E88CC_CLASS] class=REQUIRES_UI_OBJECT F6C=0x%X p4=0x%X p8=0x%X "
-               "D14_s16=%d note=early_exit_likely_before_2F2854 evidence=OBSERVED\n",
-               f6c, p4, p8, (int)d14);
+               "D14_s16=%d note=F70_and_F74_zero_early_exit_2E8914 evidence=OBSERVED\n",
+               w0, f70, f74, (int)d14);
     } else if (d14 > 0) {
         printf("[JJFB_E8V_E88CC_CLASS] class=SKIP_BY_D14_GATE D14_s16=%d "
                "note=halfword_gt0_early_out evidence=OBSERVED\n",
                (int)d14);
+    } else if (scroll == 0x3E7u) {
+        printf("[JJFB_E8V_E88CC_CLASS] class=BLOCKED_BY_SCROLL_SENTINEL scroll200=0x3E7 "
+               "F70=0x%X F74=0x%X note=0x2E8994_beq_exit evidence=OBSERVED\n",
+               f70, f74);
     } else {
         printf("[JJFB_E8V_E88CC_CLASS] class=OBJECT_PRESENT_DRAW_PATH_OPEN F6C=0x%X "
-               "p4=0x%X p8=0x%X evidence=OBSERVED\n",
-               f6c, p4, p8);
+               "p4=0x%X p8=0x%X scroll200=0x%X evidence=OBSERVED\n",
+               w0, f70, f74, scroll);
     }
     fflush(stdout);
 }
@@ -1257,7 +1331,7 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     if (!g_e8f.writer_bp && !g_e8f.longpath_watch && !g_e8f.caller_bp && !g_e8f.fault_watch &&
         !g_e8f.dispatcher_bp && !g_e8f.parent_bp && !g_e8f.state_watch && !g_e8f.e8j_bp &&
         !g_e8f.e8j_queue_read_watch && !g_e8f.svc_trap && !g_e8f.e8m_parent_trace &&
-        !g_e8f.e8k_10102_case && !g_e8f.display_first && !g_e8f.e8v_mode)
+        !g_e8f.e8k_10102_case && !g_e8f.display_first && !g_e8f.e8v_mode && !g_e8f.e8w_mode)
         return;
     if (!find_robotol_code(&code_base, &code_size)) return;
 
@@ -1385,7 +1459,7 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                "note=runtime_branch_assist_only evidence=HYPOTHESIS\n");
         fflush(stdout);
     }
-    if (g_e8f.e8v_mode || g_e8f.e8v_e88cc_trace) {
+    if (g_e8f.e8v_mode || g_e8f.e8v_e88cc_trace || g_e8f.e8w_mode) {
         add_bp(0x2E88E6u, "vD14");
         add_bp(0x2E8914u, "vNULL");
         add_bp(0x2E898Cu, "vEPI");
@@ -1401,6 +1475,20 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
         add_bp(0x2E993Cu, "v2E993C");
         printf("[JJFB_E8V_BP] e88cc_exits=0x2E88E6,0x2E8914,0x2E898C "
                "draw_cands=0x2F2854,0x305BFC,0x2EA058 evidence=HYPOTHESIS\n");
+        fflush(stdout);
+    }
+    if (g_e8f.e8w_mode) {
+        add_bp(0x2D9CFCu, "wF6C");
+        add_bp(0x2FBD18u, "wF70");
+        add_bp(0x2E8920u, "wF74");
+        add_bp(0x30AA32u, "wClr70");
+        add_bp(0x30AA34u, "wClr6C");
+        add_bp(0x30AA42u, "wClr74");
+        add_bp(0x311AA6u, "w31170");
+        add_bp(0x311AB8u, "w3116C");
+        add_bp(0x311AC4u, "w31174");
+        printf("[JJFB_E8W_BP] f6c_writers=0x2D9CFC,0x2FBD18,0x2E8920 clear=0x30A9EC "
+               "evidence=HYPOTHESIS\n");
         fflush(stdout);
     }
 
@@ -1638,6 +1726,106 @@ static void fast_call_c44_unlock(void *uc, const char *when) {
     if (c44_after == 1u)
         printf("[JJFB_E8R_C44_UNLOCKED] C44=1 via=0x2FC8C0 note=FAST_ASSIST_real_writer "
                "evidence=OBSERVED\n");
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
+/* E8W: structural F74 table assist derived from 0x2E88CC reads (NOT product / no paint).
+ * Gate opens on F74!=0; first draw candidate 0x2F2854 is reachable before F74[] loop.
+ * Scratch page holds 2F5B38 header + pointer table for later 0x305BFC/0x2EA058 path. */
+#define E8W_SCRATCH_BASE 0x3900000u
+#define E8W_SCRATCH_SIZE 0x1000u
+static void e8w_install_f6c_assist(void *uc, uint32_t r9) {
+    uint32_t f70 = 0, f74 = 0, scroll = 0, w0 = 0;
+    uint32_t table;
+    int i;
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    if (!uc || !r9 || g_e8f.e8w_f6c_assist_done) return;
+    g_e8f.e8w_f6c_assist_done = 1;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF6Cu, &w0);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF70u, &f70);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF74u, &f74);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x1A8u + 0x58u, &scroll);
+    printf("[JJFB_FAST_F6C_OBJECT_ASSIST] before F6C_w0=0x%X F70=0x%X F74=0x%X scroll200=0x%X "
+           "note=FAST_OBJECT_ASSIST_NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS\n",
+           w0, f70, f74, scroll);
+#ifdef GWY_HAVE_UNICORN
+    ue = uc_mem_map((uc_engine *)uc, E8W_SCRATCH_BASE, E8W_SCRATCH_SIZE, UC_PROT_ALL);
+    if (ue != UC_ERR_OK) {
+        /* Already-mapped is fine; poke will confirm usability. */
+        printf("[JJFB_FAST_F6C_OBJECT_ASSIST] map_status uc_err=%u "
+               "note=continue_if_region_exists evidence=OBSERVED\n",
+               (unsigned)ue);
+    }
+#endif
+    g_e8f.e8w_scratch_base = E8W_SCRATCH_BASE;
+    /* header @ base for 0x2F5B38 (reads ptr-4); table @ base+4 used as F74. */
+    {
+        uint8_t hdr[4] = {0x10, 0x00, 0x00, 0x00};
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, E8W_SCRATCH_BASE, hdr, 4);
+    }
+    table = E8W_SCRATCH_BASE + 4u;
+    for (i = 0; i < 32; i++) {
+        uint32_t slot = E8W_SCRATCH_BASE + 0x100u; /* stub element */
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, table + (uint32_t)i * 4u, slot);
+    }
+    {
+        uint8_t stub[0x40];
+        memset(stub, 0, sizeof(stub));
+        stub[0] = 1;
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, E8W_SCRATCH_BASE + 0x100u, stub,
+                                   sizeof(stub));
+    }
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xF74u, table);
+    g_e8f.e8w_f74_assist = table;
+    /* 0x3E7 sentinel at R9+0x200 forces epilogue @ 0x2E8994 — clear if present. */
+    if (scroll == 0x3E7u) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x1A8u + 0x58u, 0u);
+        printf("[JJFB_FAST_F6C_OBJECT_ASSIST] cleared_scroll_sentinel old=0x3E7 new=0 "
+               "note=derived_from_0x2E8994 evidence=HYPOTHESIS\n");
+    }
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xF74u, &f74);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x1A8u + 0x58u, &scroll);
+    printf("[JJFB_FAST_F6C_OBJECT_ASSIST] after F74=0x%X scratch=0x%X scroll200=0x%X "
+           "note=structural_table_only_no_framebuffer evidence=OBSERVED\n",
+           f74, E8W_SCRATCH_BASE, scroll);
+    fflush(stdout);
+}
+
+static void e8w_reenter_e88cc(void *uc, uint32_t r9) {
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    uint32_t r9_save = 0;
+    int ok;
+    uint64_t lim = 300000ull;
+    if (!uc || !r9 || g_e8f.e8w_reenter_done) return;
+    g_e8f.e8w_reenter_done = 1;
+    (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9);
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = 0;
+    abi.set_r1 = 1;
+    abi.r1 = 0;
+    abi.set_r2 = 1;
+    abi.r2 = 0;
+    abi.set_r3 = 1;
+    abi.r3 = 0;
+    abi.set_lr = 1;
+    abi.lr = 0x80000u;
+    if (g_e8f.fast_insn_limit) lim = g_e8f.fast_insn_limit;
+    e8v_dump_e88cc_context((uc_engine *)uc, r9, 0, "before_reenter");
+    printf("[JJFB_E8W_REENTER_E88CC] entry=0x2E88CC r9=0x%X F74=0x%X "
+           "note=FAST_ASSIST_not_product evidence=HYPOTHESIS\n",
+           r9, g_e8f.e8w_f74_assist);
+    fflush(stdout);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x2E88CDu, 0x80000u, lim, &abi, &out);
+    printf("[JJFB_E8W_REENTER_DONE] ok=%d end=%s pc_after=0x%X draw_cand=%u "
+           "note=FAST_ASSIST_not_product evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after, g_e8f.e8v_draw_cand_n);
+    e8v_dump_e88cc_context((uc_engine *)uc, r9, out.lr_after, "after_reenter");
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
@@ -2121,6 +2309,24 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
                    g_e8f.e8v_f6c_p8, (int)g_e8f.e8v_d14_s16);
         }
         fflush(stdout);
+    }
+
+    /* E8W: after first idle success, install F74 structural assist and re-enter 0x2E88CC. */
+    if (g_e8f.e8w_mode && g_e8f.idle_success_n > 0u && tick >= 1u &&
+        find_robotol_r9(uc, &r9) && r9) {
+        if (g_e8f.e8w_f6c_assist && !g_e8f.e8w_f6c_assist_done)
+            e8w_install_f6c_assist(uc, r9);
+        if (g_e8f.e8w_reenter_e88cc && !g_e8f.e8w_reenter_done &&
+            (g_e8f.e8w_f6c_assist_done || g_e8f.e8v_f6c_p8 || g_e8f.e8v_f6c_p4))
+            e8w_reenter_e88cc(uc, r9);
+        if (tick == 2u || tick == 30u) {
+            printf("[JJFB_E8W_SUMMARY] reason=tick_%u writer_hits=%u assist=%u reenter=%u "
+                   "draw_cand=%u F70=0x%X F74=0x%X idle_success=%u evidence=OBSERVED\n",
+                   tick, g_e8f.e8w_writer_hit_n, g_e8f.e8w_f6c_assist_done,
+                   g_e8f.e8w_reenter_done, g_e8f.e8v_draw_cand_n, g_e8f.e8v_f6c_p4,
+                   g_e8f.e8v_f6c_p8, g_e8f.idle_success_n);
+            fflush(stdout);
+        }
     }
 
     /* E8V Case C: after first idle success, call R9-only downstream 0x2E993C once. */
