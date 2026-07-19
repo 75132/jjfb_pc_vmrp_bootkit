@@ -29,6 +29,8 @@
 #include "gwy_launcher/platform_send_app_event.h"
 #include "gwy_launcher/platform_timer.h"
 #include "gwy_launcher/platform_handler_registry.h"
+#include "gwy_launcher/platform_call_census.h"
+#include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/vm_runtime.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdint.h>
@@ -144,6 +146,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_lifecycle_ticks = 0;
     g_helper_r9_scope_valid = 0;
     memset(&g_helper_r9_scope, 0, sizeof(g_helper_r9_scope));
+    platform_call_census_reset();
 }
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
@@ -451,6 +454,7 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
 
     g_lifecycle_ticks++;
+    platform_call_census_set_tick(g_lifecycle_ticks);
     memset(&abi, 0, sizeof(abi));
     abi.set_r0 = 1;
     abi.r0 = 0;
@@ -466,8 +470,24 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
            owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name) : "?");
     fflush(stdout);
 
+    /* Observe-only forensic on first FIRE. Do not poke UC regs here (audit:
+     * guest_memory is the only write surface); ENTRY snap is pre-emu, ring[0]
+     * captures post-canonicalization T/regs. */
+    if (handler_forensic_enabled() && g_lifecycle_ticks == 1u) {
+        (void)handler_forensic_begin(
+            uc, handler, owner ? owner->map.guest_code_base : 0,
+            owner ? owner->map.guest_code_size : 0,
+            owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name) : "?",
+            r9_run);
+    }
+
     ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
                                       GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+    if (handler_forensic_enabled() && g_lifecycle_ticks == 1u) {
+        handler_forensic_end(uc, ok, out.uc_err, out.end_reason[0] ? out.end_reason : "?",
+                             out.pc_after, out.r0_after, out.r9_after, out.sp_after, out.lr_after,
+                             out.cpsr_after);
+    }
     printf("[JJFB_LIFECYCLE] op=FIRE_DONE tick=%u ok=%d end=%s pc_after=0x%X r0_after=0x%X "
            "r9_after=0x%X sp_after=0x%X uc_err=%u detail=%s evidence=OBSERVED\n",
            g_lifecycle_ticks, ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after,
@@ -481,6 +501,10 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
                    out.pc_after & ~1u, peek[0], peek[1], peek[2], peek[3], peek[4], peek[5],
                    peek[6], peek[7]);
         }
+    }
+    if (platform_call_census_enabled() &&
+        (g_lifecycle_ticks == 1u || (g_lifecycle_ticks % 25u) == 0u)) {
+        platform_call_census_dump("lifecycle_tick");
     }
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
@@ -581,15 +605,17 @@ static void gwy_ext_obs_timer_poll(void *uc) {
 }
 
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
-    uint32_t pc = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, sp = 0;
+    uint32_t pc = 0, lr = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, sp = 0;
     uint32_t ret = 0;
     uint32_t arg4 = 0;
+    uint32_t caller_pc = 0;
     GwyPlatCall call;
     GwyPlatCallResult result;
 
 #ifdef GWY_HAVE_UNICORN
     if (uc) {
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &pc);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R0, &r0);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R1, &r1);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R2, &r2);
@@ -603,6 +629,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
 #else
     (void)uc;
 #endif
+    /* Prefer LR (guest return site) over stub PC for census/1E209 observe. */
+    caller_pc = lr ? lr : pc;
 
     memset(&call, 0, sizeof(call));
     call.code = r0;
@@ -766,6 +794,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     }
 
     ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+    platform_call_census_note(r0, r1, caller_pc, ret);
+    platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
+    if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
+        platform_call_census_note_refresh();
     /* Poll after every plat call — SDL timers do not run during nested emu. */
     gwy_ext_obs_timer_poll(uc);
     return ret;
@@ -1054,6 +1086,7 @@ void gwy_ext_obs_mr_exit(void *uc) {
     ext_er_rw_bind_restore_finalize("mr_exit");
     ext_gwy_shell_native_exec_finalize("mr_exit");
     ext_gwy_shell_shim_finalize("mr_exit");
+    platform_call_census_dump("mr_exit");
 }
 
 static char g_continue_target[160];

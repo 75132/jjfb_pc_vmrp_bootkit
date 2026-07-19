@@ -206,10 +206,12 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         uint32_t z = 0;
         (void)z;
     }
-    /* Thumb bit from start_pc LSB (CROSS_TARGET guest handlers are often Thumb). */
+    /* Thumb mode: Unicorn 1.0.2 selects ISA from uc_emu_start address LSB.
+     * Clearing the LSB and only setting CPSR.T leaves the engine in ARM mode
+     * (isolated probe: even PC + T=1 still traces size=4 / T=0). Keep LSB. */
     {
         uint32_t cpsr = saved[16];
-        uint32_t pc_run = start_pc & ~1u;
+        uint32_t pc_run = start_pc;
         uint32_t stop_run = stop_addr & ~1u;
         if (start_pc & 1u)
             cpsr |= (1u << 5);

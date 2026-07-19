@@ -1,0 +1,184 @@
+{
+  "path": "game_files\\mythroad\\320x480\\gwy\\wxjwq.mrp",
+  "sha256": "6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d",
+  "size": 299067,
+  "header_length": 240,
+  "first_data_offset": 779,
+  "internal_name": "wxjwq.mrp",
+  "display_name": "wxjwq",
+  "appid_le": 403095,
+  "appver_le": 1118,
+  "flags": 7,
+  "appid_be": 403095,
+  "appver_be": 1118,
+  "members": [
+    {
+      "name": "start.mr",
+      "offset": 808,
+      "stored_length": 1514,
+      "decoded_length": 3787,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "mrc_loader.ext",
+      "offset": 2345,
+      "stored_length": 219,
+      "decoded_length": 232,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "name3.bmp",
+      "offset": 2582,
+      "stored_length": 161,
+      "decoded_length": 696,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "name2.bmp",
+      "offset": 2761,
+      "stored_length": 159,
+      "decoded_length": 224,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "load3.bmp",
+      "offset": 2938,
+      "stored_length": 112,
+      "decoded_length": 364,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "load2.bmp",
+      "offset": 3068,
+      "stored_length": 321,
+      "decoded_length": 3006,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "load1.bmp",
+      "offset": 3407,
+      "stored_length": 465,
+      "decoded_length": 6154,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "name1.bmp",
+      "offset": 3890,
+      "stored_length": 3410,
+      "decoded_length": 23940,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "hill2.bmp",
+      "offset": 7318,
+      "stored_length": 17987,
+      "decoded_length": 42390,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "hill1.bmp",
+      "offset": 25323,
+      "stored_length": 16861,
+      "decoded_length": 35960,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "zhang.bmp",
+      "offset": 42202,
+      "stored_length": 691,
+      "decoded_length": 684,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "sfcidx.bin",
+      "offset": 42912,
+      "stored_length": 1978,
+      "decoded_length": 2020,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "world.path",
+      "offset": 44909,
+      "stored_length": 1053,
+      "decoded_length": 1694,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "face4.bmp",
+      "offset": 45980,
+      "stored_length": 11632,
+      "decoded_length": 30720,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "face5.bmp",
+      "offset": 57630,
+      "stored_length": 9314,
+      "decoded_length": 30720,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "text.res",
+      "offset": 66961,
+      "stored_length": 4359,
+      "decoded_length": 8454,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "face1.bmp",
+      "offset": 71338,
+      "stored_length": 4411,
+      "decoded_length": 30720,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "face2.bmp",
+      "offset": 75767,
+      "stored_length": 5858,
+      "decoded_length": 30720,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "face3.bmp",
+      "offset": 81643,
+      "stored_length": 10582,
+      "decoded_length": 30720,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "reg.ext",
+      "offset": 92241,
+      "stored_length": 658,
+      "decoded_length": 704,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "mmochat.ext",
+      "offset": 92919,
+      "stored_length": 206148,
+      "decoded_length": 320292,
+      "encoding": "gzip",
+      "reserved": 0
+    }
+  ]
+}

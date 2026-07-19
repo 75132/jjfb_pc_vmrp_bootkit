@@ -4,7 +4,7 @@
 - **target:** `gwy/wxjwq.mrp`
 - **primary:** `mmochat.ext`
 - **hash before/after:** `6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d` / `6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d` match=True
-- **seconds:** 45
+- **seconds:** 50
 
 ## Gates
 
@@ -13,7 +13,7 @@
 | E1 primary ENTRY_CALLED | yes |
 | E2 JJFB_MRC_INIT | no |
 | E4 ret0=0 (DOCUMENTED args) | no |
-| E4 DRAW/REFRESH | no |
+| E4 DRAW/REFRESH | yes |
 | mrc_loader ENTRY_CALLED | yes |
 | primary EXTRACTED | yes |
 | primary MAPPED | yes |

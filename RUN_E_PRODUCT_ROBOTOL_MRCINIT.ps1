@@ -17,15 +17,22 @@ $env:Path = "$MingwBin;C:\msys64\usr\bin;" + $env:Path
 $ResourceRoot = Join-Path $Root 'game_files\mythroad\320x480'
 $TargetNorm = $Target -replace '\\', '/'
 $isJjfb = ($TargetNorm -match 'jjfb\.mrp$')
+$isWxjwq = ($TargetNorm -match 'wxjwq\.mrp$')
 $ExpectedHash = if ($isJjfb) {
   '52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036'
+} elseif ($isWxjwq) {
+  '6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d'
 } else { $null }
 $mrpHost = Join-Path $ResourceRoot ($TargetNorm -replace '/', '\')
-$Profile = Join-Path $Root 'profiles\jjfb.json'
+$Profile = if ($isWxjwq -and (Test-Path (Join-Path $Root 'profiles\wxjwq.json'))) {
+  Join-Path $Root 'profiles\wxjwq.json'
+} else {
+  Join-Path $Root 'profiles\jjfb.json'
+}
 $Launcher = Join-Path $Root 'build-i686\gwy_launcher.exe'
 $RunDir = Join-Path $Root 'out\vmrp_run'
 $exe = Join-Path $RunDir 'main.exe'
-$PrimaryExt = if ($isJjfb) { 'robotol.ext' } else { 'mmochat.ext' }
+$PrimaryExt = if ($isJjfb) { 'robotol.ext' } elseif ($isWxjwq) { 'mmochat.ext' } else { 'mmochat.ext' }
 $tag = if ($isJjfb) { 'stage_e' } else { 'stage_e_wxjwq' }
 
 if (-not (Test-Path $mrpHost)) { throw "missing $mrpHost" }
@@ -94,8 +101,13 @@ $env:JJFB_MRC_INIT_TRACE = '1'
 $env:JJFB_EXTCHUNK_SLOT_TRACE = '1'
 $env:JJFB_GAME_SELF_PATCH = '0'
 # Stage E4: DOCUMENTED mr_doExt appInfo id/ver (profile/runner only — not fixed guest addrs).
-$env:GWY_PACKAGE_APPID = '400101'
-$env:GWY_PACKAGE_APPVER = '12'
+# Do not overwrite if caller (E8B wxjwq) already set package identity.
+if (-not $env:GWY_PACKAGE_APPID) {
+  if ($isWxjwq) { $env:GWY_PACKAGE_APPID = '403095' } else { $env:GWY_PACKAGE_APPID = '400101' }
+}
+if (-not $env:GWY_PACKAGE_APPVER) {
+  if ($isWxjwq) { $env:GWY_PACKAGE_APPVER = '1118' } else { $env:GWY_PACKAGE_APPVER = '12' }
+}
 # DOCUMENTED nested EXT R9 scope: DSM ER_RW guard + enter/leave (required for loader/robotol).
 # Must be explicit — do not rely on ambient shell leftover from prior live scripts.
 $env:GWY_MODULE_R9_SWITCH = '1'
@@ -112,10 +124,14 @@ $env:GWY_LAUNCH_PARAM = $param
 $env:GWY_RESOURCE_ROOT = $ResourceRoot
 
 Write-Host "== Stage E product robotol/mrc_init target=$TargetNorm Seconds=$Seconds =="
-Write-Host "primary=$PrimaryExt source=descriptor_launcher"
+Write-Host "primary=$PrimaryExt source=descriptor_launcher appid=$($env:GWY_PACKAGE_APPID) appver=$($env:GWY_PACKAGE_APPVER)"
 
-& $Launcher validate --root $ResourceRoot
-if ($LASTEXITCODE -ne 0) { throw 'gwy_launcher validate failed' }
+if ($isJjfb) {
+  & $Launcher validate --root $ResourceRoot
+  if ($LASTEXITCODE -ne 0) { throw 'gwy_launcher validate failed' }
+} else {
+  Write-Host "[validate] skipped for non-jjfb target=$TargetNorm (hash gate still applied)"
+}
 
 "[JJFB_GWY_LAUNCH] cfg_index=$CfgIndex target=$TargetNorm source=descriptor_launcher evidence=DOCUMENTED" |
   Out-File -FilePath $stdout -Encoding utf8
@@ -141,7 +157,11 @@ $e2Mode = ($env:JJFB_GAME_PACKAGE_CONTEXT_PROVIDER -eq '1') -or
 $e4Mode = ($env:JJFB_ROBOTOL_RETRY_AFTER_CONTEXT_RESTORE -eq '1')
 $e5Mode = ($env:JJFB_E5_SCHEDULER_MODE -eq '1')
 $e7Mode = ($env:JJFB_E7_LIFECYCLE_MODE -eq '1')
-if ($e7Mode) {
+$e8bMode = ($env:JJFB_E8B_MODE -eq '1')
+if ($e8bMode) {
+  # Long post-handler observe: DRAW, tick>=25 (census dump), or wall-clock Seconds.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=25\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e7Mode) {
   # Wait for natural DRAW or enough lifecycle fires; do not stop on PLATFORM_TIMER FIRE alone.
   $stopPat = '\[JJFB_DRAW\]|\[JJFB_REFRESH\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=8\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e5Mode) {

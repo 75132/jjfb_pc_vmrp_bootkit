@@ -1,0 +1,5 @@
+code_base=0x2D8DF4
+handler_va=0x30630C file_off=0x2D518
+fault_va=0x306338 file_off=0x2D544
+fault_bytes_match=True
+window_file_start=0x2D498

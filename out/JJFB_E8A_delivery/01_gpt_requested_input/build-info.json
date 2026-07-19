@@ -1,0 +1,10 @@
+﻿{
+    "commit":  "6b515f5c2e6101eb3447f3c2a950f01246167bf0",
+    "date":  "2026-07-19T19:28:03.2173100+08:00",
+    "jjfb_mrp_sha256":  "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+    "wxjwq_mrp_sha256":  "6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d",
+    "main_exe_sha256":  "f661ab91f3bd153debd1d73ae38c205f9e561fcf0595dedee23b466721fd867d",
+    "unicorn_dll_sha256":  "927446e4ea46b44a075708077af9e0ccdb284af4e1748239837d0dd6a768114e",
+    "verdict":  "THUMB_STATE_LOST -\u003e HANDLER_RETURNED_NEXT_PLATFORM_GAP",
+    "note":  "main.exe/unicorn.dll are post-E8A Thumb LSB fix build"
+}

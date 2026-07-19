@@ -1,4 +1,5 @@
 #include "gwy_launcher/guest_vfs.h"
+#include "gwy_launcher/platform_call_census.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -366,6 +367,43 @@ LauncherStatus guest_path_canonicalize(const char *guest_path,
     return L_OK;
 }
 
+static int env_alias_on(void) {
+    const char *e = getenv("JJFB_VFS_RES_ALIAS");
+    return e && e[0] == '1' && e[1] == '\0';
+}
+
+/* Replace first occurrence of needle in path → out (cap). Returns 1 if replaced. */
+static int path_replace_once(const char *in, const char *needle, const char *repl, char *out,
+                             size_t cap) {
+    const char *p;
+    size_t nlen, pre;
+    if (!in || !needle || !repl || !out || !cap) return 0;
+    p = strstr(in, needle);
+    if (!p) return 0;
+    nlen = strlen(needle);
+    pre = (size_t)(p - in);
+    if (snprintf(out, cap, "%.*s%s%s", (int)pre, in, repl, p + nlen) >= (int)cap) return 0;
+    return 1;
+}
+
+static int try_alias_host(const char *primary_host, char *alt_host, size_t alt_cap,
+                          const char **out_reason) {
+    if (!primary_host || !alt_host || !alt_cap) return 0;
+    /* Resolution sibling: .../320x480/... → .../240x320/... */
+    if (path_replace_once(primary_host, "320x480", "240x320", alt_host, alt_cap) &&
+        host_exists(alt_host)) {
+        if (out_reason) *out_reason = "resolution_320x480_to_240x320";
+        return 1;
+    }
+    /* Font fallback: system/gb16.uc2 → system/gb12.uc2 */
+    if (path_replace_once(primary_host, "gb16.uc2", "gb12.uc2", alt_host, alt_cap) &&
+        host_exists(alt_host)) {
+        if (out_reason) *out_reason = "gb16_to_gb12";
+        return 1;
+    }
+    return 0;
+}
+
 LauncherStatus guest_vfs_resolve(GuestVfs *vfs,
                                  const char *guest_path,
                                  VfsOpenMode mode,
@@ -444,6 +482,19 @@ LauncherStatus guest_vfs_resolve(GuestVfs *vfs,
     }
     out->backend = VFS_CANONICAL_READONLY;
     out->exists = host_exists(out->host_path);
+    if (!out->exists && mode == VFS_OPEN_READ && env_alias_on()) {
+        char alt[VFS_PATH_MAX];
+        const char *reason = NULL;
+        if (try_alias_host(out->host_path, alt, sizeof(alt), &reason)) {
+            printf("[JJFB_VFS_ALIAS] from=\"%s\" to=\"%s\" reason=%s evidence=OBSERVED\n",
+                   out->host_path, alt, reason ? reason : "?");
+            fflush(stdout);
+            snprintf(out->host_path, sizeof(out->host_path), "%s", alt);
+            snprintf(out->rule, sizeof(out->rule), "alias:%s", reason ? reason : "fallback");
+            out->exists = 1;
+            return L_OK;
+        }
+    }
     if (!out->exists && mode == VFS_OPEN_READ) {
         record_miss(vfs, out->guest_normalized, VFS_MISS_PROBE);
         launcher_error_set(err, L_ERR_NOT_FOUND, "guest_vfs", "FILEOPEN_MISS", out->guest_normalized);
@@ -469,6 +520,7 @@ void guest_vfs_trace_miss(const GuestVfs *vfs, const char *guest_normalized, Vfs
     printf("[JJFB_FILEOPEN_MISS] guest=\"%s\" canonical=\"%s\" kind=%s\n",
            guest_normalized ? guest_normalized : "", canon, vfs_miss_kind_name(kind));
     gwy_ext_obs_file_open(guest_normalized ? guest_normalized : canon, 0);
+    platform_call_census_note_file_miss(guest_normalized ? guest_normalized : canon);
 }
 
 size_t guest_vfs_miss_summary(const GuestVfs *vfs) {

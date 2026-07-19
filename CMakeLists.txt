@@ -34,6 +34,7 @@ add_library(launcher_core STATIC
     src/runtime/module_registry.c
     src/runtime/ext_loader.c
     src/runtime/gwy_ext_obs.c
+    src/runtime/handler_forensic.c
     src/runtime/guest_call_observer.c
     src/runtime/ext_entry_observe.c
     src/runtime/ext_chunk_observe.c
@@ -71,6 +72,7 @@ add_library(launcher_core STATIC
     src/platform/platform_send_app_event.c
     src/platform/platform_timer.c
     src/platform/platform_handler_registry.c
+    src/platform/platform_call_census.c
 )
 target_include_directories(launcher_core PUBLIC include "${GWY_UNICORN_ROOT}/include")
 target_link_libraries(launcher_core PUBLIC ZLIB::ZLIB "${GWY_UNICORN_ROOT}/unicorn.lib")

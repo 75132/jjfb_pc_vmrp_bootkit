@@ -1,0 +1,94 @@
+{
+  "stage_e7_jjfb_lifecycle_stdout.txt": {
+    "UC_ERR_INSN_INVALID": 9,
+    "uc_err=10": 9,
+    "op=FIRE tick=": 9,
+    "op=FIRE_DONE tick=": 9,
+    "HANDLER_FORENSIC_ENTRY": 0,
+    "HANDLER_FORENSIC_FAULT": 0,
+    "DRAW": 0,
+    "REFRESH": 1,
+    "r0=0x1E209": 0,
+    "arg0=0x1E209": 0,
+    "owner=robotol.ext": 9,
+    "owner=mmochat.ext": 0,
+    "resource_root=": 1,
+    "platform_signature_counts": {
+      "0x1/0x64": 4,
+      "0x10113/0x11F02": 4,
+      "0x10113/0x11F03": 4,
+      "0x10113/0x11F04": 4,
+      "0x10102/0x1E200": 4,
+      "0x10120/0x4": 4,
+      "0x10140/0x5": 4,
+      "0x10162/0xE200": 4,
+      "0x10165/0xE200": 4,
+      "0x10800/0x4": 4
+    },
+    "resource_root_lines": [
+      "[JJFB_VFS] GuestVFS bound resource_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\320x480 overlay_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\out\\vmrp_run\\overlay"
+    ]
+  },
+  "stage_e8a_jjfb_forensic_stdout.txt": {
+    "UC_ERR_INSN_INVALID": 0,
+    "uc_err=10": 0,
+    "op=FIRE tick=": 9,
+    "op=FIRE_DONE tick=": 9,
+    "HANDLER_FORENSIC_ENTRY": 2,
+    "HANDLER_FORENSIC_FAULT": 3,
+    "DRAW": 0,
+    "REFRESH": 1,
+    "r0=0x1E209": 9,
+    "arg0=0x1E209": 9,
+    "owner=robotol.ext": 10,
+    "owner=mmochat.ext": 0,
+    "resource_root=": 1,
+    "platform_signature_counts": {
+      "0x1/0x64": 4,
+      "0x10113/0x11F02": 4,
+      "0x10113/0x11F03": 4,
+      "0x10113/0x11F04": 4,
+      "0x10102/0x1E200": 4,
+      "0x10120/0x4": 4,
+      "0x10140/0x5": 4,
+      "0x10162/0xE200": 4,
+      "0x10165/0xE200": 4,
+      "0x10800/0x4": 4,
+      "0x1E209/0x9": 9
+    },
+    "resource_root_lines": [
+      "[JJFB_VFS] GuestVFS bound resource_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\320x480 overlay_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\out\\vmrp_run\\overlay"
+    ]
+  },
+  "stage_e8a_wxjwq_forensic_stdout.txt": {
+    "UC_ERR_INSN_INVALID": 0,
+    "uc_err=10": 0,
+    "op=FIRE tick=": 9,
+    "op=FIRE_DONE tick=": 9,
+    "HANDLER_FORENSIC_ENTRY": 2,
+    "HANDLER_FORENSIC_FAULT": 3,
+    "DRAW": 0,
+    "REFRESH": 1,
+    "r0=0x1E209": 9,
+    "arg0=0x1E209": 9,
+    "owner=robotol.ext": 10,
+    "owner=mmochat.ext": 0,
+    "resource_root=": 1,
+    "platform_signature_counts": {
+      "0x1/0x64": 4,
+      "0x10113/0x11F02": 4,
+      "0x10113/0x11F03": 4,
+      "0x10113/0x11F04": 4,
+      "0x10102/0x1E200": 4,
+      "0x10120/0x4": 4,
+      "0x10140/0x5": 4,
+      "0x10162/0xE200": 4,
+      "0x10165/0xE200": 4,
+      "0x10800/0x4": 4,
+      "0x1E209/0x9": 9
+    },
+    "resource_root_lines": [
+      "[JJFB_VFS] GuestVFS bound resource_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\game_files\\mythroad\\320x480 overlay_root=C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit\\out\\vmrp_run\\overlay"
+    ]
+  }
+}

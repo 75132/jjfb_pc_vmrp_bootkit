@@ -1,42 +1,30 @@
-# Repository layout after Phase 0 / Task 0.1
+﻿# Repository layout
 
-```text
+`	ext
 jjfb_pc_vmrp_bootkit/
-├─ .cursor/                         # rebuild rules + skill
-├─ CMakeLists.txt                   # clean product only
-├─ README.md
-├─ 00_READ_ME_FIRST.md
-├─ START_CURSOR_HERE.md
+├─ README.md / 00_READ_ME_FIRST.md / START_CURSOR_HERE.md
 ├─ CURSOR_MASTER_PROMPT.md
-├─ PACKAGE_INDEX.md
-├─ include/gwy_launcher/            # public headers
-├─ src/
-│  ├─ app/                          # CLI entry
-│  ├─ formats/                      # MRP/cfg/reg (to implement)
-│  ├─ launcher/                     # descriptor/context
-│  ├─ vfs/
-│  ├─ runtime/
-│  ├─ platform/
-│  ├─ profiles/
-│  └─ trace/
-├─ third_party/vmrp_upstream/       # clean vmrp (~51KB bridge.c)
-├─ game_files/                      # original mythroad/gwy resources
-├─ profiles/  schemas/
-├─ tests/{unit,integration,fixtures,golden}/
-├─ tools/                           # mrp_inspect / gwy_cfg_inspect / audit
-├─ docs/  evidence/  decisions/  templates/
-├─ logs/                            # new-run logs only
-└─ legacy_lab/                      # frozen old bootkit (not in build)
-```
+├─ CMakeLists.txt
+├─ RUN_BUILD.ps1 / RUN_BUILD_VMRP.ps1 / RUN_TESTS.ps1 / RUN_GAMES.ps1 / RUN_VMRP_VISUAL.ps1
+├─ RUN_E_PRODUCT_ROBOTOL_MRCINIT.ps1   # product track entry
+├─ RUN_E5_*.ps1 … RUN_E8A_*.ps1        # current stage runners
+├─ include/ src/ tests/ tools/ profiles/ schemas/
+├─ docs/ evidence/ decisions/ templates/
+├─ game_files/                         # original resources (immutable)
+├─ logs/                               # latest run logs
+├─ reports/
+│  ├─ phase_verdicts/                  # D/E/6x stage verdicts (moved from root)
+│  └─ stage_e8a_*.md
+├─ out/
+│  ├─ JJFB_E8A_delivery/ + .zip
+│  └─ JJFB_E8B_fast_route_analysis_pack/
+├─ third_party/vmrp_upstream/
+└─ legacy_lab/
+   ├─ runners/                         # RUN_LIVE_* / RUN_PHASE6_* / old D6/E2/NATIVE
+   └─ archive/
+      ├─ cursor_phase_prompts/
+      ├─ root_phase_docs/
+      └─ native_fullboot_pack/
+`
 
-## Mapping from old root
-
-| 旧路径 | 新位置 |
-|---|---|
-| `runtime/vmrp_src/vmrp-master` | `third_party/vmrp_upstream`（副本）+ `legacy_lab/runtime/...` |
-| `runtime/vmrp_src_build_v27` | `legacy_lab/runtime/vmrp_src_build_v27` |
-| `scripts/` `tools/`（旧） | `legacy_lab/scripts` `legacy_lab/tools` |
-| `docs/` `README/` `reports/` | `legacy_lab/...` |
-| `RUN_*.ps1` `CONFIG.json` | `legacy_lab/runners/` |
-| `JJFB_GWY_LAUNCHER_REBUILD_GUIDE_COMPLETE/` | 内容提升到根；原包在 `legacy_lab/...` |
-| `game_files/` | **仍在根**（资源根不变） |
+Historical root clutter (phase markdowns, LIVE/PHASE6 runners, Native pack) lives under `legacy_lab/` or `reports/phase_verdicts/`. Do not add new phase docs or one-off runners to the repo root.
