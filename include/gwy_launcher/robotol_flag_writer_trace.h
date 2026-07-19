@@ -8,17 +8,20 @@ extern "C" {
 #endif
 
 /*
- * Stage E8F: observe-only idle-flag writer callpath + sibling/counterfactual diagnostics.
+ * Stage E8F/E8G: observe-only writer/caller BP + counterfactual diagnostics.
  *
- * Env:
- *   JJFB_E8F_WRITER_BP=1          — CODE hooks on writer PCs (csv or built-in top set)
- *   JJFB_E8F_WRITER_PCS=0x..,..   — optional override CSV
- *   JJFB_E8F_SIBLING_PROBE=1      — fire 0x10162 and/or 0x10102 once
- *   JJFB_E8F_SIBLING=10162|10102|BOTH
- *   JJFB_E8F_COUNTERFACTUAL=C44|C9D|CF5|ALL  — COUNTERFACTUAL_ONLY poke (not product)
- *   JJFB_E8F_LONGPATH_WATCH=1     — hook 0x30D28C + snap queue depth
+ * E8F Env:
+ *   JJFB_E8F_WRITER_BP=1, JJFB_E8F_WRITER_PCS=...
+ *   JJFB_E8F_SIBLING_PROBE=1, JJFB_E8F_SIBLING=...
+ *   JJFB_E8F_COUNTERFACTUAL=C44|C9D|CF5|C44C9D|C44CF5|C9DCF5|ALL
+ *   JJFB_E8F_LONGPATH_WATCH=1
  *
- * Never claims counterfactual as product success. Never mutates 0x1E209 ret / MRP.
+ * E8G Env:
+ *   JJFB_E8G_CALLER_BP=1          — bootstrap caller CODE hooks
+ *   JJFB_E8G_CALLER_PCS=0x..,..   — optional CSV (else built-in priority set)
+ *   JJFB_E8G_FAULT_WATCH=1        — hook 0x2D92B0 + rich fault dump on lifecycle fail
+ *
+ * Never claims counterfactual as product success.
  */
 
 int robotol_flag_writer_trace_enabled(void);
@@ -26,14 +29,15 @@ void robotol_flag_writer_trace_reset(void);
 void robotol_flag_writer_trace_bind_uc(void *uc);
 void robotol_flag_writer_trace_set_tick(uint32_t tick);
 
-/* Arm CODE breakpoints once robotol code mapping is known. */
 void robotol_flag_writer_trace_try_arm(void *uc);
-
-/* After lifecycle tick (guest depth==0): sibling probes / counterfactual / summary. */
 void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick);
-
-/* Dump never-hit writers (call at tick 40 / shutdown). */
 void robotol_flag_writer_trace_dump_summary(const char *reason);
+
+/* E8G: after 10140 fire fails — dump regs/context at fault PC (COUNTERFACTUAL path). */
+void robotol_flag_writer_trace_on_lifecycle_fault(void *uc, uint32_t tick, int ok,
+                                                  unsigned uc_err, uint32_t pc_after,
+                                                  uint32_t r0_after, uint32_t r9_after,
+                                                  uint32_t sp_after, uint32_t lr_after);
 
 #ifdef __cplusplus
 }

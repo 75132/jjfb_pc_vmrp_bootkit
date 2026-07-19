@@ -1,0 +1,23 @@
+{
+  "fault_pc": "0x2D92B0",
+  "fault_insn": "h0=0xB001",
+  "fault_kind": "raw",
+  "fn_start": "0x2D92A4",
+  "fn_end": "0x2D92E2",
+  "upstream_bl_callers": [
+    "0x2D91E0",
+    "0x2D91EE",
+    "0x2D9202",
+    "0x2D920E"
+  ],
+  "prior_insns": [
+    "0x2D92A4: PUSH 0xB508",
+    "0x2D92A6: h0=0xAB00",
+    "0x2D92A8: h0=0x7018",
+    "0x2D92AA: MOVS r0, #3",
+    "0x2D92AC: h0=0x4669",
+    "0x2D92AE: h0=0xDFAB"
+  ],
+  "hypothesis": "CF tick2 hit this PC with UC_ERR_EXCEPTION r0=3; classify live: unmapped vs trap vs bad target",
+  "evidence": "TARGET_OBSERVED+HYPOTHESIS"
+}

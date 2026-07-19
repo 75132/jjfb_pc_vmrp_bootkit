@@ -516,6 +516,11 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
            g_lifecycle_ticks, ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after,
            out.r0_after, out.r9_after, out.sp_after, out.uc_err,
            out.err_detail[0] ? out.err_detail : "-");
+    if (!ok) {
+        robotol_flag_writer_trace_on_lifecycle_fault(uc, g_lifecycle_ticks, ok, out.uc_err,
+                                                     out.pc_after, out.r0_after, out.r9_after,
+                                                     out.sp_after, out.lr_after);
+    }
     if (!ok && out.pc_after) {
         uint8_t peek[8];
         if (guest_memory_uc_peek((struct uc_struct *)uc, out.pc_after & ~1u, peek, sizeof(peek))) {

@@ -11,7 +11,7 @@
 #include <unicorn/unicorn.h>
 #endif
 
-#define E8F_MAX_BP 48
+#define E8F_MAX_BP 64
 
 typedef struct E8fBp {
     int used;
@@ -33,19 +33,23 @@ static struct {
     int writer_bp;
     int sibling_probe;
     int longpath_watch;
+    int caller_bp;
+    int fault_watch;
     int armed;
     int sibling_done;
     int counterfactual_done;
     int probe10162_done;
     int probe10102_done;
+    int fault_dumped;
     void *uc;
     uint32_t tick;
-    char sibling_mode[16]; /* 10162 / 10102 / BOTH */
-    char counterfactual[16]; /* C44 / C9D / CF5 / ALL / empty */
+    char sibling_mode[16];
+    char counterfactual[16];
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
     uint32_t queue_depth_at_probe;
+    uint32_t fault_hits;
 } g_e8f;
 
 static int env1(const char *name) {
@@ -77,6 +81,8 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.writer_bp = env1("JJFB_E8F_WRITER_BP");
         g_e8f.sibling_probe = env1("JJFB_E8F_SIBLING_PROBE");
         g_e8f.longpath_watch = env1("JJFB_E8F_LONGPATH_WATCH");
+        g_e8f.caller_bp = env1("JJFB_E8G_CALLER_BP");
+        g_e8f.fault_watch = env1("JJFB_E8G_FAULT_WATCH");
         sib = getenv("JJFB_E8F_SIBLING");
         if (sib && sib[0]) {
             strncpy(g_e8f.sibling_mode, sib, sizeof(g_e8f.sibling_mode) - 1);
@@ -88,7 +94,7 @@ int robotol_flag_writer_trace_enabled(void) {
             strncpy(g_e8f.counterfactual, cf, sizeof(g_e8f.counterfactual) - 1);
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
-                        (g_e8f.counterfactual[0] != '\0');
+                        g_e8f.caller_bp || g_e8f.fault_watch || (g_e8f.counterfactual[0] != '\0');
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -171,6 +177,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         printf("[JJFB_E8F_LONGPATH_HIT] pc=0x%X tick=%u r0=0x%X r1=0x%X r9=0x%X lr=0x%X "
                "evidence=OBSERVED\n",
                bp->pc, g_e8f.tick, r0, r1, r9, lr);
+    } else if (bp->pc == 0x2D92B0u) {
+        g_e8f.fault_hits++;
+        printf("[JJFB_E8G_FAULT_HIT] pc=0x2D92B0 tick=%u r0=0x%X r1=0x%X r9=0x%X lr=0x%X "
+               "note=counterfactual_second_gate_site evidence=OBSERVED\n",
+               g_e8f.tick, r0, r1, r9, lr);
+    } else if (bp->tag[0] == 'c') {
+        printf("[JJFB_E8G_CALLER_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
+               "lr=0x%X evidence=OBSERVED\n",
+               bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r9, lr);
     } else {
         printf("[JJFB_E8F_WRITER_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r9=0x%X "
                "lr=0x%X evidence=OBSERVED\n",
@@ -207,7 +222,8 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
     if (!robotol_flag_writer_trace_enabled()) return;
     if (!uc) uc = g_e8f.uc;
     if (!uc || g_e8f.armed) return;
-    if (!g_e8f.writer_bp && !g_e8f.longpath_watch) return;
+    if (!g_e8f.writer_bp && !g_e8f.longpath_watch && !g_e8f.caller_bp && !g_e8f.fault_watch)
+        return;
     if (!find_robotol_code(&code_base, &code_size)) return;
 
     /* Built-in top writers (E8D/E8F list). */
@@ -215,6 +231,11 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
         0x2E87F2u, 0x2F4E82u, 0x2F7F56u, 0x2FB286u, 0x2FC8CAu, 0x2FEDFAu, 0x2FEE4Eu,
         0x30CC72u, 0x311C3Eu, 0x2E3A68u, 0x2F097Au, 0x2F7772u, 0x2FB008u, 0x307796u,
         0x30AA42u, 0x3115B4u, 0x2D9B68u, 0x2D9CE6u, 0x2DBA82u, 0x2E7DBCu, 0x2F7F2Cu,
+    };
+    /* E8G priority bootstrap callers + fn entries. */
+    static const uint32_t k_callers[] = {
+        0x302340u, 0x302362u, 0x2FC048u, 0x2E32A2u, 0x2EFF1Cu, 0x2F08A4u, 0x2F0D6Au,
+        0x2F1FF0u, 0x30D9EEu, 0x30AF8Au, 0x30DF78u, 0x2DA64Au, 0x2DE7ECu, 0x30FCEEu,
     };
     csv = getenv("JJFB_E8F_WRITER_PCS");
     if (csv && csv[0])
@@ -232,6 +253,21 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
         add_bp(0x30D28Cu, "longpath");
         add_bp(0x30D262u, "fe8_str");
     }
+    if (g_e8f.caller_bp) {
+        uint32_t cpcs[E8F_MAX_BP];
+        int nc = 0;
+        const char *ccsv = getenv("JJFB_E8G_CALLER_PCS");
+        if (ccsv && ccsv[0])
+            nc = parse_hex_list(ccsv, cpcs, E8F_MAX_BP);
+        else {
+            for (i = 0; i < (int)(sizeof(k_callers) / sizeof(k_callers[0])); i++)
+                cpcs[nc++] = k_callers[i];
+        }
+        for (i = 0; i < nc; i++)
+            add_bp(cpcs[i], "caller");
+    }
+    if (g_e8f.fault_watch)
+        add_bp(0x2D92B0u, "fault");
 
 #ifdef GWY_HAVE_UNICORN
     for (i = 0; i < g_e8f.nbps; i++) {
@@ -250,8 +286,9 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
 #endif
     g_e8f.armed = 1;
     g_e8f.uc = uc;
-    printf("[JJFB_E8F_WRITER_BP] armed=1 n=%d code_base=0x%X size=0x%X evidence=OBSERVED\n",
-           g_e8f.nbps, code_base, code_size);
+    printf("[JJFB_E8F_WRITER_BP] armed=1 n=%d code_base=0x%X size=0x%X caller_bp=%d "
+           "fault_watch=%d evidence=OBSERVED\n",
+           g_e8f.nbps, code_base, code_size, g_e8f.caller_bp, g_e8f.fault_watch);
     fflush(stdout);
 }
 
@@ -318,11 +355,14 @@ static void run_counterfactual(void *uc) {
            mode, r9);
     fflush(stdout);
     snap_idle_flags(uc, r9, "cf_before");
-    if (strcmp(mode, "C44") == 0 || strcmp(mode, "ALL") == 0)
+    if (strcmp(mode, "C44") == 0 || strcmp(mode, "ALL") == 0 || strcmp(mode, "C44C9D") == 0 ||
+        strcmp(mode, "C44CF5") == 0)
         (void)guest_memory_uc_poke((struct uc_struct *)uc, r9 + 0xC44u, &one, 1);
-    if (strcmp(mode, "C9D") == 0 || strcmp(mode, "ALL") == 0)
+    if (strcmp(mode, "C9D") == 0 || strcmp(mode, "ALL") == 0 || strcmp(mode, "C44C9D") == 0 ||
+        strcmp(mode, "C9DCF5") == 0)
         (void)guest_memory_uc_poke((struct uc_struct *)uc, r9 + 0xC9Du, &one, 1);
-    if (strcmp(mode, "CF5") == 0 || strcmp(mode, "ALL") == 0)
+    if (strcmp(mode, "CF5") == 0 || strcmp(mode, "ALL") == 0 || strcmp(mode, "C44CF5") == 0 ||
+        strcmp(mode, "C9DCF5") == 0)
         (void)guest_memory_uc_poke((struct uc_struct *)uc, r9 + 0xCF5u, &one, 1);
     snap_idle_flags(uc, r9, "cf_after_poke");
     printf("[JJFB_E8F_COUNTERFACTUAL_ARMED] mode=%s note=watch_next_10140_for_new_plat_or_DRAW "
@@ -332,26 +372,65 @@ static void run_counterfactual(void *uc) {
 }
 
 void robotol_flag_writer_trace_dump_summary(const char *reason) {
-    int i, hits = 0, miss = 0;
+    int i, hits = 0, miss = 0, caller_hits = 0, caller_miss = 0;
     if (!robotol_flag_writer_trace_enabled()) return;
     for (i = 0; i < g_e8f.nbps; i++) {
         E8fBp *bp = &g_e8f.bps[i];
         if (!bp->used) continue;
         if (bp->hit_n) {
             hits++;
+            if (bp->tag[0] == 'c') caller_hits++;
             printf("[JJFB_E8F_WRITER_REACHED] tag=%s pc=0x%X hits=%u first_tick=%u "
                    "class=ENTERED evidence=OBSERVED\n",
                    bp->tag, bp->pc, bp->hit_n, bp->first_tick);
         } else {
             miss++;
+            if (bp->tag[0] == 'c') caller_miss++;
             printf("[JJFB_E8F_WRITER_NEVER] tag=%s pc=0x%X class=NEVER_ENTERED "
                    "evidence=OBSERVED\n",
                    bp->tag, bp->pc);
         }
     }
     printf("[JJFB_E8F_WRITER_SUMMARY] reason=%s armed=%d hit_pcs=%d never_pcs=%d "
-           "longpath_hits=%u evidence=OBSERVED\n",
-           reason ? reason : "-", g_e8f.armed, hits, miss, g_e8f.longpath_hits);
+           "caller_hit=%d caller_never=%d longpath_hits=%u fault_hits=%u evidence=OBSERVED\n",
+           reason ? reason : "-", g_e8f.armed, hits, miss, caller_hits, caller_miss,
+           g_e8f.longpath_hits, g_e8f.fault_hits);
+    fflush(stdout);
+}
+
+void robotol_flag_writer_trace_on_lifecycle_fault(void *uc, uint32_t tick, int ok,
+                                                  unsigned uc_err, uint32_t pc_after,
+                                                  uint32_t r0_after, uint32_t r9_after,
+                                                  uint32_t sp_after, uint32_t lr_after) {
+    uint8_t peek[16];
+    uint32_t r9 = r9_after;
+    int i;
+    if (!robotol_flag_writer_trace_enabled()) return;
+    if (ok || g_e8f.fault_dumped) return;
+    if (!g_e8f.fault_watch && !g_e8f.counterfactual_done) return;
+    g_e8f.fault_dumped = 1;
+    printf("[JJFB_E8G_SECOND_GATE_FAULT] tick=%u uc_err=%u pc=0x%X r0=0x%X r9=0x%X sp=0x%X "
+           "lr=0x%X note=COUNTERFACTUAL_ONLY evidence=OBSERVED\n",
+           tick, uc_err, pc_after, r0_after, r9_after, sp_after, lr_after);
+    if (uc && guest_memory_uc_peek((struct uc_struct *)uc, pc_after & ~1u, peek, sizeof(peek))) {
+        printf("[JJFB_E8G_FAULT_BYTES] pc=0x%X bytes=", pc_after & ~1u);
+        for (i = 0; i < (int)sizeof(peek); i++)
+            printf("%02X", peek[i]);
+        printf(" evidence=OBSERVED\n");
+    }
+    if (uc && find_robotol_r9(uc, &r9))
+        snap_idle_flags(uc, r9, "fault_context");
+    /* Heuristic classification from known CF site. */
+    if ((pc_after & ~1u) == 0x2D92B0u) {
+        printf("[JJFB_E8G_FAULT_CLASS] site=0x2D92B0 class=COUNTERFACTUAL_SECOND_GATE "
+               "uc_err=%u r0=0x%X hypothesis=missing_context_after_flag_gate "
+               "evidence=TARGET_OBSERVED+HYPOTHESIS\n",
+               uc_err, r0_after);
+    } else {
+        printf("[JJFB_E8G_FAULT_CLASS] site=0x%X class=OTHER_PATH uc_err=%u "
+               "evidence=OBSERVED\n",
+               pc_after & ~1u, uc_err);
+    }
     fflush(stdout);
 }
 
