@@ -51,6 +51,10 @@ extern "C" {
  *   JJFB_E8M_PARENT_TRACE=1       — log first 200 insns in 0x300158..0x3004F6 (tick1)
  *   JJFB_E8M_SEQ=10165+310+156:18 — ordered observe-only fires (not product success)
  *
+ * E8N Env:
+ *   JJFB_E8N_CF_STATE=<n>         — COUNTERFACTUAL_ONLY poke R9+0x8D0 then case156
+ *                                   (ladder map only; NOT product success)
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

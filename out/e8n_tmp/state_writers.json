@@ -1,0 +1,2184 @@
+{
+  "state_off": 2256,
+  "direct_writers": [
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 2999866,
+      "str_pc": 2999912,
+      "width": 1,
+      "rt": 5,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 2999894,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 2999840,
+      "callers": [
+        3003050
+      ],
+      "caller_fns": [
+        3002472
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 2999866,
+      "str_pc": 2999918,
+      "width": 1,
+      "rt": 5,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 2999894,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 2999840,
+      "callers": [
+        3003050
+      ],
+      "caller_fns": [
+        3002472
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3000642,
+      "str_pc": 3000654,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 46,
+        "pc": 3000652,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3000332,
+      "callers": [
+        3169982
+      ],
+      "caller_fns": [
+        3169976
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3003450,
+      "str_pc": 3003456,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 37,
+        "pc": 3003452,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3002472,
+      "callers": [
+        3004218,
+        3024136
+      ],
+      "caller_fns": [
+        3004064,
+        3023960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3003450,
+      "str_pc": 3003512,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 30,
+        "pc": 3003508,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3002472,
+      "callers": [
+        3004218,
+        3024136
+      ],
+      "caller_fns": [
+        3004064,
+        3023960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3003660,
+      "str_pc": 3003666,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 20,
+        "pc": 3003662,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3002472,
+      "callers": [
+        3004218,
+        3024136
+      ],
+      "caller_fns": [
+        3004064,
+        3023960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3003660,
+      "str_pc": 3003678,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3003672,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3002472,
+      "callers": [
+        3004218,
+        3024136
+      ],
+      "caller_fns": [
+        3004064,
+        3023960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3003964,
+      "str_pc": 3003974,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 27,
+        "pc": 3003970,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3002472,
+      "callers": [
+        3004218,
+        3024136
+      ],
+      "caller_fns": [
+        3004064,
+        3023960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3015974,
+      "str_pc": 3015980,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3015976,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3015974,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3023972,
+      "str_pc": 3024014,
+      "width": 4,
+      "rt": 2,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3023978,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3023960,
+      "callers": [
+        3002536,
+        3216634
+      ],
+      "caller_fns": [
+        3002472,
+        3216252
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3026776,
+      "str_pc": 3026784,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3026776,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3027510,
+      "str_pc": 3027540,
+      "width": 1,
+      "rt": 1,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 0,
+        "pc": 3027538,
+        "can_nonzero": false,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3027510,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": false,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3028070,
+      "str_pc": 3028078,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3028070,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3029476,
+      "str_pc": 3029484,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3029476,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3029476,
+      "str_pc": 3029508,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3029476,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3030916,
+      "str_pc": 3030924,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3030916,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3030982,
+      "str_pc": 3030988,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 20,
+        "pc": 3030984,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3030982,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3036592,
+      "str_pc": 3036600,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3036594,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3036200,
+      "callers": [
+        3029038
+      ],
+      "caller_fns": [
+        3029038
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3041654,
+      "str_pc": 3041670,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3041520,
+      "callers": [
+        3030898
+      ],
+      "caller_fns": [
+        3030898
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3041654,
+      "str_pc": 3041678,
+      "width": 1,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 3041674,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3041520,
+      "callers": [
+        3030898
+      ],
+      "caller_fns": [
+        3030898
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3041728,
+      "str_pc": 3041736,
+      "width": 4,
+      "rt": 1,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 0,
+        "pc": 3041680,
+        "can_nonzero": false,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3041726,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": false,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3041728,
+      "str_pc": 3041744,
+      "width": 4,
+      "rt": 1,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3041726,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3041728,
+      "str_pc": 3041752,
+      "width": 4,
+      "rt": 1,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 0,
+        "pc": 3041748,
+        "can_nonzero": false,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3041726,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": false,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3045734,
+      "str_pc": 3045742,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 32,
+        "pc": 3045738,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3045684,
+      "callers": [
+        3003490
+      ],
+      "caller_fns": [
+        3002472
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3124970,
+      "str_pc": 3124976,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 26,
+        "pc": 3124972,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3124888,
+      "callers": [
+        3004002,
+        3219944
+      ],
+      "caller_fns": [
+        3002472,
+        3219676
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125192,
+      "str_pc": 3125198,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 22,
+        "pc": 3125194,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3124996,
+      "callers": [
+        2992182,
+        2992194,
+        2994204,
+        2996418,
+        2996912,
+        2997060,
+        2997186,
+        2997388,
+        2998400,
+        2998552,
+        2999816,
+        3000164
+      ],
+      "caller_fns": [
+        2992048,
+        2994160,
+        2996244,
+        2996792,
+        2996940,
+        2997092,
+        2997212,
+        2998348,
+        2998420,
+        2999764,
+        3000108
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125412,
+      "str_pc": 3125426,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3125264,
+      "callers": [
+        3004418,
+        3004900
+      ],
+      "caller_fns": [
+        3004264,
+        3004444
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125412,
+      "str_pc": 3125446,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 3125438,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3125264,
+      "callers": [
+        3004418,
+        3004900
+      ],
+      "caller_fns": [
+        3004264,
+        3004444
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125412,
+      "str_pc": 3125458,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 22,
+        "pc": 3125456,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3125264,
+      "callers": [
+        3004418,
+        3004900
+      ],
+      "caller_fns": [
+        3004264,
+        3004444
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125498,
+      "str_pc": 3125504,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 214,
+        "pc": 3125500,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3125484,
+      "callers": [
+        2999072
+      ],
+      "caller_fns": [
+        2998960
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125498,
+      "str_pc": 3125544,
+      "width": 1,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 6,
+        "pc": 3125538,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3125484,
+      "callers": [
+        2999072
+      ],
+      "caller_fns": [
+        2998960
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125916,
+      "str_pc": 3125950,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3125832,
+      "callers": [
+        2991690,
+        3008492,
+        3210478
+      ],
+      "caller_fns": [
+        2991652,
+        3008444,
+        3210412
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3125916,
+      "str_pc": 3125958,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 68,
+        "pc": 3125956,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3125832,
+      "callers": [
+        2991690,
+        3008492,
+        3210478
+      ],
+      "caller_fns": [
+        2991652,
+        3008444,
+        3210412
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3126556,
+      "str_pc": 3126562,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 33,
+        "pc": 3126558,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3126112,
+      "callers": [
+        3150176,
+        3192056,
+        3203156
+      ],
+      "caller_fns": [
+        3150068,
+        3191996,
+        3203156
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3128118,
+      "str_pc": 3128124,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 64,
+        "pc": 3128120,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3126716,
+      "callers": [
+        2991424,
+        3006104,
+        3013824,
+        3015544,
+        3015730,
+        3015896,
+        3015922,
+        3016004,
+        3016030,
+        3025682,
+        3200550
+      ],
+      "caller_fns": [
+        2991176,
+        3005964,
+        3013692,
+        3015896,
+        3015922,
+        3016004,
+        3016030,
+        3024160,
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3128924,
+      "str_pc": 3128932,
+      "width": 4,
+      "rt": 3,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 0,
+        "pc": 3128926,
+        "can_nonzero": false,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3128172,
+      "callers": [
+        3038654
+      ],
+      "caller_fns": [
+        3037008
+      ],
+      "can_nonzero": false,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129188,
+      "str_pc": 3129194,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 20,
+        "pc": 3129190,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3128172,
+      "callers": [
+        3038654
+      ],
+      "caller_fns": [
+        3037008
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129188,
+      "str_pc": 3129216,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3129212,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3128172,
+      "callers": [
+        3038654
+      ],
+      "caller_fns": [
+        3037008
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129240,
+      "str_pc": 3129244,
+      "width": 4,
+      "rt": 6,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3129228,
+      "callers": [
+        3028660,
+        3028826,
+        3028930,
+        3035578,
+        3035598
+      ],
+      "caller_fns": [
+        3028660,
+        3028826,
+        3028930,
+        3035528
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129484,
+      "str_pc": 3129490,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 37,
+        "pc": 3129486,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3129456,
+      "callers": [
+        3017582,
+        3023574,
+        3101264,
+        3131294,
+        3155248,
+        3202810
+      ],
+      "caller_fns": [
+        3017582,
+        3023574,
+        3100788,
+        3131288,
+        3154120,
+        3202810
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129614,
+      "str_pc": 3129620,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3129612,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3129576,
+      "callers": [
+        3026462
+      ],
+      "caller_fns": [
+        3026462
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129760,
+      "str_pc": 3129766,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 3,
+        "pc": 3129762,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3129658,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129844,
+      "str_pc": 3129856,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 39,
+        "pc": 3129852,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3129824,
+      "callers": [
+        3201456
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3129910,
+      "str_pc": 3129920,
+      "width": 4,
+      "rt": 1,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 40,
+        "pc": 3129916,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3129900,
+      "callers": [
+        3201464
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3130394,
+      "str_pc": 3130440,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 69,
+        "pc": 3130438,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3130392,
+      "callers": [
+        3129438,
+        3206794,
+        3206802
+      ],
+      "caller_fns": [
+        3129404,
+        3206736
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3130988,
+      "str_pc": 3130994,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 206,
+        "pc": 3130990,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3130456,
+      "callers": [
+        3150224
+      ],
+      "caller_fns": [
+        3150068
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131206,
+      "str_pc": 3131214,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131208,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131164,
+      "callers": [
+        3007142
+      ],
+      "caller_fns": [
+        3006944
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131268,
+      "str_pc": 3131276,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131270,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131252,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131268,
+      "str_pc": 3131326,
+      "width": 1,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 3131322,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3131252,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131354,
+      "str_pc": 3131412,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 53,
+        "pc": 3131410,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131352,
+      "callers": [
+        3007906,
+        3045606
+      ],
+      "caller_fns": [
+        3007856,
+        3045568
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131462,
+      "str_pc": 3131470,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131464,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131428,
+      "callers": [
+        3201566
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131520,
+      "str_pc": 3131524,
+      "width": 4,
+      "rt": 4,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3131496,
+      "callers": [
+        3201496
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131564,
+      "str_pc": 3131572,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131566,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131540,
+      "callers": [
+        3006598,
+        3007590
+      ],
+      "caller_fns": [
+        3006512,
+        3007352
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131564,
+      "str_pc": 3131598,
+      "width": 1,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 1,
+        "pc": 3131596,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3131540,
+      "callers": [
+        3006598,
+        3007590
+      ],
+      "caller_fns": [
+        3006512,
+        3007352
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131664,
+      "str_pc": 3131672,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131666,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131612,
+      "callers": [
+        3008030,
+        3201170
+      ],
+      "caller_fns": [
+        3008008,
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3131978,
+      "str_pc": 3131986,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3131980,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3131780,
+      "callers": [
+        3200834
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3132156,
+      "str_pc": 3132162,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 55,
+        "pc": 3132158,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3132032,
+      "callers": [
+        3035792,
+        3035848
+      ],
+      "caller_fns": [
+        3035528
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134180,
+      "str_pc": 3134186,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 209,
+        "pc": 3134182,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3133492,
+      "callers": [
+        3200792
+      ],
+      "caller_fns": [
+        3199744
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134326,
+      "str_pc": 3134332,
+      "width": 4,
+      "rt": 4,
+      "value_source": {
+        "kind": "unknown"
+      },
+      "fn": 3134312,
+      "callers": [
+        3036182
+      ],
+      "caller_fns": [
+        3036060
+      ],
+      "can_nonzero": "unknown",
+      "can_ge20": "unknown",
+      "can_eq38": "unknown"
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134376,
+      "str_pc": 3134386,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 217,
+        "pc": 3134382,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3134356,
+      "callers": [
+        3202182
+      ],
+      "caller_fns": [
+        3202182
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134416,
+      "str_pc": 3134424,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3134418,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3134408,
+      "callers": [
+        3030032,
+        3030348,
+        3041768,
+        3154696,
+        3155290,
+        3202540,
+        3209634,
+        3211128
+      ],
+      "caller_fns": [
+        3030032,
+        3030348,
+        3041726,
+        3154120,
+        3202540,
+        3209630,
+        3211120
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134416,
+      "str_pc": 3134434,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3134418,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3134408,
+      "callers": [
+        3030032,
+        3030348,
+        3041768,
+        3154696,
+        3155290,
+        3202540,
+        3209634,
+        3211128
+      ],
+      "caller_fns": [
+        3030032,
+        3030348,
+        3041726,
+        3154120,
+        3202540,
+        3209630,
+        3211120
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3134536,
+      "str_pc": 3134542,
+      "width": 4,
+      "rt": 2,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 58,
+        "pc": 3134538,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3134516,
+      "callers": [
+        3029928
+      ],
+      "caller_fns": [
+        3029928
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3151364,
+      "str_pc": 3151372,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 218,
+        "pc": 3151368,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3151040,
+      "callers": [
+        3147864,
+        3156862
+      ],
+      "caller_fns": [
+        3147540,
+        3156862
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3154416,
+      "str_pc": 3154426,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 0,
+        "pc": 3154410,
+        "can_nonzero": false,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3154120,
+      "callers": [
+        3149884
+      ],
+      "caller_fns": [
+        3149884
+      ],
+      "can_nonzero": false,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3154776,
+      "str_pc": 3154784,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 18,
+        "pc": 3154766,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3154120,
+      "callers": [
+        3149884
+      ],
+      "caller_fns": [
+        3149884
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3172628,
+      "str_pc": 3172682,
+      "width": 1,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 2,
+        "pc": 3172678,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3172612,
+      "callers": [
+        3172008
+      ],
+      "caller_fns": [
+        3171086
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3174268,
+      "str_pc": 3174274,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 20,
+        "pc": 3174270,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3172612,
+      "callers": [
+        3172008
+      ],
+      "caller_fns": [
+        3171086
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3174546,
+      "str_pc": 3174566,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3174562,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3174524,
+      "callers": [
+        3049264,
+        3062942,
+        3174456,
+        3218732
+      ],
+      "caller_fns": [
+        3049212,
+        3062932,
+        3172612,
+        3218474
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3204820,
+      "str_pc": 3204828,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 20,
+        "pc": 3204824,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3204532,
+      "callers": [
+        3149670
+      ],
+      "caller_fns": [
+        3149670
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3215344,
+      "str_pc": 3215360,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 47,
+        "pc": 3215358,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3215128,
+      "callers": [
+        3217972,
+        3218264
+      ],
+      "caller_fns": [
+        3217552
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3217310,
+      "str_pc": 3217316,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 25,
+        "pc": 3217312,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3217268,
+      "callers": [
+        3217824
+      ],
+      "caller_fns": [
+        3217552
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3218746,
+      "str_pc": 3218768,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3218764,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3218474,
+      "callers": [],
+      "caller_fns": [],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3219414,
+      "str_pc": 3219438,
+      "width": 4,
+      "rt": 2,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 3,
+        "pc": 3219436,
+        "can_nonzero": true,
+        "can_ge20": false,
+        "can_eq38": false
+      },
+      "fn": 3219412,
+      "callers": [
+        3129998,
+        3130026,
+        3130034,
+        3130064,
+        3130094,
+        3130124,
+        3130154,
+        3130182,
+        3130210,
+        3130238,
+        3141338,
+        3141406
+      ],
+      "caller_fns": [
+        3129964,
+        3140884
+      ],
+      "can_nonzero": true,
+      "can_ge20": false,
+      "can_eq38": false
+    },
+    {
+      "kind": "direct_STR_off0",
+      "ldr_pc": 3221440,
+      "str_pc": 3221448,
+      "width": 4,
+      "rt": 0,
+      "value_source": {
+        "kind": "imm8",
+        "imm": 255,
+        "pc": 3221442,
+        "can_nonzero": true,
+        "can_ge20": true,
+        "can_eq38": false
+      },
+      "fn": 3221276,
+      "callers": [
+        2995826,
+        2996870,
+        2997018,
+        2997144,
+        2997344,
+        3000080,
+        3000888,
+        3001128,
+        3001340,
+        3001376,
+        3002440,
+        3002518
+      ],
+      "caller_fns": [
+        2995652,
+        2996792,
+        2996940,
+        2997092,
+        2997212,
+        3000036,
+        3000796,
+        3000956,
+        3001152,
+        3001352,
+        3002356,
+        3002472
+      ],
+      "can_nonzero": true,
+      "can_ge20": true,
+      "can_eq38": false
+    }
+  ],
+  "direct_writer_count": 75,
+  "via_7d8_alias_writers": [],
+  "imm_nonzero_count": 58,
+  "imm_ge20_count": 47,
+  "imm_eq38_count": 0,
+  "imm38_writers": [],
+  "state_ladder_cmps": [
+    {
+      "cmp_pc": 3146114,
+      "state_imm": 217,
+      "branch": "BEQ",
+      "target": 3146346,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146120,
+      "state_imm": 204,
+      "branch": "BEQ",
+      "target": 3146348,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146126,
+      "state_imm": 5,
+      "branch": "BEQ",
+      "target": 3146144,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146132,
+      "state_imm": 0,
+      "branch": "BEQ",
+      "target": 3146350,
+      "reaches_714_hyp": false,
+      "note": "state0 early arm"
+    },
+    {
+      "cmp_pc": 3146136,
+      "state_imm": 1,
+      "branch": "BEQ",
+      "target": 3146352,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146140,
+      "state_imm": 4,
+      "branch": "BNE",
+      "target": 3146354,
+      "reaches_714_hyp": true,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146170,
+      "state_imm": 68,
+      "branch": "BEQ",
+      "target": 3146400,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146174,
+      "state_imm": 201,
+      "branch": "BEQ",
+      "target": 3146402,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146178,
+      "state_imm": 203,
+      "branch": "BNE",
+      "target": 3146354,
+      "reaches_714_hyp": true,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146256,
+      "state_imm": 254,
+      "branch": "BEQ",
+      "target": 3146452,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146262,
+      "state_imm": 233,
+      "branch": "BEQ",
+      "target": 3146480,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146268,
+      "state_imm": 218,
+      "branch": "BEQ",
+      "target": 3146398,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146272,
+      "state_imm": 219,
+      "branch": "BEQ",
+      "target": 3146398,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146276,
+      "state_imm": 226,
+      "branch": "BNE",
+      "target": 3146354,
+      "reaches_714_hyp": true,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146282,
+      "state_imm": 236,
+      "branch": "BEQ",
+      "target": 3146480,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146286,
+      "state_imm": 239,
+      "branch": "BEQ",
+      "target": 3146496,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146290,
+      "state_imm": 242,
+      "branch": "BNE",
+      "target": 3146354,
+      "reaches_714_hyp": true,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146378,
+      "state_imm": 255,
+      "branch": "BEQ",
+      "target": 3146438,
+      "reaches_714_hyp": false,
+      "note": ""
+    },
+    {
+      "cmp_pc": 3146426,
+      "state_imm": 20,
+      "branch": "BLT",
+      "target": 3146210,
+      "reaches_714_hyp": false,
+      "note": "gate CMP#20 before BL714"
+    },
+    {
+      "cmp_pc": 3146426,
+      "state_imm": 20,
+      "branch": "BLT\u2192epilogue else BL 0x300714",
+      "target": 3146432,
+      "reaches_714_hyp": true,
+      "note": "default-arm gate: state>=20 required"
+    }
+  ],
+  "ladder_hypothesis": [
+    {
+      "from": 0,
+      "to": "special arms (1,5,...) or stay",
+      "via": "state0 arm 0x3004C8 does NOT advance; needs external writer"
+    },
+    {
+      "from": "unlisted >=20 (e.g. 20..37,39..)",
+      "to": "BL 0x300714",
+      "via": "default arm + CMP#20 not LT"
+    },
+    {
+      "from": 38,
+      "to": "0x30103C path inside dispatcher",
+      "via": "0x300714 CMP #38"
+    },
+    {
+      "note": "Do not assume 0\u219238 single step; E8N maps writers that can produce intermediate values"
+    }
+  ],
+  "state0_arm": {
+    "entry": 3146952,
+    "bls": [
+      {
+        "pc": 3146970,
+        "target": 3163480
+      }
+    ],
+    "summary": "MOVS args; BL 0x304558 (plat helper); B epilogue \u2014 no STR to state, no BL 0x300714, no E6C write",
+    "side_effect": "platform/helper call only (0x304558)",
+    "advances_state": false
+  },
+  "e6c_writers": [
+    {
+      "ldr_pc": 3039120,
+      "str_pc": 3039138,
+      "fn": 3038816
+    },
+    {
+      "ldr_pc": 3039120,
+      "str_pc": 3039150,
+      "fn": 3038816
+    },
+    {
+      "ldr_pc": 3122588,
+      "str_pc": 3122608,
+      "fn": 3122432
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195438,
+      "fn": 3195388
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195454,
+      "fn": 3195388
+    },
+    {
+      "ldr_pc": 3195424,
+      "str_pc": 3195470,
+      "fn": 3195388
+    }
+  ],
+  "shared_state_e6c_fns": [],
+  "bp_spec": "p:0x300158,p:0x3004C8,p:0x3002BA,p:0x3002C0,p:0x300714,p:0x30103C,e:0x2DFC3C,e:0x2DFCAC,e:0x30D300,u:0x2DC668,u:0x2DC66E,u:0x2DC94E,u:0x2DD440,u:0x2DD478,u:0x2DD512,u:0x2DD51E,u:0x2DD646,u:0x2E052C,u:0x2E248E,u:0x2E2F60,u:0x2E3254,u:0x2E346E,u:0x2E39EC,u:0x2E3A04,u:0x2E3F8C,u:0x2E3FCC,u:0x2E55B8,u:0x2E6986,u:0x2E698E,u:0x2E69C8,u:0x2E69D0,u:0x2E69D8,u:0x2E796E,u:0x2FAEF0,u:0x2FAFCE,u:0x2FB0B2,u:0x2FB0C6,u:0x2FB0D2,u:0x2FB100,u:0x2FB128,u:0x2FB2BE,u:0x2FB2C6,u:0x2FB522,u:0x2FBB3C,u:0x2FBE64,u:0x2FBF6A,u:0x2FBF80,u:0x2FBF9C,u:0x2FC092",
+  "cf_ladder_values": [
+    1,
+    2,
+    19,
+    20,
+    38
+  ],
+  "hypotheses": [
+    {
+      "id": "R9_8D0_WRITER_NEVER_REACHED",
+      "why": "E8I product + E8M probes: state_writes=0; writers exist statically"
+    },
+    {
+      "id": "STATE_LADDER_DERIVED_NEXT_GAP",
+      "why": "0\u2192714 blocked; need writer path that produces >=20 then 38"
+    },
+    {
+      "id": "R9_8D0_REQUIRES_OBJECT_INIT",
+      "why": "shared init with E6C if common fn found"
+    }
+  ]
+}

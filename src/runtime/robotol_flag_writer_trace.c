@@ -70,6 +70,9 @@ static struct {
     char e8m_seq[48]; /* e.g. 10165+310+156:18 */
     uint32_t e8m_insn_n;
     uint32_t e8m_path_hits;
+    int e8n_cf_state_set;
+    uint32_t e8n_cf_state; /* COUNTERFACTUAL_ONLY poke of R9+0x8D0 before case156 */
+    int e8n_cf_done;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -228,8 +231,10 @@ int robotol_flag_writer_trace_enabled(void) {
             if (seq && seq[0]) {
                 strncpy(g_e8f.e8m_seq, seq, sizeof(g_e8f.e8m_seq) - 1);
                 if (strstr(seq, "10165")) g_e8f.e8m_seq_10165 = 1;
-                if (strstr(seq, "310")) g_e8f.e8m_seq_310 = 1;
-                /* Optional trailing 156:R1 — also accept REGS/CASE from E8L. */
+                /* Require standalone 310 token — avoid matching digits inside 10165. */
+                if (strstr(seq, "+310") || strstr(seq, "310+") || strcmp(seq, "310") == 0 ||
+                    strncmp(seq, "310+", 4) == 0)
+                    g_e8f.e8m_seq_310 = 1;
                 {
                     const char *p156 = strstr(seq, "156:");
                     if (p156) {
@@ -244,12 +249,24 @@ int robotol_flag_writer_trace_enabled(void) {
                 }
             }
         }
+        {
+            const char *cfst = getenv("JJFB_E8N_CF_STATE");
+            if (cfst && cfst[0]) {
+                char *end = NULL;
+                unsigned long v = strtoul(cfst, &end, 0);
+                if (end != cfst) {
+                    g_e8f.e8n_cf_state = (uint32_t)v;
+                    g_e8f.e8n_cf_state_set = 1;
+                }
+            }
+        }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
                         g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
                         g_e8f.e8j_queue_read_watch || g_e8f.svc_trap ||
                         (g_e8f.e8k_10102_case != 0) || (g_e8f.counterfactual[0] != '\0') ||
-                        g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0');
+                        g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
+                        g_e8f.e8n_cf_state_set;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -552,6 +569,7 @@ static void on_e8i_state_write(uc_engine *uc, uc_mem_type type, uint64_t address
                                int64_t value, void *user_data) {
     uint32_t pc = 0, lr = 0, r0 = 0, r9 = 0;
     uint32_t newv = (uint32_t)value;
+    uint32_t oldv = g_e8f.state_last_val;
     (void)type;
     (void)user_data;
     uc_reg_read(uc, UC_ARM_REG_PC, &pc);
@@ -560,12 +578,17 @@ static void on_e8i_state_write(uc_engine *uc, uc_mem_type type, uint64_t address
     uc_reg_read(uc, UC_ARM_REG_R9, &r9);
     if (size == 1) newv = (uint32_t)(uint8_t)value;
     else if (size == 2) newv = (uint32_t)(uint16_t)value;
+    /* Prefer tracked last value as old; peek may already see new during hook. */
+    oldv = g_e8f.state_last_val;
     g_e8f.state_writes++;
     g_e8f.state_last_val = newv;
     g_e8f.state_last_writer = pc;
-    printf("[JJFB_E8I_STATE_WRITE] addr=0x%X off=0x%X size=%d new=0x%X writer_pc=0x%X lr=0x%X "
-           "r0=0x%X r9=0x%X tick=%u note=observe_only evidence=OBSERVED\n",
-           (uint32_t)address, E8I_STATE_OFF, size, newv, pc, lr, r0, r9, g_e8f.tick);
+    printf("[JJFB_E8I_STATE_WRITE] addr=0x%X off=0x%X size=%d old=0x%X new=0x%X writer_pc=0x%X "
+           "lr=0x%X r0=0x%X r9=0x%X tick=%u note=observe_only evidence=OBSERVED\n",
+           (uint32_t)address, E8I_STATE_OFF, size, oldv, newv, pc, lr, r0, r9, g_e8f.tick);
+    printf("[JJFB_E8N_STATE_WRITE] old=0x%X new=0x%X width=%d writer_pc=0x%X lr=0x%X tick=%u "
+           "ge20=%d eq38=%d evidence=OBSERVED\n",
+           oldv, newv, size, pc, lr, g_e8f.tick, newv >= 20u, newv == 38u);
     if (newv == 38u) {
         printf("[JJFB_E8I_STATE_EQ38] writer_pc=0x%X tick=%u note=required_for_30103C_arm "
                "evidence=OBSERVED\n",
@@ -1103,9 +1126,9 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
         }
     }
 
-    /* E8M: ordered observe-only sequence then case156; else E8K/E8L single 10102 fire. */
+    /* E8M/E8N: ordered sequence / CF state ladder / single 10102 fire. */
     if (tick == 1u && !g_e8f.e8m_seq_done &&
-        (g_e8f.e8m_seq[0] || g_e8f.e8k_10102_case)) {
+        (g_e8f.e8m_seq[0] || g_e8f.e8k_10102_case || g_e8f.e8n_cf_state_set)) {
         g_e8f.e8m_seq_done = 1;
         g_e8f.e8k_10102_done = 1;
         g_e8f.e8m_insn_n = 0;
@@ -1125,13 +1148,35 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
                               "E8M_seq_case310_observe_only_not_product");
             if (find_robotol_r9(uc, &r9)) snap_idle_flags(uc, r9, "after_seq_310");
         }
+        /* E8N: COUNTERFACTUAL_ONLY poke of R9+0x8D0 before case156 — not product success. */
+        if (g_e8f.e8n_cf_state_set && !g_e8f.e8n_cf_done && find_robotol_r9(uc, &r9) && r9) {
+            uint32_t addr = r9 + E8I_STATE_OFF;
+            uint32_t oldv = 0;
+            g_e8f.e8n_cf_done = 1;
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, addr, &oldv);
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, addr, g_e8f.e8n_cf_state);
+            g_e8f.state_last_val = g_e8f.e8n_cf_state;
+            printf("[JJFB_E8N_CF_STATE] old=0x%X new=0x%X addr=0x%X "
+                   "note=COUNTERFACTUAL_ONLY_not_product evidence=HYPOTHESIS\n",
+                   oldv, g_e8f.e8n_cf_state, addr);
+            snap_idle_flags(uc, r9, "after_cf_state");
+            fflush(stdout);
+            if (!g_e8f.e8k_10102_case) {
+                g_e8f.e8k_10102_case = 156u;
+                g_e8f.e8l_10102_r1 = 18u;
+                g_e8f.e8l_regs_set = 1;
+            }
+        }
         if (g_e8f.e8k_10102_case) {
             fire_handler_regs(uc, 0x10102u, "e8m_case", g_e8f.e8k_10102_case, g_e8f.e8l_10102_r1,
                               g_e8f.e8l_10102_r2, g_e8f.e8l_10102_r3,
-                              g_e8f.e8m_seq[0] ? "E8M_seq_case156_observe_only_not_product"
-                                              : (g_e8f.e8l_regs_set
-                                                     ? "E8L_structured_abi_observe_only_not_product"
-                                                     : "E8K_derived_case_observe_only_not_product"));
+                              g_e8f.e8n_cf_state_set
+                                  ? "E8N_CF_state_ladder_observe_only_not_product"
+                                  : (g_e8f.e8m_seq[0]
+                                         ? "E8M_seq_case156_observe_only_not_product"
+                                         : (g_e8f.e8l_regs_set
+                                                ? "E8L_structured_abi_observe_only_not_product"
+                                                : "E8K_derived_case_observe_only_not_product")));
             printf("[JJFB_E8M_PARENT_TRACE_SUMMARY] insn_logged=%u path_hits=%u evidence=OBSERVED\n",
                    g_e8f.e8m_insn_n, g_e8f.e8m_path_hits);
             fflush(stdout);
