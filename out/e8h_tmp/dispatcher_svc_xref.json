@@ -1,0 +1,292 @@
+{
+  "code_base": 2985460,
+  "dispatcher": {
+    "fn": 3147540,
+    "bl_from_parent": 3146432,
+    "parent_fn": 3146072,
+    "parent_caller_count": 85,
+    "parent_callers_sample": [
+      3000276,
+      3014102,
+      3014232,
+      3014248,
+      3014286,
+      3014392,
+      3014424,
+      3014462,
+      3016058,
+      3016292,
+      3016414,
+      3016524,
+      3018674,
+      3018760,
+      3018824,
+      3018938,
+      3018988,
+      3019046,
+      3019142,
+      3019316,
+      3019366,
+      3019488,
+      3019854,
+      3019892
+    ],
+    "dispatcher_callers": [
+      3146432
+    ],
+    "site_30103C": 3149884,
+    "fn_3020C8": 3154120,
+    "path": {
+      "evidence": "TARGET_OBSERVED",
+      "chain": [
+        "0x300158 (many callers) BL@0x3002C0",
+        "0x300714 loads *(R9+(0x800+0xD0)); MOVS r4,r0 (incoming arg)",
+        "CMP *(R9+(0x800+0xD0)), #38 \u2192 BEQ 0x300816 \u2192 0x300EF0 \u2192 0x30103A",
+        "0x30103A: MOVS r0,r4; BL 0x3020C8",
+        "0x3020C8: MOVS r4,r0; CMP r4,#13/#2/#5/#8/#12/#17/#18/#20 \u2026",
+        "path arm reaches 0x302340 / 0x302362: BL 0x2F4E64 (C44 writer family)",
+        "writer site 0x2F4E82"
+      ],
+      "r9_state_gate": {
+        "offset": "(0x800+0xD0)",
+        "required_value_for_30103C": 38
+      },
+      "note": "0x30103C is a BL site inside dispatcher 0x300714, not a standalone function. r4 inside 0x3020C8 is the original argument to 0x300714."
+    },
+    "r4_cases_near_3020C8": [
+      {
+        "pc": 3154152,
+        "imm": 13,
+        "branch": null,
+        "target": null
+      },
+      {
+        "pc": 3154160,
+        "imm": 2,
+        "branch": "Bcond(0)",
+        "target": 3154176
+      },
+      {
+        "pc": 3154164,
+        "imm": 5,
+        "branch": "Bcond(0)",
+        "target": 3154212
+      },
+      {
+        "pc": 3154168,
+        "imm": 8,
+        "branch": "Bcond(0)",
+        "target": 3154386
+      },
+      {
+        "pc": 3154172,
+        "imm": 12,
+        "branch": "Bcond(1)",
+        "target": 3154196
+      },
+      {
+        "pc": 3154200,
+        "imm": 17,
+        "branch": "Bcond(0)",
+        "target": 3154212
+      },
+      {
+        "pc": 3154204,
+        "imm": 18,
+        "branch": "Bcond(0)",
+        "target": 3154292
+      },
+      {
+        "pc": 3154208,
+        "imm": 20,
+        "branch": "Bcond(1)",
+        "target": 3154196
+      },
+      {
+        "pc": 3154230,
+        "imm": 20,
+        "branch": "Bcond(0)",
+        "target": 3154238
+      },
+      {
+        "pc": 3154234,
+        "imm": 5,
+        "branch": "Bcond(1)",
+        "target": 3154462
+      }
+    ],
+    "disasm_30103A": [
+      "0x30103A: 0x1C20",
+      "0x30103C: BL 0x3020C8",
+      "0x301040: 0x1C20",
+      "0x301042: BL 0x301848",
+      "0x301046: B -> 0x30085C",
+      "0x301048: MOVS r1, #0"
+    ],
+    "disasm_dispatcher_entry": [
+      "0x300714: PUSH 0xB5F0",
+      "0x300716: 0xB083",
+      "0x300718: 0x1C04",
+      "0x30071A: BL 0x3127F8",
+      "0x30071E: CMP r0, #0",
+      "0x300720: Bcond(0) -> 0x300764",
+      "0x300722: 0x48E8",
+      "0x300724: MOVS r3, #255",
+      "0x300726: 0x4448",
+      "0x300728: 0x6800",
+      "0x30072A: 0x331B",
+      "0x30072C: MOVS r5, #0",
+      "0x30072E: 0x4298",
+      "0x300730: 0x4EE5",
+      "0x300732: 0x4FE6",
+      "0x300734: Bcond(0) -> 0x30080E",
+      "0x300736: Bcond(12) -> 0x300810",
+      "0x300738: CMP r0, #230",
+      "0x30073A: Bcond(0) -> 0x300812",
+      "0x30073C: Bcond(12) -> 0x3007F8",
+      "0x30073E: CMP r0, #46",
+      "0x300740: Bcond(0) -> 0x300814",
+      "0x300742: Bcond(12) -> 0x3007B0",
+      "0x300744: CMP r0, #38",
+      "0x300746: Bcond(0) -> 0x300816",
+      "0x300748: Bcond(12) -> 0x30078E",
+      "0x30074A: CMP r0, #33",
+      "0x30074C: Bcond(0) -> 0x300818",
+      "0x30074E: Bcond(12) -> 0x300768",
+      "0x300750: CMP r0, #20",
+      "0x300752: Bcond(0) -> 0x30081A"
+    ],
+    "disasm_3020C8_head": [
+      "0x3020C8: PUSH 0xB5F0",
+      "0x3020CA: 0x49F4",
+      "0x3020CC: 0x1C04",
+      "0x3020CE: 0x4449",
+      "0x3020D0: 0x1C08",
+      "0x3020D2: 0x3070",
+      "0x3020D4: 0xB085",
+      "0x3020D6: 0x9004",
+      "0x3020D8: 0x48F1",
+      "0x3020DA: 0x1C0D",
+      "0x3020DC: 0x1C0E",
+      "0x3020DE: 0x4FEE",
+      "0x3020E0: 0x3620",
+      "0x3020E2: 0x3560",
+      "0x3020E4: 0x4448",
+      "0x3020E6: 0x6FC0",
+      "0x3020E8: CMP r4, #13",
+      "0x3020EA: 0x444F",
+      "0x3020EC: Bcond(0) -> 0x3021D2",
+      "0x3020EE: Bcond(12) -> 0x302118",
+      "0x3020F0: CMP r4, #2",
+      "0x3020F2: Bcond(0) -> 0x302100",
+      "0x3020F4: CMP r4, #5",
+      "0x3020F6: Bcond(0) -> 0x302124"
+    ],
+    "disasm_302340": [
+      "0x302340: BL 0x2F4E64",
+      "0x302344: MOVS r3, #9",
+      "0x302346: 0x56E8",
+      "0x302348: CMP r0, #1",
+      "0x30234A: Bcond(0) -> 0x30234E",
+      "0x30234C: B -> 0x302114",
+      "0x30234E: MOVS r0, #18",
+      "0x302350: BL 0x300158",
+      "0x302354: B -> 0x302114",
+      "0x302356: 0x4854",
+      "0x302358: 0x4957",
+      "0x30235A: 0x4448",
+      "0x30235C: 0x6D40",
+      "0x30235E: 0x4449",
+      "0x302360: 0x6008",
+      "0x302362: BL 0x2F4E64",
+      "0x302366: MOVS r7, #0"
+    ]
+  },
+  "svc_ab": {
+    "insn_pc": 2986670,
+    "stub_fn": 2986660,
+    "occurrences_in_robotol": 1,
+    "sites": [
+      {
+        "pc": 2986670,
+        "imm": 171,
+        "raw": "0xDFAB"
+      }
+    ],
+    "stub_disasm": [
+      "0x2D92A4: PUSH 0xB508",
+      "0x2D92A6: 0xAB00",
+      "0x2D92A8: 0x7018",
+      "0x2D92AA: MOVS r0, #3",
+      "0x2D92AC: 0x4669",
+      "0x2D92AE: SVC #0xAB",
+      "0x2D92B0: 0xB001",
+      "0x2D92B2: 0xBC08",
+      "0x2D92B4: 0x4718",
+      "0x2D92B6: 0x0000"
+    ],
+    "stub_callers": [
+      {
+        "bl_pc": 2986464,
+        "original_r0_movs": 10,
+        "in_known_list": true
+      },
+      {
+        "bl_pc": 2986478,
+        "original_r0_movs": 10,
+        "in_known_list": true
+      },
+      {
+        "bl_pc": 2986498,
+        "original_r0_movs": null,
+        "in_known_list": true
+      },
+      {
+        "bl_pc": 2986510,
+        "original_r0_movs": 10,
+        "in_known_list": true
+      }
+    ],
+    "abi_hypothesis": {
+      "evidence": "TARGET_OBSERVED+HYPOTHESIS",
+      "steps": [
+        "PUSH {r3,lr}",
+        "STRB r0,[sp]  ; original request byte",
+        "MOVS r0,#3    ; service selector",
+        "MOV r1,sp     ; arg block",
+        "SVC #0xAB"
+      ],
+      "known_original_r0_at_callers": {
+        "0x2d91e0": 10,
+        "0x2d91ee": 10,
+        "0x2d9202": null,
+        "0x2d920e": 10
+      }
+    }
+  },
+  "svc_all_imm_histogram": {
+    "27": 1,
+    "33": 1,
+    "85": 1,
+    "96": 1,
+    "111": 1,
+    "171": 1,
+    "177": 1,
+    "184": 3,
+    "204": 3,
+    "207": 6,
+    "213": 4,
+    "215": 1
+  },
+  "dispatcher_bp_csv": "0x300714,0x3002C0,0x30103C,0x3020C8,0x302340,0x302362,0x2F4E82,0x2D92AE",
+  "bp_pcs": [
+    3147540,
+    3146432,
+    3149884,
+    3154120,
+    3154752,
+    3154786,
+    3100290,
+    2986670
+  ]
+}

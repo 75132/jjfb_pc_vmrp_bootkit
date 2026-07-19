@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 /*
- * Stage E8F/E8G: observe-only writer/caller BP + counterfactual diagnostics.
+ * Stage E8F/E8G/E8H: observe-only writer/caller/dispatcher BP + SVC trap.
  *
  * E8F Env:
  *   JJFB_E8F_WRITER_BP=1, JJFB_E8F_WRITER_PCS=...
@@ -21,7 +21,14 @@ extern "C" {
  *   JJFB_E8G_CALLER_PCS=0x..,..   — optional CSV (else built-in priority set)
  *   JJFB_E8G_FAULT_WATCH=1        — hook 0x2D92B0 + rich fault dump on lifecycle fail
  *
+ * E8H Env:
+ *   JJFB_E8H_DISPATCHER_BP=1      — 0x300714/0x30103C/0x3020C8/0x302340/... CODE hooks
+ *   JJFB_E8H_DISPATCHER_PCS=...   — optional CSV override
+ *   JJFB_E8H_SVC_TRAP=1           — observe-only trap at SVC #0xAB (0x2D92AE); no fake success
+ *   JJFB_E8H_SVC_STOP=1           — uc_emu_stop on first SVC #0xAB (default when trap=1)
+ *
  * Never claims counterfactual as product success.
+ * Never returns blind success from SVC #0xAB.
  */
 
 int robotol_flag_writer_trace_enabled(void);

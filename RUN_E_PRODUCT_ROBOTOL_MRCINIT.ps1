@@ -163,7 +163,11 @@ $e8dMode = ($env:JJFB_E8D_MODE -eq '1')
 $e8eMode = ($env:JJFB_E8E_MODE -eq '1')
 $e8fMode = ($env:JJFB_E8F_MODE -eq '1')
 $e8gMode = ($env:JJFB_E8G_MODE -eq '1')
-if ($e8gMode) {
+$e8hMode = ($env:JJFB_E8H_MODE -eq '1')
+if ($e8hMode) {
+  # Dispatcher BP + observe-only SVC #0xAB trap; stop on DRAW, SVC trap, summary, or tick25/40.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8H_SVC_AB_STOP\]|JJFB_E8H_DISPATCHER_SUMMARY\]|JJFB_E8G_SECOND_GATE_FAULT\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8gMode) {
   # Caller BP + optional CF matrix; stop on DRAW, second-gate fault dump, summary, or tick25.
   $stopPat = '\[JJFB_DRAW\]|JJFB_E8G_SECOND_GATE_FAULT\]|JJFB_E8F_WRITER_SUMMARY\]|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e8fMode) {
