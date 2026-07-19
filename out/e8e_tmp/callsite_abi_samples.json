@@ -1,0 +1,40 @@
+{
+  "samples": [
+    {
+      "call_pc": "0x30D2FA",
+      "setup": [
+        {
+          "pc": "0x30D2CA",
+          "note": "ADDS r3, r7, #0  ; mov"
+        },
+        {
+          "pc": "0x30D2CC",
+          "note": "ADD r2, r15"
+        },
+        {
+          "pc": "0x30D2D6",
+          "note": "LDR r1, [sp, #0xC]"
+        },
+        {
+          "pc": "0x30D2DC",
+          "note": "MOVS r0, #0"
+        },
+        {
+          "pc": "0x30D2F0",
+          "note": "STR r0, [r4, #0x74]"
+        },
+        {
+          "pc": "0x30D2F4",
+          "note": "STR r4, [r1, #0x74]"
+        }
+      ],
+      "immediates": [
+        0
+      ],
+      "interesting_imms": [
+        0
+      ]
+    }
+  ],
+  "literal_refs": []
+}

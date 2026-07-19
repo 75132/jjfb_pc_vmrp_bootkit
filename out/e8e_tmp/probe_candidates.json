@@ -1,0 +1,27 @@
+{
+  "preferred_candidates": [
+    "ZERO_ARGS",
+    "R0_NULL_R1_CTX",
+    "R0_EVENT_PTR_MIN",
+    "HELPER_ONLY_PASSTHROUGH"
+  ],
+  "abi_summary": {
+    "R0": "saved to r4; passed to helper 0x3046A8; return stored at R9+0xFE8",
+    "R1": "saved to r6; passed to helper",
+    "side_effects": [
+      "R9+0xFE8 word",
+      "R9+0x7D8 queue fields",
+      "R9+0xB7D byte=1 on short path"
+    ],
+    "does_not_touch": [
+      "0xC44",
+      "0xC9D",
+      "0xCF5"
+    ]
+  },
+  "notes": [
+    "No internal BL samples with event-code immediates; platform-delivered only.",
+    "Structured probes: allocate guest block for R0 only after helper disasm justifies layout.",
+    "FE8 is helper-return slot, not idle C44/C9D/CF5."
+  ]
+}

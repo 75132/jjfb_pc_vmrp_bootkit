@@ -160,7 +160,11 @@ $e7Mode = ($env:JJFB_E7_LIFECYCLE_MODE -eq '1')
 $e8bMode = ($env:JJFB_E8B_MODE -eq '1')
 $e8cMode = ($env:JJFB_E8C_MODE -eq '1')
 $e8dMode = ($env:JJFB_E8D_MODE -eq '1')
-if ($e8dMode) {
+$e8eMode = ($env:JJFB_E8E_MODE -eq '1')
+if ($e8eMode) {
+  # ABI probe + FE8 watch; FE8/queue writes are expected — stop only on idle-flag unlock, DRAW, or tick40.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8dMode) {
   # After 10165 probe (tick1), continue to tick=40 for ER_RW diffs unless DRAW/transition.
   $stopPat = '\[JJFB_DRAW\]|JJFB_E8C_FLAG_TRANSITION|JJFB_LIFECYCLE\] op=FIRE_DONE tick=40\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e8cMode) {

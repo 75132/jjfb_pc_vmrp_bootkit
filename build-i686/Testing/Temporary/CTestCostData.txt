@@ -1,22 +1,51 @@
-smoke 2 0.466902
+smoke 3 0.388791
 mrp_jjfb 0 0
 cfg36 0 0
 game_catalog 0 0
-guest_vfs 1 0.0189924
+guest_vfs 2 0.0934808
 launch_descriptor 0 0
 ext_resolver 0 0
-module_registry 1 0.0213643
-ext_loader 1 0.0231542
-mrp_member_view 1 0.0234544
-ext_entry_observe 1 0.0208103
-ext_chunk_observe 1 0.0776513
-platform_identity 1 0.015657
-vm_runtime 1 0.0274364
-guest_memory 1 0.0269125
+module_registry 2 0.14902
+ext_loader 2 0.192864
+mrp_member_view 2 0.151298
+ext_entry_observe 2 0.153156
+ext_chunk_observe 2 0.215001
+platform_identity 2 0.170677
+vm_runtime 2 0.151613
+guest_memory 2 0.198966
 vm_file_service 0 0
-ext_helper_handoff 1 0.996622
-ext_dsm_record_observe 1 0.0270401
-ext_module_entry_abi 2 0.0199683
-ext_entry_null_contract 1 0.104251
-ext_er_rw_bind_restore 1 0.0305066
+ext_helper_handoff 2 1.34384
+ext_dsm_record_observe 2 0.198767
+ext_module_entry_abi 3 0.103116
+ext_entry_null_contract 2 0.178176
+ext_er_rw_bind_restore 2 0.190767
+mrp_reg_primary 0 0
+package_scope 1 0.371524
+ext_object_observe 1 0.291189
+ext_module_data_init 1 0.357719
+module_r9_switch 1 0.350592
+ext_er_rw_producer 1 0.252259
+ext_bootstrap_abi 1 0.329683
+ext_callback_frame 1 0.326901
+ext_post_cont_audit 1 0.236332
+ext_post_cfn_r9_audit 1 0.337341
+ext_p_extchunk_audit 1 0.263891
+ext_shell_publication_audit 1 0.357362
+ext_mrpgcmap_entry_order 1 0.342318
+ext_entry_abi_cluster_audit 1 0.247332
+ext_cfunction_publication_audit 1 0.333299
+ext_chunk_provider 1 0.315864
+ext_gwy_startgame_audit 1 0.246471
+ext_gwy_shell_shim 1 0.248303
+platform_userinfo 1 0.161766
+platform_timer 1 0.246943
+platform_send_app_event 1 0.179503
+platform_handler_registry 1 0.160451
 ---
+mrp_jjfb
+cfg36
+game_catalog
+launch_descriptor
+ext_resolver
+mrp_reg_primary
+vm_file_service

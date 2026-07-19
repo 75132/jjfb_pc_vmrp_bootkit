@@ -3,4 +3,5 @@
 4:game_catalog
 6:launch_descriptor
 7:ext_resolver
-16:vm_file_service
+11:mrp_reg_primary
+43:vm_file_service

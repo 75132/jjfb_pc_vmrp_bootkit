@@ -1,0 +1,76 @@
+# E8E enqueue core disasm
+entry_thumb=0x30D24D
+entry_even=0x30D24C
+code_base=0x2D8DF4
+ext=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\JJFB_E8A_delivery\02_mrp_extracted\jjfb\robotol.ext
+
+## Thumb
+
+  0x0030D24C: F0B5        PUSH {r4-r7,lr}
+  0x0030D24E: 041C        ADDS r4, r0, #0  ; mov
+  0x0030D250: 0E1C        ADDS r6, r1, #0  ; mov
+  0x0030D252: 0025        MOVS r5, #0
+  0x0030D254: 85B0        SUB SP, #0x14
+  0x0030D256: 0395        STR r5, [sp, #0xC]
+  0x0030D258: F7F726FA    BL -> 0x3046A8
+  0x0030D25C: 2049        LDR r1, [pc, #0x80] lit=0x30D2E0 val=0xFE8
+  0x0030D25E: 0023        MOVS r3, #0
+  0x0030D260: 4944        ADD r1, r9
+  0x0030D262: 0860        STR r0, [r1, #0x0]
+  0x0030D264: 1F49        LDR r1, [pc, #0x7C] lit=0x30D2E4 val=0x7D8
+  0x0030D266: 4944        ADD r1, r9
+  0x0030D268: 4A6A        LDR r2, [r1, #0x24]
+  0x0030D26A: 013A        SUBS r2, #1
+  0x0030D26C: 4A62        STR r2, [r1, #0x24]
+  0x0030D26E: C86E        LDR r0, [r1, #0x6C]
+  0x0030D270: 0028        CMP r0, #0
+  0x0030D272: 0BDD        BLE -> 0x30D28C
+  0x0030D274: 0138        SUBS r0, #1
+  0x0030D276: C866        STR r0, [r1, #0x6C]
+  0x0030D278: 002A        CMP r2, #0
+  0x0030D27A: 00DC        BGT -> 0x30D27E
+  0x0030D27C: CB66        STR r3, [r1, #0x6C]
+  0x0030D27E: 1A49        LDR r1, [pc, #0x68] lit=0x30D2E8 val=0xB7D
+  0x0030D280: 0120        MOVS r0, #1
+  0x0030D282: 4944        ADD r1, r9
+  0x0030D284: 0870        STRB r0, [r1, #0x0]
+  0x0030D286: 0020        MOVS r0, #0
+  0x0030D288: 05B0        ADD SP, #0x14
+  0x0030D28A: F0BD        POP {r4-r7,pc}
+  0x0030D28C: 1548        LDR r0, [pc, #0x54] lit=0x30D2E4 val=0x7D8
+  0x0030D28E: CB72        STRB r3, [r1, #0xB]
+  0x0030D290: 4844        ADD r0, r9
+  0x0030D292: 8030        ADDS r0, #128
+  0x0030D294: 006F        LDR r0, [r0, #0x70]
+  0x0030D296: F8F7B5F9    BL -> 0x305604
+  0x0030D29A: 0022        MOVS r2, #0
+  0x0030D29C: 0021        MOVS r1, #0
+  0x0030D29E: 0191        STR r1, [sp, #0x4]
+  0x0030D2A0: 0292        STR r2, [sp, #0x8]
+  0x0030D2A2: 0223        MOVS r3, #2
+  0x0030D2A4: 211C        ADDS r1, r4, #0  ; mov
+  0x0030D2A6: 04AA        ADD r2, sp, #0x10
+  0x0030D2A8: 0095        STR r5, [sp, #0x0]
+  0x0030D2AA: 1048        LDR r0, [pc, #0x40] lit=0x30D2EC val=0x101AB
+  0x0030D2AC: F7F754F9    BL -> 0x304558
+  0x0030D2B0: 051C        ADDS r5, r0, #0  ; mov
+  0x0030D2B2: 311A        SUBS r1, r6, r0
+  0x0030D2B4: 0E4A        LDR r2, [pc, #0x38] lit=0x30D2F0 val=0x6760
+  0x0030D2B6: 2018        h0=0x1820
+  0x0030D2B8: 03AF        ADD r7, sp, #0xC
+  0x0030D2BA: 3B1C        ADDS r3, r7, #0  ; mov
+  0x0030D2BC: 7A44        ADD r2, r15
+  0x0030D2BE: 03F0BDFE    BL -> 0x31103C
+  0x0030D2C2: 4519        h0=0x1945
+  0x0030D2C4: 0B4A        LDR r2, [pc, #0x2C] lit=0x30D2F4 val=0x674C
+  0x0030D2C6: 711B        h0=0x1B71
+  0x0030D2C8: 6019        h0=0x1960
+  0x0030D2CA: 3B1C        ADDS r3, r7, #0  ; mov
+  0x0030D2CC: 7A44        ADD r2, r15
+  0x0030D2CE: 03F0B5FE    BL -> 0x31103C
+  0x0030D2D2: 4019        h0=0x1940
+  0x0030D2D4: 2018        h0=0x1820
+  0x0030D2D6: 0399        LDR r1, [sp, #0xC]
+  0x0030D2D8: D7F748FD    BL -> 0x2E4D6C
+  0x0030D2DC: 0020        MOVS r0, #0
+  0x0030D2DE: D3E7        B -> 0x30D288

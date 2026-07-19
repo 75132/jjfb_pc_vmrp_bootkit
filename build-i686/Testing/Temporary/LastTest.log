@@ -1,34 +1,883 @@
-Start testing: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+Start testing: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
 ----------------------------------------------------------
-1/41 Testing: smoke
-1/41 Test: smoke
+1/43 Testing: smoke
+1/43 Test: smoke
 Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_smoke.exe"
 Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
-"smoke" start time: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+"smoke" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.93 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Passed.
-"smoke" end time: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+"smoke" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
 "smoke" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-33/41 Testing: ext_er_rw_bind_restore
-33/41 Test: ext_er_rw_bind_restore
+16/43 Testing: ext_helper_handoff
+16/43 Test: ext_helper_handoff
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_helper_handoff.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_helper_handoff" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_helper_handoff OK
+<end of output>
+Test time =   1.69 sec
+----------------------------------------------------------
+Test Passed.
+"ext_helper_handoff" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_helper_handoff" time elapsed: 00:00:01
+----------------------------------------------------------
+
+19/43 Testing: ext_entry_null_contract
+19/43 Test: ext_entry_null_contract
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_entry_null_contract.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_entry_null_contract" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_entry_null_contract OK
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"ext_entry_null_contract" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_entry_null_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/43 Testing: ext_chunk_observe
+14/43 Test: ext_chunk_observe
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_chunk_observe.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_chunk_observe" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[CHUNK_RECORD] chunk_id=1 base=0x200000 size=64 origin=GUEST_ALLOCATED creator_pc=0x1000 creator_module_id=1
+[CHUNK_SNAPSHOT] stage=FIRST_SEEN chunk_id=1 base=0x200000 size=64 origin=GUEST_ALLOCATED field_04=0x0 snap_valid=0
+[CHUNK_RECORD] chunk_id=2 base=0x300000 size=64 origin=FROM_P_PLUS_0C creator_pc=0x0 creator_module_id=0
+[CHUNK_SNAPSHOT] stage=FIRST_SEEN chunk_id=2 base=0x300000 size=64 origin=FROM_P_PLUS_0C field_04=0x0 snap_valid=0
+[CHUNK_SNAPSHOT] stage=FIRST_SEEN chunk_id=2 base=0x300000 size=64 origin=FROM_P_PLUS_0C field_04=0x0 snap_valid=0
+test_ext_chunk_observe OK
+<end of output>
+Test time =   0.35 sec
+----------------------------------------------------------
+Test Passed.
+"ext_chunk_observe" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_chunk_observe" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/43 Testing: ext_er_rw_bind_restore
+33/43 Test: ext_er_rw_bind_restore
 Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_er_rw_bind_restore.exe"
 Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
-"ext_er_rw_bind_restore" start time: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_er_rw_bind_restore" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
 Output:
 ----------------------------------------------------------
 test_ext_er_rw_bind_restore OK
 <end of output>
-Test time =   0.03 sec
+Test time =   0.35 sec
 ----------------------------------------------------------
 Test Passed.
-"ext_er_rw_bind_restore" end time: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_er_rw_bind_restore" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
 "ext_er_rw_bind_restore" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jul 19 15:57 ÖÐ¹ú±ê×¼Ê±¼ä
+41/43 Testing: vm_runtime
+41/43 Test: vm_runtime
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_vm_runtime.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"vm_runtime" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_vm_runtime OK
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"vm_runtime" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"vm_runtime" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/43 Testing: ext_dsm_record_observe
+17/43 Test: ext_dsm_record_observe
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_dsm_record_observe.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_dsm_record_observe" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_dsm_record_observe OK
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"ext_dsm_record_observe" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_dsm_record_observe" time elapsed: 00:00:00
+----------------------------------------------------------
+
+42/43 Testing: guest_memory
+42/43 Test: guest_memory
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_guest_memory.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"guest_memory" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_guest_memory OK
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"guest_memory" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"guest_memory" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/43 Testing: mrp_member_view
+10/43 Test: mrp_member_view
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_mrp_member_view.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"mrp_member_view" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+skip: GWY_FIXTURE_ROOT unset
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"mrp_member_view" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"mrp_member_view" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/43 Testing: ext_loader
+9/43 Test: ext_loader
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_loader.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_loader" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=16 unpacked_size=16 extracted_size=16 helper=0x0
+[EXT_LOAD] module_id=1 load_id=1 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=16
+[MODULE_REGISTRY] module_id=1 state=FAILED stage=EXTRACTED error=set_registered_requires_MAPPED
+[EXT_MAP] module_id=1 code_base=0xABC0 code_size=16 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0xABC8 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=MAPPED stored_size=16 unpacked_size=16 extracted_size=16 helper=0x0
+[EXT_REGISTER] module_id=1 helper=0xABC0 header_entry_candidate=0xABC8 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=REGISTERED stored_size=16 unpacked_size=16 extracted_size=16 helper=0xABC0
+[EXT_ENTRY] module_id=1 method=0 return=1
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=ENTRY_CALLED stored_size=16 unpacked_size=16 extracted_size=16 helper=0xABC0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=32 unpacked_size=32 extracted_size=32 helper=0x0
+[EXT_LOAD] module_id=2 load_id=2 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=32
+[EXT_LOAD] module_id=2 load_id=2 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=2 code_base=0x5000 code_size=32 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x5008 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=32 unpacked_size=32 extracted_size=32 helper=0x0
+[EXT_LOAD] module_id=2 load_id=2 stage=MAPPED code_base=0x5000 code_size=32 reason=decompress_alloc
+[GUEST_CALL_OBSERVER] attach module_id=2 code=[0x5000,0x5020) helper=0x0 observe_only=1
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x5000 p_len=64 p_guest=0x6000 rw_base=0x7000 rw_size=128 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=mrc_loader.ext module_id=2 base=0x7000 size=128 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_REGISTER] module_id=2 helper=0x5000 header_entry_candidate=0x5008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=32 unpacked_size=32 extracted_size=32 helper=0x5000
+[EXT_LOAD] module_id=2 load_id=2 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=REGISTERED size=32
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x80008 p_len=100 p_guest=0x80100 rw_base=0x90000 rw_size=256 stack=0x0 evidence=OBSERVED
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=dsm:cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=3 load_id=3 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=3 code_base=0x80008 code_size=1 rw_base=0x90000 rw_size=256 stack_base=0x0 stack_size=0 header_entry_candidate=0x80010 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x80008
+[EXT_REGISTER] module_id=3 helper=0x80008 header_entry_candidate=0x80010 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x80008
+[MODULE_ER_RW] module=cfunction.ext module_id=3 base=0x90000 size=256 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=3 load_id=3 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=gamelist.ext module_id=4 requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=91532 unpacked_size=91532 extracted_size=91532 helper=0x0
+[EXT_LOAD] module_id=4 load_id=4 package=gwy/jjfb.mrp requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER stage=EXTRACTED size=91532
+[EXT_LOAD] module_id=4 load_id=4 package=gwy/jjfb.mrp requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=4 code_base=0x2D4340 code_size=91616 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2D4348 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=gamelist.ext module_id=4 requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=91532 unpacked_size=91532 extracted_size=91532 helper=0x0
+[EXT_LOAD] module_id=4 load_id=4 stage=MAPPED code_base=0x2D4340 code_size=91616 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=4 code=[0x2D4340,0x2EA920) helper=0x0 observe_only=1
+[EXT_LOAD] module_id=4 stage=RAW_BASE_REFINE aligned=0x2D4340 raw=0x2D4354 pad=0x14 code_size=91596 header_entry=0x2D435C evidence=DOCUMENTED source=mythroad.c:case800_input1_vs_cacheSync_align
+[EXT_MAP] module_id=4 code_base=0x2D4354 code_size=91596 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2D435C result=OK reason=raw_base_refine
+[EXT_LOAD] module_id=1 load_id=1 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=DESTROY size=0
+[EXT_LOAD] module_id=2 load_id=2 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=DESTROY size=0
+[EXT_LOAD] module_id=3 load_id=3 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=DESTROY size=0
+[EXT_LOAD] module_id=4 load_id=4 package=gwy/jjfb.mrp requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER stage=DESTROY size=0
+test_ext_loader OK
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"ext_loader" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_loader" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/43 Testing: module_registry
+8/43 Test: module_registry
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_module_registry.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"module_registry" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=1 requested=cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=RESOLVED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=1 state=FAILED stage=RESOLVED error=illegal_transitionâ†’ENTRY_CALLED
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=1 state=FAILED stage=EXTRACTED error=set_registered_requires_MAPPED
+[EXT_MAP] module_id=1 code_base=0x200000 code_size=253420 rw_base=0x300000 rw_size=4096 stack_base=0x0 stack_size=0 header_entry_candidate=0x200008 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=MAPPED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x0
+[EXT_REGISTER] module_id=1 helper=0x200100 header_entry_candidate=0x200008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=REGISTERED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x200100
+[DSM_DIRECT_TARGET] module_id=1 module=robotol.ext target=0x200100 relation=DIRECT_TARGET_IS_HELPER helper=0x200100 observed_first=0x0 evidence=OBSERVED
+[EXT_ENTRY_POINTS] module_id=1 image_base=0x200000 header_entry_candidate=0x200008 chunk_field_04=0x200009 registered_helper=0x200100 observed_first_pc=0x200200 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=OBSERVED relation=UNKNOWN
+[EXT_ENTRY] module_id=1 method=0 return=1
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=ENTRY_CALLED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x200100
+[EXT_FAIL] module_id=1 stage=ENTRY_EXECUTION access=UC_MEM_READ_UNMAPPED fault_pc=0x200200 module_offset=0x200 invalid_address=0x28 access_size=4 method=0 caller_pc=0x100 base_reg=r0 base_value=0x0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=FAILED stored_size=161178 unpacked_size=253420 extracted_size=0 helper=0x200100
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=x.ext module_id=1 requested=x.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=x.ext module_id=1 requested=x.ext resolved= origin=MRP_MEMBER strategy=unknown state=FAILED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=1 state=FAILED stage=FAILED error=illegal_transitionâ†’RESOLVED
+test_module_registry OK
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"module_registry" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"module_registry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/43 Testing: ext_entry_observe
+13/43 Test: ext_entry_observe
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_entry_observe.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_entry_observe" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_entry_observe OK
+<end of output>
+Test time =   0.29 sec
+----------------------------------------------------------
+Test Passed.
+"ext_entry_observe" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_entry_observe" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/43 Testing: ext_module_entry_abi
+18/43 Test: ext_module_entry_abi
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_module_entry_abi.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_module_entry_abi" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_module_entry_abi OK
+<end of output>
+Test time =   0.27 sec
+----------------------------------------------------------
+Test Passed.
+"ext_module_entry_abi" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_module_entry_abi" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/43 Testing: guest_vfs
+5/43 Test: guest_vfs
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_guest_vfs.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"guest_vfs" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set â€” skip resolve/IO tests
+canonicalize_cases=53
+test_guest_vfs OK (canonicalize only)
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"guest_vfs" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"guest_vfs" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/43 Testing: platform_identity
+36/43 Test: platform_identity
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_platform_identity.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"platform_identity" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+sdk_key_len=48
+sdk_key_sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436
+identity=vmver=1968 imei=864086040622841 hsman=vmrp hstype=vmrp
+[OK] platform_identity golden
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"platform_identity" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"platform_identity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/43 Testing: mrp_jjfb
+2/43 Test: mrp_jjfb
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_mrp_jjfb.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"mrp_jjfb" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Failed.
+"mrp_jjfb" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"mrp_jjfb" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/43 Testing: cfg36
+3/43 Test: cfg36
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_cfg36.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"cfg36" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Failed.
+"cfg36" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"cfg36" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/43 Testing: game_catalog
+4/43 Test: game_catalog
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_game_catalog.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"game_catalog" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Failed.
+"game_catalog" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"game_catalog" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/43 Testing: launch_descriptor
+6/43 Test: launch_descriptor
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_launch_descriptor.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"launch_descriptor" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set
+<end of output>
+Test time =   0.41 sec
+----------------------------------------------------------
+Test Failed.
+"launch_descriptor" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"launch_descriptor" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/43 Testing: ext_resolver
+7/43 Test: ext_resolver
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_resolver.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_resolver" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT not set
+<end of output>
+Test time =   0.32 sec
+----------------------------------------------------------
+Test Failed.
+"ext_resolver" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_resolver" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/43 Testing: mrp_reg_primary
+11/43 Test: mrp_reg_primary
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_mrp_reg_primary.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"mrp_reg_primary" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+open failed: failed to open file
+<end of output>
+Test time =   0.40 sec
+----------------------------------------------------------
+Test Failed.
+"mrp_reg_primary" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"mrp_reg_primary" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/43 Testing: package_scope
+12/43 Test: package_scope
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_package_scope.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"package_scope" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_PACKAGE_SCOPE] package=gwy/gamelist.mrp primary=gamelist.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[JJFB_PACKAGE_SCOPE] package=gwy/jjfb.mrp primary=robotol.ext class=mrc_loader_game cload=scoped evidence=CROSS_TARGET
+test_package_scope OK
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"package_scope" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"package_scope" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/43 Testing: ext_object_observe
+15/43 Test: ext_object_observe
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_object_observe.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_object_observe" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[CROSS_MODULE_CALL] transfer_id=1 hop=OTHER from_module=unknown from_module_id=1 from_pc=0x100 to_module=unknown to_module_id=2 target=0x200 target_offset=0x0 r0=0x0 r1=0x0 lr=0x0 evidence=OBSERVED
+test_ext_object_observe OK
+<end of output>
+Test time =   0.29 sec
+----------------------------------------------------------
+Test Passed.
+"ext_object_observe" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_object_observe" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/43 Testing: ext_module_data_init
+20/43 Test: ext_module_data_init
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_module_data_init.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_module_data_init" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_module_data_init OK
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"ext_module_data_init" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_module_data_init" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/43 Testing: module_r9_switch
+21/43 Test: module_r9_switch
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_module_r9_switch.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"module_r9_switch" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[R9_SWITCH] stage=ENTER same_module=1 module=? call_kind=BOOTSTRAP_ENTRY depth=0 evidence=DOCUMENTED note=preserve_r9
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=0 owns_frame=no requested_kind=BOOTSTRAP_ENTRY caller=? callee=? current_r9=0x0 target_r9=0x0 result=SAME_MODULE frame_pushed=no depth_before=0 depth_after=0 top_frame_id=0 top_frame_kind=NONE generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE] stage=NOOP scope_id=1 owns_frame=no requested_by=unit_unowned requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=unit_unowned owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[MODULE_REGISTRY] package=test.mrp module=mod.ext module_id=1 requested=mod.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_ER_RW] module=mod.ext module_id=1 base=0x1000 size=64 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[R9_SCOPE] stage=NOOP scope_id=1 owns_frame=no requested_by=unit requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=UNKNOWN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=unit owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=UNKNOWN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SCOPE] stage=REJECT scope_id=99 owns_frame=yes requested_by=unit_reject requested_frame_id=42 actual_top_frame_id=0 top_frame_kind=NONE leave_action=REJECT emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE] stage=UNWIND active_depth=0 guest_r9=0x0 restore_r9=0x0 reason=UNIT_TEST module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=OBSERVED note=clear_all_frames_on_uc_fault
+[R9_SWITCH] stage=ABORT active_depth=0 guest_r9=0x0 saved_r9=0x0 reason=UNIT_TEST evidence=OBSERVED note=clear_host_frames
+test_module_r9_switch OK
+<end of output>
+Test time =   0.35 sec
+----------------------------------------------------------
+Test Passed.
+"module_r9_switch" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"module_r9_switch" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/43 Testing: ext_er_rw_producer
+22/43 Test: ext_er_rw_producer
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_er_rw_producer.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_er_rw_producer" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_er_rw_producer OK
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"ext_er_rw_producer" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_er_rw_producer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/43 Testing: ext_bootstrap_abi
+23/43 Test: ext_bootstrap_abi
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_bootstrap_abi.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_bootstrap_abi" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_bootstrap_abi OK
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"ext_bootstrap_abi" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_bootstrap_abi" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/43 Testing: ext_callback_frame
+24/43 Test: ext_callback_frame
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_callback_frame.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_callback_frame" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_callback_frame OK (no fixture; API only)
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"ext_callback_frame" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_callback_frame" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/43 Testing: ext_post_cont_audit
+25/43 Test: ext_post_cont_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_post_cont_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_post_cont_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[POST_CONT] seq=1 event_type=ROBOTOL_CONTINUATION guest_pc=0x102 module=robotol.ext module_offset=0x0 r0=0x11 r1=0x0 r2=0x0 r3=0x0 r9=0x280400 scope_depth=0 lr=0x3000 sp=0x2000 instr=0 post_continuation_gate=blocked graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[POST_CONT_ARM] module=robotol.ext module_id=3 continuation_pc=0x102 call_pc=0x100 helper=0x0 p=0x0 post_continuation_gate=blocked graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=post_cont_timeline_start
+[POST_CONT_SUMMARY] post_continuation_class=HARNESS_WINDOW_TOO_SHORT continuation_instruction_count=1 robotol_runtime_ready=no first_platform_api=none draw_seen=no refresh_seen=no stop_reason=HARNESS_TIMEOUT next_allowed_fix=NONE first_boundary=none load_exit=no p=0x0 er_rw=0x0 registry_er_rw=0x0 helper=0x0 normal_return=no outer_frame_popped=no helper_abi_ok=unchecked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+test_ext_post_cont_audit OK
+<end of output>
+Test time =   0.24 sec
+----------------------------------------------------------
+Test Passed.
+"ext_post_cont_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_post_cont_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/43 Testing: ext_post_cfn_r9_audit
+26/43 Test: ext_post_cfn_r9_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_post_cfn_r9_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_post_cfn_r9_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[FIXR9_STAGE_CONTRACT] stage=bootstrap_start r9_contract=CALLER_OR_UNKNOWN evidence=DOCUMENTED source=fixR9.c post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=mr_c_function_load_internal r9_contract=CALLER_OR_TEMP_NO_PERMANENT_SWITCH evidence=DOCUMENTED source=fixR9.c post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=post_cfn_continuation r9_contract=NOT_DOCUMENTED_AS_AUTO_PROMOTION evidence=DOCUMENTED note=helper_entry_sets_r9_not_cfn_return post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=registered_helper r9_contract=CALLEE_ER_RW_P_START_OF_ER_RW evidence=DOCUMENTED source=fixR9.c:L20-21 post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=callback r9_contract=PENDING evidence=CROSS_TARGET source=dsm.c:network_cb post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[R9_SCOPE_PROMOTION_CANDIDATE] scope_id=0 module=robotol.ext old_r9=0x1000 new_r9=0x0 er_rw_ready=no continuation_pending=yes promotion_performed=no call_kind=UNKNOWN post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[POST_CFN_ARM] module=robotol.ext continuation_pc=0x102 cont_r9=0x1000 p=0x0 helper=0x0 er_rw=0x0 post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[R9_STACK_SNAPSHOT] depth=0 active_r9=0x1000 post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[R9_SCOPE_PROMOTION_CANDIDATE] scope_id=0 module=robotol.ext old_r9=0x1000 new_r9=0x0 er_rw_ready=no continuation_pending=yes promotion_performed=no call_kind=UNKNOWN post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[POST_CFN_SUMMARY] post_cfn_r9_class=P_MODULE_ASSOCIATION_MISSING fault_instruction=none r0_last_writer=0x0 r0_source_class=UNKNOWN robotol_er_rw_exact=0x0 er_rw_ready_before_continuation=no registry_pending_reason=P_MODULE_ASSOCIATION_MISSING scope_depth=0 next_allowed_fix=NONE stop_reason=HARNESS_TIMEOUT function_start=0x0 memory_access_pc=0x0 post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+test_ext_post_cfn_r9_audit OK
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Passed.
+"ext_post_cfn_r9_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_post_cfn_r9_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/43 Testing: ext_p_extchunk_audit
+27/43 Test: ext_p_extchunk_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_p_extchunk_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_p_extchunk_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_P_STRUCT] base=0x2000 range=+0x00..+0x80 len=20 names=start_of_ER_RW,ER_RW_Length,ext_type,mrc_extChunk,stack evidence=DOCUMENTED source=mr_helper.h p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[JJFB_EXTCHUNK_PHASE] phase=after_cfunction_p_alloc P=0x2000 P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=pre_continuation P=0x2000 P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=post_continuation P=0x2000 P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_OWNER] p=0x2000 source_reg=r3 pc=0x102 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_ARM] module=robotol.ext cont_pc=0x102 P=0x2000 helper=0x100 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=mrc_init_not_observed P=0x2000 P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_SUMMARY] extchunk_class=EXTCHUNK_NEVER_WRITTEN writes_seen=0 reads_seen=0 last_write_pc=0x0 last_write_val=0x0 null_at_use=no function_start=0x0 memory_access_pc=0x0 fault_expr=none next_allowed_fix=MISSING_EXTCHUNK_PROVIDER_PATH stop_reason=HARNESS_TIMEOUT P=0x2000 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+test_ext_p_extchunk_audit OK
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"ext_p_extchunk_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_p_extchunk_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/43 Testing: ext_shell_publication_audit
+28/43 Test: ext_shell_publication_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_shell_publication_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_shell_publication_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x0 new=0x111 pc=0x30CA00 lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x30CA00 module=gbrwcore.ext value=0x111 evidence=TARGET_OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x04 old=0x0 new=0x19A8 pc=0x30CA10 lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x04 pc=0x30CA10 module=gbrwcore.ext value=0x19A8 evidence=TARGET_OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x08 old=0x0 new=0x1 pc=0x30CA20 lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x08 pc=0x30CA20 module=gbrwcore.ext value=0x1 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] chain P=0x2AC8DC wrote_0=yes wrote_4=yes wrote_8=yes wrote_C=no wrote_10=no P+0xC=0x0 fault_pc=0x30CCF8 fault_addr=0x28 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] missing P+0x0C nearest_048_writer_pc=0x30CA20 module=gbrwcore.ext note=same_init_path_skipped_extchunk evidence=TARGET_OBSERVED
+[JJFB_PUBLICATION_SUMMARY] P=0x2AC8DC wrote_0=yes wrote_4=yes wrote_8=yes wrote_C=no wrote_10=no last_048_pc=0x30CA20 last_048_module=gbrwcore.ext stop=mem_fault evidence=TARGET_OBSERVED
+test_ext_shell_publication_audit OK
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"ext_shell_publication_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_shell_publication_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/43 Testing: ext_mrpgcmap_entry_order
+29/43 Test: ext_mrpgcmap_entry_order
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_mrpgcmap_entry_order.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_mrpgcmap_entry_order" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=loaded base=0x2EB7E0 intended=0x2EB7E8 observed_first=0x0 evidence=TARGET_OBSERVED
+[JJFB_6K_ENTRY_AUDIT] module=gbrwcore.ext image_base=0x2EB7E0 intended_entry=0x2EB7E8 observed_first_pc=0x30CA96 match=no evidence=TARGET_OBSERVED
+[JJFB_6K_ENTRY_SUMMARY] mode=1 entry_ran=no entry_hit=no fault_pc=0x0 fault_addr=0x0 stop=harness evidence=TARGET_OBSERVED
+[JJFB_6K_ENTRY_SUMMARY] module=gbrwcore.ext intended=0x2EB7E8 observed=0x30CA96 ran=no hit=no cont=no
+test_ext_mrpgcmap_entry_order OK
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Passed.
+"ext_mrpgcmap_entry_order" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_mrpgcmap_entry_order" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/43 Testing: ext_entry_abi_cluster_audit
+30/43 Test: ext_entry_abi_cluster_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_entry_abi_cluster_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_entry_abi_cluster_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_P_CANDIDATE] kind=nested_cfn addr=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_6L_SUMMARY] variant=mirror_callback_regs end_reason=n/a insns=0 cluster_any=no pxc_nz=no mr_exit_during=no mr_exit_after=no exit_source=none stop=harness evidence=TARGET_OBSERVED
+[JJFB_6L_SUMMARY] P_CANDIDATE kind=nested_cfn addr=0x2AC8DC wrote_0=0 wrote_4=0 wrote_8=0 wrote_C=1 C_new=0x0
+test_ext_entry_abi_cluster_audit OK
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"ext_entry_abi_cluster_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_entry_abi_cluster_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/43 Testing: ext_cfunction_publication_audit
+31/43 Test: ext_cfunction_publication_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_cfunction_publication_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_cfunction_publication_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_CFN_NEW_CONTRACT] helper=0x30CFE9 p_len=20 p_guest=0x2AC8DC origin=GUEST_NESTED host_memset=yes ret=MR_SUCCESS note=DOCUMENTED_alloc_zero_P extChunk_not_allocated_by_host evidence=DOCUMENTED
+[JJFB_P_TIMELINE] seq=1 pc=0x0 module=host:_mr_c_function_new op=alloc_memset P=0x2AC8DC off=0x0 old=0x0 new=0x0 lr=0x0 class=zero_init evidence=DOCUMENTED
+[JJFB_CHUNK_FIELD04] module=gbrwcore.ext module_id=3 helper=0x30CFE9 header=0x2EB7E8 value=0x0 source=EXT_REGISTER note=tracks_extChunk_plus4_init_func_NOT_P_plus_C evidence=DOCUMENTED
+[JJFB_CHUNK_FIELD04_MISSING] module=gbrwcore.ext reason=EXT_REGISTER_ZERO evidence=TARGET_OBSERVED
+[JJFB_P_TIMELINE] seq=2 pc=0x94F04 module=dsm:cfunction.ext op=P_WRITE P=0x2AC8DC off=0x0C old=0x0 new=0x0 lr=0x89D5C class=zero_init evidence=TARGET_OBSERVED
+[JJFB_CFN_PXC_SOURCE] pc=0x94F04 src_reg=imm_or_rN src_value=0x0 r0=0x0 r1=0x0 r2=0x0 r3=0x0 lr=0x89D5C reason=store_zero_to_P_plus_C class=zero_init evidence=TARGET_OBSERVED
+[JJFB_CFN_DISASM] func=0x94F04 kind=zero_init evidence=TARGET_OBSERVED
+[JJFB_6M_SUMMARY] host_cfn_new=yes saw_94f04_zero=yes pxc_zero_write=yes pxc_nz=no chunk04_nz=no chunk04_missing=yes missing_reason=EXT_REGISTER_ZERO cand=0 stop=harness class=CFUNCTION_PUBLICATION_SOURCE_ZERO evidence=TARGET_OBSERVED
+test_ext_cfunction_publication_audit OK
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"ext_cfunction_publication_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_cfunction_publication_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/43 Testing: ext_chunk_provider
+32/43 Test: ext_chunk_provider
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_chunk_provider.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_chunk_provider" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+test_ext_chunk_provider OK
+<end of output>
+Test time =   0.32 sec
+----------------------------------------------------------
+Test Passed.
+"ext_chunk_provider" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_chunk_provider" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/43 Testing: ext_gwy_startgame_audit
+34/43 Test: ext_gwy_startgame_audit
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_gwy_startgame_audit.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_gwy_startgame_audit" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_LAUNCH_CONTEXT] resource_root="game_files/mythroad/240x320" target="gwy/jjfb.mrp" param="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" profile="" overlay="" shell_packages_loaded=pending gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_CFG36_CONTRACT] expected=napptype=12,nextid=482,ncode=512,narg=0,narg1=1,nmrpname=gwy/jjfb.mrp,gwyblink live=napptype=12,nextid=482,ncode=512,narg=0,narg1=1,nmrpname=gwy/jjfb.mrp,gwyblink=yes match=yes consumer=LaunchDescriptor_env_to_bridge_dsm_mr_start_dsm gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/jjfb.mrp" ext="*" entry="(null)" count=1 evidence=DOCUMENTED_lowest_layer_not_full_shell gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[JJFB_SHELL_BYPASS] gbrwcore_opened=no gamelist_opened=no gbrwshell_opened=no vdload_opened=no startGame_string_exec=no start_dsm_seen=yes gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_STRCOM] strcom_601_800_801=not_observed testcom_seen=no plat_seen=no gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_MRC_INIT_GAP] mrc_init_seen=no note=fault_or_stop_before_mrc_init_or_path_never_entered gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=TARGET_OBSERVED
+[JJFB_GWY_CONTEXT_SUMMARY] gwy_context_class=SHELL_BYPASSED_DIRECT_JJFB shell_bypassed=yes start_dsm_count=1 pxc_writes_seen=0 p_plus_c_at_fault=0x0 cfg36_match=yes fileopen_miss_critical=no next_allowed_fix=RESTORE_GWY_STARTGAME_RUNAPP_CONTEXT stop_reason=HARNESS_TIMEOUT fault_pc=0x0 gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+test_ext_gwy_startgame_audit OK
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"ext_gwy_startgame_audit" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_gwy_startgame_audit" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/43 Testing: ext_gwy_shell_shim
+35/43 Test: ext_gwy_shell_shim
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_ext_gwy_shell_shim.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"ext_gwy_shell_shim" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[JJFB_GWY_LAUNCH] mode=gwy_shell_post_update launcher_mode=1 alias_direct=disabled guest_native=no shell_core_continue=no
+[JJFB_GWY_ROOT] mythroad_root=game_files/mythroad/240x320
+[JJFB_GWY_ROOT] gwy_root=game_files/mythroad/240x320/gwy
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="mythroad/gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="game_files/mythroad/240x320/gwy/gbrwcore.mrp" ok=1 note=shell_package
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=mythroad/gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="mythroad/gwy/jjfb.mrp" entry="(null)" shell_context=chained_or_direct
+[JJFB_GAME_SELF] untouched=yes initNetwork_passthrough=1 pkg=mythroad/gwy/jjfb.mrp
+[JJFB_GWY_LAUNCH] mode=gwy_shell_post_update launcher_mode=1 alias_direct=disabled guest_native=no shell_core_continue=no
+[JJFB_GWY_ROOT] mythroad_root=
+[JJFB_GWY_ROOT] gwy_root=
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_STARTGAME] source=gwy_shell cfg_index=36 target=gwy/jjfb.mrp
+[JJFB_RUNAPP] source=gbrwcore/gamelist target=gwy/jjfb.mrp via=host_runapp_equivalent_after_no_update
+[JJFB_PARAM] napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_GWY_LAUNCH] prepare=jjfb_after_shell_context target=gwy/jjfb.mrp
+[JJFB_FILEOPEN] guest="gwy/jjfb.mrp" host="game_files/mythroad/240x320/gwy/jjfb.mrp" ok=1 note=real_gwy_jjfb
+[JJFB_GWY_SHELL_SUMMARY] class=SHELL_RUNAPP_CHAINED shell_open=yes gbrwcore=no gamelist=no gbrwshell=no jjfb_real=yes jjfb_alias=no update_stub=yes runapp_chained=yes guest_native=no shell_continue=no stop=unit evidence=TARGET_OBSERVED
+[JJFB_GWY_LAUNCH] mode=gwy_guest_native_runapp launcher_mode=1 alias_direct=disabled guest_native=yes shell_core_continue=no
+[JJFB_GWY_ROOT] mythroad_root=
+[JJFB_GWY_ROOT] gwy_root=
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="game_files/mythroad/240x320/gwy/gbrwcore.mrp" ok=1 note=shell_package
+[JJFB_FILEOPEN] guest="gwy/gbrwshell.mrp" host="game_files/mythroad/240x320/gwy/gbrwshell.mrp" ok=1 note=shell_package
+[JJFB_GWY_SHELL_SUMMARY] class=SHELL_NATIVE_EXEC_PENDING shell_open=yes gbrwcore=yes gamelist=no gbrwshell=yes jjfb_real=no jjfb_alias=no update_stub=yes runapp_chained=no guest_native=yes shell_continue=no stop=unit_native evidence=TARGET_OBSERVED
+[JJFB_GWY_LAUNCH] mode=gwy_shell_core_continue launcher_mode=1 alias_direct=disabled guest_native=yes shell_core_continue=yes
+[JJFB_GWY_ROOT] mythroad_root=
+[JJFB_GWY_ROOT] gwy_root=
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_6P_EXIT_SOURCE] source=gbrwcore_only pc=0x0 lr=0x0 mode=gwy_shell_core_continue gbrwcore_init_ok=no gamelist_started=no shell_chain_continued=no evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_6P_EXIT_SOURCE] source=shell_chain_continue pc=0x0 lr=0x0 mode=gwy_shell_core_continue gbrwcore_init_ok=yes gamelist_started=no shell_chain_continued=yes evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=init_ok evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm reason=continue_after_gbrwcore_init evidence=TARGET_OBSERVED
+ok
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"ext_gwy_shell_shim" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"ext_gwy_shell_shim" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/43 Testing: platform_userinfo
+37/43 Test: platform_userinfo
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_platform_userinfo.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"platform_userinfo" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+layout=mr_userinfo bytes=64 blob=256 ver=101000000
+[OK] platform_userinfo
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"platform_userinfo" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"platform_userinfo" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/43 Testing: platform_timer
+38/43 Test: platform_timer
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_platform_timer.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"platform_timer" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+[OK] platform_timer
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"platform_timer" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"platform_timer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+39/43 Testing: platform_send_app_event
+39/43 Test: platform_send_app_event
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_platform_send_app_event.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"platform_send_app_event" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+ok
+<end of output>
+Test time =   0.18 sec
+----------------------------------------------------------
+Test Passed.
+"platform_send_app_event" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"platform_send_app_event" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/43 Testing: platform_handler_registry
+40/43 Test: platform_handler_registry
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_platform_handler_registry.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"platform_handler_registry" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+ok
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"platform_handler_registry" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"platform_handler_registry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+43/43 Testing: vm_file_service
+43/43 Test: vm_file_service
+Command: "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_vm_file_service.exe"
+Directory: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
+"vm_file_service" start time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+Output:
+----------------------------------------------------------
+GWY_FIXTURE_ROOT required
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Failed.
+"vm_file_service" end time: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä
+"vm_file_service" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jul 19 21:14 ÖÐ¹ú±ê×¼Ê±¼ä

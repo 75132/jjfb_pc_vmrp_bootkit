@@ -7,9 +7,11 @@
 extern "C" {
 #endif
 
-/* Stage E8C/E8D: observe-only idle flag watch.
+/* Stage E8C/E8D/E8E: observe-only idle flag + enqueue ABI watch.
  * Env: JJFB_E8C_IDLE_WATCH=1, JJFB_E8C_WATCH_OFFSETS / WATCH_ADDRS
  * E8D: JJFB_E8D_EARLY_WATCH=1, JJFB_E8D_ERW_DIFF=1, JJFB_E8D_10165_PROBE=1
+ * E8E: JJFB_E8E_FE8_WATCH=1, JJFB_E8E_EVENT_PROBE=1, JJFB_E8E_CANDIDATE=<name>
+ *      JJFB_E8E_DRAIN_ORDER=A|B|C
  * Never mutates guest flag bytes or plat ret. */
 
 int robotol_idle_watch_enabled(void);
@@ -23,8 +25,11 @@ void robotol_idle_watch_snap(void *uc, const char *reason);
 /* E8D: milestone dump/diff of ER_RW[0xC00..0x1200) + early arm. */
 void robotol_idle_watch_note_stage(void *uc, const char *stage);
 
-/* E8D: observe-only one-shot fire of registered 0x10165 enqueue handler. */
+/* E8D/E8E: observe-only fire of registered 0x10165 enqueue handler. */
 void robotol_idle_watch_try_10165_probe(void *uc);
+
+/* E8E: 'A'|'B'|'C'|0 — drain-order experiment (0 = legacy B: 10140 then probe). */
+int robotol_idle_watch_drain_order(void);
 
 void robotol_idle_watch_helper_fx_begin(uint32_t r0, uint32_t r1);
 void robotol_idle_watch_helper_fx_end(uint32_t r0, uint32_t r1, uint32_t ret);

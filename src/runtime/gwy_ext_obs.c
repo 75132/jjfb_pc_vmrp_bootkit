@@ -444,11 +444,26 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     ModuleRegistry *reg;
     const GwyLoadedModule *owner;
     int ok;
+    int drain = robotol_idle_watch_drain_order();
 
     if (!uc) return;
     g_lifecycle_pending = 0;
     handler = platform_handler_registry_get(0x10140u);
     if (!handler) return;
+
+    /* E8E drain-order C: one 10165 at app-start (before first 10140), then only 10140. */
+    if (drain == 'C' && g_lifecycle_ticks == 0u) {
+        printf("[JJFB_E8E_DRAIN_ORDER] order=C phase=app_start_10165_then_10140_only "
+               "evidence=HYPOTHESIS\n");
+        fflush(stdout);
+        robotol_idle_watch_try_10165_probe(uc);
+    }
+    /* E8E drain-order A: 10165 then 10140 on first tick. */
+    if (drain == 'A' && g_lifecycle_ticks == 0u) {
+        printf("[JJFB_E8E_DRAIN_ORDER] order=A phase=10165_before_10140 evidence=HYPOTHESIS\n");
+        fflush(stdout);
+        robotol_idle_watch_try_10165_probe(uc);
+    }
 
     /* CROSS_TARGET: handler runs with owning module ER_RW in R9 (legacy tick path). */
     (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
@@ -518,9 +533,17 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         robotol_idle_watch_note_stage(uc, "tick_40");
     else
         robotol_idle_watch_snap(uc, "lifecycle_fire_done");
-    /* After first tick returns, try one-shot 10165 enqueue probe (guest depth exiting). */
-    if (g_lifecycle_ticks == 1u)
+    /*
+     * Drain-order B (default): 10140 then one-shot 10165 probe after first tick.
+     * Order A/C already fired 10165 (probe_done suppresses second fire).
+     */
+    if (g_lifecycle_ticks == 1u && drain != 'A' && drain != 'C') {
+        if (drain == 'B') {
+            printf("[JJFB_E8E_DRAIN_ORDER] order=B phase=10140_then_10165 evidence=HYPOTHESIS\n");
+            fflush(stdout);
+        }
         robotol_idle_watch_try_10165_probe(uc);
+    }
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
