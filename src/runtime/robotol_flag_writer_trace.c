@@ -88,6 +88,15 @@ static struct {
     int fast_unlock_call; /* JJFB_FAST_UNLOCK_CALL=1 */
     int fast_unlock_done;
     char fast_unlock_when[12]; /* before | after (case156); default before */
+    /* E8S: call real UI-init 0x2E4788 (not C44/C9D/CF5 poke). */
+    int fast_ui_init_call;
+    int fast_ui_init_done;
+    int fast_ui_state_set;
+    uint32_t fast_ui_state; /* optional state before UI-init; 38 is REJECTED by UI-init */
+    int fast_ui_ed8_set;
+    uint32_t fast_ui_ed8_val;
+    int fast_ui_ca3_set;
+    uint32_t fast_ui_ca3_val;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -368,15 +377,48 @@ int robotol_flag_writer_trace_enabled(void) {
                         strncpy(g_e8f.fast_unlock_when, "before", sizeof(g_e8f.fast_unlock_when) - 1);
                 }
             }
+            {
+                const char *uic = getenv("JJFB_FAST_UI_INIT_CALL");
+                const char *uist = getenv("JJFB_FAST_UI_STATE");
+                const char *ed8 = getenv("JJFB_FAST_UI_ED8");
+                const char *ca3 = getenv("JJFB_FAST_UI_CA3");
+                if (uic && uic[0] == '1' && uic[1] == '\0')
+                    g_e8f.fast_ui_init_call = 1;
+                if (uist && uist[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(uist, &end, 0);
+                    if (end != uist) {
+                        g_e8f.fast_ui_state = (uint32_t)v;
+                        g_e8f.fast_ui_state_set = 1;
+                    }
+                }
+                if (ed8 && ed8[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(ed8, &end, 0);
+                    if (end != ed8) {
+                        g_e8f.fast_ui_ed8_val = (uint32_t)v;
+                        g_e8f.fast_ui_ed8_set = 1;
+                    }
+                }
+                if (ca3 && ca3[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(ca3, &end, 0);
+                    if (end != ca3) {
+                        g_e8f.fast_ui_ca3_val = (uint32_t)v;
+                        g_e8f.fast_ui_ca3_set = 1;
+                    }
+                }
+            }
             printf("[JJFB_FAST_ASSIST] enabled=1 state=0x%X case156_r1=0x%X seq=%s "
                    "svc_ab=%c eec7c=%s dec30=%s c6c22=%s insn_limit=%llu "
-                   "unlock_call=%d unlock_when=%s "
+                   "unlock_call=%d unlock_when=%s ui_init_call=%d ui_state=%s "
                    "note=NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS\n",
                    g_e8f.e8n_cf_state, g_e8f.e8l_10102_r1, g_e8f.e8m_seq, g_e8f.fast_svc_mode,
                    g_e8f.fast_eec7c_set ? "set" : "off", g_e8f.fast_dec30_set ? "set" : "off",
                    g_e8f.fast_c6c22_set ? "set" : "off",
                    (unsigned long long)(g_e8f.fast_insn_limit ? g_e8f.fast_insn_limit : 400000ull),
-                   g_e8f.fast_unlock_call, g_e8f.fast_unlock_when);
+                   g_e8f.fast_unlock_call, g_e8f.fast_unlock_when, g_e8f.fast_ui_init_call,
+                   g_e8f.fast_ui_state_set ? "set" : "off");
             fflush(stdout);
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
@@ -682,6 +724,21 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[JJFB_E8R_UNLOCK_PATH] tag=%s pc=0x%X lr=0x%X state=0x%X C44=0x%X "
                    "note=caller_or_writer evidence=OBSERVED\n",
                    bp->tag, bp->pc, lr, state, c44);
+        }
+        /* E8S: C9D/CF5 writers + UI-init landmarks. */
+        if (bp->pc == 0x2F097Au || bp->pc == 0x2FB008u || bp->pc == 0x30AA42u ||
+            bp->pc == 0x2E7DA8u || bp->pc == 0x2E7DC2u || bp->pc == 0x2F7F2Cu ||
+            bp->pc == 0x2E2520u || bp->pc == 0x2E2F50u || bp->pc == 0x2E3F7Cu ||
+            bp->pc == 0x2E32A2u) {
+            uint8_t c9d = 0, cf5 = 0, c44b = 0;
+            if (r9) {
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC44u, &c44b, 1);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC9Du, &c9d, 1);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xCF5u, &cf5, 1);
+            }
+            printf("[JJFB_E8S_FLAG_WRITER] tag=%s pc=0x%X lr=0x%X state=0x%X C44=0x%X C9D=0x%X "
+                   "CF5=0x%X evidence=OBSERVED\n",
+                   bp->tag, bp->pc, lr, state, c44b, c9d, cf5);
         }
         /* E8M path landmarks inside parent. */
         if (bp->pc == 0x300182u || bp->pc == 0x300194u || bp->pc == 0x30026Eu ||
@@ -1210,6 +1267,92 @@ static void fast_call_c44_unlock(void *uc, const char *when) {
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
 
+/* E8S: invoke real UI-init 0x2E4788. Static: rejects state in {38,46,69,252,300};
+ * needs *(R9+ED8)!=0 and CA3==1 among other gates. */
+static void fast_call_ui_init(void *uc) {
+    uint32_t r9_save = 0, r9_run = 0, state_before = 0, state_after = 0;
+    uint8_t c44b = 0, c9db = 0, cf5b = 0, ca3b = 0;
+    uint32_t ed8 = 0;
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    int ok;
+    uint64_t lim = 500000ull;
+    if (!g_e8f.fast_assist || !g_e8f.fast_ui_init_call || g_e8f.fast_ui_init_done || !uc)
+        return;
+    g_e8f.fast_ui_init_done = 1;
+    (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+    if (!find_robotol_r9(uc, &r9_run)) r9_run = r9_save;
+    if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+    if (r9_run) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF, &state_before);
+        if (g_e8f.fast_ui_state_set) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF,
+                                           g_e8f.fast_ui_state);
+            printf("[JJFB_FAST_UI_STATE] old=0x%X new=0x%X note=FAST_ASSIST_UI_init_rejects_38 "
+                   "evidence=HYPOTHESIS\n",
+                   state_before, g_e8f.fast_ui_state);
+            state_before = g_e8f.fast_ui_state;
+        }
+        if (g_e8f.fast_ui_ed8_set) {
+            uint32_t oldv = 0;
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + 0xED8u, &oldv);
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9_run + 0xED8u,
+                                           g_e8f.fast_ui_ed8_val);
+            printf("[JJFB_FAST_UI_OBJ] field=ED8 old=0x%X new=0x%X note=FAST_ASSIST_not_product "
+                   "evidence=HYPOTHESIS\n",
+                   oldv, g_e8f.fast_ui_ed8_val);
+        }
+        if (g_e8f.fast_ui_ca3_set) {
+            uint8_t oldb = 0, newb = (uint8_t)(g_e8f.fast_ui_ca3_val & 0xFFu);
+            (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xCA3u, &oldb, 1);
+            (void)guest_memory_uc_poke((struct uc_struct *)uc, r9_run + 0xCA3u, &newb, 1);
+            printf("[JJFB_FAST_UI_OBJ] field=CA3 old=0x%X new=0x%X note=FAST_ASSIST_not_product "
+                   "evidence=HYPOTHESIS\n",
+                   oldb, newb);
+        }
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC44u, &c44b, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC9Du, &c9db, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xCF5u, &cf5b, 1);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + 0xED8u, &ed8);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xCA3u, &ca3b, 1);
+    }
+    snap_idle_flags(uc, r9_run, "before_fast_ui_init");
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = 0;
+    abi.set_r1 = 1;
+    abi.r1 = 0;
+    abi.set_r2 = 1;
+    abi.r2 = 0;
+    abi.set_r3 = 1;
+    abi.r3 = 0;
+    abi.set_lr = 1;
+    abi.lr = 0x80000u;
+    if (g_e8f.fast_insn_limit) lim = g_e8f.fast_insn_limit;
+    printf("[JJFB_FAST_UI_INIT_CALL] entry=0x2E4788 r9=0x%X state=0x%X ED8=0x%X CA3=0x%X "
+           "C44=0x%X C9D=0x%X CF5=0x%X note=FAST_ASSIST_real_fn evidence=HYPOTHESIS\n",
+           r9_run, state_before, ed8, ca3b, c44b, c9db, cf5b);
+    fflush(stdout);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x2E4789u, 0x80000u, lim, &abi, &out);
+    if (r9_run) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF, &state_after);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC44u, &c44b, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xC9Du, &c9db, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9_run + 0xCF5u, &cf5b, 1);
+    }
+    snap_idle_flags(uc, r9_run, "after_fast_ui_init");
+    printf("[JJFB_FAST_UI_INIT_DONE] ok=%d end=%s pc_after=0x%X state=0x%X->0x%X "
+           "C44=0x%X C9D=0x%X CF5=0x%X note=FAST_ASSIST_not_product evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after, state_before, state_after,
+           c44b, c9db, cf5b);
+    if (c9db || cf5b)
+        printf("[JJFB_E8S_POST_C44_FLAGS] C9D=0x%X CF5=0x%X via=ui_init note=FAST_ASSIST "
+               "evidence=OBSERVED\n",
+               c9db, cf5b);
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
 static void fire_handler_regs(void *uc, uint32_t code, const char *label, uint32_t r0,
                               uint32_t r1, uint32_t r2, uint32_t r3, const char *note) {
     uint32_t handler, stop = 0x80000u;
@@ -1472,6 +1615,9 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
         /* E8R: real unlock fn before case156 (default). */
         if (g_e8f.fast_unlock_call && strcmp(g_e8f.fast_unlock_when, "after") != 0)
             fast_call_c44_unlock(uc, "before_case156");
+        /* E8S: UI-init real call (often after unlock; state=38 is rejected by UI-init). */
+        if (g_e8f.fast_ui_init_call)
+            fast_call_ui_init(uc);
         if (g_e8f.e8k_10102_case) {
             fire_handler_regs(uc, 0x10102u, "e8m_case", g_e8f.e8k_10102_case, g_e8f.e8l_10102_r1,
                               g_e8f.e8l_10102_r2, g_e8f.e8l_10102_r3,
@@ -1505,9 +1651,26 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
     if (tick == 2u && g_e8f.counterfactual_done && find_robotol_r9(uc, &r9))
         snap_idle_flags(uc, r9, "cf_after_next_10140");
 
-    if (tick == 25u || tick == 40u || tick == 100u || tick == 600u)
+    /* E8S: post-C44 persistence into next 10140 tick. */
+    if (tick == 2u && g_e8f.fast_assist && (g_e8f.fast_unlock_done || g_e8f.fast_ui_init_done) &&
+        find_robotol_r9(uc, &r9) && r9) {
+        uint8_t c44 = 0, c9d = 0, cf5 = 0;
+        uint32_t st = 0;
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC44u, &c44, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC9Du, &c9d, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xCF5u, &cf5, 1);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E8I_STATE_OFF, &st);
+        snap_idle_flags(uc, r9, "e8s_tick2_post_c44");
+        printf("[JJFB_E8S_POST_C44_TICK2] C44=0x%X C9D=0x%X CF5=0x%X state=0x%X "
+               "note=persistence_check evidence=OBSERVED\n",
+               c44, c9d, cf5, st);
+        fflush(stdout);
+    }
+
+    if (tick == 25u || tick == 40u || tick == 80u || tick == 100u || tick == 600u)
         robotol_flag_writer_trace_dump_summary(tick == 600u   ? "tick_600"
                                               : tick == 100u ? "tick_100"
+                                              : tick == 80u  ? "tick_80"
                                               : tick == 40u  ? "tick_40"
                                                              : "tick_25");
 }
