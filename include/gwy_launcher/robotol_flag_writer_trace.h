@@ -55,6 +55,13 @@ extern "C" {
  *   JJFB_E8N_CF_STATE=<n>         — COUNTERFACTUAL_ONLY poke R9+0x8D0 then case156
  *                                   (ladder map only; NOT product success)
  *
+ * E8O-Fast Env (NOT product success):
+ *   JJFB_FAST_ASSIST=1
+ *   JJFB_FAST_STATE=20|38
+ *   JJFB_FAST_CASE156_R1=18|20
+ *   JJFB_FAST_SEQUENCE=case156|10165_case156|case310_case156|10165_case310_case156
+ *   JJFB_FAST_SVC_AB=observe|return0|preserve
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

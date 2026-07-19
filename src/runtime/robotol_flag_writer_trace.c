@@ -73,6 +73,9 @@ static struct {
     int e8n_cf_state_set;
     uint32_t e8n_cf_state; /* COUNTERFACTUAL_ONLY poke of R9+0x8D0 before case156 */
     int e8n_cf_done;
+    int fast_assist; /* JJFB_FAST_ASSIST=1 — not product success */
+    char fast_svc_mode; /* 0=off, 'o'=observe, 'r'=return0, 'p'=preserve */
+    uint32_t fast_svc_continues;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -260,13 +263,63 @@ int robotol_flag_writer_trace_enabled(void) {
                 }
             }
         }
+        /* E8O-Fast: controlled assist — never product success. */
+        g_e8f.fast_assist = env1("JJFB_FAST_ASSIST");
+        if (g_e8f.fast_assist) {
+            const char *fsm = getenv("JJFB_FAST_SVC_AB");
+            const char *fst = getenv("JJFB_FAST_STATE");
+            const char *fr1 = getenv("JJFB_FAST_CASE156_R1");
+            const char *fseq = getenv("JJFB_FAST_SEQUENCE");
+            g_e8f.fast_svc_mode = 'o'; /* default observe */
+            if (fsm && fsm[0]) {
+                if (strcmp(fsm, "return0") == 0)
+                    g_e8f.fast_svc_mode = 'r';
+                else if (strcmp(fsm, "preserve") == 0)
+                    g_e8f.fast_svc_mode = 'p';
+                else
+                    g_e8f.fast_svc_mode = 'o';
+            }
+            /* Arm SVC trap for fast path. */
+            g_e8f.svc_trap = 1;
+            g_e8f.svc_stop = (g_e8f.fast_svc_mode == 'o');
+            if (fst && fst[0]) {
+                char *end = NULL;
+                unsigned long v = strtoul(fst, &end, 0);
+                if (end != fst) {
+                    g_e8f.e8n_cf_state = (uint32_t)v;
+                    g_e8f.e8n_cf_state_set = 1;
+                }
+            } else if (!g_e8f.e8n_cf_state_set) {
+                g_e8f.e8n_cf_state = 38u;
+                g_e8f.e8n_cf_state_set = 1;
+            }
+            g_e8f.e8k_10102_case = 156u;
+            g_e8f.e8l_10102_r1 = 18u;
+            g_e8f.e8l_regs_set = 1;
+            if (fr1 && fr1[0]) {
+                char *end = NULL;
+                unsigned long v = strtoul(fr1, &end, 0);
+                if (end != fr1) g_e8f.e8l_10102_r1 = (uint32_t)v;
+            }
+            if (fseq && fseq[0]) {
+                strncpy(g_e8f.e8m_seq, fseq, sizeof(g_e8f.e8m_seq) - 1);
+                if (strstr(fseq, "10165")) g_e8f.e8m_seq_10165 = 1;
+                if (strstr(fseq, "case310") || strstr(fseq, "310")) g_e8f.e8m_seq_310 = 1;
+            } else {
+                strncpy(g_e8f.e8m_seq, "case156", sizeof(g_e8f.e8m_seq) - 1);
+            }
+            printf("[JJFB_FAST_ASSIST] enabled=1 state=0x%X case156_r1=0x%X seq=%s "
+                   "svc_ab=%c note=NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS\n",
+                   g_e8f.e8n_cf_state, g_e8f.e8l_10102_r1, g_e8f.e8m_seq, g_e8f.fast_svc_mode);
+            fflush(stdout);
+        }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
                         g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
                         g_e8f.e8j_queue_read_watch || g_e8f.svc_trap ||
                         (g_e8f.e8k_10102_case != 0) || (g_e8f.counterfactual[0] != '\0') ||
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
-                        g_e8f.e8n_cf_state_set;
+                        g_e8f.e8n_cf_state_set || g_e8f.fast_assist;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -408,19 +461,54 @@ static void dump_svc_ab_context(uc_engine *uc, const char *via, uint32_t intno) 
     if (r1)
         (void)guest_memory_uc_peek((struct uc_struct *)uc, r1, blk, (int)sizeof(blk));
     (void)guest_memory_uc_peek((struct uc_struct *)uc, sp, &spb, 1);
-    path = g_e8f.counterfactual[0] ? "COUNTERFACTUAL" : "PRODUCT";
+    if (g_e8f.fast_assist)
+        path = "FAST_ASSIST";
+    else
+        path = g_e8f.counterfactual[0] ? "COUNTERFACTUAL" : "PRODUCT";
     g_e8f.svc_hits++;
     printf("[JJFB_E8H_SVC_AB] via=%s tick=%u path=%s cf=%s intno=0x%X "
            "pc=0x%X lr=0x%X cpsr=0x%X T=%u r0=0x%X r1=0x%X r2=0x%X r3=0x%X r9=0x%X sp=0x%X "
            "sp_byte=0x%02X note=observe_only_no_fake_return evidence=OBSERVED\n",
            via, g_e8f.tick, path, g_e8f.counterfactual[0] ? g_e8f.counterfactual : "NONE", intno,
            pc, lr, cpsr, (cpsr >> 5) & 1u, r0, r1, r2, r3, r9, sp, spb);
+    if (g_e8f.fast_assist) {
+        printf("[JJFB_FAST_SVC_AB] via=%s mode=%c r0=0x%X r1=0x%X lr=0x%X pc=0x%X "
+               "sp_byte=0x%02X note=FAST_ASSIST_not_product evidence=HYPOTHESIS\n",
+               via, g_e8f.fast_svc_mode ? g_e8f.fast_svc_mode : 'o', r0, r1, lr, pc, spb);
+    }
     dump_hex_line("JJFB_E8H_SVC_AB_ARG", r1, blk, (int)sizeof(blk));
     printf("[JJFB_E8H_SVC_AB_CLASS] path=%s class=%s "
            "hypothesis=r0_service_sel_r1_argblock_sp_byte_original_request "
            "evidence=TARGET_OBSERVED+HYPOTHESIS\n",
            path,
-           g_e8f.counterfactual[0] ? "SVC_AB_POST_GATE_CANDIDATE" : "SVC_AB_PRODUCT_CANDIDATE");
+           g_e8f.fast_assist
+               ? "SVC_AB_FAST_ASSIST"
+               : (g_e8f.counterfactual[0] ? "SVC_AB_POST_GATE_CANDIDATE" : "SVC_AB_PRODUCT_CANDIDATE"));
+    fflush(stdout);
+}
+
+/* FAST_ASSIST only: skip unimplemented SVC #0xAB and return to LR. */
+static void fast_svc_ab_continue(uc_engine *uc) {
+    uint32_t lr = 0, cpsr = 0, next = 0, r0 = 0;
+    if (!g_e8f.fast_assist) return;
+    if (g_e8f.fast_svc_mode != 'r' && g_e8f.fast_svc_mode != 'p') return;
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
+    if (g_e8f.fast_svc_mode == 'r') {
+        r0 = 0;
+        uc_reg_write(uc, UC_ARM_REG_R0, &r0);
+    }
+    next = lr & ~1u;
+    if (lr & 1u)
+        cpsr |= (1u << 5);
+    else
+        cpsr &= ~(1u << 5);
+    uc_reg_write(uc, UC_ARM_REG_CPSR, &cpsr);
+    uc_reg_write(uc, UC_ARM_REG_PC, &next);
+    g_e8f.fast_svc_continues++;
+    printf("[JJFB_FAST_SVC_AB_CONTINUE] mode=%s ret_pc=0x%X continues=%u "
+           "note=FAST_ASSISTED_CONTINUE_not_product evidence=HYPOTHESIS\n",
+           g_e8f.fast_svc_mode == 'r' ? "return0" : "preserve", next, g_e8f.fast_svc_continues);
     fflush(stdout);
 }
 
@@ -431,6 +519,12 @@ static void on_e8h_svc_code(uc_engine *uc, uint64_t address, uint32_t size, void
     if (g_e8f.svc_trapped && g_e8f.svc_stop) return;
     dump_svc_ab_context(uc, "CODE_0x2D92AE", 0xABu);
     g_e8f.svc_trapped = 1;
+    if (g_e8f.fast_assist && (g_e8f.fast_svc_mode == 'r' || g_e8f.fast_svc_mode == 'p')) {
+        fast_svc_ab_continue(uc);
+        /* Allow further SVC hits on this fast run. */
+        g_e8f.svc_trapped = 0;
+        return;
+    }
     if (g_e8f.svc_stop) {
         printf("[JJFB_E8H_SVC_AB_STOP] note=observe_only_emu_stop evidence=OBSERVED\n");
         fflush(stdout);
@@ -448,6 +542,11 @@ static void on_e8h_intr(uc_engine *uc, uint32_t intno, void *user_data) {
     if (g_e8f.svc_trapped && g_e8f.svc_stop) return;
     dump_svc_ab_context(uc, "HOOK_INTR", intno);
     g_e8f.svc_trapped = 1;
+    if (g_e8f.fast_assist && (g_e8f.fast_svc_mode == 'r' || g_e8f.fast_svc_mode == 'p')) {
+        fast_svc_ab_continue(uc);
+        g_e8f.svc_trapped = 0;
+        return;
+    }
     if (g_e8f.svc_stop) {
         printf("[JJFB_E8H_SVC_AB_STOP] note=observe_only_emu_stop evidence=OBSERVED\n");
         fflush(stdout);
@@ -1159,7 +1258,12 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
             printf("[JJFB_E8N_CF_STATE] old=0x%X new=0x%X addr=0x%X "
                    "note=COUNTERFACTUAL_ONLY_not_product evidence=HYPOTHESIS\n",
                    oldv, g_e8f.e8n_cf_state, addr);
-            snap_idle_flags(uc, r9, "after_cf_state");
+            if (g_e8f.fast_assist) {
+                printf("[JJFB_FAST_STATE] old=0x%X new=0x%X addr=0x%X "
+                       "note=FAST_ASSIST_not_product evidence=HYPOTHESIS\n",
+                       oldv, g_e8f.e8n_cf_state, addr);
+            }
+            snap_idle_flags(uc, r9, g_e8f.fast_assist ? "after_fast_state" : "after_cf_state");
             fflush(stdout);
             if (!g_e8f.e8k_10102_case) {
                 g_e8f.e8k_10102_case = 156u;
@@ -1170,13 +1274,21 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
         if (g_e8f.e8k_10102_case) {
             fire_handler_regs(uc, 0x10102u, "e8m_case", g_e8f.e8k_10102_case, g_e8f.e8l_10102_r1,
                               g_e8f.e8l_10102_r2, g_e8f.e8l_10102_r3,
-                              g_e8f.e8n_cf_state_set
-                                  ? "E8N_CF_state_ladder_observe_only_not_product"
-                                  : (g_e8f.e8m_seq[0]
-                                         ? "E8M_seq_case156_observe_only_not_product"
-                                         : (g_e8f.e8l_regs_set
-                                                ? "E8L_structured_abi_observe_only_not_product"
-                                                : "E8K_derived_case_observe_only_not_product")));
+                              g_e8f.fast_assist
+                                  ? "E8O_FAST_ASSIST_not_product"
+                                  : (g_e8f.e8n_cf_state_set
+                                         ? "E8N_CF_state_ladder_observe_only_not_product"
+                                         : (g_e8f.e8m_seq[0]
+                                                ? "E8M_seq_case156_observe_only_not_product"
+                                                : (g_e8f.e8l_regs_set
+                                                       ? "E8L_structured_abi_observe_only_not_product"
+                                                       : "E8K_derived_case_observe_only_not_product"))));
+            if (g_e8f.fast_assist) {
+                printf("[JJFB_FAST_FIRE_DONE] case156_r1=0x%X state=0x%X svc_hits=%u "
+                       "svc_continues=%u note=FAST_ASSIST_not_product evidence=OBSERVED\n",
+                       g_e8f.e8l_10102_r1, g_e8f.e8n_cf_state, g_e8f.svc_hits,
+                       g_e8f.fast_svc_continues);
+            }
             printf("[JJFB_E8M_PARENT_TRACE_SUMMARY] insn_logged=%u path_hits=%u evidence=OBSERVED\n",
                    g_e8f.e8m_insn_n, g_e8f.e8m_path_hits);
             fflush(stdout);
