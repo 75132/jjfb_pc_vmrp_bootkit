@@ -62,6 +62,12 @@ extern "C" {
  *   JJFB_FAST_SEQUENCE=case156|10165_case156|case310_case156|10165_case310_case156
  *   JJFB_FAST_SVC_AB=observe|return0|preserve
  *
+ * E8P-Fast Env (NOT product success):
+ *   JJFB_FAST_EEC7C=<n>           — poke *(R9+0xEEC+0x7C); early-arm field
+ *   JJFB_FAST_DEC30=<n>           — poke *(R9+0xDEC+0x30); R1=20 success-arm gate
+ *   JJFB_FAST_C6C22=<n>           — poke *(u8*)(R9+0xC6C+0x22); R1=20 CMP#1 gate
+ *   JJFB_FAST_INSN_LIMIT=<n>      — raise case156 fire insn budget (default 400000)
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

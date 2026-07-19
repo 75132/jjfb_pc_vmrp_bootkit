@@ -170,12 +170,16 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST: do not stop on 30103C alone — continue to expose C44/SVC/DRAW/fault.
+  # FAST_ASSIST / E8P: do not stop on 30103C alone — continue to expose C44/SVC/DRAW/fault.
   # observe: stop on first SVC dump; return0/preserve: keep going past SVC until DRAW/C44/fault/tick600.
+  # E8P: also stop on FAST_FIRE_DONE (tick1 fire captures the 3020C8 outcome).
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
-  if ($svcMode -eq 'return0' -or $svcMode -eq 'preserve') {
+  $e8pMode = ($env:JJFB_E8P_MODE -eq '1')
+  if ($e8pMode) {
+    $stopPat = '\[JJFB_DRAW\]|\[JJFB_REFRESH\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_FAST_FIRE_DONE\]|JJFB_E8I_PARENT_HIT\] tag=p2[Ff]4[Ee]82|JJFB_E8I_PARENT_HIT\] tag=p302340|JJFB_E8J_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed'
+  } elseif ($svcMode -eq 'return0' -or $svcMode -eq 'preserve') {
     $stopPat = '\[JJFB_DRAW\]|\[JJFB_REFRESH\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_E8J_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed'
   } else {
     $stopPat = '\[JJFB_DRAW\]|\[JJFB_REFRESH\]|JJFB_E8C_FLAG_TRANSITION\][^\r\n]*off=0xC(44|9D|F5)\b|JJFB_FAST_FIRE_DONE\]|JJFB_FAST_SVC_AB\]|JJFB_E8H_SVC_AB_STOP\]|JJFB_E8J_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed'
