@@ -631,6 +631,30 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         printf("[JJFB_E8I_PARENT_HIT] tag=%s pc=0x%X hit=%u tick=%u r0=0x%X r1=0x%X r4=0x%X "
                "r9=0x%X lr=0x%X state=0x%X evidence=OBSERVED\n",
                bp->tag, bp->pc, bp->hit_n, g_e8f.tick, r0, r1, r4, r9, lr, state);
+        /* E8Q: success-arm / C44-unlock landmarks. */
+        if (bp->pc == 0x301848u || bp->pc == 0x301864u || bp->pc == 0x304558u ||
+            bp->pc == 0x2FC8C0u || bp->pc == 0x2FC8CEu || bp->pc == 0x30213Eu) {
+            uint32_t r2 = 0, r3 = 0, c44 = 0, eec7c = 0, dec30 = 0, b1a8 = 0;
+            uint8_t c44b = 0, b1a8b = 0, c6c22 = 0;
+            uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+            uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+            if (r9) {
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC44u, &c44b, 1);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0x1A8u, &b1a8b, 1);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC6Cu + 0x22u, &c6c22, 1);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xEECu + 0x7Cu, &eec7c);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xDECu + 0x30u, &dec30);
+                c44 = c44b;
+                b1a8 = b1a8b;
+            }
+            printf("[JJFB_E8Q_ARM] tag=%s pc=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X lr=0x%X "
+                   "state=0x%X C44=0x%X R9_1A8=0x%X C6C22=0x%X EEC7C=0x%X DEC30=0x%X "
+                   "note=FAST_OR_OBSERVE evidence=OBSERVED\n",
+                   bp->tag, bp->pc, r0, r1, r2, r3, lr, state, c44, b1a8, c6c22, eec7c, dec30);
+            if (bp->pc == 0x2FC8CEu)
+                printf("[JJFB_E8Q_C44_UNLOCK_SITE] pc=0x2FC8CE note=STRB_1_not_reset "
+                       "evidence=TARGET_OBSERVED\n");
+        }
         /* E8M path landmarks inside parent. */
         if (bp->pc == 0x300182u || bp->pc == 0x300194u || bp->pc == 0x30026Eu ||
             bp->pc == 0x3004C8u || bp->pc == 0x3002BAu || bp->pc == 0x3002C0u ||

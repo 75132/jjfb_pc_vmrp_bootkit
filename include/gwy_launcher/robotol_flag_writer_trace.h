@@ -68,6 +68,8 @@ extern "C" {
  *   JJFB_FAST_C6C22=<n>           — poke *(u8*)(R9+0xC6C+0x22); R1=20 CMP#1 gate
  *   JJFB_FAST_INSN_LIMIT=<n>      — raise case156 fire insn budget (default 400000)
  *
+ * E8Q-Fast: R1=20 success arm + C44 nonzero unlock (0x2FC8CE); see RUN_E8Q_FAST.ps1
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.
