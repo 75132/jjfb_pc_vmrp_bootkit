@@ -37,6 +37,10 @@ extern "C" {
  *   JJFB_E8J_BP_SPEC=e:0x..,u:0x..,q:0x..,p:0x..,b:0x..
  *   JJFB_E8J_QUEUE_READ_WATCH=1   — MEM_READ watch on R9+FE8 / R9+B7D; observe-only
  *
+ * E8K Env:
+ *   JJFB_E8K_10102_CASE=<n>       — observe-only fire registered 0x10102 handler with R0=case
+ *                                   (derived switch index; NOT product success)
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

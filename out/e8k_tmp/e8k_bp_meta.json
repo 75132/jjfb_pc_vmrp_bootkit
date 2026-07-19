@@ -1,0 +1,98 @@
+[
+  {
+    "key": "e:3199744",
+    "role": "e",
+    "pc": 3199744,
+    "note": "event_switch_entry"
+  },
+  {
+    "key": "e:3200816",
+    "role": "e",
+    "pc": 3200816,
+    "note": "case_arm_BL_2DFC3C"
+  },
+  {
+    "key": "e:3013692",
+    "role": "e",
+    "pc": 3013692,
+    "note": "hot_cluster"
+  },
+  {
+    "key": "e:3018240",
+    "role": "e",
+    "pc": 3018240,
+    "note": "hot_cluster"
+  },
+  {
+    "key": "e:3000184",
+    "role": "e",
+    "pc": 3000184,
+    "note": "hot_cluster"
+  },
+  {
+    "key": "p:3146072",
+    "role": "p",
+    "pc": 3146072,
+    "note": "parent_dispatcher"
+  },
+  {
+    "key": "p:3147540",
+    "role": "p",
+    "pc": 3147540,
+    "note": "dispatcher"
+  },
+  {
+    "key": "q:3000332",
+    "role": "q",
+    "pc": 3000332,
+    "note": "b7d_drain"
+  },
+  {
+    "key": "q:3169976",
+    "role": "q",
+    "pc": 3169976,
+    "note": "drain_gate_callback"
+  },
+  {
+    "key": "q:3169982",
+    "role": "q",
+    "pc": 3169982,
+    "note": "BL_site_into_drain"
+  },
+  {
+    "key": "u:3102516",
+    "role": "u",
+    "pc": 3102516,
+    "note": "upstream_BL_to_drain_gate"
+  },
+  {
+    "key": "u:3101700",
+    "role": "u",
+    "pc": 3101700,
+    "note": "legacy_callback_cluster_near_2F5734"
+  },
+  {
+    "key": "e:3202548",
+    "role": "e",
+    "pc": 3202548,
+    "note": "case_156"
+  },
+  {
+    "key": "e:3200814",
+    "role": "e",
+    "pc": 3200814,
+    "note": "case_310"
+  },
+  {
+    "key": "u:3199564",
+    "role": "u",
+    "pc": 3199564,
+    "note": "enqueue_core"
+  },
+  {
+    "key": "u:3199628",
+    "role": "u",
+    "pc": 3199628,
+    "note": "enqueue_long_path"
+  }
+]

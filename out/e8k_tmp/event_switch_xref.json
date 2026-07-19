@@ -1,0 +1,339 @@
+{
+  "code_base": 2985460,
+  "registration": {
+    "plat_code": 65794,
+    "family": 123392,
+    "handler_thumb": 3199745,
+    "handler_even": 3199744,
+    "role": "family_register",
+    "host_drain": "no",
+    "bl_callers_in_robotol": 0,
+    "literal_ptrs_in_ext": 0,
+    "implication": "0x30D300 is not reached by in-module BL; it is the 0x10102-registered family handler (Thumb 0x30D301). Product only REGISTERs it; host never drains/delivers 0x10102 events into the handler after register."
+  },
+  "bl_callers_30D300": [],
+  "literal_hits": [],
+  "switch": {
+    "entry": 3199744,
+    "thumb_entry": 3199745,
+    "table_base": 3199780,
+    "max_case_exclusive": 343,
+    "index_reg": "R0",
+    "bound_note": "MOVS r3,#0xFF; ADDS r3,#0x58 \u2192 CMP; BCS default",
+    "case_count": 343,
+    "interesting_cases": [
+      {
+        "case": 156,
+        "case_hex": "0x9C",
+        "table_entry": 1385,
+        "arm_pc": 3202548,
+        "first_bls": [
+          3146072
+        ],
+        "reaches_hot": 3146072,
+        "can_reach_parent": true,
+        "touches_state": false,
+        "touches_idle_flags": false
+      },
+      {
+        "case": 310,
+        "case_hex": "0x136",
+        "table_entry": 518,
+        "arm_pc": 3200814,
+        "first_bls": [
+          3013692
+        ],
+        "reaches_hot": 3013692,
+        "can_reach_parent": false,
+        "touches_state": false,
+        "touches_idle_flags": false
+      }
+    ],
+    "cases_to_hot": {
+      "0x300158": [
+        156
+      ],
+      "0x2DFC3C": [
+        310
+      ]
+    },
+    "case_310_note": "case 310 (0x136) arm 0x30D72E \u2192 BL 0x2DFC3C",
+    "case_156_note": "case 156 (0x9C) \u2192 BL 0x300158"
+  },
+  "drain": {
+    "entry": 3000332,
+    "gate": 3169976,
+    "gate_bl_site": 3169982,
+    "upstream_bl_to_gate": 3102516,
+    "bl_callers_of_drain": [
+      {
+        "bl_pc": 3169982,
+        "enclosing_fn": 3169976,
+        "prev30": [
+          "0x305E7A: 0xB083",
+          "0x305E7C: 0x1C1F",
+          "0x305E7E: MOVS r1, #0",
+          "0x305E80: 0xAA02",
+          "0x305E82: 0x9C08",
+          "0x305E84: BL 0x303C50",
+          "0x305E88: MOVS r2, #0",
+          "0x305E8A: 0x9E02",
+          "0x305E8C: 0x9202",
+          "0x305E8E: 0x1C05",
+          "0x305E90: 0x1C02",
+          "0x305E92: MOVS r3, #0",
+          "0x305E94: MOVS r1, #1",
+          "0x305E96: LDR r0,[pc]=0x12340",
+          "0x305E98: 0x9700",
+          "0x305E9A: 0x9401",
+          "0x305E9C: BL 0x304558",
+          "0x305EA0: 0x6820",
+          "0x305EA2: 0x1C31",
+          "0x305EA4: 0x3002",
+          "0x305EA6: 0x6020",
+          "0x305EA8: 0x1C28",
+          "0x305EAA: BL 0x304614",
+          "0x305EAE: 0xB003",
+          "0x305EB0: 0xBDF0",
+          "0x305EB2: 0x0000",
+          "0x305EB4: MOVS r3, #64",
+          "0x305EB6: 0x0001",
+          "0x305EB8: PUSH",
+          "0x305EBA: BL 0x2DC984"
+        ],
+        "strings": [],
+        "note": "sole static BL into drain"
+      }
+    ],
+    "bl_callers_of_gate": [
+      {
+        "bl_pc": 3102516,
+        "enclosing_fn": 3101750,
+        "prev30": [
+          "0x2F56F0: 0x9805",
+          "0x2F56F2: BL 0x2FAF04",
+          "0x2F56F6: LDR r1,[pc]=0x1048",
+          "0x2F56F8: MOVS r0, #105",
+          "0x2F56FA: 0x4449",
+          "0x2F56FC: 0x6008",
+          "0x2F56FE: LDR r0,[pc]=0x1074",
+          "0x2F5700: 0x4448",
+          "0x2F5702: 0x6800",
+          "0x2F5704: CMP r0, #0",
+          "0x2F5706: 0xD014",
+          "0x2F5708: LDR r0,[pc]=0x244",
+          "0x2F570A: LDR r4,[pc]=0x7D8",
+          "0x2F570C: 0x4448",
+          "0x2F570E: 0x444C",
+          "0x2F5710: 0x3480",
+          "0x2F5712: 0x6800",
+          "0x2F5714: 0x6FA1",
+          "0x2F5716: 0x4288",
+          "0x2F5718: 0xD10B",
+          "0x2F571A: LDR r4,[pc]=0x1074",
+          "0x2F571C: 0x444C",
+          "0x2F571E: 0x6820",
+          "0x2F5720: 0x6800",
+          "0x2F5722: BL 0x31027C",
+          "0x2F5726: BL 0x31271C",
+          "0x2F572A: 0x6025",
+          "0x2F572C: BL 0x30A260",
+          "0x2F5730: 0xE67F",
+          "0x2F5732: MOVS r0, #0"
+        ],
+        "strings": []
+      }
+    ],
+    "b7d_readers": [
+      {
+        "access_pc": 2991674,
+        "fn": 2991652,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": false
+      },
+      {
+        "access_pc": 3000404,
+        "fn": 3000392,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": true
+      },
+      {
+        "access_pc": 3000446,
+        "fn": 3000392,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": true
+      },
+      {
+        "access_pc": 3000646,
+        "fn": 3000392,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": true
+      },
+      {
+        "access_pc": 3000738,
+        "fn": 3000708,
+        "upstream_count": 1,
+        "upstream_sample": [
+          {
+            "bl": 3169978,
+            "fn": 3169976
+          }
+        ],
+        "in_drain_fn": true
+      },
+      {
+        "access_pc": 3138046,
+        "fn": 3137918,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": false
+      },
+      {
+        "access_pc": 3199636,
+        "fn": 3199628,
+        "upstream_count": 0,
+        "upstream_sample": [],
+        "in_drain_fn": false
+      },
+      {
+        "access_pc": 3210458,
+        "fn": 3210412,
+        "upstream_count": 1,
+        "upstream_sample": [
+          {
+            "bl": 3000782,
+            "fn": 3000708
+          }
+        ],
+        "in_drain_fn": false
+      }
+    ],
+    "chain": "0x2F5734 BL \u2192 gate@0x305EB8 \u2192 0x305EBE BL \u2192 drain@0x2DC80C"
+  },
+  "bp_spec": "e:0x30D300,e:0x30D730,e:0x2DFC3C,e:0x2E0E00,e:0x2DC778,p:0x300158,p:0x300714,q:0x2DC80C,q:0x305EB8,q:0x305EBE,u:0x2F5734,u:0x2F5404,e:0x30DDF4,e:0x30D72E,u:0x30D24C,u:0x30D28C",
+  "bp_count": 16,
+  "bp_meta": [
+    {
+      "key": "e:3199744",
+      "role": "e",
+      "pc": 3199744,
+      "note": "event_switch_entry"
+    },
+    {
+      "key": "e:3200816",
+      "role": "e",
+      "pc": 3200816,
+      "note": "case_arm_BL_2DFC3C"
+    },
+    {
+      "key": "e:3013692",
+      "role": "e",
+      "pc": 3013692,
+      "note": "hot_cluster"
+    },
+    {
+      "key": "e:3018240",
+      "role": "e",
+      "pc": 3018240,
+      "note": "hot_cluster"
+    },
+    {
+      "key": "e:3000184",
+      "role": "e",
+      "pc": 3000184,
+      "note": "hot_cluster"
+    },
+    {
+      "key": "p:3146072",
+      "role": "p",
+      "pc": 3146072,
+      "note": "parent_dispatcher"
+    },
+    {
+      "key": "p:3147540",
+      "role": "p",
+      "pc": 3147540,
+      "note": "dispatcher"
+    },
+    {
+      "key": "q:3000332",
+      "role": "q",
+      "pc": 3000332,
+      "note": "b7d_drain"
+    },
+    {
+      "key": "q:3169976",
+      "role": "q",
+      "pc": 3169976,
+      "note": "drain_gate_callback"
+    },
+    {
+      "key": "q:3169982",
+      "role": "q",
+      "pc": 3169982,
+      "note": "BL_site_into_drain"
+    },
+    {
+      "key": "u:3102516",
+      "role": "u",
+      "pc": 3102516,
+      "note": "upstream_BL_to_drain_gate"
+    },
+    {
+      "key": "u:3101700",
+      "role": "u",
+      "pc": 3101700,
+      "note": "legacy_callback_cluster_near_2F5734"
+    },
+    {
+      "key": "e:3202548",
+      "role": "e",
+      "pc": 3202548,
+      "note": "case_156"
+    },
+    {
+      "key": "e:3200814",
+      "role": "e",
+      "pc": 3200814,
+      "note": "case_310"
+    },
+    {
+      "key": "u:3199564",
+      "role": "u",
+      "pc": 3199564,
+      "note": "enqueue_core"
+    },
+    {
+      "key": "u:3199628",
+      "role": "u",
+      "pc": 3199628,
+      "note": "enqueue_long_path"
+    }
+  ],
+  "hypotheses_ranked_prelive": [
+    {
+      "id": "MISSING_APP_INIT_DISPATCH",
+      "why": "0x10102 family handler 0x30D301 registered but never delivered/drained"
+    },
+    {
+      "id": "EVENT_SWITCH_CALLER_NEVER_REACHED",
+      "why": "no in-module BL; only host/platform delivery of 0x10102 can enter"
+    },
+    {
+      "id": "EVENT_SWITCH_CASE_DERIVED_NEXT_GAP",
+      "why": "case 310\u21920x2DFC3C and case 156\u21920x300158 derived; needs correct R0 delivery"
+    },
+    {
+      "id": "MISSING_QUEUE_CONSUMER_TO_DISPATCHER",
+      "why": "B7D drain 0x2DC80C only reached via timer/callback gate; product cold"
+    },
+    {
+      "id": "MISSING_PLATFORM_SIDE_EFFECT_STATE_38",
+      "why": "state still downstream of cold switch/parent path"
+    }
+  ]
+}

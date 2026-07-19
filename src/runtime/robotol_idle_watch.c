@@ -431,6 +431,8 @@ void robotol_idle_watch_on_handler_register(uint32_t plat_code, uint32_t family,
         role = "alloc_or_enqueue";
     } else if (plat_code == 0x10102u) {
         role = "family_register";
+        tramp = "event_switch_0x30D300";
+        drain = "no_host_never_delivers_after_register";
     }
     printf("[JJFB_E8D_HANDLER_MAP] code=0x%X family=0x%X handler=0x%X role=%s "
            "evidence=CROSS_TARGET+docs/06\n",
