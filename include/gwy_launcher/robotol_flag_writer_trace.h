@@ -41,6 +41,12 @@ extern "C" {
  *   JJFB_E8K_10102_CASE=<n>       — observe-only fire registered 0x10102 handler with R0=case
  *                                   (derived switch index; NOT product success)
  *
+ * E8L Env:
+ *   JJFB_E8L_10102_REGS=r0,r1,r2,r3 — structured ABI (overrides CASE when r0 present)
+ *   JJFB_E8L_10102_R1=<n>         — R1 payload (event code or pointer); with E8K_CASE
+ *   JJFB_E8L_10102_R2=<n>
+ *   JJFB_E8L_10102_R3=<n>
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

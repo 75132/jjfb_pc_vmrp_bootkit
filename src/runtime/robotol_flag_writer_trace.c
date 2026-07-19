@@ -58,6 +58,10 @@ static struct {
     char sibling_mode[16];
     char counterfactual[16];
     uint32_t e8k_10102_case; /* 0 = disabled; else R0 case index for observe-only 0x10102 fire */
+    uint32_t e8l_10102_r1;   /* E8L: R1 payload (event code or pointer); default 0 */
+    uint32_t e8l_10102_r2;
+    uint32_t e8l_10102_r3;
+    int e8l_regs_set; /* 1 if JJFB_E8L_10102_R{1,2,3} or REGS parsed */
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -164,6 +168,49 @@ int robotol_flag_writer_trace_enabled(void) {
                 unsigned long v = strtoul(c10102, &end, 0);
                 if (end != c10102)
                     g_e8f.e8k_10102_case = (uint32_t)v;
+            }
+        }
+        /* E8L: R0=case via E8K_CASE; R1-R3 via REGS=r0,r1,r2,r3 or R1/R2/R3. */
+        {
+            const char *regs = getenv("JJFB_E8L_10102_REGS");
+            if (regs && regs[0]) {
+                uint32_t v[4];
+                int n = parse_hex_list(regs, v, 4);
+                if (n >= 1) {
+                    g_e8f.e8k_10102_case = v[0];
+                    g_e8f.e8l_regs_set = 1;
+                }
+                if (n >= 2) g_e8f.e8l_10102_r1 = v[1];
+                if (n >= 3) g_e8f.e8l_10102_r2 = v[2];
+                if (n >= 4) g_e8f.e8l_10102_r3 = v[3];
+            } else {
+                const char *r1 = getenv("JJFB_E8L_10102_R1");
+                const char *r2 = getenv("JJFB_E8L_10102_R2");
+                const char *r3 = getenv("JJFB_E8L_10102_R3");
+                if (r1 && r1[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(r1, &end, 0);
+                    if (end != r1) {
+                        g_e8f.e8l_10102_r1 = (uint32_t)v;
+                        g_e8f.e8l_regs_set = 1;
+                    }
+                }
+                if (r2 && r2[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(r2, &end, 0);
+                    if (end != r2) {
+                        g_e8f.e8l_10102_r2 = (uint32_t)v;
+                        g_e8f.e8l_regs_set = 1;
+                    }
+                }
+                if (r3 && r3[0]) {
+                    char *end = NULL;
+                    unsigned long v = strtoul(r3, &end, 0);
+                    if (end != r3) {
+                        g_e8f.e8l_10102_r3 = (uint32_t)v;
+                        g_e8f.e8l_regs_set = 1;
+                    }
+                }
             }
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
@@ -755,8 +802,8 @@ static void snap_idle_flags(void *uc, uint32_t r9, const char *reason) {
     fflush(stdout);
 }
 
-static void fire_handler_r0(void *uc, uint32_t code, const char *label, uint32_t r0,
-                            const char *note) {
+static void fire_handler_regs(void *uc, uint32_t code, const char *label, uint32_t r0,
+                              uint32_t r1, uint32_t r2, uint32_t r3, const char *note) {
     uint32_t handler, stop = 0x80000u;
     uint32_t r9_save = 0, r9_run = 0;
     GwyUcEntryAbi abi;
@@ -776,16 +823,23 @@ static void fire_handler_r0(void *uc, uint32_t code, const char *label, uint32_t
     abi.set_r0 = 1;
     abi.r0 = r0;
     abi.set_r1 = 1;
-    abi.r1 = 0;
+    abi.r1 = r1;
+    abi.set_r2 = 1;
+    abi.r2 = r2;
+    abi.set_r3 = 1;
+    abi.r3 = r3;
     abi.set_lr = 1;
     abi.lr = stop;
-    printf("[JJFB_E8F_SIBLING_FIRE] code=0x%X label=%s handler=0x%X r0=0x%X r9=0x%X "
-           "note=%s evidence=HYPOTHESIS\n",
-           code, label, handler, r0, r9_run, note ? note : "observe_only");
+    printf("[JJFB_E8F_SIBLING_FIRE] code=0x%X label=%s handler=0x%X r0=0x%X r1=0x%X r2=0x%X "
+           "r3=0x%X r9=0x%X note=%s evidence=HYPOTHESIS\n",
+           code, label, handler, r0, r1, r2, r3, r9_run, note ? note : "observe_only");
     if (code == 0x10102u) {
         printf("[JJFB_E8K_10102_FIRE] case_r0=0x%X handler=0x%X "
                "note=derived_switch_index_observe_only evidence=HYPOTHESIS\n",
                r0, handler);
+        printf("[JJFB_E8L_10102_FIRE] case_r0=0x%X r1=0x%X r2=0x%X r3=0x%X handler=0x%X "
+               "note=structured_abi_observe_only evidence=HYPOTHESIS\n",
+               r0, r1, r2, r3, handler);
     }
     fflush(stdout);
     ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop, 400000ull, &abi, &out);
@@ -795,9 +849,17 @@ static void fire_handler_r0(void *uc, uint32_t code, const char *label, uint32_t
            code, ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after, out.r0_after);
     if (code == 0x10102u) {
         printf("[JJFB_E8K_10102_FIRE_DONE] case_r0=0x%X ok=%d evidence=OBSERVED\n", r0, ok);
+        printf("[JJFB_E8L_10102_FIRE_DONE] case_r0=0x%X r1=0x%X ok=%d end=%s pc_after=0x%X "
+               "evidence=OBSERVED\n",
+               r0, r1, ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after);
     }
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
+static void fire_handler_r0(void *uc, uint32_t code, const char *label, uint32_t r0,
+                            const char *note) {
+    fire_handler_regs(uc, code, label, r0, 0, 0, 0, note);
 }
 
 static void fire_handler(void *uc, uint32_t code, const char *label) {
@@ -945,11 +1007,13 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
         }
     }
 
-    /* E8K: observe-only fire of registered 0x10102 family handler with derived case R0. */
+    /* E8K/E8L: observe-only fire of registered 0x10102 family handler with derived case + payload. */
     if (tick == 1u && g_e8f.e8k_10102_case && !g_e8f.e8k_10102_done) {
         g_e8f.e8k_10102_done = 1;
-        fire_handler_r0(uc, 0x10102u, "e8k_case", g_e8f.e8k_10102_case,
-                        "E8K_derived_case_observe_only_not_product");
+        fire_handler_regs(uc, 0x10102u, "e8l_case", g_e8f.e8k_10102_case, g_e8f.e8l_10102_r1,
+                          g_e8f.e8l_10102_r2, g_e8f.e8l_10102_r3,
+                          g_e8f.e8l_regs_set ? "E8L_structured_abi_observe_only_not_product"
+                                            : "E8K_derived_case_observe_only_not_product");
     }
 
     if (tick == 1u && g_e8f.counterfactual[0])

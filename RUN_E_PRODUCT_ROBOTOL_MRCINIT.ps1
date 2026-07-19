@@ -167,7 +167,11 @@ $e8hMode = ($env:JJFB_E8H_MODE -eq '1')
 $e8iMode = ($env:JJFB_E8I_MODE -eq '1')
 $e8jMode = ($env:JJFB_E8J_MODE -eq '1')
 $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
-if ($e8kMode) {
+$e8lMode = ($env:JJFB_E8L_MODE -eq '1')
+if ($e8lMode) {
+  # Structured 10102 ABI probes; stop after fire-done, parent/dispatcher, DRAW, or tick 600.
+  $stopPat = '\[JJFB_DRAW\]|JJFB_E8I_PARENT_HIT\] tag=p300(158|714)|JJFB_E8L_10102_FIRE_DONE\]|JJFB_E8K_10102_FIRE_DONE\]|JJFB_E8J_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
+} elseif ($e8kMode) {
   # Event-switch / drain census; stop after structured 10102 fire, parent entry, DRAW, or tick 600.
   $stopPat = '\[JJFB_DRAW\]|JJFB_E8I_PARENT_HIT\] tag=p300(158|714)|JJFB_E8K_10102_FIRE_DONE\]|JJFB_E8J_SUMMARY\] reason=tick_600|JJFB_LIFECYCLE\] op=FIRE_DONE tick=600\b|UC_MEM_READ_UNMAPPED|mythroad exit|br_mem_get failed'
 } elseif ($e8jMode) {
