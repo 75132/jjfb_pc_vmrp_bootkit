@@ -301,7 +301,7 @@ static struct {
     /* E9U: progress count via real tick 0x3124D8; 2FC03C object slot probe. */
     int e9u_mode;
     int e9u_tick_call; /* JJFB_FAST_PROGRESS_TICK_CALL — real 0x3124D8 */
-    int e9u_tick_n;    /* how many times to call (default 4) */
+    int e9u_tick_n;    /* how many times to call (default 12 = natural CMP#12 cap) */
     int e9u_tick_done;
     int e9u_3124fe_hit;
     int e9u_3124d8_hit;
@@ -309,6 +309,12 @@ static struct {
     uint32_t e9u_obj_w0;
     FILE *e9u_count_csv;
     FILE *e9u_object_csv;
+    /* E9V: launcher visual parity — colorkey/measure done in bridge/plat; timer path here. */
+    int e9v_mode;
+    int e9v_timer_dispatch; /* JJFB_PLATFORM_TIMER_DISPATCH — periodic rearm + 2F55FA watch */
+    int e9v_2f55fa_hit;
+    int e9v_natural_tick; /* 3124D8 reached with lr != assist stub */
+    FILE *e9v_timer_csv;
     /* E9K: post-r4 textbar / 0x305BFC path — keep BD0 assist; delay HWND hold. */
     int e9k_mode;
     int e9k_hold_after_post_r4; /* JJFB_E9K_HOLD_AFTER_POST_R4 */
@@ -973,7 +979,9 @@ int robotol_flag_writer_trace_enabled(void) {
         /* E9U: real progress tick + 11EC object probe (no count poke as success). */
         g_e8f.e9u_mode = env1("JJFB_E9U_MODE");
         g_e8f.e9u_tick_call = env1("JJFB_FAST_PROGRESS_TICK_CALL");
-        g_e8f.e9u_tick_n = 4;
+        /* Natural tick @ 0x3124D8: count += 1; if count > 12: count = 0.
+         * Default 12 fills the bar; was 4 (E9U probe) → only 4 segments visible. */
+        g_e8f.e9u_tick_n = 12;
         {
             const char *tn = getenv("JJFB_E9U_TICK_N");
             if (tn && tn[0]) {
@@ -1064,6 +1072,23 @@ int robotol_flag_writer_trace_enabled(void) {
             } else if (!getenv("JJFB_FAST_TEXTCTX_ASSIST")) {
                 g_e8f.e9l_textctx_assist = 1;
             }
+        }
+        /* E9V: after E9M env — visual parity + natural timer watch. */
+        g_e8f.e9v_mode = env1("JJFB_E9V_MODE");
+        g_e8f.e9v_timer_dispatch = env1("JJFB_PLATFORM_TIMER_DISPATCH");
+        if (g_e8f.e9v_mode) {
+            g_e8f.e9u_mode = 1;
+            g_e8f.e9s_mode = 1;
+            g_e8f.e9t_mode = 1;
+            g_e8f.e9m_mode = 1;
+            g_e8f.e9l_mode = 1;
+            if (!g_e8f.e9s_bd0_init_call && !g_e8f.e9t_caller_2fc03c &&
+                !g_e8f.e9t_caller_2fc05e && !g_e8f.e9t_caller_30ee8a)
+                g_e8f.e9s_bd0_init_call = 1;
+            printf("[JJFB_E9V] mode=1 timer_dispatch=%d tick_call=%d "
+                   "note=colorkey_measure_timer NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9v_timer_dispatch, g_e8f.e9u_tick_call);
+            fflush(stdout);
         }
         if (g_e8f.plat_screen_dims) {
             printf("[JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 "
@@ -1644,7 +1669,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
          bp->pc == 0x305D08u || bp->pc == 0x305D16u || bp->pc == 0x305D58u ||
          bp->pc == 0x305D5Cu || bp->pc == 0x2F2360u || bp->pc == 0x2F99A4u ||
          bp->pc == 0x304558u || bp->pc == 0x3124D8u || bp->pc == 0x3124FEu ||
-         bp->pc == 0x2FEBBCu || bp->pc == 0x2DAE24u || bp->pc == 0x2FECAAu)) {
+         bp->pc == 0x2FEBBCu || bp->pc == 0x2DAE24u || bp->pc == 0x2FECAAu ||
+         bp->pc == 0x2F55FAu)) {
         uint32_t ui_mode = 0;
         uint32_t r9w = r9;
         uint32_t r4 = 0, r2 = 0, r3 = 0, sp = 0;
@@ -2074,7 +2100,31 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         } else if (bp->pc == 0x2EFBA2u || bp->pc == 0x305BFCu) {
             if (g_e8f.e9m_mode && bp->pc == 0x2EFBA2u) {
                 uint32_t old_r1 = r1;
+                uint32_t scr_w = 240u, r9l = 0;
                 e9m_open_trace_files();
+                if (find_robotol_r9(uc, &r9l) && r9l)
+                    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9l + 0x830u, &scr_w);
+                if (!scr_w) scr_w = 240u;
+                printf("[JJFB_TEXT_LAYOUT] screen_w=%u measured_w=%u measured_h=%u x=%u y=%u "
+                       "expect_x≈%u note=no_layout_assist evidence=OBSERVED\n",
+                       scr_w, g_e8f.e9m_meas_w, g_e8f.e9m_meas_h, r1, r2,
+                       g_e8f.e9m_meas_w && g_e8f.e9m_meas_w <= scr_w
+                           ? (scr_w - g_e8f.e9m_meas_w) / 2u
+                           : 0u);
+                if (g_e8f.e9m_meas_w > 0u && g_e8f.e9m_meas_w <= scr_w) {
+                    uint32_t expect_x = (scr_w - g_e8f.e9m_meas_w) / 2u;
+                    int32_t dx = (int32_t)r1 - (int32_t)expect_x;
+                    if (dx < 0) dx = -dx;
+                    if (dx <= 4) {
+                        printf("[JJFB_E9V_CLASS] class=TEXT_MEASURE_LAYOUT_CENTERED "
+                               "x=%u expect=%u evidence=OBSERVED\n",
+                               r1, expect_x);
+                    } else {
+                        printf("[JJFB_E9V_CLASS] class=TEXT_LAYOUT_STILL_OFF_CENTER "
+                               "x=%u expect=%u dx=%d evidence=OBSERVED\n",
+                               r1, expect_x, (int)dx);
+                    }
+                }
                 if (e9m_try_layout_assist(uc, &r1)) {
                     printf("[JJFB_TEXT_LAYOUT_ASSIST] pc=0x2EFBA2 old_r1=0x%X new_r1=0x%X "
                            "r2=0x%X meas_w=%u meas_h=%u note=x_from_W_minus_height_div2 "
@@ -2084,6 +2134,7 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                                    g_e8f.e9m_meas_h, "layout_assist");
                     fflush(stdout);
                 }
+                fflush(stdout);
             }
             printf("[JJFB_E9J_POST_R4_DRAW] pc=0x%X r0=0x%X r1=0x%X r2=0x%X r4=0x%X "
                    "tick=%u note=text_draw_305bfc evidence=OBSERVED\n",
@@ -2148,7 +2199,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             }
             fflush(stdout);
         } else if (bp->pc == 0x305EA0u) {
-            /* After BL 0x304558 (plat 0x12340): r4=&width r7=&height still live. */
+            /* After BL 0x304558 (plat 0x12340): R4=&vert R7=&horiz still live.
+             * E9V: caller 0x2EFBA2 does x=(screen_w-*R7)/2 — R7 must get text WIDTH. */
             if (g_e8f.e9m_mode) {
                 uint32_t r4m = 0, r7m = 0, old_w = 0, old_h = 0;
                 uc_reg_read(uc, UC_ARM_REG_R4, &r4m);
@@ -2157,65 +2209,72 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &old_w);
                 if (r7m)
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &old_h);
-                printf("[JJFB_E9M_MEASURE_OUT] pc=0x305EA0 width_ptr=0x%X height_ptr=0x%X "
-                       "old_w=%u old_h=%u str=0x%X tick=%u note=plat_0x12340_outs "
+                printf("[JJFB_E9M_MEASURE_OUT] pc=0x305EA0 vert_ptr_R4=0x%X horiz_ptr_R7=0x%X "
+                       "old_R4=%u old_R7=%u str=0x%X tick=%u note=plat_0x12340_outs "
                        "evidence=OBSERVED\n",
                        r4m, r7m, old_w, old_h, g_e8f.e9m_str_va, g_e8f.tick);
                 e9m_log_meas(bp->pc, lr, 0x12340u, g_e8f.e9m_str_va, old_w, old_h, old_w, old_h,
                              "plat_return");
-                /* E9Q: apply pending platform 0x12340 measure to R4/R7 outs (not E9M shim). */
+                /* E9Q/E9V: flush width→R7 (horiz), height→R4 (vert). */
                 if (env1("JJFB_PLATFORM_TEXT_MEASURE_12340") &&
-                    jjfb_plat_12340_flush_outs(uc, r4m, r7m)) {
-                    uint32_t nw = 0, nh = 0, sva = 0;
-                    if (r4m)
-                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &nw);
+                    jjfb_plat_12340_flush_outs(uc, r7m, r4m)) {
+                    uint32_t nw = 0, nh = 0, sva = 0, horiz = 0, vert = 0;
                     if (r7m)
-                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &nh);
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &horiz);
+                    if (r4m)
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &vert);
                     (void)jjfb_plat_12340_pending(&nw, &nh, &sva);
                     g_e8f.e9m_meas_w = nw;
                     g_e8f.e9m_meas_h = nh;
                     g_e8f.e9m_measure_shim_done = 0;
                     e9m_log_meas(bp->pc, lr, 0x12340u, sva ? sva : g_e8f.e9m_str_va, old_w, old_h,
-                                 nw, nh, "plat_12340_flush");
+                                 nw, nh, "plat_12340_flush_e9v");
                     printf("[JJFB_E9Q_CLASS] class=TEXT_MEASURE_SHIM_REMOVED_SUCCESSFULLY "
-                           "w=%u h=%u evidence=OBSERVED\n",
-                           nw, nh);
+                           "w=%u h=%u R7_horiz=%u R4_vert=%u evidence=OBSERVED\n",
+                           nw, nh, horiz, vert);
+                    printf("[JJFB_E9V_CLASS] class=TEXT_MEASURE_ABI_HORIZ_WIDTH_MAPPED "
+                           "measured_w=%u expect_x≈%u evidence=OBSERVED\n",
+                           nw, nw <= 240u ? (240u - nw) / 2u : 0u);
                 } else if (e9m_try_measure_shim(uc, bp->pc)) {
                     uint32_t nw = 0, nh = 0;
-                    if (r4m)
-                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &nw);
                     if (r7m)
-                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &nh);
-                    printf("[JJFB_TEXT_MEASURE_SHIM] text_va=0x%X w=%u h=%u old_w=%u old_h=%u "
-                           "note=GBK_char_est_12x16 FAST_TEXT_MEASURE_SHIM NOT_PRODUCT_SUCCESS "
-                           "evidence=OBSERVED\n",
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &nw);
+                    if (r4m)
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &nh);
+                    printf("[JJFB_TEXT_MEASURE_SHIM] text_va=0x%X w=%u h=%u old_R4=%u old_R7=%u "
+                           "note=GBK_char_est_12x16_R7_horiz FAST_TEXT_MEASURE_SHIM "
+                           "NOT_PRODUCT_SUCCESS evidence=OBSERVED\n",
                            g_e8f.e9m_str_va, nw, nh, old_w, old_h);
                     e9m_log_meas(bp->pc, lr, 0x12340u, g_e8f.e9m_str_va, old_w, old_h, nw, nh,
-                                 "shim_write");
+                                 "shim_write_e9v");
                     printf("[JJFB_E9M_CLASS] class=TEXT_MEASURE_ABI_FIXED_NEXT_GAP "
                            "w=%u h=%u evidence=OBSERVED\n",
                            nw, nh);
                 } else if (old_w == 0 || old_h == 0 || old_h > 320u ||
                            (int32_t)old_h < 0 || old_w > 240u) {
                     printf("[JJFB_E9M_CLASS] class=TEXT_305BFC_BLOCKED_BY_BAD_R1 "
-                           "note=measure_outs_garbage_need_shim old_w=%u old_h=%u "
+                           "note=measure_outs_garbage_need_shim old_R4=%u old_R7=%u "
                            "evidence=OBSERVED\n",
                            old_w, old_h);
                 }
                 fflush(stdout);
             }
         } else if (bp->pc == 0x2EFB48u) {
-            /* Return from 0x305E78: log measured width/height locals. */
+            /* Return from 0x305E78: stack locals — E9V: sp+0x18=vert(R4), sp+0x1C=horiz(R7). */
             if (g_e8f.e9m_mode && sp) {
-                uint32_t mw = 0, mh = 0;
-                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 0x18u, &mw);
-                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 0x1Cu, &mh);
-                g_e8f.e9m_meas_w = mw;
-                g_e8f.e9m_meas_h = mh;
-                printf("[JJFB_E9M_305E78_RET] pc=0x2EFB48 width=%u height=%u "
-                       "note=x_will_be_(W-height)/2 evidence=OBSERVED\n",
-                       mw, mh);
-                e9m_log_meas(bp->pc, lr, 0, g_e8f.e9m_str_va, mw, mh, mw, mh, "305E78_ret");
+                uint32_t vert = 0, horiz = 0;
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 0x18u, &vert);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 0x1Cu, &horiz);
+                /* Prefer platform pending (pre +=2) for layout expect; else use horiz as width. */
+                if (!g_e8f.e9m_meas_w || g_e8f.e9m_meas_w > 240u) {
+                    g_e8f.e9m_meas_w = horiz;
+                    g_e8f.e9m_meas_h = vert;
+                }
+                printf("[JJFB_E9M_305E78_RET] pc=0x2EFB48 horiz=%u vert=%u "
+                       "note=x_will_be_(W-horiz)/2 evidence=OBSERVED\n",
+                       horiz, vert);
+                e9m_log_meas(bp->pc, lr, 0, g_e8f.e9m_str_va, horiz, vert, g_e8f.e9m_meas_w,
+                             g_e8f.e9m_meas_h, "305E78_ret");
                 fflush(stdout);
             }
         } else if (bp->pc == 0x303C50u) {
@@ -2598,6 +2657,12 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[JJFB_E9U_COUNT_WRITER] pc=0x%X lr=0x%X r1=0x%X count=%u gate8B8=0x%X "
                    "tick=%u evidence=OBSERVED\n",
                    bp->pc, lr, r1, count, gate, g_e8f.tick);
+            if (g_e8f.e9v_mode && bp->pc == 0x3124D8u && (lr & ~1u) != 0x80000u) {
+                g_e8f.e9v_natural_tick = 1;
+                printf("[JJFB_E9V_CLASS] class=PROGRESS_TIMER_NATURAL_TICK_RESTORED "
+                       "lr=0x%X count=%u evidence=OBSERVED\n",
+                       lr, count);
+            }
             e9u_open_trace_files();
             if (g_e8f.e9u_count_csv) {
                 static unsigned wn;
@@ -2605,10 +2670,38 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                         g_e8f.tick, bp->pc, bp->pc, count, count, gate);
                 fflush(g_e8f.e9u_count_csv);
             }
+            if (g_e8f.e9v_timer_csv) {
+                static unsigned vn;
+                fprintf(g_e8f.e9v_timer_csv, "%u,%u,0x%X,0x%X,%u,0x%X,%s\n", ++vn, g_e8f.tick,
+                        bp->pc, lr, count, gate,
+                        (lr & ~1u) == 0x80000u ? "assist" : "natural_or_other");
+                fflush(g_e8f.e9v_timer_csv);
+            }
             if (bp->pc == 0x3124FEu)
                 printf("[JJFB_E9U_CLASS] class=PROGRESS_COUNT_WRITER_3124FE_HIT count=%u "
                        "evidence=OBSERVED\n",
                        count);
+            fflush(stdout);
+        } else if (bp->pc == 0x2F55FAu) {
+            uint32_t count = 0, gate = 0;
+            g_e8f.e9v_2f55fa_hit = 1;
+            if (r9w) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xBA0u + 0x2Cu,
+                                               &count);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x8B8u, &gate);
+            }
+            printf("[JJFB_E9V_TIMER] pc=0x2F55FA lr=0x%X count=%u gate8B8=0x%X tick=%u "
+                   "note=natural_progress_tick_caller evidence=OBSERVED\n",
+                   lr, count, gate, g_e8f.tick);
+            printf("[JJFB_E9V_CLASS] class=PROGRESS_TIMER_2F55FA_REACHED count=%u "
+                   "evidence=OBSERVED\n",
+                   count);
+            if (g_e8f.e9v_timer_csv) {
+                static unsigned tn;
+                fprintf(g_e8f.e9v_timer_csv, "%u,%u,0x2F55FA,0x%X,%u,0x%X,natural_caller\n",
+                        ++tn, g_e8f.tick, lr, count, gate);
+                fflush(g_e8f.e9v_timer_csv);
+            }
             fflush(stdout);
         } else if (bp->pc == 0x2FEBBCu || bp->pc == 0x2DAE24u || bp->pc == 0x2FECAAu) {
             printf("[JJFB_E9U_OBJECT_PATH] pc=0x%X lr=0x%X r0=0x%X tick=%u "
@@ -4002,7 +4095,7 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                 add_bp(0x2F2174u, "jTbLayout");
                 add_bp(0x2FC444u, "jBd0Str");
                 add_bp(0x30ED98u, "jB6cStr");
-                if (g_e8f.e9u_mode) {
+                if (g_e8f.e9u_mode || g_e8f.e9v_mode) {
                     add_bp(0x3124D8u, "uTick");
                     add_bp(0x3124FEu, "uCntStr");
                     add_bp(0x2FEBBCu, "uObjInit");
@@ -4011,6 +4104,21 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                     e9u_open_trace_files();
                     printf("[JJFB_E9U_BP] tick=0x3124D8 count_str=0x3124FE "
                            "obj_init=0x2FEBBC callers=0x2DAE24/0x2FECAA evidence=HYPOTHESIS\n");
+                }
+                if (g_e8f.e9v_mode || g_e8f.e9v_timer_dispatch) {
+                    const char *tc = getenv("JJFB_E9V_TIMER_CSV");
+                    add_bp(0x2F55FAu, "vTimerCaller");
+                    if (!g_e8f.e9v_timer_csv && tc && tc[0]) {
+                        g_e8f.e9v_timer_csv = fopen(tc, "w");
+                        if (g_e8f.e9v_timer_csv) {
+                            fprintf(g_e8f.e9v_timer_csv,
+                                    "n,tick,pc,lr,count,gate8b8,note\n");
+                            fflush(g_e8f.e9v_timer_csv);
+                        }
+                    }
+                    printf("[JJFB_E9V_BP] natural_caller=0x2F55FA tick=0x3124D8 "
+                           "timer_dispatch=%d evidence=HYPOTHESIS\n",
+                           g_e8f.e9v_timer_dispatch);
                 }
                 if (g_e8f.e9m_mode) {
                     add_bp(0x305EA0u, "mMeasRet");
@@ -5236,7 +5344,7 @@ static void fast_call_progress_tick(void *uc, uint32_t r9) {
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x8B8u, &gate);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xBA0u + 0x2Cu, &cnt_b);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xBD0u, &bd0);
-    n = g_e8f.e9u_tick_n > 0 ? g_e8f.e9u_tick_n : 4;
+    n = g_e8f.e9u_tick_n > 0 ? g_e8f.e9u_tick_n : 12;
     printf("[JJFB_FAST_PROGRESS_TICK_CALL] entry=0x3124D8 n=%d r9=0x%X gate8B8=0x%X "
            "count_before=%u BD0=0x%X note=real_STR_at_0x3124FE NOT_PRODUCT "
            "evidence=HYPOTHESIS\n",
@@ -5580,17 +5688,19 @@ static int e9m_estimate_text_wh(void *uc, uint32_t str_va, uint32_t *w_out, uint
 }
 
 static int e9m_try_measure_shim(void *uc, uint32_t pc) {
-    uint32_t r4 = 0, r7 = 0, old_w = 0, old_h = 0, nw = 0, nh = 0;
+    uint32_t r4 = 0, r7 = 0, old_a = 0, old_b = 0, nw = 0, nh = 0;
     (void)pc;
     if (!uc || !g_e8f.e9m_mode || !g_e8f.e9m_measure_shim) return 0;
     uc_reg_read((uc_engine *)uc, UC_ARM_REG_R4, &r4);
     uc_reg_read((uc_engine *)uc, UC_ARM_REG_R7, &r7);
     if (!r4 || !r7) return 0;
-    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4, &old_w);
-    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7, &old_h);
-    if (e9m_wh_plausible(old_w, old_h)) {
-        g_e8f.e9m_meas_w = old_w;
-        g_e8f.e9m_meas_h = old_h;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4, &old_a);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7, &old_b);
+    /* Plausible if R7 already holds a width-like horiz extent. */
+    if (e9m_wh_plausible(old_b, old_a > 64u ? 16u : old_a) && old_b >= 8u && old_b <= 240u &&
+        old_a > 0u && old_a <= 64u) {
+        g_e8f.e9m_meas_w = old_b;
+        g_e8f.e9m_meas_h = old_a;
         return 0;
     }
     if (!e9m_estimate_text_wh(uc, g_e8f.e9m_str_va, &nw, &nh)) {
@@ -5598,8 +5708,9 @@ static int e9m_try_measure_shim(void *uc, uint32_t pc) {
         nw = 36u;
         nh = 16u;
     }
-    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r4, nw);
-    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r7, nh);
+    /* E9V: R7=horiz←width, R4=vert←height (matches 0x2EFBA2 center formula). */
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r7, nw);
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r4, nh);
     g_e8f.e9m_meas_w = nw;
     g_e8f.e9m_meas_h = nh;
     g_e8f.e9m_measure_shim_done = 1;

@@ -340,24 +340,30 @@ int jjfb_plat_12340_pending(uint32_t *w_out, uint32_t *h_out, uint32_t *str_va_o
     return 1;
 }
 
-int jjfb_plat_12340_flush_outs(void *uc, uint32_t width_ptr, uint32_t height_ptr) {
+int jjfb_plat_12340_flush_outs(void *uc, uint32_t horiz_ptr, uint32_t vert_ptr) {
     if (!g_pending_meas || !uc) return 0;
-    if (!width_ptr || !height_ptr) {
+    if (!horiz_ptr || !vert_ptr) {
         printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_OUTPUT_POINTER "
                "evidence=OBSERVED\n");
         fflush(stdout);
         return 0;
     }
-    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, width_ptr, g_pending_w);
-    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, height_ptr, g_pending_h);
-    printf("[JJFB_PLATFORM_TEXT_MEASURE_12340] flush width_ptr=0x%X height_ptr=0x%X "
-           "w=%u h=%u str=0x%X evidence=OBSERVED\n",
-           width_ptr, height_ptr, g_pending_w, g_pending_h, g_pending_str);
+    /* E9V: R7=horiz gets text WIDTH; R4=vert gets text HEIGHT.
+     * Caller 0x2EFBA2: x=(screen_w - *R7)/2 — must receive width, not height. */
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, horiz_ptr, g_pending_w);
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, vert_ptr, g_pending_h);
+    printf("[JJFB_TEXT_MEASURE_12340] text=0x%X w=%u h=%u outA(R7_horiz)=0x%X=%u "
+           "outB(R4_vert)=0x%X=%u evidence=OBSERVED\n",
+           g_pending_str, g_pending_w, g_pending_h, horiz_ptr, g_pending_w, vert_ptr,
+           g_pending_h);
+    printf("[JJFB_PLATFORM_TEXT_MEASURE_12340] flush horiz_ptr=0x%X vert_ptr=0x%X "
+           "w=%u h=%u str=0x%X note=R7_gets_width_for_2EFBA2_center evidence=OBSERVED\n",
+           horiz_ptr, vert_ptr, g_pending_w, g_pending_h, g_pending_str);
     if (g_metrics_csv || 1) {
         open_meas_csvs();
         if (g_metrics_csv) {
             int dw = g_last_draw_w, dh = g_last_draw_h;
-            fprintf(g_metrics_csv, "%u,0x%X,%u,%u,%d,%d,%d,%d,\"pending\",0,flush_outs\n",
+            fprintf(g_metrics_csv, "%u,0x%X,%u,%u,%d,%d,%d,%d,\"pending\",0,flush_outs_e9v\n",
                     g_meas_n, g_pending_str, g_pending_w, g_pending_h, dw, dh,
                     dw ? (int)g_pending_w - dw : 0, dh ? (int)g_pending_h - dh : 0);
             fflush(g_metrics_csv);

@@ -8,7 +8,7 @@ param(
   [string]$Target = 'gwy/jjfb.mrp',
   [ValidateSet('tick','object','trace')]
   [string]$Mode = 'tick',
-  [int]$TickN = 4,
+  [int]$TickN = 12,
   [switch]$SkipBuild
 )
 

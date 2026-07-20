@@ -651,6 +651,16 @@ static void gwy_ext_obs_timer_poll(void *uc) {
     else if (!gwy_ext_obs_lifecycle_on_timer_due(uc) && g_timer_stop)
         (void)g_timer_stop();
     g_timer_flushing = 0;
+    /* E9V: Maopao splash progress expects periodic timer callbacks.
+     * platform_timer_take_due is one-shot; re-arm when dispatch compat is on. */
+    if (env_flag("JJFB_PLATFORM_TIMER_DISPATCH") && g_timer_last_period_ms > 0u &&
+        g_timer_last_period_ms <= 60000u) {
+        platform_timer_start(g_timer_last_period_ms);
+        printf("[JJFB_PLATFORM_TIMER_DISPATCH] op=REARM period_ms=%u id=%u "
+               "note=periodic_compat NOT_PRODUCT evidence=OBSERVED\n",
+               g_timer_last_period_ms, g_timer_last_id ? g_timer_last_id : 1u);
+        fflush(stdout);
+    }
     printf("[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED\n");
     fflush(stdout);
 }

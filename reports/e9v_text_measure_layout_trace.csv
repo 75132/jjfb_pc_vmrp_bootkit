@@ -1,0 +1,4 @@
+n,pc,lr,app,code,param0,sp0,sp1,str_va,str_hex,enc,old_w,old_h,new_w,new_h,width_ptr,height_ptr,ret,handled,font,fallback,note
+1,0x280058,0x304589,0x1,0x2A8374,0x0,0x27FFE8,0x27FFE4,0x0,"",ASCII,0,3229380,0,0,0x0,0x0,0,0,"none",0,none
+2,0x280058,0x304589,0x1,0x2A8474,0x0,0x27FFDC,0x27FFD8,0x2A8364,"C1 AC BD D3 D6 D0 A3 AC C7 EB C9 D4 B5 C8",GBK,2827256,14,72,18,0x0,0x0,0,1,"Microsoft YaHei",0,chain_305bfc_cstr
+3,0x280058,0x304589,0x1,0x2A8474,0x0,0x27FF50,0x27FF4C,0x2A8364,"C1 AC BD D3 D6 D0 A3 AC C7 EB C9 D4 B5 C8",GBK,2621400,0,72,18,0x0,0x0,0,1,"Microsoft YaHei",0,chain_305bfc_cstr

@@ -19,6 +19,9 @@
 #ifdef GWY_USE_VM_FILE_SERVICE
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/jjfb_plat_11f00.h"
+/* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
+static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
+                                               const char *member_or_handle);
 #endif
 
 #ifdef _WIN32
@@ -500,8 +503,28 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         fflush(stdout);
         /* If E9C already presented a meaningful frame, skip tiny guest sprite overlay. */
         if (!(e9c && e9c[0] == '1' && getenv("JJFB_E9C_SKIP_TINY") &&
-              getenv("JJFB_E9C_SKIP_TINY")[0] == '1' && w <= 16 && h <= 16))
+              getenv("JJFB_E9C_SKIP_TINY")[0] == '1' && w <= 16 && h <= 16)) {
+#ifdef GWY_USE_VM_FILE_SERVICE
+            /* E9V: magenta key transparency on generic sprite path (not text-only). */
+            {
+                char member_tag[96];
+                char handle_tag[48];
+                uint16_t mw = 0, mh = 0;
+                const char *tag;
+                memset(member_tag, 0, sizeof(member_tag));
+                (void)jjfb_bmp_meta_get(bmp, &mw, &mh, member_tag, sizeof(member_tag));
+                if (member_tag[0]) {
+                    tag = member_tag;
+                } else {
+                    snprintf(handle_tag, sizeof(handle_tag), "bmp@0x%X", bmp);
+                    tag = handle_tag;
+                }
+                jjfb_blit_sprite_with_optional_key(host_pix, (int)x, (int)y, (int)w, (int)h, tag);
+            }
+#else
             guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+#endif
+        }
     } else {
         void *host = getMrpMemPtr(bmp);
         if (!host) {
@@ -2231,8 +2254,81 @@ int32_t bridge_dsm_init(uc_engine *uc) {
 }
 
 #ifdef GWY_USE_VM_FILE_SERVICE
+/* E9V: generic RGB565 color-key for bitmap sprites (Maopao magenta 0xF81F / #FF00FF).
+ * Detect when corners contain the key (or env force); never hardcode game member names. */
+static int jjfb_sprite_pick_colorkey(const uint16_t *px, int w, int h, uint16_t *out_key,
+                                     const char **out_src) {
+    const char *ck;
+    int corners = 0;
+    if (!px || !out_key || w <= 0 || h <= 0) return 0;
+    ck = getenv("JJFB_COLORKEY");
+    if (ck && ck[0] == '0' && ck[1] == '\0') return 0;
+    if (ck && (ck[0] == 'F' || ck[0] == 'f' ||
+               (ck[0] == '0' && (ck[1] == 'x' || ck[1] == 'X')))) {
+        *out_key = (uint16_t)strtoul(ck, NULL, 16);
+        if (out_src) *out_src = "env";
+        return *out_key ? 1 : 0;
+    }
+    /* auto (default): key only when ≥2 corners match classic magenta. */
+    if (w > 1 && h > 1) {
+        if (px[0] == 0xF81Fu) corners++;
+        if (px[(unsigned)(w - 1)] == 0xF81Fu) corners++;
+        if (px[(unsigned)(h - 1) * (unsigned)w] == 0xF81Fu) corners++;
+        if (px[(unsigned)(h - 1) * (unsigned)w + (unsigned)(w - 1)] == 0xF81Fu) corners++;
+        if (corners >= 2) {
+            *out_key = 0xF81Fu;
+            if (out_src) *out_src = "corners";
+            return 1;
+        }
+    }
+    /* Single-corner / dense key: first pixel is key and ≥8% of samples match. */
+    if (px[0] == 0xF81Fu) {
+        uint32_t i, n = (uint32_t)w * (uint32_t)h, hit = 0, step;
+        step = n > 64u ? n / 64u : 1u;
+        for (i = 0; i < n; i += step) {
+            if (px[i] == 0xF81Fu) hit++;
+        }
+        if (hit >= 4u) {
+            *out_key = 0xF81Fu;
+            if (out_src) *out_src = "sample";
+            return 1;
+        }
+    }
+    return 0;
+}
+
+static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
+                                               const char *member_or_handle) {
+    uint16_t key = 0;
+    const char *ksrc = "-";
+    uint32_t lit = 0, skipped = 0;
+    int i, n;
+    if (!px || w <= 0 || h <= 0) return;
+    if (jjfb_sprite_pick_colorkey(px, w, h, &key, &ksrc)) {
+        n = w * h;
+        for (i = 0; i < n; i++) {
+            if (px[i] == key)
+                skipped++;
+            else
+                lit++;
+        }
+        guiDrawBitmapSpriteKey(px, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h, key);
+        printf("[JJFB_BITMAP_COLORKEY] member=%s key=0x%04X skipped=%u lit=%u source=%s "
+               "@%d,%d %dx%d evidence=OBSERVED\n",
+               member_or_handle && member_or_handle[0] ? member_or_handle : "?",
+               (unsigned)key, skipped, lit, ksrc, x, y, w, h);
+        printf("[JJFB_E9V_CLASS] class=BITMAP_COLORKEY_TRANSPARENT_RENDERED member=%s "
+               "key=0x%04X evidence=OBSERVED\n",
+               member_or_handle && member_or_handle[0] ? member_or_handle : "?", (unsigned)key);
+        fflush(stdout);
+    } else {
+        guiDrawBitmapSprite(px, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+    }
+}
+
 /* E9H: splash 0x2EC6B8 path — blit original guest RGB565 via real guiDrawBitmapSprite.
- * Registered into launcher_core (MinGW PE has no ELF weak override). */
+ * Registered into launcher_core (MinGW PE has no ELF weak override).
+ * E9V: apply generic color-key when bitmap uses magenta transparent key. */
 static int jjfb_e9h_blit_guest_pixels_impl(void *uc_in, uint32_t pixels_va, int x, int y, int w,
                                            int h, const char *member) {
     uc_engine *uc = (uc_engine *)uc_in;
@@ -2251,10 +2347,11 @@ static int jjfb_e9h_blit_guest_pixels_impl(void *uc_in, uint32_t pixels_va, int 
         return 0;
     }
     printf("[JJFB_E9H_2EC6B8_BLIT] pixels=0x%X x=%d y=%d w=%d h=%d member=%s "
-           "via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED\n",
+           "via=guiDrawBitmapSprite_auto_key note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED\n",
            pixels_va, x, y, w, h, member && member[0] ? member : "?");
     fflush(stdout);
-    guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+    jjfb_blit_sprite_with_optional_key(host_pix, x, y, w, h,
+                                       member && member[0] ? member : "?");
     return 1;
 }
 
