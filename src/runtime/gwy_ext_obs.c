@@ -699,6 +699,22 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     robotol_idle_watch_helper_fx_begin(r0, r1);
     robotol_idle_watch_try_arm(uc);
 
+    /* E9N: proven platform drawText 0x11F00 (via 2F2360 → 304558 → slot+0x28). */
+    if (r0 == 0x11F00u) {
+        if (jjfb_e9n_try_plat_11f00_text_draw(uc, r1, r2, r3)) {
+            ret = 0; /* MR_SUCCESS */
+            ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+            return ret;
+        }
+        if (getenv("JJFB_E9N_MODE") && getenv("JJFB_E9N_MODE")[0] == '1') {
+            printf("[JJFB_E9N_CLASS] class=TEXT_305C3C_BLOCKED_BY_PLATFORM_TEXT_API "
+                   "note=0x11F00_unhandled_need_shim app=0x%X code=0x%X p0=0x%X "
+                   "evidence=OBSERVED\n",
+                   r1, r2, r3);
+            fflush(stdout);
+        }
+    }
+
     if (env_flag("JJFB_TIMER_ARM_TRACE") &&
         (result.kind == GWY_PLAT_KIND_TIMER_START || result.kind == GWY_PLAT_KIND_TIMER_STOP ||
          (result.kind == GWY_PLAT_KIND_STATUS && (r0 == 0u || (r1 >= 1u && r1 <= 60000u))))) {

@@ -15,6 +15,7 @@ typedef struct {
 static JjfbBmpMetaSlot g_slots[JJFB_BMP_META_N];
 static JjfbE9hBlitFn g_e9h_blit_fn;
 static JjfbE9kHoldFn g_e9k_hold_fn;
+static JjfbE9nTextDrawFn g_e9n_text_draw_fn;
 static int g_e9k_hold_requested;
 
 void jjfb_bmp_meta_reset(void) {
@@ -95,4 +96,13 @@ void jjfb_e9k_request_hold(const char *reason) {
                 reason ? reason : "?");
         fflush(stderr);
     }
+}
+
+void jjfb_e9n_set_text_draw_fn(JjfbE9nTextDrawFn fn) {
+    g_e9n_text_draw_fn = fn;
+}
+
+int jjfb_e9n_host_draw_gbk(int x, int y, const uint8_t *bytes, int nbytes) {
+    if (!g_e9n_text_draw_fn || !bytes || nbytes <= 0) return 0;
+    return g_e9n_text_draw_fn(x, y, bytes, nbytes);
 }

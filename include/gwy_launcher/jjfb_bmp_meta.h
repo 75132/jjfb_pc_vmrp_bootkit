@@ -35,8 +35,12 @@ void jjfb_e9k_set_hold_fn(JjfbE9kHoldFn fn);
 void jjfb_e9k_request_hold(const char *reason);
 int jjfb_e9k_hold_requested(void);
 
+/* E9N: platform 0x11F00 text draw compat — bridge registers guiDrawBitmapSprite impl. */
+typedef int (*JjfbE9nTextDrawFn)(int x, int y, const uint8_t *bytes, int nbytes);
+void jjfb_e9n_set_text_draw_fn(JjfbE9nTextDrawFn fn);
+int jjfb_e9n_host_draw_gbk(int x, int y, const uint8_t *bytes, int nbytes);
+
 #ifdef __cplusplus
 }
 #endif
-
 #endif

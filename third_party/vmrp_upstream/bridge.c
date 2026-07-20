@@ -508,6 +508,47 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
 }
 
 /* Observe-only graphics stubs: log real guest calls; no host fake paint. */
+static uint16_t jjfb_rgb565_simple(uint8_t r, uint8_t g, uint8_t b) {
+    return (uint16_t)(((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3));
+}
+
+static void jjfb_compat_draw_char_block(int32_t x, int32_t y, uint16_t ch, uint16_t fg) {
+    uint16_t pix[12 * 16];
+    int i, j, gw = (ch >= 128u) ? 12 : 8;
+    int gh = 12;
+    (void)memset(pix, 0, sizeof(pix));
+    for (j = 0; j < gh; j++) {
+        for (i = 0; i < gw; i++) {
+            if (((i + j + (ch & 0xFF)) & 3) != 0) pix[j * 12 + i] = fg;
+        }
+    }
+    guiDrawBitmapSprite(pix, x, y, gw, gh);
+}
+
+/* E9N: platform mr_platDrawChar compat — only when JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM=1. */
+static void br_mr_platDrawChar_compat(BridgeMap *o, uc_engine *uc) {
+    uint32_t ch = 0, x = 0, y = 0, color = 0;
+    static uint32_t n;
+    const char *shim = getenv("JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM");
+    uint16_t fg;
+    (void)o;
+    if (!shim || shim[0] != '1') return;
+    uc_reg_read(uc, UC_ARM_REG_R0, &ch);
+    uc_reg_read(uc, UC_ARM_REG_R1, &x);
+    uc_reg_read(uc, UC_ARM_REG_R2, &y);
+    uc_reg_read(uc, UC_ARM_REG_R3, &color);
+    n++;
+    fg = (uint16_t)(color & 0xFFFFu);
+    if (!fg) fg = 0xFFFFu;
+    jjfb_compat_draw_char_block((int32_t)x, (int32_t)y, (uint16_t)(ch & 0xFFFFu), fg);
+    if (n <= 16 || (n % 64) == 0) {
+        printf("[JJFB_PLATFORM_TEXT_DRAW_COMPAT] api=mr_platDrawChar #%u ch=0x%X @%d,%d "
+               "color=0x%X NOT_PRODUCT evidence=OBSERVED\n",
+               n, ch & 0xFFFFu, (int)x, (int)y, color);
+        fflush(stdout);
+    }
+}
+
 static void br_observe_draw_text(BridgeMap *o, uc_engine *uc) {
     uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0, sp = 0;
     uc_reg_read(uc, UC_ARM_REG_R0, &r0);
@@ -522,6 +563,32 @@ static void br_observe_draw_text(BridgeMap *o, uc_engine *uc) {
     printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
            "r2=0x%X r3=0x%X sp=0x%X note=real_platform_draw evidence=OBSERVED\n",
            o && o->name ? o->name : "drawText", pc, lr, r0, r1, r2, r3, sp);
+    {
+        const char *shim = getenv("JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM");
+        if (shim && shim[0] == '1' && r0) {
+            uint8_t buf[96];
+            int i = 0, cx = (int)(int16_t)(r1 & 0xFFFFu), cy = (int)(int16_t)(r2 & 0xFFFFu);
+            uint16_t fg = jjfb_rgb565_simple(255, 255, 255);
+            memset(buf, 0, sizeof(buf));
+            if (uc_mem_read(uc, r0, buf, sizeof(buf) - 1) == UC_ERR_OK) {
+                while (i < (int)sizeof(buf) - 1 && buf[i]) {
+                    uint16_t ch;
+                    if (buf[i] >= 0x81u && i + 1 < (int)sizeof(buf) - 1 && buf[i + 1]) {
+                        ch = (uint16_t)(((uint16_t)buf[i] << 8) | buf[i + 1]);
+                        i += 2;
+                    } else {
+                        ch = (uint16_t)buf[i++];
+                    }
+                    jjfb_compat_draw_char_block(cx, cy, ch, fg);
+                    cx += (ch >= 128u) ? 12 : 8;
+                }
+                printf("[JJFB_PLATFORM_TEXT_DRAW_COMPAT] api=%s str=0x%X @%d,%d "
+                       "NOT_PRODUCT evidence=OBSERVED\n",
+                       o && o->name ? o->name : "drawText", r0, (int)(int16_t)(r1 & 0xFFFFu),
+                       (int)(int16_t)(r2 & 0xFFFFu));
+            }
+        }
+    }
     fflush(stdout);
 }
 
@@ -1634,7 +1701,7 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x238, MAP_DATA, mr_exit_cb, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x23C, MAP_DATA, mr_exit_cb_data, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x240, MAP_DATA, mr_entry, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x244, MAP_FUNC, mr_platDrawChar, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x244, MAP_FUNC, mr_platDrawChar, NULL, br_mr_platDrawChar_compat, 0),
 };
 
 static BridgeMap dsm_require_funcs_funcMap[] = {
@@ -2203,5 +2270,32 @@ __attribute__((constructor))
 #endif
 static void jjfb_e9k_register_hold(void) {
     jjfb_e9k_set_hold_fn(jjfb_e9k_hold_impl);
+}
+
+/* E9N: 0x11F00 sendAppEvent text draw — GBK bytes at real x/y via guiDrawBitmapSprite. */
+static int jjfb_e9n_text_draw_impl(int x, int y, const uint8_t *bytes, int nbytes) {
+    int i = 0, cx = x, cy = y, nchars = 0;
+    uint16_t fg = 0xFFFFu;
+    if (!bytes || nbytes <= 0) return 0;
+    while (i < nbytes && bytes[i] && nchars < 16) {
+        uint16_t ch;
+        if (bytes[i] >= 0x81u && i + 1 < nbytes && bytes[i + 1]) {
+            ch = (uint16_t)(((uint16_t)bytes[i] << 8) | bytes[i + 1]);
+            i += 2;
+        } else {
+            ch = (uint16_t)bytes[i++];
+        }
+        jjfb_compat_draw_char_block(cx, cy, ch, fg);
+        cx += (ch >= 128u) ? 12 : 8;
+        nchars++;
+    }
+    return nchars > 0 ? 1 : 0;
+}
+
+#if defined(__GNUC__)
+__attribute__((constructor))
+#endif
+static void jjfb_e9n_register_text_draw(void) {
+    jjfb_e9n_set_text_draw_fn(jjfb_e9n_text_draw_impl);
 }
 #endif

@@ -168,6 +168,13 @@ extern "C" {
  *   JJFB_E9M_ABI_CSV / MEAS_CSV / LAYOUT_CSV
  *   Root cause: x=(W-height_out)/2; garbage height → r1=0xFFE7917B.
  *
+ * E9N-305C3C glyph / platform text draw (NOT product success):
+ *   JJFB_E9N_MODE=1                — deep trace 0x305C3C inner clip/glyph/blit
+ *   JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM=1 — mr_platDrawChar/_DrawText compat only
+ *   JJFB_E9N_GLYPHTRACE=1          — focus font/glyph table reads
+ *   JJFB_E9N_305C3C_CSV / CLIP_CSV / GLYPH_CSV
+ *   Inner gates: R9+830/824 clip, 303C50 draw mode, BL 2F2360 glyph blit.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.
@@ -188,6 +195,11 @@ void robotol_flag_writer_trace_on_lifecycle_fault(void *uc, uint32_t tick, int o
                                                   unsigned uc_err, uint32_t pc_after,
                                                   uint32_t r0_after, uint32_t r9_after,
                                                   uint32_t sp_after, uint32_t lr_after);
+
+/* E9N: platform 0x11F00 drawText compat (JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM).
+ * Draws real guest splash string at real param0 x/y. NOT product success. */
+int jjfb_e9n_try_plat_11f00_text_draw(void *uc, uint32_t app, uint32_t code_obj,
+                                      uint32_t param0);
 
 #ifdef __cplusplus
 }
