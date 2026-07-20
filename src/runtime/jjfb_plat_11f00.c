@@ -6,15 +6,36 @@
 #include <string.h>
 
 static JjfbPlat11f00DrawFn g_draw_fn;
+static JjfbPlat12340MeasureFn g_measure_fn;
 static uint32_t g_last_str_va;
 static int16_t g_last_x, g_last_y;
 static uint32_t g_last_color = 0xFFu;
 static FILE *g_calls_csv;
 static FILE *g_draw_csv;
 static uint32_t g_call_n;
+static int g_pending_meas;
+static uint32_t g_pending_w, g_pending_h, g_pending_str;
+static int g_last_draw_w, g_last_draw_h;
+static FILE *g_meas_csv;
+static FILE *g_metrics_csv;
+static uint32_t g_meas_n;
 
 void jjfb_plat_11f00_set_draw_fn(JjfbPlat11f00DrawFn fn) {
     g_draw_fn = fn;
+}
+
+void jjfb_plat_12340_set_measure_fn(JjfbPlat12340MeasureFn fn) {
+    g_measure_fn = fn;
+}
+
+void jjfb_plat_11f00_note_draw_bbox(int w, int h) {
+    if (w > 0) g_last_draw_w = w;
+    if (h > 0) g_last_draw_h = h;
+}
+
+void jjfb_plat_11f00_last_draw_bbox(int *w_out, int *h_out) {
+    if (w_out) *w_out = g_last_draw_w;
+    if (h_out) *h_out = g_last_draw_h;
 }
 
 void jjfb_plat_11f00_note_guest_cstr(uint32_t str_va, int16_t x, int16_t y, uint32_t color) {
@@ -283,5 +304,177 @@ int jjfb_plat_11f00_handle(void *uc, uint32_t app, uint32_t code_obj, uint32_t p
         fflush(g_calls_csv);
     }
 
+    return handled;
+}
+
+static void open_meas_csvs(void) {
+    const char *c, *m;
+    if (!g_meas_csv) {
+        c = getenv("JJFB_E9Q_12340_CSV");
+        if (!c || !c[0]) c = "reports/e9q_platform_12340_measure_calls.csv";
+        g_meas_csv = fopen(c, "w");
+        if (g_meas_csv) {
+            fprintf(g_meas_csv,
+                    "n,pc,lr,app,code,param0,sp0,sp1,str_va,str_hex,enc,old_w,old_h,new_w,new_h,"
+                    "width_ptr,height_ptr,ret,handled,font,fallback,note\n");
+            fflush(g_meas_csv);
+        }
+    }
+    if (!g_metrics_csv) {
+        m = getenv("JJFB_E9Q_METRICS_CSV");
+        if (!m || !m[0]) m = "reports/e9q_measure_vs_draw_metrics.csv";
+        g_metrics_csv = fopen(m, "w");
+        if (g_metrics_csv) {
+            fprintf(g_metrics_csv,
+                    "n,str_va,meas_w,meas_h,draw_w,draw_h,dw,dh,font,fallback,note\n");
+            fflush(g_metrics_csv);
+        }
+    }
+}
+
+int jjfb_plat_12340_pending(uint32_t *w_out, uint32_t *h_out, uint32_t *str_va_out) {
+    if (!g_pending_meas) return 0;
+    if (w_out) *w_out = g_pending_w;
+    if (h_out) *h_out = g_pending_h;
+    if (str_va_out) *str_va_out = g_pending_str;
+    return 1;
+}
+
+int jjfb_plat_12340_flush_outs(void *uc, uint32_t width_ptr, uint32_t height_ptr) {
+    if (!g_pending_meas || !uc) return 0;
+    if (!width_ptr || !height_ptr) {
+        printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_OUTPUT_POINTER "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+        return 0;
+    }
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, width_ptr, g_pending_w);
+    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, height_ptr, g_pending_h);
+    printf("[JJFB_PLATFORM_TEXT_MEASURE_12340] flush width_ptr=0x%X height_ptr=0x%X "
+           "w=%u h=%u str=0x%X evidence=OBSERVED\n",
+           width_ptr, height_ptr, g_pending_w, g_pending_h, g_pending_str);
+    if (g_metrics_csv || 1) {
+        open_meas_csvs();
+        if (g_metrics_csv) {
+            int dw = g_last_draw_w, dh = g_last_draw_h;
+            fprintf(g_metrics_csv, "%u,0x%X,%u,%u,%d,%d,%d,%d,\"pending\",0,flush_outs\n",
+                    g_meas_n, g_pending_str, g_pending_w, g_pending_h, dw, dh,
+                    dw ? (int)g_pending_w - dw : 0, dh ? (int)g_pending_h - dh : 0);
+            fflush(g_metrics_csv);
+        }
+    }
+    fflush(stdout);
+    return 1;
+}
+
+int jjfb_plat_12340_handle(void *uc, uint32_t app, uint32_t code_obj, uint32_t param0,
+                           uint32_t caller_pc, uint32_t caller_lr, uint32_t sp) {
+    uint8_t buf[96];
+    char hex[200];
+    int nbytes = 0, mw = 0, mh = 0;
+    uint32_t str_va = 0, sp0 = 0, sp1 = 0, old_w = 0, old_h = 0;
+    uint32_t width_ptr = 0, height_ptr = 0;
+    const char *how = "none";
+    const char *enc;
+    const char *font_name = "none";
+    int font_fallback = 0;
+    int handled = 0;
+    int api_on = env1("JJFB_PLATFORM_TEXT_MEASURE_12340");
+    int trace_on = env1("JJFB_E9Q_MODE") || api_on;
+    int ret = 0;
+
+    open_meas_csvs();
+    memset(buf, 0, sizeof(buf));
+    if (sp) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp, &sp0);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 4u, &sp1);
+    }
+
+    str_va = resolve_str_va(uc, code_obj, buf, (int)sizeof(buf), &nbytes, &how);
+    if (!str_va && g_last_str_va) {
+        str_va = g_last_str_va;
+        if (peek_cstr(uc, str_va, buf, (int)sizeof(buf), &nbytes))
+            how = "chain_last_cstr";
+    }
+    enc = guess_enc(buf, nbytes);
+    hex_escape(buf, nbytes > 24 ? 24 : nbytes, hex, (int)sizeof(hex));
+
+    /* Candidate out pointers on SP are unordered vs R4/R7 after return.
+     * Do not poke here — jjfb_plat_12340_flush_outs @ 0x305EA0 uses R4=&w R7=&h. */
+    if (sp0 > 0x1000u && sp0 < 0x04000000u)
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp0, &old_w);
+    if (sp1 > 0x1000u && sp1 < 0x04000000u)
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp1, &old_h);
+
+    if (api_on && str_va && nbytes > 0) {
+        int ok = 0;
+        if (g_measure_fn)
+            ok = g_measure_fn(buf, nbytes, &mw, &mh, &font_name, &font_fallback);
+        if (!ok || mw <= 0 || mh <= 0) {
+            /* Conservative GBK glyph estimate matching prior shim scale (not hardcoded string). */
+            int i = 0, nchars = 0;
+            while (i < nbytes && buf[i] && nchars < 32) {
+                if (buf[i] >= 0x81u && i + 1 < nbytes && buf[i + 1]) {
+                    nchars++;
+                    i += 2;
+                } else {
+                    nchars++;
+                    i++;
+                }
+            }
+            if (nchars > 0) {
+                mw = nchars * 12;
+                mh = 16;
+                ok = 1;
+                font_name = "fallback_12x16_est";
+                font_fallback = 1;
+            }
+        }
+        if (ok && mw > 0 && mh > 0 && mw <= 240 && mh <= 64) {
+            g_pending_meas = 1;
+            g_pending_w = (uint32_t)mw;
+            g_pending_h = (uint32_t)mh;
+            g_pending_str = str_va;
+            handled = 1;
+            printf("[JJFB_PLATFORM_TEXT_MEASURE_12340] text_va=0x%X w=%d h=%d enc=%s "
+                   "font=%s fallback=%d how=%s ret=0 NOT_PRODUCT evidence=OBSERVED\n",
+                   str_va, mw, mh, enc, font_name ? font_name : "?", font_fallback, how);
+            if (font_fallback)
+                printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_RENDERED_WITH_FONT_FALLBACK "
+                       "evidence=OBSERVED\n");
+            else
+                printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_RENDERED "
+                       "evidence=OBSERVED\n");
+            fflush(stdout);
+        } else if (!ok) {
+            printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_ENCODING "
+                   "str=0x%X evidence=OBSERVED\n",
+                   str_va);
+            fflush(stdout);
+        }
+    } else if (api_on && !str_va) {
+        printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_ENCODING "
+               "note=no_guest_cstr code=0x%X evidence=OBSERVED\n",
+               code_obj);
+        fflush(stdout);
+    } else if (trace_on) {
+        printf("[JJFB_E9Q_12340_TRACE] app=0x%X code=0x%X str=0x%X old_w=%u old_h=%u "
+               "enc=%s how=%s hex=[%s] evidence=OBSERVED\n",
+               app, code_obj, str_va, old_w, old_h, enc, how, hex);
+        fflush(stdout);
+    }
+
+    if (g_meas_csv) {
+        fprintf(g_meas_csv,
+                "%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,\"%s\",%s,%u,%u,%u,%u,0x%X,0x%X,"
+                "%d,%d,\"%s\",%d,%s\n",
+                ++g_meas_n, caller_pc, caller_lr, app, code_obj, param0, sp0, sp1, str_va, hex,
+                enc, old_w, old_h, g_pending_w, g_pending_h, width_ptr, height_ptr, ret, handled,
+                font_name ? font_name : "", font_fallback, how);
+        fflush(g_meas_csv);
+    }
+    (void)param0;
+    (void)width_ptr;
+    (void)height_ptr;
     return handled;
 }

@@ -723,6 +723,21 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
     }
 
+    /* E9Q: formal platform text-measure 0x12340. Outs flushed @ 0x305EA0 via R4/R7. */
+    if (r0 == 0x12340u) {
+        if (jjfb_plat_12340_handle(uc, r1, r2, r3, pc, lr, sp)) {
+            ret = 0; /* MR_SUCCESS */
+            ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+            return ret;
+        }
+        if (getenv("JJFB_E9Q_MODE") && getenv("JJFB_E9Q_MODE")[0] == '1') {
+            printf("[JJFB_E9Q_CLASS] class=PLATFORM_TEXT_MEASURE_12340_ABI_WRONG "
+                   "note=unhandled app=0x%X code=0x%X evidence=OBSERVED\n",
+                   r1, r2);
+            fflush(stdout);
+        }
+    }
+
     if (env_flag("JJFB_TIMER_ARM_TRACE") &&
         (result.kind == GWY_PLAT_KIND_TIMER_START || result.kind == GWY_PLAT_KIND_TIMER_STOP ||
          (result.kind == GWY_PLAT_KIND_STATUS && (r0 == 0u || (r1 >= 1u && r1 <= 60000u))))) {

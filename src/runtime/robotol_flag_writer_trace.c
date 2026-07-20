@@ -292,6 +292,10 @@ static struct {
     int e9l_mode;
     int e9l_textctx_assist; /* JJFB_FAST_TEXTCTX_ASSIST — dims only, NOT_PRODUCT */
     int e9l_textctx_assist_done;
+    /* E9R: platform screen dims replace FAST_TEXTCTX_ASSIST on success path. */
+    int e9r_mode;
+    int plat_screen_dims; /* JJFB_PLATFORM_SCREEN_DIMS — normal runtime compat */
+    int plat_screen_dims_done;
     int e9l_305e78_ok;
     int e9l_2f2174_hit;
     int e9l_305bfc_hit;
@@ -909,6 +913,9 @@ int robotol_flag_writer_trace_enabled(void) {
         /* E9L: R9+0x818/0x81C text-measure dims — implies E9K; BD0 assist may remain. */
         g_e8f.e9l_mode = env1("JJFB_E9L_MODE");
         g_e8f.e9l_textctx_assist = env1("JJFB_FAST_TEXTCTX_ASSIST");
+        /* E9R: platform screen dims (818/81C/830/834/824) replace FAST_TEXTCTX_ASSIST. */
+        g_e8f.e9r_mode = env1("JJFB_E9R_MODE");
+        g_e8f.plat_screen_dims = env1("JJFB_PLATFORM_SCREEN_DIMS");
         /* E9M: 305BFC ABI / text-measure return — implies E9L + textctx dims. */
         g_e8f.e9m_mode = env1("JJFB_E9M_MODE");
         g_e8f.e9m_measure_shim = env1("JJFB_FAST_TEXT_MEASURE_SHIM");
@@ -916,18 +923,43 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9n_mode = env1("JJFB_E9N_MODE");
         g_e8f.e9n_text_draw_shim = env1("JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM");
         g_e8f.e9n_glyphtrace = env1("JJFB_E9N_GLYPHTRACE");
+        if (g_e8f.e9r_mode)
+            g_e8f.e9l_mode = 1;
         if (g_e8f.e9n_mode) {
             g_e8f.e9m_mode = 1;
             g_e8f.e9l_mode = 1;
-            if (!getenv("JJFB_FAST_TEXTCTX_ASSIST"))
+            /* Prefer platform screen dims over FAST_TEXTCTX_ASSIST when set. */
+            if (g_e8f.plat_screen_dims || env1("JJFB_PLATFORM_SCREEN_DIMS")) {
+                g_e8f.plat_screen_dims = 1;
+                g_e8f.e9l_textctx_assist = 0;
+            } else if (!getenv("JJFB_FAST_TEXTCTX_ASSIST")) {
                 g_e8f.e9l_textctx_assist = 1;
-            if (!getenv("JJFB_FAST_TEXT_MEASURE_SHIM"))
+            }
+            /* E9Q: formal 0x12340 measure replaces FAST_TEXT_MEASURE_SHIM success path. */
+            if (env1("JJFB_PLATFORM_TEXT_MEASURE_12340")) {
+                g_e8f.e9m_measure_shim = 0;
+            } else if (!getenv("JJFB_FAST_TEXT_MEASURE_SHIM")) {
                 g_e8f.e9m_measure_shim = 1;
+            }
+        }
+        if (env1("JJFB_PLATFORM_TEXT_MEASURE_12340"))
+            g_e8f.e9m_measure_shim = 0;
+        if (env1("JJFB_PLATFORM_SCREEN_DIMS")) {
+            g_e8f.plat_screen_dims = 1;
+            g_e8f.e9l_textctx_assist = 0;
         }
         if (g_e8f.e9m_mode) {
             g_e8f.e9l_mode = 1;
-            if (!getenv("JJFB_FAST_TEXTCTX_ASSIST"))
+            if (g_e8f.plat_screen_dims) {
+                g_e8f.e9l_textctx_assist = 0;
+            } else if (!getenv("JJFB_FAST_TEXTCTX_ASSIST")) {
                 g_e8f.e9l_textctx_assist = 1;
+            }
+        }
+        if (g_e8f.plat_screen_dims) {
+            printf("[JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 "
+                   "replaces_FAST_TEXTCTX_ASSIST NOT_PRODUCT evidence=HYPOTHESIS\n");
+            fflush(stdout);
         }
         if (g_e8f.e9l_mode) {
             g_e8f.e9k_mode = 1;
@@ -1983,7 +2015,24 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                        r4m, r7m, old_w, old_h, g_e8f.e9m_str_va, g_e8f.tick);
                 e9m_log_meas(bp->pc, lr, 0x12340u, g_e8f.e9m_str_va, old_w, old_h, old_w, old_h,
                              "plat_return");
-                if (e9m_try_measure_shim(uc, bp->pc)) {
+                /* E9Q: apply pending platform 0x12340 measure to R4/R7 outs (not E9M shim). */
+                if (env1("JJFB_PLATFORM_TEXT_MEASURE_12340") &&
+                    jjfb_plat_12340_flush_outs(uc, r4m, r7m)) {
+                    uint32_t nw = 0, nh = 0, sva = 0;
+                    if (r4m)
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &nw);
+                    if (r7m)
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r7m, &nh);
+                    (void)jjfb_plat_12340_pending(&nw, &nh, &sva);
+                    g_e8f.e9m_meas_w = nw;
+                    g_e8f.e9m_meas_h = nh;
+                    g_e8f.e9m_measure_shim_done = 0;
+                    e9m_log_meas(bp->pc, lr, 0x12340u, sva ? sva : g_e8f.e9m_str_va, old_w, old_h,
+                                 nw, nh, "plat_12340_flush");
+                    printf("[JJFB_E9Q_CLASS] class=TEXT_MEASURE_SHIM_REMOVED_SUCCESSFULLY "
+                           "w=%u h=%u evidence=OBSERVED\n",
+                           nw, nh);
+                } else if (e9m_try_measure_shim(uc, bp->pc)) {
                     uint32_t nw = 0, nh = 0;
                     if (r4m)
                         (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r4m, &nw);
@@ -4412,17 +4461,21 @@ static void e9i_seed_scr_dims(void *uc, uint32_t r9) {
     fflush(stdout);
 }
 
-/* E9L: R9+0x818/0x81C are screen/layout dims (same family as 830/834) read by caller
- * 0x2EFB38/40 into r2/r1 before BL 0x305E78. No robotol STR writer observed; seed under
- * FAST_TEXTCTX_ASSIST only — dims from real 240x320 surface, not invented pixels. */
+/* E9L/E9R: R9+0x818/0x81C are screen/layout dims (same family as 830/834) read by caller
+ * 0x2EFB38/40 into r2/r1 before BL 0x305E78. No robotol STR writer observed.
+ * E9R: JJFB_PLATFORM_SCREEN_DIMS fills zero slots from host 240x320 surface (normal
+ * runtime compat). FAST_TEXTCTX_ASSIST remains diagnostic-only and is OFF on success. */
 static void e9l_seed_textctx(void *uc, uint32_t r9) {
-    uint32_t a818 = 0, a81c = 0, a830 = 0, a834 = 0;
+    uint32_t a818 = 0, a81c = 0, a830 = 0, a834 = 0, a824 = 0;
+    uint32_t sw = 240u, sh = 320u;
+    int used_plat = 0;
     if (!uc || !r9 || !g_e8f.e9l_mode) return;
     e9l_open_trace_files();
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x818u, &a818);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x81Cu, &a81c);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x830u, &a830);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x834u, &a834);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x824u, &a824);
     printf("[JJFB_E9L_818_81C] before R9_818=0x%X R9_81C=0x%X R9_830=0x%X R9_834=0x%X "
            "note=screen_dims_for_305E78 evidence=OBSERVED\n",
            a818, a81c, a830, a834);
@@ -4431,42 +4484,82 @@ static void e9l_seed_textctx(void *uc, uint32_t r9) {
     if (!a818 && !a81c)
         printf("[JJFB_E9L_CLASS] class=TEXTCTX_818_81C_WRITER_FOUND_NEXT_GAP "
                "note=no_robotol_STR_writer_dims_like_830_834 evidence=OBSERVED\n");
+
+    /* Prefer already-seeded 830/834 (E9I) as source of truth when sane. */
+    if (a830 >= 160u && a830 <= 480u) sw = a830;
+    if (a834 >= 160u && a834 <= 640u) sh = a834;
+
+    if (g_e8f.plat_screen_dims) {
+        if (g_e8f.plat_screen_dims_done && a818 && a81c) return;
+        if (!a818) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x818u, sw);
+            e9l_log_writer(0, 0, 0x818u, 0, sw, "plat_sync_818_w");
+            a818 = sw;
+        }
+        if (!a81c) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x81Cu, sh);
+            e9l_log_writer(0, 0, 0x81Cu, 0, sh, "plat_sync_81C_h");
+            a81c = sh;
+        }
+        if (!a830) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x830u, sw);
+            a830 = sw;
+        }
+        if (!a834) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x834u, sh);
+            a834 = sh;
+        }
+        if (!a824) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x824u, sh);
+            e9l_log_writer(0, 0, 0x824u, 0, sh, "plat_sync_824_h_clip");
+            a824 = sh;
+        }
+        g_e8f.plat_screen_dims_done = 1;
+        g_e8f.e9l_textctx_assist_done = 1;
+        used_plat = 1;
+        printf("[JJFB_PLATFORM_SCREEN_DIMS] R9_818=%u R9_81C=%u R9_830=%u R9_834=%u "
+               "R9_824=%u note=host_surface_%ux%u_NOT_PRODUCT evidence=OBSERVED\n",
+               a818, a81c, a830, a834, a824, (unsigned)sw, (unsigned)sh);
+        printf("[JJFB_E9R_CLASS] class=PLATFORM_TEXTCTX_DIMS_SYNCED evidence=OBSERVED\n");
+        printf("[JJFB_E9R_CLASS] class=TEXTCTX_ASSIST_REMOVED_SUCCESSFULLY evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+
     if (!g_e8f.e9l_textctx_assist) {
         if (!a818 || !a81c)
             printf("[JJFB_E9L_CLASS] class=SPLASH_TEXT_BLOCKED_BY_FONT_CONTEXT "
-                   "note=need_FAST_TEXTCTX_ASSIST_or_natural_writer evidence=OBSERVED\n");
+                   "note=need_PLATFORM_SCREEN_DIMS_or_FAST_TEXTCTX_ASSIST_or_natural_writer "
+                   "evidence=OBSERVED\n");
         fflush(stdout);
         return;
     }
     if (g_e8f.e9l_textctx_assist_done && a818 && a81c) return;
     if (!a818) {
-        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x818u, 240u);
-        e9l_log_writer(0, 0, 0x818u, 0, 240u, "assist_seed_818_w");
-        a818 = 240u;
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x818u, sw);
+        e9l_log_writer(0, 0, 0x818u, 0, sw, "assist_seed_818_w");
+        a818 = sw;
     }
     if (!a81c) {
-        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x81Cu, 320u);
-        e9l_log_writer(0, 0, 0x81Cu, 0, 320u, "assist_seed_81C_h");
-        a81c = 320u;
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x81Cu, sh);
+        e9l_log_writer(0, 0, 0x81Cu, 0, sh, "assist_seed_81C_h");
+        a81c = sh;
     }
     if (!a830)
-        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x830u, 240u);
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x830u, sw);
     if (!a834)
-        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x834u, 320u);
-    {
-        uint32_t a824 = 0;
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x824u, &a824);
-        if (!a824) {
-            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x824u, 320u);
-            e9l_log_writer(0, 0, 0x824u, 0, 320u, "assist_seed_824_h_clip");
-        }
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x834u, sh);
+    if (!a824) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x824u, sh);
+        e9l_log_writer(0, 0, 0x824u, 0, sh, "assist_seed_824_h_clip");
     }
     g_e8f.e9l_textctx_assist_done = 1;
-    printf("[JJFB_FAST_TEXTCTX_ASSIST] R9_818=%u R9_81C=%u note=real_240x320_dims_only "
+    printf("[JJFB_FAST_TEXTCTX_ASSIST] R9_818=%u R9_81C=%u note=real_%ux%u_dims_only "
            "FAST_TEXTCTX_ASSIST NOT_PRODUCT_SUCCESS evidence=OBSERVED\n",
-           a818, a81c);
+           a818, a81c, (unsigned)sw, (unsigned)sh);
     printf("[JJFB_E9L_CLASS] class=TEXTCTX_INIT_REACHED_NEXT_GAP "
            "note=dims_seeded_await_305E78 evidence=OBSERVED\n");
+    (void)used_plat;
     fflush(stdout);
 }
 

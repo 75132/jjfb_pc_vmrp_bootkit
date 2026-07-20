@@ -157,9 +157,15 @@ extern "C" {
  *
  * E9L-Text context 818/81C (NOT product success):
  *   JJFB_E9L_MODE=1                — R9+0x818/0x81C dims for 0x305E78→0x305BFC
- *   JJFB_FAST_TEXTCTX_ASSIST=1     — seed 818=240,81C=320 (real surface dims)
+ *   JJFB_FAST_TEXTCTX_ASSIST=1     — seed 818=240,81C=320 (diagnostic only)
  *   JJFB_E9L_WRITER_CSV / 305E78_CSV / TEXT_CSV
  *   818/81C are screen dims (same family as 830/834), not a font object pointer.
+ *
+ * E9R-Platform screen dims (NOT product success):
+ *   JJFB_E9R_MODE=1                — naturalize TEXTCTX via platform dims
+ *   JJFB_PLATFORM_SCREEN_DIMS=1    — fill zero 818/81C/830/834/824 from host surface
+ *   Success path: PLATFORM_SCREEN_DIMS=1, FAST_TEXTCTX_ASSIST off.
+ *   Prefer already-seeded 830/834 when sane; else 240x320 host framebuffer.
  *
  * E9M-Text ABI / measure return (NOT product success):
  *   JJFB_E9M_MODE=1                — decode 0x305BFC ABI; fix measure/layout r1

@@ -2547,7 +2547,58 @@ static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbyt
         return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
     }
     free(out565);
+    jjfb_plat_11f00_note_draw_bbox(tw, th);
     if (font_fallback_out) *font_fallback_out = fallback;
+    return 1;
+}
+
+static int jjfb_plat_12340_gdi_measure(const uint8_t *bytes, int nbytes, int *w_out, int *h_out,
+                                       const char **font_name_out, int *font_fallback_out) {
+    static char s_face_utf8[64];
+    wchar_t wbuf[96];
+    int wlen, fallback = 0;
+    HDC hdc, mem;
+    HFONT font = NULL, oldf = NULL;
+    const wchar_t *face;
+    SIZE sz;
+    if (!bytes || nbytes <= 0 || !w_out || !h_out) return 0;
+    wlen = MultiByteToWideChar(936, 0, (LPCSTR)bytes, nbytes, wbuf,
+                               (int)(sizeof(wbuf) / sizeof(wbuf[0])) - 1);
+    if (wlen <= 0)
+        wlen = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)bytes, nbytes, wbuf,
+                                   (int)(sizeof(wbuf) / sizeof(wbuf[0])) - 1);
+    if (wlen <= 0) return 0;
+    wbuf[wlen] = 0;
+    face = jjfb_pick_cjk_face(&fallback);
+    memset(s_face_utf8, 0, sizeof(s_face_utf8));
+    WideCharToMultiByte(CP_UTF8, 0, face, -1, s_face_utf8, (int)sizeof(s_face_utf8) - 1, NULL,
+                        NULL);
+    if (font_name_out) *font_name_out = s_face_utf8[0] ? s_face_utf8 : "gdi_cjk";
+    if (font_fallback_out) *font_fallback_out = fallback;
+    hdc = GetDC(NULL);
+    if (!hdc) return 0;
+    mem = CreateCompatibleDC(hdc);
+    font = CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, GB2312_CHARSET,
+                       OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, NONANTIALIASED_QUALITY,
+                       DEFAULT_PITCH | FF_DONTCARE, face);
+    if (!mem || !font) {
+        if (font) DeleteObject(font);
+        if (mem) DeleteDC(mem);
+        ReleaseDC(NULL, hdc);
+        return 0;
+    }
+    oldf = (HFONT)SelectObject(mem, font);
+    GetTextExtentPoint32W(mem, wbuf, wlen, &sz);
+    *w_out = sz.cx + 2;
+    *h_out = sz.cy + 2;
+    if (*w_out < 1) *w_out = 1;
+    if (*h_out < 1) *h_out = 1;
+    if (*w_out > 240) *w_out = 240;
+    if (*h_out > 64) *h_out = 64;
+    SelectObject(mem, oldf);
+    DeleteObject(font);
+    DeleteDC(mem);
+    ReleaseDC(NULL, hdc);
     return 1;
 }
 #else
@@ -2563,6 +2614,28 @@ static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbyt
     if (font_fallback_out) *font_fallback_out = 1;
     return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
 }
+
+static int jjfb_plat_12340_gdi_measure(const uint8_t *bytes, int nbytes, int *w_out, int *h_out,
+                                       const char **font_name_out, int *font_fallback_out) {
+    int i = 0, nchars = 0;
+    (void)font_name_out;
+    if (font_fallback_out) *font_fallback_out = 1;
+    if (font_name_out) *font_name_out = "fallback_12x16_est";
+    if (!bytes || nbytes <= 0 || !w_out || !h_out) return 0;
+    while (i < nbytes && bytes[i] && nchars < 32) {
+        if (bytes[i] >= 0x81u && i + 1 < nbytes && bytes[i + 1]) {
+            nchars++;
+            i += 2;
+        } else {
+            nchars++;
+            i++;
+        }
+    }
+    if (nchars <= 0) return 0;
+    *w_out = nchars * 12;
+    *h_out = 16;
+    return 1;
+}
 #endif
 
 #if defined(__GNUC__)
@@ -2570,5 +2643,6 @@ __attribute__((constructor))
 #endif
 static void jjfb_plat_11f00_register_draw(void) {
     jjfb_plat_11f00_set_draw_fn(jjfb_plat_11f00_gdi_draw);
+    jjfb_plat_12340_set_measure_fn(jjfb_plat_12340_gdi_measure);
 }
 #endif
