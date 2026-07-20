@@ -1,0 +1,2 @@
+n,pc,lr,app,code,param0,str_va,str_hex,enc,x,y,color,clip_x,clip_y,clip_w,clip_h,mode,ret,handled,font,fallback,note
+1,0x280058,0x304589,0x7,0x2A8474,0x27FF10,0x2A8364,"C1 AC BD D3 D6 D0 A3 AC C7 EB C9 D4 B5 C8",GBK,111,261,0xFFFFFF,0,0,240,320,0x6F,0,1,"Microsoft YaHei",0,chain_305bfc_cstr

@@ -167,6 +167,14 @@ extern "C" {
  *   Success path: PLATFORM_SCREEN_DIMS=1, FAST_TEXTCTX_ASSIST off.
  *   Prefer already-seeded 830/834 when sane; else 240x320 host framebuffer.
  *
+ * E9S-BD0 naturalization (NOT product success):
+ *   JJFB_E9S_MODE=1                — trace 0x2FC418/0x2FC444 BD0 writers
+ *   JJFB_FAST_BD0_INIT_CALL=1      — call real 0x2FC418 (r0=guest C-string)
+ *   JJFB_E9S_BD0_STR_VA=<va>       — optional; default 0x3146C4 (2FC03C natural arg)
+ *   JJFB_E9S_WRITER_CSV / FN_CSV
+ *   Success path: FAST_BD0_INIT_CALL on, FAST_SPLASH_PROGRESS_OBJECT_ASSIST off.
+ *   0x2FC418: concat via 2D9648 → STR @0x2FC444 to BA0+0x30 (=R9+BD0); ui_mode=0x45.
+ *
  * E9M-Text ABI / measure return (NOT product success):
  *   JJFB_E9M_MODE=1                — decode 0x305BFC ABI; fix measure/layout r1
  *   JJFB_FAST_TEXT_MEASURE_SHIM=1  — write plausible w/h after plat 0x12340
