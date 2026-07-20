@@ -1,0 +1,4 @@
+n,tick,pc,lr,event,note
+1,1,0x2F55FA,0x3056D5,timer_2F55FA,natural
+caller
+1,1,0x3124D8,0x2F55FF,0,0x1,natural_or_other

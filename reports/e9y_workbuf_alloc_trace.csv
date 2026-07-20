@@ -1,0 +1,2 @@
+n,tick,pc,lr,size,ptr,source,note
+1,1,0x30CD82,0x2D9AD3,1000,0x2AC8FC,guest_alloc_0x2d99ac,str_R9_8D8

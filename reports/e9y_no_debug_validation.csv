@@ -1,0 +1,14 @@
+field,value
+case,workbuf_30CBBC
+mode,workbuf
+class,WORKBUF_30CD82_ALLOC_REACHED
+ac8_event,False
+ac8_debug,False
+logo_no_debug,False
+workbuf_30,True
+workbuf_natural,False
+workbuf_seed_used,False
+upper,False
+logo_draw,False
+timer_2f55fa,True
+elapsed_s,125.5

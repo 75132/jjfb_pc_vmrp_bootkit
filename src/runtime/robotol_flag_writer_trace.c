@@ -387,6 +387,22 @@ static struct {
     FILE *e9w_resolve_csv;
     FILE *e9w_logo_csv;
     FILE *e9w_timer_csv;
+    /* E9Y: natural splash state — AC8/workbuf via real event/init, not poke/seed. */
+    int e9y_mode;
+    int e9y_no_debug_ac8; /* force DEBUG_AC8 off */
+    int e9y_no_workbuf_seed; /* forbid R9+0x8D8 seed */
+    int e9y_workbuf_alloc; /* JJFB_PLATFORM_WORKBUF_ALLOC — call real 0x30CBBC */
+    int e9y_real_state_event; /* JJFB_FAST_REAL_SPLASH_STATE_EVENT */
+    int e9y_workbuf_init_done;
+    int e9y_30cbbc_hit;
+    int e9y_30cd82_hit;
+    int e9y_8d8_natural;
+    int e9y_ac8_natural_nz;
+    uint32_t e9y_state_n;
+    uint32_t e9y_workbuf_n;
+    FILE *e9y_state_csv;
+    FILE *e9y_workbuf_csv;
+    FILE *e9y_event_csv;
     /* E9K: post-r4 textbar / 0x305BFC path — keep BD0 assist; delay HWND hold. */
     int e9k_mode;
     int e9k_hold_after_post_r4; /* JJFB_E9K_HOLD_AFTER_POST_R4 */
@@ -1193,6 +1209,33 @@ int robotol_flag_writer_trace_enabled(void) {
                        "note=never_count_as_product_or_stage_success evidence=HYPOTHESIS\n");
             fflush(stdout);
         }
+        /* E9Y: natural splash state path (AC8/workbuf via real init/event). */
+        g_e8f.e9y_mode = env1("JJFB_E9Y_MODE");
+        g_e8f.e9y_no_debug_ac8 = env1("JJFB_E9Y_NO_DEBUG_AC8") || g_e8f.e9y_mode;
+        g_e8f.e9y_no_workbuf_seed = env1("JJFB_E9Y_NO_WORKBUF_SEED") || g_e8f.e9y_mode;
+        g_e8f.e9y_workbuf_alloc = env1("JJFB_PLATFORM_WORKBUF_ALLOC");
+        g_e8f.e9y_real_state_event = env1("JJFB_FAST_REAL_SPLASH_STATE_EVENT");
+        if (g_e8f.e9y_mode) {
+            g_e8f.e9w_mode = 1;
+            g_e8f.e9w_archive_exact = 1;
+            g_e8f.e9v_mode = 1;
+            g_e8f.e9u_mode = 1;
+            g_e8f.e9g_mode = 1;
+            g_e8f.e9i_mode = 1;
+            g_e8f.e9e_postmatch_shims = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            if (g_e8f.e9y_no_debug_ac8)
+                g_e8f.e9w_debug_ac8_force = 0;
+            if (!g_e8f.e9s_bd0_init_call && !g_e8f.e9t_caller_2fc03c &&
+                !g_e8f.e9t_caller_2fc05e && !g_e8f.e9t_caller_30ee8a)
+                g_e8f.e9s_bd0_init_call = 1;
+            printf("[JJFB_E9Y] mode=1 no_debug_ac8=%d no_workbuf_seed=%d workbuf_alloc=%d "
+                   "real_state_event=%d note=natural_splash_state_NOT_PRODUCT "
+                   "evidence=HYPOTHESIS\n",
+                   g_e8f.e9y_no_debug_ac8, g_e8f.e9y_no_workbuf_seed, g_e8f.e9y_workbuf_alloc,
+                   g_e8f.e9y_real_state_event);
+            fflush(stdout);
+        }
         if (g_e8f.plat_screen_dims) {
             printf("[JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 "
                    "replaces_FAST_TEXTCTX_ASSIST NOT_PRODUCT evidence=HYPOTHESIS\n");
@@ -1522,8 +1565,14 @@ static int e9w_fp_is_junk(uint32_t fp);
 static void e9w_heal_table_gfx(void *uc, uint32_t table, const char *why);
 static void e9w_heal_shadow_gfx(void *uc, const char *why);
 static void e9w_seed_str_workbuf(void *uc, uint32_t r9);
-static uint32_t e9w_host_drawrect_fp(void *uc);
 static uint32_t e9w_peek_ac8(void *uc, uint32_t r9);
+static void e9y_open_trace_files(void);
+static void e9y_log_state(void *uc, uint32_t pc, uint32_t lr, uint32_t r9, const char *role,
+                          const char *note);
+static void e9y_log_workbuf(uint32_t pc, uint32_t lr, uint32_t size, uint32_t ptr,
+                            const char *source, const char *note);
+static void e9y_try_workbuf_init(void *uc, uint32_t r9);
+static uint32_t e9w_host_drawrect_fp(void *uc);
 static int e9e_name_already_done(const char *name);
 static void e9f_open_trace_files(void);
 static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint32_t pc);
@@ -1777,7 +1826,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     bp->last_r9 = r9;
 
     /* E9G/E9H: splash / UI_MODE writer / bind / blit sites. */
-    if ((g_e8f.e9g_mode || g_e8f.e9h_mode || g_e8f.e9n_mode || g_e8f.e9w_mode) &&
+    if ((g_e8f.e9g_mode || g_e8f.e9h_mode || g_e8f.e9n_mode || g_e8f.e9w_mode ||
+         g_e8f.e9y_mode) &&
         (bp->pc == 0x2EF86Cu || bp->pc == 0x2EF8AEu || bp->pc == 0x30662Cu ||
          bp->pc == 0x306344u ||
          bp->pc == 0x2FC418u || bp->pc == 0x2EFA33u || bp->pc == 0x2EFA43u ||
@@ -1798,7 +1848,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
          bp->pc == 0x2F55FAu || bp->pc == 0x2E4062u || bp->pc == 0x2F68FFu ||
          bp->pc == 0x2EF9AAu || bp->pc == 0x2EF9DEu || bp->pc == 0x2FB28Cu ||
          bp->pc == 0x303C68u || bp->pc == 0x303C84u || bp->pc == 0x303CA4u ||
-         bp->pc == 0x2EF992u || bp->pc == 0x2D96F6u)) {
+         bp->pc == 0x2EF992u || bp->pc == 0x2D96F6u || bp->pc == 0x30CBBCu ||
+         bp->pc == 0x30CD82u || bp->pc == 0x30E15Eu || bp->pc == 0x2FC03Cu ||
+         bp->pc == 0x2FC05Eu || bp->pc == 0x30EE8Au || bp->pc == 0x30EE92u)) {
         uint32_t ui_mode = 0;
         uint32_t r9w = r9;
         uint32_t r4 = 0, r2 = 0, r3 = 0, sp = 0;
@@ -1828,6 +1880,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                        ac8, r9w, ac8 > 0u ? "logo" : "loading_only");
                 /* Logo path needs DrawRect + R9+0x8D8 workbuf before name BL. */
                 e9w_heal_shadow_gfx(uc, "splash_enter");
+                if (g_e8f.e9y_mode)
+                    e9y_log_state(uc, bp->pc, lr, r9w, "splash_enter",
+                                  ac8 > 0u ? "ac8_nz" : "ac8_zero");
                 e9w_seed_str_workbuf(uc, r9w);
             }
             e9g_log_uimode_csv(bp->pc, lr, ui_mode, ui_mode, r9w, "splash_enter");
@@ -1851,6 +1906,41 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             e9w_open_trace_files();
             e9w_log_ac8(0x2EF8AEu, lr, ac8, mem_ac8, "branch_cmp",
                         ac8 > 0u ? "logo" : "loading_only");
+            if (g_e8f.e9y_mode)
+                e9y_log_state(uc, 0x2EF8AEu, lr, r9w, "ac8_branch",
+                              ac8 > 0u ? "logo" : "loading_only");
+            fflush(stdout);
+        } else if (bp->pc == 0x30CBBCu || bp->pc == 0x30CD82u || bp->pc == 0x30E15Eu) {
+            uint32_t slot = 0;
+            if (r9w)
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + E9W_STR_WORK_OFF,
+                                               &slot);
+            if (bp->pc == 0x30CBBCu) {
+                g_e8f.e9y_30cbbc_hit = 1;
+                printf("[JJFB_E9Y_CLASS] class=WORKBUF_30CBBC_ALLOC_REACHED lr=0x%X "
+                       "slot8D8=0x%X evidence=OBSERVED\n",
+                       lr, slot);
+            } else if (bp->pc == 0x30CD82u) {
+                g_e8f.e9y_30cd82_hit = 1;
+                /* r0 is freshly allocated ptr about to be stored. */
+                e9y_log_workbuf(bp->pc, lr, 0x3E8u, r0, "guest_alloc_0x2d99ac", "str_R9_8D8");
+                if (r0) {
+                    g_e8f.e9y_8d8_natural = 1;
+                    printf("[JJFB_E9Y_CLASS] class=WORKBUF_30CD82_ALLOC_REACHED ptr=0x%X "
+                           "evidence=OBSERVED\n",
+                           r0);
+                    printf("[JJFB_E9Y_CLASS] class=WORKBUF_8D8_NATURAL_ALLOCATED ptr=0x%X "
+                           "via=0x30CD82 evidence=OBSERVED\n",
+                           r0);
+                }
+            } else {
+                printf("[JJFB_E9Y_STATE] pc=0x30E15E lr=0x%X note=switch_case_bl_30CBBC "
+                       "slot8D8=0x%X evidence=OBSERVED\n",
+                       lr, slot);
+            }
+            if (g_e8f.e9y_mode)
+                e9y_log_state(uc, bp->pc, lr, r9w, "workbuf_site",
+                              bp->pc == 0x30CD82u ? "alloc_store" : "init_or_case");
             fflush(stdout);
         } else if (bp->pc == 0x2E4062u || bp->pc == 0x2F68FFu || bp->pc == 0x2FB28Cu) {
             uint32_t ac8 = 0;
@@ -1863,6 +1953,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             e9w_log_ac8(bp->pc, lr, ac8, ac8, "candidate_hit",
                         bp->pc == 0x2FB28Cu ? "static_str_0x2FB28C"
                         : (bp->pc == 0x2E4062u ? "near_2E4062" : "lr_2F68FF"));
+            if (g_e8f.e9y_mode)
+                e9y_log_state(uc, bp->pc, lr, r9w, "ac8_candidate",
+                              bp->pc == 0x2FB28Cu ? "clear_site" : "historical");
             fflush(stdout);
         } else if (bp->pc == 0x2EF9AAu || bp->pc == 0x2EF9DEu || bp->pc == 0x2EF992u) {
             g_e8f.e9w_logo_branch_seen = 1;
@@ -1946,6 +2039,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             e9g_log_uimode_csv(bp->pc, lr, ui_mode, ui_mode, r9w, "writer_2FC418");
             e9s_open_trace_files();
             e9s_log_fn(bp->pc, lr, r0, r1, r4, r9w, bd0, count, "2FC418_enter");
+            if (g_e8f.e9y_mode)
+                e9y_log_state(uc, bp->pc, lr, r9w, "ui_init_2FC418", "bd0_writer");
             fflush(stdout);
         } else if (bp->pc == 0x306344u) {
             printf("[JJFB_E9G_UIMODE_CMP] pc=0x306344 lr=0x%X r0=0x%X ui_mode=0x%X "
@@ -2956,6 +3051,16 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 fprintf(g_e8f.e9v_timer_csv, "%u,%u,0x2F55FA,0x%X,%u,0x%X,natural_caller\n",
                         ++tn, g_e8f.tick, lr, count, gate);
                 fflush(g_e8f.e9v_timer_csv);
+            }
+            if (g_e8f.e9y_mode) {
+                e9y_open_trace_files();
+                if (g_e8f.e9y_event_csv) {
+                    static unsigned en;
+                    fprintf(g_e8f.e9y_event_csv, "%u,%u,0x2F55FA,0x%X,timer_2F55FA,natural\n",
+                            ++en, g_e8f.tick, lr);
+                    fflush(g_e8f.e9y_event_csv);
+                }
+                e9y_log_state(uc, bp->pc, lr, r9w, "timer_2F55FA", "natural_caller");
             }
             fflush(stdout);
         } else if (bp->pc == 0x2FEBBCu || bp->pc == 0x2DAE24u || bp->pc == 0x2FECAAu) {
@@ -4453,6 +4558,14 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                 printf("[JJFB_E9W_BP] ac8_cmp=0x2EF8AE logo_bl=0x2EF992/AA "
                        "clearscreen=0x303C68/84/A4 cand=0x2E4062,0x2F68FF "
                        "evidence=HYPOTHESIS\n");
+            }
+            if (g_e8f.e9y_mode) {
+                add_bp(0x30CBBCu, "yWbInit"); /* real init containing 8D8 alloc */
+                add_bp(0x30CD82u, "yWbAlloc"); /* natural R9+0x8D8 store */
+                add_bp(0x30E15Eu, "yWbCase"); /* switch case bl 0x30CBBC */
+                e9y_open_trace_files();
+                printf("[JJFB_E9Y_BP] workbuf=0x30CBBC/0x30CD82 case=0x30E15E "
+                       "ac8_cmp=0x2EF8AE splash=0x2EF86C evidence=HYPOTHESIS\n");
             }
             printf("[JJFB_E9H_BP] splash=0x2EF86C blit=0x2EFA9A,0x2EC6B8 ycalc=0x2EFA5C "
                    "gate=0x2EFAFA bind=0x2EFA36/46/56 base=0x2D8DF4 evidence=HYPOTHESIS\n");
@@ -6410,9 +6523,158 @@ static void e9w_log_logo_draw(uint32_t pc, uint32_t lr, const char *name, int x,
     fflush(stdout);
 }
 
+static void e9y_open_trace_files(void) {
+    const char *s = getenv("JJFB_E9Y_STATE_CSV");
+    const char *w = getenv("JJFB_E9Y_WORKBUF_CSV");
+    const char *e = getenv("JJFB_E9Y_EVENT_CSV");
+    if (!g_e8f.e9y_state_csv && s && s[0]) {
+        g_e8f.e9y_state_csv = fopen(s, "w");
+        if (g_e8f.e9y_state_csv) {
+            fprintf(g_e8f.e9y_state_csv,
+                    "n,tick,pc,lr,r9,AC8,slot8D8,ui8D0,C44,C9D,CF5,CD1,off11B0,role,note,"
+                    "blocker\n");
+            fflush(g_e8f.e9y_state_csv);
+        }
+    }
+    if (!g_e8f.e9y_workbuf_csv && w && w[0]) {
+        g_e8f.e9y_workbuf_csv = fopen(w, "w");
+        if (g_e8f.e9y_workbuf_csv) {
+            fprintf(g_e8f.e9y_workbuf_csv, "n,tick,pc,lr,size,ptr,source,note\n");
+            fflush(g_e8f.e9y_workbuf_csv);
+        }
+    }
+    if (!g_e8f.e9y_event_csv && e && e[0]) {
+        g_e8f.e9y_event_csv = fopen(e, "w");
+        if (g_e8f.e9y_event_csv) {
+            fprintf(g_e8f.e9y_event_csv, "n,tick,pc,lr,event,note\n");
+            fflush(g_e8f.e9y_event_csv);
+        }
+    }
+}
+
+static const char *e9y_blocker_guess(uint32_t ac8, uint32_t slot8d8, uint8_t c9d, uint8_t c44) {
+    if (ac8 > 0u && slot8d8)
+        return "none_logo_ready";
+    if (ac8 > 0u && !slot8d8)
+        return "WORKBUF_8D8_NULL";
+    /* DisplayFirst path often keeps C9D=0 while BYPASS_C9D_GATE assists idle —
+     * AC8 still never rises; classify as DisplayFirst/state gap, not idle C9D. */
+    if (ac8 == 0u && c44 == 1u)
+        return "AC8_STILL_DISPLAYFIRST_ONLY";
+    if (ac8 == 0u && c9d != 1u)
+        return "AC8_BLOCKED_BY_C9D_GATE_OR_DISPLAYFIRST";
+    if (ac8 == 0u && c44 != 1u)
+        return "AC8_BLOCKED_BY_UI_STATE";
+    if (ac8 == 0u)
+        return "AC8_STILL_DISPLAYFIRST_ONLY";
+    if (!slot8d8)
+        return "WORKBUF_8D8_NULL";
+    return "unknown";
+}
+
+static void e9y_log_state(void *uc, uint32_t pc, uint32_t lr, uint32_t r9, const char *role,
+                          const char *note) {
+    uint32_t ac8 = 0, slot = 0, ui = 0, o11b0 = 0;
+    uint8_t c44 = 0, c9d = 0, cf5 = 0, cd1 = 0;
+    const char *blocker;
+    if (!g_e8f.e9y_mode || !uc) return;
+    e9y_open_trace_files();
+    if (r9) {
+        ac8 = e9w_peek_ac8(uc, r9);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E9W_STR_WORK_OFF, &slot);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E8I_STATE_OFF, &ui);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC44u, &c44, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xC9Du, &c9d, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xCF5u, &cf5, 1);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, r9 + 0xCD1u, &cd1, 1);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x11B0u, &o11b0);
+    }
+    blocker = e9y_blocker_guess(ac8, slot, c9d, c44);
+    g_e8f.e9y_state_n++;
+    printf("[JJFB_E9Y_STATE] n=%u pc=0x%X lr=0x%X AC8=0x%X 8D8=0x%X ui=0x%X "
+           "C44=%u C9D=%u CF5=%u role=%s blocker=%s note=%s evidence=OBSERVED\n",
+           g_e8f.e9y_state_n, pc, lr, ac8, slot, ui, c44, c9d, cf5, role ? role : "?",
+           blocker, note ? note : "");
+    if (g_e8f.e9y_state_csv) {
+        fprintf(g_e8f.e9y_state_csv,
+                "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%u,%u,%u,%u,0x%X,%s,%s,%s\n",
+                g_e8f.e9y_state_n, g_e8f.tick, pc, lr, r9, ac8, slot, ui, c44, c9d, cf5, cd1,
+                o11b0, role ? role : "?", note ? note : "", blocker);
+        fflush(g_e8f.e9y_state_csv);
+    }
+    fflush(stdout);
+}
+
+static void e9y_log_workbuf(uint32_t pc, uint32_t lr, uint32_t size, uint32_t ptr,
+                            const char *source, const char *note) {
+    if (!g_e8f.e9y_mode) return;
+    e9y_open_trace_files();
+    g_e8f.e9y_workbuf_n++;
+    printf("[WORKBUF_ALLOC] caller=0x%X lr=0x%X size=%u ptr=0x%X source=%s note=%s "
+           "evidence=OBSERVED\n",
+           pc, lr, size, ptr, source ? source : "?", note ? note : "");
+    if (g_e8f.e9y_workbuf_csv) {
+        fprintf(g_e8f.e9y_workbuf_csv, "%u,%u,0x%X,0x%X,%u,0x%X,%s,%s\n", g_e8f.e9y_workbuf_n,
+                g_e8f.tick, pc, lr, size, ptr, source ? source : "?", note ? note : "");
+        fflush(g_e8f.e9y_workbuf_csv);
+    }
+    fflush(stdout);
+}
+
+/* Real UI/splash init 0x30CBBC — contains natural R9+0x8D8 alloc @0x30CD82. */
+static void e9y_try_workbuf_init(void *uc, uint32_t r9) {
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    uint32_t slot_before = 0, slot_after = 0;
+    uint64_t lim = 200000ull;
+    int ok;
+    if (!uc || !r9 || !g_e8f.e9y_workbuf_alloc || g_e8f.e9y_workbuf_init_done) return;
+    g_e8f.e9y_workbuf_init_done = 1;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E9W_STR_WORK_OFF, &slot_before);
+    if (slot_before) {
+        g_e8f.e9y_8d8_natural = 1;
+        printf("[JJFB_E9Y_CLASS] class=WORKBUF_8D8_NATURAL_ALLOCATED ptr=0x%X "
+               "note=already_set_before_init_call evidence=OBSERVED\n",
+               slot_before);
+        fflush(stdout);
+        return;
+    }
+    memset(&abi, 0, sizeof(abi));
+    abi.set_lr = 1;
+    abi.lr = 0x80000u;
+    if (g_e8f.fast_insn_limit) lim = g_e8f.fast_insn_limit;
+    printf("[JJFB_PLATFORM_WORKBUF_ALLOC] entry=0x30CBBC r9=0x%X note=real_init_fn "
+           "NOT_PRODUCT evidence=HYPOTHESIS\n",
+           r9);
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x30CBBDu, 0x80000u, lim, &abi,
+                                      &out);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E9W_STR_WORK_OFF, &slot_after);
+    e9y_log_workbuf(0x30CBBCu, 0x80000u, 0x3E8u, slot_after,
+                    ok ? "guest_alloc_via_30CBBC" : "guest_alloc_fail", out.end_reason);
+    if (slot_after) {
+        g_e8f.e9y_8d8_natural = 1;
+        printf("[JJFB_E9Y_CLASS] class=WORKBUF_8D8_NATURAL_ALLOCATED ptr=0x%X "
+               "via=0x30CBBC evidence=OBSERVED\n",
+               slot_after);
+    } else {
+        printf("[JJFB_E9Y_CLASS] class=WORKBUF_30CBBC_CALLED_8D8_STILL_NULL ok=%d "
+               "end=%s evidence=OBSERVED\n",
+               ok, out.end_reason[0] ? out.end_reason : "?");
+    }
+    fflush(stdout);
+}
+
 static void e9w_debug_force_ac8(void *uc, uint32_t r9) {
     uint32_t oldv = 0, newv = 1u;
     if (!uc || !r9 || !g_e8f.e9w_debug_ac8_force || g_e8f.e9w_ac8_force_done) return;
+    if (g_e8f.e9y_no_debug_ac8) {
+        printf("[JJFB_E9Y_AC8] debug_force_forbidden note=use_real_event_or_init "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
     g_e8f.e9w_ac8_force_done = 1;
     oldv = e9w_peek_ac8(uc, r9);
     (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + E9W_AC8_OFF, newv);
@@ -6508,6 +6770,19 @@ static void e9w_seed_str_workbuf(void *uc, uint32_t r9) {
     uc_err ue;
 #endif
     if (!uc || !r9 || g_e8f.e9w_str_work_seeded) return;
+    if (g_e8f.e9y_no_workbuf_seed) {
+        if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E9W_STR_WORK_OFF, &cur))
+            return;
+        printf("[JJFB_E9Y_WORKBUF] seed_forbidden slot8D8=0x%X note=natural_alloc_required "
+               "class=%s evidence=OBSERVED\n",
+               cur, cur ? "WORKBUF_8D8_ALREADY_SET" : "WORKBUF_SEED_BLOCKED_NEED_30CD82");
+        fflush(stdout);
+        if (cur) {
+            g_e8f.e9w_str_work_seeded = 1;
+            g_e8f.e9y_8d8_natural = 1;
+        }
+        return;
+    }
     if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E9W_STR_WORK_OFF, &cur)) return;
     if (cur) {
         g_e8f.e9w_str_work_seeded = 1;
@@ -6558,6 +6833,14 @@ static void on_e9w_ac8_write(uc_engine *uc, uc_mem_type type, uint64_t address, 
         newv = (oldv & 0xFFFFFF00u) | ((uint32_t)value & 0xFFu);
     g_e8f.e9w_ac8_last = newv;
     g_e8f.e9w_ac8_write_n++;
+    if (newv > 0u && !g_e8f.e9w_ac8_force_done) {
+        g_e8f.e9y_ac8_natural_nz = 1;
+        printf("[JJFB_E9Y_CLASS] class=AC8_RUNTIME_EVENT_SOURCE_FOUND writer_pc=0x%X "
+               "new=0x%X evidence=OBSERVED\n",
+               pc, newv);
+        if (g_e8f.e9y_mode)
+            e9y_log_state(uc, pc, lr, r9, "ac8_mem_write", "natural_nz");
+    }
     printf("[JJFB_E9W_AC8_WRITE] addr=0x%X size=%d old=0x%X new=0x%X writer_pc=0x%X "
            "lr=0x%X r0=0x%X r9=0x%X tick=%u class=AC8_NATURAL_WRITER_FOUND_NEXT_GAP "
            "evidence=OBSERVED\n",
@@ -7586,6 +7869,14 @@ static void fast_call_splash(void *uc) {
         /* E9I: seed splash screen dims used by 0x2F9970/0x2F9964 (R9+0x830/0x834). */
         if (g_e8f.e9i_mode || g_e8f.e9h_mode)
             e9i_seed_scr_dims(uc, r9_run);
+        /* E9Y: call real 0x30CBBC so R9+0x8D8 may allocate before splash. */
+        if (g_e8f.e9y_mode) {
+            e9y_open_trace_files();
+            e9y_log_state(uc, 0, 0, r9_run, "pre_splash", "before_workbuf_or_assist");
+            if (g_e8f.e9y_workbuf_alloc)
+                e9y_try_workbuf_init(uc, r9_run);
+            e9y_log_state(uc, 0, 0, r9_run, "pre_splash", "after_workbuf_assist");
+        }
         /* E9W: arm AC8 watch; heal DrawRect FP; seed logo str workbuf; DEBUG AC8. */
         if (g_e8f.e9w_mode) {
             e9w_try_arm_ac8_watch(uc);

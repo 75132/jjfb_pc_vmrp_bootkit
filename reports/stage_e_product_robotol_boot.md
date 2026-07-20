@@ -4,7 +4,7 @@
 - **target:** `gwy/jjfb.mrp`
 - **primary:** `robotol.ext`
 - **hash before/after:** `52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036` / `52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036` match=True
-- **seconds:** 90
+- **seconds:** 120
 
 ## Gates
 
@@ -13,7 +13,7 @@
 | E1 primary ENTRY_CALLED | yes |
 | E2 JJFB_MRC_INIT | yes |
 | E4 ret0=0 (DOCUMENTED args) | yes |
-| E4 DRAW/REFRESH | yes |
+| E4 DRAW/REFRESH | no |
 | mrc_loader ENTRY_CALLED | yes |
 | primary EXTRACTED | yes |
 | primary MAPPED | yes |
