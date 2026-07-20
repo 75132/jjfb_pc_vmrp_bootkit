@@ -1,0 +1,102 @@
+{
+  "wrapper_2F2854": {
+    "role": "thin wrapper: r4=r0 r5=r1 r6=r2; BL 0x2EA188; return",
+    "always_r0_from_caller": "MOVS r0,#0 before both BL sites \u2014 r0 is ALWAYS 0",
+    "bls": [
+      {
+        "pc": "0x2F2874",
+        "tgt": "0x2EA188"
+      }
+    ],
+    "lines": [
+      "0x2F2854: PUSH {...,lr} 0xB570",
+      "0x2F2856: ADDS r5, r1, #0",
+      "0x2F2858: MOVS r1, #0",
+      "0x2F285A: SUB sp, #0x10",
+      "0x2F285C: raw 0x43C9",
+      "0x2F285E: ADDS r6, r2, #0",
+      "0x2F2860: MOVS r2, #10",
+      "0x2F2862: STR r2, [sp, #0xC]",
+      "0x2F2864: ADDS r2, r1, #0",
+      "0x2F2866: STR r2, [sp, #0x0]",
+      "0x2F2868: STR r1, [sp, #0x4]",
+      "0x2F286A: STR r1, [sp, #0x8]",
+      "0x2F286C: ADDS r1, r5, #0",
+      "0x2F286E: ADDS r2, r6, #0",
+      "0x2F2870: ADDS r4, r0, #0",
+      "0x2F2872: ADDS r0, r4, #0",
+      "0x2F2874: BL 0x2EA188 ;BL",
+      "0x2F2878: ADD sp, #0x10",
+      "0x2F287A: POP 0xBD70"
+    ]
+  },
+  "worker_2EA188": {
+    "end": "0x2EA1FC",
+    "size": 116,
+    "bls": [
+      {
+        "pc": "0x2EA1A0",
+        "tgt": "0x2F449C"
+      },
+      {
+        "pc": "0x2EA1B8",
+        "tgt": "0x2F449C"
+      },
+      {
+        "pc": "0x2EA1CC",
+        "tgt": "0x2F449C"
+      },
+      {
+        "pc": "0x2EA1E0",
+        "tgt": "0x2F449C"
+      },
+      {
+        "pc": "0x2EA1F4",
+        "tgt": "0x2F449C"
+      }
+    ],
+    "callers": [
+      "0x2E997A",
+      "0x2EA214",
+      "0x2EB7C4",
+      "0x2EC536",
+      "0x2EFEA0",
+      "0x2F05F0",
+      "0x2F2874",
+      "0x2F30BC"
+    ],
+    "early_predicates": [
+      "0x2EA192: CMP r1, #1",
+      "0x2EA194: BNE 0x2EA1A8",
+      "0x2EA1A0: BL 0x2F449C ;BL",
+      "0x2EA1A6: POP 0xBD30",
+      "0x2EA1A8: CMP r1, #0",
+      "0x2EA1AA: BNE 0x2EA1BE",
+      "0x2EA1B8: BL 0x2F449C ;BL",
+      "0x2EA1BE: CMP r1, #2",
+      "0x2EA1C0: BNE 0x2EA1D2",
+      "0x2EA1CC: BL 0x2F449C ;BL",
+      "0x2EA1D2: CMP r1, #8",
+      "0x2EA1D4: BNE 0x2EA1E6",
+      "0x2EA1E0: BL 0x2F449C ;BL",
+      "0x2EA1E6: CMP r1, #10",
+      "0x2EA1E8: BNE 0x2EA1A4",
+      "0x2EA1F4: BL 0x2F449C ;BL"
+    ]
+  },
+  "caller_abi": {
+    "0x2E8980": "r0=0, r1=layout_delta_or_0, r2=ret_2F9970, r3=height_like",
+    "0x2E89A8": "r0=0, r1=layout_delta_or_0, r2=ret_2F9970, r3=width_like; E8W hit lr=0x2E89AD",
+    "note": "F74 is NOT passed in R0-R3 to 0x2F2854; layout math uses F74 via 0x2F5B38 earlier"
+  },
+  "f74_producer_2F99D0": {
+    "callsite": "0x2E891A with r0 from prior path, r1=r6-0x1E",
+    "writes_F74_at": "0x2E8920 STR r0,[r5,#8] after return",
+    "starts_with": "BL 0x312AA4 then string/path ops via 0x2D9648 / 0x305E78"
+  },
+  "hypothesis": [
+    "2F2854_RETURNS_NOOP_DUE_ZERO_ARGS if 2EA188 early-outs on r1/r2==0",
+    "Real draw may be in 2EA188 BL targets (graphics/resource)",
+    "F74 scratch opens gate but does not feed R0-R3; need nonzero r1/r2 from layout math"
+  ]
+}
