@@ -1,0 +1,2 @@
+n,tick,pc,lr,r0,r1,r2,r3,r4,r9,sp,scr_w,scr_h,d818,d81c,str,note
+1,1,0x305C3C,0x305C33,0x314338,0x70,0x105,0x0,0x70,0x2B1858,0x27FF90,240,320,240,320,"......",305C3C_enter

@@ -18,6 +18,14 @@
 
 #ifdef GWY_USE_VM_FILE_SERVICE
 #include "gwy_launcher/jjfb_bmp_meta.h"
+#include "gwy_launcher/jjfb_plat_11f00.h"
+#endif
+
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
 #endif
 
 #ifdef __EMSCRIPTEN__
@@ -2297,5 +2305,196 @@ __attribute__((constructor))
 #endif
 static void jjfb_e9n_register_text_draw(void) {
     jjfb_e9n_set_text_draw_fn(jjfb_e9n_text_draw_impl);
+}
+
+/* E9O: system CJK font via GDI → RGB565 → guiDrawBitmapSprite (same surface as bitmaps). */
+#ifdef _WIN32
+static const wchar_t *jjfb_pick_cjk_face(int *fallback) {
+    static const wchar_t *faces[] = {
+        L"Microsoft YaHei", L"微软雅黑", L"SimSun", L"宋体", L"SimHei", L"黑体", L"NSimSun",
+        L"Arial Unicode MS", NULL};
+    int i;
+    HDC hdc = CreateCompatibleDC(NULL);
+    *fallback = 1;
+    if (!hdc) return L"Arial";
+    for (i = 0; faces[i]; i++) {
+        HFONT f = CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
+                              OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+                              DEFAULT_PITCH | FF_DONTCARE, faces[i]);
+        if (!f) continue;
+        SelectObject(hdc, f);
+        {
+            TEXTMETRICW tm;
+            GetTextMetricsW(hdc, &tm);
+            if (tm.tmCharSet == GB2312_CHARSET || tm.tmCharSet == CHINESEBIG5_CHARSET ||
+                tm.tmCharSet == DEFAULT_CHARSET || tm.tmCharSet == SHIFTJIS_CHARSET) {
+                DeleteObject(f);
+                DeleteDC(hdc);
+                *fallback = 0;
+                return faces[i];
+            }
+        }
+        DeleteObject(f);
+    }
+    DeleteDC(hdc);
+    return L"Microsoft YaHei";
+}
+
+static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbytes,
+                                    uint16_t fg_rgb565, int clip_x, int clip_y, int clip_w,
+                                    int clip_h, const char **font_name_out, int *font_fallback_out) {
+    static char s_face_utf8[64];
+    wchar_t wbuf[96];
+    int wlen, tw = 0, th = 0, i, j;
+    HDC hdc, mem;
+    HBITMAP dib = NULL, oldbm = NULL;
+    HFONT font = NULL, oldf = NULL;
+    BITMAPINFO bmi;
+    void *bits = NULL;
+    uint16_t *out565 = NULL;
+    const wchar_t *face;
+    int fallback = 0;
+    RECT rc;
+    SIZE sz;
+    (void)clip_x;
+    (void)clip_y;
+    (void)clip_w;
+    (void)clip_h;
+    if (!bytes || nbytes <= 0) return 0;
+    if (!fg_rgb565) fg_rgb565 = 0xFFFFu;
+
+    wlen = MultiByteToWideChar(936, 0, (LPCSTR)bytes, nbytes, wbuf,
+                               (int)(sizeof(wbuf) / sizeof(wbuf[0])) - 1);
+    if (wlen <= 0) {
+        wlen = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)bytes, nbytes, wbuf,
+                                   (int)(sizeof(wbuf) / sizeof(wbuf[0])) - 1);
+    }
+    if (wlen <= 0) {
+        if (font_fallback_out) *font_fallback_out = 1;
+        if (font_name_out) *font_name_out = "fallback_block_glyph";
+        return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+    }
+    wbuf[wlen] = 0;
+
+    face = jjfb_pick_cjk_face(&fallback);
+    memset(s_face_utf8, 0, sizeof(s_face_utf8));
+    WideCharToMultiByte(CP_UTF8, 0, face, -1, s_face_utf8, (int)sizeof(s_face_utf8) - 1, NULL,
+                        NULL);
+    if (font_name_out) *font_name_out = s_face_utf8[0] ? s_face_utf8 : "gdi_cjk";
+    if (font_fallback_out) *font_fallback_out = fallback;
+
+    hdc = GetDC(NULL);
+    if (!hdc) {
+        if (font_fallback_out) *font_fallback_out = 1;
+        return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+    }
+    mem = CreateCompatibleDC(hdc);
+    font = CreateFontW(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, GB2312_CHARSET,
+                       OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, NONANTIALIASED_QUALITY,
+                       DEFAULT_PITCH | FF_DONTCARE, face);
+    if (!mem || !font) {
+        if (font) DeleteObject(font);
+        if (mem) DeleteDC(mem);
+        ReleaseDC(NULL, hdc);
+        if (font_fallback_out) *font_fallback_out = 1;
+        return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+    }
+    oldf = (HFONT)SelectObject(mem, font);
+    GetTextExtentPoint32W(mem, wbuf, wlen, &sz);
+    tw = sz.cx + 2;
+    th = sz.cy + 2;
+    if (tw < 8) tw = 8;
+    if (th < 12) th = 12;
+    if (tw > 240) tw = 240;
+    if (th > 64) th = 64;
+
+    memset(&bmi, 0, sizeof(bmi));
+    bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bmi.bmiHeader.biWidth = tw;
+    bmi.bmiHeader.biHeight = -th;
+    bmi.bmiHeader.biPlanes = 1;
+    bmi.bmiHeader.biBitCount = 32;
+    bmi.bmiHeader.biCompression = BI_RGB;
+    dib = CreateDIBSection(mem, &bmi, DIB_RGB_COLORS, &bits, NULL, 0);
+    if (!dib || !bits) {
+        SelectObject(mem, oldf);
+        DeleteObject(font);
+        DeleteDC(mem);
+        ReleaseDC(NULL, hdc);
+        if (font_fallback_out) *font_fallback_out = 1;
+        return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+    }
+    oldbm = (HBITMAP)SelectObject(mem, dib);
+    SetBkMode(mem, TRANSPARENT);
+    SetTextColor(mem, RGB(255, 255, 255));
+    rc.left = 0;
+    rc.top = 0;
+    rc.right = tw;
+    rc.bottom = th;
+    FillRect(mem, &rc, (HBRUSH)GetStockObject(BLACK_BRUSH));
+    TextOutW(mem, 1, 1, wbuf, wlen);
+
+    out565 = (uint16_t *)calloc((size_t)tw * (size_t)th, sizeof(uint16_t));
+    if (out565) {
+        uint8_t *px = (uint8_t *)bits;
+        int lit = 0;
+        for (j = 0; j < th; j++) {
+            for (i = 0; i < tw; i++) {
+                uint8_t *p = px + (size_t)j * (size_t)tw * 4u + (size_t)i * 4u;
+                if (p[0] > 40 || p[1] > 40 || p[2] > 40) {
+                    out565[j * tw + i] = fg_rgb565;
+                    lit++;
+                }
+            }
+        }
+        if (lit > 0) {
+            guiDrawBitmapSprite(out565, (int32_t)x, (int32_t)y, tw, th);
+            printf("[JJFB_PLATFORM_TEXT_API_11F00] font=%s fallback=%d gdi=%dx%d lit=%d "
+                   "@%d,%d evidence=OBSERVED\n",
+                   s_face_utf8, fallback, tw, th, lit, x, y);
+            fflush(stdout);
+        } else {
+            free(out565);
+            out565 = NULL;
+            fallback = 1;
+        }
+    }
+
+    SelectObject(mem, oldbm);
+    SelectObject(mem, oldf);
+    DeleteObject(dib);
+    DeleteObject(font);
+    DeleteDC(mem);
+    ReleaseDC(NULL, hdc);
+
+    if (!out565) {
+        if (font_fallback_out) *font_fallback_out = 1;
+        if (font_name_out) *font_name_out = "fallback_block_glyph";
+        return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+    }
+    free(out565);
+    if (font_fallback_out) *font_fallback_out = fallback;
+    return 1;
+}
+#else
+static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbytes,
+                                    uint16_t fg_rgb565, int clip_x, int clip_y, int clip_w,
+                                    int clip_h, const char **font_name_out, int *font_fallback_out) {
+    (void)fg_rgb565;
+    (void)clip_x;
+    (void)clip_y;
+    (void)clip_w;
+    (void)clip_h;
+    if (font_name_out) *font_name_out = "fallback_block_glyph";
+    if (font_fallback_out) *font_fallback_out = 1;
+    return jjfb_e9n_text_draw_impl(x, y, bytes, nbytes);
+}
+#endif
+
+#if defined(__GNUC__)
+__attribute__((constructor))
+#endif
+static void jjfb_plat_11f00_register_draw(void) {
+    jjfb_plat_11f00_set_draw_fn(jjfb_plat_11f00_gdi_draw);
 }
 #endif

@@ -3,6 +3,7 @@
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/jjfb_bmp_meta.h"
+#include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/mrp_archive.h"
@@ -1950,6 +1951,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                                 "305BFC_enter");
                     if (e9m_xy_plausible(r1, r2) && r0) {
                         g_e8f.e9m_valid_305bfc_args = 1;
+                        g_e8f.e9m_str_va = r0;
+                        jjfb_plat_11f00_note_guest_cstr(r0, (int16_t)(r1 & 0xFFFFu),
+                                                        (int16_t)(r2 & 0xFFFFu), r3);
                         printf("[JJFB_E9M_CLASS] class=TEXT_305BFC_REACHED_VALID_ARGS_NEXT_GAP "
                                "r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
                                r0, r1, r2, r3);
@@ -2098,6 +2102,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                                "tick=%u evidence=OBSERVED\n",
                                r0, r1, r2, r3, sbuf, scr_w, scr_h, yoff, dim818, dim81c,
                                g_e8f.tick);
+                        if (r0)
+                            jjfb_plat_11f00_note_guest_cstr(r0, (int16_t)(r1 & 0xFFFFu),
+                                                            (int16_t)(r2 & 0xFFFFu), 0xFFu);
                         e9n_log_305c3c(bp->pc, lr, r0, r1, r2, r3, r4, r9w, sp, scr_w, scr_h,
                                        dim818, dim81c, sbuf, "305C3C_enter");
                     }
@@ -2852,6 +2859,7 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 }
                 if (g_e8f.e9m_mode) {
                     g_e8f.e9m_str_va = r0;
+                    jjfb_plat_11f00_note_guest_cstr(r0, 0, 0, 0);
                     e9m_open_trace_files();
                     e9m_log_abi(bp->pc, lr, r0, r1, r2, r3, 0, 0, "305E78_enter");
                     printf("[JJFB_E9M_305E78_ENTER] str=0x%X r1=0x%X r2=0x%X r3=0x%X "

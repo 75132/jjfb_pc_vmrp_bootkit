@@ -38,6 +38,7 @@ add_library(launcher_core STATIC
     src/runtime/robotol_idle_watch.c
     src/runtime/robotol_flag_writer_trace.c
     src/runtime/jjfb_bmp_meta.c
+    src/runtime/jjfb_plat_11f00.c
     src/runtime/guest_call_observer.c
     src/runtime/ext_entry_observe.c
     src/runtime/ext_chunk_observe.c

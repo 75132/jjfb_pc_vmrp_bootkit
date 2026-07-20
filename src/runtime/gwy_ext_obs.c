@@ -33,6 +33,7 @@
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
+#include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/vm_runtime.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdint.h>
@@ -699,16 +700,23 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     robotol_idle_watch_helper_fx_begin(r0, r1);
     robotol_idle_watch_try_arm(uc);
 
-    /* E9N: proven platform drawText 0x11F00 (via 2F2360 → 304558 → slot+0x28). */
+    /* E9O: formal platform drawText 0x11F00 (via 2F2360 → 304558 → slot+0x28).
+     * Prefer JJFB_PLATFORM_TEXT_API_11F00 over E9N diagnostic textshim. */
     if (r0 == 0x11F00u) {
-        if (jjfb_e9n_try_plat_11f00_text_draw(uc, r1, r2, r3)) {
+        if (jjfb_plat_11f00_handle(uc, r1, r2, r3, pc, lr)) {
             ret = 0; /* MR_SUCCESS */
             ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
             return ret;
         }
-        if (getenv("JJFB_E9N_MODE") && getenv("JJFB_E9N_MODE")[0] == '1') {
+        if (jjfb_e9n_try_plat_11f00_text_draw(uc, r1, r2, r3)) {
+            ret = 0;
+            ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+            return ret;
+        }
+        if ((getenv("JJFB_E9N_MODE") && getenv("JJFB_E9N_MODE")[0] == '1') ||
+            (getenv("JJFB_E9O_MODE") && getenv("JJFB_E9O_MODE")[0] == '1')) {
             printf("[JJFB_E9N_CLASS] class=TEXT_305C3C_BLOCKED_BY_PLATFORM_TEXT_API "
-                   "note=0x11F00_unhandled_need_shim app=0x%X code=0x%X p0=0x%X "
+                   "note=0x11F00_unhandled app=0x%X code=0x%X p0=0x%X "
                    "evidence=OBSERVED\n",
                    r1, r2, r3);
             fflush(stdout);
