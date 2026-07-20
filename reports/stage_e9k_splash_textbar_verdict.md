@@ -1,4 +1,4 @@
-﻿# Stage E9K: Post-r4 Textbar / 0x305BFC Path
+# Stage E9K: Post-r4 Textbar / 0x305BFC Path
 
 **Verdict:** `SPLASH_POST_R4_BLOCKED_BY_R4_FIELD` — **NOT product success.**
 

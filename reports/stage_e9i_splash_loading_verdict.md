@@ -1,4 +1,4 @@
-﻿# Stage E9I Splash Loading UI Verdict
+# Stage E9I Splash Loading UI Verdict
 
 - **Mode**: natural
 - **Class**: `SPLASH_LOADINGBAR_NATURAL_COORD_VISIBLE`

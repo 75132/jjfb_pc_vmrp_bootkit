@@ -1,0 +1,5 @@
+n,tick,pc,lr,member,x,y,w,h,note
+1,1,0x2EC6B8,0x2F21D7,"textbar!120!30.bmp",0,256,120,30,textbar_blit
+2,1,0x2EC6B8,0x2F21D7,"textbar!120!30.bmp",120,256,120,30,textbar_blit
+3,1,0x2EFBA2,0xFFE7917B,"status_text",-1601157,261,0,0,305BFC
+4,1,0x305BFC,0x2EFBA7,"status_text",-1601157,261,0,0,305BFC

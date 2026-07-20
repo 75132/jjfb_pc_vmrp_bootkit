@@ -170,12 +170,13 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_E9I_MODE -eq '1') -or ($env:JJFB_E9J_MODE -eq '1') -or ($env:JJFB_E9K_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_E9I_MODE -eq '1') -or ($env:JJFB_E9J_MODE -eq '1') -or ($env:JJFB_E9K_MODE -eq '1') -or ($env:JJFB_E9L_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST / E8P..E9K: do not stop on 30103C alone.
+  # FAST_ASSIST / E8P..E9L: do not stop on 30103C alone.
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
   $e9bMode = ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_VISIBLE_WINDOW -eq '1')
-  $e9kMode = ($env:JJFB_E9K_MODE -eq '1')
+  $e9lMode = ($env:JJFB_E9L_MODE -eq '1')
+  $e9kMode = ($env:JJFB_E9K_MODE -eq '1') -or $e9lMode
   $e9jMode = ($env:JJFB_E9J_MODE -eq '1') -or $e9kMode
   $e9iMode = ($env:JJFB_E9I_MODE -eq '1') -or $e9jMode
   $e9hMode = ($env:JJFB_E9H_MODE -eq '1') -or $e9iMode
@@ -195,7 +196,10 @@ if ($e8oFast) {
   $e8sMode = ($env:JJFB_E8S_MODE -eq '1')
   $e8rMode = ($env:JJFB_E8R_MODE -eq '1')
   $e8pMode = ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1')
-  if ($e9kMode -and $e9bMode) {
+  if ($e9lMode -and $e9bMode) {
+    # E9L: wait for HWND hold after 305BFC/text path — do not kill on early REACHED.
+    $stopPat = "JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_E9L_CLASS\] class=SPLASH_TEXT_BLOCKED_BY_|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
+  } elseif ($e9kMode -and $e9bMode) {
     # E9K: wait for post-r4/text/305BFC hold — never kill on LOADING_UI / early progress.
     $stopPat = "JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_E9K_CLASS\] class=SPLASH_POST_R4_BLOCKED_BY_|JJFB_E9K_CLASS\] class=SPLASH_POST_R4_FAULT_|JJFB_E9H_CLASS\] class=SPLASH_BLIT_BAD_XY|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
   } elseif (($e9jMode -or $e9iMode -or $e9hMode) -and $e9bMode) {

@@ -153,7 +153,13 @@ extern "C" {
  *   JJFB_E9K_MIN_BLITS=<n>         — blit-count fallback floor (default high)
  *   JJFB_E9K_STOP_ON_TEXTBAR_DRAW=1
  *   JJFB_E9K_POSTR4_CSV / JJFB_E9K_DRAW_CSV
- *   Keep BD0 assist; natural BD0 writer is E9L. Hold via jjfb_e9k_request_hold.
+ *   Keep BD0 assist; natural BD0 writer is deferred. Hold via jjfb_e9k_request_hold.
+ *
+ * E9L-Text context 818/81C (NOT product success):
+ *   JJFB_E9L_MODE=1                — R9+0x818/0x81C dims for 0x305E78→0x305BFC
+ *   JJFB_FAST_TEXTCTX_ASSIST=1     — seed 818=240,81C=320 (real surface dims)
+ *   JJFB_E9L_WRITER_CSV / 305E78_CSV / TEXT_CSV
+ *   818/81C are screen dims (same family as 830/834), not a font object pointer.
  *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.

@@ -287,6 +287,16 @@ static struct {
     int e9k_hold_armed;
     FILE *e9k_postr4_csv;
     FILE *e9k_draw_csv;
+    /* E9L: R9+0x818/0x81C screen dims for 0x305E78 text measure → 0x305BFC. */
+    int e9l_mode;
+    int e9l_textctx_assist; /* JJFB_FAST_TEXTCTX_ASSIST — dims only, NOT_PRODUCT */
+    int e9l_textctx_assist_done;
+    int e9l_305e78_ok;
+    int e9l_2f2174_hit;
+    int e9l_305bfc_hit;
+    FILE *e9l_writer_csv;
+    FILE *e9l_305e78_csv;
+    FILE *e9l_text_csv;
 #ifdef GWY_HAVE_UNICORN
     uc_hook e9h_splash_hook;
 #endif
@@ -861,11 +871,22 @@ int robotol_flag_writer_trace_enabled(void) {
                     g_e8f.e9k_min_blits = (int)v;
             }
         }
-        if (g_e8f.e9k_mode) {
-            g_e8f.e9j_mode = 1;
+        /* E9L: R9+0x818/0x81C text-measure dims — implies E9K; BD0 assist may remain. */
+        g_e8f.e9l_mode = env1("JJFB_E9L_MODE");
+        g_e8f.e9l_textctx_assist = env1("JJFB_FAST_TEXTCTX_ASSIST");
+        if (g_e8f.e9l_mode) {
+            g_e8f.e9k_mode = 1;
             if (!getenv("JJFB_E9K_HOLD_AFTER_POST_R4"))
                 g_e8f.e9k_hold_after_post_r4 = 1;
+            /* Prefer not to stop on textbar until 305BFC path is exercised. */
             if (!getenv("JJFB_E9K_STOP_ON_TEXTBAR_DRAW"))
+                g_e8f.e9k_stop_on_textbar = 0;
+        }
+        if (g_e8f.e9k_mode) {
+            g_e8f.e9j_mode = 1;
+            if (!getenv("JJFB_E9K_HOLD_AFTER_POST_R4") && !g_e8f.e9l_mode)
+                g_e8f.e9k_hold_after_post_r4 = 1;
+            if (!getenv("JJFB_E9K_STOP_ON_TEXTBAR_DRAW") && !g_e8f.e9l_mode)
                 g_e8f.e9k_stop_on_textbar = 1;
         }
         if (g_e8f.e9j_mode)
@@ -893,6 +914,12 @@ int robotol_flag_writer_trace_enabled(void) {
                    "evidence=HYPOTHESIS\n",
                    g_e8f.e9k_hold_after_post_r4, g_e8f.e9k_stop_on_textbar,
                    g_e8f.e9k_min_blits);
+            fflush(stdout);
+        }
+        if (g_e8f.e9l_mode) {
+            printf("[JJFB_E9L_TEXTCTX] enabled=1 assist=%d note=R9_818_81C_dims_for_305E78 "
+                   "NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9l_textctx_assist);
             fflush(stdout);
         }
         if (g_e8f.e9h_mode) {
@@ -1160,6 +1187,14 @@ static void e9k_log_draw(uint32_t pc, uint32_t lr, const char *member, int x, in
                          const char *note);
 static void e9k_dump_slots(void *uc, uint32_t r9w, uint32_t r4, uint32_t pc, const char *tag);
 static void e9k_try_hold(const char *reason);
+static void e9l_open_trace_files(void);
+static void e9l_log_writer(uint32_t pc, uint32_t lr, uint32_t off, uint32_t old_v, uint32_t new_v,
+                           const char *note);
+static void e9l_log_305e78(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1, uint32_t r2,
+                           uint32_t r3, uint32_t a818, uint32_t a81c, const char *note);
+static void e9l_log_text(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1, uint32_t r2,
+                         uint32_t r3, const char *note);
+static void e9l_seed_textctx(void *uc, uint32_t r9);
 #ifdef GWY_HAVE_UNICORN
 static void on_e9h_splash_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data);
 #endif
@@ -1751,6 +1786,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                                "post_r4_2EFB0E");
                 printf("[JJFB_E9K_CLASS] class=SPLASH_POST_R4_REACHED_NEXT_GAP "
                        "note=await_305BFC_or_textbar evidence=OBSERVED\n");
+                if (g_e8f.e9l_mode)
+                    e9l_seed_textctx(uc, r9w);
                 fflush(stdout);
             }
             fflush(stdout);
@@ -1786,6 +1823,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 printf("[JJFB_E9K_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP "
                        "pc=0x%X evidence=OBSERVED\n",
                        bp->pc);
+                if (g_e8f.e9l_mode) {
+                    g_e8f.e9l_305bfc_hit = 1;
+                    e9l_log_text(bp->pc, lr, r0, r1, r2, r3, "305BFC");
+                    printf("[JJFB_E9L_CLASS] class=TEXTCTX_ASSIST_REACHED_305BFC "
+                           "r0=0x%X r1=0x%X r2=0x%X evidence=OBSERVED\n",
+                           r0, r1, r2);
+                    printf("[JJFB_E9L_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP "
+                           "evidence=OBSERVED\n");
+                }
                 /* Do NOT hold at 305BFC entry — text draw must run first. */
             }
             fflush(stdout);
@@ -1797,8 +1843,14 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                        r0, r4, g_e8f.tick);
                 e9k_log_postr4(bp->pc, lr, r0, r1, r2, r3, r4, r9w, sp, 0, 0, 0, 0, 0,
                                "305BFC_ret");
-                if (!g_e8f.e9k_stop_on_textbar || g_e8f.e9k_305bfc_hit)
-                    e9k_try_hold("after_305BFC");
+                if (g_e8f.e9l_mode) {
+                    e9l_log_text(bp->pc, lr, r0, r1, r2, r3, "305BFC_ret");
+                    printf("[JJFB_E9L_305BFC_RET] r0=0x%X tick=%u note=text_api_returned "
+                           "evidence=OBSERVED\n",
+                           r0, g_e8f.tick);
+                }
+                if (!g_e8f.e9k_stop_on_textbar || g_e8f.e9k_305bfc_hit || g_e8f.e9l_mode)
+                    e9k_try_hold(g_e8f.e9l_mode ? "after_305BFC_e9l" : "after_305BFC");
             }
             fflush(stdout);
         } else if (bp->pc == 0x2EFB08u) {
@@ -1841,6 +1893,13 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 e9k_dump_slots(uc, r9w, r4, bp->pc, "textbar_layout_2F2174");
                 e9k_log_postr4(bp->pc, lr, r0, r1, r2, r3, r4, r9w, sp, 0, 0, 0, 0, 0,
                                "2F2174_layout");
+            }
+            if (g_e8f.e9l_mode) {
+                g_e8f.e9l_2f2174_hit = 1;
+                e9l_log_text(bp->pc, lr, r0, r1, r2, r3, "2F2174_layout");
+                printf("[JJFB_E9L_CLASS] class=TEXTCTX_ASSIST_REACHED_2F2174 "
+                       "r0=0x%X r1=0x%X evidence=OBSERVED\n",
+                       r0, r1);
             }
             fflush(stdout);
         } else if (bp->pc == 0x2FC444u) {
@@ -2323,6 +2382,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 uint32_t slot818 = 0, slot81c = 0, r9w = r9;
                 if ((!r9w || !find_robotol_r9(uc, &r9w)) && r9) r9w = r9;
                 if (r9w) {
+                    if (g_e8f.e9l_mode)
+                        e9l_seed_textctx(uc, r9w);
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x818u, &slot818);
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x81Cu, &slot81c);
                 }
@@ -2330,14 +2391,27 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                        "R9_818=0x%X R9_81C=0x%X lr=0x%X tick=%u "
                        "note=pre_305BFC_needs_font_ctx evidence=OBSERVED\n",
                        r0, r1, r2, slot818, slot81c, lr, g_e8f.tick);
-                e9k_log_postr4(bp->pc, lr, r0, r1, r2, r3, 0, r9w, 0, slot818, slot81c, 0, 0, 0,
-                               "305E78_text_measure");
-                if (!slot81c || !r1) {
+                if (g_e8f.e9l_mode) {
+                    printf("[JJFB_E9L_305E78] r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
+                           "R9_818=0x%X R9_81C=0x%X lr=0x%X tick=%u evidence=OBSERVED\n",
+                           r0, r1, r2, r3, slot818, slot81c, lr, g_e8f.tick);
+                    e9l_log_305e78(bp->pc, lr, r0, r1, r2, r3, slot818, slot81c, "enter");
+                }
+                if ((!slot81c || !r1) && !(g_e8f.e9l_mode && g_e8f.e9l_textctx_assist &&
+                                           slot818 && slot81c)) {
                     printf("[JJFB_E9K_CLASS] class=SPLASH_POST_R4_BLOCKED_BY_R4_FIELD "
                            "note=R9_81C_or_r1_zero_text_measure evidence=OBSERVED\n");
+                    if (g_e8f.e9l_mode)
+                        printf("[JJFB_E9L_CLASS] class=SPLASH_TEXT_BLOCKED_BY_305E78_FIELD "
+                               "evidence=OBSERVED\n");
                     fflush(stdout);
-                    /* Capture loading+progress HWND; text path needs font ctx next. */
-                    e9k_try_hold("text_measure_missing_R9_81C");
+                    if (!g_e8f.e9l_mode)
+                        e9k_try_hold("text_measure_missing_R9_81C");
+                } else if (g_e8f.e9l_mode && slot818 && slot81c) {
+                    g_e8f.e9l_305e78_ok = 1;
+                    printf("[JJFB_E9L_CLASS] class=TEXTCTX_INIT_REACHED_NEXT_GAP "
+                           "note=305E78_dims_ok_continue NOT_PRODUCT evidence=OBSERVED\n");
+                    fflush(stdout);
                 }
             }
             if (g_e8f.e8x_mode && (bp->pc == 0x2E8980u || bp->pc == 0x2E89A8u)) {
@@ -3215,12 +3289,16 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                 add_bp(0x30ED98u, "jB6cStr");
                 e9j_open_trace_files();
                 if (g_e8f.e9k_mode) e9k_open_trace_files();
+                if (g_e8f.e9l_mode) e9l_open_trace_files();
                 printf("[JJFB_E9J_BP] post_r4=0x2EFB0E text=0x2EFBA2/0x305BFC "
                        "bd0_writer=0x2FC444 b6c_writer=0x30ED98 evidence=HYPOTHESIS\n");
                 if (g_e8f.e9k_mode)
                     printf("[JJFB_E9K_BP] gate=0x2EFAFA pre=0x2EFB08 post=0x2EFB0E "
                            "text=0x2EFBA2/0x305BFC ret=0x2EFBA6 layout=0x2F2174 "
                            "evidence=HYPOTHESIS\n");
+                if (g_e8f.e9l_mode)
+                    printf("[JJFB_E9L_BP] dims=R9+0x818/0x81C measure=0x305E78 "
+                           "layout=0x2F2174 text=0x305BFC evidence=HYPOTHESIS\n");
             }
             e9g_open_trace_files();
             if (g_e8f.e9h_mode) e9h_open_trace_files();
@@ -3833,6 +3911,56 @@ static void e9i_seed_scr_dims(void *uc, uint32_t r9) {
     fflush(stdout);
 }
 
+/* E9L: R9+0x818/0x81C are screen/layout dims (same family as 830/834) read by caller
+ * 0x2EFB38/40 into r2/r1 before BL 0x305E78. No robotol STR writer observed; seed under
+ * FAST_TEXTCTX_ASSIST only — dims from real 240x320 surface, not invented pixels. */
+static void e9l_seed_textctx(void *uc, uint32_t r9) {
+    uint32_t a818 = 0, a81c = 0, a830 = 0, a834 = 0;
+    if (!uc || !r9 || !g_e8f.e9l_mode) return;
+    e9l_open_trace_files();
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x818u, &a818);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x81Cu, &a81c);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x830u, &a830);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x834u, &a834);
+    printf("[JJFB_E9L_818_81C] before R9_818=0x%X R9_81C=0x%X R9_830=0x%X R9_834=0x%X "
+           "note=screen_dims_for_305E78 evidence=OBSERVED\n",
+           a818, a81c, a830, a834);
+    e9l_log_writer(0, 0, 0x818u, a818, a818, "before_seed");
+    e9l_log_writer(0, 0, 0x81Cu, a81c, a81c, "before_seed");
+    if (!a818 && !a81c)
+        printf("[JJFB_E9L_CLASS] class=TEXTCTX_818_81C_WRITER_FOUND_NEXT_GAP "
+               "note=no_robotol_STR_writer_dims_like_830_834 evidence=OBSERVED\n");
+    if (!g_e8f.e9l_textctx_assist) {
+        if (!a818 || !a81c)
+            printf("[JJFB_E9L_CLASS] class=SPLASH_TEXT_BLOCKED_BY_FONT_CONTEXT "
+                   "note=need_FAST_TEXTCTX_ASSIST_or_natural_writer evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    if (g_e8f.e9l_textctx_assist_done && a818 && a81c) return;
+    if (!a818) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x818u, 240u);
+        e9l_log_writer(0, 0, 0x818u, 0, 240u, "assist_seed_818_w");
+        a818 = 240u;
+    }
+    if (!a81c) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x81Cu, 320u);
+        e9l_log_writer(0, 0, 0x81Cu, 0, 320u, "assist_seed_81C_h");
+        a81c = 320u;
+    }
+    if (!a830)
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x830u, 240u);
+    if (!a834)
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x834u, 320u);
+    g_e8f.e9l_textctx_assist_done = 1;
+    printf("[JJFB_FAST_TEXTCTX_ASSIST] R9_818=%u R9_81C=%u note=real_240x320_dims_only "
+           "FAST_TEXTCTX_ASSIST NOT_PRODUCT_SUCCESS evidence=OBSERVED\n",
+           a818, a81c);
+    printf("[JJFB_E9L_CLASS] class=TEXTCTX_INIT_REACHED_NEXT_GAP "
+           "note=dims_seeded_await_305E78 evidence=OBSERVED\n");
+    fflush(stdout);
+}
+
 /* E9J: R9+0xBD0 is a status C-string (writer 0x2FC444 via 2d9648 concat), loaded into
  * r4 at splash 0x2EF886. BA0+0x2C is progress tick count for bar segments at 0x2EFAE2.
  * Assist only under JJFB_FAST_SPLASH_PROGRESS_OBJECT_ASSIST — uses real robotol string. */
@@ -4012,6 +4140,66 @@ static void e9k_try_hold(const char *reason) {
            g_e8f.e9j_post_r4_reached);
     fflush(stdout);
     jjfb_e9k_request_hold(reason);
+}
+
+static void e9l_open_trace_files(void) {
+    const char *w = getenv("JJFB_E9L_WRITER_CSV");
+    const char *m = getenv("JJFB_E9L_305E78_CSV");
+    const char *t = getenv("JJFB_E9L_TEXT_CSV");
+    if (!g_e8f.e9l_writer_csv && w && w[0]) {
+        g_e8f.e9l_writer_csv = fopen(w, "w");
+        if (g_e8f.e9l_writer_csv) {
+            fprintf(g_e8f.e9l_writer_csv, "n,tick,pc,lr,off,old,new,note\n");
+            fflush(g_e8f.e9l_writer_csv);
+        }
+    }
+    if (!g_e8f.e9l_305e78_csv && m && m[0]) {
+        g_e8f.e9l_305e78_csv = fopen(m, "w");
+        if (g_e8f.e9l_305e78_csv) {
+            fprintf(g_e8f.e9l_305e78_csv, "n,tick,pc,lr,r0,r1,r2,r3,a818,a81c,note\n");
+            fflush(g_e8f.e9l_305e78_csv);
+        }
+    }
+    if (!g_e8f.e9l_text_csv && t && t[0]) {
+        g_e8f.e9l_text_csv = fopen(t, "w");
+        if (g_e8f.e9l_text_csv) {
+            fprintf(g_e8f.e9l_text_csv, "n,tick,pc,lr,r0,r1,r2,r3,note\n");
+            fflush(g_e8f.e9l_text_csv);
+        }
+    }
+}
+
+static void e9l_log_writer(uint32_t pc, uint32_t lr, uint32_t off, uint32_t old_v, uint32_t new_v,
+                           const char *note) {
+    static uint32_t n;
+    e9l_open_trace_files();
+    if (!g_e8f.e9l_writer_csv) return;
+    n++;
+    fprintf(g_e8f.e9l_writer_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n, g_e8f.tick, pc, lr,
+            off, old_v, new_v, note ? note : "");
+    fflush(g_e8f.e9l_writer_csv);
+}
+
+static void e9l_log_305e78(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1, uint32_t r2,
+                           uint32_t r3, uint32_t a818, uint32_t a81c, const char *note) {
+    static uint32_t n;
+    e9l_open_trace_files();
+    if (!g_e8f.e9l_305e78_csv) return;
+    n++;
+    fprintf(g_e8f.e9l_305e78_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n,
+            g_e8f.tick, pc, lr, r0, r1, r2, r3, a818, a81c, note ? note : "");
+    fflush(g_e8f.e9l_305e78_csv);
+}
+
+static void e9l_log_text(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1, uint32_t r2,
+                         uint32_t r3, const char *note) {
+    static uint32_t n;
+    e9l_open_trace_files();
+    if (!g_e8f.e9l_text_csv) return;
+    n++;
+    fprintf(g_e8f.e9l_text_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n, g_e8f.tick, pc,
+            lr, r0, r1, r2, r3, note ? note : "");
+    fflush(g_e8f.e9l_text_csv);
 }
 
 #ifdef GWY_HAVE_UNICORN
@@ -5030,6 +5218,9 @@ static void fast_call_splash(void *uc) {
         /* E9J: seed BD0 status string + progress count before 0x2EF886 loads r4. */
         if (g_e8f.e9j_mode)
             e9j_seed_progress_object(uc, r9_run);
+        /* E9L: seed R9+0x818/0x81C dims for 0x305E78 text measure (post-r4). */
+        if (g_e8f.e9l_mode)
+            e9l_seed_textctx(uc, r9_run);
     }
     memset(&abi, 0, sizeof(abi));
     abi.set_r0 = 1;

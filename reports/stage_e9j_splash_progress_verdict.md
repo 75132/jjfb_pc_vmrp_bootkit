@@ -1,4 +1,4 @@
-﻿# Stage E9J: Splash Progress Object / Post-r4 UI
+# Stage E9J: Splash Progress Object / Post-r4 UI
 
 **Verdict:** `SPLASH_LOADING_UI_VISIBLE` — **NOT product success.**
 

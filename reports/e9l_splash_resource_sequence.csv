@@ -1,0 +1,4 @@
+n,tick,pc,lr,name,natural_entry,postmatch,handle,pixels,w,h,note
+1,1,0x304BF0,0x2D93D1,"loadingbar!201!29.bmp",1,1,0x2A83C4,0x3920000,201,29,postmatch
+1,1,0x2D92E4,0x2EFA4B,"bar!16!18.bmp",1,1,0x3910080,0x3922E00,16,18,sibling_resolve
+1,1,0x2D92E4,0x2EFA5B,"textbar!120!30.bmp",1,1,0x39100C0,0x3923200,120,30,sibling_resolve
