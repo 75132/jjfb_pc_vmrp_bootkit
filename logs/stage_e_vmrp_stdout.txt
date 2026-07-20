@@ -45,7 +45,7 @@ R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
 [JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
-[VM_FILE_BIND] runtime=1 svc=15b34e70
+[VM_FILE_BIND] runtime=1 svc=14924ed0
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
@@ -738,7 +738,7 @@ After app init, memory left:3748952
 [JJFB_LIFECYCLE] op=ARM period_ms=50 handler=0x30630D family=0x5 reason=10140_registered_no_classic_timer evidence=CROSS_TARGET+docs/06
 bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=30345 loop_iter=1 timers_active=1 next_due_ms=122568006 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=29977 loop_iter=1 timers_active=1 next_due_ms=124946721 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
@@ -772,9 +772,10 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_DISPLAY_FIRST] enabled=1 bypass_c9d=1 bypass_cf5=0 note=DISPLAY_FIRST_BRANCH_ASSIST NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8W_FIRSTFRAME] enabled=1 f6c_assist=1 reenter=1 note=F70_F74_embedded_struct NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8X_FIRSTFRAME] enabled=1 f74_desc=1 call_2f99d0=0 f6c_assist=1 insn_max=3000 note=2F2854_to_2F449C NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E8Y_FIRSTFRAME] enabled=1 a64_assist=0 insn_max=5000 note=2D92E4_to_A64_to_310BBC NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
+[JJFB_E8Y_FIRSTFRAME] enabled=1 a64_assist=1 insn_max=3000 note=2D92E4_to_A64_to_310BBC NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8Z_FIRSTPIXEL] enabled=1 real_bmp=1 member_fastpath=1 note=real_mrp_pixels_to_mr_drawBitmap NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E8J_CLUSTER_BP] spec_n=20 armed_via_parent_table evidence=OBSERVED
+[JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=0 real_bmp=1 note=stabilize_and_naturalize_304BF0 NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
+[JJFB_E8J_CLUSTER_BP] spec_n=18 armed_via_parent_table evidence=OBSERVED
 [JJFB_DISPLAY_FIRST] gate_bp=0x3066B8,0x3066C6,0x3066DA success=0x306740,0x2E88CC note=runtime_branch_assist_only evidence=HYPOTHESIS
 [JJFB_E8V_BP] e88cc_exits=0x2E88E6,0x2E8914,0x2E898C draw_cands=0x2F2854,0x305BFC,0x2EA058 evidence=HYPOTHESIS
 [JJFB_E8W_BP] f6c_writers=0x2D9CFC,0x2FBD18,0x2E8920 clear=0x30A9EC evidence=HYPOTHESIS
@@ -783,7 +784,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8H_SVC_TRAP] armed=1 stop=0 note=observe_only_no_fake_success evidence=OBSERVED
 [JJFB_E8V_E88CC_TRACE] armed=1 range=0x2E88CC..0x2E8A4E max_insn=2000 evidence=OBSERVED
 [JJFB_E8X_DRAW_TRACE] armed=1 ranges=0x2F2854..287C,0x2EA188..1FC,0x2F449C..4A80 max_insn=3000 evidence=OBSERVED
-[JJFB_E8Y_RESOLVE_TRACE] armed=1 range=0x2D92E4..0x2D9560 max_insn=5000 evidence=OBSERVED
+[JJFB_E8Y_RESOLVE_TRACE] armed=1 range=0x2D92E4..0x2D9560 max_insn=3000 evidence=OBSERVED
 [JJFB_E8F_WRITER_BP] armed=1 n=47 code_base=0x2D8DF4 size=0x3DE2C caller_bp=0 fault_watch=0 dispatcher_bp=0 parent_bp=0 state_watch=1 e8j_bp=1 qread_watch=0 svc_trap=1 e8m_trace=0 evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
@@ -871,7 +872,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_WRITE] event_seq=41 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=34092 loop_iter=6 timers_active=1 next_due_ms=122568072 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=33297 loop_iter=6 timers_active=1 next_due_ms=124946776 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
@@ -1201,19 +1202,4 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED
 [JJFB_E8Z_PIXEL_READ] bmp=0x3920000 bytes=220 first=0xF81F evidence=OBSERVED
 [JJFB_E8Z_SPRITE_BLIT] x=0 y=11 w=11 h=10 black=0 white=0 other=109 key=1 evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_REACHED] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e8z_first_real_frame.bmp before=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e8z_first_real_frame_before.bmp after=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e8z_first_real_frame_after.bmp x=0 y=11 w=11 h=10 black=0 white=0 other=109 key=1 note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED
-[JJFB_E8X_INSN] n=175 pc=0x2F4802 size=2 r0=0x3920000 r1=0xB r2=0x106 r3=0xB lr=0x310C3B evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F482C target=0x310BBD arg0=0x3910080 arg1=0xE5
-[JJFB_E8X_INSN] n=196 pc=0x2F482C size=4 r0=0x3910080 r1=0xE5 r2=0xB r3=0xA lr=0x310C3B evidence=OBSERVED
-[JJFB_E8X_DRAW_PATH] pc=0x310BBC lr=0x2F4831 r0=0x3910080 r1=0xE5 r2=0xB r3=0xA n2854=1 n188=1 n449c=1 n310=2 tick=1 evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] pc=0x310BBC lr=0x2F4831 r0=0x3910080 r1=0xE5 r2=0xB r3=0xA tick=1 note=deeper_draw_path evidence=OBSERVED
-[JJFB_E8Y_310BBC] hit=2 tick=1 note=post_resource_draw_site evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p310BBC pc=0x310BBC hit=2 tick=1 r0=0x3910080 r1=0xE5 r4=0x3910080 r9=0x2B1858 lr=0x2F4831 state=0x26 evidence=OBSERVED
-[JJFB_DRAW] api=mr_drawBitmap bmp=0x3920000 x=229 y=11 w=11 h=10 evidence=DOCUMENTED
-[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x2801E4 lr=0x310C3B r0=0x3920000 r1=229 r2=11 r3=11 h=10 sp=0x27FEC8 surface=0x3920000 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x2801E4 lr=0x310C3B r0=0x3920000 r1=229 r2=11 r3=11 h=10 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x3920000 x=229 y=11 w=11 h=10 sprite_blit=1 evidence=OBSERVED
-[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED
-[JJFB_E8Z_PIXEL_READ] bmp=0x3920000 bytes=220 first=0xF81F evidence=OBSERVED
-[JJFB_E8Z_SPRITE_BLIT] x=229 y=11 w=11 h=10 black=0 white=0 other=109 key=1 evidence=OBSERVED
-[JJFB_E8X_INSN] n=
+[JJFB_FIRST_REAL_FRAME_REACHED] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9a_first_frame.bmp before=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9a_first_frame_before.bmp after=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9a_first_frame_after.bmp x=0 y=11 w=11 h=10 black=0 white=0 other=109 key=1 note=re

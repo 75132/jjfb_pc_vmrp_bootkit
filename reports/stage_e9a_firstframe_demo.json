@@ -1,0 +1,14 @@
+﻿{
+  "stage": "E9A",
+  "mode": "bridgeonly+demo",
+  "verdict": "REAL_MEMBER_BRIDGE_FIRST_FRAME",
+  "assist_level": "REAL_MEMBER_BRIDGE",
+  "screenshot": "screenshots/e9a_first_frame.png",
+  "bmp_path": "out/e9a_resources/wy_jiao1_11_11.bmp",
+  "mrp_path": "game_files/mythroad/320x480/gwy/jjfb.mrp",
+  "note": "NOT_PRODUCT_SUCCESS; pixels from original jjfb.mrp",
+  "cases": [
+    {"name":"demo_visible_frame","verdict":"FIRST_FRAME_DEMO_STABLE","level":"FAST_REAL_BMP_HANDLE_FALLBACK","bmp":"0x3920000"},
+    {"name":"B_real_member_bridge","verdict":"REAL_MEMBER_BRIDGE_FIRST_FRAME","level":"REAL_MEMBER_BRIDGE","bmp":"0x3920000"}
+  ]
+}

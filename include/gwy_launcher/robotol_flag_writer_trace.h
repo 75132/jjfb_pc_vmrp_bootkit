@@ -105,6 +105,12 @@ extern "C" {
  *   JJFB_E8Z_BMP_PATH=<file>       — pre-extracted wy_jiao1!11!11.bmp (raw RGB565)
  *   Pixels must come from original jjfb.mrp; no invented bitmap data.
  *
+ * E9A-FirstFrame (NOT product success):
+ *   JJFB_E9A_MODE=1                — stabilize first frame + naturalize member resolve
+ *   JJFB_REAL_MRP_MEMBER_BRIDGE=1  — at 0x304BF0, decode exact jjfb.mrp members (real bytes)
+ *   JJFB_REAL_MRP_PATH=<jjfb.mrp>  — original package path for bridge decode
+ *   Prefer bridge over FAST_REAL_BMP_HANDLE when possible.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

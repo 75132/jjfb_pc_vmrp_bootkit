@@ -1,0 +1,2 @@
+﻿{"case_name":"demo_visible_frame","verdict":"FIRST_FRAME_DEMO_STABLE","elapsed_sec":47.4,"level":"FAST_REAL_BMP_HANDLE_FALLBACK","bmp":"0x3920000","other":"109","first_frame":true,"bridge":false,"real_bmp":true}
+{"case_name":"B_real_member_bridge","verdict":"REAL_MEMBER_BRIDGE_FIRST_FRAME","elapsed_sec":84.1,"level":"REAL_MEMBER_BRIDGE","bmp":"0x3920000","other":"109","first_frame":true,"bridge":true,"real_bmp":false}

@@ -1,9 +1,12 @@
 #include "gwy_launcher/robotol_flag_writer_trace.h"
+#include "gwy_launcher/byte_buffer.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/robotol_idle_watch.h"
+#include "gwy_launcher/sha256.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -20,7 +23,7 @@
 #define E8Y_A64_SCRATCH 0x3910000u
 #define E8Y_A64_SCRATCH_SIZE 0x1000u
 #define E8Z_PIXEL_BASE 0x3920000u
-#define E8Z_PIXEL_MAP_SIZE 0x1000u
+#define E8Z_PIXEL_MAP_SIZE 0x4000u
 #define E8Z_BMP_BYTES 242
 #define E8Z_BMP_W 11
 #define E8Z_BMP_H 11
@@ -178,6 +181,14 @@ static struct {
     uint32_t e8z_handle_va;
     uint16_t e8z_bw;
     uint16_t e8z_bh;
+    /* E9A: real member bridge at 0x304BF0 (replaces stalled guest index scan). */
+    int e9a_mode;
+    int e9a_member_bridge; /* JJFB_REAL_MRP_MEMBER_BRIDGE */
+    uint32_t e9a_bridge_n;
+    uint32_t e9a_bridge_hit_n;
+    uint32_t e9a_bridge_miss_n;
+    uint32_t e9a_pixel_slot;
+    int e9a_post_a64_draw_skip; /* after first bridged A64 store → 0x2F45A2 */
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -689,6 +700,33 @@ int robotol_flag_writer_trace_enabled(void) {
                    g_e8f.e8z_real_bmp, g_e8f.e8z_member_fastpath);
             fflush(stdout);
         }
+        /* E9A: stabilize first frame; prefer real 0x304BF0 member bridge. */
+        g_e8f.e9a_mode = env1("JJFB_E9A_MODE");
+        g_e8f.e9a_member_bridge = env1("JJFB_REAL_MRP_MEMBER_BRIDGE");
+        if (g_e8f.e9a_mode || g_e8f.e9a_member_bridge) {
+            g_e8f.e9a_mode = 1;
+            g_e8f.e8z_mode = 1;
+            g_e8f.e8y_mode = 1;
+            g_e8f.e8x_mode = 1;
+            g_e8f.e8w_mode = 1;
+            g_e8f.e8v_mode = 1;
+            g_e8f.e8v_e88cc_trace = 1;
+            if (!g_e8f.display_first) {
+                g_e8f.display_first = 1;
+                g_e8f.bypass_c9d_gate = 1;
+            }
+            if (!g_e8f.e8x_f74_desc_assist)
+                g_e8f.e8x_f74_desc_assist = 1;
+            if (!g_e8f.e8w_f6c_assist)
+                g_e8f.e8w_f6c_assist = 1;
+            g_e8f.e8w_reenter_e88cc = 1;
+            /* Bridge path: do NOT auto-enable A64 structural assist (keep A64=0 so 2D92E4 runs). */
+            printf("[JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=%d real_bmp=%d "
+                   "note=stabilize_and_naturalize_304BF0 NOT_PRODUCT_SUCCESS "
+                   "evidence=HYPOTHESIS\n",
+                   g_e8f.e9a_member_bridge, g_e8f.e8z_real_bmp);
+            fflush(stdout);
+        }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
                         g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
@@ -697,7 +735,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
-                        g_e8f.e8z_mode;
+                        g_e8f.e8z_mode || g_e8f.e9a_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -810,6 +848,8 @@ static void on_e8x_draw_insn(uc_engine *uc, uint64_t address, uint32_t size, voi
 static void e8y_install_a64_assist(void *uc, uint32_t r9);
 static void on_e8y_2d92e4_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data);
 static void e8y_dump_name(uc_engine *uc, uint32_t name_va);
+static int e9a_try_member_bridge(uc_engine *uc, uint32_t name_va, uint32_t handle_va,
+                                 uint32_t out_pixels_va, uint32_t lr);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1250,11 +1290,43 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 printf("[JJFB_E8Z_304BF0] lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" note=mrp_member_lookup evidence=OBSERVED\n",
                        lr, r0, r1, r2, r3, g_e8f.e8y_last_name);
+                /* E9A: replace stalled guest index scan with host mrp_archive decode. */
+                if (g_e8f.e9a_member_bridge) {
+                    if (e9a_try_member_bridge(uc, r1, r3, r2, lr))
+                        return;
+                }
             } else if (bp->pc == 0x2F44CEu || bp->pc == 0x2F44E4u || bp->pc == 0x2F44EEu) {
                 g_e8f.e8y_a64_write_n++;
                 printf("[JJFB_E8Y_A64_STORE] pc=0x%X r0=0x%X A64=0x%X A68=0x%X A6C=0x%X "
                        "hit=%u tick=%u evidence=OBSERVED\n",
                        bp->pc, r0, a64, a68, a6c, g_e8f.e8y_a64_write_n, g_e8f.tick);
+                /*
+                 * E9A: first bridged member already stored to A64. Remaining ~15
+                 * BL 0x2D92E4 loads are too slow under host tracing; take the
+                 * natural A64-nonzero continue at 0x2F45A2 → 0x2F4628 draw path.
+                 * Mirror the same real handle into A68/A6C (still original MRP bytes).
+                 */
+                if (bp->pc == 0x2F44CEu && g_e8f.e9a_member_bridge &&
+                    !g_e8f.e9a_post_a64_draw_skip && r9 && r0 &&
+                    g_e8f.e9a_bridge_hit_n > 0u) {
+                    uint32_t cont = 0x2F45A2u | 1u;
+                    /* Mode at [sp,#0x60] may be 10 → uses A58/A5C/A60; mirror real handle. */
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA58u, r0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA5Cu, r0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA60u, r0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA64u, r0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA68u, r0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA6Cu, r0);
+                    g_e8f.e9a_post_a64_draw_skip = 1;
+                    uc_reg_write(uc, UC_ARM_REG_PC, &cont);
+                    printf("[JJFB_E9A_POST_A64_DRAW_SKIP] handle=0x%X "
+                           "A58..A6C=0x%X cont=0x2F45A2 "
+                           "note=real_bridged_handle_skip_sibling_loads "
+                           "NOT_PRODUCT evidence=OBSERVED\n",
+                           r0, r0);
+                    fflush(stdout);
+                    return;
+                }
             } else {
                 printf("[JJFB_E8Y_HELPER] pc=0x%X lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "tick=%u evidence=OBSERVED\n",
@@ -2350,6 +2422,177 @@ static void e8x_call_2f99d0(void *uc, uint32_t r9) {
 #endif
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
+/* Parse name!W!H.bmp → w/h. Returns 1 on success. */
+static int e9a_parse_name_wh(const char *name, int *w, int *h) {
+    const char *p, *q;
+    int ww, hh;
+    if (!name || !w || !h) return 0;
+    p = strchr(name, '!');
+    if (!p) return 0;
+    q = strchr(p + 1, '!');
+    if (!q) return 0;
+    ww = atoi(p + 1);
+    hh = atoi(q + 1);
+    if (ww <= 0 || hh <= 0 || ww > 512 || hh > 512) return 0;
+    *w = ww;
+    *h = hh;
+    return 1;
+}
+
+/* E9A: at 0x304BF0 entry — decode exact member from original jjfb.mrp via mrp_archive.
+ *
+ * Guest ABI (from 0x2D92E4 @ 0x2D93CC / 0x2D954A):
+ *   r0 = package path, r1 = member name, r2 = out size/pixels slot (obj+4),
+ *   r3 = out object (JjfbBmpObjHdr: +0 size, +4 pixels, +8 w, +0xa h)
+ *   return r0 == 0 success, r0 == -1 miss/fail (NOT a handle pointer).
+ * 0x2D92E4 then returns the object in r4 when r5 (304BF0 status) == 0.
+ */
+static int e9a_try_member_bridge(uc_engine *uc, uint32_t name_va, uint32_t handle_va,
+                                 uint32_t out_pixels_va, uint32_t lr) {
+    char name[96];
+    const char *mrp_path;
+    MrpArchive *arch = NULL;
+    const MrpMember *mem = NULL;
+    ByteBuffer bb;
+    LauncherError err;
+    LauncherStatus st;
+    int w = 0, h = 0;
+    uint32_t slot_va, ret_pc, sz, px, status;
+    uint8_t stub[0x20];
+    uint8_t digest[32];
+    char hex[65];
+    int i;
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    g_e8f.e9a_bridge_n++;
+    memset(name, 0, sizeof(name));
+    if (!uc || !name_va) return 0;
+    for (i = 0; i < (int)sizeof(name) - 1; i++) {
+        uint8_t c = 0;
+        if (!guest_memory_uc_peek((struct uc_struct *)uc, name_va + (uint32_t)i, &c, 1) || !c)
+            break;
+        name[i] = (char)c;
+    }
+    if (!name[0]) {
+        printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] miss=empty_name "
+               "class=MEMBER_RESOLVE_BLOCKED_BY_NAME evidence=OBSERVED\n");
+        fflush(stdout);
+        return 0;
+    }
+    mrp_path = getenv("JJFB_REAL_MRP_PATH");
+    if (!mrp_path || !mrp_path[0])
+        mrp_path = "game_files/mythroad/320x480/gwy/jjfb.mrp";
+    st = mrp_archive_open(mrp_path, &arch, &err);
+    if (st != L_OK || !arch) {
+        printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] open_fail path=%s status=%d "
+               "class=MEMBER_RESOLVE_BLOCKED_BY_PACKAGE_CONTEXT evidence=OBSERVED\n",
+               mrp_path, (int)st);
+        fflush(stdout);
+        return 0;
+    }
+    st = mrp_archive_find_exact(arch, name, &mem, &err);
+    if (st != L_OK || !mem) {
+        uint32_t fail = 0xFFFFFFFFu;
+        uint32_t ret = lr | 1u;
+        g_e8f.e9a_bridge_miss_n++;
+        printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] miss name=\"%s\" path=%s "
+               "class=MEMBER_RESOLVE_BLOCKED_BY_NAME note=fail_fast_r0=-1 evidence=OBSERVED\n",
+               name, mrp_path);
+        fflush(stdout);
+        uc_reg_write(uc, UC_ARM_REG_R0, &fail);
+        uc_reg_write(uc, UC_ARM_REG_PC, &ret);
+        mrp_archive_close(arch);
+        return 1; /* consumed; avoid guest stall */
+    }
+    byte_buffer_init(&bb);
+    st = mrp_archive_decode_member(arch, mem, 1024 * 1024, &bb, &err);
+    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > 0x800u) {
+        uint32_t fail = 0xFFFFFFFFu;
+        uint32_t ret = lr | 1u;
+        g_e8f.e9a_bridge_miss_n++;
+        printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] decode_fail name=\"%s\" status=%d size=%u "
+               "class=MEMBER_RESOLVE_BLOCKED_BY_READ_CALLBACK evidence=OBSERVED\n",
+               name, (int)st, (unsigned)bb.size);
+        fflush(stdout);
+        byte_buffer_free(&bb);
+        mrp_archive_close(arch);
+        uc_reg_write(uc, UC_ARM_REG_R0, &fail);
+        uc_reg_write(uc, UC_ARM_REG_PC, &ret);
+        return 1;
+    }
+    (void)e9a_parse_name_wh(name, &w, &h);
+    if (w <= 0 || h <= 0) {
+        w = E8Z_BMP_W;
+        h = E8Z_BMP_H;
+    }
+    gwy_sha256(bb.data, bb.size, digest);
+    gwy_sha256_hex(digest, hex);
+#ifdef GWY_HAVE_UNICORN
+    if (g_e8f.e9a_pixel_slot == 0) {
+        ue = uc_mem_map((uc_engine *)uc, E8Z_PIXEL_BASE, E8Z_PIXEL_MAP_SIZE, UC_PROT_ALL);
+        if (ue != UC_ERR_OK && ue != UC_ERR_MAP)
+            printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] pixel_map uc_err=%u evidence=OBSERVED\n",
+                   (unsigned)ue);
+        ue = uc_mem_map((uc_engine *)uc, E8Y_A64_SCRATCH, E8Y_A64_SCRATCH_SIZE, UC_PROT_ALL);
+        (void)ue;
+    }
+#endif
+    slot_va = E8Z_PIXEL_BASE + (g_e8f.e9a_pixel_slot % 16u) * 0x200u;
+    g_e8f.e9a_pixel_slot++;
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, slot_va, bb.data, (int)bb.size);
+    if (!handle_va)
+        handle_va = E8Y_A64_SCRATCH + ((g_e8f.e9a_bridge_hit_n % 6u) * 0x40u);
+    if (!out_pixels_va)
+        out_pixels_va = handle_va + 4u;
+    memset(stub, 0, sizeof(stub));
+    sz = (uint32_t)bb.size;
+    px = slot_va;
+    /* Preserve guest-filled w/h if already present; else write from name. */
+    {
+        uint16_t gw = 0, gh = 0;
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, handle_va + 8u, (uint8_t *)&gw, 2);
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, handle_va + 10u, (uint8_t *)&gh, 2);
+        if (gw > 0 && gw <= 512) w = (int)gw;
+        if (gh > 0 && gh <= 512) h = (int)gh;
+    }
+    memcpy(stub + 0, &sz, 4);
+    memcpy(stub + 4, &px, 4);
+    stub[8] = (uint8_t)(w & 0xFF);
+    stub[9] = (uint8_t)((w >> 8) & 0xFF);
+    stub[10] = (uint8_t)(h & 0xFF);
+    stub[11] = (uint8_t)((h >> 8) & 0xFF);
+    stub[16] = 1;
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
+    if (out_pixels_va != handle_va + 4u)
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, out_pixels_va, &px, 4);
+    /* ABI: success status 0 — object stays in caller's r4; 2D92E4 returns r4. */
+    status = 0;
+    ret_pc = lr | 1u;
+    uc_reg_write(uc, UC_ARM_REG_R0, &status);
+    uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+    g_e8f.e9a_bridge_hit_n++;
+    g_e8f.e8z_pixel_va = slot_va;
+    g_e8f.e8z_pixel_bytes = sz;
+    g_e8f.e8z_handle_va = handle_va;
+    g_e8f.e8z_bw = (uint16_t)w;
+    g_e8f.e8z_bh = (uint16_t)h;
+    g_e8f.e8z_real_bmp_done = 1;
+    printf("[JJFB_REAL_MRP_MEMBER_BRIDGE] hit=%u name=\"%s\" bytes=%u sha256=%s "
+           "handle=0x%X pixels=0x%X w=%d h=%d stored=%u status_r0=0 "
+           "level=REAL_MEMBER_BRIDGE note=original_jjfb_mrp_decode NOT_PRODUCT "
+           "evidence=OBSERVED\n",
+           g_e8f.e9a_bridge_hit_n, name, sz, hex, handle_va, slot_va, w, h,
+           mem->stored_size);
+    printf("[JJFB_E9A_CLASS] class=REAL_MEMBER_BRIDGE_FIRST_FRAME name=\"%s\" "
+           "evidence=OBSERVED\n",
+           name);
+    fflush(stdout);
+    byte_buffer_free(&bb);
+    mrp_archive_close(arch);
+    return 1;
 }
 
 /* E8Y/E8Z: A58/A5C/A60/A64/A68/A6C handles (0x14-byte layout from 0x2D92E4).
