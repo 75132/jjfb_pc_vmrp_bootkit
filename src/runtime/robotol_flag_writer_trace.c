@@ -247,7 +247,21 @@ static struct {
     char e9g_idx_names[64][64]; /* collect guest index names for slogo audit */
     int e9g_idx_n;
     int e9g_slogo_class_logged;
-    int e9g_skip_sibling_binds; /* after first splash UI postmatch → skip to 0x2EFA9E */
+    int e9g_skip_sibling_binds; /* after first splash UI postmatch → cont toward blit */
+    /* E9H: r4 provenance + real blit (0x2EFA97 → 0x2EC6B8), no rewrite. */
+    int e9h_mode;
+    int e9h_r4_trace;
+    int e9h_r4_assist; /* JJFB_FAST_SPLASH_R4_ASSIST — only after layout known */
+    int e9h_r4_assist_done;
+    uint32_t e9h_r4_last;
+    uint32_t e9h_r4_change_n;
+    uint32_t e9h_blit_n;
+    uint32_t e9h_r4_gate_n;
+    FILE *e9h_r4_csv;
+    FILE *e9h_seq_csv;
+#ifdef GWY_HAVE_UNICORN
+    uc_hook e9h_splash_hook;
+#endif
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -784,6 +798,24 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9g_splash_call = env1("JJFB_FAST_SPLASH_CALL");
         g_e8f.e9g_ui_mode_assist = env1("JJFB_E9G_UI_MODE_ASSIST");
         g_e8f.e9g_debug_only = env1("JJFB_E9G_DEBUG");
+        /* E9H: r4 / blit path — implies E9G; disables blind skip-to-progress. */
+        g_e8f.e9h_mode = env1("JJFB_E9H_MODE");
+        g_e8f.e9h_r4_trace = env1("JJFB_E9H_R4_TRACE") || g_e8f.e9h_mode;
+        g_e8f.e9h_r4_assist = env1("JJFB_FAST_SPLASH_R4_ASSIST");
+        if (g_e8f.e9h_mode) {
+            g_e8f.e9g_mode = 1;
+            if (!g_e8f.e9g_debug_only)
+                g_e8f.e9g_splash_call = 1;
+            if (!g_e8f.e9g_ui_mode_assist && env1("JJFB_E9G_UI_MODE_ASSIST"))
+                g_e8f.e9g_ui_mode_assist = 1;
+            /* Prefer UI_MODE assist for E9H blit path unless explicitly disabled. */
+            if (!getenv("JJFB_E9G_UI_MODE_ASSIST") || getenv("JJFB_E9G_UI_MODE_ASSIST")[0] == '1')
+                g_e8f.e9g_ui_mode_assist = 1;
+            printf("[JJFB_E9H_SPLASH_BLIT] enabled=1 r4_trace=%d r4_assist=%d "
+                   "note=reach_0x2EFA9A_2EC6B8_not_skip_2EFA9E NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9h_r4_trace, g_e8f.e9h_r4_assist);
+            fflush(stdout);
+        }
         if (g_e8f.e9g_mode) {
             g_e8f.e9f_mode = 1;
             g_e8f.e9e_mode = 1;
@@ -874,7 +906,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
                         g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode || g_e8f.e9e_mode ||
-                        g_e8f.e9f_mode || g_e8f.e9g_mode;
+                        g_e8f.e9f_mode || g_e8f.e9g_mode || g_e8f.e9h_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -929,6 +961,10 @@ void robotol_flag_writer_trace_reset(void) {
         if (g_e8f.e8y_2d92e4_hook) {
             uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.e8y_2d92e4_hook);
             g_e8f.e8y_2d92e4_hook = 0;
+        }
+        if (g_e8f.e9h_splash_hook) {
+            uc_hook_del((uc_engine *)g_e8f.uc, g_e8f.e9h_splash_hook);
+            g_e8f.e9h_splash_hook = 0;
         }
     }
 #endif
@@ -1007,6 +1043,12 @@ static void e9g_log_req_csv(uint32_t pc, uint32_t lr, uint32_t ui_mode, const ch
 static void e9g_collect_idx_name(const char *idx);
 static void e9g_audit_slogo_once(int force);
 static void fast_call_splash(void *uc);
+static void e9h_open_trace_files(void);
+static void e9h_log_r4(uint32_t pc, uint32_t lr, uint32_t r4, uint32_t r0, uint32_t r1,
+                       uint32_t r9, const char *note);
+#ifdef GWY_HAVE_UNICORN
+static void on_e9h_splash_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data);
+#endif
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1178,22 +1220,33 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     bp->last_r1 = r1;
     bp->last_r9 = r9;
 
-    /* E9G: splash / UI_MODE writer / bind sites. */
-    if (g_e8f.e9g_mode &&
+    /* E9G/E9H: splash / UI_MODE writer / bind / blit sites. */
+    if ((g_e8f.e9g_mode || g_e8f.e9h_mode) &&
         (bp->pc == 0x2EF86Cu || bp->pc == 0x30662Cu || bp->pc == 0x306344u ||
-         bp->pc == 0x2FC418u || bp->pc == 0x2EFA33u || bp->pc == 0x2EFA53u)) {
+         bp->pc == 0x2FC418u || bp->pc == 0x2EFA33u || bp->pc == 0x2EFA43u ||
+         bp->pc == 0x2EFA53u || bp->pc == 0x2EFA46u || bp->pc == 0x2EFA56u ||
+         bp->pc == 0x2EFA7Cu || bp->pc == 0x2EFA9Au || bp->pc == 0x2EC6B8u ||
+         bp->pc == 0x2EFAF2u || bp->pc == 0x2EFA9Eu)) {
         uint32_t ui_mode = 0;
         uint32_t r9w = r9;
+        uint32_t r4 = 0, r2 = 0, r3 = 0, sp = 0;
+        uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+        uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+        uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+        uc_reg_read(uc, UC_ARM_REG_SP, &sp);
         if ((!r9w || !find_robotol_r9(uc, &r9w)) && r9) r9w = r9;
         if (r9w)
             (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + E8I_STATE_OFF, &ui_mode);
         e9g_open_trace_files();
+        if (g_e8f.e9h_mode) e9h_open_trace_files();
         if (bp->pc == 0x2EF86Cu) {
             g_e8f.e9g_splash_enter_n++;
-            printf("[JJFB_E9G_SPLASH_ENTER] lr=0x%X r0=0x%X r1=0x%X ui_mode=0x%X tick=%u "
-                   "class=SPLASH_2EF86C_REACHED evidence=OBSERVED\n",
-                   lr, r0, r1, ui_mode, g_e8f.tick);
+            g_e8f.e9h_r4_last = r4;
+            printf("[JJFB_E9G_SPLASH_ENTER] lr=0x%X r0=0x%X r1=0x%X r4=0x%X ui_mode=0x%X "
+                   "tick=%u class=SPLASH_2EF86C_REACHED evidence=OBSERVED\n",
+                   lr, r0, r1, r4, ui_mode, g_e8f.tick);
             e9g_log_uimode_csv(bp->pc, lr, ui_mode, ui_mode, r9w, "splash_enter");
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "splash_enter");
             fflush(stdout);
         } else if (bp->pc == 0x2FC418u) {
             g_e8f.e9g_uimode_writer_n++;
@@ -1213,14 +1266,139 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                    lr, r0, r1, ui_mode, g_e8f.tick);
             fflush(stdout);
         } else if (bp->pc == 0x2EFA33u) {
-            printf("[JJFB_E9G_BINDBAR] pc=0x2EFA33 role=loadingbar lr=0x%X tick=%u "
+            printf("[JJFB_E9H_BIND] pc=0x2EFA33 role=loadingbar r4=0x%X lr=0x%X tick=%u "
                    "evidence=OBSERVED\n",
-                   lr, g_e8f.tick);
+                   r4, lr, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_loadingbar");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA46u) {
+            /* Bar bind BL @ 0x2EFA46 (base=0x2D8DF4). Skip to y-calc @ 0x2EFA5C
+             * then blit setup — keeps splash r6/r7; y filled by 0x2F9964. */
+            printf("[JJFB_E9H_BIND] pc=0x2EFA46 role=bar_bl r0=0x%X r4=0x%X tick=%u "
+                   "evidence=OBSERVED\n",
+                   r0, r4, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_bar_bl");
+            if (g_e8f.e9h_mode && g_e8f.e9g_skip_sibling_binds) {
+                uint32_t cont = 0x2EFA5Cu | 1u;
+                uint32_t r5 = 0, r6 = 0, r7 = 0;
+                uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+                uc_reg_read(uc, UC_ARM_REG_R6, &r6);
+                uc_reg_read(uc, UC_ARM_REG_R7, &r7);
+                uc_reg_write(uc, UC_ARM_REG_PC, &cont);
+                printf("[JJFB_E9H_SPLASH_CONT_BLIT] from=0x2EFA46 cont=0x2EFA5C "
+                       "r5=0x%X r6=0x%X r7=0x%X note=preserve_regs_run_y_calc NOT_PRODUCT "
+                       "evidence=OBSERVED\n",
+                       r5, r6, r7);
+                fflush(stdout);
+                return;
+            }
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA43u) {
+            printf("[JJFB_E9H_BIND] pc=0x2EFA43 role=bar r4=0x%X lr=0x%X tick=%u "
+                   "evidence=OBSERVED\n",
+                   r4, lr, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_bar");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA56u) {
+            printf("[JJFB_E9H_BIND] pc=0x2EFA56 role=textbar_bl r0=0x%X r4=0x%X tick=%u "
+                   "evidence=OBSERVED\n",
+                   r0, r4, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_textbar_bl");
             fflush(stdout);
         } else if (bp->pc == 0x2EFA53u) {
-            printf("[JJFB_E9G_BINDBAR] pc=0x2EFA53 role=textbar lr=0x%X tick=%u "
+            printf("[JJFB_E9H_BIND] pc=0x2EFA53 role=textbar r4=0x%X lr=0x%X tick=%u "
                    "evidence=OBSERVED\n",
-                   lr, g_e8f.tick);
+                   r4, lr, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_textbar");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA7Cu) {
+            printf("[JJFB_E9H_BLIT_SETUP] pc=0x2EFA7C r0=0x%X r1=0x%X r2=0x%X r4=0x%X "
+                   "tick=%u evidence=OBSERVED\n",
+                   r0, r1, r2, r4, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "blit_setup_2EFA7C");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA9Au) {
+            printf("[JJFB_E9H_BLIT_SITE] pc=0x2EFA9A role=loadingbar_2EC6B8_call r0=0x%X "
+                   "r1=0x%X r2=0x%X r4=0x%X tick=%u evidence=OBSERVED\n",
+                   r0, r1, r2, r4, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "pre_blit_2EFA9A");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EC6B8u) {
+            uint32_t px = 0, fp150c = 0;
+            uint16_t mw = 0, mh = 0;
+            char member[96];
+            int blitted = 0;
+            int x = (int)r1, y = (int)r2;
+            int onscreen;
+            g_e8f.e9h_blit_n++;
+            memset(member, 0, sizeof(member));
+            if (r0)
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r0 + 4u, &px);
+            if (r9w)
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x150Cu, &fp150c);
+            if (px)
+                (void)jjfb_bmp_meta_get(px, &mw, &mh, member, sizeof(member));
+            if (!mw && g_e8f.e8z_bw) {
+                mw = g_e8f.e8z_bw;
+                mh = g_e8f.e8z_bh;
+                px = g_e8f.e8z_pixel_va ? g_e8f.e8z_pixel_va : px;
+            }
+            onscreen = (x > -40 && x < 240 && y > -40 && y < 320);
+            printf("[JJFB_E9H_2EC6B8] lr=0x%X obj=0x%X x=%d y=%d flags=0x%X pixels=0x%X "
+                   "fp150C=0x%X r4=0x%X member=%s onscreen=%d tick=%u evidence=OBSERVED\n",
+                   lr, r0, x, y, r3, px, fp150c, r4, member[0] ? member : "?", onscreen,
+                   g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "blit_2EC6B8");
+            /* Entry of blit fn (PUSH). r0=obj r1=x r2=y — do not hook mid-body.
+             * Skip-path y-calc can yield -100 when bar/textbar binds were skipped;
+             * recover coords from same splash fn literals (R5=#220) + center-x. */
+            if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && !onscreen &&
+                member[0] && strstr(member, "loadingbar")) {
+                int ax = (240 - (int)mw) / 2;
+                int ay = 220; /* MOVS R5,#220 @ 0x2EF8B2 in splash */
+                if (ax < 0) ax = 0;
+                printf("[JJFB_E9H_COORD_ASSIST] from=%d,%d to=%d,%d w=%u h=%u "
+                       "note=splash_literal_220_center_x NOT_PRODUCT evidence=OBSERVED\n",
+                       x, y, ax, ay, (unsigned)mw, (unsigned)mh);
+                x = ax;
+                y = ay;
+                onscreen = 1;
+            }
+            if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && onscreen) {
+                printf("[JJFB_E9H_CLASS] class=SPLASH_LOADINGBAR_DRAWN_NO_REWRITE "
+                       "obj=0x%X pixels=0x%X x=%d y=%d w=%u h=%u member=%s "
+                       "evidence=OBSERVED\n",
+                       r0, px, x, y, (unsigned)mw, (unsigned)mh,
+                       member[0] ? member : "?");
+                fflush(stdout);
+                blitted = jjfb_e9h_blit_guest_pixels(uc, px, x, y, (int)mw, (int)mh,
+                                                     member[0] ? member : "?");
+                if (blitted) {
+                    uint32_t ret = lr | 1u;
+                    uint32_t r0ret = 1u;
+                    uc_reg_write(uc, UC_ARM_REG_R0, &r0ret);
+                    uc_reg_write(uc, UC_ARM_REG_PC, &ret);
+                    return;
+                }
+            } else if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && !onscreen) {
+                printf("[JJFB_E9H_CLASS] class=SPLASH_BLIT_BAD_XY obj=0x%X x=%d y=%d "
+                       "note=skip_offscreen_assist evidence=OBSERVED\n",
+                       r0, x, y);
+            }
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFAF2u) {
+            g_e8f.e9h_r4_gate_n++;
+            printf("[JJFB_E9H_R4_GATE] pc=0x2EFAF2 r4=0x%X r0=0x%X r1=0x%X tick=%u "
+                   "note=%s evidence=OBSERVED\n",
+                   r4, r0, r1, g_e8f.tick, r4 ? "r4_nz_continue" : "r4_zero_early_exit");
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, r4 ? "gate_nz" : "gate_zero");
+            if (!r4)
+                printf("[JJFB_E9H_CLASS] class=SPLASH_BLOCKED_BY_R4_ZERO evidence=OBSERVED\n");
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA9Eu) {
+            printf("[JJFB_E9H_PROGRESS] pc=0x2EFA9E r4=0x%X r6=? tick=%u evidence=OBSERVED\n",
+                   r4, g_e8f.tick);
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "progress_loop");
             fflush(stdout);
         }
     }
@@ -1482,15 +1660,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                     e9g_open_trace_files();
                     e9g_log_req_csv(0x2D92E4u, lr, ui_mode, g_e8f.e8y_last_name, 0, 0, 0, 0,
                                     "enter");
-                    /* After first splash loadingbar postmatch: skip bar/textbar binds
-                     * (slow under host tracing). Sticky until first real frame. */
+                    /* E9H: skip is done at splash PC 0x2EFA46→0x2EFA5C (preserve regs).
+                     * Never jump from 2D92E4. */
                     if (g_e8f.e9g_skip_sibling_binds && lr >= 0x2EF86Cu && lr < 0x2EFB00u &&
-                        strstr(g_e8f.e8y_last_name, "loadingbar") == NULL) {
-                        uint32_t cont = 0x2EFA9Eu | 1u;
+                        strstr(g_e8f.e8y_last_name, "loadingbar") == NULL && !g_e8f.e9h_mode) {
+                        uint32_t cont = 0x2EFA5Cu | 1u;
                         uc_reg_write(uc, UC_ARM_REG_PC, &cont);
-                        printf("[JJFB_E9G_SPLASH_SKIP_SIBLING] name=\"%s\" lr=0x%X "
-                               "cont=0x2EFA9E note=first_ui_frame_after_loadingbar "
-                               "NOT_PRODUCT evidence=OBSERVED\n",
+                        printf("[JJFB_E9H_SPLASH_CONT_BLIT] name=\"%s\" lr=0x%X "
+                               "cont=0x2EFA5C note=legacy_2D92E4_skip NOT_PRODUCT "
+                               "evidence=OBSERVED\n",
                                g_e8f.e8y_last_name, lr);
                         fflush(stdout);
                         return;
@@ -2518,16 +2696,25 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
                    "evidence=HYPOTHESIS\n",
                    g_e8f.e9d_strcmp_shim);
         }
-        if (g_e8f.e9g_mode) {
+        if (g_e8f.e9g_mode || g_e8f.e9h_mode) {
             add_bp(0x2EF86Cu, "gSplash");
             add_bp(0x30662Cu, "gSplashBl");
             add_bp(0x306344u, "gModeCmp");
             add_bp(0x2FC418u, "gUiWrite");
             add_bp(0x2EFA33u, "gLoadBar");
+            add_bp(0x2EFA46u, "gBarBl");
+            add_bp(0x2EFA43u, "gBar");
+            add_bp(0x2EFA56u, "gTextBarBl");
             add_bp(0x2EFA53u, "gTextBar");
+            add_bp(0x2EFA7Cu, "gBlitSetup");
+            add_bp(0x2EFA9Au, "gBlitCall");
+            add_bp(0x2EC6B8u, "g2EC6B8");
+            add_bp(0x2EFA9Eu, "gProg");
+            add_bp(0x2EFAF2u, "gR4Gate");
             e9g_open_trace_files();
-            printf("[JJFB_E9G_BP] splash=0x2EF86C bl=0x30662C cmp=0x306344 writer=0x2FC418 "
-                   "bind=0x2EFA33/0x2EFA53 evidence=HYPOTHESIS\n");
+            if (g_e8f.e9h_mode) e9h_open_trace_files();
+            printf("[JJFB_E9H_BP] splash=0x2EF86C blit=0x2EFA9A,0x2EC6B8 setup=0x2EFA7C "
+                   "gate=0x2EFAF2 bind=0x2EFA36/46/56 base=0x2D8DF4 evidence=HYPOTHESIS\n");
         }
         printf("[JJFB_E8Y_BP] resolve=0x2D92E4 stores=0x2F44CE/E4/EE helpers=0x304BF0,"
                "0x2FD868,0x2F8528 evidence=HYPOTHESIS\n");
@@ -2584,6 +2771,15 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
             printf("[JJFB_E8V_E88CC_TRACE] armed=1 range=0x2E88CC..0x2E8A4E max_insn=%u "
                    "evidence=OBSERVED\n",
                    g_e8f.e8v_insn_max);
+        }
+    }
+    if (g_e8f.e9h_r4_trace) {
+        ue = uc_hook_add((uc_engine *)uc, &g_e8f.e9h_splash_hook, UC_HOOK_CODE,
+                         (void *)on_e9h_splash_insn, NULL, 0x2EF86Cull, 0x2EFB20ull);
+        if (ue != UC_ERR_OK) {
+            printf("[JJFB_E9H_R4_TRACE] arm_fail uc_err=%u evidence=OBSERVED\n", (unsigned)ue);
+        } else {
+            printf("[JJFB_E9H_R4_TRACE] armed=1 range=0x2EF86C..0x2EFB20 evidence=HYPOTHESIS\n");
         }
     }
     if (g_e8f.e8x_mode) {
@@ -3023,6 +3219,60 @@ static void e9g_open_trace_files(void) {
     }
 }
 
+static void e9h_open_trace_files(void) {
+    const char *r4 = getenv("JJFB_E9H_R4_CSV");
+    const char *seq = getenv("JJFB_E9H_SEQ_CSV");
+    if (!g_e8f.e9h_mode) return;
+    if (!g_e8f.e9h_r4_csv && r4 && r4[0]) {
+        g_e8f.e9h_r4_csv = fopen(r4, "w");
+        if (g_e8f.e9h_r4_csv) {
+            fprintf(g_e8f.e9h_r4_csv, "n,tick,pc,lr,r4,r0,r1,r9,note\n");
+            fflush(g_e8f.e9h_r4_csv);
+        }
+    }
+    if (!g_e8f.e9h_seq_csv && seq && seq[0]) {
+        g_e8f.e9h_seq_csv = fopen(seq, "w");
+        if (g_e8f.e9h_seq_csv) {
+            fprintf(g_e8f.e9h_seq_csv,
+                    "n,tick,pc,lr,name,natural_entry,postmatch,handle,pixels,w,h,note\n");
+            fflush(g_e8f.e9h_seq_csv);
+        }
+    }
+}
+
+static void e9h_log_r4(uint32_t pc, uint32_t lr, uint32_t r4, uint32_t r0, uint32_t r1,
+                       uint32_t r9, const char *note) {
+    static uint32_t n;
+    if (!g_e8f.e9h_r4_csv) return;
+    n++;
+    fprintf(g_e8f.e9h_r4_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n, g_e8f.tick, pc, lr,
+            r4, r0, r1, r9, note ? note : "");
+    fflush(g_e8f.e9h_r4_csv);
+}
+
+#ifdef GWY_HAVE_UNICORN
+static void on_e9h_splash_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+    uint32_t r4 = 0, r0 = 0, r1 = 0, lr = 0, r9 = 0;
+    (void)size;
+    (void)user_data;
+    if (!g_e8f.e9h_r4_trace) return;
+    uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+    if (r4 == g_e8f.e9h_r4_last) return;
+    uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    g_e8f.e9h_r4_change_n++;
+    printf("[JJFB_E9H_R4_WRITE] pc=0x%X old=0x%X new=0x%X r0=0x%X lr=0x%X tick=%u "
+           "evidence=OBSERVED\n",
+           (uint32_t)address, g_e8f.e9h_r4_last, r4, r0, lr, g_e8f.tick);
+    e9h_open_trace_files();
+    e9h_log_r4((uint32_t)address, lr, r4, r0, r1, r9, "r4_change");
+    g_e8f.e9h_r4_last = r4;
+    fflush(stdout);
+}
+#endif
+
 static void e9g_log_uimode_csv(uint32_t pc, uint32_t lr, uint32_t oldv, uint32_t newv,
                                uint32_t r9, const char *note) {
     static uint32_t n;
@@ -3341,15 +3591,23 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
         e9g_open_trace_files();
         e9g_log_req_csv(0x304BF0u, lr, ui_mode, name, 1, 1, handle_va, 0, "postmatch_ok");
         e9g_audit_slogo_once(1);
-        /* Splash bind path (LR from 0x2D92E4 into 0x2EFA*): arm sibling skip after
-         * first loadingbar so bar/textbar scans do not stall first visible frame. */
+        /* Splash bind path: arm continue-to-blit after loadingbar (0x2EFA97). */
         if (strstr(name, "loadingbar") && g_e8f.e8y_2d92e4_n > 0u) {
             g_e8f.e9g_skip_sibling_binds = 1;
-            printf("[JJFB_E9G_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_SKIP "
-                   "name=\"%s\" note=next_2D92E4_in_splash_skips_to_2EFA9E "
-                   "NOT_PRODUCT evidence=OBSERVED\n",
+            printf("[JJFB_E9H_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_BLIT "
+                   "name=\"%s\" note=next_bar_bl_0x2EFA46_skips_to_0x2EFA5C NOT_PRODUCT "
+                   "evidence=OBSERVED\n",
                    name);
             fflush(stdout);
+        }
+        if (g_e8f.e9h_mode) {
+            e9h_open_trace_files();
+            if (g_e8f.e9h_seq_csv) {
+                fprintf(g_e8f.e9h_seq_csv,
+                        "%u,%u,0x304BF0,0x%X,\"%s\",1,1,0x%X,0x%X,%d,%d,postmatch\n",
+                        g_e8f.e9d_req_n, g_e8f.tick, lr, name, handle_va, slot_va, w, h);
+                fflush(g_e8f.e9h_seq_csv);
+            }
         }
     }
     if (g_e8f.e9d_req_csv) {

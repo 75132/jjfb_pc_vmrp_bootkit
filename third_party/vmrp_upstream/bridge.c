@@ -2154,3 +2154,39 @@ int32_t bridge_dsm_init(uc_engine *uc) {
     }
     return MR_FAILED;
 }
+
+#ifdef GWY_USE_VM_FILE_SERVICE
+/* E9H: splash 0x2EC6B8 path — blit original guest RGB565 via real guiDrawBitmapSprite.
+ * Registered into launcher_core (MinGW PE has no ELF weak override). */
+static int jjfb_e9h_blit_guest_pixels_impl(void *uc_in, uint32_t pixels_va, int x, int y, int w,
+                                           int h, const char *member) {
+    uc_engine *uc = (uc_engine *)uc_in;
+    uint16_t host_pix[240 * 320];
+    uint32_t nbytes;
+    uc_err ue;
+    if (!uc || !pixels_va || w <= 0 || h <= 0 || w > 240 || h > 320) return 0;
+    nbytes = (uint32_t)w * (uint32_t)h * 2u;
+    if (nbytes > sizeof(host_pix)) return 0;
+    memset(host_pix, 0, nbytes);
+    ue = uc_mem_read(uc, pixels_va, host_pix, nbytes);
+    if (ue != UC_ERR_OK) {
+        printf("[JJFB_E9H_2EC6B8_BLIT] fail=uc_mem_read uc_err=%u pixels=0x%X evidence=OBSERVED\n",
+               (unsigned)ue, pixels_va);
+        fflush(stdout);
+        return 0;
+    }
+    printf("[JJFB_E9H_2EC6B8_BLIT] pixels=0x%X x=%d y=%d w=%d h=%d member=%s "
+           "via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED\n",
+           pixels_va, x, y, w, h, member && member[0] ? member : "?");
+    fflush(stdout);
+    guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+    return 1;
+}
+
+#if defined(__GNUC__)
+__attribute__((constructor))
+#endif
+static void jjfb_e9h_register_blit(void) {
+    jjfb_e9h_set_blit_fn(jjfb_e9h_blit_guest_pixels_impl);
+}
+#endif

@@ -121,6 +121,17 @@ extern "C" {
  *   Implies E9F/E9E/E9D natural postmatch. Does NOT enable JJFB_E9F_REWRITE_REQUEST
  *   (rewrite under E9G is debug-only demotion, not success).
  *
+ * E9H-Splash blit / r4 (NOT product success):
+ *   JJFB_E9H_MODE=1                — reach 0x2EFA9A → 0x2EC6B8 loadingbar blit
+ *   JJFB_E9H_R4_TRACE=1            — log r4 changes in 0x2EF86C..0x2EFB20
+ *   JJFB_FAST_SPLASH_R4_ASSIST=1   — optional r4 object assist after layout known
+ *   JJFB_E9H_R4_CSV=<path>         — r4 provenance rows
+ *   JJFB_E9H_SEQ_CSV=<path>        — splash resource sequence
+ *   robotol code_base refined to 0x2D8DF4: blit entry 0x2EC6B8, call 0x2EFA9A.
+ *   After loadingbar postmatch, skip at 0x2EFA46 → 0x2EFA5C (y-calc then blit).
+ *   Never jump from 2D92E4 / never skip to 0x2EFA9E (that's post-blit).
+ *   No request rewrite. No blind jump to 0x2F45A2.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

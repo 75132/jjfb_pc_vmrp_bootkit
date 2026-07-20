@@ -12,6 +12,7 @@ typedef struct {
 } JjfbBmpMetaSlot;
 
 static JjfbBmpMetaSlot g_slots[JJFB_BMP_META_N];
+static JjfbE9hBlitFn g_e9h_blit_fn;
 
 void jjfb_bmp_meta_reset(void) {
     memset(g_slots, 0, sizeof(g_slots));
@@ -60,4 +61,14 @@ int jjfb_bmp_meta_get(uint32_t pixels_va, uint16_t *w_out, uint16_t *h_out, char
         return 1;
     }
     return 0;
+}
+
+void jjfb_e9h_set_blit_fn(JjfbE9hBlitFn fn) {
+    g_e9h_blit_fn = fn;
+}
+
+int jjfb_e9h_blit_guest_pixels(void *uc, uint32_t pixels_va, int x, int y, int w, int h,
+                               const char *member) {
+    if (!g_e9h_blit_fn) return 0;
+    return g_e9h_blit_fn(uc, pixels_va, x, y, w, h, member);
 }

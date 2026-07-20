@@ -1,0 +1,4 @@
+n,tick,pc,lr,ui_mode,name,natural_entry,postmatch,handle,draw_pc,note
+1,1,0x2D92E4,0x2EFA3B,0x45,"loadingbar!201!29.bmp",0,0,0x0,0x0,enter
+2,1,0x304BF0,0x2D93D1,0x45,"loadingbar!201!29.bmp",0,0,0x0,0x0,enter_304BF0
+3,1,0x304BF0,0x2D93D1,0x45,"loadingbar!201!29.bmp",1,1,0x2A83C4,0x0,postmatch_ok
