@@ -132,6 +132,13 @@ extern "C" {
  *   Never jump from 2D92E4 / never skip to 0x2EFA9E (that's post-blit).
  *   No request rewrite. No blind jump to 0x2F45A2.
  *
+ * E9I-Splash Loading UI (NOT product success):
+ *   JJFB_E9I_MODE=1                — complete splash UI; seed R9+0x830/0x834
+ *   JJFB_SPLASH_COORD_ASSIST=1     — diagnostic xy recovery only (not success)
+ *   JJFB_E9I_SKIP_SIBLING=1        — optional E9H-style skip bar/textbar binds
+ *   JJFB_E9I_COORD_CSV / R4_CSV / SEQ_CSV
+ *   Natural xy: x=(R9_830-bmp_w)/2 → R6; y=(R9_834)-100 → R5. Default keeps siblings.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

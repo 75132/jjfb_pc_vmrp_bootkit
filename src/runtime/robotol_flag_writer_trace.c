@@ -248,7 +248,7 @@ static struct {
     int e9g_idx_n;
     int e9g_slogo_class_logged;
     int e9g_skip_sibling_binds; /* after first splash UI postmatch → cont toward blit */
-    /* E9H: r4 provenance + real blit (0x2EFA97 → 0x2EC6B8), no rewrite. */
+    /* E9H: r4 provenance + real blit (0x2EFA9A → 0x2EC6B8), no rewrite. */
     int e9h_mode;
     int e9h_r4_trace;
     int e9h_r4_assist; /* JJFB_FAST_SPLASH_R4_ASSIST — only after layout known */
@@ -259,6 +259,15 @@ static struct {
     uint32_t e9h_r4_gate_n;
     FILE *e9h_r4_csv;
     FILE *e9h_seq_csv;
+    /* E9I: fuller splash UI — natural coords via R9+0x830/0x834 seed; optional coord assist. */
+    int e9i_mode;
+    int e9i_coord_assist; /* JJFB_SPLASH_COORD_ASSIST — diagnostic only */
+    int e9i_skip_sibling; /* 1=E9H-style skip bar binds; 0=natural sibling binds */
+    int e9i_scr_dim_seeded;
+    uint32_t e9i_drawn_mask; /* bit0 loadingbar bit1 textbar bit2 top bit3 other */
+    FILE *e9i_coord_csv;
+    FILE *e9i_r4_csv;
+    FILE *e9i_seq_csv;
 #ifdef GWY_HAVE_UNICORN
     uc_hook e9h_splash_hook;
 #endif
@@ -802,13 +811,28 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9h_mode = env1("JJFB_E9H_MODE");
         g_e8f.e9h_r4_trace = env1("JJFB_E9H_R4_TRACE") || g_e8f.e9h_mode;
         g_e8f.e9h_r4_assist = env1("JJFB_FAST_SPLASH_R4_ASSIST");
+        /* E9I: complete splash loading UI — implies E9H; prefer natural coords. */
+        g_e8f.e9i_mode = env1("JJFB_E9I_MODE");
+        g_e8f.e9i_coord_assist = env1("JJFB_SPLASH_COORD_ASSIST");
+        g_e8f.e9i_skip_sibling = env1("JJFB_E9I_SKIP_SIBLING");
+        if (g_e8f.e9i_mode) {
+            g_e8f.e9h_mode = 1;
+            g_e8f.e9h_r4_trace = 1;
+            /* Default: do NOT skip sibling binds (natural bar/textbar). */
+            if (!getenv("JJFB_E9I_SKIP_SIBLING"))
+                g_e8f.e9i_skip_sibling = 0;
+            printf("[JJFB_E9I_SPLASH_UI] enabled=1 coord_assist=%d skip_sibling=%d "
+                   "note=seed_R9_830_834_natural_xy NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9i_coord_assist, g_e8f.e9i_skip_sibling);
+            fflush(stdout);
+        }
         if (g_e8f.e9h_mode) {
             g_e8f.e9g_mode = 1;
             if (!g_e8f.e9g_debug_only)
                 g_e8f.e9g_splash_call = 1;
             if (!g_e8f.e9g_ui_mode_assist && env1("JJFB_E9G_UI_MODE_ASSIST"))
                 g_e8f.e9g_ui_mode_assist = 1;
-            /* Prefer UI_MODE assist for E9H blit path unless explicitly disabled. */
+            /* Prefer UI_MODE assist for E9H/E9I blit path unless explicitly disabled. */
             if (!getenv("JJFB_E9G_UI_MODE_ASSIST") || getenv("JJFB_E9G_UI_MODE_ASSIST")[0] == '1')
                 g_e8f.e9g_ui_mode_assist = 1;
             printf("[JJFB_E9H_SPLASH_BLIT] enabled=1 r4_trace=%d r4_assist=%d "
@@ -1031,6 +1055,8 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1);
 static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t r0, uint32_t r1,
                                uint32_t r2);
 static int e9e_try_postmatch_complete(uc_engine *uc, const char *name);
+static int e9i_is_splash_sibling(const char *name);
+static int e9i_try_splash_sibling_resolve(uc_engine *uc, const char *name, uint32_t lr);
 static int e9e_name_already_done(const char *name);
 static void e9f_open_trace_files(void);
 static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint32_t pc);
@@ -1046,6 +1072,10 @@ static void fast_call_splash(void *uc);
 static void e9h_open_trace_files(void);
 static void e9h_log_r4(uint32_t pc, uint32_t lr, uint32_t r4, uint32_t r0, uint32_t r1,
                        uint32_t r9, const char *note);
+static void e9i_open_trace_files(void);
+static void e9i_log_coord(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r5, uint32_t r6,
+                          uint32_t r7, uint32_t a830, uint32_t a834, const char *note);
+static void e9i_seed_scr_dims(void *uc, uint32_t r9);
 #ifdef GWY_HAVE_UNICORN
 static void on_e9h_splash_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data);
 #endif
@@ -1225,8 +1255,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         (bp->pc == 0x2EF86Cu || bp->pc == 0x30662Cu || bp->pc == 0x306344u ||
          bp->pc == 0x2FC418u || bp->pc == 0x2EFA33u || bp->pc == 0x2EFA43u ||
          bp->pc == 0x2EFA53u || bp->pc == 0x2EFA46u || bp->pc == 0x2EFA56u ||
-         bp->pc == 0x2EFA7Cu || bp->pc == 0x2EFA9Au || bp->pc == 0x2EC6B8u ||
-         bp->pc == 0x2EFAF2u || bp->pc == 0x2EFA9Eu)) {
+         bp->pc == 0x2EFA5Cu || bp->pc == 0x2EFA7Cu || bp->pc == 0x2EFA9Au ||
+         bp->pc == 0x2EC6B8u || bp->pc == 0x2EFAF2u || bp->pc == 0x2EFA9Eu ||
+         bp->pc == 0x2EFAFAu)) {
         uint32_t ui_mode = 0;
         uint32_t r9w = r9;
         uint32_t r4 = 0, r2 = 0, r3 = 0, sp = 0;
@@ -1272,13 +1303,13 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_loadingbar");
             fflush(stdout);
         } else if (bp->pc == 0x2EFA46u) {
-            /* Bar bind BL @ 0x2EFA46 (base=0x2D8DF4). Skip to y-calc @ 0x2EFA5C
-             * then blit setup — keeps splash r6/r7; y filled by 0x2F9964. */
+            /* Bar bind BL @ 0x2EFA46. E9H may skip to y-calc; E9I natural keeps binds. */
             printf("[JJFB_E9H_BIND] pc=0x2EFA46 role=bar_bl r0=0x%X r4=0x%X tick=%u "
                    "evidence=OBSERVED\n",
                    r0, r4, g_e8f.tick);
             e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_bar_bl");
-            if (g_e8f.e9h_mode && g_e8f.e9g_skip_sibling_binds) {
+            if (g_e8f.e9h_mode && g_e8f.e9g_skip_sibling_binds &&
+                (!g_e8f.e9i_mode || g_e8f.e9i_skip_sibling)) {
                 uint32_t cont = 0x2EFA5Cu | 1u;
                 uint32_t r5 = 0, r6 = 0, r7 = 0;
                 uc_reg_read(uc, UC_ARM_REG_R5, &r5);
@@ -1292,12 +1323,56 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 fflush(stdout);
                 return;
             }
+            if (g_e8f.e9i_mode && !g_e8f.e9i_skip_sibling)
+                printf("[JJFB_E9I_SIBLING] keep=bar_bind note=natural_no_skip evidence=OBSERVED\n");
             fflush(stdout);
-        } else if (bp->pc == 0x2EFA43u) {
-            printf("[JJFB_E9H_BIND] pc=0x2EFA43 role=bar r4=0x%X lr=0x%X tick=%u "
+        } else if (bp->pc == 0x2EFA5Cu) {
+            uint32_t a830 = 0, a834 = 0, r5 = 0, r6 = 0, r7 = 0;
+            uint32_t slot20 = 0, slot24 = 0, slot28 = 0, r4src = 0, gate_b6c = 0;
+            if (r9w) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x830u, &a830);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x834u, &a834);
+                /* Splash UI obj = R9+0xBA0: +0x20 bar, +0x24 textbar, +0x28 loadingbar.
+                 * r4 source = *(R9+0xBD0) = splash_obj+0x30. Gate peek = *(R9+0xB6C). */
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xBA0u + 0x20u,
+                                               &slot20);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xBA0u + 0x24u,
+                                               &slot24);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xBA0u + 0x28u,
+                                               &slot28);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xBD0u, &r4src);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0xB6Cu, &gate_b6c);
+            }
+            uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+            uc_reg_read(uc, UC_ARM_REG_R6, &r6);
+            uc_reg_read(uc, UC_ARM_REG_R7, &r7);
+            printf("[JJFB_E9I_YCALC] pc=0x2EFA5C phase=enter r0=0x%X r5=0x%X r6=0x%X r7=0x%X "
+                   "R9_830=0x%X R9_834=0x%X note=getter_2F9970_then_center_x_to_r6 "
                    "evidence=OBSERVED\n",
-                   r4, lr, g_e8f.tick);
-            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_bar");
+                   r0, r5, r6, r7, a830, a834);
+            printf("[JJFB_E9I_SPLASH_SLOTS] R9_BA0_plus20_bar=0x%X plus24_textbar=0x%X "
+                   "plus28_loadingbar=0x%X R9_BD0_r4_src=0x%X R9_B6C_gate=0x%X r4_reg=0x%X "
+                   "note=r4_is_splash_obj_plus_0x30_not_sibling_bind evidence=OBSERVED\n",
+                   slot20, slot24, slot28, r4src, gate_b6c, r4);
+            if (r4src && !r4)
+                printf("[JJFB_E9I_CLASS] class=SPLASH_R4_SOURCE_FOUND_NEXT_GAP "
+                       "R9_BD0=0x%X r4_reg=0x%X note=field_set_but_reg_stale "
+                       "evidence=OBSERVED\n",
+                       r4src, r4);
+            else if (!r4src)
+                printf("[JJFB_E9I_CLASS] class=SPLASH_R4_SOURCE_FOUND_NEXT_GAP "
+                       "R9_BD0=0 r4_reg=0x%X "
+                       "note=r4_is_R9_BD0_splash_obj_plus30_not_bar_textbar_slots "
+                       "evidence=OBSERVED\n",
+                       r4);
+            if (!slot20 || !slot24)
+                printf("[JJFB_E9I_CLASS] class=SPLASH_R4_REQUIRES_SIBLING_BIND "
+                       "bar=0x%X textbar=0x%X loadingbar=0x%X "
+                       "note=sibling_slots_incomplete_for_fuller_UI_not_for_r4 "
+                       "evidence=OBSERVED\n",
+                       slot20, slot24, slot28);
+            e9i_log_coord(bp->pc, lr, r0, r5, r6, r7, a830, a834, "ycalc_enter");
+            e9h_log_r4(bp->pc, lr, r4, r4src, slot28, r9w, "ycalc_r4_vs_R9_BD0");
             fflush(stdout);
         } else if (bp->pc == 0x2EFA56u) {
             printf("[JJFB_E9H_BIND] pc=0x2EFA56 role=textbar_bl r0=0x%X r4=0x%X tick=%u "
@@ -1312,10 +1387,19 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "bind_textbar");
             fflush(stdout);
         } else if (bp->pc == 0x2EFA7Cu) {
+            uint32_t r5 = 0, r6 = 0, r7 = 0, a830 = 0, a834 = 0;
+            uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+            uc_reg_read(uc, UC_ARM_REG_R6, &r6);
+            uc_reg_read(uc, UC_ARM_REG_R7, &r7);
+            if (r9w) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x830u, &a830);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + 0x834u, &a834);
+            }
             printf("[JJFB_E9H_BLIT_SETUP] pc=0x2EFA7C r0=0x%X r1=0x%X r2=0x%X r4=0x%X "
-                   "tick=%u evidence=OBSERVED\n",
-                   r0, r1, r2, r4, g_e8f.tick);
+                   "r5=%d r6=%d R9_830=0x%X R9_834=0x%X tick=%u evidence=OBSERVED\n",
+                   r0, r1, r2, r4, (int)r5, (int)r6, a830, a834, g_e8f.tick);
             e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "blit_setup_2EFA7C");
+            e9i_log_coord(bp->pc, lr, r0, r5, r6, r7, a830, a834, "pre_blit_setup");
             fflush(stdout);
         } else if (bp->pc == 0x2EFA9Au) {
             printf("[JJFB_E9H_BLIT_SITE] pc=0x2EFA9A role=loadingbar_2EC6B8_call r0=0x%X "
@@ -1349,42 +1433,82 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                    lr, r0, x, y, r3, px, fp150c, r4, member[0] ? member : "?", onscreen,
                    g_e8f.tick);
             e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, "blit_2EC6B8");
-            /* Entry of blit fn (PUSH). r0=obj r1=x r2=y — do not hook mid-body.
-             * Skip-path y-calc can yield -100 when bar/textbar binds were skipped;
-             * recover coords from same splash fn literals (R5=#220) + center-x. */
-            if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && !onscreen &&
-                member[0] && strstr(member, "loadingbar")) {
+            /* Natural xy: R9+0x830=screen_w → ASRS R6 center-x; R9+0x834 → R5; R5-=100 → y.
+             * COORD_ASSIST only when JJFB_SPLASH_COORD_ASSIST=1 (E9I diagnostic). */
+            if ((g_e8f.e9i_coord_assist || (!g_e8f.e9i_mode && g_e8f.e9h_mode)) &&
+                px && mw > 0 && mh > 0 && !onscreen && member[0] &&
+                (strstr(member, "loadingbar") || strstr(member, "textbar") ||
+                 strstr(member, "top!") || strstr(member, "target"))) {
                 int ax = (240 - (int)mw) / 2;
-                int ay = 220; /* MOVS R5,#220 @ 0x2EF8B2 in splash */
+                int ay = 220; /* equiv: seeded R9+0x834=320 then SUBS #100 */
                 if (ax < 0) ax = 0;
-                printf("[JJFB_E9H_COORD_ASSIST] from=%d,%d to=%d,%d w=%u h=%u "
-                       "note=splash_literal_220_center_x NOT_PRODUCT evidence=OBSERVED\n",
-                       x, y, ax, ay, (unsigned)mw, (unsigned)mh);
+                printf("[JJFB_SPLASH_COORD_ASSIST] member=%s guest=(%d,%d) fixed=(%d,%d) "
+                       "w=%u h=%u reason=R9_830_834_zero_or_bad NOT_PRODUCT evidence=OBSERVED\n",
+                       member, x, y, ax, ay, (unsigned)mw, (unsigned)mh);
+                e9i_log_coord(bp->pc, lr, (uint32_t)x, (uint32_t)y, (uint32_t)ax, (uint32_t)ay,
+                              0, 0, "coord_assist");
                 x = ax;
                 y = ay;
                 onscreen = 1;
             }
-            if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && onscreen) {
-                printf("[JJFB_E9H_CLASS] class=SPLASH_LOADINGBAR_DRAWN_NO_REWRITE "
-                       "obj=0x%X pixels=0x%X x=%d y=%d w=%u h=%u member=%s "
-                       "evidence=OBSERVED\n",
+            if ((g_e8f.e9h_mode || g_e8f.e9i_mode) && px && mw > 0 && mh > 0 && onscreen) {
+                int is_lb = member[0] && strstr(member, "loadingbar") != NULL;
+                int is_tb = member[0] && strstr(member, "textbar") != NULL;
+                int is_top = member[0] && strstr(member, "top!") != NULL;
+                printf("[JJFB_E9H_CLASS] class=%s obj=0x%X pixels=0x%X x=%d y=%d w=%u h=%u "
+                       "member=%s evidence=OBSERVED\n",
+                       is_lb ? "SPLASH_LOADINGBAR_DRAWN_NO_REWRITE"
+                             : (is_tb ? "SPLASH_TEXTBAR_DRAWN_NO_REWRITE"
+                                      : (is_top ? "SPLASH_TOP_DRAWN_NO_REWRITE"
+                                                : "SPLASH_RESOURCE_DRAWN_NO_REWRITE")),
                        r0, px, x, y, (unsigned)mw, (unsigned)mh,
                        member[0] ? member : "?");
+                if (is_tb)
+                    printf("[JJFB_E9I_CLASS] class=SPLASH_TEXTBAR_DRAWN_NO_REWRITE "
+                           "member=%s evidence=OBSERVED\n",
+                           member);
+                if (is_top)
+                    printf("[JJFB_E9I_CLASS] class=SPLASH_TOP_DRAWN_NO_REWRITE "
+                           "member=%s evidence=OBSERVED\n",
+                           member);
+                if (is_lb && !g_e8f.e9i_coord_assist && x > -40 && y > -40)
+                    printf("[JJFB_E9I_CLASS] class=SPLASH_LOADINGBAR_NATURAL_COORD_VISIBLE "
+                           "x=%d y=%d evidence=OBSERVED\n",
+                           x, y);
                 fflush(stdout);
                 blitted = jjfb_e9h_blit_guest_pixels(uc, px, x, y, (int)mw, (int)mh,
                                                      member[0] ? member : "?");
                 if (blitted) {
                     uint32_t ret = lr | 1u;
                     uint32_t r0ret = 1u;
+                    if (is_lb) g_e8f.e9i_drawn_mask |= 1u;
+                    if (is_tb) g_e8f.e9i_drawn_mask |= 2u;
+                    if (is_top) g_e8f.e9i_drawn_mask |= 4u;
+                    if (!is_lb && !is_tb && !is_top) g_e8f.e9i_drawn_mask |= 8u;
+                    if ((g_e8f.e9i_drawn_mask & 1u) && (g_e8f.e9i_drawn_mask & ~1u))
+                        printf("[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE "
+                               "mask=0x%X evidence=OBSERVED\n",
+                               g_e8f.e9i_drawn_mask);
                     uc_reg_write(uc, UC_ARM_REG_R0, &r0ret);
                     uc_reg_write(uc, UC_ARM_REG_PC, &ret);
                     return;
                 }
-            } else if (g_e8f.e9h_mode && px && mw > 0 && mh > 0 && !onscreen) {
+            } else if ((g_e8f.e9h_mode || g_e8f.e9i_mode) && px && mw > 0 && mh > 0 &&
+                       !onscreen) {
                 printf("[JJFB_E9H_CLASS] class=SPLASH_BLIT_BAD_XY obj=0x%X x=%d y=%d "
-                       "note=skip_offscreen_assist evidence=OBSERVED\n",
-                       r0, x, y);
+                       "member=%s note=need_scr_dim_seed_or_coord_assist evidence=OBSERVED\n",
+                       r0, x, y, member[0] ? member : "?");
+                printf("[JJFB_E9I_CLASS] class=SPLASH_COORD_ASSIST_STILL_REQUIRED "
+                       "evidence=OBSERVED\n");
             }
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFAFAu) {
+            printf("[JJFB_E9I_R4_CMP] pc=0x2EFAFA r4=0x%X r0=0x%X tick=%u note=%s "
+                   "evidence=OBSERVED\n",
+                   r4, r0, g_e8f.tick, r4 ? "r4_nz" : "r4_zero_blocks");
+            e9h_log_r4(bp->pc, lr, r4, r0, r1, r9w, r4 ? "r4_cmp_nz" : "r4_cmp_zero");
+            if (!r4)
+                printf("[JJFB_E9I_CLASS] class=SPLASH_BLOCKED_BY_R4_ZERO evidence=OBSERVED\n");
             fflush(stdout);
         } else if (bp->pc == 0x2EFAF2u) {
             g_e8f.e9h_r4_gate_n++;
@@ -1672,6 +1796,14 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                                g_e8f.e8y_last_name, lr);
                         fflush(stdout);
                         return;
+                    }
+                    /* E9I: bar/textbar/top stall in guest index miss path — complete via
+                     * same original-MRP postmatch bytes, return handle to splash LR. */
+                    if (g_e8f.e9i_mode && !g_e8f.e9i_skip_sibling &&
+                        lr >= 0x2EF86Cu && lr < 0x2EFB00u &&
+                        e9i_is_splash_sibling(g_e8f.e8y_last_name)) {
+                        if (e9i_try_splash_sibling_resolve(uc, g_e8f.e8y_last_name, lr))
+                            return;
                     }
                 }
                 printf("[JJFB_E8Y_2D92E4_ENTRY] hit=%u lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
@@ -2706,15 +2838,18 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
             add_bp(0x2EFA43u, "gBar");
             add_bp(0x2EFA56u, "gTextBarBl");
             add_bp(0x2EFA53u, "gTextBar");
+            add_bp(0x2EFA5Cu, "gYCalc");
             add_bp(0x2EFA7Cu, "gBlitSetup");
             add_bp(0x2EFA9Au, "gBlitCall");
             add_bp(0x2EC6B8u, "g2EC6B8");
             add_bp(0x2EFA9Eu, "gProg");
             add_bp(0x2EFAF2u, "gR4Gate");
+            add_bp(0x2EFAFAu, "gR4Cmp");
             e9g_open_trace_files();
             if (g_e8f.e9h_mode) e9h_open_trace_files();
-            printf("[JJFB_E9H_BP] splash=0x2EF86C blit=0x2EFA9A,0x2EC6B8 setup=0x2EFA7C "
-                   "gate=0x2EFAF2 bind=0x2EFA36/46/56 base=0x2D8DF4 evidence=HYPOTHESIS\n");
+            if (g_e8f.e9i_mode) e9i_open_trace_files();
+            printf("[JJFB_E9H_BP] splash=0x2EF86C blit=0x2EFA9A,0x2EC6B8 ycalc=0x2EFA5C "
+                   "gate=0x2EFAFA bind=0x2EFA36/46/56 base=0x2D8DF4 evidence=HYPOTHESIS\n");
         }
         printf("[JJFB_E8Y_BP] resolve=0x2D92E4 stores=0x2F44CE/E4/EE helpers=0x304BF0,"
                "0x2FD868,0x2F8528 evidence=HYPOTHESIS\n");
@@ -3250,6 +3385,76 @@ static void e9h_log_r4(uint32_t pc, uint32_t lr, uint32_t r4, uint32_t r0, uint3
     fflush(g_e8f.e9h_r4_csv);
 }
 
+static void e9i_open_trace_files(void) {
+    const char *coord = getenv("JJFB_E9I_COORD_CSV");
+    const char *r4 = getenv("JJFB_E9I_R4_CSV");
+    const char *seq = getenv("JJFB_E9I_SEQ_CSV");
+    if (!g_e8f.e9i_mode) return;
+    if (!g_e8f.e9i_coord_csv && coord && coord[0]) {
+        g_e8f.e9i_coord_csv = fopen(coord, "w");
+        if (g_e8f.e9i_coord_csv) {
+            fprintf(g_e8f.e9i_coord_csv,
+                    "n,tick,pc,lr,r0,r5,r6,r7,R9_830,R9_834,note\n");
+            fflush(g_e8f.e9i_coord_csv);
+        }
+    }
+    if (!g_e8f.e9i_r4_csv && r4 && r4[0]) {
+        g_e8f.e9i_r4_csv = fopen(r4, "w");
+        if (g_e8f.e9i_r4_csv) {
+            fprintf(g_e8f.e9i_r4_csv, "n,tick,pc,lr,r4,r0,r1,r9,note\n");
+            fflush(g_e8f.e9i_r4_csv);
+        }
+    }
+    if (!g_e8f.e9i_seq_csv && seq && seq[0]) {
+        g_e8f.e9i_seq_csv = fopen(seq, "w");
+        if (g_e8f.e9i_seq_csv) {
+            fprintf(g_e8f.e9i_seq_csv,
+                    "n,tick,pc,lr,name,natural_entry,postmatch,handle,pixels,w,h,note\n");
+            fflush(g_e8f.e9i_seq_csv);
+        }
+    }
+    /* Mirror into E9H CSV handles so existing e9h_log_r4 / seq writers work. */
+    if (!g_e8f.e9h_r4_csv && g_e8f.e9i_r4_csv)
+        g_e8f.e9h_r4_csv = g_e8f.e9i_r4_csv;
+    if (!g_e8f.e9h_seq_csv && g_e8f.e9i_seq_csv)
+        g_e8f.e9h_seq_csv = g_e8f.e9i_seq_csv;
+    e9h_open_trace_files();
+}
+
+static void e9i_log_coord(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r5, uint32_t r6,
+                          uint32_t r7, uint32_t a830, uint32_t a834, const char *note) {
+    static uint32_t n;
+    if (!g_e8f.e9i_coord_csv) return;
+    n++;
+    fprintf(g_e8f.e9i_coord_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n,
+            g_e8f.tick, pc, lr, r0, r5, r6, r7, a830, a834, note ? note : "");
+    fflush(g_e8f.e9i_coord_csv);
+}
+
+static void e9i_seed_scr_dims(void *uc, uint32_t r9) {
+    uint32_t a830 = 0, a834 = 0;
+    if (!uc || !r9 || g_e8f.e9i_scr_dim_seeded) return;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x830u, &a830);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x834u, &a834);
+    printf("[JJFB_E9I_SCR_DIM] before R9_830=0x%X R9_834=0x%X note=2F9970_W_2F9964_Ybase "
+           "evidence=OBSERVED\n",
+           a830, a834);
+    if (!a830) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x830u, 240u);
+        a830 = 240u;
+    }
+    if (!a834) {
+        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0x834u, 320u);
+        a834 = 320u;
+    }
+    g_e8f.e9i_scr_dim_seeded = 1;
+    printf("[JJFB_E9I_SCR_DIM_SEED] R9_830=%u R9_834=%u "
+           "note=natural_xy_formula_x=(W-bw)/2_y=H-100 NOT_PRODUCT evidence=OBSERVED\n",
+           a830, a834);
+    e9i_log_coord(0, 0, 0, 0, 0, 0, a830, a834, "scr_dim_seed");
+    fflush(stdout);
+}
+
 #ifdef GWY_HAVE_UNICORN
 static void on_e9h_splash_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
     uint32_t r4 = 0, r0 = 0, r1 = 0, lr = 0, r9 = 0;
@@ -3387,6 +3592,128 @@ static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint3
            "blocker_was=GAME_ONLY_REQUESTS_WY_JIAO_ON_DISPLAYFIRST evidence=OBSERVED\n",
            prefer);
     fflush(stdout);
+    return 1;
+}
+
+/* E9I: splash sibling names that stall when absent from guest 304BF0 index. */
+static int e9i_is_splash_sibling(const char *name) {
+    if (!name || !name[0]) return 0;
+    if (strncmp(name, "bar!", 4) == 0) return 1;
+    if (strncmp(name, "textbar!", 8) == 0) return 1;
+    if (strncmp(name, "top!", 4) == 0) return 1;
+    if (strncmp(name, "target!", 7) == 0) return 1;
+    return 0;
+}
+
+/* Complete 0x2D92E4 for splash siblings with original jjfb.mrp bytes (same payload path
+ * as E9E postmatch). Returns handle in r0 to splash LR — NOT REAL_MRP_MEMBER_BRIDGE. */
+static int e9i_try_splash_sibling_resolve(uc_engine *uc, const char *name, uint32_t lr) {
+    const char *mrp_path;
+    MrpArchive *arch = NULL;
+    const MrpMember *mem = NULL;
+    ByteBuffer bb;
+    LauncherError err;
+    LauncherStatus st;
+    int w = 0, h = 0, i;
+    uint32_t handle_va, slot_va, sz, px, ret_pc;
+    uint8_t stub[0x20];
+    uint8_t digest[32];
+    char hex[65];
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    if (!uc || !name || !name[0] || !lr) return 0;
+    if (!g_e8f.e9i_mode || !g_e8f.e9e_postmatch_shims) return 0;
+    if (e9e_name_already_done(name)) return 0;
+    if (g_e8f.e9e_postmatch_n >= 8u) return 0;
+
+    mrp_path = getenv("JJFB_REAL_MRP_PATH");
+    if (!mrp_path || !mrp_path[0])
+        mrp_path = "game_files/mythroad/320x480/gwy/jjfb.mrp";
+    st = mrp_archive_open(mrp_path, &arch, &err);
+    if (st != L_OK || !arch) return 0;
+    st = mrp_archive_find_exact(arch, name, &mem, &err);
+    if (st != L_OK || !mem) {
+        printf("[JJFB_E9I_SIBLING_RESOLVE] find_fail name=\"%s\" evidence=OBSERVED\n", name);
+        fflush(stdout);
+        mrp_archive_close(arch);
+        return 0;
+    }
+    byte_buffer_init(&bb);
+    st = mrp_archive_decode_member(arch, mem, 1024 * 1024, &bb, &err);
+    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > (240u * 320u * 2u)) {
+        byte_buffer_free(&bb);
+        mrp_archive_close(arch);
+        return 0;
+    }
+    (void)e9a_parse_name_wh(name, &w, &h);
+    if (w <= 0 || h <= 0) {
+        w = 16;
+        h = 18;
+    }
+    gwy_sha256(bb.data, bb.size, digest);
+    gwy_sha256_hex(digest, hex);
+#ifdef GWY_HAVE_UNICORN
+    if (g_e8f.e9a_pixel_slot == 0) {
+        ue = uc_mem_map((uc_engine *)uc, E8Z_PIXEL_BASE, E8Z_PIXEL_MAP_SIZE, UC_PROT_ALL);
+        (void)ue;
+        ue = uc_mem_map((uc_engine *)uc, E8Y_A64_SCRATCH, E8Y_A64_SCRATCH_SIZE, UC_PROT_ALL);
+        (void)ue;
+    }
+#endif
+    slot_va = E8Z_PIXEL_BASE + g_e8f.e9a_pixel_slot;
+    {
+        uint32_t need = ((uint32_t)bb.size + 0x1FFu) & ~0x1FFu;
+        if (need < 0x200u) need = 0x200u;
+        if (slot_va + need > E8Z_PIXEL_BASE + E8Z_PIXEL_MAP_SIZE) {
+            slot_va = E8Z_PIXEL_BASE;
+            g_e8f.e9a_pixel_slot = 0;
+        }
+        g_e8f.e9a_pixel_slot += need;
+    }
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, slot_va, bb.data, (int)bb.size);
+    handle_va = E8Y_A64_SCRATCH + 0x40u + (g_e8f.e9e_postmatch_n % 6u) * 0x40u;
+    memset(stub, 0, sizeof(stub));
+    sz = (uint32_t)bb.size;
+    px = slot_va;
+    memcpy(stub + 0, &sz, 4);
+    memcpy(stub + 4, &px, 4);
+    stub[8] = (uint8_t)(w & 0xFF);
+    stub[9] = (uint8_t)((w >> 8) & 0xFF);
+    stub[10] = (uint8_t)(h & 0xFF);
+    stub[11] = (uint8_t)((h >> 8) & 0xFF);
+    stub[16] = 1;
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
+    jjfb_bmp_meta_set(slot_va, (uint16_t)w, (uint16_t)h, name);
+
+    ret_pc = lr | 1u;
+    module_r9_switch_clear_dsm_return_side_stack();
+    uc_reg_write(uc, UC_ARM_REG_R0, &handle_va);
+    uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+
+    g_e8f.e9e_postmatch_done = 1;
+    if (g_e8f.e9e_postmatch_n < 8u) {
+        snprintf(g_e8f.e9e_done_names[g_e8f.e9e_postmatch_n],
+                 sizeof(g_e8f.e9e_done_names[0]), "%s", name);
+        g_e8f.e9e_postmatch_n++;
+    }
+    if (g_e8f.e9h_seq_csv || g_e8f.e9i_seq_csv) {
+        e9i_open_trace_files();
+        if (g_e8f.e9h_seq_csv) {
+            fprintf(g_e8f.e9h_seq_csv,
+                    "%u,%u,0x2D92E4,0x%X,\"%s\",1,1,0x%X,0x%X,%d,%d,sibling_resolve\n",
+                    g_e8f.e9d_req_n, g_e8f.tick, lr, name, handle_va, slot_va, w, h);
+            fflush(g_e8f.e9h_seq_csv);
+        }
+    }
+    printf("[JJFB_E9I_SIBLING_RESOLVE] name=\"%s\" handle=0x%X pixels=0x%X w=%d h=%d "
+           "sha256=%s lr=0x%X note=original_mrp_bytes_complete_2D92E4 NOT_BRIDGE "
+           "NOT_PRODUCT evidence=OBSERVED\n",
+           name, handle_va, slot_va, w, h, hex, lr);
+    fflush(stdout);
+    (void)i;
+    byte_buffer_free(&bb);
+    mrp_archive_close(arch);
     return 1;
 }
 
@@ -3594,10 +3921,18 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
         /* Splash bind path: arm continue-to-blit after loadingbar (0x2EFA97). */
         if (strstr(name, "loadingbar") && g_e8f.e8y_2d92e4_n > 0u) {
             g_e8f.e9g_skip_sibling_binds = 1;
-            printf("[JJFB_E9H_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_BLIT "
-                   "name=\"%s\" note=next_bar_bl_0x2EFA46_skips_to_0x2EFA5C NOT_PRODUCT "
-                   "evidence=OBSERVED\n",
-                   name);
+            if (g_e8f.e9i_mode && !g_e8f.e9i_skip_sibling) {
+                g_e8f.e9g_skip_sibling_binds = 0;
+                printf("[JJFB_E9I_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_KEEP_SIBLINGS "
+                       "name=\"%s\" note=natural_bar_textbar_binds NOT_PRODUCT "
+                       "evidence=OBSERVED\n",
+                       name);
+            } else {
+                printf("[JJFB_E9H_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_BLIT "
+                       "name=\"%s\" note=next_bar_bl_0x2EFA46_skips_to_0x2EFA5C NOT_PRODUCT "
+                       "evidence=OBSERVED\n",
+                       name);
+            }
             fflush(stdout);
         }
         if (g_e8f.e9h_mode) {
@@ -4130,6 +4465,9 @@ static void fast_call_splash(void *uc) {
             state_before = 0x45u;
             fflush(stdout);
         }
+        /* E9I: seed splash screen dims used by 0x2F9970/0x2F9964 (R9+0x830/0x834). */
+        if (g_e8f.e9i_mode || g_e8f.e9h_mode)
+            e9i_seed_scr_dims(uc, r9_run);
     }
     memset(&abi, 0, sizeof(abi));
     abi.set_r0 = 1;

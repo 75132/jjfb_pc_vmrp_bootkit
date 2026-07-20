@@ -170,12 +170,13 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_E9I_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST / E8P..E9H: do not stop on 30103C alone.
+  # FAST_ASSIST / E8P..E9I: do not stop on 30103C alone.
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
   $e9bMode = ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_VISIBLE_WINDOW -eq '1')
-  $e9hMode = ($env:JJFB_E9H_MODE -eq '1')
+  $e9iMode = ($env:JJFB_E9I_MODE -eq '1')
+  $e9hMode = ($env:JJFB_E9H_MODE -eq '1') -or $e9iMode
   $e9gMode = ($env:JJFB_E9G_MODE -eq '1') -or $e9hMode
   $e9fMode = ($env:JJFB_E9F_MODE -eq '1') -or $e9gMode
   $e9eMode = ($env:JJFB_E9E_MODE -eq '1') -or $e9fMode
@@ -192,11 +193,11 @@ if ($e8oFast) {
   $e8sMode = ($env:JJFB_E8S_MODE -eq '1')
   $e8rMode = ($env:JJFB_E8R_MODE -eq '1')
   $e8pMode = ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1')
-  if ($e9hMode -and $e9bMode) {
-    # Prefer HWND hold after blit; do not kill on DRAWN alone (need capture).
-    $stopPat = "JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_E9H_CLASS\] class=SPLASH_BLIT_BAD_XY|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
-  } elseif ($e9hMode) {
-    $stopPat = "JJFB_E9H_CLASS\] class=SPLASH_LOADINGBAR_DRAWN|JJFB_E9H_R4_GATE\]|JJFB_E9H_CLASS\] class=SPLASH_BLIT_BAD_XY|JJFB_FIRST_REAL_FRAME_REACHED\]|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
+  if (($e9iMode -or $e9hMode) -and $e9bMode) {
+    # Prefer HWND hold after splash draw; do not kill on DRAWN/NATURAL alone.
+    $stopPat = "JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_E9H_CLASS\] class=SPLASH_BLIT_BAD_XY|JJFB_E9I_CLASS\] class=SPLASH_COORD_ASSIST_STILL_REQUIRED|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
+  } elseif ($e9iMode -or $e9hMode) {
+    $stopPat = "JJFB_E9I_CLASS\] class=SPLASH_LOADING_UI_VISIBLE|JJFB_E9I_CLASS\] class=SPLASH_LOADINGBAR_NATURAL_COORD_VISIBLE|JJFB_E9H_CLASS\] class=SPLASH_LOADINGBAR_DRAWN|JJFB_E9H_R4_GATE\]|JJFB_E9I_R4_CMP\]|JJFB_E9H_CLASS\] class=SPLASH_BLIT_BAD_XY|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
   } elseif ($e9gMode -and ($env:JJFB_E9G_DEBUG -eq '1')) {
     # Debug: stop after splash enter / UI_MODE writer / FAST splash done / request.
     $stopPat = "JJFB_E9G_SPLASH_ENTER\]|JJFB_FAST_SPLASH_DONE\]|JJFB_E9G_UIMODE_WRITER\]|JJFB_E9G_UI_MODE_45\]|JJFB_E9D_REQUEST\]|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"

@@ -1,4 +1,4 @@
-﻿# Stage E9H Splash Blit Verdict
+# Stage E9H Splash Blit Verdict
 
 - **Mode**: blit
 - **Class**: `SPLASH_LOADINGBAR_DRAWN_NO_REWRITE`
