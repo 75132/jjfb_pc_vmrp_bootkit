@@ -425,9 +425,28 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
     fflush(stdout);
     if (sprite_blit) {
-        uint16_t host_pix[240 * 160]; /* up to half-screen sprite for E9C */
-        uint32_t nbytes = (uint32_t)w * (uint32_t)h * 2u;
+        /* Full LCD RGB565 headroom for E9F UI members (loadingbar/slogo/…). */
+        uint16_t host_pix[240 * 320];
+        uint32_t nbytes;
         uc_err ue;
+        /* E9E/E9F: guest blit path may pass w==h==width for wide bars; prefer
+         * postmatch-recorded dimensions (original member w/h). */
+        {
+            const char *whs = getenv("JJFB_E9E_LAST_WH");
+            unsigned cw = 0, ch = 0;
+            if (whs && whs[0] && sscanf(whs, "%ux%u", &cw, &ch) == 2 && cw > 0 && ch > 0 &&
+                cw <= 240 && ch <= 320) {
+                if (w != cw || h != ch) {
+                    printf("[JJFB_E9F_DRAW_DIM_FIX] guest_w=%u guest_h=%u -> %ux%u "
+                           "note=postmatch_member_wh NOT_PRODUCT evidence=OBSERVED\n",
+                           w, h, cw, ch);
+                    fflush(stdout);
+                    w = cw;
+                    h = ch;
+                }
+            }
+        }
+        nbytes = (uint32_t)w * (uint32_t)h * 2u;
         if (nbytes > sizeof(host_pix)) {
             printf("[JJFB_E8Z_CLASS] class=BMP_DECODE_FAILED note=sprite_too_large "
                    "w=%u h=%u evidence=OBSERVED\n",

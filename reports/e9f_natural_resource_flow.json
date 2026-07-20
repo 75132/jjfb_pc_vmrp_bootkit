@@ -1,0 +1,18 @@
+﻿{
+    "stage":  "E9F",
+    "mode":  "logo",
+    "verdict":  "NATURAL_POSTMATCH_LOADINGBAR_FRAME",
+    "elapsed_sec":  89.91,
+    "natural_match":  true,
+    "postmatch":  true,
+    "bridge":  false,
+    "rewrite":  true,
+    "first_frame":  true,
+    "hwnd_nonwhite":  "23316",
+    "member":  "loadingbar!201!29.bmp",
+    "members":  [
+                    "loadingbar!201!29.bmp"
+                ],
+    "nearest_blocker":  "slogo!157!58.bmp absent from guest 0x304BF0 index (present in jjfb.mrp); logo mode falls back to loadingbar",
+    "note":  "NOT_PRODUCT_SUCCESS; natural postmatch UI sequence"
+}

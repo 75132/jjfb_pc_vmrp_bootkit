@@ -207,6 +207,8 @@ static struct {
     int e9e_mode;
     int e9e_postmatch_shims;
     int e9e_postmatch_done;
+    uint32_t e9e_postmatch_n;
+    char e9e_done_names[8][96];
     uint32_t e9e_304bf0_lr;
     uint32_t e9e_304bf0_name_va;
     uint32_t e9e_304bf0_handle_va;
@@ -221,6 +223,14 @@ static struct {
     uint32_t e9e_304bf0_r9;
     uint32_t e9e_304bf0_r10;
     uint32_t e9e_304bf0_r11;
+    /* E9F: UI sequence — prefer larger members; optional request rewrite assist. */
+    int e9f_mode;
+    int e9f_rewrite_request; /* rewrite first DisplayFirst name → prefer (not bridge) */
+    int e9f_rewrite_done;
+    int e9f_multi; /* allow multiple natural postmatches */
+    char e9f_prefer[96]; /* e.g. slogo!157!58.bmp */
+    FILE *e9f_req_csv;
+    FILE *e9f_results_jsonl;
     FILE *e9e_helper_csv;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
@@ -744,6 +754,26 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9e_mode = env1("JJFB_E9E_MODE");
         g_e8f.e9e_postmatch_shims =
             env1("JJFB_E9E_POSTMATCH_SHIMS") || g_e8f.e9e_mode;
+        g_e8f.e9f_mode = env1("JJFB_E9F_MODE");
+        g_e8f.e9f_rewrite_request = env1("JJFB_E9F_REWRITE_REQUEST");
+        g_e8f.e9f_multi = env1("JJFB_E9F_MULTI_POSTMATCH") || g_e8f.e9f_mode;
+        {
+            const char *pref = getenv("JJFB_E9F_PREFER");
+            memset(g_e8f.e9f_prefer, 0, sizeof(g_e8f.e9f_prefer));
+            if (pref && pref[0])
+                snprintf(g_e8f.e9f_prefer, sizeof(g_e8f.e9f_prefer), "%s", pref);
+        }
+        if (g_e8f.e9f_mode) {
+            g_e8f.e9e_mode = 1;
+            g_e8f.e9e_postmatch_shims = 1;
+            g_e8f.e9d_mode = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            printf("[JJFB_E9F_UI_SEQUENCE] enabled=1 prefer=\"%s\" rewrite=%d multi=%d "
+                   "note=natural_postmatch_larger_ui NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9f_prefer[0] ? g_e8f.e9f_prefer : "(game_request)",
+                   g_e8f.e9f_rewrite_request, g_e8f.e9f_multi);
+            fflush(stdout);
+        }
         if (g_e8f.e9e_mode) {
             g_e8f.e9d_mode = 1;
             g_e8f.e9d_strcmp_shim = 1;
@@ -802,7 +832,8 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
-                        g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode || g_e8f.e9e_mode;
+                        g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode || g_e8f.e9e_mode ||
+                        g_e8f.e9f_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -922,6 +953,9 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1);
 static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t r0, uint32_t r1,
                                uint32_t r2);
 static int e9e_try_postmatch_complete(uc_engine *uc, const char *name);
+static int e9e_name_already_done(const char *name);
+static void e9f_open_trace_files(void);
+static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint32_t pc);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1321,6 +1355,19 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 g_e8f.e8y_2d92e4_n++;
                 g_e8f.e8y_last_name_va = r1;
                 e8y_dump_name(uc, r1);
+                if (g_e8f.e9f_mode) {
+                    e9f_open_trace_files();
+                    if (e9f_try_rewrite_request(uc, &r1, bp->pc)) {
+                        g_e8f.e8y_last_name_va = r1;
+                        e8y_dump_name(uc, r1);
+                    }
+                    if (g_e8f.e9f_req_csv) {
+                        fprintf(g_e8f.e9f_req_csv,
+                                "%u,%u,0x2D92E4,0x%X,\"%s\",0,0,0x0,0,enter\n",
+                                g_e8f.e8y_2d92e4_n, g_e8f.tick, lr, g_e8f.e8y_last_name);
+                        fflush(g_e8f.e9f_req_csv);
+                    }
+                }
                 printf("[JJFB_E8Y_2D92E4_ENTRY] hit=%u lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" R9_1450_strlen=0x%X R9_144C_memset=0x%X "
                        "A64=0x%X A68=0x%X A6C=0x%X tick=%u evidence=OBSERVED\n",
@@ -1376,10 +1423,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                            "handle=0x%X evidence=OBSERVED\n",
                            r0);
             } else if (bp->pc == 0x304BF0u) {
+                if (g_e8f.e9f_mode) {
+                    e9f_open_trace_files();
+                    if (e9f_try_rewrite_request(uc, &r1, bp->pc))
+                        e8y_dump_name(uc, r1);
+                }
                 printf("[JJFB_E8Z_304BF0] lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" note=mrp_member_lookup evidence=OBSERVED\n",
                        lr, r0, r1, r2, r3, g_e8f.e8y_last_name);
-                if (g_e8f.e9d_mode || g_e8f.e9e_mode) {
+                if (g_e8f.e9d_mode || g_e8f.e9e_mode || g_e8f.e9f_mode) {
                     e9d_open_csvs();
                     g_e8f.e9d_req_n++;
                     g_e8f.e9d_req_tick = g_e8f.tick;
@@ -1442,6 +1494,14 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                     (g_e8f.e9a_member_bridge || g_e8f.e9e_postmatch_done) &&
                     !g_e8f.e9a_post_a64_draw_skip && r9 && r0 &&
                     (g_e8f.e9a_bridge_hit_n > 0u || g_e8f.e9e_postmatch_done)) {
+                    int allow_skip = 1;
+                    /* E9F multi: only skip siblings after preferred UI member is loaded. */
+                    if (g_e8f.e9f_multi && g_e8f.e9f_prefer[0] &&
+                        !strstr(g_e8f.e8y_last_name, g_e8f.e9f_prefer) &&
+                        strstr(g_e8f.e8y_last_name, "slogo") == NULL &&
+                        strstr(g_e8f.e8y_last_name, "loadingbar") == NULL)
+                        allow_skip = 0;
+                    if (allow_skip) {
                     uint32_t cont = 0x2F45A2u | 1u;
                     /* Mode at [sp,#0x60] may be 10 → uses A58/A5C/A60; mirror real handle. */
                     (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA58u, r0);
@@ -1459,6 +1519,7 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                            r0, r0);
                     fflush(stdout);
                     return;
+                    }
                 }
             } else {
                 printf("[JJFB_E8Y_HELPER] pc=0x%X lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
@@ -2043,8 +2104,9 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
                req);
         fflush(stdout);
         (void)cause_wrong_cb;
-        /* E9E: skip slow post-match DSM file/inflate; fill object with original bytes. */
-        if (g_e8f.e9e_postmatch_shims && !g_e8f.e9e_postmatch_done) {
+        /* E9E/E9F: skip slow post-match DSM file/inflate; fill object with original bytes. */
+        if (g_e8f.e9e_postmatch_shims &&
+            (!g_e8f.e9e_postmatch_done || g_e8f.e9f_multi) && !e9e_name_already_done(req)) {
             if (e9e_try_postmatch_complete(uc, req))
                 return 1;
         }
@@ -2750,6 +2812,82 @@ static int e9a_parse_name_wh(const char *name, int *w, int *h) {
     return 1;
 }
 
+static int e9e_name_already_done(const char *name) {
+    uint32_t i;
+    if (!name || !name[0]) return 1;
+    for (i = 0; i < g_e8f.e9e_postmatch_n && i < 8u; i++) {
+        if (strcmp(g_e8f.e9e_done_names[i], name) == 0) return 1;
+    }
+    return 0;
+}
+
+static void e9f_open_trace_files(void) {
+    const char *req = getenv("JJFB_E9F_REQUEST_CSV");
+    const char *res = getenv("JJFB_E9F_RESULTS_JSONL");
+    if (!g_e8f.e9f_req_csv && req && req[0]) {
+        g_e8f.e9f_req_csv = fopen(req, "w");
+        if (g_e8f.e9f_req_csv) {
+            fprintf(g_e8f.e9f_req_csv,
+                    "n,tick,pc,lr,name,natural_entry,postmatch,handle,bridge,note\n");
+            fflush(g_e8f.e9f_req_csv);
+        }
+    }
+    if (!g_e8f.e9f_results_jsonl && res && res[0]) {
+        g_e8f.e9f_results_jsonl = fopen(res, "w");
+    }
+}
+
+/* E9F logo/loading: rewrite DisplayFirst request name so natural index+postmatch
+ * loads a larger original UI member (not entry bridge; pixels still from jjfb.mrp).
+ * Note: slogo!157!58.bmp is in jjfb.mrp but NOT in the guest 0x304BF0 index table
+ * observed under DisplayFirst (27 entries). Prefer loadingbar/textbar/top instead. */
+static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint32_t pc) {
+    uint32_t slot = E8Y_A64_SCRATCH + 0x200u;
+    size_t n;
+    char from[96];
+    const char *prefer;
+    if (!g_e8f.e9f_mode || !g_e8f.e9f_rewrite_request || g_e8f.e9f_rewrite_done) return 0;
+    if (!uc || !name_va_inout || !g_e8f.e9f_prefer[0]) return 0;
+    prefer = g_e8f.e9f_prefer;
+    /* Guest index lacks slogo; map logo prefer → loadingbar (present at entry ~4). */
+    if (strstr(prefer, "slogo") != NULL) {
+        prefer = "loadingbar!201!29.bmp";
+        printf("[JJFB_E9F_CLASS] class=SLOGO_ABSENT_FROM_GUEST_INDEX "
+               "prefer_was=slogo!157!58.bmp fallback=\"%s\" "
+               "note=mrp_has_slogo_index_does_not NOT_PRODUCT evidence=OBSERVED\n",
+               prefer);
+        fflush(stdout);
+        snprintf(g_e8f.e9f_prefer, sizeof(g_e8f.e9f_prefer), "%s", prefer);
+    }
+    snprintf(from, sizeof(from), "%s", g_e8f.e8y_last_name[0] ? g_e8f.e8y_last_name : "?");
+    /* Only rewrite when current request is the tiny DisplayFirst sprite (or empty). */
+    if (from[0] && strstr(from, "wy_jiao1!") != from && strcmp(from, prefer) != 0)
+        return 0;
+    if (from[0] && strcmp(from, prefer) == 0) return 0;
+    n = strlen(prefer);
+    if (n >= 90) return 0;
+#ifdef GWY_HAVE_UNICORN
+    {
+        uc_err ue = uc_mem_map((uc_engine *)uc, E8Y_A64_SCRATCH, E8Y_A64_SCRATCH_SIZE, UC_PROT_ALL);
+        (void)ue;
+    }
+#endif
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, slot, prefer, (int)n + 1);
+    *name_va_inout = slot;
+    uc_reg_write(uc, UC_ARM_REG_R1, &slot);
+    g_e8f.e9f_rewrite_done = 1;
+    snprintf(g_e8f.e8y_last_name, sizeof(g_e8f.e8y_last_name), "%s", prefer);
+    g_e8f.e8y_last_name_va = slot;
+    printf("[JJFB_E9F_REQUEST_REWRITE] pc=0x%X from=\"%s\" to=\"%s\" name_va=0x%X "
+           "note=assist_redirect_not_bridge NOT_PRODUCT evidence=OBSERVED\n",
+           pc, from, prefer, slot);
+    printf("[JJFB_E9F_CLASS] class=REQUEST_REWRITE_ASSIST prefer=\"%s\" "
+           "blocker_was=GAME_ONLY_REQUESTS_WY_JIAO_ON_DISPLAYFIRST evidence=OBSERVED\n",
+           prefer);
+    fflush(stdout);
+    return 1;
+}
+
 /* E9E: after natural 0x304F92 name match, deliver original member bytes into the
  * caller-owned object and return from 0x304BF0 (skip slow DSM seek/read/inflate).
  * NOT entry-bridge: lookup already matched via guest index + host strcmp shim. */
@@ -2769,8 +2907,11 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
 #ifdef GWY_HAVE_UNICORN
     uc_err ue;
 #endif
-    if (!uc || !name || !name[0] || g_e8f.e9e_postmatch_done) return 0;
+    if (!uc || !name || !name[0]) return 0;
     if (!g_e8f.e9e_postmatch_shims) return 0;
+    if (e9e_name_already_done(name)) return 0;
+    if (g_e8f.e9e_postmatch_done && !g_e8f.e9f_multi) return 0;
+    if (g_e8f.e9e_postmatch_n >= 8u) return 0;
     handle_va = g_e8f.e9e_304bf0_handle_va;
     out_va = g_e8f.e9e_304bf0_out_va;
     lr = g_e8f.e9e_304bf0_lr;
@@ -2878,12 +3019,26 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
     uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
 
     g_e8f.e9e_postmatch_done = 1;
+    if (g_e8f.e9e_postmatch_n < 8u) {
+        snprintf(g_e8f.e9e_done_names[g_e8f.e9e_postmatch_n],
+                 sizeof(g_e8f.e9e_done_names[0]), "%s", name);
+        g_e8f.e9e_postmatch_n++;
+    }
     g_e8f.e8z_pixel_va = slot_va;
     g_e8f.e8z_pixel_bytes = sz;
     g_e8f.e8z_handle_va = handle_va;
     g_e8f.e8z_bw = (uint16_t)w;
     g_e8f.e8z_bh = (uint16_t)h;
     g_e8f.e8z_real_bmp_done = 1;
+    {
+        char wh[32];
+        snprintf(wh, sizeof(wh), "%dx%d", w, h);
+#ifdef _WIN32
+        _putenv_s("JJFB_E9E_LAST_WH", wh);
+#else
+        setenv("JJFB_E9E_LAST_WH", wh, 1);
+#endif
+    }
 
     printf("[JJFB_E9E_POSTMATCH_SHIM] pc=0x304F92 role=member_bytes_after_natural_match "
            "name=\"%s\" offset=%u stored=%u decoded=%u w=%d h=%d sha256=%s "
@@ -2898,6 +3053,33 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
     printf("[JJFB_E9E_CLASS] class=NATURAL_POSTMATCH_MEMBER_BYTES name=\"%s\" "
            "blocker_was=POST_MATCH_RETURN_ABI_WRONG evidence=OBSERVED\n",
            name);
+    if (g_e8f.e9f_mode) {
+        e9f_open_trace_files();
+        if (g_e8f.e9f_req_csv) {
+            fprintf(g_e8f.e9f_req_csv,
+                    "%u,%u,0x304BF0,0x%X,\"%s\",%u,1,0x%X,0,postmatch_ok\n",
+                    g_e8f.e9d_req_n, g_e8f.tick, lr, name, g_e8f.e9d_cmp_n, handle_va);
+            fflush(g_e8f.e9f_req_csv);
+        }
+        if (g_e8f.e9f_results_jsonl) {
+            fprintf(g_e8f.e9f_results_jsonl,
+                    "{\"name\":\"%s\",\"entry\":%u,\"offset\":%u,\"stored\":%u,"
+                    "\"decoded\":%u,\"w\":%d,\"h\":%d,\"sha256\":\"%s\","
+                    "\"handle\":\"0x%X\",\"pixels\":\"0x%X\",\"bridge\":false,"
+                    "\"rewrite\":%s}\n",
+                    name, g_e8f.e9d_cmp_n, mem->offset, mem->stored_size, sz, w, h, hex,
+                    handle_va, slot_va, g_e8f.e9f_rewrite_done ? "true" : "false");
+            fflush(g_e8f.e9f_results_jsonl);
+        }
+        if (strstr(name, "slogo"))
+            printf("[JJFB_E9F_CLASS] class=NATURAL_POSTMATCH_LOGO_CANDIDATE name=\"%s\" "
+                   "evidence=OBSERVED\n",
+                   name);
+        else if (strstr(name, "loadingbar"))
+            printf("[JJFB_E9F_CLASS] class=NATURAL_POSTMATCH_LOADINGBAR_CANDIDATE "
+                   "name=\"%s\" evidence=OBSERVED\n",
+                   name);
+    }
     if (g_e8f.e9d_req_csv) {
         fprintf(g_e8f.e9d_req_csv, "%u,%u,0x304BF0,0x%X,\"%s\",1,0,postmatch_complete\n",
                 g_e8f.e9d_req_n, g_e8f.tick, lr, name);
