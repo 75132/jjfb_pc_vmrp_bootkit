@@ -95,6 +95,9 @@ function Analyze-E9([string]$log) {
   $h.draw_nz = [bool](Select-String -Path $log -Pattern '\[JJFB_DRAW\] api=mr_drawBitmap bmp=0x(?!0\b)' -Quiet -EA SilentlyContinue)
   $h.bridge = [bool](Select-String -Path $log -Pattern 'JJFB_REAL_MRP_MEMBER_BRIDGE\] hit=' -Quiet -EA SilentlyContinue)
   $h.real_bmp = [bool](Select-String -Path $log -Pattern 'JJFB_FAST_REAL_BMP_HANDLE\] after' -Quiet -EA SilentlyContinue)
+  # original_mrp_pixels: bytes from jjfb.mrp (bridge OR fast handle load). Distinct from real_bmp=FAST assist flag.
+  $h.original_mrp_pixels = [bool](Select-String -Path $log -Pattern 'original_jjfb_mrp_decode|real_mrp_pixels_via_mr_drawBitmap|JJFB_FAST_REAL_BMP_HANDLE\] after' -Quiet -EA SilentlyContinue)
+  $h.fast_real_bmp_handle = [bool]$h.real_bmp
   $h.fastpath = [bool](Select-String -Path $log -Pattern 'JJFB_DISPLAY_FIRST_MEMBER_FASTPATH\] name=' -Quiet -EA SilentlyContinue)
   $h.natural_ret = [bool](Select-String -Path $log -Pattern 'class=RESOURCE_INIT_2D92E4_COMPLETED' -Quiet -EA SilentlyContinue)
   $bm = Select-String -Path $log -Pattern '\[JJFB_DRAW\] api=mr_drawBitmap bmp=(0x[0-9A-Fa-f]+)' -EA SilentlyContinue | Select-Object -Last 1
@@ -262,7 +265,12 @@ foreach ($c in $cases) {
   $obj = [ordered]@{
     case_name=$label; verdict=$verdict; elapsed_sec=[Math]::Round($elapsed,2)
     level=$hits.level; bmp=$hits.bmp; other=$hits.other
-    first_frame=[bool]$hits.first_frame; bridge=[bool]$hits.bridge; real_bmp=[bool]$hits.real_bmp
+    first_frame=[bool]$hits.first_frame; bridge=[bool]$hits.bridge
+    # real_bmp historically meant FAST_REAL_BMP_HANDLE assist (not "pixels fake").
+    real_bmp=[bool]$hits.real_bmp
+    fast_real_bmp_handle=[bool]$hits.fast_real_bmp_handle
+    original_mrp_pixels=[bool]$hits.original_mrp_pixels
+    real_bmp_note='real_bmp=FAST_REAL_BMP_HANDLE assist only; original_mrp_pixels=bytes from jjfb.mrp'
   }
   ($obj | ConvertTo-Json -Compress) | Add-Content $summaryPath -Encoding utf8
   $results[$label] = @{ verdict=$verdict; hits=$hits; elapsed=$elapsed; log=$caseLog }

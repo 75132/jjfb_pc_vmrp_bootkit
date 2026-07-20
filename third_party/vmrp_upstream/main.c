@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "./header/bridge.h"
 #include "./header/vmrp.h"
@@ -12,6 +13,11 @@
 // #include "./windows/SDL2-2.0.10/x86_64-w64-mingw32/include/SDL2/SDL.h"
 // #elif __i386__
 #include "./windows/SDL2-2.0.10/i686-w64-mingw32/include/SDL2/SDL.h"
+#include "./windows/SDL2-2.0.10/i686-w64-mingw32/include/SDL2/SDL_syswm.h"
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
 // #endif
 #else
 #include <SDL2/SDL.h>
@@ -34,8 +40,227 @@ static bool isMouseDown = false;
 static bool isEditMode = false;
 static int32_t editMaxSize = 0;
 static char *holdEditText = NULL;
+static int g_window_zoom = 1; /* JJFB_WINDOW_ZOOM, display scale only */
+static int g_e9b_presented = 0;
 
 static SDL_Keycode isKeyDown = SDLK_UNKNOWN;
+
+static int env1(const char *k) {
+    const char *v = getenv(k);
+    return (v && v[0] == '1') ? 1 : 0;
+}
+
+static int env_int(const char *k, int defv) {
+    const char *v = getenv(k);
+    int n;
+    if (!v || !v[0]) return defv;
+    n = atoi(v);
+    return n > 0 ? n : defv;
+}
+
+void guiPumpEvents(void) {
+    SDL_Event ev;
+    /* Keep HWND responsive; do NOT dispatch game input into Unicorn while
+     * mid-bridge (nested emu). Only drain/drop events + Win32 queue. */
+    SDL_PumpEvents();
+    while (SDL_PollEvent(&ev)) {
+        (void)ev; /* drop: QUIT/keys/mouse during emu present path */
+    }
+#ifdef _WIN32
+    {
+        MSG msg;
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+#endif
+}
+
+#ifdef _WIN32
+/* Capture actual HWND client area via GDI BitBlt (not SDL surface dump). */
+static int e9b_hwnd_capture(const char *path, uint32_t *out_nonwhite) {
+    SDL_SysWMinfo info;
+    HWND hwnd;
+    HDC hdc_win = NULL, hdc_mem = NULL;
+    HBITMAP hbmp = NULL, hold = NULL;
+    BITMAPINFO bmi;
+    uint8_t *bits = NULL;
+    int cw, ch, row, col, nonwhite = 0, ok = 0;
+    FILE *fp = NULL;
+    SDL_VERSION(&info.version);
+    if (!SDL_GetWindowWMInfo(window, &info) || info.subsystem != SDL_SYSWM_WINDOWS) {
+        printf("[JJFB_E9B_HWND_CAPTURE] fail=no_hwnd err=%s evidence=OBSERVED\n",
+               SDL_GetError());
+        fflush(stdout);
+        return 0;
+    }
+    hwnd = info.info.win.window;
+    {
+        RECT rc;
+        if (!GetClientRect(hwnd, &rc)) return 0;
+        cw = rc.right - rc.left;
+        ch = rc.bottom - rc.top;
+    }
+    if (cw <= 0 || ch <= 0 || cw > 4096 || ch > 4096) return 0;
+    hdc_win = GetDC(hwnd);
+    if (!hdc_win) return 0;
+    hdc_mem = CreateCompatibleDC(hdc_win);
+    hbmp = CreateCompatibleBitmap(hdc_win, cw, ch);
+    if (!hdc_mem || !hbmp) goto done;
+    hold = (HBITMAP)SelectObject(hdc_mem, hbmp);
+    if (!BitBlt(hdc_mem, 0, 0, cw, ch, hdc_win, 0, 0, SRCCOPY)) goto done;
+    memset(&bmi, 0, sizeof(bmi));
+    bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bmi.bmiHeader.biWidth = cw;
+    bmi.bmiHeader.biHeight = -ch; /* top-down */
+    bmi.bmiHeader.biPlanes = 1;
+    bmi.bmiHeader.biBitCount = 32;
+    bmi.bmiHeader.biCompression = BI_RGB;
+    bits = (uint8_t *)malloc((size_t)cw * (size_t)ch * 4u);
+    if (!bits) goto done;
+    if (!GetDIBits(hdc_mem, hbmp, 0, (UINT)ch, bits, &bmi, DIB_RGB_COLORS)) goto done;
+    for (row = 0; row < ch; row++) {
+        for (col = 0; col < cw; col++) {
+            uint8_t *p = bits + ((size_t)row * (size_t)cw + (size_t)col) * 4u;
+            /* BGRA */
+            if (!(p[0] > 250 && p[1] > 250 && p[2] > 250) &&
+                !(p[0] < 5 && p[1] < 5 && p[2] < 5))
+                nonwhite++;
+        }
+    }
+    /* Write 24bpp BMP manually (simple). */
+    {
+        int row_pad = (4 - ((cw * 3) % 4)) % 4;
+        uint32_t img_sz = (uint32_t)((cw * 3 + row_pad) * ch);
+        uint32_t file_sz = 54u + img_sz;
+        uint8_t hdr[54];
+        int r, c;
+        memset(hdr, 0, sizeof(hdr));
+        hdr[0] = 'B';
+        hdr[1] = 'M';
+        memcpy(hdr + 2, &file_sz, 4);
+        hdr[10] = 54;
+        hdr[14] = 40;
+        memcpy(hdr + 18, &cw, 4);
+        {
+            int nh = ch; /* bottom-up in file */
+            memcpy(hdr + 22, &nh, 4);
+        }
+        hdr[26] = 1;
+        hdr[28] = 24;
+        fp = fopen(path, "wb");
+        if (!fp) goto done;
+        fwrite(hdr, 1, 54, fp);
+        for (r = ch - 1; r >= 0; r--) {
+            for (c = 0; c < cw; c++) {
+                uint8_t *p = bits + ((size_t)r * (size_t)cw + (size_t)c) * 4u;
+                fputc(p[0], fp);
+                fputc(p[1], fp);
+                fputc(p[2], fp);
+            }
+            for (c = 0; c < row_pad; c++) fputc(0, fp);
+        }
+        fclose(fp);
+        fp = NULL;
+        ok = 1;
+    }
+    if (out_nonwhite) *out_nonwhite = (uint32_t)nonwhite;
+    printf("[JJFB_E9B_HWND_CAPTURE] path=%s w=%d h=%d nonwhite_or_nonblack=%d "
+           "kind=GDI_BitBlt_client evidence=OBSERVED\n",
+           path, cw, ch, nonwhite);
+    fflush(stdout);
+done:
+    if (fp) fclose(fp);
+    if (hold) SelectObject(hdc_mem, hold);
+    if (hbmp) DeleteObject(hbmp);
+    if (hdc_mem) DeleteDC(hdc_mem);
+    if (hdc_win) ReleaseDC(hwnd, hdc_win);
+    if (bits) free(bits);
+    return ok;
+}
+#else
+static int e9b_hwnd_capture(const char *path, uint32_t *out_nonwhite) {
+    (void)path;
+    (void)out_nonwhite;
+    return 0;
+}
+#endif
+
+static void e9b_after_first_frame_present(SDL_Surface *surface, uint32_t other,
+                                          uint32_t white, uint32_t black) {
+    const char *cap_path;
+    uint32_t nw = 0;
+    int hold_sec;
+    Uint32 t0, now;
+    (void)surface;
+    (void)white;
+    (void)black;
+    /* Force another present + pump so OS paints before capture. */
+    guiPumpEvents();
+    (void)SDL_UpdateWindowSurface(window);
+    guiPumpEvents();
+    SDL_Delay(50);
+    guiPumpEvents();
+
+    cap_path = getenv("JJFB_E9B_HWND_CAPTURE");
+    if (!cap_path || !cap_path[0])
+        cap_path = "screenshots/e9b_actual_window_capture.bmp";
+    if (!e9b_hwnd_capture(cap_path, &nw)) {
+        printf("[JJFB_VISIBLE_WINDOW] class=WINDOW_CAPTURE_STILL_BLANK "
+               "note=hwnd_capture_failed evidence=OBSERVED\n");
+        fflush(stdout);
+    } else if (nw == 0) {
+        printf("[JJFB_VISIBLE_WINDOW] class=WINDOW_CAPTURE_STILL_BLANK "
+               "nonwhite=0 path=%s evidence=OBSERVED\n",
+               cap_path);
+        fflush(stdout);
+    } else if (other == 0 && nw > 0) {
+        printf("[JJFB_VISIBLE_WINDOW] class=WINDOW_PRESENT_BLOCKED_BY_WHITE_BACKGROUND "
+               "hwnd_nonwhite=%u evidence=OBSERVED\n",
+               nw);
+        fflush(stdout);
+    } else {
+        printf("[JJFB_VISIBLE_WINDOW] class=VISIBLE_WINDOW_PRESENTED "
+               "hwnd_nonwhite=%u sprite_other=%u evidence=OBSERVED\n",
+               nw, other);
+        fflush(stdout);
+    }
+
+    hold_sec = env_int("JJFB_E9B_HOLD_SEC", 0);
+    if (hold_sec <= 0 && (env1("JJFB_E9B_MODE") || env1("JJFB_E9C_MODE") ||
+                           env1("JJFB_VISIBLE_WINDOW")))
+        hold_sec = 30;
+    if (hold_sec > 0) {
+        printf("[JJFB_VISIBLE_WINDOW_HOLD] sec=%d note=pump_messages_keep_responsive "
+               "evidence=OBSERVED\n",
+               hold_sec);
+        printf("[JJFB_WINDOW_RESPONSIVE_HOLD] sec=%d pump_ms=16 evidence=OBSERVED\n",
+               hold_sec);
+        fflush(stdout);
+        t0 = SDL_GetTicks();
+        for (;;) {
+            guiPumpEvents();
+            (void)SDL_UpdateWindowSurface(window);
+            SDL_Delay(16);
+            now = SDL_GetTicks();
+            if ((int)(now - t0) >= hold_sec * 1000)
+                break;
+        }
+        printf("[JJFB_VISIBLE_WINDOW_HOLD_DONE] sec=%d evidence=OBSERVED\n", hold_sec);
+        printf("[JJFB_WINDOW_RESPONSIVE_HOLD] done=1 evidence=OBSERVED\n");
+        fflush(stdout);
+    }
+}
+
+/* E9C contactsheet: finish HWND capture + hold after multiple real sprite blits. */
+void guiVisibleWindowFinalize(void) {
+    SDL_Surface *surface = SDL_GetWindowSurface(window);
+    if (!surface) return;
+    guiPumpEvents();
+    (void)SDL_UpdateWindowSurface(window);
+    e9b_after_first_frame_present(surface, 1u, 0u, 0u);
+}
 
 void saveEditText(char *str) {
     uint8_t *utf8Str = (uint8_t *)str;
@@ -146,7 +371,8 @@ void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
     }
 }
 
-/* E8Z: blit sprite RGB565 with pitch=w into the SDL window (real mr_drawBitmap path). */
+/* E8Z/E9B: blit sprite RGB565 with pitch=w into the SDL window (real mr_drawBitmap path).
+ * Screenshot is SDL software surface SaveBMP — NOT HWND capture (see e9b_hwnd_capture). */
 void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
     static int s_e8z_saved = 0;
     SDL_Surface *surface;
@@ -155,8 +381,18 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
     const char *after_path;
     uint32_t black = 0, white = 0, other = 0, key = 0;
     int32_t j, i;
+    int zoom = g_window_zoom > 0 ? g_window_zoom : 1;
+    int e9b = env1("JJFB_E9B_MODE") || env1("JJFB_E9C_MODE") || env1("JJFB_VISIBLE_WINDOW");
+    int defer_hold = env1("JJFB_E9C_DEFER_HOLD");
     if (!bmp || w <= 0 || h <= 0) return;
     surface = SDL_GetWindowSurface(window);
+    if (!surface) {
+        printf("[JJFB_VISIBLE_WINDOW] class=WINDOW_PRESENT_BLOCKED_BY_SURFACE_COPY "
+               "err=%s evidence=OBSERVED\n",
+               SDL_GetError());
+        fflush(stdout);
+        return;
+    }
     shot = getenv("JJFB_E8Z_SCREENSHOT");
     if (!shot || !shot[0]) shot = "screenshots/e8z_first_real_frame.bmp";
     before_path = getenv("JJFB_E8Z_SCREENSHOT_BEFORE");
@@ -175,7 +411,7 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
             int32_t xx = x + i;
             int32_t yy = y + j;
             uint16_t color;
-            Uint32 *p;
+            int zi, zj;
             if (xx < 0 || yy < 0 || xx >= SCREEN_WIDTH || yy >= SCREEN_HEIGHT)
                 continue;
             color = bmp[(uint32_t)j * (uint32_t)w + (uint32_t)i];
@@ -183,14 +419,38 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
             else if (color == 0xFFFFu) white++;
             else if (color == 0xF81Fu) key++;
             else other++;
-            /* Present keyed pixels too for first-frame visibility (no invent). */
-            p = (Uint32 *)(((Uint8 *)surface->pixels) + surface->pitch * yy) + xx;
-            *p = SDL_MapRGB(surface->format, PIXEL565R(color), PIXEL565G(color), PIXEL565B(color));
+            /* Display zoom is nearest-neighbor only; pixels still from real buffer. */
+            for (zj = 0; zj < zoom; zj++) {
+                for (zi = 0; zi < zoom; zi++) {
+                    int dx = xx * zoom + zi;
+                    int dy = yy * zoom + zj;
+                    Uint32 *p;
+                    if (dx < 0 || dy < 0 || dx >= surface->w || dy >= surface->h)
+                        continue;
+                    p = (Uint32 *)(((Uint8 *)surface->pixels) + surface->pitch * dy) + dx;
+                    *p = SDL_MapRGB(surface->format, PIXEL565R(color), PIXEL565G(color),
+                                    PIXEL565B(color));
+                }
+            }
         }
     }
     if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
-    if (SDL_UpdateWindowSurface(window) != 0)
-        printf("SDL_UpdateWindowSurface err\n");
+
+    guiPumpEvents();
+    if (SDL_UpdateWindowSurface(window) != 0) {
+        printf("[JJFB_VISIBLE_WINDOW] class=WINDOW_PRESENT_BLOCKED_BY_SURFACE_COPY "
+               "err=%s evidence=OBSERVED\n",
+               SDL_GetError());
+        fflush(stdout);
+    } else {
+        printf("[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface "
+               "source=SDL_GetWindowSurface zoom=%d x=%d y=%d w=%d h=%d "
+               "note=NOT_HWND_CAPTURE_YET evidence=OBSERVED\n",
+               zoom, (int)x, (int)y, (int)w, (int)h);
+        fflush(stdout);
+        g_e9b_presented = 1;
+    }
+    guiPumpEvents();
 
     printf("[JJFB_E8Z_SPRITE_BLIT] x=%d y=%d w=%d h=%d black=%u white=%u other=%u key=%u "
            "evidence=OBSERVED\n",
@@ -200,12 +460,18 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
     if (!s_e8z_saved && (other > 0 || (black > 0 && white > 0) || key > 0)) {
         if (SDL_SaveBMP(surface, after_path) == 0 && SDL_SaveBMP(surface, shot) == 0) {
             s_e8z_saved = 1;
+            printf("[JJFB_SCREENSHOT_SOURCE] path=%s kind=SDL_GetWindowSurface_SaveBMP "
+                   "note=internal_sdl_software_surface_NOT_hwnd_PrintWindow "
+                   "evidence=OBSERVED\n",
+                   shot);
             printf("[JJFB_FIRST_REAL_FRAME_REACHED] path=%s before=%s after=%s "
                    "x=%d y=%d w=%d h=%d black=%u white=%u other=%u key=%u "
                    "note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED\n",
                    shot, before_path, after_path, (int)x, (int)y, (int)w, (int)h, black,
                    white, other, key);
             fflush(stdout);
+            if (e9b && !defer_hold)
+                e9b_after_first_frame_present(surface, other, white, black);
         } else {
             printf("[JJFB_FIRST_REAL_FRAME_REACHED] save_fail path=%s err=%s evidence=OBSERVED\n",
                    shot, SDL_GetError());
@@ -471,11 +737,50 @@ int main(int argc, char *args[]) {
         return -1;
     }
 
-    window = SDL_CreateWindow("vmrp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+    /* E9B: software window (no OPENGL). OPENGL + UpdateWindowSurface often leaves
+     * a white HWND while SDL_SaveBMP still dumps the software surface. */
+    g_window_zoom = env_int("JJFB_WINDOW_ZOOM", 1);
+    if (g_window_zoom < 1) g_window_zoom = 1;
+    if (g_window_zoom > 8) g_window_zoom = 8;
+    /* Clamp zoom so the window fits on the primary display (leave ~10% margin). */
+    {
+        SDL_DisplayMode dm;
+        int max_z = g_window_zoom;
+        int z;
+        if (SDL_GetDesktopDisplayMode(0, &dm) == 0 && dm.w > 0 && dm.h > 0) {
+            int max_w = (dm.w * 9) / 10;
+            int max_h = (dm.h * 9) / 10;
+            for (z = g_window_zoom; z >= 1; z--) {
+                if (SCREEN_WIDTH * z <= max_w && SCREEN_HEIGHT * z <= max_h) {
+                    max_z = z;
+                    break;
+                }
+                max_z = 1;
+            }
+            if (max_z < g_window_zoom) {
+                printf("[JJFB_WINDOW_ZOOM_CLAMP] requested=%d clamped=%d display=%dx%d "
+                       "note=fit_primary_display evidence=OBSERVED\n",
+                       g_window_zoom, max_z, dm.w, dm.h);
+                fflush(stdout);
+                g_window_zoom = max_z;
+            }
+        }
+    }
+    {
+        int ww = SCREEN_WIDTH * g_window_zoom;
+        int hh = SCREEN_HEIGHT * g_window_zoom;
+        window = SDL_CreateWindow("vmrp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww,
+                                  hh, 0);
+    }
     if (window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
+    printf("[JJFB_WINDOW] kind=SDL_software flags=0 zoom=%d size=%dx%d "
+           "note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED\n",
+           g_window_zoom, SCREEN_WIDTH * g_window_zoom, SCREEN_HEIGHT * g_window_zoom);
+    fflush(stdout);
+    guiPumpEvents();
 
     startVmrp();
 

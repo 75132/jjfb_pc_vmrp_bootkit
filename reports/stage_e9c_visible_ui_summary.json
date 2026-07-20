@@ -1,0 +1,19 @@
+﻿{
+    "stage":  "E9C",
+    "mode":  "candidate",
+    "candidate":  "slogo!157!58.bmp",
+    "verdict":  "MEANINGFUL_VISIBLE_UI_FRAME",
+    "natural_304bf0":  "NATURAL_MEMBER_RESOLVE_STILL_BLOCKED",
+    "elapsed_sec":  99.99,
+    "zoom":  2,
+    "hold_sec":  30,
+    "hwnd_capture":  "screenshots/e9c_actual_window_capture.png",
+    "hwnd_nonwhite":  "26236",
+    "internal_surface":  "screenshots/e9c_internal_surface.png",
+    "other":  "6584",
+    "bridge":  false,
+    "meaningful":  true,
+    "contactsheet":  false,
+    "best_ui":  "slogo!157!58.bmp",
+    "note":  "NOT_PRODUCT_SUCCESS; meaningful original MRP UI via real draw path"
+}

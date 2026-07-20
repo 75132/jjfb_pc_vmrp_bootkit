@@ -1,0 +1,227 @@
+{
+  "mrp": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/game_files/mythroad/320x480/gwy/jjfb.mrp",
+  "mrp_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+  "member_count": 50,
+  "imageish_count": 27,
+  "largest_rgb565": {
+    "name": "slogo!157!58.bmp",
+    "w": 157,
+    "h": 58,
+    "bytes": 18212,
+    "score": 260,
+    "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/slogo_157_58.bmp.png"
+  },
+  "best_ui_candidate": {
+    "name": "slogo!157!58.bmp",
+    "w": 157,
+    "h": 58,
+    "decoded_size": 18212,
+    "kind": "background_or_title",
+    "score": 260,
+    "other": 6584,
+    "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/slogo_157_58.bmp.png"
+  },
+  "top20": [
+    {
+      "name": "slogo!157!58.bmp",
+      "w": 157,
+      "h": 58,
+      "decoded_size": 18212,
+      "kind": "background_or_title",
+      "score": 260,
+      "other": 6584,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/slogo_157_58.bmp.png"
+    },
+    {
+      "name": "loadingbar!201!29.bmp",
+      "w": 201,
+      "h": 29,
+      "decoded_size": 11658,
+      "kind": "background_or_title",
+      "score": 260,
+      "other": 5627,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/loadingbar_201_29.bmp.png"
+    },
+    {
+      "name": "textbar!120!30.bmp",
+      "w": 120,
+      "h": 30,
+      "decoded_size": 7200,
+      "kind": "mid_sprite",
+      "score": 192,
+      "other": 3600,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/textbar_120_30.bmp.png"
+    },
+    {
+      "name": "top!76!28.bmp",
+      "w": 76,
+      "h": 28,
+      "decoded_size": 4256,
+      "kind": "mid_sprite",
+      "score": 122,
+      "other": 1960,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/top_76_28.bmp.png"
+    },
+    {
+      "name": "wy_xian1!15!7.bmp",
+      "w": 15,
+      "h": 7,
+      "decoded_size": 210,
+      "kind": "small_sprite",
+      "score": 122,
+      "other": 105,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_xian1_15_7.bmp.png"
+    },
+    {
+      "name": "wy_xian2!15!5.bmp",
+      "w": 15,
+      "h": 5,
+      "decoded_size": 150,
+      "kind": "small_sprite",
+      "score": 121,
+      "other": 75,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_xian2_15_5.bmp.png"
+    },
+    {
+      "name": "wy_xian3!15!5.bmp",
+      "w": 15,
+      "h": 5,
+      "decoded_size": 150,
+      "kind": "small_sprite",
+      "score": 121,
+      "other": 75,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_xian3_15_5.bmp.png"
+    },
+    {
+      "name": "target!65!25.bmp",
+      "w": 65,
+      "h": 25,
+      "decoded_size": 3250,
+      "kind": "mid_sprite",
+      "score": 112,
+      "other": 323,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/target_65_25.bmp.png"
+    },
+    {
+      "name": "bar!16!18.bmp",
+      "w": 16,
+      "h": 18,
+      "decoded_size": 576,
+      "kind": "small_sprite",
+      "score": 105,
+      "other": 0,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/bar_16_18.bmp.png"
+    },
+    {
+      "name": "wy_xian0!15!6.bmp",
+      "w": 15,
+      "h": 6,
+      "decoded_size": 180,
+      "kind": "small_sprite",
+      "score": 101,
+      "other": 60,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_xian0_15_6.bmp.png"
+    },
+    {
+      "name": "jiao41!12!12.bmp",
+      "w": 12,
+      "h": 12,
+      "decoded_size": 288,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 129,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/jiao41_12_12.bmp.png"
+    },
+    {
+      "name": "wy_jiao5!11!11.bmp",
+      "w": 11,
+      "h": 11,
+      "decoded_size": 242,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 93,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao5_11_11.bmp.png"
+    },
+    {
+      "name": "wy_jiao12!11!11.bmp",
+      "w": 11,
+      "h": 11,
+      "decoded_size": 242,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 121,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao12_11_11.bmp.png"
+    },
+    {
+      "name": "wy_jiao1!11!11.bmp",
+      "w": 11,
+      "h": 11,
+      "decoded_size": 242,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 120,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao1_11_11.bmp.png"
+    },
+    {
+      "name": "wy_jiao3!10!10.bmp",
+      "w": 10,
+      "h": 10,
+      "decoded_size": 200,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 85,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao3_10_10.bmp.png"
+    },
+    {
+      "name": "wy_jiao2!10!10.bmp",
+      "w": 10,
+      "h": 10,
+      "decoded_size": 200,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 85,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao2_10_10.bmp.png"
+    },
+    {
+      "name": "wy_jiao22!10!10.bmp",
+      "w": 10,
+      "h": 10,
+      "decoded_size": 200,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 100,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao22_10_10.bmp.png"
+    },
+    {
+      "name": "wy_jiao32!10!10.bmp",
+      "w": 10,
+      "h": 10,
+      "decoded_size": 200,
+      "kind": "sprite_button",
+      "score": 92,
+      "other": 100,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/wy_jiao32_10_10.bmp.png"
+    },
+    {
+      "name": "jiao42!11!6.bmp",
+      "w": 11,
+      "h": 6,
+      "decoded_size": 132,
+      "kind": "sprite_button",
+      "score": 91,
+      "other": 66,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/jiao42_11_6.bmp.png"
+    },
+    {
+      "name": "jt!30!16.bmp",
+      "w": 30,
+      "h": 16,
+      "decoded_size": 960,
+      "kind": "small_sprite",
+      "score": 89,
+      "other": 222,
+      "preview": "C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/out/e9c_resource_previews/jt_30_16.bmp.png"
+    }
+  ],
+  "note": "NOT_PRODUCT_SUCCESS; original jjfb.mrp only"
+}

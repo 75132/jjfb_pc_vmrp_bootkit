@@ -1,0 +1,19 @@
+﻿{
+    "stage":  "E9B",
+    "path":  "demo",
+    "verdict":  "VISIBLE_WINDOW_DEMO_STABLE",
+    "elapsed_sec":  96.33,
+    "zoom":  4,
+    "hold_sec":  30,
+    "screenshot_source":  "SDL_GetWindowSurface_SaveBMP",
+    "screenshot_source_note":  "internal SDL software surface dump; NOT HWND capture",
+    "hwnd_capture":  "screenshots/e9b_actual_window_capture.png",
+    "hwnd_nonwhite":  "440",
+    "internal_surface":  "screenshots/e9b_internal_surface.png",
+    "bmp":  "0x3920000",
+    "other":  "109",
+    "fast_real_bmp_handle":  true,
+    "original_mrp_pixels":  true,
+    "bridge":  false,
+    "note":  "NOT_PRODUCT_SUCCESS; present real mr_drawBitmap pixels to HWND"
+}

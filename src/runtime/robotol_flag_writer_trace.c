@@ -23,7 +23,7 @@
 #define E8Y_A64_SCRATCH 0x3910000u
 #define E8Y_A64_SCRATCH_SIZE 0x1000u
 #define E8Z_PIXEL_BASE 0x3920000u
-#define E8Z_PIXEL_MAP_SIZE 0x4000u
+#define E8Z_PIXEL_MAP_SIZE 0x40000u /* room for large UI members (e.g. slogo 18KB+) */
 #define E8Z_BMP_BYTES 242
 #define E8Z_BMP_W 11
 #define E8Z_BMP_H 11
@@ -702,7 +702,8 @@ int robotol_flag_writer_trace_enabled(void) {
         }
         /* E9A: stabilize first frame; prefer real 0x304BF0 member bridge. */
         g_e8f.e9a_mode = env1("JJFB_E9A_MODE");
-        g_e8f.e9a_member_bridge = env1("JJFB_REAL_MRP_MEMBER_BRIDGE");
+        g_e8f.e9a_member_bridge = env1("JJFB_REAL_MRP_MEMBER_BRIDGE") ||
+                                  env1("JJFB_REAL_MRP_MEMBER_BRIDGE_ALL");
         if (g_e8f.e9a_mode || g_e8f.e9a_member_bridge) {
             g_e8f.e9a_mode = 1;
             g_e8f.e8z_mode = 1;
@@ -2509,7 +2510,8 @@ static int e9a_try_member_bridge(uc_engine *uc, uint32_t name_va, uint32_t handl
     }
     byte_buffer_init(&bb);
     st = mrp_archive_decode_member(arch, mem, 1024 * 1024, &bb, &err);
-    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > 0x800u) {
+    /* E9C: allow large UI members (slogo ~18KB); keep a hard cap at full LCD RGB565. */
+    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > (240u * 320u * 2u)) {
         uint32_t fail = 0xFFFFFFFFu;
         uint32_t ret = lr | 1u;
         g_e8f.e9a_bridge_miss_n++;
@@ -2540,8 +2542,17 @@ static int e9a_try_member_bridge(uc_engine *uc, uint32_t name_va, uint32_t handl
         (void)ue;
     }
 #endif
-    slot_va = E8Z_PIXEL_BASE + (g_e8f.e9a_pixel_slot % 16u) * 0x200u;
-    g_e8f.e9a_pixel_slot++;
+    slot_va = E8Z_PIXEL_BASE + g_e8f.e9a_pixel_slot;
+    /* advance by rounded-up 512B blocks so large UI members do not overlap */
+    {
+        uint32_t need = ((uint32_t)bb.size + 0x1FFu) & ~0x1FFu;
+        if (need < 0x200u) need = 0x200u;
+        if (slot_va + need > E8Z_PIXEL_BASE + E8Z_PIXEL_MAP_SIZE) {
+            slot_va = E8Z_PIXEL_BASE;
+            g_e8f.e9a_pixel_slot = 0;
+        }
+        g_e8f.e9a_pixel_slot += need;
+    }
     (void)guest_memory_uc_poke((struct uc_struct *)uc, slot_va, bb.data, (int)bb.size);
     if (!handle_va)
         handle_va = E8Y_A64_SCRATCH + ((g_e8f.e9a_bridge_hit_n % 6u) * 0x40u);

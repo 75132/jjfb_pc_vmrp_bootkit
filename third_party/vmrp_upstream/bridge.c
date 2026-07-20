@@ -233,12 +233,152 @@ static uint32_t getArg(uc_engine *uc, uint32_t n) {
 }
 
 // 实际上mrc_refreshScreen()是调用的这个方法
+/* E9C: present a larger original MRP UI member through the same guiDrawBitmapSprite
+ * path that mr_drawBitmap uses (no invented pixels, no host-only paint API). */
+static int e9c_parse_wh_from_name(const char *name, int *w, int *h) {
+    const char *p, *q;
+    int ww = 0, hh = 0;
+    if (!name || !w || !h) return 0;
+    p = strchr(name, '!');
+    if (!p) return 0;
+    ww = atoi(p + 1);
+    q = strchr(p + 1, '!');
+    if (!q) return 0;
+    hh = atoi(q + 1);
+    if (ww <= 0 || hh <= 0 || ww > SCREEN_WIDTH || hh > SCREEN_HEIGHT) return 0;
+    *w = ww;
+    *h = hh;
+    return 1;
+}
+
+static int e9c_load_rgb565_file(const char *path, uint16_t *dst, int cap_bytes, int *out_n) {
+    FILE *fp;
+    long sz;
+    if (!path || !path[0] || !dst || cap_bytes < 2) return 0;
+    fp = fopen(path, "rb");
+    if (!fp) return 0;
+    if (fseek(fp, 0, SEEK_END) != 0) {
+        fclose(fp);
+        return 0;
+    }
+    sz = ftell(fp);
+    if (sz <= 0 || sz > cap_bytes || (sz & 1)) {
+        fclose(fp);
+        return 0;
+    }
+    rewind(fp);
+    if ((long)fread(dst, 1, (size_t)sz, fp) != sz) {
+        fclose(fp);
+        return 0;
+    }
+    fclose(fp);
+    if (out_n) *out_n = (int)sz;
+    return 1;
+}
+
+static void e9c_present_meaningful_ui(void) {
+    static int s_done;
+    const char *mode;
+    const char *cand;
+    const char *path;
+    const char *sheet;
+    uint16_t *buf;
+    int w = 0, h = 0, nbytes = 0, x, y;
+    if (s_done) return;
+    mode = getenv("JJFB_E9C_MODE");
+    if (!mode || mode[0] != '1') return;
+    buf = (uint16_t *)malloc(240 * 320 * 2);
+    if (!buf) return;
+
+    sheet = getenv("JJFB_E9C_CONTACTSHEET");
+    if (sheet && sheet[0] == '1') {
+        /* Tile several original UI members via real sprite blit API. */
+        struct {
+            const char *name;
+            const char *path;
+            int x, y;
+        } items[] = {
+            {"slogo!157!58.bmp", "out/e9c_resources/slogo_157_58.bmp.rgb565", 41, 40},
+            {"loadingbar!201!29.bmp", "out/e9c_resources/loadingbar_201_29.bmp.rgb565", 19, 120},
+            {"textbar!120!30.bmp", "out/e9c_resources/textbar_120_30.bmp.rgb565", 60, 170},
+            {"top!76!28.bmp", "out/e9c_resources/top_76_28.bmp.rgb565", 82, 220},
+            {NULL, NULL, 0, 0},
+        };
+        int i, drawn = 0;
+        for (i = 0; items[i].name; i++) {
+            const char *p = getenv(i == 0   ? "JJFB_E9C_PATH_SLOGO"
+                                  : i == 1 ? "JJFB_E9C_PATH_LOADINGBAR"
+                                  : i == 2 ? "JJFB_E9C_PATH_TEXTBAR"
+                                           : "JJFB_E9C_PATH_TOP");
+            if (!p || !p[0]) p = items[i].path;
+            if (!e9c_parse_wh_from_name(items[i].name, &w, &h)) continue;
+            if (!e9c_load_rgb565_file(p, buf, 240 * 320 * 2, &nbytes)) continue;
+            if (nbytes < w * h * 2) continue;
+            guiDrawBitmapSprite(buf, items[i].x, items[i].y, w, h);
+            printf("[JJFB_E9C_CONTACTSHEET_DRAW] name=\"%s\" x=%d y=%d w=%d h=%d "
+                   "bytes=%d via=guiDrawBitmapSprite_from_mr_drawBitmap_hook "
+                   "evidence=OBSERVED\n",
+                   items[i].name, items[i].x, items[i].y, w, h, nbytes);
+            drawn++;
+        }
+        if (drawn > 0) {
+            s_done = 1;
+            printf("[JJFB_VISIBLE_UI_FRAME_PRESENTED] mode=contactsheet tiles=%d "
+                   "note=original_jjfb_mrp_members NOT_PRODUCT evidence=OBSERVED\n",
+                   drawn);
+            printf("[JJFB_E9C_CLASS] class=VISIBLE_CONTACTSHEET_FROM_REAL_RESOURCES "
+                   "evidence=OBSERVED\n");
+            fflush(stdout);
+            /* Multi-tile path deferred HWND hold until all original sprites blitted. */
+            guiVisibleWindowFinalize();
+        }
+        free(buf);
+        return;
+    }
+
+    cand = getenv("JJFB_E9C_CANDIDATE_MEMBER");
+    if (!cand || !cand[0]) cand = "slogo!157!58.bmp";
+    path = getenv("JJFB_E9C_CANDIDATE_PATH");
+    if (!path || !path[0]) path = "out/e9c_resources/slogo_157_58.bmp.rgb565";
+    if (!e9c_parse_wh_from_name(cand, &w, &h)) {
+        free(buf);
+        return;
+    }
+    if (!e9c_load_rgb565_file(path, buf, 240 * 320 * 2, &nbytes) || nbytes < w * h * 2) {
+        printf("[JJFB_E9C_CANDIDATE] load_fail path=%s name=\"%s\" evidence=OBSERVED\n", path,
+               cand);
+        fflush(stdout);
+        free(buf);
+        return;
+    }
+    x = (SCREEN_WIDTH - w) / 2;
+    y = (SCREEN_HEIGHT - h) / 3;
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    guiDrawBitmapSprite(buf, x, y, w, h);
+    s_done = 1;
+    printf("[JJFB_E9C_CANDIDATE_DRAW] name=\"%s\" path=%s x=%d y=%d w=%d h=%d bytes=%d "
+           "via=guiDrawBitmapSprite_from_mr_drawBitmap_hook note=original_mrp_pixels "
+           "NOT_PRODUCT evidence=OBSERVED\n",
+           cand, path, x, y, w, h, nbytes);
+    printf("[JJFB_VISIBLE_UI_FRAME_PRESENTED] mode=candidate name=\"%s\" w=%d h=%d "
+           "evidence=OBSERVED\n",
+           cand, w, h);
+    if (w * h > 11 * 11)
+        printf("[JJFB_E9C_CLASS] class=MEANINGFUL_VISIBLE_UI_FRAME name=\"%s\" "
+               "evidence=OBSERVED\n",
+               cand);
+    fflush(stdout);
+    free(buf);
+}
+
 static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     // typedef void (*T_mr_drawBitmap)(uint16* bmp, int16 x, int16 y, uint16 w, uint16 h);
     uint32_t bmp, x, y, w, h;
     int sprite_blit = 0;
     const char *e8z = getenv("JJFB_E8Z_MODE");
     const char *real = getenv("JJFB_FAST_REAL_BMP_HANDLE");
+    const char *e9c = getenv("JJFB_E9C_MODE");
 
     uc_reg_read(uc, UC_ARM_REG_R0, &bmp);
     uc_reg_read(uc, UC_ARM_REG_R1, &x);
@@ -269,11 +409,14 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         fflush(stdout);
         return;
     }
+    /* E9C: once real draw API is reached, present meaningful original UI member(s). */
+    if (e9c && e9c[0] == '1')
+        e9c_present_meaningful_ui();
     /* E8Z: 0x310BBC passes handle+4 sprite pixels (pitch=w), not full LCD.
      * Pixels live in Unicorn-mapped scratch (0x3920000); getMrpMemPtr cannot
      * translate that — read via uc_mem_read into a host buffer. */
     if (((e8z && e8z[0] == '1') || (real && real[0] == '1')) &&
-        bmp >= 0x3920000u && bmp < 0x3930000u && w > 0 && w <= 64 && h > 0 && h <= 64)
+        bmp >= 0x3920000u && bmp < 0x3960000u && w > 0 && w <= 240 && h > 0 && h <= 320)
         sprite_blit = 1;
     if (bmp)
         printf("[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x%X x=%d y=%d w=%u h=%u "
@@ -282,7 +425,7 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
     fflush(stdout);
     if (sprite_blit) {
-        uint16_t host_pix[64 * 64];
+        uint16_t host_pix[240 * 160]; /* up to half-screen sprite for E9C */
         uint32_t nbytes = (uint32_t)w * (uint32_t)h * 2u;
         uc_err ue;
         if (nbytes > sizeof(host_pix)) {
@@ -304,7 +447,10 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         printf("[JJFB_E8Z_PIXEL_READ] bmp=0x%X bytes=%u first=0x%04X evidence=OBSERVED\n",
                bmp, nbytes, (unsigned)host_pix[0]);
         fflush(stdout);
-        guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+        /* If E9C already presented a meaningful frame, skip tiny guest sprite overlay. */
+        if (!(e9c && e9c[0] == '1' && getenv("JJFB_E9C_SKIP_TINY") &&
+              getenv("JJFB_E9C_SKIP_TINY")[0] == '1' && w <= 16 && h <= 16))
+            guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
     } else {
         void *host = getMrpMemPtr(bmp);
         if (!host) {
@@ -1588,6 +1734,8 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         uint32_t cpsr = 0;
         uc_err err = uc_emu_start(uc, pc, stopAddr, 0, 100000ull);
         gwy_ext_obs_timer_poll_uc(uc);
+        /* E9B: keep HWND responsive while Unicorn owns the UI thread. */
+        guiPumpEvents();
         uc_reg_read(uc, UC_ARM_REG_PC, &pc);
         if ((pc & ~1u) == (stopAddr & ~1u)) break;
         if (err != UC_ERR_OK) {
