@@ -1,4 +1,5 @@
 #include "gwy_launcher/jjfb_bmp_meta.h"
+#include <stdio.h>
 #include <string.h>
 
 #define JJFB_BMP_META_N 16
@@ -13,9 +14,12 @@ typedef struct {
 
 static JjfbBmpMetaSlot g_slots[JJFB_BMP_META_N];
 static JjfbE9hBlitFn g_e9h_blit_fn;
+static JjfbE9kHoldFn g_e9k_hold_fn;
+static int g_e9k_hold_requested;
 
 void jjfb_bmp_meta_reset(void) {
     memset(g_slots, 0, sizeof(g_slots));
+    g_e9k_hold_requested = 0;
 }
 
 void jjfb_bmp_meta_set(uint32_t pixels_va, uint16_t w, uint16_t h, const char *member) {
@@ -71,4 +75,24 @@ int jjfb_e9h_blit_guest_pixels(void *uc, uint32_t pixels_va, int x, int y, int w
                                const char *member) {
     if (!g_e9h_blit_fn) return 0;
     return g_e9h_blit_fn(uc, pixels_va, x, y, w, h, member);
+}
+
+void jjfb_e9k_set_hold_fn(JjfbE9kHoldFn fn) {
+    g_e9k_hold_fn = fn;
+}
+
+int jjfb_e9k_hold_requested(void) {
+    return g_e9k_hold_requested;
+}
+
+void jjfb_e9k_request_hold(const char *reason) {
+    if (g_e9k_hold_requested) return;
+    g_e9k_hold_requested = 1;
+    if (g_e9k_hold_fn) {
+        g_e9k_hold_fn(reason ? reason : "e9k");
+    } else {
+        fprintf(stderr, "[JJFB_E9K_HOLD] fail=no_hold_fn reason=%s evidence=OBSERVED\n",
+                reason ? reason : "?");
+        fflush(stderr);
+    }
 }

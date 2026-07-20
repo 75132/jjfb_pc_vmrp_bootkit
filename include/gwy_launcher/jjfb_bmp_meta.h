@@ -28,6 +28,13 @@ void jjfb_e9h_set_blit_fn(JjfbE9hBlitFn fn);
 int jjfb_e9h_blit_guest_pixels(void *uc, uint32_t pixels_va, int x, int y, int w, int h,
                                const char *member);
 
+/* E9K: post-r4 / text path may not blit again — robotol arms HWND hold via this hook.
+ * bridge/main registers an impl that calls guiVisibleWindowFinalize(). */
+typedef void (*JjfbE9kHoldFn)(const char *reason);
+void jjfb_e9k_set_hold_fn(JjfbE9kHoldFn fn);
+void jjfb_e9k_request_hold(const char *reason);
+int jjfb_e9k_hold_requested(void);
+
 #ifdef __cplusplus
 }
 #endif

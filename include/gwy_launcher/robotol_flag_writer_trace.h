@@ -147,6 +147,14 @@ extern "C" {
  *   Natural writer: 0x2FC418 → 2d9648 concat → STR @ 0x2FC444 to BA0+0x30.
  *   Gate: B6C!=0 skips r4; else r4=*(BD0) must be nonzero for text path.
  *
+ * E9K-Post-r4 textbar / 0x305BFC (NOT product success):
+ *   JJFB_E9K_MODE=1                — delay hold; trace 0x2EFAFA→0x2EFB0E→0x305BFC
+ *   JJFB_E9K_HOLD_AFTER_POST_R4=1  — do not stop on early progress blits
+ *   JJFB_E9K_MIN_BLITS=<n>         — blit-count fallback floor (default high)
+ *   JJFB_E9K_STOP_ON_TEXTBAR_DRAW=1
+ *   JJFB_E9K_POSTR4_CSV / JJFB_E9K_DRAW_CSV
+ *   Keep BD0 assist; natural BD0 writer is E9L. Hold via jjfb_e9k_request_hold.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

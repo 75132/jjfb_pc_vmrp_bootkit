@@ -2189,4 +2189,19 @@ __attribute__((constructor))
 static void jjfb_e9h_register_blit(void) {
     jjfb_e9h_set_blit_fn(jjfb_e9h_blit_guest_pixels_impl);
 }
+
+/* E9K: robotol arms HWND hold after post-r4 / 305BFC / textbar (may not blit again). */
+static void jjfb_e9k_hold_impl(const char *reason) {
+    printf("[JJFB_E9K_HOLD] reason=%s via=guiVisibleWindowFinalize evidence=OBSERVED\n",
+           reason && reason[0] ? reason : "?");
+    fflush(stdout);
+    guiVisibleWindowFinalize();
+}
+
+#if defined(__GNUC__)
+__attribute__((constructor))
+#endif
+static void jjfb_e9k_register_hold(void) {
+    jjfb_e9k_set_hold_fn(jjfb_e9k_hold_impl);
+}
 #endif

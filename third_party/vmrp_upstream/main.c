@@ -386,8 +386,13 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
     int zoom = g_window_zoom > 0 ? g_window_zoom : 1;
     int e9b = env1("JJFB_E9B_MODE") || env1("JJFB_E9C_MODE") || env1("JJFB_VISIBLE_WINDOW");
     int e9j = env1("JJFB_E9J_MODE");
-    int defer_hold = env1("JJFB_E9C_DEFER_HOLD") || e9j;
+    int e9k = env1("JJFB_E9K_MODE");
+    /* E9K: do not hold on early progress blits — post-r4/text may need guest to continue.
+     * Hold is armed from robotol via jjfb_e9k_request_hold → guiVisibleWindowFinalize. */
+    int defer_hold = env1("JJFB_E9C_DEFER_HOLD") || e9j || e9k;
     int hold_after = env_int("JJFB_E9J_HOLD_AFTER_BLIT", e9j ? 2 : 0);
+    if (e9k && (env1("JJFB_E9K_HOLD_AFTER_POST_R4") || !getenv("JJFB_E9J_HOLD_AFTER_BLIT")))
+        hold_after = env_int("JJFB_E9K_MIN_BLITS", 64); /* high floor; prefer post-r4 arm */
     if (!bmp || w <= 0 || h <= 0) return;
     s_blit_n++;
     surface = SDL_GetWindowSurface(window);
@@ -489,13 +494,18 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
         fflush(stdout);
     }
     /* E9J: first loadingbar must not HOLD (stop watcher kills before progress loop).
-     * Defer capture/hold until blit N (default 2 = first progress bar segment). */
+     * Defer capture/hold until blit N (default 2 = first progress bar segment).
+     * E9K: hold_after is raised; preferred path is jjfb_e9k_request_hold after post-r4. */
     if (e9b && defer_hold && !s_deferred_hold_done && hold_after > 0 &&
         s_blit_n >= hold_after && s_e8z_saved) {
         s_deferred_hold_done = 1;
         printf("[JJFB_E9J_DEFERRED_HOLD] blit_n=%d hold_after=%d note=after_progress_blit "
                "evidence=OBSERVED\n",
                s_blit_n, hold_after);
+        if (e9k)
+            printf("[JJFB_E9K_DEFERRED_HOLD] blit_n=%d hold_after=%d "
+                   "note=fallback_min_blits_not_post_r4_arm evidence=OBSERVED\n",
+                   s_blit_n, hold_after);
         fflush(stdout);
         e9b_after_first_frame_present(surface, other > 0 ? other : 1u, white, black);
     }
