@@ -1,0 +1,16 @@
+﻿{
+  "stage": "E9G",
+  "mode": "splash",
+  "verdict": "SPLASH_2EF86C_REACHED_NEXT_GAP",
+  "splash_enter": true,
+  "splash_call": true,
+  "uimode_45": true,
+  "natural_match": true,
+  "postmatch": true,
+  "bridge": false,
+  "rewrite": false,
+  "first_frame": false,
+  "member": "loadingbar!201!29.bmp",
+  "nearest_blocker": "splash progress early-exit r4==0; blit path 0x2EC6B0 / post-r4 not reached; mid-fn 2F45A2 faults",
+  "note": "NOT_PRODUCT_SUCCESS; game requested loadingbar from 0x2EF86C without rewrite"
+}

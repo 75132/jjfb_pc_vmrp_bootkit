@@ -16,6 +16,10 @@
 #include "./header/debug.h"
 #include "./header/network.h"
 
+#ifdef GWY_USE_VM_FILE_SERVICE
+#include "gwy_launcher/jjfb_bmp_meta.h"
+#endif
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -429,20 +433,40 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         uint16_t host_pix[240 * 320];
         uint32_t nbytes;
         uc_err ue;
-        /* E9E/E9F: guest blit path may pass w==h==width for wide bars; prefer
-         * postmatch-recorded dimensions (original member w/h). */
+        /* E9E/E9F/E9G: guest blit may pass w==h==width for wide bars; prefer
+         * per-bmp meta (original member w/h), then LAST_WH, then guest args. */
         {
-            const char *whs = getenv("JJFB_E9E_LAST_WH");
+            uint16_t mw = 0, mh = 0;
+            char member[96];
             unsigned cw = 0, ch = 0;
-            if (whs && whs[0] && sscanf(whs, "%ux%u", &cw, &ch) == 2 && cw > 0 && ch > 0 &&
-                cw <= 240 && ch <= 320) {
-                if (w != cw || h != ch) {
-                    printf("[JJFB_E9F_DRAW_DIM_FIX] guest_w=%u guest_h=%u -> %ux%u "
-                           "note=postmatch_member_wh NOT_PRODUCT evidence=OBSERVED\n",
-                           w, h, cw, ch);
-                    fflush(stdout);
-                    w = cw;
-                    h = ch;
+            int got = 0;
+            memset(member, 0, sizeof(member));
+#ifdef GWY_USE_VM_FILE_SERVICE
+            if (jjfb_bmp_meta_get(bmp, &mw, &mh, member, sizeof(member)) && mw > 0 &&
+                mh > 0 && mw <= 240 && mh <= 320) {
+                printf("[JJFB_DRAW_DIM_FIX] bmp=0x%X guest=%ux%u real=%ux%u member=%s "
+                       "note=per_bmp_meta NOT_PRODUCT evidence=OBSERVED\n",
+                       bmp, w, h, (unsigned)mw, (unsigned)mh,
+                       member[0] ? member : "?");
+                fflush(stdout);
+                w = mw;
+                h = mh;
+                got = 1;
+            }
+#endif
+            if (!got) {
+                const char *whs = getenv("JJFB_E9E_LAST_WH");
+                if (whs && whs[0] && sscanf(whs, "%ux%u", &cw, &ch) == 2 && cw > 0 &&
+                    ch > 0 && cw <= 240 && ch <= 320) {
+                    if (w != cw || h != ch) {
+                        printf("[JJFB_DRAW_DIM_FIX] bmp=0x%X guest=%ux%u real=%ux%u "
+                               "member=(LAST_WH) note=env_fallback NOT_PRODUCT "
+                               "evidence=OBSERVED\n",
+                               bmp, w, h, cw, ch);
+                        fflush(stdout);
+                        w = cw;
+                        h = ch;
+                    }
                 }
             }
         }

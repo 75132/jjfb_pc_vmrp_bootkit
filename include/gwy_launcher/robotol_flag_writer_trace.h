@@ -111,6 +111,16 @@ extern "C" {
  *   JJFB_REAL_MRP_PATH=<jjfb.mrp>  — original package path for bridge decode
  *   Prefer bridge over FAST_REAL_BMP_HANDLE when possible.
  *
+ * E9G-Splash/Loading UI (NOT product success):
+ *   JJFB_E9G_MODE=1                — splash UI_MODE=0x45 + real 0x2EF86C path
+ *   JJFB_FAST_SPLASH_CALL=1        — FAST call splash fn 0x2EF86C (r0=0x45,r1=0x13)
+ *   JJFB_E9G_UI_MODE_ASSIST=1      — optional poke R9+0x8D0=0x45 before splash (not product)
+ *   JJFB_E9G_DEBUG=1               — trace-only; no splash guest call
+ *   JJFB_E9G_REQUEST_CSV=<path>    — request/ui_mode/postmatch rows
+ *   JJFB_E9G_UIMODE_CSV=<path>     — UI_MODE write/assist/splash rows
+ *   Implies E9F/E9E/E9D natural postmatch. Does NOT enable JJFB_E9F_REWRITE_REQUEST
+ *   (rewrite under E9G is debug-only demotion, not success).
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

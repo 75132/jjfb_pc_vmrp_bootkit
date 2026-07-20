@@ -46,7 +46,7 @@ R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
 [JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
-[VM_FILE_BIND] runtime=1 svc=07f54f00
+[VM_FILE_BIND] runtime=1 svc=08eb4fb0
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
@@ -739,7 +739,7 @@ After app init, memory left:3748952
 [JJFB_LIFECYCLE] op=ARM period_ms=50 handler=0x30630D family=0x5 reason=10140_registered_no_classic_timer evidence=CROSS_TARGET+docs/06
 bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=30858 loop_iter=1 timers_active=1 next_due_ms=134810380 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=31674 loop_iter=1 timers_active=1 next_due_ms=140839042 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
@@ -775,22 +775,24 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8X_FIRSTFRAME] enabled=1 f74_desc=1 call_2f99d0=0 f6c_assist=1 insn_max=3000 note=2F2854_to_2F449C NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8Y_FIRSTFRAME] enabled=1 a64_assist=0 insn_max=3000 note=2D92E4_to_A64_to_310BBC NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8Z_FIRSTPIXEL] enabled=1 real_bmp=0 member_fastpath=0 note=real_mrp_pixels_to_mr_drawBitmap NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E9F_UI_SEQUENCE] enabled=1 prefer="slogo!157!58.bmp" rewrite=1 multi=1 note=natural_postmatch_larger_ui NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_E9G_SPLASH] enabled=1 splash_call=1 ui_mode_assist=1 rewrite=0 note=real_0x2EF86C_not_request_rewrite NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_E9F_UI_SEQUENCE] enabled=1 prefer="(game_request)" rewrite=0 multi=1 note=natural_postmatch_larger_ui NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9E_POSTMATCH] enabled=1 shims=1 note=natural_match_then_host_member_bytes NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9D_NATURAL] enabled=1 strcmp_shim=1 bridge_fallback=0 real_bmp=0 a64_assist=0 note=fix_304F92_DSM_strcmp_stub NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=0 real_bmp=0 e9d=1 note=stabilize_and_naturalize_304BF0 NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E8J_CLUSTER_BP] spec_n=21 armed_via_parent_table evidence=OBSERVED
+[JJFB_E8J_CLUSTER_BP] spec_n=27 armed_via_parent_table evidence=OBSERVED
 [JJFB_DISPLAY_FIRST] gate_bp=0x3066B8,0x3066C6,0x3066DA success=0x306740,0x2E88CC note=runtime_branch_assist_only evidence=HYPOTHESIS
 [JJFB_E8V_BP] e88cc_exits=0x2E88E6,0x2E8914,0x2E898C draw_cands=0x2F2854,0x305BFC,0x2EA058 evidence=HYPOTHESIS
 [JJFB_E8W_BP] f6c_writers=0x2D9CFC,0x2FBD18,0x2E8920 clear=0x30A9EC evidence=HYPOTHESIS
 [JJFB_E8X_BP] path=0x2F2854->0x2EA188->0x2F449C->0x310BBC producer=0x2F99D0 evidence=HYPOTHESIS
 [JJFB_E9D_BP] compare=0x304F26/0x304F7A/0x304F92 shim=1 evidence=HYPOTHESIS
+[JJFB_E9G_BP] splash=0x2EF86C bl=0x30662C cmp=0x306344 writer=0x2FC418 bind=0x2EFA33/0x2EFA53 evidence=HYPOTHESIS
 [JJFB_E8Y_BP] resolve=0x2D92E4 stores=0x2F44CE/E4/EE helpers=0x304BF0,0x2FD868,0x2F8528 evidence=HYPOTHESIS
 [JJFB_E8H_SVC_TRAP] armed=1 stop=0 note=observe_only_no_fake_success evidence=OBSERVED
 [JJFB_E8V_E88CC_TRACE] armed=1 range=0x2E88CC..0x2E8A4E max_insn=2000 evidence=OBSERVED
 [JJFB_E8X_DRAW_TRACE] armed=1 ranges=0x2F2854..287C,0x2EA188..1FC,0x2F449C..4A80 max_insn=3000 evidence=OBSERVED
 [JJFB_E8Y_RESOLVE_TRACE] armed=1 range=0x2D92E4..0x2D9560 max_insn=3000 evidence=OBSERVED
-[JJFB_E8F_WRITER_BP] armed=1 n=50 code_base=0x2D8DF4 size=0x3DE2C caller_bp=0 fault_watch=0 dispatcher_bp=0 parent_bp=0 state_watch=1 e8j_bp=1 qread_watch=0 svc_trap=1 e8m_trace=0 evidence=OBSERVED
+[JJFB_E8F_WRITER_BP] armed=1 n=56 code_base=0x2D8DF4 size=0x3DE2C caller_bp=0 fault_watch=0 dispatcher_bp=0 parent_bp=0 state_watch=1 e8j_bp=1 qread_watch=0 svc_trap=1 e8m_trace=0 evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
@@ -874,284 +876,85 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_WRITE] event_seq=40 old=0x2B1858 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [JJFB_FAST_FIRE_DONE] case156_r1=0x14 state=0x26 svc_hits=0 svc_continues=0 note=FAST_ASSIST_not_product evidence=OBSERVED
 [JJFB_E8M_PARENT_TRACE_SUMMARY] insn_logged=0 path_hits=0 evidence=OBSERVED
-[R9_WRITE] event_seq=41 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
-[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
-[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
-[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=34520 loop_iter=3 timers_active=1 next_due_ms=134810385 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
-[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
-[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
-[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
-[R9_WRITE] event_seq=42 old=0x280400 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
-[JJFB_LIFECYCLE] op=FIRE tick=2 handler=0x30630D r0=0 r1=0 r9=0x2B1858 owner=robotol.ext evidence=CROSS_TARGET+docs/06
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x30633A target=0x2FEB95 arg0=0x2B24FF arg1=0x0
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x3066A8 target=0x306905 arg0=0x26 arg1=0x13
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x307032 target=0x2EC04D arg0=0x10 arg1=0x2B2128
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EC050 target=0x2F9971 arg0=0x10 arg1=0x2B2128
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x307048 target=0x2F176D arg0=0x0 arg1=0x2B2128
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x3066B8 target=0x2E87B5 arg0=0x1 arg1=0x2B2128
-[JJFB_DISPLAY_FIRST_BRANCH_ASSIST] gate=C44_HELPER_SKIP pc_before=0x3066B8 pc_after=0x3066BC cpsr=0x600001F3 r0=0x1 r1=0x2B2128 C44=0x1 C9D=0x0 CF5=0x0 state=0x26 tick=1 note=skip_2E87B4_SVC_path NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_DISPLAY_FIRST_BRANCH_ASSIST] gate=C9D pc_before=0x3066C6 pc_after=0x3066C8 cpsr=0x800001F3 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 C44=0x1 C9D=0x0 CF5=0x0 CD1=0x0 state=0x26 tick=1 hit=1 note=NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E8F_WRITER_HIT] tag=gCF5 pc=0x3066DA hit=1 tick=1 r0=0x0 r1=0x2B2128 r9=0x2B1858 lr=0x30704D evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x306740 target=0x2E88CD arg0=0x0 arg1=0x2B2128
-[JJFB_E8U_IDLE_SUCCESS] pc=0x306740 lr=0x30704D C44=0x1 C9D=0x0 CF5=0x0 CD1=0x0 state=0x26 c9d_assist=1 cf5_assist=0 tick=1 note=real_idle_exit_path evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p306740 pc=0x306740 hit=1 tick=1 r0=0x0 r1=0x2B2128 r4=0x1E209 r9=0x2B1858 lr=0x30704D state=0x26 evidence=OBSERVED
-[JJFB_E8U_IDLE_SUCCESS] pc=0x2E88CC lr=0x306745 C44=0x1 C9D=0x0 CF5=0x0 CD1=0x0 state=0x26 c9d_assist=1 cf5_assist=0 tick=1 note=real_idle_exit_path evidence=OBSERVED
-[JJFB_E8V_E88CC_CTX] why=entry r9=0x2B1858 lr=0x306745 F6C=0x0 F6C_0=0x0 F6C_4=0x0 F6C_8=0x0 D14_s16=0 R9_818=0x0 R9_81C=0x0 R9_1A8=0x9 R9_7DA=0x1 note=F6C_4_is_F70_F6C_8_is_F74 evidence=OBSERVED
-[JJFB_E8W_F6C_WORDS] F6C_w0=0x0 F70=0x0 F74=0x0 scroll200=0x0 note=gate_open_if_F74_or_F70_nonzero evidence=DOCUMENTED
-[JJFB_E8V_E88CC_CLASS] class=REQUIRES_UI_OBJECT F6C=0x0 p4=0x0 p8=0x0 D14_s16=0 note=F70_and_F74_zero_early_exit_2E8914 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2E88CC pc=0x2E88CC hit=1 tick=1 r0=0x0 r1=0x2B2128 r4=0x1E209 r9=0x2B1858 lr=0x306745 state=0x26 evidence=OBSERVED
-[JJFB_E8V_INSN] n=1 pc=0x2E88CC size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x306745 evidence=OBSERVED
-[JJFB_E8V_INSN] n=2 pc=0x2E88CE size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x306745 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E88D0 target=0x2F9971 arg0=0x0 arg1=0x2B2128
-[JJFB_E8V_INSN] n=3 pc=0x2E88D0 size=4 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x306745 evidence=OBSERVED
-[JJFB_E8V_INSN] n=4 pc=0x2E88D4 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=5 pc=0x2E88D6 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=6 pc=0x2E88D8 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=7 pc=0x2E88DA size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=8 pc=0x2E88DC size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=9 pc=0x2E88DE size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x0 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=10 pc=0x2E88E0 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=11 pc=0x2E88E2 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=12 pc=0x2E88E4 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_E88CC_CTX] why=gate_probe r9=0x2B1858 lr=0x2E88D5 F6C=0x0 F6C_0=0x0 F6C_4=0x0 F6C_8=0x0 D14_s16=0 R9_818=0x0 R9_81C=0x0 R9_1A8=0x9 R9_7DA=0x1 note=F6C_4_is_F70_F6C_8_is_F74 evidence=OBSERVED
-[JJFB_E8W_F6C_WORDS] F6C_w0=0x0 F70=0x0 F74=0x0 scroll200=0x0 note=gate_open_if_F74_or_F70_nonzero evidence=DOCUMENTED
-[JJFB_E8V_E88CC_CLASS] class=REQUIRES_UI_OBJECT F6C=0x0 p4=0x0 p8=0x0 D14_s16=0 note=F70_and_F74_zero_early_exit_2E8914 evidence=OBSERVED
-[JJFB_E8V_E88CC_GATE] pc=0x2E88E6 why=pass_D14_gate tick=1 D14_s16=0 note=fallthrough evidence=OBSERVED
-[JJFB_E8F_WRITER_HIT] tag=vD14 pc=0x2E88E6 hit=1 tick=1 r0=0x0 r1=0x2B2128 r9=0x2B1858 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=13 pc=0x2E88E6 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=14 pc=0x2E88E8 size=2 r0=0x0 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=15 pc=0x2E88EA size=2 r0=0x818 r1=0x2B2128 r2=0xFFFFFFFF r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=16 pc=0x2E88EC size=2 r0=0x818 r1=0x2B2128 r2=0x27FFB4 r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=17 pc=0x2E88EE size=2 r0=0x818 r1=0x2B2128 r2=0x27FFB4 r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=18 pc=0x2E88F0 size=2 r0=0x2B2070 r1=0x2B2128 r2=0x27FFB4 r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=19 pc=0x2E88F2 size=2 r0=0x2B2070 r1=0x2B2128 r2=0x0 r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=20 pc=0x2E88F4 size=2 r0=0x81C r1=0x2B2128 r2=0x0 r3=0x28 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=21 pc=0x2E88F6 size=2 r0=0x81C r1=0x2B2128 r2=0x0 r3=0x27FFB8 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=22 pc=0x2E88F8 size=2 r0=0x2B2074 r1=0x2B2128 r2=0x0 r3=0x27FFB8 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=23 pc=0x2E88FA size=2 r0=0x2B2074 r1=0x0 r2=0x0 r3=0x27FFB8 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_INSN] n=24 pc=0x2E88FC size=2 r0=0x2C9E0 r1=0x0 r2=0x0 r3=0x27FFB8 lr=0x2E88D5 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E88FE target=0x305E79 arg0=0x3152E0 arg1=0x0
-[JJFB_E8V_INSN] n=25 pc=0x2E88FE size=4 r0=0x3152E0 r1=0x0 r2=0x0 r3=0x27FFB8 lr=0x2E88D5 evidence=OBSERVED
-[JJFB_E8V_PATH_HIT] pc=0x305E78 lr=0x2E8903 r0=0x3152E0 r1=0x0 r2=0x0 r3=0x27FFB8 tick=1 note=scheduler_sidepath_not_platform_draw evidence=OBSERVED
-[JJFB_E8F_WRITER_HIT] tag=v305E78 pc=0x305E78 hit=1 tick=1 r0=0x3152E0 r1=0x0 r9=0x2B1858 lr=0x2E8903 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x305E84 target=0x303C51 arg0=0x3152E0 arg1=0x0
-[R9_WRITE] event_seq=43 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=16 scope_id=20 host_callsite=enter guest_pc=0x303C60 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=41 old=0x2B1858 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[JJFB_E9G_UI_MODE_ASSIST] old=0x26 new=0x45 addr=0x2B2128 NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_FAST_SPLASH_CALL] entry=0x2EF86C r0=0x45 r1=0x13 r9=0x2B1858 ui_mode=0x45 note=real_fn_not_rewrite NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_E9G_SPLASH_ENTER] lr=0x80000 r0=0x45 r1=0x13 ui_mode=0x45 tick=1 class=SPLASH_2EF86C_REACHED evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EF86C pc=0x2EF86C hit=1 tick=1 r0=0x45 r1=0x13 r4=0x0 r9=0x2B1858 lr=0x80000 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EF878 target=0x2F9971 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EF87C target=0x2F9965 arg0=0x0 arg1=0x13
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EF8A4 target=0x305E79 arg0=0x3142B4 arg1=0x0
+[JJFB_E8V_PATH_HIT] pc=0x305E78 lr=0x2EF8A9 r0=0x3142B4 r1=0x0 r2=0x0 r3=0x27FFE8 tick=1 note=scheduler_sidepath_not_platform_draw evidence=OBSERVED
+[JJFB_E8F_WRITER_HIT] tag=v305E78 pc=0x305E78 hit=1 tick=1 r0=0x3142B4 r1=0x0 r9=0x2B1858 lr=0x2EF8A9 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x305E84 target=0x303C51 arg0=0x3142B4 arg1=0x0
+[R9_WRITE] event_seq=42 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=16 scope_id=20 host_callsite=enter guest_pc=0x303C60 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=20 frame_id=16 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=16 top_frame_kind=RUNTIME_ENTRY generation=16 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x303C60 return_pc=0x303C62 frame_id=16 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=16 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303C60 to_module=dsm:cfunction.ext to_module_id=5 target=0x812A8 target_offset=0x12A8 r0=0x3152E0 r1=0x0 lr=0x305E89 evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=16 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303C60 to_module=dsm:cfunction.ext to_module_id=5 target=0x812A8 target_offset=0x12A8 r0=0x3142B4 r1=0x0 lr=0x305E89 evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x303C60 function_entry_pc=0x812A8 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=20 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=16 actual_top_frame_id=16 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=16 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=16 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=44 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=43 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x303C62 return_pc=0x303C62 call_pc=0x303C60 cur_r9=0x280400 lr=0x303C63 executed=1 owns_r9_pop=1 side_depth=0 frame_id=16 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=45 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=16 scope_id=20 host_callsite=mrp_return_from_dsm_helper guest_pc=0x303C60 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=44 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=16 scope_id=20 host_callsite=mrp_return_from_dsm_helper guest_pc=0x303C60 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=20 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=16 actual_top_frame_id=16 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=16 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x305E9C target=0x304559 arg0=0x12340 arg1=0x1
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x12340 r1=0x1 r2=0x2A835C r3=0x0 r4=0x12340 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x305EAA target=0x304615 arg0=0x2A835C arg1=0x4
-[R9_WRITE] event_seq=46 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=17 scope_id=21 host_callsite=enter guest_pc=0x30461E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x305EAA target=0x304615 arg0=0x2A835C arg1=0x6
+[R9_WRITE] event_seq=45 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=17 scope_id=21 host_callsite=enter guest_pc=0x30461E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=21 frame_id=17 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=17 top_frame_kind=RUNTIME_ENTRY generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30461E return_pc=0x304620 frame_id=17 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=17 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x30461E to_module=dsm:cfunction.ext to_module_id=5 target=0x80198 target_offset=0x198 r0=0x2A835C r1=0x4 lr=0x305EAF evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=17 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x30461E to_module=dsm:cfunction.ext to_module_id=5 target=0x80198 target_offset=0x198 r0=0x2A835C r1=0x6 lr=0x305EAF evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30461E function_entry_pc=0x80198 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=21 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=17 actual_top_frame_id=17 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=17 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=47 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=46 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304620 return_pc=0x304620 call_pc=0x30461E cur_r9=0x280400 lr=0x304621 executed=1 owns_r9_pop=1 side_depth=0 frame_id=17 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=48 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=17 scope_id=21 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30461E guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=47 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=17 scope_id=21 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30461E guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=21 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=17 actual_top_frame_id=17 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[JJFB_E8V_INSN] n=26 pc=0x2E8902 size=2 r0=0x393458 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=27 pc=0x2E8904 size=2 r0=0x393458 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=28 pc=0x2E8906 size=2 r0=0x393458 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=29 pc=0x2E8908 size=2 r0=0x393458 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=30 pc=0x2E890A size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=31 pc=0x2E890C size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=32 pc=0x2E890E size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=33 pc=0x2E8910 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=34 pc=0x2E8912 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_E88CC_CTX] why=gate_probe r9=0x2B1858 lr=0x304621 F6C=0x0 F6C_0=0x0 F6C_4=0x0 F6C_8=0x0 D14_s16=0 R9_818=0x0 R9_81C=0x0 R9_1A8=0x9 R9_7DA=0x1 note=F6C_4_is_F70_F6C_8_is_F74 evidence=OBSERVED
-[JJFB_E8W_F6C_WORDS] F6C_w0=0x0 F70=0x0 F74=0x0 scroll200=0x0 note=gate_open_if_F74_or_F70_nonzero evidence=DOCUMENTED
-[JJFB_E8V_E88CC_CLASS] class=REQUIRES_UI_OBJECT F6C=0x0 p4=0x0 p8=0x0 D14_s16=0 note=F70_and_F74_zero_early_exit_2E8914 evidence=OBSERVED
-[JJFB_FAST_F6C_OBJECT_ASSIST] before F6C_w0=0x0 F70=0x0 F74=0x0 scroll200=0x0 note=FAST_OBJECT_ASSIST_NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_FAST_F6C_OBJECT_ASSIST] after F74=0x3900004 scratch=0x3900000 scroll200=0x0 note=structural_table_only_no_framebuffer evidence=OBSERVED
-[JJFB_FAST_F74_DESCRIPTOR_ASSIST] before R9_830=0x0 R9_818=0x0 R9_81C=0x0 note=FAST_STRUCTURAL_DIMS_NOT_PRODUCT evidence=HYPOTHESIS
-[JJFB_E8X_DIMS] why=after_desc_assist R9_830=0xF0 R9_818=0xF0 R9_81C=0x140 R9_A64=0x0 R9_A68=0x0 R9_A6C=0x0 F70=0x0 F74=0x3900004 note=830_feeds_2F2854_r2 evidence=OBSERVED
-[JJFB_FAST_F74_DESCRIPTOR_ASSIST] after note=dims_only_no_framebuffer evidence=OBSERVED
-[JJFB_E8W_GATE_RETRY] from=0x2E8914 to=0x2E8902 F74=0x3900004 note=FAST_OBJECT_ASSIST_retry_gate evidence=HYPOTHESIS
-[JJFB_E8V_INSN] n=35 pc=0x2E8914 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=36 pc=0x2E8902 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=37 pc=0x2E8904 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=38 pc=0x2E8906 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=39 pc=0x2E8908 size=2 r0=0x0 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=40 pc=0x2E890A size=2 r0=0x3900004 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=41 pc=0x2E890C size=2 r0=0x3900004 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=42 pc=0x2E890E size=2 r0=0x3900004 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=43 pc=0x2E8930 size=2 r0=0x3900004 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=44 pc=0x2E8932 size=2 r0=0x3900004 r1=0x50 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=45 pc=0x2E8934 size=2 r0=0x3900004 r1=0x4 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8V_INSN] n=46 pc=0x2E8936 size=2 r0=0x3900004 r1=0x4 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E8938 target=0x2F5B39 arg0=0x3900004 arg1=0x4
-[JJFB_E8V_INSN] n=47 pc=0x2E8938 size=4 r0=0x3900004 r1=0x4 r2=0x2A8364 r3=0x0 lr=0x304621 evidence=OBSERVED
-[JJFB_E8F_WRITER_HIT] tag=x2F5B38 pc=0x2F5B38 hit=1 tick=1 r0=0x3900004 r1=0x4 r9=0x2B1858 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=48 pc=0x2E893C size=2 r0=0x10 r1=0x4 r2=0x0 r3=0x3900000 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=49 pc=0x2E893E size=2 r0=0x10 r1=0x2 r2=0x0 r3=0x3900000 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=50 pc=0x2E8940 size=2 r0=0x10 r1=0x2 r2=0x0 r3=0x3900000 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=51 pc=0x2E8942 size=2 r0=0x20 r1=0x2 r2=0x0 r3=0x3900000 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=52 pc=0x2E8944 size=2 r0=0x20 r1=0x0 r2=0x0 r3=0x3900000 lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=53 pc=0x2E8946 size=2 r0=0x20 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=54 pc=0x2E8948 size=2 r0=0x20 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=55 pc=0x2E894A size=2 r0=0x20 r1=0x116C r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=56 pc=0x2E894C size=2 r0=0x0 r1=0x116C r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=57 pc=0x2E894E size=2 r0=0x0 r1=0x2B29C4 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=58 pc=0x2E8950 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=59 pc=0x2E8952 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=60 pc=0x2E8954 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=61 pc=0x2E8956 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=62 pc=0x2E8958 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=63 pc=0x2E895A size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=64 pc=0x2E895C size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=65 pc=0x2E895E size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E8960 target=0x2F9965 arg0=0x0 arg1=0x0
-[JJFB_E8V_INSN] n=66 pc=0x2E8960 size=4 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E893D evidence=OBSERVED
-[JJFB_E8V_INSN] n=67 pc=0x2E8964 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=68 pc=0x2E8966 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=69 pc=0x2E8968 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=70 pc=0x2E896A size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=71 pc=0x2E8990 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=72 pc=0x2E8992 size=2 r0=0x0 r1=0x3E7 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=73 pc=0x2E8994 size=2 r0=0x0 r1=0x3E7 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E8996 target=0x2F9971 arg0=0x0 arg1=0x3E7
-[JJFB_E8V_INSN] n=74 pc=0x2E8996 size=4 r0=0x0 r1=0x3E7 r2=0x0 r3=0xF lr=0x2E8965 evidence=OBSERVED
-[JJFB_E8V_INSN] n=75 pc=0x2E899A size=2 r0=0xF0 r1=0x3E7 r2=0x0 r3=0xF lr=0x2E899B evidence=OBSERVED
-[JJFB_E8V_INSN] n=76 pc=0x2E899C size=2 r0=0xF0 r1=0x0 r2=0x0 r3=0xF lr=0x2E899B evidence=OBSERVED
-[JJFB_E8V_INSN] n=77 pc=0x2E89A0 size=2 r0=0xF0 r1=0x0 r2=0x0 r3=0xF lr=0x2E899B evidence=OBSERVED
-[JJFB_E8V_INSN] n=78 pc=0x2E89A2 size=2 r0=0xF0 r1=0x0 r2=0x0 r3=0xF lr=0x2E899B evidence=OBSERVED
-[JJFB_E8V_INSN] n=79 pc=0x2E89A4 size=2 r0=0xF0 r1=0x0 r2=0x0 r3=0x20 lr=0x2E899B evidence=OBSERVED
-[JJFB_E8V_INSN] n=80 pc=0x2E89A6 size=2 r0=0xF0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E899B evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2E89A8 target=0x2F2855 arg0=0x0 arg1=0x0
-[JJFB_E8V_PATH_HIT] pc=0x2E89A8 lr=0x2E899B r0=0x0 r1=0x0 r2=0xF0 r3=0x20 tick=1 note=scheduler_sidepath_not_platform_draw evidence=OBSERVED
-[JJFB_E8X_CALLSITE] pc=0x2E89A8 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 R9_830=0xF0 note=pre_BL_2F2854 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2E89A8 pc=0x2E89A8 hit=1 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x2E899B state=0x26 evidence=OBSERVED
-[JJFB_E8V_INSN] n=81 pc=0x2E89A8 size=4 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E899B evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] pc=0x2F2854 lr=0x2E89AD r0=0x0 r1=0x0 r2=0xF0 r3=0x20 tick=1 hit=1 note=drawish_bl_target evidence=OBSERVED
-[JJFB_E8W_DRAW_SITE] site=0x2F2854 tick=1 evidence=OBSERVED
-[JJFB_E8X_2F2854_ENTRY] pc=0x2F2854 lr=0x2E89AD cpsr=0x400001F3 T=1 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 sp=0x27FFA0 sp0=0x27FFB4 sp4=0x1E501 sp8=0x1E216 spC=0x30704D R9_830=0xF0 hit=1 note=r0_always0_r2_from_2F9970_R9_830 evidence=OBSERVED
-[JJFB_E8X_DIMS] why=2f2854_entry R9_830=0xF0 R9_818=0xF0 R9_81C=0x140 R9_A64=0x0 R9_A68=0x0 R9_A6C=0x0 F70=0x0 F74=0x3900004 note=830_feeds_2F2854_r2 evidence=OBSERVED
-[JJFB_E8X_CLASS] class=2F2854_NONZERO_ARGS r1=0x0 r2=0xF0 r3=0x20 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2F2854 pc=0x2F2854 hit=1 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x2E89AD state=0x26 evidence=OBSERVED
-[JJFB_E8X_INSN] n=1 pc=0x2F2854 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=2 pc=0x2F2856 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=3 pc=0x2F2858 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=4 pc=0x2F285A size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=5 pc=0x2F285C size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=6 pc=0x2F285E size=2 r0=0x0 r1=0xFFFFFFFF r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=7 pc=0x2F2860 size=2 r0=0x0 r1=0xFFFFFFFF r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=8 pc=0x2F2862 size=2 r0=0x0 r1=0xFFFFFFFF r2=0xA r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=9 pc=0x2F2864 size=2 r0=0x0 r1=0xFFFFFFFF r2=0xA r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=10 pc=0x2F2866 size=2 r0=0x0 r1=0xFFFFFFFF r2=0xFFFFFFFF r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=11 pc=0x2F2868 size=2 r0=0x0 r1=0xFFFFFFFF r2=0xFFFFFFFF r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=12 pc=0x2F286A size=2 r0=0x0 r1=0xFFFFFFFF r2=0xFFFFFFFF r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=13 pc=0x2F286C size=2 r0=0x0 r1=0xFFFFFFFF r2=0xFFFFFFFF r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=14 pc=0x2F286E size=2 r0=0x0 r1=0x0 r2=0xFFFFFFFF r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=15 pc=0x2F2870 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_INSN] n=16 pc=0x2F2872 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F2874 target=0x2EA189 arg0=0x0 arg1=0x0
-[JJFB_E8X_INSN] n=17 pc=0x2F2874 size=4 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2E89AD evidence=OBSERVED
-[JJFB_E8X_DRAW_PATH] pc=0x2EA188 lr=0x2F2879 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 n2854=1 n188=1 n449c=0 n310=0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2EA188 pc=0x2EA188 hit=1 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x2F2879 state=0x26 evidence=OBSERVED
-[JJFB_E8X_INSN] n=18 pc=0x2EA188 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=19 pc=0x2EA18A size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=20 pc=0x2EA18C size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=21 pc=0x2EA18E size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=22 pc=0x2EA190 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=23 pc=0x2EA192 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=24 pc=0x2EA194 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=25 pc=0x2EA1A8 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=26 pc=0x2EA1AA size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=27 pc=0x2EA1BE size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=28 pc=0x2EA1C0 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=29 pc=0x2EA1D2 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=30 pc=0x2EA1D4 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=31 pc=0x2EA1E6 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=32 pc=0x2EA1E8 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=33 pc=0x2EA1EA size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=34 pc=0x2EA1EC size=2 r0=0x0 r1=0xA r2=0x0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=35 pc=0x2EA1EE size=2 r0=0x0 r1=0xA r2=0x0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=36 pc=0x2EA1F0 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_INSN] n=37 pc=0x2EA1F2 size=2 r0=0x0 r1=0xA r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EA1F4 target=0x2F449D arg0=0x0 arg1=0x0
-[JJFB_E8X_INSN] n=38 pc=0x2EA1F4 size=4 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2F2879 evidence=OBSERVED
-[JJFB_E8X_DRAW_PATH] pc=0x2F449C lr=0x2EA1F9 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 n2854=1 n188=1 n449c=1 n310=0 tick=1 evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] pc=0x2F449C lr=0x2EA1F9 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 tick=1 note=deeper_draw_path evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2F449C pc=0x2F449C hit=1 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x2EA1F9 state=0x26 evidence=OBSERVED
-[JJFB_E8X_INSN] n=39 pc=0x2F449C size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=40 pc=0x2F449E size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=41 pc=0x2F44A0 size=2 r0=0x0 r1=0x0 r2=0xF0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=42 pc=0x2F44A2 size=2 r0=0xA64 r1=0x0 r2=0xF0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=43 pc=0x2F44A4 size=2 r0=0xA64 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=44 pc=0x2F44A6 size=2 r0=0xA64 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=45 pc=0x2F44A8 size=2 r0=0xA64 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=46 pc=0x2F44AA size=2 r0=0x2B22BC r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=47 pc=0x2F44AC size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=48 pc=0x2F44AE size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=49 pc=0x2F44B0 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=50 pc=0x2F44B2 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=51 pc=0x2F44B4 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=52 pc=0x2F44B6 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=53 pc=0x2F44B8 size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=54 pc=0x2F44BA size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=55 pc=0x2F44BC size=2 r0=0x0 r1=0x0 r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=56 pc=0x2F44BE size=2 r0=0x0 r1=0x1F04E r2=0x0 r3=0x20 lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=57 pc=0x2F44C0 size=2 r0=0x0 r1=0x1F04E r2=0x0 r3=0xFFFFFFFF lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_INSN] n=58 pc=0x2F44C2 size=2 r0=0x0 r1=0x1F04E r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EA1F9 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F44C4 target=0x2D92E5 arg0=0x0 arg1=0x313514
-[JJFB_E8X_INSN] n=59 pc=0x2F44C4 size=4 r0=0x0 r1=0x313514 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EA1F9 evidence=OBSERVED
-[JJFB_E8X_RESOURCE_LOAD] pc=0x2F44C4 bl=0x2D92E4 r0=0x0 r1=0x313514 r2=0xFFFFFFFF r3=0xFFFFFFFF note=A64_zero_init_path evidence=OBSERVED
-[JJFB_E9F_CLASS] class=SLOGO_ABSENT_FROM_GUEST_INDEX prefer_was=slogo!157!58.bmp fallback="loadingbar!201!29.bmp" note=mrp_has_slogo_index_does_not NOT_PRODUCT evidence=OBSERVED
-[JJFB_E9F_REQUEST_REWRITE] pc=0x2D92E4 from="wy_jiao1!11!11.bmp" to="loadingbar!201!29.bmp" name_va=0x3910200 note=assist_redirect_not_bridge NOT_PRODUCT evidence=OBSERVED
-[JJFB_E9F_CLASS] class=REQUEST_REWRITE_ASSIST prefer="loadingbar!201!29.bmp" blocker_was=GAME_ONLY_REQUESTS_WY_JIAO_ON_DISPLAYFIRST evidence=OBSERVED
-[JJFB_E8Y_2D92E4_ENTRY] hit=1 lr=0x2F44C9 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF name="loadingbar!201!29.bmp" R9_1450_strlen=0xAC374 R9_144C_memset=0x94F04 A64=0x0 A68=0x0 A6C=0x0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2D92E4 pc=0x2D92E4 hit=1 tick=1 r0=0x0 r1=0x3910200 r4=0x2B22C4 r9=0x2B1858 lr=0x2F44C9 state=0x26 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=1 pc=0x2D92E4 size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=2 pc=0x2D92E6 size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=3 pc=0x2D92E8 size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=4 pc=0x2D92EA size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=5 pc=0x2D92EC size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=6 pc=0x2D92EE size=2 r0=0x0 r1=0x3910200 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=7 pc=0x2D92F0 size=2 r0=0x0 r1=0x1450 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=8 pc=0x2D92F2 size=2 r0=0x0 r1=0x1450 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=9 pc=0x2D92F4 size=2 r0=0x0 r1=0x2B2CA8 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=10 pc=0x2D92F6 size=2 r0=0x0 r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[JJFB_E8Y_INSN] n=11 pc=0x2D92F8 size=2 r0=0x0 r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
-[R9_WRITE] event_seq=49 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=18 scope_id=22 host_callsite=enter guest_pc=0x2D92FA guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFA33 pc=0x2EFA32 hit=1 tick=1 r0=0x0 r1=0x31431C r4=0x0 r9=0x2B1858 lr=0x304621 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFA36 target=0x2D92E5 arg0=0x0 arg1=0x31431C
+[JJFB_E8Y_2D92E4_ENTRY] hit=1 lr=0x2EFA3B r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF name="loadingbar!201!29.bmp" R9_1450_strlen=0xAC374 R9_144C_memset=0x94F04 A64=0x0 A68=0x0 A6C=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2D92E4 pc=0x2D92E4 hit=1 tick=1 r0=0x0 r1=0x31431C r4=0x0 r9=0x2B1858 lr=0x2EFA3B state=0x45 evidence=OBSERVED
+[JJFB_E8Y_INSN] n=1 pc=0x2D92E4 size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=2 pc=0x2D92E6 size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=3 pc=0x2D92E8 size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=4 pc=0x2D92EA size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=5 pc=0x2D92EC size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=6 pc=0x2D92EE size=2 r0=0x0 r1=0x31431C r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=7 pc=0x2D92F0 size=2 r0=0x0 r1=0x1450 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=8 pc=0x2D92F2 size=2 r0=0x0 r1=0x1450 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=9 pc=0x2D92F4 size=2 r0=0x0 r1=0x2B2CA8 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=10 pc=0x2D92F6 size=2 r0=0x0 r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[JJFB_E8Y_INSN] n=11 pc=0x2D92F8 size=2 r0=0x0 r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
+[R9_WRITE] event_seq=48 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=18 scope_id=22 host_callsite=enter guest_pc=0x2D92FA guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=22 frame_id=18 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=18 top_frame_kind=RUNTIME_ENTRY generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D92FA return_pc=0x2D92FC frame_id=18 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=18 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x2D92FA to_module=dsm:cfunction.ext to_module_id=5 target=0xAC374 target_offset=0x2C374 r0=0x3910200 r1=0xAC374 lr=0x2F44C9 evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=18 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x2D92FA to_module=dsm:cfunction.ext to_module_id=5 target=0xAC374 target_offset=0x2C374 r0=0x31431C r1=0xAC374 lr=0x2EFA3B evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2D92FA function_entry_pc=0xAC374 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=22 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=18 actual_top_frame_id=18 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=18 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[JJFB_E8Y_INSN] n=12 pc=0x2D92FA size=2 r0=0x3910200 r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2F44C9 evidence=OBSERVED
+[JJFB_E8Y_INSN] n=12 pc=0x2D92FA size=2 r0=0x31431C r1=0xAC374 r2=0xFFFFFFFF r3=0xFFFFFFFF lr=0x2EFA3B evidence=OBSERVED
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D92FC return_pc=0x2D92FC call_pc=0x2D92FA cur_r9=0x280400 lr=0x2D92FD executed=1 owns_r9_pop=1 side_depth=0 frame_id=18 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=50 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=18 scope_id=22 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D92FA guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=49 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=18 scope_id=22 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D92FA guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=22 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=18 actual_top_frame_id=18 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x15 r9=0x2B1858 pc=0x2D92FC evidence=OBSERVED note=low_pointer_or_status
-[JJFB_E8Y_INSN] n=13 pc=0x2D92FC size=2 r0=0x15 r1=0x3910215 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
-[JJFB_E8Y_INSN] n=14 pc=0x2D92FE size=2 r0=0x15 r1=0x3910215 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9300 target=0x2D99AD arg0=0x16 arg1=0x3910215
-[JJFB_E8Y_INSN] n=15 pc=0x2D9300 size=4 r0=0x16 r1=0x3910215 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FEC0
-[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FEC0 r2=0x27FEBC r3=0x27FEB8 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x1A arg1=0x27FEC0
-[R9_WRITE] event_seq=51 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=19 scope_id=23 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8Y_INSN] n=13 pc=0x2D92FC size=2 r0=0x15 r1=0x314331 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
+[JJFB_E8Y_INSN] n=14 pc=0x2D92FE size=2 r0=0x15 r1=0x314331 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9300 target=0x2D99AD arg0=0x16 arg1=0x314331
+[JJFB_E8Y_INSN] n=15 pc=0x2D9300 size=4 r0=0x16 r1=0x314331 r2=0x0 r3=0xFFFFFFFF lr=0x2D92FD evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FF78
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FF78 r2=0x27FF74 r3=0x27FF70 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x1A arg1=0x27FF78
+[R9_WRITE] event_seq=50 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=19 scope_id=23 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=23 frame_id=19 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=19 top_frame_kind=RUNTIME_ENTRY generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=19 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1159,13 +962,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=23 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=19 actual_top_frame_id=19 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=19 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=52 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=51 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=19 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=53 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=19 scope_id=23 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=52 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=19 scope_id=23 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=23 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=19 actual_top_frame_id=19 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=54 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=20 scope_id=24 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=53 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=20 scope_id=24 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=24 frame_id=20 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=20 top_frame_kind=RUNTIME_ENTRY generation=20 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D9AD0 return_pc=0x2D9AD2 frame_id=20 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1174,7 +977,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=24 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=20 actual_top_frame_id=20 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=20 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=20 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9AD2 return_pc=0x2D9AD2 call_pc=0x2D9AD0 cur_r9=0x280400 lr=0x2D9AD3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=20 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=55 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=20 scope_id=24 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=54 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=20 scope_id=24 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=24 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=20 actual_top_frame_id=20 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=20 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_E8Y_INSN] n=16 pc=0x2D9304 size=2 r0=0x2A8364 r1=0x2A837A r2=0xFFFFFFFF r3=0x0 lr=0x2D9AD3 evidence=OBSERVED
@@ -1270,10 +1073,10 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8Y_HELPER] pc=0x2F8528 lr=0x2D932B r0=0x2A8364 r1=0x0 r2=0x2F r3=0x0 tick=1 evidence=OBSERVED
 [JJFB_E8F_WRITER_HIT] tag=y2F8528 pc=0x2F8528 hit=1 tick=1 r0=0x2A8364 r1=0x0 r9=0x2B1858 lr=0x2D932B evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F852E target=0x2D99AD arg0=0x8 arg1=0x0
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FEA8
-[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FEA8 r2=0x27FEA4 r3=0x27FEA0 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0xC arg1=0x27FEA8
-[R9_WRITE] event_seq=56 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=21 scope_id=25 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FF60
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FF60 r2=0x27FF5C r3=0x27FF58 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0xC arg1=0x27FF60
+[R9_WRITE] event_seq=55 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=21 scope_id=25 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=25 frame_id=21 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=21 top_frame_kind=RUNTIME_ENTRY generation=21 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=21 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1281,13 +1084,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=25 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=21 actual_top_frame_id=21 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=21 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=21 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=57 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=56 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=21 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=58 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=21 scope_id=25 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=57 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=21 scope_id=25 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=25 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=21 actual_top_frame_id=21 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=21 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=59 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=22 scope_id=26 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=58 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=22 scope_id=26 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=26 frame_id=22 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=22 top_frame_kind=RUNTIME_ENTRY generation=22 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D9AD0 return_pc=0x2D9AD2 frame_id=22 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1296,13 +1099,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=26 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=22 actual_top_frame_id=22 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=22 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=22 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9AD2 return_pc=0x2D9AD2 call_pc=0x2D9AD0 cur_r9=0x280400 lr=0x2D9AD3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=22 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=60 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=22 scope_id=26 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=59 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=22 scope_id=26 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=26 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=22 actual_top_frame_id=22 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=22 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F853E target=0x2FD869 arg0=0x2A8364 arg1=0x313388
 [JJFB_E8Y_HELPER] pc=0x2FD868 lr=0x2F8543 r0=0x2A8364 r1=0x313388 r2=0x0 r3=0x0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=1 tick=1 r0=0x2A8364 r1=0x313388 r4=0x2A8364 r9=0x2B1858 lr=0x2F8543 state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=61 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=23 scope_id=27 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=1 tick=1 r0=0x2A8364 r1=0x313388 r4=0x2A8364 r9=0x2B1858 lr=0x2F8543 state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=60 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=23 scope_id=27 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=27 frame_id=23 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=23 top_frame_kind=RUNTIME_ENTRY generation=23 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD886 return_pc=0x2FD888 frame_id=23 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1311,26 +1114,26 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=27 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=23 actual_top_frame_id=23 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=23 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=23 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD888 return_pc=0x2FD888 call_pc=0x2FD886 cur_r9=0x280400 lr=0xA executed=1 owns_r9_pop=1 side_depth=0 frame_id=23 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=62 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=23 scope_id=27 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=61 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=23 scope_id=27 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=27 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=23 actual_top_frame_id=23 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=23 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F854E target=0x2FD869 arg0=0x2A8364 arg1=0x313388
 [JJFB_E8Y_HELPER] pc=0x2FD868 lr=0x2F8553 r0=0x2A8364 r1=0x313388 r2=0xB r3=0xB tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=2 tick=1 r0=0x2A8364 r1=0x313388 r4=0x2A8364 r9=0x2B1858 lr=0x2F8553 state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=63 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=24 scope_id=28 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=2 tick=1 r0=0x2A8364 r1=0x313388 r4=0x2A8364 r9=0x2B1858 lr=0x2F8553 state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=62 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=24 scope_id=28 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=28 frame_id=24 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=24 top_frame_kind=RUNTIME_ENTRY generation=24 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD886 return_pc=0x2FD888 frame_id=24 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD888 return_pc=0x2FD888 call_pc=0x2FD886 cur_r9=0x280400 lr=0x6 executed=1 owns_r9_pop=1 side_depth=0 frame_id=24 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=64 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=24 scope_id=28 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=63 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=24 scope_id=28 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=28 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=24 actual_top_frame_id=24 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=24 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F855A target=0x310725 arg0=0x2A8364 arg1=0xB
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x310730 target=0x2D99AD arg0=0x4 arg1=0xB
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FE90
-[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FE90 r2=0x27FE8C r3=0x27FE88 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x8 arg1=0x27FE90
-[R9_WRITE] event_seq=65 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=25 scope_id=29 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FF48
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FF48 r2=0x27FF44 r3=0x27FF40 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x8 arg1=0x27FF48
+[R9_WRITE] event_seq=64 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=25 scope_id=29 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=29 frame_id=25 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=25 top_frame_kind=RUNTIME_ENTRY generation=25 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=25 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1338,13 +1141,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=29 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=25 actual_top_frame_id=25 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=25 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=25 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=66 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=65 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=25 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=67 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=25 scope_id=29 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=66 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=25 scope_id=29 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=29 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=25 actual_top_frame_id=25 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=25 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=68 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=26 scope_id=30 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=67 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=26 scope_id=30 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=30 frame_id=26 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=26 top_frame_kind=RUNTIME_ENTRY generation=26 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D9AD0 return_pc=0x2D9AD2 frame_id=26 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1353,10 +1156,10 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=30 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=26 actual_top_frame_id=26 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=26 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=26 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9AD2 return_pc=0x2D9AD2 call_pc=0x2D9AD0 cur_r9=0x280400 lr=0x2D9AD3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=26 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=69 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=26 scope_id=30 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=68 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=26 scope_id=30 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=30 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=26 actual_top_frame_id=26 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=26 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=70 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=27 scope_id=31 host_callsite=enter guest_pc=0x310740 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=69 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=27 scope_id=31 host_callsite=enter guest_pc=0x310740 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=31 frame_id=27 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=27 top_frame_kind=RUNTIME_ENTRY generation=27 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x310740 return_pc=0x310742 frame_id=27 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1365,11 +1168,11 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=31 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=27 actual_top_frame_id=27 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=27 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=27 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x310742 return_pc=0x310742 call_pc=0x310740 cur_r9=0x280400 lr=0x310743 executed=1 owns_r9_pop=1 side_depth=0 frame_id=27 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=71 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=27 scope_id=31 host_callsite=mrp_return_from_dsm_helper guest_pc=0x310740 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=70 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=27 scope_id=31 host_callsite=mrp_return_from_dsm_helper guest_pc=0x310740 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=31 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=27 actual_top_frame_id=27 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=27 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F8560 target=0x3106A1 arg0=0x2A8394 arg1=0x0
-[R9_WRITE] event_seq=72 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=28 scope_id=32 host_callsite=enter guest_pc=0x3106A8 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=71 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=28 scope_id=32 host_callsite=enter guest_pc=0x3106A8 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=32 frame_id=28 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=28 top_frame_kind=RUNTIME_ENTRY generation=28 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x3106A8 return_pc=0x3106AA frame_id=28 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1378,7 +1181,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=32 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=28 actual_top_frame_id=28 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=28 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=28 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x3106AA return_pc=0x3106AA call_pc=0x3106A8 cur_r9=0x280400 lr=0x3106AB executed=1 owns_r9_pop=1 side_depth=0 frame_id=28 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=73 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=28 scope_id=32 host_callsite=mrp_return_from_dsm_helper guest_pc=0x3106A8 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=72 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=28 scope_id=32 host_callsite=mrp_return_from_dsm_helper guest_pc=0x3106A8 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=32 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=28 actual_top_frame_id=28 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=28 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0xC9 r9=0x2B1858 pc=0x3106AA evidence=OBSERVED note=low_pointer_or_status
@@ -1387,8 +1190,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10133 r1=0x2A8390 r2=0x0 r3=0x0 r4=0x10133 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F8576 target=0x2FD869 arg0=0x2A8364 arg1=0x31338C
 [JJFB_E8Y_HELPER] pc=0x2FD868 lr=0x2F857B r0=0x2A8364 r1=0x31338C r2=0xF r3=0x0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=3 tick=1 r0=0x2A8364 r1=0x31338C r4=0x2A8364 r9=0x2B1858 lr=0x2F857B state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=74 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=29 scope_id=33 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=3 tick=1 r0=0x2A8364 r1=0x31338C r4=0x2A8364 r9=0x2B1858 lr=0x2F857B state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=73 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=29 scope_id=33 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=33 frame_id=29 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=29 top_frame_kind=RUNTIME_ENTRY generation=29 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD886 return_pc=0x2FD888 frame_id=29 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1397,15 +1200,15 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=33 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=29 actual_top_frame_id=29 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=29 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=29 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD888 return_pc=0x2FD888 call_pc=0x2FD886 cur_r9=0x280400 lr=0x3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=29 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=75 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=29 scope_id=33 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=74 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=29 scope_id=33 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=33 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=29 actual_top_frame_id=29 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=29 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F8580 target=0x310725 arg0=0x2A8364 arg1=0xF
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x310730 target=0x2D99AD arg0=0x3 arg1=0xF
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FE90
-[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FE90 r2=0x27FE8C r3=0x27FE88 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x7 arg1=0x27FE90
-[R9_WRITE] event_seq=76 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=30 scope_id=34 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FF48
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FF48 r2=0x27FF44 r3=0x27FF40 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x7 arg1=0x27FF48
+[R9_WRITE] event_seq=75 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=30 scope_id=34 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=34 frame_id=30 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=30 top_frame_kind=RUNTIME_ENTRY generation=30 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=30 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1413,13 +1216,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=34 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=30 actual_top_frame_id=30 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=30 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=30 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=77 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=76 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=30 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=78 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=30 scope_id=34 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=77 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=30 scope_id=34 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=34 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=30 actual_top_frame_id=30 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=30 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=79 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=31 scope_id=35 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=78 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=31 scope_id=35 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=35 frame_id=31 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=31 top_frame_kind=RUNTIME_ENTRY generation=31 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D9AD0 return_pc=0x2D9AD2 frame_id=31 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1428,10 +1231,10 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=35 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=31 actual_top_frame_id=31 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=31 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=31 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9AD2 return_pc=0x2D9AD2 call_pc=0x2D9AD0 cur_r9=0x280400 lr=0x2D9AD3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=31 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=80 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=31 scope_id=35 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=79 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=31 scope_id=35 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=35 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=31 actual_top_frame_id=31 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=31 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=81 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=32 scope_id=36 host_callsite=enter guest_pc=0x310740 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=80 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=32 scope_id=36 host_callsite=enter guest_pc=0x310740 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=36 frame_id=32 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=32 top_frame_kind=RUNTIME_ENTRY generation=32 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x310740 return_pc=0x310742 frame_id=32 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1440,11 +1243,11 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=36 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=32 actual_top_frame_id=32 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=32 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=32 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x310742 return_pc=0x310742 call_pc=0x310740 cur_r9=0x280400 lr=0x310743 executed=1 owns_r9_pop=1 side_depth=0 frame_id=32 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=82 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=32 scope_id=36 host_callsite=mrp_return_from_dsm_helper guest_pc=0x310740 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=81 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=32 scope_id=36 host_callsite=mrp_return_from_dsm_helper guest_pc=0x310740 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=36 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=32 actual_top_frame_id=32 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=32 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F8586 target=0x3106A1 arg0=0x2A83A4 arg1=0x0
-[R9_WRITE] event_seq=83 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=33 scope_id=37 host_callsite=enter guest_pc=0x3106A8 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=82 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=33 scope_id=37 host_callsite=enter guest_pc=0x3106A8 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=37 frame_id=33 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=33 top_frame_kind=RUNTIME_ENTRY generation=33 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x3106A8 return_pc=0x3106AA frame_id=33 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1453,7 +1256,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=37 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=33 actual_top_frame_id=33 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=33 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=33 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x3106AA return_pc=0x3106AA call_pc=0x3106A8 cur_r9=0x280400 lr=0x3106AB executed=1 owns_r9_pop=1 side_depth=0 frame_id=33 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=84 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=33 scope_id=37 host_callsite=mrp_return_from_dsm_helper guest_pc=0x3106A8 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=83 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=33 scope_id=37 host_callsite=mrp_return_from_dsm_helper guest_pc=0x3106A8 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=37 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=33 actual_top_frame_id=33 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=33 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x1D r9=0x2B1858 pc=0x3106AA evidence=OBSERVED note=low_pointer_or_status
@@ -1462,10 +1265,10 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10133 r1=0x2A83A0 r2=0x0 r3=0x0 r4=0x10133 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D932E target=0x2D99AD arg0=0x14 arg1=0x2A83A0
 [JJFB_E8Y_INSN] n=213 pc=0x2D932E size=4 r0=0x14 r1=0x2A83A0 r2=0x0 r3=0xC9 lr=0x304589 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FEC0
-[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FEC0 r2=0x27FEBC r3=0x27FEB8 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x18 arg1=0x27FEC0
-[R9_WRITE] event_seq=85 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=34 scope_id=38 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9A6E target=0x304559 arg0=0x10138 arg1=0x27FF78
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10138 r1=0x27FF78 r2=0x27FF74 r3=0x27FF70 r4=0x10138 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9AA4 target=0x304A7D arg0=0x18 arg1=0x27FF78
+[R9_WRITE] event_seq=84 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=34 scope_id=38 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=38 frame_id=34 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=34 top_frame_kind=RUNTIME_ENTRY generation=34 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=34 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1473,13 +1276,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=38 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=34 actual_top_frame_id=34 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=34 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=34 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=86 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=85 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=34 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=87 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=34 scope_id=38 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=86 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=34 scope_id=38 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=38 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=34 actual_top_frame_id=34 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=34 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=88 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=35 scope_id=39 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=87 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=35 scope_id=39 host_callsite=enter guest_pc=0x2D9AD0 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=39 frame_id=35 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=35 top_frame_kind=RUNTIME_ENTRY generation=35 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D9AD0 return_pc=0x2D9AD2 frame_id=35 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1488,15 +1291,15 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=39 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=35 actual_top_frame_id=35 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=35 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=35 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9AD2 return_pc=0x2D9AD2 call_pc=0x2D9AD0 cur_r9=0x280400 lr=0x2D9AD3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=35 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=89 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=35 scope_id=39 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=88 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=35 scope_id=39 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D9AD0 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=39 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=35 actual_top_frame_id=35 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=35 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=90 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=36 scope_id=40 host_callsite=enter guest_pc=0x2D933E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=89 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=36 scope_id=40 host_callsite=enter guest_pc=0x2D933E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=40 frame_id=36 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=36 top_frame_kind=RUNTIME_ENTRY generation=36 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2D933E return_pc=0x2D9340 frame_id=36 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2D9340 return_pc=0x2D9340 call_pc=0x2D933E cur_r9=0x280400 lr=0x2D9341 executed=1 owns_r9_pop=1 side_depth=0 frame_id=36 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=91 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=36 scope_id=40 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D933E guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=90 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=36 scope_id=40 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2D933E guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=40 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=36 actual_top_frame_id=36 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=36 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D934E target=0x305E09 arg0=0x2A8384 arg1=0x0
@@ -1509,8 +1312,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8F_WRITER_HIT] tag=y2F6BD4 pc=0x2F6BD4 hit=1 tick=1 r0=0x2A8364 r1=0x2A8380 r9=0x2B1858 lr=0x2D9359 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F6BDE target=0x2FD869 arg0=0x2A8364 arg1=0x31337C
 [JJFB_E8Y_HELPER] pc=0x2FD868 lr=0x2F6BE3 r0=0x2A8364 r1=0x31337C r2=0x0 r3=0x0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=4 tick=1 r0=0x2A8364 r1=0x31337C r4=0x2A8364 r9=0x2B1858 lr=0x2F6BE3 state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=92 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=37 scope_id=41 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=4 tick=1 r0=0x2A8364 r1=0x31337C r4=0x2A8364 r9=0x2B1858 lr=0x2F6BE3 state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=91 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=37 scope_id=41 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=41 frame_id=37 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=37 top_frame_kind=RUNTIME_ENTRY generation=37 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD886 return_pc=0x2FD888 frame_id=37 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1519,19 +1322,19 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NOOP scope_id=41 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=37 actual_top_frame_id=37 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=37 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=37 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD888 return_pc=0x2FD888 call_pc=0x2FD886 cur_r9=0x280400 lr=0x3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=37 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=93 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=37 scope_id=41 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=92 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=37 scope_id=41 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=41 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=37 actual_top_frame_id=37 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=37 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B1858 pc=0x2FD888 evidence=OBSERVED note=low_pointer_or_status
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F6BF2 target=0x2FD869 arg0=0x2A8364 arg1=0x313384
 [JJFB_E8Y_HELPER] pc=0x2FD868 lr=0x2F6BF7 r0=0x2A8364 r1=0x313384 r2=0x0 r3=0x0 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=5 tick=1 r0=0x2A8364 r1=0x313384 r4=0x2A8364 r9=0x2B1858 lr=0x2F6BF7 state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=94 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=38 scope_id=42 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2FD868 pc=0x2FD868 hit=5 tick=1 r0=0x2A8364 r1=0x313384 r4=0x2A8364 r9=0x2B1858 lr=0x2F6BF7 state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=93 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=38 scope_id=42 host_callsite=enter guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=42 frame_id=38 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=38 top_frame_kind=RUNTIME_ENTRY generation=38 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD886 return_pc=0x2FD888 frame_id=38 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD888 return_pc=0x2FD888 call_pc=0x2FD886 cur_r9=0x280400 lr=0x0 executed=1 owns_r9_pop=1 side_depth=0 frame_id=38 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=95 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=38 scope_id=42 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=94 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=38 scope_id=42 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD886 guest_module=cfunction.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=42 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=38 actual_top_frame_id=38 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=38 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B1858 pc=0x2FD888 evidence=OBSERVED note=low_pointer_or_status
@@ -1540,8 +1343,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8Y_INSN] n=250 pc=0x2D93CC size=4 r0=0x2B216C r1=0x2A8364 r2=0x2A83C8 r3=0x2A83C4 lr=0x0 evidence=OBSERVED
 [JJFB_E8Z_304BF0] lr=0x2D93D1 r0=0x2B216C r1=0x2A8364 r2=0x2A83C8 r3=0x2A83C4 name="loadingbar!201!29.bmp" note=mrp_member_lookup evidence=OBSERVED
 [JJFB_E9D_REQUEST] n=1 name="loadingbar!201!29.bmp" lr=0x2D93D1 tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p304BF0 pc=0x304BF0 hit=1 tick=1 r0=0x2B216C r1=0x2A8364 r4=0x2A83C4 r9=0x2B1858 lr=0x2D93D1 state=0x26 evidence=OBSERVED
-[R9_WRITE] event_seq=96 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=39 scope_id=43 host_callsite=enter guest_pc=0x304DFE guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p304BF0 pc=0x304BF0 hit=1 tick=1 r0=0x2B216C r1=0x2A8364 r4=0x2A83C4 r9=0x2B1858 lr=0x2D93D1 state=0x45 evidence=OBSERVED
+[R9_WRITE] event_seq=95 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=39 scope_id=43 host_callsite=enter guest_pc=0x304DFE guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=43 frame_id=39 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=39 top_frame_kind=RUNTIME_ENTRY generation=39 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304DFE return_pc=0x304E00 frame_id=39 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1549,46 +1352,46 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304DFE function_entry_pc=0x806D8 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=43 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=39 actual_top_frame_id=39 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=39 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=39 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=97 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=96 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
 [VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
 [INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304E00 return_pc=0x304E00 call_pc=0x304DFE cur_r9=0x280400 lr=0x304E01 executed=1 owns_r9_pop=1 side_depth=0 frame_id=39 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=98 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=39 scope_id=43 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304DFE guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=97 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=39 scope_id=43 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304DFE guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=43 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=39 actual_top_frame_id=39 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=39 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x2 r9=0x2B1858 pc=0x304E00 evidence=OBSERVED note=low_pointer_or_status
-[R9_WRITE] event_seq=99 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=40 scope_id=44 host_callsite=enter guest_pc=0x304E20 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=98 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=40 scope_id=44 host_callsite=enter guest_pc=0x304E20 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=44 frame_id=40 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=40 top_frame_kind=RUNTIME_ENTRY generation=40 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304E20 return_pc=0x304E22 frame_id=40 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=37 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304E20 to_module=dsm:cfunction.ext to_module_id=5 target=0x94F04 target_offset=0x14F04 r0=0x27FE8C r1=0x0 lr=0x304E01 evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=37 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304E20 to_module=dsm:cfunction.ext to_module_id=5 target=0x94F04 target_offset=0x14F04 r0=0x27FF44 r1=0x0 lr=0x304E01 evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304E20 function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=44 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=40 actual_top_frame_id=40 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=40 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=40 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304E22 return_pc=0x304E22 call_pc=0x304E20 cur_r9=0x280400 lr=0x304E23 executed=1 owns_r9_pop=1 side_depth=0 frame_id=40 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=100 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=40 scope_id=44 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304E20 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=99 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=40 scope_id=44 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304E20 guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=44 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=40 actual_top_frame_id=40 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=40 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=101 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=41 scope_id=45 host_callsite=enter guest_pc=0x304E2E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=100 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=41 scope_id=45 host_callsite=enter guest_pc=0x304E2E guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=45 frame_id=41 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=41 top_frame_kind=RUNTIME_ENTRY generation=41 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304E2E return_pc=0x304E30 frame_id=41 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=38 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304E2E to_module=dsm:cfunction.ext to_module_id=5 target=0x80748 target_offset=0x748 r0=0x2 r1=0x27FE8C lr=0x304E23 evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=38 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304E2E to_module=dsm:cfunction.ext to_module_id=5 target=0x80748 target_offset=0x748 r0=0x2 r1=0x27FF44 lr=0x304E23 evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304E2E function_entry_pc=0x80748 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=45 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=41 actual_top_frame_id=41 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=41 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=41 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=102 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=101 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [VM_FILE_READ] handle=2 requested=16 got=16 eof=0
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304E30 return_pc=0x304E30 call_pc=0x304E2E cur_r9=0x280400 lr=0x304E31 executed=1 owns_r9_pop=1 side_depth=0 frame_id=41 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=103 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=41 scope_id=45 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304E2E guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=102 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=41 scope_id=45 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304E2E guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=45 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=41 actual_top_frame_id=41 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=41 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x10 r9=0x2B1858 pc=0x304E30 evidence=OBSERVED note=low_pointer_or_status
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304E6C target=0x304A7D arg0=0x69E arg1=0x69E
-[R9_WRITE] event_seq=104 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=42 scope_id=46 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=103 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=42 scope_id=46 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=46 frame_id=42 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=42 top_frame_kind=RUNTIME_ENTRY generation=42 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=42 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1596,13 +1399,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=46 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=42 actual_top_frame_id=42 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=42 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=42 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=105 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=104 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=42 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=106 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=42 scope_id=46 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=105 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=42 scope_id=46 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=46 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=42 actual_top_frame_id=42 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=42 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=107 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=43 scope_id=47 host_callsite=enter guest_pc=0x304EAA guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=106 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=43 scope_id=47 host_callsite=enter guest_pc=0x304EAA guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=47 frame_id=43 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=43 top_frame_kind=RUNTIME_ENTRY generation=43 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304EAA return_pc=0x304EAC frame_id=43 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1610,15 +1413,15 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304EAA function_entry_pc=0x807B8 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=47 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=43 actual_top_frame_id=43 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=43 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=43 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=108 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=107 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304EAC return_pc=0x304EAC call_pc=0x304EAA cur_r9=0x280400 lr=0x304EAD executed=1 owns_r9_pop=1 side_depth=0 frame_id=43 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=109 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=43 scope_id=47 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304EAA guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=108 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=43 scope_id=47 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304EAA guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=47 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=43 actual_top_frame_id=43 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=43 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B1858 pc=0x304EAC evidence=OBSERVED note=low_pointer_or_status
-[R9_WRITE] event_seq=110 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=44 scope_id=48 host_callsite=enter guest_pc=0x304EDE guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=109 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=44 scope_id=48 host_callsite=enter guest_pc=0x304EDE guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=48 frame_id=44 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=44 top_frame_kind=RUNTIME_ENTRY generation=44 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304EDE return_pc=0x304EE0 frame_id=44 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1626,16 +1429,16 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304EDE function_entry_pc=0x80748 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=48 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=44 actual_top_frame_id=44 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=44 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=44 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=111 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=110 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304EE0 return_pc=0x304EE0 call_pc=0x304EDE cur_r9=0x280400 lr=0x304EE1 executed=1 owns_r9_pop=1 side_depth=0 frame_id=44 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=112 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=44 scope_id=48 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304EDE guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=111 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=44 scope_id=48 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304EDE guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=48 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=44 actual_top_frame_id=44 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=44 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [JJFB_DSM_HELPER_RET] r0=0x69E r9=0x2B1858 pc=0x304EE0 evidence=OBSERVED note=low_pointer_or_status
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304F0C target=0x304A7D arg0=0x80 arg1=0x69E
-[R9_WRITE] event_seq=113 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=45 scope_id=49 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=112 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=45 scope_id=49 host_callsite=enter guest_pc=0x304A9A guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=49 frame_id=45 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=45 top_frame_kind=RUNTIME_ENTRY generation=45 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304A9A return_pc=0x304A9C frame_id=45 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1643,22 +1446,22 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304A9A function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=49 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=45 actual_top_frame_id=45 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=45 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=45 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=114 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=113 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x304A9C return_pc=0x304A9C call_pc=0x304A9A cur_r9=0x280400 lr=0x304A9D executed=1 owns_r9_pop=1 side_depth=0 frame_id=45 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=115 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=45 scope_id=49 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
+[R9_WRITE] event_seq=114 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=45 scope_id=49 host_callsite=mrp_return_from_dsm_helper guest_pc=0x304A9A guest_module=robotol.ext depth_before=3 depth_after=2 evidence=OBSERVED
 [R9_SCOPE] stage=LEAVE scope_id=49 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=45 actual_top_frame_id=45 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=45 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
-[R9_WRITE] event_seq=116 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=46 scope_id=50 host_callsite=enter guest_pc=0x304F26 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
+[R9_WRITE] event_seq=115 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=46 scope_id=50 host_callsite=enter guest_pc=0x304F26 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER from=robotol.ext to=cfunction.ext old_r9=0x2B1858 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=50 frame_id=46 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=2 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F26 return_pc=0x304F28 frame_id=46 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=43 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FEA4 r1=0x2AC8F8 lr=0x304A9D evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=43 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FF5C r1=0x2AC8F8 lr=0x304A9D evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304F26 function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=50 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=46 actual_top_frame_id=46 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=46 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=CANCEL_DSM_BLX call_pc=0x304F26 return_pc=0x304F28 side_depth=0 evidence=DOCUMENTED note=host_skipped_blx
-[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FEA4 src=0x2AC8F8 n=4 name_len=9 evidence=OBSERVED
+[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FF5C src=0x2AC8F8 n=4 name_len=9 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=51 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F7A return_pc=0x304F7C frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1676,12 +1479,12 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=53 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F26 return_pc=0x304F28 frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=45 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FEA4 r1=0x2AC911 lr=0x304A9D evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=45 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FF5C r1=0x2AC911 lr=0x304A9D evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304F26 function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=53 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=46 actual_top_frame_id=46 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=46 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=CANCEL_DSM_BLX call_pc=0x304F26 return_pc=0x304F28 side_depth=0 evidence=DOCUMENTED note=host_skipped_blx
-[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FEA4 src=0x2AC911 n=4 name_len=15 evidence=OBSERVED
+[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FF5C src=0x2AC911 n=4 name_len=15 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=54 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F7A return_pc=0x304F7C frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1698,12 +1501,12 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=56 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F26 return_pc=0x304F28 frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=47 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FEA4 r1=0x2AC930 lr=0x304A9D evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=47 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FF5C r1=0x2AC930 lr=0x304A9D evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304F26 function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=56 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=46 actual_top_frame_id=46 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=46 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_SWITCH] stage=CANCEL_DSM_BLX call_pc=0x304F26 return_pc=0x304F28 side_depth=0 evidence=DOCUMENTED note=host_skipped_blx
-[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FEA4 src=0x2AC930 n=4 name_len=20 evidence=OBSERVED
+[JJFB_E9D_MEMCPY_SHIM] pc=0x304F26 dst=0x27FF5C src=0x2AC930 n=4 name_len=20 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=57 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F7A return_pc=0x304F7C frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
@@ -1720,7 +1523,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=59 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x304F26 return_pc=0x304F28 frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=49 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FEA4 r1=0x2AC954 lr=0x304A9D evidence=OBSERVED
+[CROSS_MODULE_CALL] transfer_id=49 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x304F26 to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x27FF5C r1=0x2AC954 lr=0x304A9D evidence=OBSERVED
 [R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x304F26 function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
 [R9_SCOPE] stage=NOOP scope_id=59 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=46 actual_top_frame_id=46 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=46 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
@@ -1741,137 +1544,39 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9D_NATURAL_MATCH] name="loadingbar!201!29.bmp" n=4 shim=4 class=NATURAL_MEMBER_RESOLVE_FIXED_FIRST_FRAME note=host_strcmp_shim_skips_DSM_stub NOT_PRODUCT evidence=OBSERVED
 [NATURAL_MEMBER_RESOLVE_FIXED_FIRST_FRAME] name="loadingbar!201!29.bmp" evidence=OBSERVED
 [JJFB_E9E_POSTMATCH_SHIM] pc=0x304F92 role=member_bytes_after_natural_match name="loadingbar!201!29.bmp" offset=3782 stored=1385 decoded=11658 w=201 h=29 sha256=6ab17ba601918ab21e1ec7d802ed70027586f2ce231e5b11732e0f97a5d6435d first32=1ff81ff81ff81ff81ff81ff81ff81ff81ff81ff81ff81ff86141614161416141 handle=0x2A83C4 pixels=0x3920000 ret=0 note=original_jjfb_mrp_bytes NOT_BRIDGE NOT_PRODUCT evidence=OBSERVED
-[JJFB_E9E_POSTMATCH_SHIM] role=return_abi_restore sp=0x27FED8 r4=0x2A83C4 r6=0x2A8364 r7=0x2B216C r9=0x2B1858 lr=0x2D93D1 class=POST_MATCH_RETURN_ABI_FIXED_NEXT_GAP evidence=OBSERVED
+[JJFB_E9E_POSTMATCH_SHIM] role=return_abi_restore sp=0x27FF90 r4=0x2A83C4 r6=0x2A8364 r7=0x2B216C r9=0x2B1858 lr=0x2D93D1 class=POST_MATCH_RETURN_ABI_FIXED_NEXT_GAP evidence=OBSERVED
 [JJFB_E9E_CLASS] class=NATURAL_POSTMATCH_MEMBER_BYTES name="loadingbar!201!29.bmp" blocker_was=POST_MATCH_RETURN_ABI_WRONG evidence=OBSERVED
 [JJFB_E9F_CLASS] class=NATURAL_POSTMATCH_LOADINGBAR_CANDIDATE name="loadingbar!201!29.bmp" evidence=OBSERVED
+[JJFB_E9G_CLASS] class=SLOGO_ABSENT_FROM_GUEST_INDEX_CONFIRMED note=mrp_has_slogo_guest_304BF0_index_omits evidence=OBSERVED
+[JJFB_E9G_CLASS] class=SLOGO_RAW_INVENTORY_ONLY note=present_in_package_inventory_absent_from_runtime_guest_table loadingbar=1 textbar=0 top=0 evidence=OBSERVED
+[JJFB_E9G_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_SKIP name="loadingbar!201!29.bmp" note=next_2D92E4_in_splash_skips_to_2EFA9E NOT_PRODUCT evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9546 target=0x305E09 arg0=0x2A8364 arg1=0x2A83E0
 [JJFB_E8Y_INSN] n=269 pc=0x2D9546 size=4 r0=0x2A8364 r1=0x2A83E0 r2=0xAC2D0 r3=0x1 lr=0x304A9D evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x305E22 target=0x304559 arg0=0x10133 arg1=0x2A8360
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10133 r1=0x2A8360 r2=0x0 r3=0x0 r4=0x10133 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D9578 target=0x304559 arg0=0x10134 arg1=0x2D8A
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10134 r1=0x2D8A r2=0x0 r3=0x0 r4=0x10134 ret=0x0 evidence=TARGET_OBSERVED
-[JJFB_E8Y_2D92E4_RETURN] r0=0x2A83C4 name="loadingbar!201!29.bmp" A64_before_store=0x0 nz=1 z=0 tick=1 evidence=OBSERVED
-[JJFB_E8Y_CLASS] class=RESOURCE_INIT_2D92E4_COMPLETED_NEXT_GAP handle=0x2A83C4 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p2F44C8 pc=0x2F44C8 hit=1 tick=1 r0=0x2A83C4 r1=0x2D8A r4=0x2B22C4 r9=0x2B1858 lr=0x304589 state=0x26 evidence=OBSERVED
-[JJFB_E8X_INSN] n=60 pc=0x2F44C8 size=2 r0=0x2A83C4 r1=0x2D8A r2=0x0 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=61 pc=0x2F44CA size=2 r0=0x2A83C4 r1=0xA64 r2=0x0 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=62 pc=0x2F44CC size=2 r0=0x2A83C4 r1=0xA64 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8Y_A64_STORE] pc=0x2F44CE r0=0x2A83C4 A64=0x0 A68=0x0 A6C=0x0 hit=1 tick=1 evidence=OBSERVED
-[JJFB_E9A_POST_A64_DRAW_SKIP] handle=0x2A83C4 A58..A6C=0x2A83C4 cont=0x2F45A2 note=real_bridged_handle_skip_sibling_loads NOT_PRODUCT evidence=OBSERVED
-[JJFB_E8X_INSN] n=63 pc=0x2F44CE size=2 r0=0x2A83C4 r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=64 pc=0x2F45A2 size=2 r0=0x2A83C4 r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=65 pc=0x2F4628 size=2 r0=0x2A83C4 r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=66 pc=0x2F462A size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=67 pc=0x2F462C size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=68 pc=0x2F462E size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=69 pc=0x2F4654 size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=70 pc=0x2F4656 size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=71 pc=0x2F4658 size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=72 pc=0x2F465A size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=73 pc=0x2F465C size=2 r0=0xA r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=74 pc=0x2F465E size=2 r0=0xA58 r1=0x2B22BC r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=75 pc=0x2F4660 size=2 r0=0xA58 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=76 pc=0x2F4662 size=2 r0=0x2B22B0 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=77 pc=0x2F4664 size=2 r0=0x2B22B0 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=78 pc=0x2F4666 size=2 r0=0xA5C r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=79 pc=0x2F4668 size=2 r0=0x2B22B4 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=80 pc=0x2F466A size=2 r0=0x2B22B4 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=81 pc=0x2F466C size=2 r0=0xA60 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=82 pc=0x2F466E size=2 r0=0x2B22B8 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=83 pc=0x2F4670 size=2 r0=0x2B22B8 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=84 pc=0x2F4672 size=2 r0=0x1 r1=0x2 r2=0x0 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=85 pc=0x2F4674 size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=86 pc=0x2F4676 size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=87 pc=0x2F46CA size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=88 pc=0x2F46CC size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=89 pc=0x2F46CE size=2 r0=0x1 r1=0x2000000 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=90 pc=0x2F46D0 size=2 r0=0x1000000 r1=0x2000000 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=91 pc=0x2F46D2 size=2 r0=0x1000000 r1=0x2000000 r2=0x1000000 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=92 pc=0x2F46D4 size=2 r0=0x1000000 r1=0x2000000 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=93 pc=0x2F46D6 size=2 r0=0x1 r1=0x2000000 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=94 pc=0x2F46D8 size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=95 pc=0x2F46DA size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=96 pc=0x2F46DC size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=97 pc=0x2F46DE size=2 r0=0x1 r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=98 pc=0x2F46E0 size=2 r0=0x1D r1=0x2 r2=0x1 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=99 pc=0x2F46E2 size=2 r0=0x1D r1=0x2 r2=0x20 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=100 pc=0x2F46E4 size=2 r0=0x1D r1=0x3A r2=0x20 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=101 pc=0x2F46E6 size=2 r0=0x1D r1=0x3A r2=0xFFFFFFE6 r3=0xFFFFFFFF lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=102 pc=0x2F46E8 size=2 r0=0x1D r1=0x3A r2=0xFFFFFFE6 r3=0xFFE60000 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=103 pc=0x2F46EA size=2 r0=0x1D r1=0x3A r2=0xFFFFFFE6 r3=0xFFFFFFE6 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=104 pc=0x2F46EC size=2 r0=0x1D r1=0x3A r2=0xFFFFFFE6 r3=0xFFFFFFE6 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=105 pc=0x2F46EE size=2 r0=0x1D r1=0x3A r2=0xF0 r3=0xFFFFFFE6 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=106 pc=0x2F46F0 size=2 r0=0x1D r1=0x3A r2=0xF0 r3=0x828 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=107 pc=0x2F46F2 size=2 r0=0x1D r1=0xB6 r2=0xF0 r3=0x828 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=108 pc=0x2F46F4 size=2 r0=0x1D r1=0xB6 r2=0xB60000 r3=0x828 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=109 pc=0x2F46F6 size=2 r0=0x1D r1=0xB6 r2=0xB60000 r3=0x2B2080 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=110 pc=0x2F46F8 size=2 r0=0x1D r1=0xB6 r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=111 pc=0x2F46FA size=2 r0=0x1D r1=0x1D r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=112 pc=0x2F46FC size=2 r0=0x1D r1=0x1D r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=113 pc=0x2F46FE size=2 r0=0x1D r1=0x1D r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=114 pc=0x2F4700 size=2 r0=0x1D r1=0x1D0000 r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=115 pc=0x2F4702 size=2 r0=0x1D r1=0x1D0000 r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=116 pc=0x2F4704 size=2 r0=0x1D0000 r1=0x1D0000 r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=117 pc=0x2F4706 size=2 r0=0x1D0000 r1=0x1D r2=0xB60000 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=118 pc=0x2F4708 size=2 r0=0x1D0000 r1=0x1D r2=0xB6 r3=0x0 lr=0x304589 evidence=OBSERVED
-[JJFB_E8X_INSN] n=119 pc=0x2F470A size=2 r0=0x1D r1=0x1D r2=0xB6 r3=0x0 lr=0x304589 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F470C target=0x303D9D arg0=0x1D arg1=0x1D
-[JJFB_E8X_INSN] n=120 pc=0x2F470C size=4 r0=0x1D r1=0x1D r2=0xB6 r3=0xFFFFFFE6 lr=0x304589 evidence=OBSERVED
-[R9_WRITE] event_seq=117 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=46 scope_id=0 host_callsite=enter_reuse_dsm_frame guest_pc=0x303DC2 guest_module=cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
-[R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
-[R9_SCOPE] stage=ENTER scope_id=62 frame_id=46 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=46 top_frame_kind=RUNTIME_ENTRY generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
-[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x303DC2 return_pc=0x303DC4 frame_id=46 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
-[CROSS_MODULE_CALL] transfer_id=51 hop=OTHER from_module=robotol.ext from_module_id=3 from_pc=0x303DC2 to_module=dsm:cfunction.ext to_module_id=5 target=0x80278 target_offset=0x278 r0=0x1D r1=0x1D lr=0x2F4711 evidence=OBSERVED
-[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x303DC2 function_entry_pc=0x80278 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
-[R9_SCOPE] stage=NOOP scope_id=62 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=46 actual_top_frame_id=46 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=3 depth_after=3 old_r9=0x280400 new_r9=0x280400 generation=46 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
-[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=46 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
-[R9_WRITE] event_seq=118 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
-[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B1858 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
-[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x303DC4 return_pc=0x303DC4 call_pc=0x303DC2 cur_r9=0x280400 lr=0x303DC5 executed=1 owns_r9_pop=0 side_depth=0 frame_id=46 evidence=DOCUMENTED note=mrp_dsm_helper_return
-[R9_WRITE] event_seq=119 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=46 scope_id=0 host_callsite=mrp_return_from_dsm_helper_nested guest_pc=0x303DC4 guest_module=mrp_nested_dsm_return depth_before=0 depth_after=0 evidence=OBSERVED
-[R9_SWITCH] stage=RESTORE_NESTED_MRP_R9 to_caller_id=3 old_r9=0x280400 new_r9=0x2B1858 pc=0x303DC4 frame_id=46 evidence=DOCUMENTED note=keep_outer_frame
-[JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B1858 pc=0x303DC4 evidence=OBSERVED note=low_pointer_or_status
-[JJFB_E8X_INSN] n=125 pc=0x2F4718 size=2 r0=0x3A r1=0x1D r2=0x20 r3=0xA lr=0x303DC5 evidence=OBSERVED
-[JJFB_E8X_INSN] n=128 pc=0x2F471E size=4 r0=0xC9 r1=0xFFFFFFE6 r2=0x20 r3=0x8 lr=0x303DC5 evidence=OBSERVED
-[JJFB_E8X_INSN] n=150 pc=0x2F47BA size=2 r0=0x0 r1=0x1D r2=0x20 r3=0xA lr=0x2F4723 evidence=OBSERVED
-[JJFB_E8X_INSN] n=161 pc=0x2F483C size=4 r0=0xC9 r1=0xFFFFFF5E r2=0xF0 r3=0x8 lr=0x2F4723 evidence=OBSERVED
-[JJFB_E8X_INSN] n=175 pc=0x2F4962 size=2 r0=0xC9 r1=0x0 r2=0xF0 r3=0x8 lr=0x2F4841 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F49F8 target=0x310B65 arg0=0x2A83C4 arg1=0x0
-[JJFB_E8X_INSN] n=194 pc=0x2F49F8 size=4 r0=0x2A83C4 r1=0x0 r2=0x0 r3=0x0 lr=0x2F4841 evidence=OBSERVED
-[JJFB_DRAW] api=mr_drawBitmap bmp=0x3920000 x=0 y=0 w=201 h=201 evidence=DOCUMENTED
-[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x2801E4 lr=0x310BB5 r0=0x3920000 r1=0 r2=0 r3=201 h=201 sp=0x27FED0 surface=0x3920000 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x2801E4 lr=0x310BB5 r0=0x3920000 r1=0 r2=0 r3=201 h=201 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x3920000 x=0 y=0 w=201 h=201 sprite_blit=1 evidence=OBSERVED
-[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED
-[JJFB_E9F_DRAW_DIM_FIX] guest_w=201 guest_h=201 -> 201x29 note=postmatch_member_wh NOT_PRODUCT evidence=OBSERVED
-[JJFB_E8Z_PIXEL_READ] bmp=0x3920000 bytes=11658 first=0xF81F evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=0 y=0 w=201 h=29 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
-[JJFB_E8Z_SPRITE_BLIT] x=0 y=0 w=201 h=29 black=0 white=0 other=5627 key=202 evidence=OBSERVED
-[JJFB_SCREENSHOT_SOURCE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9f_logo_natural.bmp kind=SDL_GetWindowSurface_SaveBMP note=internal_sdl_software_surface_NOT_hwnd_PrintWindow evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_REACHED] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9f_logo_natural.bmp before=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9f_before.bmp after=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9f_after.bmp x=0 y=0 w=201 h=29 black=0 white=0 other=5627 key=202 note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED
-[JJFB_E9B_HWND_CAPTURE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9f_actual_window_capture.bmp w=480 h=640 nonwhite_or_nonblack=23316 kind=GDI_BitBlt_client evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW] class=VISIBLE_WINDOW_PRESENTED hwnd_nonwhite=23316 sprite_other=5627 evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW_HOLD] sec=12 note=pump_messages_keep_responsive evidence=OBSERVED
-[JJFB_WINDOW_RESPONSIVE_HOLD] sec=12 pump_ms=16 evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW_HOLD_DONE] sec=12 evidence=OBSERVED
-[JJFB_WINDOW_RESPONSIVE_HOLD] done=1 evidence=OBSERVED
-[JJFB_E8X_INSN] n=200 pc=0x2F4A06 size=2 r0=0x3920000 r1=0x0 r2=0xF81F r3=0xC9 lr=0x310BB5 evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F4A20 target=0x310BBD arg0=0x2A83C4 arg1=0x27
-[JJFB_E8X_INSN] n=213 pc=0x2F4A20 size=4 r0=0x2A83C4 r1=0x27 r2=0x0 r3=0xC9 lr=0x310BB5 evidence=OBSERVED
-[JJFB_E8X_DRAW_PATH] pc=0x310BBC lr=0x2F4A25 r0=0x2A83C4 r1=0x27 r2=0x0 r3=0xC9 n2854=1 n188=1 n449c=1 n310=1 tick=1 evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] pc=0x310BBC lr=0x2F4A25 r0=0x2A83C4 r1=0x27 r2=0x0 r3=0xC9 tick=1 note=deeper_draw_path evidence=OBSERVED
-[JJFB_E8Y_310BBC] hit=1 tick=1 note=post_resource_draw_site evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p310BBC pc=0x310BBC hit=1 tick=1 r0=0x2A83C4 r1=0x27 r4=0x2A83C4 r9=0x2B1858 lr=0x2F4A25 state=0x26 evidence=OBSERVED
-[JJFB_DRAW] api=mr_drawBitmap bmp=0x3920000 x=39 y=0 w=201 h=201 evidence=DOCUMENTED
-[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x2801E4 lr=0x310C3B r0=0x3920000 r1=39 r2=0 r3=201 h=201 sp=0x27FEC8 surface=0x3920000 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x2801E4 lr=0x310C3B r0=0x3920000 r1=39 r2=0 r3=201 h=201 note=real_platform_draw evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x3920000 x=39 y=0 w=201 h=201 sprite_blit=1 evidence=OBSERVED
-[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED
-[JJFB_E9F_DRAW_DIM_FIX] guest_w=201 guest_h=201 -> 201x29 note=postmatch_member_wh NOT_PRODUCT evidence=OBSERVED
-[JJFB_E8Z_PIXEL_READ] bmp=0x3920000 bytes=11658 first=0xF81F evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=39 y=0 w=201 h=29 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
-[JJFB_E8Z_SPRITE_BLIT] x=39 y=0 w=201 h=29 black=0 white=0 other=5627 key=202 evidence=OBSERVED
-[JJFB_E8X_INSN] n=225 pc=0x2F4A3A size=2 r0=0x20 r1=0x1D r2=0x6 r3=0xC9 lr=0x310C3B evidence=OBSERVED
-[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F4A48 target=0x310BBD arg0=0x2A83C4 arg1=0x0
-[JJFB_E8X_INSN] n=232 pc=0x2F4A48 size=4 r0=0x2A83C4 r1=0x0 r2=0x3 r3=0xC9 lr=0x310C3B evidence=OBSERVED
-[JJFB_E8X_DRAW_PATH] pc=0x310BBC lr=0x2F4A4D r0=0x2A83C4 r1=0x0 r2=0x3 r3=
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFA46 target=0x2D92E5 arg0=0x0 arg1=0x31430C
+[JJFB_E9G_SPLASH_SKIP_SIBLING] name="bar!16!18.bmp" lr=0x2EFA4B cont=0x2EFA9E note=first_ui_frame_after_loadingbar NOT_PRODUCT evidence=OBSERVED
+[JJFB_FAST_SPLASH_DONE] ok=1 end=stop_at_base pc_after=0x80000 ui_mode=0x45->0x45 note=FAST_ASSIST_not_product evidence=OBSERVED
+[JJFB_E9G_DRAW_CONTINUE] handle=0x2A83C4 pixels=0x3920000 entry=0x2F45A2 note=post_splash_A64_seed NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_E8X_INSN] n=1 pc=0x2F45A2 size=2 r0=0x2A83C4 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=2 pc=0x2F4628 size=2 r0=0x2A83C4 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=3 pc=0x2F462A size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=4 pc=0x2F462C size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=5 pc=0x2F462E size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=6 pc=0x2F4630 size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=7 pc=0x2F4632 size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=8 pc=0x2F4634 size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=9 pc=0x2F4636 size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=10 pc=0x2F46B8 size=2 r0=0x0 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+[JJFB_E8X_INSN] n=11 pc=0x2F46BA size=2 r0=0xA88 r1=0x2B1858 r2=0x0 r3=0x0 lr=0x80000 evidence=OBSERVED
+>>> Tracing mem_invalid mem_type:UC_MEM_READ_UNMAPPED at 0x0, size:0x4, value:0x0
+==========================REG=================================
+ R0=0x00000A88	R1=0x002B1858	 R2=0x00000000	 R3=0x00000000	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x002B1858	R10=0x00000000	R11=0x00000000	C:0
+R12=0x00000000	SP=0x00280000	 LR=0x00080000	 PC=0x002F46BA	V:0
+==============================================================
+[JJFB_6N_SUMMARY] mode=game_package published=yes last_chunk=0x682A5C stop=mem_fault evidence=TARGET_OBSERVED
+[JJFB_6O_SUMMARY] mode=game_package bound=yes module=robotol.ext module_id=3 P=0x2

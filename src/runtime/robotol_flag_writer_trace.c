@@ -2,6 +2,7 @@
 #include "gwy_launcher/byte_buffer.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/mrp_archive.h"
@@ -232,6 +233,21 @@ static struct {
     FILE *e9f_req_csv;
     FILE *e9f_results_jsonl;
     FILE *e9e_helper_csv;
+    /* E9G: splash/loading UI_MODE=0x45 + real 0x2EF86C (NOT rewrite success). */
+    int e9g_mode;
+    int e9g_splash_call; /* JJFB_FAST_SPLASH_CALL */
+    int e9g_splash_done;
+    int e9g_ui_mode_assist; /* optional poke R9+0x8D0=0x45 — logged NOT product */
+    int e9g_debug_only; /* JJFB_E9G_DEBUG=1 — trace only, no splash call */
+    uint32_t e9g_splash_enter_n;
+    uint32_t e9g_uimode_45_n;
+    uint32_t e9g_uimode_writer_n;
+    FILE *e9g_req_csv;
+    FILE *e9g_uimode_csv;
+    char e9g_idx_names[64][64]; /* collect guest index names for slogo audit */
+    int e9g_idx_n;
+    int e9g_slogo_class_logged;
+    int e9g_skip_sibling_binds; /* after first splash UI postmatch → skip to 0x2EFA9E */
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -763,6 +779,31 @@ int robotol_flag_writer_trace_enabled(void) {
             if (pref && pref[0])
                 snprintf(g_e8f.e9f_prefer, sizeof(g_e8f.e9f_prefer), "%s", pref);
         }
+        /* E9G: splash UI_MODE=0x45 via real 0x2EF86C — never treat rewrite as success. */
+        g_e8f.e9g_mode = env1("JJFB_E9G_MODE");
+        g_e8f.e9g_splash_call = env1("JJFB_FAST_SPLASH_CALL");
+        g_e8f.e9g_ui_mode_assist = env1("JJFB_E9G_UI_MODE_ASSIST");
+        g_e8f.e9g_debug_only = env1("JJFB_E9G_DEBUG");
+        if (g_e8f.e9g_mode) {
+            g_e8f.e9f_mode = 1;
+            g_e8f.e9e_mode = 1;
+            g_e8f.e9e_postmatch_shims = 1;
+            g_e8f.e9d_mode = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            g_e8f.e9f_multi = 1;
+            /* Rewrite stays off unless JJFB_E9F_REWRITE_REQUEST=1 was explicit. */
+            if (!g_e8f.state_watch) g_e8f.state_watch = 1;
+            printf("[JJFB_E9G_SPLASH] enabled=1 splash_call=%d ui_mode_assist=%d rewrite=%d "
+                   "note=real_0x2EF86C_not_request_rewrite NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9g_splash_call && !g_e8f.e9g_debug_only, g_e8f.e9g_ui_mode_assist,
+                   g_e8f.e9f_rewrite_request);
+            fflush(stdout);
+            if (g_e8f.e9f_rewrite_request) {
+                printf("[JJFB_E9G_CLASS] class=REQUEST_REWRITE_DEBUG_ONLY "
+                       "note=not_success_path evidence=OBSERVED\n");
+                fflush(stdout);
+            }
+        }
         if (g_e8f.e9f_mode) {
             g_e8f.e9e_mode = 1;
             g_e8f.e9e_postmatch_shims = 1;
@@ -833,7 +874,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
                         g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode || g_e8f.e9e_mode ||
-                        g_e8f.e9f_mode;
+                        g_e8f.e9f_mode || g_e8f.e9g_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -891,6 +932,7 @@ void robotol_flag_writer_trace_reset(void) {
         }
     }
 #endif
+    jjfb_bmp_meta_reset();
     memset(&g_e8f, 0, sizeof(g_e8f));
 }
 
@@ -956,6 +998,15 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name);
 static int e9e_name_already_done(const char *name);
 static void e9f_open_trace_files(void);
 static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint32_t pc);
+static void e9g_open_trace_files(void);
+static void e9g_log_uimode_csv(uint32_t pc, uint32_t lr, uint32_t oldv, uint32_t newv,
+                               uint32_t r9, const char *note);
+static void e9g_log_req_csv(uint32_t pc, uint32_t lr, uint32_t ui_mode, const char *name,
+                            int natural_entry, int postmatch, uint32_t handle,
+                            uint32_t draw_pc, const char *note);
+static void e9g_collect_idx_name(const char *idx);
+static void e9g_audit_slogo_once(int force);
+static void fast_call_splash(void *uc);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1127,6 +1178,53 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     bp->last_r1 = r1;
     bp->last_r9 = r9;
 
+    /* E9G: splash / UI_MODE writer / bind sites. */
+    if (g_e8f.e9g_mode &&
+        (bp->pc == 0x2EF86Cu || bp->pc == 0x30662Cu || bp->pc == 0x306344u ||
+         bp->pc == 0x2FC418u || bp->pc == 0x2EFA33u || bp->pc == 0x2EFA53u)) {
+        uint32_t ui_mode = 0;
+        uint32_t r9w = r9;
+        if ((!r9w || !find_robotol_r9(uc, &r9w)) && r9) r9w = r9;
+        if (r9w)
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9w + E8I_STATE_OFF, &ui_mode);
+        e9g_open_trace_files();
+        if (bp->pc == 0x2EF86Cu) {
+            g_e8f.e9g_splash_enter_n++;
+            printf("[JJFB_E9G_SPLASH_ENTER] lr=0x%X r0=0x%X r1=0x%X ui_mode=0x%X tick=%u "
+                   "class=SPLASH_2EF86C_REACHED evidence=OBSERVED\n",
+                   lr, r0, r1, ui_mode, g_e8f.tick);
+            e9g_log_uimode_csv(bp->pc, lr, ui_mode, ui_mode, r9w, "splash_enter");
+            fflush(stdout);
+        } else if (bp->pc == 0x2FC418u) {
+            g_e8f.e9g_uimode_writer_n++;
+            printf("[JJFB_E9G_UIMODE_WRITER] pc=0x2FC418 lr=0x%X r0=0x%X r1=0x%X "
+                   "ui_mode=0x%X tick=%u evidence=OBSERVED\n",
+                   lr, r0, r1, ui_mode, g_e8f.tick);
+            e9g_log_uimode_csv(bp->pc, lr, ui_mode, ui_mode, r9w, "writer_2FC418");
+            fflush(stdout);
+        } else if (bp->pc == 0x306344u) {
+            printf("[JJFB_E9G_UIMODE_CMP] pc=0x306344 lr=0x%X r0=0x%X ui_mode=0x%X "
+                   "tick=%u note=cmp_0x45_gate evidence=OBSERVED\n",
+                   lr, r0, ui_mode, g_e8f.tick);
+            fflush(stdout);
+        } else if (bp->pc == 0x30662Cu) {
+            printf("[JJFB_E9G_SPLASH_BL] pc=0x30662C lr=0x%X r0=0x%X r1=0x%X ui_mode=0x%X "
+                   "tick=%u note=bl_0x2EF86C evidence=OBSERVED\n",
+                   lr, r0, r1, ui_mode, g_e8f.tick);
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA33u) {
+            printf("[JJFB_E9G_BINDBAR] pc=0x2EFA33 role=loadingbar lr=0x%X tick=%u "
+                   "evidence=OBSERVED\n",
+                   lr, g_e8f.tick);
+            fflush(stdout);
+        } else if (bp->pc == 0x2EFA53u) {
+            printf("[JJFB_E9G_BINDBAR] pc=0x2EFA53 role=textbar lr=0x%X tick=%u "
+                   "evidence=OBSERVED\n",
+                   lr, g_e8f.tick);
+            fflush(stdout);
+        }
+    }
+
     /* E8U-DisplayFirst: runtime-only gate branch assist (never poke C9D/CF5 bytes). */
     if (g_e8f.display_first &&
         (bp->pc == 0x3066B8u || bp->pc == 0x3066C6u || bp->pc == 0x3066DAu ||
@@ -1196,6 +1294,14 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                    bp->pc, lr, c44, c9d, cf5, cd1, state, g_e8f.c9d_assist_n,
                    g_e8f.cf5_assist_n, g_e8f.tick);
             fflush(stdout);
+            /* E9G: arm splash for lifecycle (do not nest uc_emu_start from CODE hook). */
+            if (bp->pc == 0x2E88CCu && g_e8f.e9g_mode && g_e8f.e9g_splash_call &&
+                !g_e8f.e9g_splash_done && !g_e8f.e9g_debug_only) {
+                printf("[JJFB_E9G_SPLASH_ARM] via=0x2E88CC tick=%u note=defer_to_lifecycle "
+                       "NOT_PRODUCT evidence=OBSERVED\n",
+                       g_e8f.tick);
+                fflush(stdout);
+            }
         }
     }
 
@@ -1368,6 +1474,28 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                         fflush(g_e8f.e9f_req_csv);
                     }
                 }
+                if (g_e8f.e9g_mode) {
+                    uint32_t ui_mode = 0;
+                    if (r9)
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc,
+                                                       r9 + E8I_STATE_OFF, &ui_mode);
+                    e9g_open_trace_files();
+                    e9g_log_req_csv(0x2D92E4u, lr, ui_mode, g_e8f.e8y_last_name, 0, 0, 0, 0,
+                                    "enter");
+                    /* After first splash loadingbar postmatch: skip bar/textbar binds
+                     * (slow under host tracing). Sticky until first real frame. */
+                    if (g_e8f.e9g_skip_sibling_binds && lr >= 0x2EF86Cu && lr < 0x2EFB00u &&
+                        strstr(g_e8f.e8y_last_name, "loadingbar") == NULL) {
+                        uint32_t cont = 0x2EFA9Eu | 1u;
+                        uc_reg_write(uc, UC_ARM_REG_PC, &cont);
+                        printf("[JJFB_E9G_SPLASH_SKIP_SIBLING] name=\"%s\" lr=0x%X "
+                               "cont=0x2EFA9E note=first_ui_frame_after_loadingbar "
+                               "NOT_PRODUCT evidence=OBSERVED\n",
+                               g_e8f.e8y_last_name, lr);
+                        fflush(stdout);
+                        return;
+                    }
+                }
                 printf("[JJFB_E8Y_2D92E4_ENTRY] hit=%u lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" R9_1450_strlen=0x%X R9_144C_memset=0x%X "
                        "A64=0x%X A68=0x%X A6C=0x%X tick=%u evidence=OBSERVED\n",
@@ -1468,6 +1596,15 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                         fprintf(g_e8f.e9d_req_csv, "%u,%u,0x%X,0x%X,\"%s\",0,0,enter_304BF0\n",
                                 g_e8f.e9d_req_n, g_e8f.tick, bp->pc, lr, g_e8f.e8y_last_name);
                         fflush(g_e8f.e9d_req_csv);
+                    }
+                    if (g_e8f.e9g_mode) {
+                        uint32_t ui_mode = 0;
+                        if (r9)
+                            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc,
+                                                           r9 + E8I_STATE_OFF, &ui_mode);
+                        e9g_open_trace_files();
+                        e9g_log_req_csv(0x304BF0u, lr, ui_mode, g_e8f.e8y_last_name, 0, 0, 0, 0,
+                                        "enter_304BF0");
                     }
                     printf("[JJFB_E9D_REQUEST] n=%u name=\"%s\" lr=0x%X tick=%u "
                            "evidence=OBSERVED\n",
@@ -1765,6 +1902,17 @@ static void on_e8i_state_write(uc_engine *uc, uc_mem_type type, uint64_t address
                "evidence=OBSERVED\n",
                pc, g_e8f.tick);
     }
+    if (g_e8f.e9g_mode) {
+        e9g_open_trace_files();
+        e9g_log_uimode_csv(pc, lr, oldv, newv, r9, "state_watch");
+        if (newv == 0x45u) {
+            g_e8f.e9g_uimode_45_n++;
+            printf("[JJFB_E9G_UI_MODE_45] pc=0x%X tick=%u class=SPLASH_UI_MODE_45_REACHED "
+                   "evidence=OBSERVED\n",
+                   pc, g_e8f.tick);
+            fflush(stdout);
+        }
+    }
     fflush(stdout);
 }
 static void on_e8j_queue_read(uc_engine *uc, uc_mem_type type, uint64_t address, int size,
@@ -2060,6 +2208,10 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
     cmp = strcmp(req, idx);
     g_e8f.e9d_cmp_n++;
     if (cmp == 0) g_e8f.e9d_cmp_match_n++;
+    if (g_e8f.e9g_mode && idx[0]) {
+        e9g_collect_idx_name(idx);
+        e9g_audit_slogo_once(0);
+    }
     if (strchr(req, '!') || strchr(idx, '!')) {
         if (cmp != 0 && mism >= 0 && req[mism] == '!' && idx[mism] != '!')
             cause = "EXCLAMATION_SEPARATOR_MISMATCH";
@@ -2107,8 +2259,10 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
         /* E9E/E9F: skip slow post-match DSM file/inflate; fill object with original bytes. */
         if (g_e8f.e9e_postmatch_shims &&
             (!g_e8f.e9e_postmatch_done || g_e8f.e9f_multi) && !e9e_name_already_done(req)) {
-            if (e9e_try_postmatch_complete(uc, req))
+            if (e9e_try_postmatch_complete(uc, req)) {
+                if (g_e8f.e9g_mode) e9g_audit_slogo_once(1);
                 return 1;
+            }
         }
     } else if (g_e8f.e9d_cmp_n == 1u) {
         printf("[NATURAL_MEMBER_RESOLVE_BLOCKED_BY_NAME] note=waiting_for_match "
@@ -2363,6 +2517,17 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
             printf("[JJFB_E9D_BP] compare=0x304F26/0x304F7A/0x304F92 shim=%d "
                    "evidence=HYPOTHESIS\n",
                    g_e8f.e9d_strcmp_shim);
+        }
+        if (g_e8f.e9g_mode) {
+            add_bp(0x2EF86Cu, "gSplash");
+            add_bp(0x30662Cu, "gSplashBl");
+            add_bp(0x306344u, "gModeCmp");
+            add_bp(0x2FC418u, "gUiWrite");
+            add_bp(0x2EFA33u, "gLoadBar");
+            add_bp(0x2EFA53u, "gTextBar");
+            e9g_open_trace_files();
+            printf("[JJFB_E9G_BP] splash=0x2EF86C bl=0x30662C cmp=0x306344 writer=0x2FC418 "
+                   "bind=0x2EFA33/0x2EFA53 evidence=HYPOTHESIS\n");
         }
         printf("[JJFB_E8Y_BP] resolve=0x2D92E4 stores=0x2F44CE/E4/EE helpers=0x304BF0,"
                "0x2FD868,0x2F8528 evidence=HYPOTHESIS\n");
@@ -2837,6 +3002,84 @@ static void e9f_open_trace_files(void) {
     }
 }
 
+static void e9g_open_trace_files(void) {
+    const char *req = getenv("JJFB_E9G_REQUEST_CSV");
+    const char *ui = getenv("JJFB_E9G_UIMODE_CSV");
+    if (!g_e8f.e9g_mode) return;
+    if (!g_e8f.e9g_req_csv && req && req[0]) {
+        g_e8f.e9g_req_csv = fopen(req, "w");
+        if (g_e8f.e9g_req_csv) {
+            fprintf(g_e8f.e9g_req_csv,
+                    "n,tick,pc,lr,ui_mode,name,natural_entry,postmatch,handle,draw_pc,note\n");
+            fflush(g_e8f.e9g_req_csv);
+        }
+    }
+    if (!g_e8f.e9g_uimode_csv && ui && ui[0]) {
+        g_e8f.e9g_uimode_csv = fopen(ui, "w");
+        if (g_e8f.e9g_uimode_csv) {
+            fprintf(g_e8f.e9g_uimode_csv, "n,tick,pc,lr,old,new,r9,note\n");
+            fflush(g_e8f.e9g_uimode_csv);
+        }
+    }
+}
+
+static void e9g_log_uimode_csv(uint32_t pc, uint32_t lr, uint32_t oldv, uint32_t newv,
+                               uint32_t r9, const char *note) {
+    static uint32_t n;
+    if (!g_e8f.e9g_uimode_csv) return;
+    n++;
+    fprintf(g_e8f.e9g_uimode_csv, "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,%s\n", n, g_e8f.tick, pc, lr,
+            oldv, newv, r9, note ? note : "");
+    fflush(g_e8f.e9g_uimode_csv);
+}
+
+static void e9g_log_req_csv(uint32_t pc, uint32_t lr, uint32_t ui_mode, const char *name,
+                            int natural_entry, int postmatch, uint32_t handle,
+                            uint32_t draw_pc, const char *note) {
+    static uint32_t n;
+    if (!g_e8f.e9g_req_csv) return;
+    n++;
+    fprintf(g_e8f.e9g_req_csv, "%u,%u,0x%X,0x%X,0x%X,\"%s\",%d,%d,0x%X,0x%X,%s\n", n,
+            g_e8f.tick, pc, lr, ui_mode, name ? name : "", natural_entry, postmatch, handle,
+            draw_pc, note ? note : "");
+    fflush(g_e8f.e9g_req_csv);
+}
+
+static void e9g_collect_idx_name(const char *idx) {
+    int i;
+    if (!idx || !idx[0] || g_e8f.e9g_idx_n >= 64) return;
+    for (i = 0; i < g_e8f.e9g_idx_n; i++) {
+        if (strcmp(g_e8f.e9g_idx_names[i], idx) == 0) return;
+    }
+    snprintf(g_e8f.e9g_idx_names[g_e8f.e9g_idx_n], sizeof(g_e8f.e9g_idx_names[0]), "%s", idx);
+    g_e8f.e9g_idx_n++;
+}
+
+static void e9g_audit_slogo_once(int force) {
+    int i, has_slogo = 0, has_loading = 0, has_textbar = 0, has_top = 0;
+    if (!g_e8f.e9g_mode || g_e8f.e9g_slogo_class_logged) return;
+    if (!force && g_e8f.e9d_cmp_n < 20u && !g_e8f.e9e_postmatch_done) return;
+    for (i = 0; i < g_e8f.e9g_idx_n; i++) {
+        if (strstr(g_e8f.e9g_idx_names[i], "slogo")) has_slogo = 1;
+        if (strstr(g_e8f.e9g_idx_names[i], "loadingbar")) has_loading = 1;
+        if (strstr(g_e8f.e9g_idx_names[i], "textbar")) has_textbar = 1;
+        if (strstr(g_e8f.e9g_idx_names[i], "top!") == g_e8f.e9g_idx_names[i] ||
+            strstr(g_e8f.e9g_idx_names[i], "top"))
+            has_top = 1;
+    }
+    if (has_slogo) return;
+    g_e8f.e9g_slogo_class_logged = 1;
+    printf("[JJFB_E9G_CLASS] class=SLOGO_ABSENT_FROM_GUEST_INDEX_CONFIRMED "
+           "note=mrp_has_slogo_guest_304BF0_index_omits evidence=OBSERVED\n");
+    if ((has_loading || has_textbar || has_top) && !has_slogo) {
+        printf("[JJFB_E9G_CLASS] class=SLOGO_RAW_INVENTORY_ONLY "
+               "note=present_in_package_inventory_absent_from_runtime_guest_table "
+               "loadingbar=%d textbar=%d top=%d evidence=OBSERVED\n",
+               has_loading, has_textbar, has_top);
+    }
+    fflush(stdout);
+}
+
 /* E9F logo/loading: rewrite DisplayFirst request name so natural index+postmatch
  * loads a larger original UI member (not entry bridge; pixels still from jjfb.mrp).
  * Note: slogo!157!58.bmp is in jjfb.mrp but NOT in the guest 0x304BF0 index table
@@ -2846,6 +3089,15 @@ static int e9f_try_rewrite_request(uc_engine *uc, uint32_t *name_va_inout, uint3
     size_t n;
     char from[96];
     const char *prefer;
+    /* E9G: rewrite is never a product success path; require explicit env. */
+    if (g_e8f.e9g_mode && !g_e8f.e9f_rewrite_request) {
+        return 0;
+    }
+    if (g_e8f.e9g_mode && g_e8f.e9f_rewrite_request && !g_e8f.e9f_rewrite_done) {
+        printf("[JJFB_E9G_CLASS] class=REQUEST_REWRITE_DEBUG_ONLY note=not_success_path "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+    }
     if (!g_e8f.e9f_mode || !g_e8f.e9f_rewrite_request || g_e8f.e9f_rewrite_done) return 0;
     if (!uc || !name_va_inout || !g_e8f.e9f_prefer[0]) return 0;
     prefer = g_e8f.e9f_prefer;
@@ -3030,9 +3282,11 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
     g_e8f.e8z_bw = (uint16_t)w;
     g_e8f.e8z_bh = (uint16_t)h;
     g_e8f.e8z_real_bmp_done = 1;
+    /* Prefer per-bmp meta over global LAST_WH for multi-member draw. */
+    jjfb_bmp_meta_set(slot_va, (uint16_t)w, (uint16_t)h, name);
     {
         char wh[32];
-        snprintf(wh, sizeof(wh), "%dx%d", w, h);
+        snprintf(wh, sizeof(wh), "%ux%u", (unsigned)w, (unsigned)h);
 #ifdef _WIN32
         _putenv_s("JJFB_E9E_LAST_WH", wh);
 #else
@@ -3079,6 +3333,24 @@ static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
             printf("[JJFB_E9F_CLASS] class=NATURAL_POSTMATCH_LOADINGBAR_CANDIDATE "
                    "name=\"%s\" evidence=OBSERVED\n",
                    name);
+    }
+    if (g_e8f.e9g_mode) {
+        uint32_t ui_mode = 0, r9p = 0;
+        if (find_robotol_r9(uc, &r9p) && r9p)
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9p + E8I_STATE_OFF, &ui_mode);
+        e9g_open_trace_files();
+        e9g_log_req_csv(0x304BF0u, lr, ui_mode, name, 1, 1, handle_va, 0, "postmatch_ok");
+        e9g_audit_slogo_once(1);
+        /* Splash bind path (LR from 0x2D92E4 into 0x2EFA*): arm sibling skip after
+         * first loadingbar so bar/textbar scans do not stall first visible frame. */
+        if (strstr(name, "loadingbar") && g_e8f.e8y_2d92e4_n > 0u) {
+            g_e8f.e9g_skip_sibling_binds = 1;
+            printf("[JJFB_E9G_CLASS] class=SPLASH_LOADINGBAR_POSTMATCH_ARM_SKIP "
+                   "name=\"%s\" note=next_2D92E4_in_splash_skips_to_2EFA9E "
+                   "NOT_PRODUCT evidence=OBSERVED\n",
+                   name);
+            fflush(stdout);
+        }
     }
     if (g_e8f.e9d_req_csv) {
         fprintf(g_e8f.e9d_req_csv, "%u,%u,0x304BF0,0x%X,\"%s\",1,0,postmatch_complete\n",
@@ -3568,6 +3840,78 @@ static void fast_call_ui_init(void *uc) {
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
 
+/* E9G: invoke real splash/loading UI fn 0x2EF86C (legacy ABI r0=0x45,r1=0x13).
+ * NOT product success — optional UI_MODE assist poke is logged as NOT_PRODUCT. */
+static void fast_call_splash(void *uc) {
+    uint32_t r9_save = 0, r9_run = 0, state_before = 0, state_after = 0;
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    int ok;
+    uint64_t lim = 500000ull;
+    if (!uc || !g_e8f.e9g_mode || !g_e8f.e9g_splash_call || g_e8f.e9g_splash_done) return;
+    if (g_e8f.e9g_debug_only) {
+        printf("[JJFB_FAST_SPLASH_CALL] skip=debug_only note=trace_only_no_guest_call "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    g_e8f.e9g_splash_done = 1;
+    (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+    if (!find_robotol_r9(uc, &r9_run)) r9_run = r9_save;
+    if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+    if (r9_run) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF,
+                                       &state_before);
+        if (g_e8f.e9g_ui_mode_assist && state_before != 0x45u) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF, 0x45u);
+            printf("[JJFB_E9G_UI_MODE_ASSIST] old=0x%X new=0x45 addr=0x%X NOT_PRODUCT "
+                   "evidence=HYPOTHESIS\n",
+                   state_before, r9_run + E8I_STATE_OFF);
+            e9g_open_trace_files();
+            e9g_log_uimode_csv(0, 0, state_before, 0x45u, r9_run, "ui_mode_assist");
+            state_before = 0x45u;
+            fflush(stdout);
+        }
+    }
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = 0x45u;
+    abi.set_r1 = 1;
+    abi.r1 = 0x13u;
+    abi.set_r2 = 1;
+    abi.r2 = 0xFFFFFFFFu;
+    abi.set_r3 = 1;
+    abi.r3 = 0;
+    abi.set_lr = 1;
+    abi.lr = 0x80000u;
+    if (g_e8f.fast_insn_limit) lim = g_e8f.fast_insn_limit;
+    printf("[JJFB_FAST_SPLASH_CALL] entry=0x2EF86C r0=0x45 r1=0x13 r9=0x%X ui_mode=0x%X "
+           "note=real_fn_not_rewrite NOT_PRODUCT evidence=HYPOTHESIS\n",
+           r9_run, state_before);
+    fflush(stdout);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x2EF86Du, 0x80000u, lim, &abi,
+                                      &out);
+    if (r9_run)
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9_run + E8I_STATE_OFF,
+                                       &state_after);
+    printf("[JJFB_FAST_SPLASH_DONE] ok=%d end=%s pc_after=0x%X ui_mode=0x%X->0x%X "
+           "note=FAST_ASSIST_not_product evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", out.pc_after, state_before,
+           state_after);
+    e9g_open_trace_files();
+    e9g_log_uimode_csv(0x2EF86Cu, 0x80000u, state_before, state_after, r9_run, "splash_done");
+    if (ok && g_e8f.e8z_handle_va && g_e8f.e9e_postmatch_done) {
+        printf("[JJFB_E9G_CLASS] class=SPLASH_2EF86C_REACHED_NEXT_GAP "
+               "handle=0x%X pixels=0x%X "
+               "note=loadingbar_bound_draw_needs_splash_blit_path_not_2F45A2 "
+               "evidence=OBSERVED\n",
+               g_e8f.e8z_handle_va, g_e8f.e8z_pixel_va);
+        fflush(stdout);
+    }
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+}
+
 static void fire_handler_regs(void *uc, uint32_t code, const char *label, uint32_t r0,
                               uint32_t r1, uint32_t r2, uint32_t r3, const char *note) {
     uint32_t handler, stop = 0x80000u;
@@ -3860,7 +4204,14 @@ void robotol_flag_writer_trace_on_lifecycle(void *uc, uint32_t tick) {
                    g_e8f.e8m_insn_n, g_e8f.e8m_path_hits);
             fflush(stdout);
         }
+        /* E9G: splash after unlock+case156 on tick1 (lifecycle, not CODE-hook nested). */
+        if (g_e8f.e9g_mode && g_e8f.e9g_splash_call && !g_e8f.e9g_splash_done)
+            fast_call_splash(uc);
     }
+
+    /* E9G: retry splash on tick2 if tick1 path skipped (e.g. unlock-only). */
+    if (tick == 2u && g_e8f.e9g_mode && g_e8f.e9g_splash_call && !g_e8f.e9g_splash_done)
+        fast_call_splash(uc);
 
     if (tick == 1u && g_e8f.counterfactual[0])
         run_counterfactual(uc);
