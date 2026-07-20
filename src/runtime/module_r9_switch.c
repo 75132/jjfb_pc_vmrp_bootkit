@@ -725,6 +725,63 @@ void module_r9_switch_arm_dsm_helper_return(void *uc, uint64_t caller_module_id,
     fflush(stdout);
 }
 
+int module_r9_switch_cancel_dsm_helper_blx(void *uc, uint32_t call_pc, uint32_t restore_r9) {
+    uint32_t call = call_pc & ~1u;
+    uint32_t cur_r9 = 0;
+    int cancelled = 0;
+    uint32_t i;
+    if (!call) return 0;
+    /* Remove matching sites from the top down (most recent BLX first). */
+    while (g_dsm_ret.depth > 0) {
+        DsmReturnSite *site = &g_dsm_ret.sites[g_dsm_ret.depth - 1u];
+        if ((site->call_pc & ~1u) != call) break;
+        g_dsm_ret.depth--;
+        cancelled = 1;
+        printf("[R9_SWITCH] stage=CANCEL_DSM_BLX call_pc=0x%X return_pc=0x%X "
+               "side_depth=%u evidence=DOCUMENTED note=host_skipped_blx\n",
+               call, site->return_pc, g_dsm_ret.depth);
+        fflush(stdout);
+    }
+    /* Also scrub older orphans for this call_pc (index-scan loop). */
+    for (i = 0; i < g_dsm_ret.depth;) {
+        if ((g_dsm_ret.sites[i].call_pc & ~1u) == call) {
+            memmove(&g_dsm_ret.sites[i], &g_dsm_ret.sites[i + 1u],
+                    (g_dsm_ret.depth - i - 1u) * sizeof(g_dsm_ret.sites[0]));
+            g_dsm_ret.depth--;
+            cancelled = 1;
+        } else {
+            i++;
+        }
+    }
+    if (uc && restore_r9) {
+        (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &cur_r9);
+        if (cur_r9 != restore_r9) {
+            GwyR9WriteAudit audit;
+            memset(&audit, 0, sizeof(audit));
+            audit.reason = GWY_R9_WRITE_MODULE_R9_SWITCH_LEAVE;
+            audit.host_callsite = "cancel_dsm_helper_blx";
+            audit.guest_pc = call;
+            audit.guest_module = "host_shim_skip_blx";
+            if (guest_memory_uc_write_r9_ex((struct uc_struct *)uc, restore_r9, &audit)) {
+                printf("[R9_SWITCH] stage=RESTORE_AFTER_CANCEL old_r9=0x%X new_r9=0x%X "
+                       "call_pc=0x%X evidence=DOCUMENTED note=host_shim_r9\n",
+                       cur_r9, restore_r9, call);
+                fflush(stdout);
+            }
+        }
+    }
+    return cancelled;
+}
+
+void module_r9_switch_clear_dsm_return_side_stack(void) {
+    if (g_dsm_ret.depth == 0) return;
+    printf("[R9_SWITCH] stage=CLEAR_DSM_SIDE_STACK depth_before=%u evidence=DOCUMENTED "
+           "note=postmatch_or_host_complete\n",
+           g_dsm_ret.depth);
+    fflush(stdout);
+    memset(&g_dsm_ret, 0, sizeof(g_dsm_ret));
+}
+
 int module_r9_switch_restore_after_dsm_helper(void *uc, uint64_t caller_module_id,
                                                uint32_t guest_pc) {
     DsmReturnSite site;

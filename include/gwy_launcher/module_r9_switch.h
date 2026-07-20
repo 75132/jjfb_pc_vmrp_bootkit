@@ -147,6 +147,16 @@ void module_r9_switch_arm_dsm_helper_return(void *uc, uint64_t caller_module_id,
 int module_r9_switch_restore_after_dsm_helper(void *uc, uint64_t caller_module_id,
                                                uint32_t guest_pc);
 
+/*
+ * Host skipped an MRP→DSM BLX (e.g. E9D memcpy/strcmp shim). Disarm the matching
+ * side-stack site and optionally restore caller R9 so later helpers can arm again.
+ * Returns 1 if a site was cancelled.
+ */
+int module_r9_switch_cancel_dsm_helper_blx(void *uc, uint32_t call_pc, uint32_t restore_r9);
+
+/* Drop all pending DSM return sites (after mid-function host complete). */
+void module_r9_switch_clear_dsm_return_side_stack(void);
+
 #ifdef __cplusplus
 }
 #endif

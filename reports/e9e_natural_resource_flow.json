@@ -1,0 +1,14 @@
+﻿{
+    "stage":  "E9E",
+    "mode":  "natural",
+    "verdict":  "NATURAL_POSTMATCH_FIRST_FRAME",
+    "elapsed_sec":  94.1,
+    "natural_match":  true,
+    "postmatch":  true,
+    "bridge":  false,
+    "ret_2d92e4":  true,
+    "first_frame":  true,
+    "hwnd_nonwhite":  "440",
+    "member":  "wy_jiao1!11!11.bmp",
+    "note":  "NOT_PRODUCT_SUCCESS; natural match + postmatch original bytes"
+}

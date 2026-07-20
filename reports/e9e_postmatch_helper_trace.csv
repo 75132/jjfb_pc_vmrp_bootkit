@@ -1,0 +1,10 @@
+﻿n,pc,role,detail
+1,0x304F26,memcpy_shim,name_len_copy_host
+2,0x304F7A,memcpy_shim,name_bytes_copy_host
+3,0x304F92,strcmp_shim,host_strcmp_entry20_match
+4,0x304F92,postmatch_member_bytes,wy_jiao1 offset=8414 stored=90 decoded=242
+5,0x304BF0,return_abi_restore,sp/r4-r11/r9 restored r0=0
+6,0x2D92E4,return,r0=0x2A83C4 handle
+7,0x2F44CE,a64_store_skip,A58..A6C=0x2A83C4 cont=0x2F45A2
+8,0x310BBC,mr_drawBitmap_path,bmp=0x3920000 via bridge 0x2801E4
+9,hwnd,GDI_BitBlt,nonwhite=440

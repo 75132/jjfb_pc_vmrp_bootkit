@@ -3,6 +3,7 @@
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -202,6 +203,25 @@ static struct {
     uint32_t e9d_req_tick;
     FILE *e9d_cmp_csv;
     FILE *e9d_req_csv;
+    /* E9E: after natural match, complete member load via host I/O (original bytes). */
+    int e9e_mode;
+    int e9e_postmatch_shims;
+    int e9e_postmatch_done;
+    uint32_t e9e_304bf0_lr;
+    uint32_t e9e_304bf0_name_va;
+    uint32_t e9e_304bf0_handle_va;
+    uint32_t e9e_304bf0_out_va;
+    /* Entry ABI snapshot: mid-304BF0 return must restore these or 2D92E4 faults. */
+    uint32_t e9e_304bf0_sp;
+    uint32_t e9e_304bf0_r4;
+    uint32_t e9e_304bf0_r5;
+    uint32_t e9e_304bf0_r6;
+    uint32_t e9e_304bf0_r7;
+    uint32_t e9e_304bf0_r8;
+    uint32_t e9e_304bf0_r9;
+    uint32_t e9e_304bf0_r10;
+    uint32_t e9e_304bf0_r11;
+    FILE *e9e_helper_csv;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -721,6 +741,18 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9d_mode = env1("JJFB_E9D_MODE");
         g_e8f.e9d_strcmp_shim = env1("JJFB_E9D_STRCMP_SHIM") || g_e8f.e9d_mode;
         g_e8f.e9d_bridge_fallback = env1("JJFB_E9D_BRIDGE_FALLBACK");
+        g_e8f.e9e_mode = env1("JJFB_E9E_MODE");
+        g_e8f.e9e_postmatch_shims =
+            env1("JJFB_E9E_POSTMATCH_SHIMS") || g_e8f.e9e_mode;
+        if (g_e8f.e9e_mode) {
+            g_e8f.e9d_mode = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            printf("[JJFB_E9E_POSTMATCH] enabled=1 shims=%d "
+                   "note=natural_match_then_host_member_bytes NOT_PRODUCT "
+                   "evidence=HYPOTHESIS\n",
+                   g_e8f.e9e_postmatch_shims);
+            fflush(stdout);
+        }
         if (g_e8f.e9d_mode) {
             g_e8f.e9a_mode = 1;
             /* Natural path: do not force bridge unless fallback mode. */
@@ -770,7 +802,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
-                        g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode;
+                        g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode || g_e8f.e9e_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -889,6 +921,7 @@ static void e9d_open_csvs(void);
 static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1);
 static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t r0, uint32_t r1,
                                uint32_t r2);
+static int e9e_try_postmatch_complete(uc_engine *uc, const char *name);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1252,6 +1285,16 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 printf("[JJFB_E8Y_310BBC] hit=%u tick=%u note=post_resource_draw_site "
                        "evidence=OBSERVED\n",
                        g_e8f.e8y_310bbc_n, g_e8f.tick);
+            /* E9E: index-scan orphans can leave R9 on DSM; mr_drawBitmap table needs robotol. */
+            if (bp->pc == 0x310BBCu && g_e8f.e9e_postmatch_done && g_e8f.e9e_304bf0_r9 &&
+                r9 != g_e8f.e9e_304bf0_r9) {
+                uc_reg_write(uc, UC_ARM_REG_R9, &g_e8f.e9e_304bf0_r9);
+                printf("[JJFB_E9E_POSTMATCH_SHIM] role=draw_r9_restore pc=0x310BBC "
+                       "old_r9=0x%X new_r9=0x%X note=mr_drawBitmap_table "
+                       "evidence=OBSERVED\n",
+                       r9, g_e8f.e9e_304bf0_r9);
+                fflush(stdout);
+            }
             fflush(stdout);
         } else if (g_e8f.e8y_mode &&
                    (bp->pc == 0x2D92E4u || bp->pc == 0x2F44C8u || bp->pc == 0x2F44CEu ||
@@ -1336,12 +1379,39 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 printf("[JJFB_E8Z_304BF0] lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" note=mrp_member_lookup evidence=OBSERVED\n",
                        lr, r0, r1, r2, r3, g_e8f.e8y_last_name);
-                if (g_e8f.e9d_mode) {
+                if (g_e8f.e9d_mode || g_e8f.e9e_mode) {
                     e9d_open_csvs();
                     g_e8f.e9d_req_n++;
                     g_e8f.e9d_req_tick = g_e8f.tick;
                     snprintf(g_e8f.e9d_req_name, sizeof(g_e8f.e9d_req_name), "%s",
                              g_e8f.e8y_last_name);
+                    /* Save ABI args + callee-saved regs for E9E post-match return. */
+                    g_e8f.e9e_304bf0_lr = lr;
+                    g_e8f.e9e_304bf0_name_va = r1;
+                    g_e8f.e9e_304bf0_out_va = r2;
+                    g_e8f.e9e_304bf0_handle_va = r3;
+                    {
+                        uint32_t sp0 = 0, r4e = 0, r5e = 0, r6e = 0, r7e = 0;
+                        uint32_t r8e = 0, r9e = 0, r10e = 0, r11e = 0;
+                        uc_reg_read(uc, UC_ARM_REG_SP, &sp0);
+                        uc_reg_read(uc, UC_ARM_REG_R4, &r4e);
+                        uc_reg_read(uc, UC_ARM_REG_R5, &r5e);
+                        uc_reg_read(uc, UC_ARM_REG_R6, &r6e);
+                        uc_reg_read(uc, UC_ARM_REG_R7, &r7e);
+                        uc_reg_read(uc, UC_ARM_REG_R8, &r8e);
+                        uc_reg_read(uc, UC_ARM_REG_R9, &r9e);
+                        uc_reg_read(uc, UC_ARM_REG_R10, &r10e);
+                        uc_reg_read(uc, UC_ARM_REG_R11, &r11e);
+                        g_e8f.e9e_304bf0_sp = sp0;
+                        g_e8f.e9e_304bf0_r4 = r4e;
+                        g_e8f.e9e_304bf0_r5 = r5e;
+                        g_e8f.e9e_304bf0_r6 = r6e;
+                        g_e8f.e9e_304bf0_r7 = r7e;
+                        g_e8f.e9e_304bf0_r8 = r8e;
+                        g_e8f.e9e_304bf0_r9 = r9e;
+                        g_e8f.e9e_304bf0_r10 = r10e;
+                        g_e8f.e9e_304bf0_r11 = r11e;
+                    }
                     if (g_e8f.e9d_req_csv) {
                         fprintf(g_e8f.e9d_req_csv, "%u,%u,0x%X,0x%X,\"%s\",0,0,enter_304BF0\n",
                                 g_e8f.e9d_req_n, g_e8f.tick, bp->pc, lr, g_e8f.e8y_last_name);
@@ -1352,7 +1422,7 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                            g_e8f.e9d_req_n, g_e8f.e8y_last_name, lr, g_e8f.tick);
                     fflush(stdout);
                 }
-                /* E9A/E9D fallback: host decode only when bridge enabled. */
+                /* E9A bridge only when explicitly enabled (not E9E natural). */
                 if (g_e8f.e9a_member_bridge) {
                     if (e9a_try_member_bridge(uc, r1, r3, r2, lr))
                         return;
@@ -1368,9 +1438,10 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                  * natural A64-nonzero continue at 0x2F45A2 → 0x2F4628 draw path.
                  * Mirror the same real handle into A68/A6C (still original MRP bytes).
                  */
-                if (bp->pc == 0x2F44CEu && g_e8f.e9a_member_bridge &&
+                if (bp->pc == 0x2F44CEu &&
+                    (g_e8f.e9a_member_bridge || g_e8f.e9e_postmatch_done) &&
                     !g_e8f.e9a_post_a64_draw_skip && r9 && r0 &&
-                    g_e8f.e9a_bridge_hit_n > 0u) {
+                    (g_e8f.e9a_bridge_hit_n > 0u || g_e8f.e9e_postmatch_done)) {
                     uint32_t cont = 0x2F45A2u | 1u;
                     /* Mode at [sp,#0x60] may be 10 → uses A58/A5C/A60; mirror real handle. */
                     (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + 0xA58u, r0);
@@ -1900,6 +1971,8 @@ static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t dst, uint32_
     if (!guest_memory_uc_poke((struct uc_struct *)uc, dst, buf, (int)n)) return 0;
     ret_pc = (pc + 2u) | 1u; /* Thumb: land on insn after BLX */
     uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+    /* Disarm only — do not restore R9 mid-scan (breaks 304BF0 index walk). */
+    (void)module_r9_switch_cancel_dsm_helper_blx(uc, pc, 0);
     if (g_e8f.e9d_cmp_n < 3u && pc == 0x304F26u) {
         uint32_t len = (uint32_t)buf[0] | ((uint32_t)buf[1] << 8) | ((uint32_t)buf[2] << 16) |
                        ((uint32_t)buf[3] << 24);
@@ -1956,6 +2029,8 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
         ret_pc = 0x304F94u | 1u;
         uc_reg_write(uc, UC_ARM_REG_R0, &status);
         uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+        /* Disarm only — R9 restore deferred to E9E postmatch / 310BBC. */
+        (void)module_r9_switch_cancel_dsm_helper_blx(uc, 0x304F92u, 0);
     }
     g_e8f.e9d_shim_n++;
     if (cmp == 0) {
@@ -1968,6 +2043,11 @@ static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
                req);
         fflush(stdout);
         (void)cause_wrong_cb;
+        /* E9E: skip slow post-match DSM file/inflate; fill object with original bytes. */
+        if (g_e8f.e9e_postmatch_shims && !g_e8f.e9e_postmatch_done) {
+            if (e9e_try_postmatch_complete(uc, req))
+                return 1;
+        }
     } else if (g_e8f.e9d_cmp_n == 1u) {
         printf("[NATURAL_MEMBER_RESOLVE_BLOCKED_BY_NAME] note=waiting_for_match "
                "evidence=OBSERVED\n");
@@ -2667,6 +2747,165 @@ static int e9a_parse_name_wh(const char *name, int *w, int *h) {
     if (ww <= 0 || hh <= 0 || ww > 512 || hh > 512) return 0;
     *w = ww;
     *h = hh;
+    return 1;
+}
+
+/* E9E: after natural 0x304F92 name match, deliver original member bytes into the
+ * caller-owned object and return from 0x304BF0 (skip slow DSM seek/read/inflate).
+ * NOT entry-bridge: lookup already matched via guest index + host strcmp shim. */
+static int e9e_try_postmatch_complete(uc_engine *uc, const char *name) {
+    const char *mrp_path;
+    MrpArchive *arch = NULL;
+    const MrpMember *mem = NULL;
+    ByteBuffer bb;
+    LauncherError err;
+    LauncherStatus st;
+    int w = 0, h = 0, i;
+    uint32_t handle_va, out_va, lr, slot_va, sz, px, status, ret_pc;
+    uint8_t stub[0x20];
+    uint8_t digest[32];
+    char hex[65];
+    char first32[96];
+#ifdef GWY_HAVE_UNICORN
+    uc_err ue;
+#endif
+    if (!uc || !name || !name[0] || g_e8f.e9e_postmatch_done) return 0;
+    if (!g_e8f.e9e_postmatch_shims) return 0;
+    handle_va = g_e8f.e9e_304bf0_handle_va;
+    out_va = g_e8f.e9e_304bf0_out_va;
+    lr = g_e8f.e9e_304bf0_lr;
+    if (!lr) return 0;
+
+    mrp_path = getenv("JJFB_REAL_MRP_PATH");
+    if (!mrp_path || !mrp_path[0])
+        mrp_path = "game_files/mythroad/320x480/gwy/jjfb.mrp";
+    st = mrp_archive_open(mrp_path, &arch, &err);
+    if (st != L_OK || !arch) {
+        printf("[JJFB_E9E_POSTMATCH_SHIM] role=open_fail path=%s class=POST_MATCH_STILL_BLOCKED_BY_READ "
+               "evidence=OBSERVED\n",
+               mrp_path);
+        fflush(stdout);
+        return 0;
+    }
+    st = mrp_archive_find_exact(arch, name, &mem, &err);
+    if (st != L_OK || !mem) {
+        printf("[JJFB_E9E_POSTMATCH_SHIM] role=find_fail name=\"%s\" "
+               "class=POST_MATCH_STILL_BLOCKED_BY_READ evidence=OBSERVED\n",
+               name);
+        fflush(stdout);
+        mrp_archive_close(arch);
+        return 0;
+    }
+    byte_buffer_init(&bb);
+    st = mrp_archive_decode_member(arch, mem, 1024 * 1024, &bb, &err);
+    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > (240u * 320u * 2u)) {
+        printf("[JJFB_E9E_POSTMATCH_SHIM] role=inflate_fail name=\"%s\" status=%d size=%u "
+               "class=POST_MATCH_STILL_BLOCKED_BY_INFLATE evidence=OBSERVED\n",
+               name, (int)st, (unsigned)bb.size);
+        fflush(stdout);
+        byte_buffer_free(&bb);
+        mrp_archive_close(arch);
+        return 0;
+    }
+    (void)e9a_parse_name_wh(name, &w, &h);
+    if (w <= 0 || h <= 0) {
+        w = E8Z_BMP_W;
+        h = E8Z_BMP_H;
+    }
+    gwy_sha256(bb.data, bb.size, digest);
+    gwy_sha256_hex(digest, hex);
+    memset(first32, 0, sizeof(first32));
+    for (i = 0; i < 32 && i < (int)bb.size; i++) {
+        static const char *hd = "0123456789abcdef";
+        first32[i * 2] = hd[bb.data[i] >> 4];
+        first32[i * 2 + 1] = hd[bb.data[i] & 0xF];
+    }
+#ifdef GWY_HAVE_UNICORN
+    if (g_e8f.e9a_pixel_slot == 0) {
+        ue = uc_mem_map((uc_engine *)uc, E8Z_PIXEL_BASE, E8Z_PIXEL_MAP_SIZE, UC_PROT_ALL);
+        (void)ue;
+        ue = uc_mem_map((uc_engine *)uc, E8Y_A64_SCRATCH, E8Y_A64_SCRATCH_SIZE, UC_PROT_ALL);
+        (void)ue;
+    }
+#endif
+    slot_va = E8Z_PIXEL_BASE + g_e8f.e9a_pixel_slot;
+    {
+        uint32_t need = ((uint32_t)bb.size + 0x1FFu) & ~0x1FFu;
+        if (need < 0x200u) need = 0x200u;
+        if (slot_va + need > E8Z_PIXEL_BASE + E8Z_PIXEL_MAP_SIZE) {
+            slot_va = E8Z_PIXEL_BASE;
+            g_e8f.e9a_pixel_slot = 0;
+        }
+        g_e8f.e9a_pixel_slot += need;
+    }
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, slot_va, bb.data, (int)bb.size);
+    if (!handle_va)
+        handle_va = E8Y_A64_SCRATCH;
+    if (!out_va)
+        out_va = handle_va + 4u;
+    memset(stub, 0, sizeof(stub));
+    sz = (uint32_t)bb.size;
+    px = slot_va;
+    memcpy(stub + 0, &sz, 4);
+    memcpy(stub + 4, &px, 4);
+    stub[8] = (uint8_t)(w & 0xFF);
+    stub[9] = (uint8_t)((w >> 8) & 0xFF);
+    stub[10] = (uint8_t)(h & 0xFF);
+    stub[11] = (uint8_t)((h >> 8) & 0xFF);
+    stub[16] = 1;
+    (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
+    if (out_va != handle_va + 4u)
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, out_va, &px, 4);
+
+    /* Return as if from 0x304BF0 entry: restore SP/R4-R11/R9 then r0=0 → lr.
+     * Mid-function PC rewrite without this clobbers 2D92E4 stack (UC_FAULT @0x6). */
+    status = 0;
+    ret_pc = lr | 1u;
+    module_r9_switch_clear_dsm_return_side_stack();
+    if (g_e8f.e9e_304bf0_sp) {
+        uc_reg_write(uc, UC_ARM_REG_SP, &g_e8f.e9e_304bf0_sp);
+        uc_reg_write(uc, UC_ARM_REG_R4, &g_e8f.e9e_304bf0_r4);
+        uc_reg_write(uc, UC_ARM_REG_R5, &g_e8f.e9e_304bf0_r5);
+        uc_reg_write(uc, UC_ARM_REG_R6, &g_e8f.e9e_304bf0_r6);
+        uc_reg_write(uc, UC_ARM_REG_R7, &g_e8f.e9e_304bf0_r7);
+        uc_reg_write(uc, UC_ARM_REG_R8, &g_e8f.e9e_304bf0_r8);
+        if (g_e8f.e9e_304bf0_r9)
+            uc_reg_write(uc, UC_ARM_REG_R9, &g_e8f.e9e_304bf0_r9);
+        uc_reg_write(uc, UC_ARM_REG_R10, &g_e8f.e9e_304bf0_r10);
+        uc_reg_write(uc, UC_ARM_REG_R11, &g_e8f.e9e_304bf0_r11);
+    }
+    uc_reg_write(uc, UC_ARM_REG_R0, &status);
+    uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+
+    g_e8f.e9e_postmatch_done = 1;
+    g_e8f.e8z_pixel_va = slot_va;
+    g_e8f.e8z_pixel_bytes = sz;
+    g_e8f.e8z_handle_va = handle_va;
+    g_e8f.e8z_bw = (uint16_t)w;
+    g_e8f.e8z_bh = (uint16_t)h;
+    g_e8f.e8z_real_bmp_done = 1;
+
+    printf("[JJFB_E9E_POSTMATCH_SHIM] pc=0x304F92 role=member_bytes_after_natural_match "
+           "name=\"%s\" offset=%u stored=%u decoded=%u w=%d h=%d sha256=%s "
+           "first32=%s handle=0x%X pixels=0x%X ret=0 "
+           "note=original_jjfb_mrp_bytes NOT_BRIDGE NOT_PRODUCT evidence=OBSERVED\n",
+           name, mem->offset, mem->stored_size, sz, w, h, hex, first32, handle_va, slot_va);
+    printf("[JJFB_E9E_POSTMATCH_SHIM] role=return_abi_restore sp=0x%X r4=0x%X r6=0x%X "
+           "r7=0x%X r9=0x%X lr=0x%X class=POST_MATCH_RETURN_ABI_FIXED_NEXT_GAP "
+           "evidence=OBSERVED\n",
+           g_e8f.e9e_304bf0_sp, g_e8f.e9e_304bf0_r4, g_e8f.e9e_304bf0_r6,
+           g_e8f.e9e_304bf0_r7, g_e8f.e9e_304bf0_r9, lr);
+    printf("[JJFB_E9E_CLASS] class=NATURAL_POSTMATCH_MEMBER_BYTES name=\"%s\" "
+           "blocker_was=POST_MATCH_RETURN_ABI_WRONG evidence=OBSERVED\n",
+           name);
+    if (g_e8f.e9d_req_csv) {
+        fprintf(g_e8f.e9d_req_csv, "%u,%u,0x304BF0,0x%X,\"%s\",1,0,postmatch_complete\n",
+                g_e8f.e9d_req_n, g_e8f.tick, lr, name);
+        fflush(g_e8f.e9d_req_csv);
+    }
+    fflush(stdout);
+    byte_buffer_free(&bb);
+    mrp_archive_close(arch);
     return 1;
 }
 
