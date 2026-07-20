@@ -46,7 +46,7 @@ R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
 [JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
 [JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
-[VM_FILE_BIND] runtime=1 svc=0c165928
+[VM_FILE_BIND] runtime=1 svc=0a9852f8
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
@@ -442,7 +442,7 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [R9_SCOPE] stage=LEAVE scope_id=8 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=4 actual_top_frame_id=4 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1858 generation=4 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1858 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D990E target=0x304559 arg0=0x1 arg1=0x64
-[JJFB_E8C_IDLE_WATCH] armed=1 er_rw=0x2B1854 offset_base=0x2B1858 size=0x151C owner=robotol.ext nflags=20 range=0x2B2070..0x2B2A0B evidence=OBSERVED
+[JJFB_E8C_IDLE_WATCH] armed=1 er_rw=0x2B1854 offset_base=0x2B1858 size=0x151C owner=robotol.ext nflags=21 range=0x2B2070..0x2B2A0B evidence=OBSERVED
 [JJFB_E8C_FLAG_ARM] addr=0x2B249C off=0xC44 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_E8C_FLAG_ARM] addr=0x2B24F5 off=0xC9D width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_E8C_FLAG_ARM] addr=0x2B2529 off=0xCD1 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
@@ -463,6 +463,7 @@ _mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
 [JJFB_E8C_FLAG_ARM] addr=0x2B22BC off=0xA64 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_E8C_FLAG_ARM] addr=0x2B22C0 off=0xA68 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_E8C_FLAG_ARM] addr=0x2B22C4 off=0xA6C width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
+[JJFB_E8C_FLAG_ARM] addr=0x2B2110 off=0x8B8 width=1 init=0x0 owner=robotol.ext evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x1 app=0x64 arg2=0x0 arg3=0x0 ret=0 kind=STATUS name=default_status evidence=DOCUMENTED
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r4=0x1 ret=0x0 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=11 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=5 scope_id=9 host_callsite=enter guest_pc=0x2D998C guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
@@ -732,6 +733,7 @@ After app init, memory left:3748952
 [JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B22BC off=0xA64 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B22C0 off=0xA68 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B22C4 off=0xA6C val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=0 addr=0x2B2110 off=0x8B8 val=0x0 writes=0 last_writer=0x0 reason=after_mrc_init evidence=OBSERVED
 [JJFB_INIT_SEQ] delivered ret6=0 ret8=0 ret0=0 evidence=OBSERVED
 [PLATFORM_TIMER] op=START_DSM_RETURN filename=gwy/jjfb.mrp ret=0 evidence=DOCUMENTED
 [JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return reason=no_timer_api_call_seen arm_count=0 evidence=TARGET_OBSERVED
@@ -739,7 +741,7 @@ After app init, memory left:3748952
 [JJFB_LIFECYCLE] op=ARM period_ms=50 handler=0x30630D family=0x5 reason=10140_registered_no_classic_timer evidence=CROSS_TARGET+docs/06
 bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
 [PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
-[JJFB_POST_START_LOOP] t_ms=32631 loop_iter=1 timers_active=1 next_due_ms=169012523 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
+[JJFB_POST_START_LOOP] t_ms=28957 loop_iter=1 timers_active=1 next_due_ms=170939605 events_pending=0 last_module=? draw_count=0 refresh_count=0 arm_seen=1 evidence=OBSERVED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
@@ -775,6 +777,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8X_FIRSTFRAME] enabled=1 f74_desc=1 call_2f99d0=0 f6c_assist=1 insn_max=3000 note=2F2854_to_2F449C NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8Y_FIRSTFRAME] enabled=1 a64_assist=0 insn_max=12000 note=2D92E4_to_A64_to_310BBC NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
 [JJFB_E8Z_FIRSTPIXEL] enabled=1 real_bmp=0 member_fastpath=0 note=real_mrp_pixels_to_mr_drawBitmap NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
+[JJFB_E9U] mode=1 tick_call=1 tick_n=4 bd0_init=1 note=real_0x3124D8_no_count_poke NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9S_BD0] initcall=1 str_arg=0x3146C4 note=call_real_0x2FC418 replaces_PROGRESS_OBJECT_ASSIST NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 replaces_FAST_TEXTCTX_ASSIST NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9I_SPLASH_UI] enabled=1 coord_assist=0 skip_sibling=0 note=seed_R9_830_834_natural_xy NOT_PRODUCT evidence=HYPOTHESIS
@@ -789,12 +792,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9E_POSTMATCH] enabled=1 shims=1 note=natural_match_then_host_member_bytes NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9D_NATURAL] enabled=1 strcmp_shim=1 bridge_fallback=0 real_bmp=0 a64_assist=0 note=fix_304F92_DSM_strcmp_stub NOT_PRODUCT evidence=HYPOTHESIS
 [JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=0 real_bmp=0 e9d=1 note=stabilize_and_naturalize_304BF0 NOT_PRODUCT_SUCCESS evidence=HYPOTHESIS
-[JJFB_E8J_CLUSTER_BP] spec_n=67 armed_via_parent_table evidence=OBSERVED
+[JJFB_E8J_CLUSTER_BP] spec_n=68 armed_via_parent_table evidence=OBSERVED
 [JJFB_DISPLAY_FIRST] gate_bp=0x3066B8,0x3066C6,0x3066DA success=0x306740,0x2E88CC note=runtime_branch_assist_only evidence=HYPOTHESIS
 [JJFB_E8V_BP] e88cc_exits=0x2E88E6,0x2E8914,0x2E898C draw_cands=0x2F2854,0x305BFC,0x2EA058 evidence=HYPOTHESIS
 [JJFB_E8W_BP] f6c_writers=0x2D9CFC,0x2FBD18,0x2E8920 clear=0x30A9EC evidence=HYPOTHESIS
 [JJFB_E8X_BP] path=0x2F2854->0x2EA188->0x2F449C->0x310BBC producer=0x2F99D0 evidence=HYPOTHESIS
 [JJFB_E9D_BP] compare=0x304F26/0x304F7A/0x304F92 shim=1 evidence=HYPOTHESIS
+[JJFB_E9U_BP] tick=0x3124D8 count_str=0x3124FE obj_init=0x2FEBBC callers=0x2DAE24/0x2FECAA evidence=HYPOTHESIS
 [JJFB_E9J_BP] post_r4=0x2EFB0E text=0x2EFBA2/0x305BFC bd0_writer=0x2FC444 b6c_writer=0x30ED98 evidence=HYPOTHESIS
 [JJFB_E9K_BP] gate=0x2EFAFA pre=0x2EFB08 post=0x2EFB0E text=0x2EFBA2/0x305BFC ret=0x2EFBA6 layout=0x2F2174 evidence=HYPOTHESIS
 [JJFB_E9L_BP] dims=R9+0x818/0x81C measure=0x305E78 layout=0x2F2174 text=0x305BFC evidence=HYPOTHESIS
@@ -807,7 +811,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9H_R4_TRACE] armed=1 range=0x2EF86C..0x2EFB20 evidence=HYPOTHESIS
 [JJFB_E8X_DRAW_TRACE] armed=1 ranges=0x2F2854..287C,0x2EA188..1FC,0x2F449C..4A80 max_insn=3000 evidence=OBSERVED
 [JJFB_E8Y_RESOLVE_TRACE] armed=1 range=0x2D92E4..0x2D9560 max_insn=12000 evidence=OBSERVED
-[JJFB_E8F_WRITER_BP] armed=1 n=96 code_base=0x2D8DF4 size=0x3DE2C caller_bp=0 fault_watch=0 dispatcher_bp=0 parent_bp=0 state_watch=1 e8j_bp=1 qread_watch=0 svc_trap=1 e8m_trace=0 evidence=OBSERVED
+[JJFB_E8F_WRITER_BP] armed=1 n=101 code_base=0x2D8DF4 size=0x3DE2C caller_bp=0 fault_watch=0 dispatcher_bp=0 parent_bp=0 state_watch=1 e8j_bp=1 qread_watch=0 svc_trap=1 e8m_trace=0 evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B249C off=0xC44 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B24F5 off=0xC9D val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2529 off=0xCD1 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
@@ -828,6 +832,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B22BC off=0xA64 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B22C0 off=0xA68 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B22C4 off=0xA6C val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
+[JJFB_E8C_FLAG_SNAP] tick=1 addr=0x2B2110 off=0x8B8 val=0x0 writes=0 last_writer=0x0 reason=first_10140_tick evidence=OBSERVED
 [JJFB_E8I_STATE_WATCH] armed=1 addr=0x2B2128 r9=0x2B1858 off=0x8D0 init=0x0 note=observe_only_no_force evidence=OBSERVED
 [JJFB_E8F_QUEUE_DEPTH] r9=0x2B1858 off=0x844 depth=0x0 note=long_path_if_depth_le_0 evidence=TARGET_OBSERVED
 [JJFB_E8F_FLAG_SNAP] reason=tick1 r9=0x2B1858 C44=0x0 C9D=0x0 CF5=0x0 B7D=0x0 FE8=0x0 queue_depth=0x0 R9_state=0x0 E6C=0x0 R9_7D8=0x0 EEC7C=0x0 DEC30=0x0 evidence=OBSERVED
@@ -974,7 +979,44 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9S_CLASS] class=BD0_REAL_INIT_CALL_WRITES_BD0 value=0x2A8364 evidence=OBSERVED
 [JJFB_E9S_CLASS] class=BD0_ASSIST_REMOVED_SPLASH_VISIBLE note=no_direct_BD0_poke evidence=OBSERVED
 [JJFB_E9S_CLASS] class=BD0_WRITER_REQUIRES_RESOURCE_OBJECT note=BA0_plus2C_progress_count_still_zero evidence=OBSERVED
-[JJFB_E9J_BD0] before BD0=0x2A8364 B6C=0x0 count=0 note=splash_obj_plus30 evidence=OBSERVED
+[JJFB_E9U_OBJECT] phase=pre_splash base=0x2B2A68 w0=0x0 w1=0x0 w2=0x0 w3=0x0 gate8B8=0x0 count=0 BD0=0x2A8364 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=BD0_UPSTREAM_CALLER_REQUIRES_OBJECT note=11EC_plus24_still_null writer=0x2FEBBC evidence=OBSERVED
+[JJFB_E9U_OBJECT] phase=before_tick base=0x2B2A68 w0=0x0 w1=0x0 w2=0x0 w3=0x0 gate8B8=0x0 count=0 BD0=0x2A8364 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=BD0_UPSTREAM_CALLER_REQUIRES_OBJECT note=11EC_plus24_still_null writer=0x2FEBBC evidence=OBSERVED
+[JJFB_FAST_PROGRESS_TICK_CALL] entry=0x3124D8 n=4 r9=0x2B1858 gate8B8=0x0 count_before=0 BD0=0x2A8364 note=real_STR_at_0x3124FE NOT_PRODUCT evidence=HYPOTHESIS
+[JJFB_E9U_COUNT_WRITER] pc=0x3124D8 lr=0x80000 r1=0x0 count=0 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124D8 pc=0x3124D8 hit=1 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x80000 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x3124E0 target=0x2D968C arg0=0x0 arg1=0x0
+[JJFB_E9U_COUNT_WRITER] pc=0x3124FE lr=0x3124E5 r1=0x1 count=0 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=PROGRESS_COUNT_WRITER_3124FE_HIT count=0 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124FE pc=0x3124FE hit=1 tick=1 r0=0x1 r1=0x1 r4=0x2B23F8 r9=0x2B1858 lr=0x3124E5 state=0x45 evidence=OBSERVED
+[JJFB_FAST_PROGRESS_TICK_DONE] i=1/4 ok=1 end=stop_at_base pc_after=0x80000 count=0->1 evidence=OBSERVED
+[JJFB_E9U_COUNT_WRITER] pc=0x3124D8 lr=0x80000 r1=0x0 count=1 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124D8 pc=0x3124D8 hit=2 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x80000 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x3124E0 target=0x2D968C arg0=0x0 arg1=0x0
+[JJFB_E9U_COUNT_WRITER] pc=0x3124FE lr=0x3124E5 r1=0x2 count=1 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=PROGRESS_COUNT_WRITER_3124FE_HIT count=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124FE pc=0x3124FE hit=2 tick=1 r0=0x1 r1=0x2 r4=0x2B23F8 r9=0x2B1858 lr=0x3124E5 state=0x45 evidence=OBSERVED
+[JJFB_FAST_PROGRESS_TICK_DONE] i=2/4 ok=1 end=stop_at_base pc_after=0x80000 count=1->2 evidence=OBSERVED
+[JJFB_E9U_COUNT_WRITER] pc=0x3124D8 lr=0x80000 r1=0x0 count=2 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124D8 pc=0x3124D8 hit=3 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x80000 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x3124E0 target=0x2D968C arg0=0x0 arg1=0x0
+[JJFB_E9U_COUNT_WRITER] pc=0x3124FE lr=0x3124E5 r1=0x3 count=2 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=PROGRESS_COUNT_WRITER_3124FE_HIT count=2 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124FE pc=0x3124FE hit=3 tick=1 r0=0x1 r1=0x3 r4=0x2B23F8 r9=0x2B1858 lr=0x3124E5 state=0x45 evidence=OBSERVED
+[JJFB_FAST_PROGRESS_TICK_DONE] i=3/4 ok=1 end=stop_at_base pc_after=0x80000 count=2->3 evidence=OBSERVED
+[JJFB_E9U_COUNT_WRITER] pc=0x3124D8 lr=0x80000 r1=0x0 count=3 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124D8 pc=0x3124D8 hit=4 tick=1 r0=0x0 r1=0x0 r4=0x0 r9=0x2B1858 lr=0x80000 state=0x45 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x3124E0 target=0x2D968C arg0=0x0 arg1=0x0
+[JJFB_E9U_COUNT_WRITER] pc=0x3124FE lr=0x3124E5 r1=0x4 count=3 gate8B8=0x0 tick=1 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=PROGRESS_COUNT_WRITER_3124FE_HIT count=3 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p3124FE pc=0x3124FE hit=4 tick=1 r0=0x1 r1=0x4 r4=0x2B23F8 r9=0x2B1858 lr=0x3124E5 state=0x45 evidence=OBSERVED
+[JJFB_FAST_PROGRESS_TICK_DONE] i=4/4 ok=1 end=stop_at_base pc_after=0x80000 count=3->4 evidence=OBSERVED
+[JJFB_E9U_OBJECT] phase=after_tick base=0x2B2A68 w0=0x0 w1=0x0 w2=0x0 w3=0x0 gate8B8=0x0 count=4 BD0=0x2A8364 evidence=OBSERVED
+[JJFB_E9U_CLASS] class=BD0_UPSTREAM_CALLER_REQUIRES_OBJECT note=11EC_plus24_still_null writer=0x2FEBBC evidence=OBSERVED
+[JJFB_E9U_CLASS] class=PROGRESS_COUNT_REAL_TICK_RESTORED count=4 writer=0x3124FE note=no_direct_BA0_plus2C_poke evidence=OBSERVED
+[JJFB_E9T_CLASS] class=PROGRESS_COUNT_REAL_CALLER_RESTORED count=4 evidence=OBSERVED
+[JJFB_E9J_BD0] before BD0=0x2A8364 B6C=0x0 count=4 note=splash_obj_plus30 evidence=OBSERVED
 [JJFB_E9S_CLASS] class=BD0_ALREADY_NONZERO value=0x2A8364 note=initcall_or_natural_writer evidence=OBSERVED
 [JJFB_E9L_818_81C] before R9_818=0x0 R9_81C=0x0 R9_830=0xF0 R9_834=0x140 note=screen_dims_for_305E78 evidence=OBSERVED
 [JJFB_E9L_CLASS] class=TEXTCTX_818_81C_WRITER_FOUND_NEXT_GAP note=no_robotol_STR_writer_dims_like_830_834 evidence=OBSERVED
@@ -1739,23 +1781,67 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9H_2EC6B8_BLIT] pixels=0x3920000 x=19 y=220 w=201 h=29 member=loadingbar!201!29.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
 [JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=19 y=220 w=201 h=29 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
 [JJFB_E8Z_SPRITE_BLIT] x=19 y=220 w=201 h=29 black=0 white=0 other=5627 key=202 evidence=OBSERVED
-[JJFB_SCREENSHOT_SOURCE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9s_bd0_naturalized_window.bmp kind=SDL_GetWindowSurface_SaveBMP note=internal_sdl_software_surface_NOT_hwnd_PrintWindow evidence=OBSERVED
-[JJFB_FIRST_REAL_FRAME_REACHED] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9s_bd0_naturalized_window.bmp before=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9s_before.bmp after=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9s_after.bmp x=19 y=220 w=201 h=29 black=0 white=0 other=5627 key=202 note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED
-[JJFB_E9H_PROGRESS] pc=0x2EFA9E r4=0x2A8364 count=0 bar=0x3910080 BD0=0x2A8364 tick=1 evidence=OBSERVED
+[JJFB_SCREENSHOT_SOURCE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9u_splash_visible.bmp kind=SDL_GetWindowSurface_SaveBMP note=internal_sdl_software_surface_NOT_hwnd_PrintWindow evidence=OBSERVED
+[JJFB_FIRST_REAL_FRAME_REACHED] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9u_splash_visible.bmp before=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9u_before.bmp after=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9u_after.bmp x=19 y=220 w=201 h=29 black=0 white=0 other=5627 key=202 note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED
+[JJFB_E9H_PROGRESS] pc=0x2EFA9E r4=0x2A8364 count=4 bar=0x3910080 BD0=0x2A8364 tick=1 evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2EFA9E pc=0x2EFA9E hit=1 tick=1 r0=0x1 r1=0x13 r4=0x2A8364 r9=0x2B1858 lr=0x2EFA9F state=0x45 evidence=OBSERVED
-[JJFB_E9H_R4_GATE] pc=0x2EFAF2 B6C=0x0 b6c_addr=0x2B23C4 r4=0x2A8364 BD0=0x2A8364 count=0x0 tick=1 note=b6c_zero_need_r4 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFAE2 target=0x2EC6B9 arg0=0x3910080 arg1=0x2F
+[JJFB_E9J_PROGRESS_BLIT] pc=0x2EFAE2 r0=0x3910080 r1=0x2F r2=0xE2 r4=0x2A8364 tick=1 note=bar_segment_callsite evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFAE2 pc=0x2EFAE2 hit=1 tick=1 r0=0x3910080 r1=0x2F r4=0x2A8364 r9=0x2B1858 lr=0x2F state=0x45 evidence=OBSERVED
+[JJFB_E9H_2EC6B8] lr=0x2EFAE7 obj=0x3910080 x=47 y=226 flags=0x0 pixels=0x3922E00 fp150C=0x2801E4 r4=0x2A8364 member=bar!16!18.bmp onscreen=1 tick=1 evidence=OBSERVED
+[JJFB_E9H_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE obj=0x3910080 pixels=0x3922E00 x=47 y=226 w=16 h=18 member=bar!16!18.bmp evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE member=bar!16!18.bmp x=47 y=226 evidence=OBSERVED
+[JJFB_E9H_2EC6B8_BLIT] pixels=0x3922E00 x=47 y=226 w=16 h=18 member=bar!16!18.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=47 y=226 w=16 h=18 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
+[JJFB_E8Z_SPRITE_BLIT] x=47 y=226 w=16 h=18 black=152 white=0 other=0 key=136 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFAE2 target=0x2EC6B9 arg0=0x3910080 arg1=0x3B
+[JJFB_E9J_PROGRESS_BLIT] pc=0x2EFAE2 r0=0x3910080 r1=0x3B r2=0xE2 r4=0x2A8364 tick=1 note=bar_segment_callsite evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFAE2 pc=0x2EFAE2 hit=2 tick=1 r0=0x3910080 r1=0x3B r4=0x2A8364 r9=0x2B1858 lr=0x3B state=0x45 evidence=OBSERVED
+[JJFB_E9H_2EC6B8] lr=0x2EFAE7 obj=0x3910080 x=59 y=226 flags=0x0 pixels=0x3922E00 fp150C=0x2801E4 r4=0x2A8364 member=bar!16!18.bmp onscreen=1 tick=1 evidence=OBSERVED
+[JJFB_E9H_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE obj=0x3910080 pixels=0x3922E00 x=59 y=226 w=16 h=18 member=bar!16!18.bmp evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE member=bar!16!18.bmp x=59 y=226 evidence=OBSERVED
+[JJFB_E9H_2EC6B8_BLIT] pixels=0x3922E00 x=59 y=226 w=16 h=18 member=bar!16!18.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=59 y=226 w=16 h=18 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
+[JJFB_E8Z_SPRITE_BLIT] x=59 y=226 w=16 h=18 black=152 white=0 other=0 key=136 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFAE2 target=0x2EC6B9 arg0=0x3910080 arg1=0x47
+[JJFB_E9J_PROGRESS_BLIT] pc=0x2EFAE2 r0=0x3910080 r1=0x47 r2=0xE2 r4=0x2A8364 tick=1 note=bar_segment_callsite evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFAE2 pc=0x2EFAE2 hit=3 tick=1 r0=0x3910080 r1=0x47 r4=0x2A8364 r9=0x2B1858 lr=0x47 state=0x45 evidence=OBSERVED
+[JJFB_E9H_2EC6B8] lr=0x2EFAE7 obj=0x3910080 x=71 y=226 flags=0x0 pixels=0x3922E00 fp150C=0x2801E4 r4=0x2A8364 member=bar!16!18.bmp onscreen=1 tick=1 evidence=OBSERVED
+[JJFB_E9H_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE obj=0x3910080 pixels=0x3922E00 x=71 y=226 w=16 h=18 member=bar!16!18.bmp evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE member=bar!16!18.bmp x=71 y=226 evidence=OBSERVED
+[JJFB_E9H_2EC6B8_BLIT] pixels=0x3922E00 x=71 y=226 w=16 h=18 member=bar!16!18.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=71 y=226 w=16 h=18 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
+[JJFB_E8Z_SPRITE_BLIT] x=71 y=226 w=16 h=18 black=152 white=0 other=0 key=136 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFAE2 target=0x2EC6B9 arg0=0x3910080 arg1=0x53
+[JJFB_E9J_PROGRESS_BLIT] pc=0x2EFAE2 r0=0x3910080 r1=0x53 r2=0xE2 r4=0x2A8364 tick=1 note=bar_segment_callsite evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFAE2 pc=0x2EFAE2 hit=4 tick=1 r0=0x3910080 r1=0x53 r4=0x2A8364 r9=0x2B1858 lr=0x53 state=0x45 evidence=OBSERVED
+[JJFB_E9H_2EC6B8] lr=0x2EFAE7 obj=0x3910080 x=83 y=226 flags=0x0 pixels=0x3922E00 fp150C=0x2801E4 r4=0x2A8364 member=bar!16!18.bmp onscreen=1 tick=1 evidence=OBSERVED
+[JJFB_E9H_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE obj=0x3910080 pixels=0x3922E00 x=83 y=226 w=16 h=18 member=bar!16!18.bmp evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_PROGRESS_DRAWN_NO_REWRITE member=bar!16!18.bmp x=83 y=226 evidence=OBSERVED
+[JJFB_E9H_2EC6B8_BLIT] pixels=0x3922E00 x=83 y=226 w=16 h=18 member=bar!16!18.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=83 y=226 w=16 h=18 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
+[JJFB_E8Z_SPRITE_BLIT] x=83 y=226 w=16 h=18 black=152 white=0 other=0 key=136 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x9 evidence=OBSERVED
+[JJFB_E9H_R4_GATE] pc=0x2EFAF2 B6C=0x0 b6c_addr=0x2B23C4 r4=0x2A8364 BD0=0x2A8364 count=0x4 tick=1 note=b6c_zero_need_r4 evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2EFAF2 pc=0x2EFAF2 hit=1 tick=1 r0=0x2B23C4 r1=0x2B23F8 r4=0x2A8364 r9=0x2B1858 lr=0xB3 state=0x45 evidence=OBSERVED
 [JJFB_E9I_R4_CMP] pc=0x2EFAFA r4=0x2A8364 r0=0x0 tick=1 note=r4_nz evidence=OBSERVED
-[JJFB_E9J_R4_GATE] pc=0x2EFAFA r4=0x2A8364 BD0=0x2A8364 B6C=0x0 count=0x0 tick=1 note=r4_pass evidence=OBSERVED
-[JJFB_E9K_R4_GATE] pc=0x2EFAFA r0=0x0 r1=0x2B23F8 r2=0xDC r3=0x0 r4=0x2A8364 r5=0xE2 r6=0x3142B0 r7=0x2F r9=0x2B1858 sp=0x27FFC0 lr=0xB3 tick=1 evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x2EFAFA tag=r4_gate bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9J_R4_GATE] pc=0x2EFAFA r4=0x2A8364 BD0=0x2A8364 B6C=0x0 count=0x4 tick=1 note=r4_pass evidence=OBSERVED
+[JJFB_E9K_R4_GATE] pc=0x2EFAFA r0=0x0 r1=0x2B23F8 r2=0xE2 r3=0x0 r4=0x2A8364 r5=0xE2 r6=0x3142B0 r7=0x2F r9=0x2B1858 sp=0x27FFC0 lr=0xB3 tick=1 evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x2EFAFA tag=r4_gate bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2EFAFA pc=0x2EFAFA hit=1 tick=1 r0=0x0 r1=0x2B23F8 r4=0x2A8364 r9=0x2B1858 lr=0xB3 state=0x45 evidence=OBSERVED
 [R9_WRITE] event_seq=125 old=0x2B1858 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=50 scope_id=0 host_callsite=enter_reuse_dsm_frame guest_pc=0x2EFB08 guest_module=cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENTER already_switched=1 from=robotol.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=3 evidence=DOCUMENTED note=dsm_return_side_stack
 [R9_SCOPE] stage=ENTER scope_id=66 frame_id=50 owns_frame=no requested_kind=RUNTIME_ENTRY caller=robotol.ext callee=cfunction.ext current_r9=0x2B1858 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=3 depth_after=3 top_frame_id=50 top_frame_kind=RUNTIME_ENTRY generation=50 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2EFB08 return_pc=0x2EFB0A frame_id=50 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
 [JJFB_E9K_PRE_POST_R4_CALL] pc=0x2EFB08 r0=0x2A8364 r2=0xAC2D0 fptr_R9_143C=0xAC2D0 r4=0x2A8364 tick=1 note=status_string_validate evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x2EFB08 tag=pre_post_r4_blx bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x2EFB08 tag=pre_post_r4_blx bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2EFB08 pc=0x2EFB08 hit=1 tick=1 r0=0x2A8364 r1=0x3142B0 r4=0x2A8364 r9=0x280400 lr=0xB3 state=0x0 evidence=OBSERVED
 [R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2EFB0A return_pc=0x2EFB0A call_pc=0x2EFB08 cur_r9=0x280400 lr=0x2EFB0B executed=1 owns_r9_pop=0 side_depth=0 frame_id=50 evidence=DOCUMENTED note=mrp_dsm_helper_return
 [R9_WRITE] event_seq=126 old=0x280400 new=0x2B1858 reason=MODULE_R9_SWITCH_LEAVE frame_id=50 scope_id=0 host_callsite=mrp_return_from_dsm_helper_nested guest_pc=0x2EFB0A guest_module=mrp_nested_dsm_return depth_before=0 depth_after=0 evidence=OBSERVED
@@ -1766,7 +1852,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFB0E target=0x2F9971 arg0=0x1 arg1=0x3142B1
 [JJFB_E9J_POST_R4] pc=0x2EFB0E r4=0x2A8364 tick=1 note=text_progress_path_enter evidence=OBSERVED
 [JJFB_E9K_POST_R4] pc=0x2EFB0E r0=0x1 r1=0x3142B1 r2=0xC1 r3=0x0 r4=0x2A8364 r5=0xE2 r6=0x3142B0 r7=0x2F r9=0x2B1858 sp=0x27FFC0 lr=0x2EFB0B R9_818=0xF0 R9_81C=0x140 tick=1 evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x2EFB0E tag=post_r4_2EFB0E bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x2EFB0E tag=post_r4_2EFB0E bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E9K_CLASS] class=SPLASH_POST_R4_REACHED_NEXT_GAP note=await_305BFC_or_textbar evidence=OBSERVED
 [JJFB_E9L_818_81C] before R9_818=0xF0 R9_81C=0x140 R9_830=0xF0 R9_834=0x140 note=screen_dims_for_305E78 evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2EFB0E pc=0x2EFB0E hit=1 tick=1 r0=0x1 r1=0x3142B1 r4=0x2A8364 r9=0x2B1858 lr=0x2EFB0B state=0x45 evidence=OBSERVED
@@ -1840,7 +1926,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFB4C target=0x2F9971 arg0=0x392CA0 arg1=0x20
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFB62 target=0x2F2175 arg0=0x3C arg1=0x100
 [JJFB_E9K_TEXTBAR_LAYOUT] pc=0x2F2174 r0=0x3C r1=0x100 r4=0x2A8364 tick=1 note=uses_BA0_plus24_width evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x2F2174 tag=textbar_layout_2F2174 bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x2F2174 tag=textbar_layout_2F2174 bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E9L_CLASS] class=TEXTCTX_ASSIST_REACHED_2F2174 r0=0x3C r1=0x100 evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p2F2174 pc=0x2F2174 hit=1 tick=1 r0=0x3C r1=0x100 r4=0x2A8364 r9=0x2B1858 lr=0x2EFB67 state=0x45 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F2184 target=0x2F9971 arg0=0x39100C0 arg1=0x100
@@ -1854,8 +1940,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9H_2EC6B8_BLIT] pixels=0x3923200 x=0 y=256 w=120 h=30 member=textbar!120!30.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
 [JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=0 y=256 w=120 h=30 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
 [JJFB_E8Z_SPRITE_BLIT] x=0 y=256 w=120 h=30 black=0 white=0 other=3600 key=0 evidence=OBSERVED
-[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x3 evidence=OBSERVED
-[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x3 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0xB evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0xB evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2F21D2 target=0x2EC6B9 arg0=0x39100C0 arg1=0x78
 [JJFB_E9H_2EC6B8] lr=0x2F21D7 obj=0x39100C0 x=120 y=256 flags=0x0 pixels=0x3923200 fp150C=0x2801E4 r4=0x1 member=textbar!120!30.bmp onscreen=1 tick=1 evidence=OBSERVED
 [JJFB_E9H_CLASS] class=SPLASH_TEXTBAR_DRAWN_NO_REWRITE obj=0x39100C0 pixels=0x3923200 x=120 y=256 w=120 h=30 member=textbar!120!30.bmp evidence=OBSERVED
@@ -1865,13 +1951,13 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9H_2EC6B8_BLIT] pixels=0x3923200 x=120 y=256 w=120 h=30 member=textbar!120!30.bmp via=guiDrawBitmapSprite note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED
 [JJFB_VISIBLE_WINDOW_PRESENTED] via=SDL_UpdateWindowSurface source=SDL_GetWindowSurface zoom=2 x=120 y=256 w=120 h=30 note=NOT_HWND_CAPTURE_YET evidence=OBSERVED
 [JJFB_E8Z_SPRITE_BLIT] x=120 y=256 w=120 h=30 black=0 white=0 other=3600 key=0 evidence=OBSERVED
-[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x3 evidence=OBSERVED
-[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0x3 evidence=OBSERVED
+[JJFB_E9I_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0xB evidence=OBSERVED
+[JJFB_E9J_CLASS] class=SPLASH_LOADING_UI_VISIBLE mask=0xB evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFBA2 target=0x305BFD arg0=0x2A8364 arg1=0x6F
 [JJFB_E9J_POST_R4_DRAW] pc=0x2EFBA2 r0=0x2A8364 r1=0x6F r2=0x105 r4=0x2A8364 tick=1 note=text_draw_305bfc evidence=OBSERVED
 [JJFB_E9J_CLASS] class=SPLASH_PROGRESS_OBJECT_ASSIST_REACHED_POST_R4 note=real_text_draw_api evidence=OBSERVED
 [JJFB_E9K_305BFC] pc=0x2EFBA2 r0=0x2A8364 r1=0x6F r2=0x105 r3=0xFF r4=0x2A8364 r5=0x100 r6=0x54 r7=0x3C sp=[0xFF,0xFF,0x140,0xF0] lr=0x6F tick=1 note=text_draw_ABI evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x2EFBA2 tag=305BFC bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x2EFBA2 tag=305BFC bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E9K_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP pc=0x2EFBA2 evidence=OBSERVED
 [JJFB_E9L_CLASS] class=TEXTCTX_ASSIST_REACHED_305BFC r0=0x2A8364 r1=0x6F r2=0x105 evidence=OBSERVED
 [JJFB_E9L_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP evidence=OBSERVED
@@ -1879,7 +1965,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9J_POST_R4_DRAW] pc=0x305BFC r0=0x2A8364 r1=0x6F r2=0x105 r4=0x2A8364 tick=1 note=text_draw_305bfc evidence=OBSERVED
 [JJFB_E9J_CLASS] class=SPLASH_PROGRESS_OBJECT_ASSIST_REACHED_POST_R4 note=real_text_draw_api evidence=OBSERVED
 [JJFB_E9K_305BFC] pc=0x305BFC r0=0x2A8364 r1=0x6F r2=0x105 r3=0xFF r4=0x2A8364 r5=0x100 r6=0x54 r7=0x3C sp=[0xFF,0xFF,0x140,0xF0] lr=0x2EFBA7 tick=1 note=text_draw_ABI evidence=OBSERVED
-[JJFB_E9K_SLOTS] pc=0x305BFC tag=305BFC bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=0 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
+[JJFB_E9K_SLOTS] pc=0x305BFC tag=305BFC bar=0x3910080 textbar=0x39100C0 loadingbar=0x2A83D4 count=4 BD0=0x2A8364 r4=0x2A8364 r4_str=".............." evidence=OBSERVED
 [JJFB_E9K_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP pc=0x305BFC evidence=OBSERVED
 [JJFB_E9L_CLASS] class=TEXTCTX_ASSIST_REACHED_305BFC r0=0x2A8364 r1=0x6F r2=0x105 evidence=OBSERVED
 [JJFB_E9L_CLASS] class=SPLASH_305BFC_REACHED_NEXT_GAP evidence=OBSERVED
@@ -1961,7 +2047,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9N_DRAW_GATE] pc=0x305D16 draw_mode=0 dsm_ret=0x0 pass=0 tick=1 evidence=OBSERVED
 [JJFB_E8I_PARENT_HIT] tag=p305D16 pc=0x305D16 hit=1 tick=1 r0=0x0 r1=0x10 r4=0x2A8364 r9=0x2B1858 lr=0x303C63 state=0x45 evidence=OBSERVED
 [JJFB_E9N_DRAW_SKIP] pc=0x305D5C r0=0x0 note=glyph_blit_skipped tick=1 evidence=OBSERVED
-[JJFB_E8I_PARENT_HIT] tag=p305D5C pc=0x305D5C hit=1 tick=1 r0=0x0 r1=0x10 r4=0x2A8364 r9=0x2B1858 lr=0x303C63 state=0x45 evidence=OBSERVED
+[JJFB_E8F_WRITER_HIT] tag=nDrawSkip pc=0x305D5C hit=1 tick=1 r0=0x0 r1=0x10 r9=0x2B1858 lr=0x303C63 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x305D90 target=0x2F2361 arg0=0x2A8474 arg1=0x6F
 [JJFB_E9N_GLYPH_BLIT_CORE] pc=0x2F2360 r0=0x2A8474 r1=0x6F r2=0x105 r3=0x105006F lr=0x305D95 tick=1 evidence=OBSERVED
 [JJFB_E9N_CLASS] class=TEXT_305C3C_REACHED_PLATFORM_DRAW evidence=OBSERVED
@@ -2002,7 +2088,18 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_E9M_CLASS] class=TEXT_305BFC_REACHED_VALID_ARGS_NEXT_GAP note=e9n_defer_drawn_claim evidence=OBSERVED
 [JJFB_E9K_HOLD_ARM] reason=after_305BFC_e9n textbar=1 hit305=1 post_r4=1 evidence=OBSERVED
 [JJFB_E9K_HOLD] reason=after_305BFC_e9n via=guiVisibleWindowFinalize evidence=OBSERVED
-[JJFB_E9B_HWND_CAPTURE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9s_actual_window_capture.bmp w=480 h=640 nonwhite_or_nonblack=52116 kind=GDI_BitBlt_client evidence=OBSERVED
-[JJFB_VISIBLE_WINDOW] class=VISIBLE_WINDOW_PRESENTED hwnd_nonwhite=52116 sprite_other=1 evidence=OBSERVED
+[JJFB_E9B_HWND_CAPTURE] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\screenshots\e9u_actual_window_capture.bmp w=480 h=640 nonwhite_or_nonblack=49924 kind=GDI_BitBlt_client evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW] class=VISIBLE_WINDOW_PRESENTED hwnd_nonwhite=49924 sprite_other=1 evidence=OBSERVED
 [JJFB_VISIBLE_WINDOW_HOLD] sec=12 note=pump_messages_keep_responsive evidence=OBSERVED
 [JJFB_WINDOW_RESPONSIVE_HOLD] sec=12 pump_ms=16 evidence=OBSERVED
+[JJFB_VISIBLE_WINDOW_HOLD_DONE] sec=12 evidence=OBSERVED
+[JJFB_WINDOW_RESPONSIVE_HOLD] done=1 evidence=OBSERVED
+[JJFB_E8I_PARENT_HIT] tag=p2EFBA6 pc=0x2EFBA6 hit=1 tick=1 r0=0x0 r1=0x20 r4=0x2A8364 r9=0x2B1858 lr=0x304621 state=0x45 evidence=OBSERVED
+[JJFB_E9H_R4_WRITE] pc=0x2EFA20 old=0x2A8364 new=0x15E r0=0x2B2320 lr=0x304621 tick=1 evidence=OBSERVED
+[JJFB_FAST_SPLASH_DONE] ok=1 end=stop_at_base pc_after=0x80000 ui_mode=0x45->0x45 note=FAST_ASSIST_not_product evidence=OBSERVED
+[JJFB_E9G_CLASS] class=SPLASH_2EF86C_REACHED_NEXT_GAP handle=0x2A83D4 pixels=0x3920000 note=loadingbar_bound_draw_needs_splash_blit_path_not_2F45A2 evidence=OBSERVED
+[R9_WRITE] event_seq=147 old=0x2B1858 new=0x2B1858 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_WRITE] event_seq=148 old=0x2B1858 new=0x280400 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED

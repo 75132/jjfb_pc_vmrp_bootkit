@@ -175,6 +175,22 @@ extern "C" {
  *   Success path: FAST_BD0_INIT_CALL on, FAST_SPLASH_PROGRESS_OBJECT_ASSIST off.
  *   0x2FC418: concat via 2D9648 → STR @0x2FC444 to BA0+0x30 (=R9+BD0); ui_mode=0x45.
  *
+ * E9T-Upstream BD0 caller + assist ladder (NOT product success):
+ *   JJFB_E9T_MODE=1
+ *   JJFB_FAST_BD0_CALLER_2FC03C=1  — prefer over bare 0x2FC418
+ *   JJFB_FAST_BD0_CALLER_30EE8A=1  — optional; ABI may need r4/r5
+ *   JJFB_E9T_NO_UI_MODE_ASSIST=1 / JJFB_E9T_NO_C9D_ASSIST=1
+ *   JJFB_E9T_UPSTREAM_CSV / COUNT_CSV / LADDER_CSV
+ *   No direct BA0+0x2C poke as success.
+ *
+ * E9U-Progress tick + 2FC03C object (NOT product success):
+ *   JJFB_E9U_MODE=1
+ *   JJFB_FAST_PROGRESS_TICK_CALL=1 — call real 0x3124D8 (STR @0x3124FE → BA0+0x2C)
+ *   JJFB_E9U_TICK_N=<1..12>       — default 4
+ *   JJFB_E9U_COUNT_CSV / OBJECT_CSV
+ *   Object slot R9+0x11EC+0x24 filled by 0x2FEBBC; tick gated by R9+0x8B8.
+ *   No direct BA0+0x2C poke as success; JJFB_DEBUG_PROGRESS_COUNT_POKE debug-only.
+ *
  * E9M-Text ABI / measure return (NOT product success):
  *   JJFB_E9M_MODE=1                — decode 0x305BFC ABI; fix measure/layout r1
  *   JJFB_FAST_TEXT_MEASURE_SHIM=1  — write plausible w/h after plat 0x12340
