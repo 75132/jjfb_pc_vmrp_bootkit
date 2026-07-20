@@ -13,7 +13,7 @@
 | E1 primary ENTRY_CALLED | yes |
 | E2 JJFB_MRC_INIT | yes |
 | E4 ret0=0 (DOCUMENTED args) | yes |
-| E4 DRAW/REFRESH | yes |
+| E4 DRAW/REFRESH | no |
 | mrc_loader ENTRY_CALLED | yes |
 | primary EXTRACTED | yes |
 | primary MAPPED | yes |

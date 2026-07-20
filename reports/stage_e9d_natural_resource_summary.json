@@ -1,0 +1,11 @@
+﻿{
+    "stage":  "E9D",
+    "mode":  "natural",
+    "verdict":  "NATURAL_MEMBER_RESOLVE_FIXED_FIRST_FRAME",
+    "elapsed_sec":  94.34,
+    "natural_fixed":  true,
+    "bridge":  false,
+    "matched_name":  "wy_jiao1!11!11.bmp",
+    "cmp_matches":  1,
+    "note":  "NOT_PRODUCT_SUCCESS; host strcmp shim at 0x304F92 for broken DSM stub"
+}

@@ -170,12 +170,13 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST / E8P..E9C: do not stop on 30103C alone.
+  # FAST_ASSIST / E8P..E9D: do not stop on 30103C alone.
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
   $e9bMode = ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_VISIBLE_WINDOW -eq '1')
-  $e9aMode = ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_REAL_MRP_MEMBER_BRIDGE -eq '1') -or ($env:JJFB_REAL_MRP_MEMBER_BRIDGE_ALL -eq '1') -or $e9bMode
+  $e9dMode = ($env:JJFB_E9D_MODE -eq '1')
+  $e9aMode = ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_REAL_MRP_MEMBER_BRIDGE -eq '1') -or ($env:JJFB_REAL_MRP_MEMBER_BRIDGE_ALL -eq '1') -or $e9bMode -or $e9dMode
   $e8zMode = ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_FAST_REAL_BMP_HANDLE -eq '1') -or $e9aMode
   $e8yMode = (($env:JJFB_E8Y_MODE -eq '1') -or $e8zMode) -and -not ($env:JJFB_E8Z_MODE -eq '0')
   if ($e8zMode) { $e8yMode = $true }
@@ -190,6 +191,9 @@ if ($e8oFast) {
   if ($e9bMode) {
     # Wait until present-hold finishes (do not kill on early PRESENTED print).
     $stopPat = "JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_VISIBLE_WINDOW\] class=WINDOW_CAPTURE_STILL_BLANK|JJFB_VISIBLE_WINDOW\] class=WINDOW_PRESENT_BLOCKED_|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
+  } elseif ($e9dMode) {
+    # Do not stop on NATURAL_MATCH alone (mid 0x304BF0); wait for resolve return / frame.
+    $stopPat = "JJFB_E8Y_2D92E4_RETURN\]|JJFB_FIRST_REAL_FRAME_REACHED\]|JJFB_VISIBLE_WINDOW_HOLD_DONE\]|JJFB_E9D_NATURAL_LOAD_FAIL\]|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"
   } elseif ($e9aMode -or $e8zMode) {
     $tickStop = 'tick_2|tick_30|tick_40|tick=2\b|tick=30\b|tick=40\b'
     $stopPat = "JJFB_FIRST_REAL_FRAME_REACHED\]|JJFB_E8Z_SPRITE_BLIT\]|JJFB_E8Z_CLASS\] class=DRAW_API_WITH_|\[JJFB_DRAW\] api=mr_drawBitmap bmp=0x0\b|JJFB_E8Y_SUMMARY\] reason=($tickStop)|JJFB_E8W_SUMMARY\] reason=($tickStop)|JJFB_LIFECYCLE\] op=FIRE_DONE tick=(30|40|80|100|600)\b|UC_MEM_READ_UNMAPPED|UC_MEM_WRITE_UNMAPPED|mythroad exit|br_mem_get failed"

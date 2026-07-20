@@ -189,6 +189,19 @@ static struct {
     uint32_t e9a_bridge_miss_n;
     uint32_t e9a_pixel_slot;
     int e9a_post_a64_draw_skip; /* after first bridged A64 store → 0x2F45A2 */
+    /* E9D: natural 0x304BF0 name match (instrument + optional host strcmp shim). */
+    int e9d_mode;
+    int e9d_strcmp_shim; /* JJFB_E9D_STRCMP_SHIM — host strcmp at 0x304F92 */
+    int e9d_bridge_fallback; /* natural first; bridge only on miss/timeout */
+    uint32_t e9d_cmp_n;
+    uint32_t e9d_cmp_match_n;
+    uint32_t e9d_shim_n;
+    uint32_t e9d_natural_hit_n;
+    uint32_t e9d_req_n;
+    char e9d_req_name[96];
+    uint32_t e9d_req_tick;
+    FILE *e9d_cmp_csv;
+    FILE *e9d_req_csv;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -704,7 +717,29 @@ int robotol_flag_writer_trace_enabled(void) {
         g_e8f.e9a_mode = env1("JJFB_E9A_MODE");
         g_e8f.e9a_member_bridge = env1("JJFB_REAL_MRP_MEMBER_BRIDGE") ||
                                   env1("JJFB_REAL_MRP_MEMBER_BRIDGE_ALL");
-        if (g_e8f.e9a_mode || g_e8f.e9a_member_bridge) {
+        /* E9D: natural name match; strcmp shim default-on when E9D_MODE=1. */
+        g_e8f.e9d_mode = env1("JJFB_E9D_MODE");
+        g_e8f.e9d_strcmp_shim = env1("JJFB_E9D_STRCMP_SHIM") || g_e8f.e9d_mode;
+        g_e8f.e9d_bridge_fallback = env1("JJFB_E9D_BRIDGE_FALLBACK");
+        if (g_e8f.e9d_mode) {
+            g_e8f.e9a_mode = 1;
+            /* Natural path: do not force bridge unless fallback mode. */
+            if (!g_e8f.e9d_bridge_fallback)
+                g_e8f.e9a_member_bridge = 0;
+            g_e8f.e8z_member_fastpath = 0;
+            /* Must not pre-seed A64/real-bmp handles — that skips 0x304BF0 entirely. */
+            if (!g_e8f.e9d_bridge_fallback) {
+                g_e8f.e8z_real_bmp = 0;
+                g_e8f.e8y_a64_assist = 0;
+            }
+            printf("[JJFB_E9D_NATURAL] enabled=1 strcmp_shim=%d bridge_fallback=%d "
+                   "real_bmp=%d a64_assist=%d "
+                   "note=fix_304F92_DSM_strcmp_stub NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9d_strcmp_shim, g_e8f.e9d_bridge_fallback, g_e8f.e8z_real_bmp,
+                   g_e8f.e8y_a64_assist);
+            fflush(stdout);
+        }
+        if (g_e8f.e9a_mode || g_e8f.e9a_member_bridge || g_e8f.e9d_mode) {
             g_e8f.e9a_mode = 1;
             g_e8f.e8z_mode = 1;
             g_e8f.e8y_mode = 1;
@@ -721,11 +756,10 @@ int robotol_flag_writer_trace_enabled(void) {
             if (!g_e8f.e8w_f6c_assist)
                 g_e8f.e8w_f6c_assist = 1;
             g_e8f.e8w_reenter_e88cc = 1;
-            /* Bridge path: do NOT auto-enable A64 structural assist (keep A64=0 so 2D92E4 runs). */
-            printf("[JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=%d real_bmp=%d "
+            printf("[JJFB_E9A_FIRSTFRAME] enabled=1 member_bridge=%d real_bmp=%d e9d=%d "
                    "note=stabilize_and_naturalize_304BF0 NOT_PRODUCT_SUCCESS "
                    "evidence=HYPOTHESIS\n",
-                   g_e8f.e9a_member_bridge, g_e8f.e8z_real_bmp);
+                   g_e8f.e9a_member_bridge, g_e8f.e8z_real_bmp, g_e8f.e9d_mode);
             fflush(stdout);
         }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
@@ -736,7 +770,7 @@ int robotol_flag_writer_trace_enabled(void) {
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
                         g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
-                        g_e8f.e8z_mode || g_e8f.e9a_mode;
+                        g_e8f.e8z_mode || g_e8f.e9a_mode || g_e8f.e9d_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -851,6 +885,10 @@ static void on_e8y_2d92e4_insn(uc_engine *uc, uint64_t address, uint32_t size, v
 static void e8y_dump_name(uc_engine *uc, uint32_t name_va);
 static int e9a_try_member_bridge(uc_engine *uc, uint32_t name_va, uint32_t handle_va,
                                  uint32_t out_pixels_va, uint32_t lr);
+static void e9d_open_csvs(void);
+static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1);
+static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t r0, uint32_t r1,
+                               uint32_t r2);
 
 static void dump_hex_line(const char *tag, uint32_t addr, const uint8_t *buf, int n) {
     int i;
@@ -1218,7 +1256,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         } else if (g_e8f.e8y_mode &&
                    (bp->pc == 0x2D92E4u || bp->pc == 0x2F44C8u || bp->pc == 0x2F44CEu ||
                     bp->pc == 0x2F44E4u || bp->pc == 0x2F44EEu || bp->pc == 0x304BF0u ||
-                    bp->pc == 0x2FD868u || bp->pc == 0x2F8528u || bp->pc == 0x2F6BD4u)) {
+                    bp->pc == 0x2FD868u || bp->pc == 0x2F8528u || bp->pc == 0x2F6BD4u ||
+                    bp->pc == 0x304F26u || bp->pc == 0x304F7Au || bp->pc == 0x304F92u)) {
             uint32_t r2 = 0, r3 = 0, a64 = 0, a68 = 0, a6c = 0, fp1450 = 0, fp144c = 0;
             uc_reg_read(uc, UC_ARM_REG_R2, &r2);
             uc_reg_read(uc, UC_ARM_REG_R3, &r3);
@@ -1229,7 +1268,13 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x1450u, &fp1450);
                 (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x144Cu, &fp144c);
             }
-            if (bp->pc == 0x2D92E4u) {
+            if (bp->pc == 0x304F92u && g_e8f.e9d_mode) {
+                if (e9d_try_strcmp_shim(uc, r0, r1))
+                    return;
+            } else if ((bp->pc == 0x304F26u || bp->pc == 0x304F7Au) && g_e8f.e9d_mode) {
+                if (e9d_try_memcpy_shim(uc, bp->pc, r0, r1, r2))
+                    return;
+            } else if (bp->pc == 0x2D92E4u) {
                 g_e8f.e8y_2d92e4_n++;
                 g_e8f.e8y_last_name_va = r1;
                 e8y_dump_name(uc, r1);
@@ -1291,7 +1336,23 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 printf("[JJFB_E8Z_304BF0] lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
                        "name=\"%s\" note=mrp_member_lookup evidence=OBSERVED\n",
                        lr, r0, r1, r2, r3, g_e8f.e8y_last_name);
-                /* E9A: replace stalled guest index scan with host mrp_archive decode. */
+                if (g_e8f.e9d_mode) {
+                    e9d_open_csvs();
+                    g_e8f.e9d_req_n++;
+                    g_e8f.e9d_req_tick = g_e8f.tick;
+                    snprintf(g_e8f.e9d_req_name, sizeof(g_e8f.e9d_req_name), "%s",
+                             g_e8f.e8y_last_name);
+                    if (g_e8f.e9d_req_csv) {
+                        fprintf(g_e8f.e9d_req_csv, "%u,%u,0x%X,0x%X,\"%s\",0,0,enter_304BF0\n",
+                                g_e8f.e9d_req_n, g_e8f.tick, bp->pc, lr, g_e8f.e8y_last_name);
+                        fflush(g_e8f.e9d_req_csv);
+                    }
+                    printf("[JJFB_E9D_REQUEST] n=%u name=\"%s\" lr=0x%X tick=%u "
+                           "evidence=OBSERVED\n",
+                           g_e8f.e9d_req_n, g_e8f.e8y_last_name, lr, g_e8f.tick);
+                    fflush(stdout);
+                }
+                /* E9A/E9D fallback: host decode only when bridge enabled. */
                 if (g_e8f.e9a_member_bridge) {
                     if (e9a_try_member_bridge(uc, r1, r3, r2, lr))
                         return;
@@ -1759,6 +1820,162 @@ static void e8y_dump_name(uc_engine *uc, uint32_t name_va) {
     g_e8f.e8y_last_name[n] = '\0';
 }
 
+/* E9D: peek C-string + hex for name compare dumps. */
+static int e9d_peek_cstr(uc_engine *uc, uint32_t va, char *ascii, int asciicap, char *hex,
+                         int hexcap, int *out_len) {
+    uint8_t buf[96];
+    int i, n = 0, hl = 0;
+    if (ascii && asciicap > 0) ascii[0] = 0;
+    if (hex && hexcap > 0) hex[0] = 0;
+    if (out_len) *out_len = 0;
+    if (!uc || !va) return 0;
+    memset(buf, 0, sizeof(buf));
+    if (!guest_memory_uc_peek((struct uc_struct *)uc, va, buf, (int)sizeof(buf) - 1))
+        return 0;
+    for (i = 0; i < (int)sizeof(buf) - 1 && buf[i]; i++) {
+        if (ascii && n < asciicap - 1) {
+            char c = (char)buf[i];
+            ascii[n++] = (c < 32 || c > 126) ? '.' : c;
+        }
+        if (hex && hl + 2 < hexcap) {
+            static const char *hd = "0123456789abcdef";
+            hex[hl++] = hd[buf[i] >> 4];
+            hex[hl++] = hd[buf[i] & 0xF];
+        }
+    }
+    if (ascii && asciicap > 0) ascii[n] = 0;
+    if (hex && hexcap > 0) hex[hl] = 0;
+    if (out_len) *out_len = i;
+    return 1;
+}
+
+static void e9d_open_csvs(void) {
+    const char *cmp_path;
+    const char *req_path;
+    if (!g_e8f.e9d_mode) return;
+    cmp_path = getenv("JJFB_E9D_COMPARE_CSV");
+    if (!cmp_path || !cmp_path[0]) cmp_path = "reports/e9d_name_compare_debug.csv";
+    req_path = getenv("JJFB_E9D_REQUEST_CSV");
+    if (!req_path || !req_path[0]) req_path = "reports/e9d_resource_request_trace.csv";
+    if (!g_e8f.e9d_cmp_csv) {
+        g_e8f.e9d_cmp_csv = fopen(cmp_path, "w");
+        if (g_e8f.e9d_cmp_csv) {
+            fprintf(g_e8f.e9d_cmp_csv,
+                    "n,tick,req_va,idx_va,req_ascii,idx_ascii,req_hex,idx_hex,req_len,"
+                    "idx_len,first_mismatch,host_strcmp,shim,cause\n");
+            fflush(g_e8f.e9d_cmp_csv);
+        }
+    }
+    if (!g_e8f.e9d_req_csv) {
+        g_e8f.e9d_req_csv = fopen(req_path, "w");
+        if (g_e8f.e9d_req_csv) {
+            fprintf(g_e8f.e9d_req_csv,
+                    "n,tick,pc,lr,name,natural_ok,bridge_used,note\n");
+            fflush(g_e8f.e9d_req_csv);
+        }
+    }
+}
+
+static int e9d_first_mismatch(const char *a, const char *b) {
+    int i = 0;
+    if (!a) a = "";
+    if (!b) b = "";
+    while (a[i] && b[i] && a[i] == b[i]) i++;
+    if (a[i] == b[i]) return -1;
+    return i;
+}
+
+/* Host memcpy shim for 0x304F26 (read u32 name_len) and 0x304F7A (copy name).
+ * Same DSM table+0xc stub path as strcmp — each call costs a full R9 module switch
+ * and made a 20-entry scan miss the budget before reaching wy_jiao1. */
+static int e9d_try_memcpy_shim(uc_engine *uc, uint32_t pc, uint32_t dst, uint32_t src,
+                               uint32_t n) {
+    uint8_t buf[128];
+    uint32_t ret_pc;
+    if (!g_e8f.e9d_mode || !g_e8f.e9d_strcmp_shim || !uc) return 0;
+    if (n == 0 || n > sizeof(buf)) return 0;
+    if (!dst || !src) return 0;
+    memset(buf, 0, sizeof(buf));
+    if (!guest_memory_uc_peek((struct uc_struct *)uc, src, buf, (int)n)) return 0;
+    if (!guest_memory_uc_poke((struct uc_struct *)uc, dst, buf, (int)n)) return 0;
+    ret_pc = (pc + 2u) | 1u; /* Thumb: land on insn after BLX */
+    uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+    if (g_e8f.e9d_cmp_n < 3u && pc == 0x304F26u) {
+        uint32_t len = (uint32_t)buf[0] | ((uint32_t)buf[1] << 8) | ((uint32_t)buf[2] << 16) |
+                       ((uint32_t)buf[3] << 24);
+        printf("[JJFB_E9D_MEMCPY_SHIM] pc=0x%X dst=0x%X src=0x%X n=%u name_len=%u "
+               "evidence=OBSERVED\n",
+               pc, dst, src, n, len);
+        fflush(stdout);
+    }
+    return 1;
+}
+
+/* Host strcmp shim: DSM stub at table+0x28 (0xAC2D0) does movs r0,#1 and destroys
+ * the requested-name pointer before dispatch — guest strcmp never sees both strings. */
+static int e9d_try_strcmp_shim(uc_engine *uc, uint32_t r0, uint32_t r1) {
+    char req[96], idx[96], req_hex[200], idx_hex[200];
+    int req_len = 0, idx_len = 0, mism = -1, cmp, cause_wrong_cb = 0;
+    uint32_t ret_pc;
+    const char *cause = "OK_HOST_STRCMP";
+    if (!g_e8f.e9d_mode || !uc) return 0;
+    e9d_open_csvs();
+    e9d_peek_cstr(uc, r0, req, (int)sizeof(req), req_hex, (int)sizeof(req_hex), &req_len);
+    e9d_peek_cstr(uc, r1, idx, (int)sizeof(idx), idx_hex, (int)sizeof(idx_hex), &idx_len);
+    mism = e9d_first_mismatch(req, idx);
+    cmp = strcmp(req, idx);
+    g_e8f.e9d_cmp_n++;
+    if (cmp == 0) g_e8f.e9d_cmp_match_n++;
+    if (strchr(req, '!') || strchr(idx, '!')) {
+        if (cmp != 0 && mism >= 0 && req[mism] == '!' && idx[mism] != '!')
+            cause = "EXCLAMATION_SEPARATOR_MISMATCH";
+        else if (cmp != 0)
+            cause = "CASE_OR_ENCODING_MISMATCH";
+    } else if (cmp != 0) {
+        cause = "CASE_OR_ENCODING_MISMATCH";
+    }
+    if (g_e8f.e9d_cmp_n <= 40u || cmp == 0 || (g_e8f.e9d_cmp_n % 10u) == 0u) {
+        printf("[JJFB_E9D_NAME_COMPARE] n=%u tick=%u req_va=0x%X idx_va=0x%X "
+               "req=\"%s\" idx=\"%s\" req_len=%d idx_len=%d first_mismatch=%d "
+               "host_strcmp=%d cause=%s evidence=OBSERVED\n",
+               g_e8f.e9d_cmp_n, g_e8f.tick, r0, r1, req, idx, req_len, idx_len, mism, cmp,
+               cause);
+        fflush(stdout);
+    }
+    if (g_e8f.e9d_cmp_csv) {
+        fprintf(g_e8f.e9d_cmp_csv,
+                "%u,%u,0x%X,0x%X,\"%s\",\"%s\",%s,%s,%d,%d,%d,%d,%d,%s\n",
+                g_e8f.e9d_cmp_n, g_e8f.tick, r0, r1, req, idx, req_hex, idx_hex, req_len,
+                idx_len, mism, cmp, g_e8f.e9d_strcmp_shim ? 1 : 0, cause);
+        fflush(g_e8f.e9d_cmp_csv);
+    }
+    if (!g_e8f.e9d_strcmp_shim) return 0;
+    /* Skip guest BLX to broken DSM stub; land on cmp r0,#0 at 0x304F94. */
+    {
+        uint32_t status = (uint32_t)(int32_t)cmp;
+        ret_pc = 0x304F94u | 1u;
+        uc_reg_write(uc, UC_ARM_REG_R0, &status);
+        uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+    }
+    g_e8f.e9d_shim_n++;
+    if (cmp == 0) {
+        g_e8f.e9d_natural_hit_n++;
+        printf("[JJFB_E9D_NATURAL_MATCH] name=\"%s\" n=%u shim=%u "
+               "class=NATURAL_MEMBER_RESOLVE_FIXED_FIRST_FRAME "
+               "note=host_strcmp_shim_skips_DSM_stub NOT_PRODUCT evidence=OBSERVED\n",
+               req, g_e8f.e9d_cmp_n, g_e8f.e9d_shim_n);
+        printf("[NATURAL_MEMBER_RESOLVE_FIXED_FIRST_FRAME] name=\"%s\" evidence=OBSERVED\n",
+               req);
+        fflush(stdout);
+        (void)cause_wrong_cb;
+    } else if (g_e8f.e9d_cmp_n == 1u) {
+        printf("[NATURAL_MEMBER_RESOLVE_BLOCKED_BY_NAME] note=waiting_for_match "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+    }
+    return 1;
+}
+
 static void on_e8y_2d92e4_insn(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
     uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, lr = 0, pc = (uint32_t)address;
     uint16_t half = 0;
@@ -1994,6 +2211,17 @@ void robotol_flag_writer_trace_try_arm(void *uc) {
         add_bp(0x2FD868u, "y2FD868");
         add_bp(0x2F8528u, "y2F8528");
         add_bp(0x2F6BD4u, "y2F6BD4");
+        if (g_e8f.e9d_mode) {
+            add_bp(0x304F26u, "d304F26"); /* read name_len via memcpy */
+            add_bp(0x304F7Au, "d304F7A"); /* copy name bytes */
+            add_bp(0x304F92u, "d304F92"); /* strcmp — shim target */
+#ifdef GWY_HAVE_UNICORN
+            e9d_open_csvs();
+#endif
+            printf("[JJFB_E9D_BP] compare=0x304F26/0x304F7A/0x304F92 shim=%d "
+                   "evidence=HYPOTHESIS\n",
+                   g_e8f.e9d_strcmp_shim);
+        }
         printf("[JJFB_E8Y_BP] resolve=0x2D92E4 stores=0x2F44CE/E4/EE helpers=0x304BF0,"
                "0x2FD868,0x2F8528 evidence=HYPOTHESIS\n");
         fflush(stdout);
