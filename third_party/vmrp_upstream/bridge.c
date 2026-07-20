@@ -2356,10 +2356,6 @@ static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbyt
     int fallback = 0;
     RECT rc;
     SIZE sz;
-    (void)clip_x;
-    (void)clip_y;
-    (void)clip_w;
-    (void)clip_h;
     if (!bytes || nbytes <= 0) return 0;
     if (!fg_rgb565) fg_rgb565 = 0xFFFFu;
 
@@ -2448,10 +2444,88 @@ static int jjfb_plat_11f00_gdi_draw(int x, int y, const uint8_t *bytes, int nbyt
             }
         }
         if (lit > 0) {
-            guiDrawBitmapSprite(out565, (int32_t)x, (int32_t)y, tw, th);
+            const char *blit_mode = getenv("JJFB_E9P_TEXT_BLIT");
+            int clip_l = clip_x, clip_t = clip_y, clip_r, clip_b;
+            int dx = x, dy = y, dw = tw, dh = th;
+            uint16_t key = 0;
+            /* Default: transparent glyph-only (skip RGB565 0). Opaque only if forced. */
+            if (!blit_mode || !blit_mode[0]) blit_mode = "transparent";
+            if (clip_w <= 0) clip_w = 240;
+            if (clip_h <= 0) clip_h = 320;
+            clip_r = clip_l + clip_w;
+            clip_b = clip_t + clip_h;
+            if (clip_r > 240) clip_r = 240;
+            if (clip_b > 320) clip_b = 320;
+            /* Clip destination to platform clip box. */
+            if (dx < clip_l) {
+                dw -= (clip_l - dx);
+                dx = clip_l;
+            }
+            if (dy < clip_t) {
+                dh -= (clip_t - dy);
+                dy = clip_t;
+            }
+            if (dx + dw > clip_r) dw = clip_r - dx;
+            if (dy + dh > clip_b) dh = clip_b - dy;
+            if (dw <= 0 || dh <= 0) {
+                printf("[JJFB_E9P_CLASS] class=PLATFORM_TEXT_ALPHA_BLEND_FAILED "
+                       "note=clip_empty evidence=OBSERVED\n");
+                fflush(stdout);
+            } else if (blit_mode[0] == 'o' || blit_mode[0] == 'O') {
+                /* opaque: legacy E9O black-box behavior (compare baseline) */
+                guiDrawBitmapSprite(out565, (int32_t)x, (int32_t)y, tw, th);
+                printf("[JJFB_E9P_CLASS] class=PLATFORM_TEXT_STILL_OPAQUE_BACKGROUND "
+                       "blit=opaque lit=%d @%d,%d evidence=OBSERVED\n",
+                       lit, x, y);
+                fflush(stdout);
+            } else {
+                if (blit_mode[0] == 'c' || blit_mode[0] == 'C') {
+                    /* colorkey: paint unused as magenta key then skip */
+                    key = 0xF81Fu;
+                    for (j = 0; j < th; j++) {
+                        for (i = 0; i < tw; i++) {
+                            if (out565[j * tw + i] == 0) out565[j * tw + i] = key;
+                        }
+                    }
+                } else {
+                    key = 0; /* transparent: skip black/zero bg */
+                }
+                /* If clip shrunk origin, rebuild a clipped sub-bitmap. */
+                if (dx != x || dy != y || dw != tw || dh != th) {
+                    uint16_t *sub = (uint16_t *)calloc((size_t)dw * (size_t)dh, sizeof(uint16_t));
+                    int ox = dx - x, oy = dy - y;
+                    if (sub) {
+                        for (j = 0; j < dh; j++) {
+                            for (i = 0; i < dw; i++) {
+                                int sx = ox + i, sy = oy + j;
+                                if (sx >= 0 && sy >= 0 && sx < tw && sy < th)
+                                    sub[j * dw + i] = out565[sy * tw + sx];
+                                else
+                                    sub[j * dw + i] = key;
+                            }
+                        }
+                        guiDrawBitmapSpriteKey(sub, dx, dy, dw, dh, key);
+                        free(sub);
+                    } else {
+                        guiDrawBitmapSpriteKey(out565, (int32_t)x, (int32_t)y, tw, th, key);
+                    }
+                } else {
+                    guiDrawBitmapSpriteKey(out565, (int32_t)x, (int32_t)y, tw, th, key);
+                }
+                if (key == 0xF81Fu) {
+                    printf("[JJFB_E9P_CLASS] class=PLATFORM_TEXT_COLORKEY_RENDERED "
+                           "lit=%d key=0xF81F @%d,%d evidence=OBSERVED\n",
+                           lit, dx, dy);
+                } else {
+                    printf("[JJFB_E9P_CLASS] class=PLATFORM_TEXT_TRANSPARENT_RENDERED "
+                           "lit=%d key=0 @%d,%d evidence=OBSERVED\n",
+                           lit, dx, dy);
+                }
+                fflush(stdout);
+            }
             printf("[JJFB_PLATFORM_TEXT_API_11F00] font=%s fallback=%d gdi=%dx%d lit=%d "
-                   "@%d,%d evidence=OBSERVED\n",
-                   s_face_utf8, fallback, tw, th, lit, x, y);
+                   "blit=%s @%d,%d evidence=OBSERVED\n",
+                   s_face_utf8, fallback, tw, th, lit, blit_mode, x, y);
             fflush(stdout);
         } else {
             free(out565);

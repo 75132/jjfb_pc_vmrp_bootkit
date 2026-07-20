@@ -387,7 +387,7 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
     int e9b = env1("JJFB_E9B_MODE") || env1("JJFB_E9C_MODE") || env1("JJFB_VISIBLE_WINDOW");
     int e9j = env1("JJFB_E9J_MODE");
     int e9k = env1("JJFB_E9K_MODE") || env1("JJFB_E9L_MODE") || env1("JJFB_E9M_MODE") ||
-              env1("JJFB_E9N_MODE") || env1("JJFB_E9O_MODE");
+              env1("JJFB_E9N_MODE") || env1("JJFB_E9O_MODE") || env1("JJFB_E9P_MODE");
     /* E9K/E9L/E9M: do not hold on early progress blits — post-r4/text may need guest to continue.
      * Hold is armed from robotol via jjfb_e9k_request_hold → guiVisibleWindowFinalize. */
     int defer_hold = env1("JJFB_E9C_DEFER_HOLD") || e9j || e9k;
@@ -510,6 +510,63 @@ void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t
         fflush(stdout);
         e9b_after_first_frame_present(surface, other > 0 ? other : 1u, white, black);
     }
+}
+
+/* E9P: color-key sprite blit — only non-key pixels modify the SDL surface.
+ * Used by platform 0x11F00 text so black GDI background does not cover splash UI. */
+void guiDrawBitmapSpriteKey(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h,
+                            uint16_t key_color) {
+    SDL_Surface *surface;
+    int32_t j, i;
+    uint32_t lit = 0, skipped = 0;
+    int zoom = g_window_zoom > 0 ? g_window_zoom : 1;
+    if (!bmp || w <= 0 || h <= 0) return;
+    surface = SDL_GetWindowSurface(window);
+    if (!surface) {
+        printf("[JJFB_E9P_CLASS] class=PLATFORM_TEXT_ALPHA_BLEND_FAILED note=no_surface "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    if (SDL_MUSTLOCK(surface)) {
+        if (SDL_LockSurface(surface) != 0) printf("SDL_LockSurface err\n");
+    }
+    for (j = 0; j < h; j++) {
+        for (i = 0; i < w; i++) {
+            int32_t xx = x + i;
+            int32_t yy = y + j;
+            uint16_t color;
+            int zi, zj;
+            if (xx < 0 || yy < 0 || xx >= SCREEN_WIDTH || yy >= SCREEN_HEIGHT)
+                continue;
+            color = bmp[(uint32_t)j * (uint32_t)w + (uint32_t)i];
+            if (color == key_color) {
+                skipped++;
+                continue;
+            }
+            lit++;
+            for (zj = 0; zj < zoom; zj++) {
+                for (zi = 0; zi < zoom; zi++) {
+                    int dx = xx * zoom + zi;
+                    int dy = yy * zoom + zj;
+                    Uint32 *p;
+                    if (dx < 0 || dy < 0 || dx >= surface->w || dy >= surface->h)
+                        continue;
+                    p = (Uint32 *)(((Uint8 *)surface->pixels) + surface->pitch * dy) + dx;
+                    *p = SDL_MapRGB(surface->format, PIXEL565R(color), PIXEL565G(color),
+                                    PIXEL565B(color));
+                }
+            }
+        }
+    }
+    if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
+    guiPumpEvents();
+    (void)SDL_UpdateWindowSurface(window);
+    guiPumpEvents();
+    printf("[JJFB_E9P_TEXT_BLIT] mode=colorkey key=0x%04X x=%d y=%d w=%d h=%d lit=%u "
+           "skipped=%u evidence=OBSERVED\n",
+           (unsigned)key_color, (int)x, (int)y, (int)w, (int)h, lit, skipped);
+    fflush(stdout);
 }
 
 #ifdef __EMSCRIPTEN__

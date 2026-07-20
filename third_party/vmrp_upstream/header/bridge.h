@@ -36,6 +36,9 @@ typedef struct BridgeMap {
 extern void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h);
 /* E8Z: sprite buffer with pitch=w (handle+4 from 0x310BBC), not full LCD. */
 extern void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h);
+/* E9P: sprite blit skipping color-key pixels (0 = transparent for platform text). */
+extern void guiDrawBitmapSpriteKey(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h,
+                                   uint16_t key_color);
 /* E9B: pump SDL/Win32 messages during Unicorn slices (avoid Not Responding). */
 extern void guiPumpEvents(void);
 /* E9C: HWND capture + responsive hold after multi-tile contactsheet. */
