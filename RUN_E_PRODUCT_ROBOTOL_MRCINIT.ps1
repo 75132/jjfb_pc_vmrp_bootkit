@@ -170,12 +170,13 @@ $e8kMode = ($env:JJFB_E8K_MODE -eq '1')
 $e8lMode = ($env:JJFB_E8L_MODE -eq '1')
 $e8mMode = ($env:JJFB_E8M_MODE -eq '1')
 $e8nMode = ($env:JJFB_E8N_MODE -eq '1')
-$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_E9I_MODE -eq '1') -or ($env:JJFB_E9J_MODE -eq '1') -or ($env:JJFB_E9K_MODE -eq '1') -or ($env:JJFB_E9L_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
+$e8oFast = ($env:JJFB_FAST_ASSIST -eq '1') -or ($env:JJFB_E8O_MODE -eq '1') -or ($env:JJFB_E8P_MODE -eq '1') -or ($env:JJFB_E8Q_MODE -eq '1') -or ($env:JJFB_E8R_MODE -eq '1') -or ($env:JJFB_E8S_MODE -eq '1') -or ($env:JJFB_E8T_MODE -eq '1') -or ($env:JJFB_E8U_MODE -eq '1') -or ($env:JJFB_E8V_MODE -eq '1') -or ($env:JJFB_E8W_MODE -eq '1') -or ($env:JJFB_E8X_MODE -eq '1') -or ($env:JJFB_E8Y_MODE -eq '1') -or ($env:JJFB_E8Z_MODE -eq '1') -or ($env:JJFB_E9A_MODE -eq '1') -or ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_E9D_MODE -eq '1') -or ($env:JJFB_E9E_MODE -eq '1') -or ($env:JJFB_E9F_MODE -eq '1') -or ($env:JJFB_E9G_MODE -eq '1') -or ($env:JJFB_E9H_MODE -eq '1') -or ($env:JJFB_E9I_MODE -eq '1') -or ($env:JJFB_E9J_MODE -eq '1') -or ($env:JJFB_E9K_MODE -eq '1') -or ($env:JJFB_E9L_MODE -eq '1') -or ($env:JJFB_E9M_MODE -eq '1') -or ($env:JJFB_DISPLAY_FIRST -eq '1')
 if ($e8oFast) {
-  # FAST_ASSIST / E8P..E9L: do not stop on 30103C alone.
+  # FAST_ASSIST / E8P..E9M: do not stop on 30103C alone.
   $svcMode = "$env:JJFB_FAST_SVC_AB".ToLowerInvariant()
   $e9bMode = ($env:JJFB_E9B_MODE -eq '1') -or ($env:JJFB_E9C_MODE -eq '1') -or ($env:JJFB_VISIBLE_WINDOW -eq '1')
-  $e9lMode = ($env:JJFB_E9L_MODE -eq '1')
+  $e9mMode = ($env:JJFB_E9M_MODE -eq '1')
+  $e9lMode = ($env:JJFB_E9L_MODE -eq '1') -or $e9mMode
   $e9kMode = ($env:JJFB_E9K_MODE -eq '1') -or $e9lMode
   $e9jMode = ($env:JJFB_E9J_MODE -eq '1') -or $e9kMode
   $e9iMode = ($env:JJFB_E9I_MODE -eq '1') -or $e9jMode

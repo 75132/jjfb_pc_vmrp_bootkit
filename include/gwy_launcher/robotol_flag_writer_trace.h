@@ -161,6 +161,13 @@ extern "C" {
  *   JJFB_E9L_WRITER_CSV / 305E78_CSV / TEXT_CSV
  *   818/81C are screen dims (same family as 830/834), not a font object pointer.
  *
+ * E9M-Text ABI / measure return (NOT product success):
+ *   JJFB_E9M_MODE=1                — decode 0x305BFC ABI; fix measure/layout r1
+ *   JJFB_FAST_TEXT_MEASURE_SHIM=1  — write plausible w/h after plat 0x12340
+ *   JJFB_FAST_TEXT_LAYOUT_ASSIST=1 — repair bad x at real caller 0x2EFBA2
+ *   JJFB_E9M_ABI_CSV / MEAS_CSV / LAYOUT_CSV
+ *   Root cause: x=(W-height_out)/2; garbage height → r1=0xFFE7917B.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.
