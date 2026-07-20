@@ -92,12 +92,11 @@ extern "C" {
  *   Gate: open if F74!=0 OR F70!=0 (not a heap object at [R9+F6C]).
  *   No C9D/CF5 poke / no fake DRAW / no framebuffer paint.
  *
- * E8X-FirstFrame (NOT product success):
- *   JJFB_E8X_MODE=1                — deep-trace 0x2F2854→0x2EA188→0x2F449C
- *   JJFB_E8X_INSN_LIMIT=<n>        — max logged insns on draw path (default 3000)
- *   JJFB_E8X_CALL_2F99D0=1         — Case B: call real F74 producer (ABI-safe)
- *   JJFB_FAST_F74_DESCRIPTOR_ASSIST=1 — Case C: poke R9+0x830/818/81C dims only
- *   Pair with E8W Case C baseline (F74 assist + gate retry). No fake DRAW / no paint.
+ * E8Y-FirstFrame (NOT product success):
+ *   JJFB_E8Y_MODE=1                — deep-trace 0x2D92E4 → A64 → 0x310BBC
+ *   JJFB_E8Y_INSN_LIMIT=<n>        — max logged insns in 0x2D92E4 (default 5000)
+ *   JJFB_FAST_A64_RESOURCE_ASSIST=1 — structural A58/A5C/A60/A64 handles (no pixels)
+ *   Implies E8X Case C baseline (F74 + dims). Resource name: wy_jiao*!w!h.bmp
  *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
