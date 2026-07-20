@@ -1,0 +1,4 @@
+n,tick,pc,lr,name,x,y,w,h,source,note
+1,1,0x2EC6B8,0x2EF9E7,"show1!232!100@downimage1.bmp",4,120,232,100,archive_or_guest,blit_2EC6B8_upper
+2,1,0x2EC6B8,0x2EFA9F,"loadingbar!201!29.bmp",19,220,201,29,archive_or_guest,blit_2EC6B8_upper
+3,1,0x2EC6B8,0x2EFAE7,"bar!16!18.bmp",47,226,16,18,archive_or_guest,blit_2EC6B8_upper

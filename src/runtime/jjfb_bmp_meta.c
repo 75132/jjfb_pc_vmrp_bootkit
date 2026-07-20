@@ -1,8 +1,10 @@
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define JJFB_BMP_META_N 16
+#define JJFB_BMP_META_MAX_BYTES (240u * 320u * 2u)
 
 typedef struct {
     int used;
@@ -10,6 +12,8 @@ typedef struct {
     uint16_t w;
     uint16_t h;
     char member[96];
+    uint8_t *pixels;
+    size_t nbytes;
 } JjfbBmpMetaSlot;
 
 static JjfbBmpMetaSlot g_slots[JJFB_BMP_META_N];
@@ -18,14 +22,24 @@ static JjfbE9kHoldFn g_e9k_hold_fn;
 static JjfbE9nTextDrawFn g_e9n_text_draw_fn;
 static int g_e9k_hold_requested;
 
+static void slot_clear_pixels(JjfbBmpMetaSlot *s) {
+    if (!s) return;
+    free(s->pixels);
+    s->pixels = NULL;
+    s->nbytes = 0;
+}
+
 void jjfb_bmp_meta_reset(void) {
+    int i;
+    for (i = 0; i < JJFB_BMP_META_N; i++)
+        slot_clear_pixels(&g_slots[i]);
     memset(g_slots, 0, sizeof(g_slots));
     g_e9k_hold_requested = 0;
 }
 
-void jjfb_bmp_meta_set(uint32_t pixels_va, uint16_t w, uint16_t h, const char *member) {
+static JjfbBmpMetaSlot *slot_upsert(uint32_t pixels_va, uint16_t w, uint16_t h, const char *member) {
     int i, free_i = -1;
-    if (!pixels_va || w == 0 || h == 0) return;
+    if (!pixels_va || w == 0 || h == 0) return NULL;
     for (i = 0; i < JJFB_BMP_META_N; i++) {
         if (g_slots[i].used && g_slots[i].pixels_va == pixels_va) {
             g_slots[i].w = w;
@@ -33,12 +47,12 @@ void jjfb_bmp_meta_set(uint32_t pixels_va, uint16_t w, uint16_t h, const char *m
             memset(g_slots[i].member, 0, sizeof(g_slots[i].member));
             if (member && member[0])
                 strncpy(g_slots[i].member, member, sizeof(g_slots[i].member) - 1);
-            return;
+            return &g_slots[i];
         }
         if (!g_slots[i].used && free_i < 0) free_i = i;
     }
     if (free_i < 0) {
-        /* Full: replace oldest slot (index 0) by shifting left. */
+        slot_clear_pixels(&g_slots[0]);
         memmove(&g_slots[0], &g_slots[1], sizeof(g_slots[0]) * (JJFB_BMP_META_N - 1));
         free_i = JJFB_BMP_META_N - 1;
         memset(&g_slots[free_i], 0, sizeof(g_slots[free_i]));
@@ -49,6 +63,23 @@ void jjfb_bmp_meta_set(uint32_t pixels_va, uint16_t w, uint16_t h, const char *m
     g_slots[free_i].h = h;
     if (member && member[0])
         strncpy(g_slots[free_i].member, member, sizeof(g_slots[free_i].member) - 1);
+    return &g_slots[free_i];
+}
+
+void jjfb_bmp_meta_set(uint32_t pixels_va, uint16_t w, uint16_t h, const char *member) {
+    (void)slot_upsert(pixels_va, w, h, member);
+}
+
+void jjfb_bmp_meta_set_pixels(uint32_t pixels_va, uint16_t w, uint16_t h, const char *member,
+                              const void *rgb565, size_t nbytes) {
+    JjfbBmpMetaSlot *s = slot_upsert(pixels_va, w, h, member);
+    if (!s) return;
+    slot_clear_pixels(s);
+    if (!rgb565 || nbytes == 0 || nbytes > JJFB_BMP_META_MAX_BYTES) return;
+    s->pixels = (uint8_t *)malloc(nbytes);
+    if (!s->pixels) return;
+    memcpy(s->pixels, rgb565, nbytes);
+    s->nbytes = nbytes;
 }
 
 int jjfb_bmp_meta_get(uint32_t pixels_va, uint16_t *w_out, uint16_t *h_out, char *member_out,
@@ -64,6 +95,19 @@ int jjfb_bmp_meta_get(uint32_t pixels_va, uint16_t *w_out, uint16_t *h_out, char
             strncpy(member_out, g_slots[i].member, member_cap - 1);
         }
         return 1;
+    }
+    return 0;
+}
+
+size_t jjfb_bmp_meta_copy_pixels(uint32_t pixels_va, void *dst, size_t dst_cap) {
+    int i;
+    if (!pixels_va || !dst || dst_cap == 0) return 0;
+    for (i = 0; i < JJFB_BMP_META_N; i++) {
+        if (!g_slots[i].used || g_slots[i].pixels_va != pixels_va) continue;
+        if (!g_slots[i].pixels || g_slots[i].nbytes == 0) return 0;
+        if (g_slots[i].nbytes > dst_cap) return 0;
+        memcpy(dst, g_slots[i].pixels, g_slots[i].nbytes);
+        return g_slots[i].nbytes;
     }
     return 0;
 }

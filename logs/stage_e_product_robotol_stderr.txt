@@ -7,7 +7,7 @@ libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
 libpng warning: iCCP: known incorrect sRGB profile
-[VM_FILE_BIND] runtime=1 svc=093153e8
+[VM_FILE_BIND] runtime=1 svc=095352e8
 [JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
 [JJFB_VFS] gwy_vm_file bound=1
 [GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
@@ -40,7 +40,3 @@ libpng warning: iCCP: known incorrect sRGB profile
 [VM_FILE_SEEK] handle=2 pos=231624 method=0 result=ok
 [VM_FILE_READ] handle=2 requested=161178 got=161178 eof=0
 [VM_FILE_CLOSE] handle=2 result=ok
-[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
-[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
-[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
-[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0

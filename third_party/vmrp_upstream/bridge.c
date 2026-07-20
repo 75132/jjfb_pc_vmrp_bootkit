@@ -492,15 +492,26 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
         memset(host_pix, 0, nbytes);
         ue = uc_mem_read(uc, bmp, host_pix, nbytes);
         if (ue != UC_ERR_OK) {
-            printf("[JJFB_E8Z_CLASS] class=BMP_DECODE_FAILED note=uc_mem_read_fail "
-                   "uc_err=%u bmp=0x%X evidence=OBSERVED\n",
-                   (unsigned)ue, bmp);
+            size_t got = 0;
+#ifdef GWY_USE_VM_FILE_SERVICE
+            got = jjfb_bmp_meta_copy_pixels(bmp, host_pix, sizeof(host_pix));
+#endif
+            if (got < nbytes) {
+                printf("[JJFB_E8Z_CLASS] class=BMP_DECODE_FAILED note=uc_mem_read_fail "
+                       "uc_err=%u bmp=0x%X host_cache=%u evidence=OBSERVED\n",
+                       (unsigned)ue, bmp, (unsigned)got);
+                fflush(stdout);
+                return;
+            }
+            printf("[JJFB_E8Z_PIXEL_READ] bmp=0x%X bytes=%u via=host_pixel_cache "
+                   "uc_err=%u evidence=OBSERVED\n",
+                   bmp, (unsigned)got, (unsigned)ue);
             fflush(stdout);
-            return;
+        } else {
+            printf("[JJFB_E8Z_PIXEL_READ] bmp=0x%X bytes=%u first=0x%04X evidence=OBSERVED\n",
+                   bmp, nbytes, (unsigned)host_pix[0]);
+            fflush(stdout);
         }
-        printf("[JJFB_E8Z_PIXEL_READ] bmp=0x%X bytes=%u first=0x%04X evidence=OBSERVED\n",
-               bmp, nbytes, (unsigned)host_pix[0]);
-        fflush(stdout);
         /* If E9C already presented a meaningful frame, skip tiny guest sprite overlay. */
         if (!(e9c && e9c[0] == '1' && getenv("JJFB_E9C_SKIP_TINY") &&
               getenv("JJFB_E9C_SKIP_TINY")[0] == '1' && w <= 16 && h <= 16)) {
@@ -2341,10 +2352,18 @@ static int jjfb_e9h_blit_guest_pixels_impl(void *uc_in, uint32_t pixels_va, int 
     memset(host_pix, 0, nbytes);
     ue = uc_mem_read(uc, pixels_va, host_pix, nbytes);
     if (ue != UC_ERR_OK) {
-        printf("[JJFB_E9H_2EC6B8_BLIT] fail=uc_mem_read uc_err=%u pixels=0x%X evidence=OBSERVED\n",
-               (unsigned)ue, pixels_va);
+        size_t got = jjfb_bmp_meta_copy_pixels(pixels_va, host_pix, sizeof(host_pix));
+        if (got < nbytes) {
+            printf("[JJFB_E9H_2EC6B8_BLIT] fail=uc_mem_read uc_err=%u pixels=0x%X "
+                   "host_cache=%u evidence=OBSERVED\n",
+                   (unsigned)ue, pixels_va, (unsigned)got);
+            fflush(stdout);
+            return 0;
+        }
+        printf("[JJFB_E9H_2EC6B8_BLIT] pixels=0x%X via=host_pixel_cache note=uc_read_fail "
+               "uc_err=%u evidence=OBSERVED\n",
+               pixels_va, (unsigned)ue);
         fflush(stdout);
-        return 0;
     }
     printf("[JJFB_E9H_2EC6B8_BLIT] pixels=0x%X x=%d y=%d w=%d h=%d member=%s "
            "via=guiDrawBitmapSprite_auto_key note=real_mrp_pixels NOT_PRODUCT evidence=OBSERVED\n",
