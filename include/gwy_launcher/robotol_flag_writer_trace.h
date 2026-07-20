@@ -98,6 +98,13 @@ extern "C" {
  *   JJFB_FAST_A64_RESOURCE_ASSIST=1 — structural A58/A5C/A60/A64 handles (no pixels)
  *   Implies E8X Case C baseline (F74 + dims). Resource name: wy_jiao*!w!h.bmp
  *
+ * E8Z-FirstPixel (NOT product success):
+ *   JJFB_E8Z_MODE=1                — real BMP member → nonzero bmp → screenshot
+ *   JJFB_FAST_REAL_BMP_HANDLE=1    — handle+4 = real RGB565 from jjfb.mrp member
+ *   JJFB_DISPLAY_FIRST_MEMBER_FASTPATH=1 — skip stalled 0x304BF0; return real handle
+ *   JJFB_E8Z_BMP_PATH=<file>       — pre-extracted wy_jiao1!11!11.bmp (raw RGB565)
+ *   Pixels must come from original jjfb.mrp; no invented bitmap data.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.

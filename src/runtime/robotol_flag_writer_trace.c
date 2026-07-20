@@ -17,6 +17,13 @@
 #define E8I_STATE_OFF (0x800u + 0xD0u) /* audit-safe: former state/ui word */
 #define E8W_SCRATCH_BASE 0x3900000u
 #define E8W_SCRATCH_SIZE 0x1000u
+#define E8Y_A64_SCRATCH 0x3910000u
+#define E8Y_A64_SCRATCH_SIZE 0x1000u
+#define E8Z_PIXEL_BASE 0x3920000u
+#define E8Z_PIXEL_MAP_SIZE 0x1000u
+#define E8Z_BMP_BYTES 242
+#define E8Z_BMP_W 11
+#define E8Z_BMP_H 11
 
 typedef struct E8fBp {
     int used;
@@ -160,6 +167,17 @@ static struct {
     uint32_t e8y_insn_max;
     uint32_t e8y_last_name_va;
     char e8y_last_name[48];
+    /* E8Z-FirstPixel: real MRP member pixels into handle+4. */
+    int e8z_mode;
+    int e8z_real_bmp; /* JJFB_FAST_REAL_BMP_HANDLE */
+    int e8z_member_fastpath; /* JJFB_DISPLAY_FIRST_MEMBER_FASTPATH */
+    int e8z_real_bmp_done;
+    int e8z_fastpath_done;
+    uint32_t e8z_pixel_va;
+    uint32_t e8z_pixel_bytes;
+    uint32_t e8z_handle_va;
+    uint16_t e8z_bw;
+    uint16_t e8z_bh;
     E8fBp bps[E8F_MAX_BP];
     int nbps;
     uint32_t longpath_hits;
@@ -643,6 +661,34 @@ int robotol_flag_writer_trace_enabled(void) {
                    g_e8f.e8y_a64_assist, g_e8f.e8y_insn_max);
             fflush(stdout);
         }
+        /* E8Z: real BMP pixels into handle+4 → mr_drawBitmap bmp!=0. */
+        g_e8f.e8z_mode = env1("JJFB_E8Z_MODE");
+        g_e8f.e8z_real_bmp = env1("JJFB_FAST_REAL_BMP_HANDLE");
+        g_e8f.e8z_member_fastpath = env1("JJFB_DISPLAY_FIRST_MEMBER_FASTPATH");
+        if (g_e8f.e8z_mode || g_e8f.e8z_real_bmp || g_e8f.e8z_member_fastpath) {
+            g_e8f.e8z_mode = 1;
+            g_e8f.e8y_mode = 1;
+            g_e8f.e8x_mode = 1;
+            g_e8f.e8w_mode = 1;
+            g_e8f.e8v_mode = 1;
+            g_e8f.e8v_e88cc_trace = 1;
+            if (!g_e8f.display_first) {
+                g_e8f.display_first = 1;
+                g_e8f.bypass_c9d_gate = 1;
+            }
+            if (!g_e8f.e8x_f74_desc_assist)
+                g_e8f.e8x_f74_desc_assist = 1;
+            if (!g_e8f.e8w_f6c_assist)
+                g_e8f.e8w_f6c_assist = 1;
+            g_e8f.e8w_reenter_e88cc = 1;
+            if (g_e8f.e8z_real_bmp && !g_e8f.e8y_a64_assist)
+                g_e8f.e8y_a64_assist = 1;
+            printf("[JJFB_E8Z_FIRSTPIXEL] enabled=1 real_bmp=%d member_fastpath=%d "
+                   "note=real_mrp_pixels_to_mr_drawBitmap NOT_PRODUCT_SUCCESS "
+                   "evidence=HYPOTHESIS\n",
+                   g_e8f.e8z_real_bmp, g_e8f.e8z_member_fastpath);
+            fflush(stdout);
+        }
         g_e8f.enabled = g_e8f.writer_bp || g_e8f.sibling_probe || g_e8f.longpath_watch ||
                         g_e8f.caller_bp || g_e8f.fault_watch || g_e8f.dispatcher_bp ||
                         g_e8f.parent_bp || g_e8f.state_watch || g_e8f.e8j_bp ||
@@ -650,7 +696,8 @@ int robotol_flag_writer_trace_enabled(void) {
                         (g_e8f.e8k_10102_case != 0) || (g_e8f.counterfactual[0] != '\0') ||
                         g_e8f.e8m_parent_trace || (g_e8f.e8m_seq[0] != '\0') ||
                         g_e8f.e8n_cf_state_set || g_e8f.fast_assist || g_e8f.display_first ||
-                        g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode;
+                        g_e8f.e8v_mode || g_e8f.e8w_mode || g_e8f.e8x_mode || g_e8f.e8y_mode ||
+                        g_e8f.e8z_mode;
         g_e8f.known = 1;
     }
     return g_e8f.enabled;
@@ -1153,6 +1200,34 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 if (!fp1450)
                     printf("[JJFB_E8Y_CLASS] class=2D92E4_NEEDS_STRLEN_FP "
                            "note=R9_1450_zero_BLX_will_fault evidence=OBSERVED\n");
+                /* DISPLAY_FIRST member fastpath: return real handle, skip stalled 0x304BF0. */
+                if (g_e8f.e8z_member_fastpath && !g_e8f.e8z_fastpath_done && r9 &&
+                    g_e8f.e8y_last_name[0] &&
+                    strstr(g_e8f.e8y_last_name, "wy_jiao1!") == g_e8f.e8y_last_name) {
+                    uint32_t ret_pc = lr | 1u;
+                    uint32_t handle = 0;
+                    if (!g_e8f.e8y_a64_assist_done)
+                        e8y_install_a64_assist(uc, r9);
+                    handle = g_e8f.e8z_handle_va ? g_e8f.e8z_handle_va
+                                                 : (E8Y_A64_SCRATCH);
+                    if (g_e8f.e8z_real_bmp_done && handle) {
+                        g_e8f.e8z_fastpath_done = 1;
+                        uc_reg_write(uc, UC_ARM_REG_R0, &handle);
+                        uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+                        printf("[JJFB_DISPLAY_FIRST_MEMBER_FASTPATH] name=\"%s\" "
+                               "handle=0x%X pixels=0x%X bytes=%u ret_pc=0x%X "
+                               "note=real_bytes_skip_304BF0 NOT_PRODUCT evidence=OBSERVED\n",
+                               g_e8f.e8y_last_name, handle, g_e8f.e8z_pixel_va,
+                               g_e8f.e8z_pixel_bytes, ret_pc);
+                        printf("[JJFB_E8Z_CLASS] class=REAL_BMP_MEMBER_LOADED_NEXT_GAP "
+                               "evidence=OBSERVED\n");
+                        fflush(stdout);
+                        return;
+                    }
+                    printf("[JJFB_DISPLAY_FIRST_MEMBER_FASTPATH] skip=no_real_pixels "
+                           "name=\"%s\" evidence=OBSERVED\n",
+                           g_e8f.e8y_last_name);
+                }
             } else if (bp->pc == 0x2F44C8u) {
                 /* Return land after first BL 0x2D92E4 — r0 is resolved handle. */
                 if (r0)
@@ -1171,6 +1246,10 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                     printf("[JJFB_E8Y_CLASS] class=RESOURCE_INIT_2D92E4_COMPLETED_NEXT_GAP "
                            "handle=0x%X evidence=OBSERVED\n",
                            r0);
+            } else if (bp->pc == 0x304BF0u) {
+                printf("[JJFB_E8Z_304BF0] lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
+                       "name=\"%s\" note=mrp_member_lookup evidence=OBSERVED\n",
+                       lr, r0, r1, r2, r3, g_e8f.e8y_last_name);
             } else if (bp->pc == 0x2F44CEu || bp->pc == 0x2F44E4u || bp->pc == 0x2F44EEu) {
                 g_e8f.e8y_a64_write_n++;
                 printf("[JJFB_E8Y_A64_STORE] pc=0x%X r0=0x%X A64=0x%X A68=0x%X A6C=0x%X "
@@ -2273,15 +2352,55 @@ static void e8x_call_2f99d0(void *uc, uint32_t r9) {
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 }
 
-/* E8Y: structural A58/A5C/A60/A64/A68/A6C handles (0x14-byte layout from 0x2D92E4).
- * Mode10 @ 0x2F465C uses A58/A5C/A60; A64 nonzero skips 2D92E4 init. No pixels. */
-#define E8Y_A64_SCRATCH 0x3910000u
-#define E8Y_A64_SCRATCH_SIZE 0x1000u
+/* E8Y/E8Z: A58/A5C/A60/A64/A68/A6C handles (0x14-byte layout from 0x2D92E4).
+ * Structural-only when FAST_A64; with FAST_REAL_BMP_HANDLE, +4 = real RGB565
+ * pixels from original jjfb.mrp member wy_jiao1!11!11.bmp (not invented). */
+static int e8z_load_host_rgb565(uint8_t *dst, int cap, int *out_n) {
+    const char *path = getenv("JJFB_E8Z_BMP_PATH");
+    FILE *fp;
+    long sz;
+    if (!dst || cap < E8Z_BMP_BYTES) return 0;
+    if (!path || !path[0])
+        path = "out/e8z_resources/wy_jiao1_11_11.bmp";
+    fp = fopen(path, "rb");
+    if (!fp) {
+        printf("[JJFB_E8Z_BMP_LOAD] open_fail path=%s evidence=OBSERVED\n", path);
+        fflush(stdout);
+        return 0;
+    }
+    if (fseek(fp, 0, SEEK_END) != 0) {
+        fclose(fp);
+        return 0;
+    }
+    sz = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    if (sz != E8Z_BMP_BYTES) {
+        printf("[JJFB_E8Z_BMP_LOAD] size_mismatch path=%s got=%ld expect=%d "
+               "evidence=OBSERVED\n",
+               path, sz, E8Z_BMP_BYTES);
+        fclose(fp);
+        return 0;
+    }
+    if ((int)fread(dst, 1, (size_t)E8Z_BMP_BYTES, fp) != E8Z_BMP_BYTES) {
+        fclose(fp);
+        return 0;
+    }
+    fclose(fp);
+    if (out_n) *out_n = E8Z_BMP_BYTES;
+    printf("[JJFB_E8Z_BMP_LOAD] path=%s bytes=%d w=%d h=%d "
+           "note=real_jjfb_mrp_member evidence=OBSERVED\n",
+           path, E8Z_BMP_BYTES, E8Z_BMP_W, E8Z_BMP_H);
+    fflush(stdout);
+    return 1;
+}
+
 static void e8y_install_a64_assist(void *uc, uint32_t r9) {
     static const uint32_t k_offs[] = {0xA58u, 0xA5Cu, 0xA60u, 0xA64u, 0xA68u, 0xA6Cu};
-    static const uint16_t k_wh[][2] = {{11, 11}, {11, 11}, {10, 10}, {11, 11}, {11, 11}, {10, 10}};
     uint32_t a64 = 0, a58 = 0;
     int i;
+    int real = g_e8f.e8z_real_bmp;
+    uint8_t pixels[E8Z_BMP_BYTES];
+    int pix_n = 0;
 #ifdef GWY_HAVE_UNICORN
     uc_err ue;
 #endif
@@ -2289,31 +2408,74 @@ static void e8y_install_a64_assist(void *uc, uint32_t r9) {
     g_e8f.e8y_a64_assist_done = 1;
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xA64u, &a64);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xA58u, &a58);
-    printf("[JJFB_FAST_A64_RESOURCE_ASSIST] before A58=0x%X A64=0x%X "
-           "note=structural_handles_no_pixels NOT_PRODUCT evidence=HYPOTHESIS\n",
-           a58, a64);
+    if (real) {
+        if (!e8z_load_host_rgb565(pixels, (int)sizeof(pixels), &pix_n)) {
+            printf("[JJFB_FAST_REAL_BMP_HANDLE] load_fail falling_back=structural_only "
+                   "evidence=OBSERVED\n");
+            real = 0;
+        }
+    }
+    printf("[JJFB_FAST_A64_RESOURCE_ASSIST] before A58=0x%X A64=0x%X real_bmp=%d "
+           "note=%s evidence=HYPOTHESIS\n",
+           a58, a64, real,
+           real ? "real_pixels_from_jjfb_mrp" : "structural_handles_no_pixels");
 #ifdef GWY_HAVE_UNICORN
     ue = uc_mem_map((uc_engine *)uc, E8Y_A64_SCRATCH, E8Y_A64_SCRATCH_SIZE, UC_PROT_ALL);
     if (ue != UC_ERR_OK)
         printf("[JJFB_FAST_A64_RESOURCE_ASSIST] map_status uc_err=%u evidence=OBSERVED\n",
                (unsigned)ue);
+    if (real) {
+        ue = uc_mem_map((uc_engine *)uc, E8Z_PIXEL_BASE, E8Z_PIXEL_MAP_SIZE, UC_PROT_ALL);
+        if (ue != UC_ERR_OK)
+            printf("[JJFB_FAST_REAL_BMP_HANDLE] pixel_map uc_err=%u evidence=OBSERVED\n",
+                   (unsigned)ue);
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, E8Z_PIXEL_BASE, pixels, pix_n);
+        g_e8f.e8z_pixel_va = E8Z_PIXEL_BASE;
+        g_e8f.e8z_pixel_bytes = (uint32_t)pix_n;
+        g_e8f.e8z_bw = E8Z_BMP_W;
+        g_e8f.e8z_bh = E8Z_BMP_H;
+        g_e8f.e8z_real_bmp_done = 1;
+    }
 #endif
     for (i = 0; i < 6; i++) {
         uint32_t slot = E8Y_A64_SCRATCH + (uint32_t)i * 0x40u;
-        uint8_t stub[0x14];
+        uint8_t stub[0x20];
         memset(stub, 0, sizeof(stub));
-        stub[8] = (uint8_t)(k_wh[i][0] & 0xFF);
-        stub[9] = (uint8_t)((k_wh[i][0] >> 8) & 0xFF);
-        stub[10] = (uint8_t)(k_wh[i][1] & 0xFF);
-        stub[11] = (uint8_t)((k_wh[i][1] >> 8) & 0xFF);
-        (void)guest_memory_uc_poke((struct uc_struct *)uc, slot, stub, (int)sizeof(stub));
+        if (real) {
+            uint32_t sz = (uint32_t)pix_n;
+            uint32_t px = E8Z_PIXEL_BASE;
+            memcpy(stub + 0, &sz, 4);
+            memcpy(stub + 4, &px, 4);
+            stub[8] = (uint8_t)(E8Z_BMP_W & 0xFF);
+            stub[9] = (uint8_t)((E8Z_BMP_W >> 8) & 0xFF);
+            stub[10] = (uint8_t)(E8Z_BMP_H & 0xFF);
+            stub[11] = (uint8_t)((E8Z_BMP_H >> 8) & 0xFF);
+            stub[16] = 1; /* flag */
+            memcpy(stub + 0x18, &sz, 4);
+            if (i == 0) g_e8f.e8z_handle_va = slot;
+        } else {
+            static const uint16_t k_wh[][2] = {
+                {11, 11}, {11, 11}, {10, 10}, {11, 11}, {11, 11}, {10, 10}};
+            stub[8] = (uint8_t)(k_wh[i][0] & 0xFF);
+            stub[9] = (uint8_t)((k_wh[i][0] >> 8) & 0xFF);
+            stub[10] = (uint8_t)(k_wh[i][1] & 0xFF);
+            stub[11] = (uint8_t)((k_wh[i][1] >> 8) & 0xFF);
+        }
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, slot, stub, real ? 0x20 : 0x14);
         (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, r9 + k_offs[i], slot);
     }
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xA64u, &a64);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0xA58u, &a58);
-    printf("[JJFB_FAST_A64_RESOURCE_ASSIST] after A58=0x%X A5C/A60/A64 set scratch=0x%X "
-           "note=mode10_uses_A58_A5C_A60 evidence=OBSERVED\n",
-           a58, E8Y_A64_SCRATCH);
+    if (real) {
+        printf("[JJFB_FAST_REAL_BMP_HANDLE] after A58=0x%X A64=0x%X pixels=0x%X "
+               "bytes=%u w=%u h=%u note=handle_plus4_nonzero NOT_PRODUCT evidence=OBSERVED\n",
+               a58, a64, g_e8f.e8z_pixel_va, g_e8f.e8z_pixel_bytes, g_e8f.e8z_bw,
+               g_e8f.e8z_bh);
+    } else {
+        printf("[JJFB_FAST_A64_RESOURCE_ASSIST] after A58=0x%X A5C/A60/A64 set scratch=0x%X "
+               "note=mode10_uses_A58_A5C_A60 evidence=OBSERVED\n",
+               a58, E8Y_A64_SCRATCH);
+    }
     fflush(stdout);
 }
 

@@ -91,6 +91,7 @@ char *editGetText(int32 edit) {
 void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
     static int s_first_real_saved = 0;
     SDL_Surface *surface = SDL_GetWindowSurface(window);
+    if (!bmp || w <= 0 || h <= 0) return;
     if (SDL_MUSTLOCK(surface)) {
         if (SDL_LockSurface(surface) != 0) printf("SDL_LockSurface err\n");
     }
@@ -142,6 +143,79 @@ void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
                 fflush(stdout);
             }
         }
+    }
+}
+
+/* E8Z: blit sprite RGB565 with pitch=w into the SDL window (real mr_drawBitmap path). */
+void guiDrawBitmapSprite(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
+    static int s_e8z_saved = 0;
+    SDL_Surface *surface;
+    const char *shot;
+    const char *before_path;
+    const char *after_path;
+    uint32_t black = 0, white = 0, other = 0, key = 0;
+    int32_t j, i;
+    if (!bmp || w <= 0 || h <= 0) return;
+    surface = SDL_GetWindowSurface(window);
+    shot = getenv("JJFB_E8Z_SCREENSHOT");
+    if (!shot || !shot[0]) shot = "screenshots/e8z_first_real_frame.bmp";
+    before_path = getenv("JJFB_E8Z_SCREENSHOT_BEFORE");
+    if (!before_path || !before_path[0]) before_path = "screenshots/e8z_first_real_frame_before.bmp";
+    after_path = getenv("JJFB_E8Z_SCREENSHOT_AFTER");
+    if (!after_path || !after_path[0]) after_path = "screenshots/e8z_first_real_frame_after.bmp";
+
+    if (!s_e8z_saved)
+        (void)SDL_SaveBMP(surface, before_path);
+
+    if (SDL_MUSTLOCK(surface)) {
+        if (SDL_LockSurface(surface) != 0) printf("SDL_LockSurface err\n");
+    }
+    for (j = 0; j < h; j++) {
+        for (i = 0; i < w; i++) {
+            int32_t xx = x + i;
+            int32_t yy = y + j;
+            uint16_t color;
+            Uint32 *p;
+            if (xx < 0 || yy < 0 || xx >= SCREEN_WIDTH || yy >= SCREEN_HEIGHT)
+                continue;
+            color = bmp[(uint32_t)j * (uint32_t)w + (uint32_t)i];
+            if (color == 0) black++;
+            else if (color == 0xFFFFu) white++;
+            else if (color == 0xF81Fu) key++;
+            else other++;
+            /* Present keyed pixels too for first-frame visibility (no invent). */
+            p = (Uint32 *)(((Uint8 *)surface->pixels) + surface->pitch * yy) + xx;
+            *p = SDL_MapRGB(surface->format, PIXEL565R(color), PIXEL565G(color), PIXEL565B(color));
+        }
+    }
+    if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
+    if (SDL_UpdateWindowSurface(window) != 0)
+        printf("SDL_UpdateWindowSurface err\n");
+
+    printf("[JJFB_E8Z_SPRITE_BLIT] x=%d y=%d w=%d h=%d black=%u white=%u other=%u key=%u "
+           "evidence=OBSERVED\n",
+           (int)x, (int)y, (int)w, (int)h, black, white, other, key);
+    fflush(stdout);
+
+    if (!s_e8z_saved && (other > 0 || (black > 0 && white > 0) || key > 0)) {
+        if (SDL_SaveBMP(surface, after_path) == 0 && SDL_SaveBMP(surface, shot) == 0) {
+            s_e8z_saved = 1;
+            printf("[JJFB_FIRST_REAL_FRAME_REACHED] path=%s before=%s after=%s "
+                   "x=%d y=%d w=%d h=%d black=%u white=%u other=%u key=%u "
+                   "note=real_mrp_pixels_via_mr_drawBitmap evidence=OBSERVED\n",
+                   shot, before_path, after_path, (int)x, (int)y, (int)w, (int)h, black,
+                   white, other, key);
+            fflush(stdout);
+        } else {
+            printf("[JJFB_FIRST_REAL_FRAME_REACHED] save_fail path=%s err=%s evidence=OBSERVED\n",
+                   shot, SDL_GetError());
+            fflush(stdout);
+        }
+    } else if (!s_e8z_saved) {
+        printf("[JJFB_E8Z_CLASS] class=DRAW_API_WITH_NONZERO_BMP_NO_FRAMEBUFFER_DELTA "
+               "black=%u white=%u other=%u evidence=OBSERVED\n",
+               black, white, other);
+        fflush(stdout);
     }
 }
 

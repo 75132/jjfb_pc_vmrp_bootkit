@@ -236,6 +236,9 @@ static uint32_t getArg(uc_engine *uc, uint32_t n) {
 static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     // typedef void (*T_mr_drawBitmap)(uint16* bmp, int16 x, int16 y, uint16 w, uint16 h);
     uint32_t bmp, x, y, w, h;
+    int sprite_blit = 0;
+    const char *e8z = getenv("JJFB_E8Z_MODE");
+    const char *real = getenv("JJFB_FAST_REAL_BMP_HANDLE");
 
     uc_reg_read(uc, UC_ARM_REG_R0, &bmp);
     uc_reg_read(uc, UC_ARM_REG_R1, &x);
@@ -261,9 +264,58 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
                "r0=0x%X r1=%d r2=%d r3=%u h=%u note=real_platform_draw evidence=OBSERVED\n",
                pc, lr, bmp, (int)x, (int)y, w, h);
     }
+    if (!bmp) {
+        printf("[JJFB_E8Z_CLASS] class=DRAW_API_WITH_NULL_BMP evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    /* E8Z: 0x310BBC passes handle+4 sprite pixels (pitch=w), not full LCD.
+     * Pixels live in Unicorn-mapped scratch (0x3920000); getMrpMemPtr cannot
+     * translate that — read via uc_mem_read into a host buffer. */
+    if (((e8z && e8z[0] == '1') || (real && real[0] == '1')) &&
+        bmp >= 0x3920000u && bmp < 0x3930000u && w > 0 && w <= 64 && h > 0 && h <= 64)
+        sprite_blit = 1;
+    if (bmp)
+        printf("[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x%X x=%d y=%d w=%u h=%u "
+               "sprite_blit=%d evidence=OBSERVED\n",
+               bmp, (int)x, (int)y, w, h, sprite_blit);
     printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
     fflush(stdout);
-    guiDrawBitmap(getMrpMemPtr(bmp), x, y, w, h);
+    if (sprite_blit) {
+        uint16_t host_pix[64 * 64];
+        uint32_t nbytes = (uint32_t)w * (uint32_t)h * 2u;
+        uc_err ue;
+        if (nbytes > sizeof(host_pix)) {
+            printf("[JJFB_E8Z_CLASS] class=BMP_DECODE_FAILED note=sprite_too_large "
+                   "w=%u h=%u evidence=OBSERVED\n",
+                   w, h);
+            fflush(stdout);
+            return;
+        }
+        memset(host_pix, 0, nbytes);
+        ue = uc_mem_read(uc, bmp, host_pix, nbytes);
+        if (ue != UC_ERR_OK) {
+            printf("[JJFB_E8Z_CLASS] class=BMP_DECODE_FAILED note=uc_mem_read_fail "
+                   "uc_err=%u bmp=0x%X evidence=OBSERVED\n",
+                   (unsigned)ue, bmp);
+            fflush(stdout);
+            return;
+        }
+        printf("[JJFB_E8Z_PIXEL_READ] bmp=0x%X bytes=%u first=0x%04X evidence=OBSERVED\n",
+               bmp, nbytes, (unsigned)host_pix[0]);
+        fflush(stdout);
+        guiDrawBitmapSprite(host_pix, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+    } else {
+        void *host = getMrpMemPtr(bmp);
+        if (!host) {
+            printf("[JJFB_E8Z_CLASS] class=DRAW_API_WITH_NULL_BMP note=getMrpMemPtr_null "
+                   "bmp=0x%X evidence=OBSERVED\n",
+                   bmp);
+            fflush(stdout);
+            return;
+        }
+        guiDrawBitmap(host, x, y, w, h);
+    }
 }
 
 /* Observe-only graphics stubs: log real guest calls; no host fake paint. */
