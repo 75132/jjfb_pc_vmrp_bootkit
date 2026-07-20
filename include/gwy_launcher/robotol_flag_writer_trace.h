@@ -139,6 +139,14 @@ extern "C" {
  *   JJFB_E9I_COORD_CSV / R4_CSV / SEQ_CSV
  *   Natural xy: x=(R9_830-bmp_w)/2 → R6; y=(R9_834)-100 → R5. Default keeps siblings.
  *
+ * E9J-Splash progress / post-r4 (NOT product success):
+ *   JJFB_E9J_MODE=1                — R9+0xBD0 status string + post-r4 path
+ *   JJFB_FAST_SPLASH_PROGRESS_OBJECT_ASSIST=1 — seed BD0=robotol "请稍候" + BA0+0x2C count
+ *   JJFB_E9J_PROGRESS_COUNT=<1..12>
+ *   JJFB_E9J_WRITER_CSV / JJFB_E9J_POSTR4_CSV
+ *   Natural writer: 0x2FC418 → 2d9648 concat → STR @ 0x2FC444 to BA0+0x30.
+ *   Gate: B6C!=0 skips r4; else r4=*(BD0) must be nonzero for text path.
+ *
  * Never claims counterfactual as product success.
  * Never returns blind success from SVC #0xAB.
  * Never force-writes state word or idle flags as product success.
