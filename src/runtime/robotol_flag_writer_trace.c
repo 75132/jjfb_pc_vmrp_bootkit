@@ -7,6 +7,7 @@
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/module_r9_switch.h"
+#include "gwy_launcher/gwy_pack_registry.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -421,6 +422,19 @@ static struct {
     FILE *e9y_event_csv;
     FILE *e9y_a80_csv;
     FILE *e9y_contract_csv;
+    /* E9Z: GWY downimage/update prelaunch contract (pack registry + resource-ready event). */
+    int e9z_mode; /* JJFB_E9Z_MODE */
+    int e9z_pack_registry; /* JJFB_GWY_PACK_REGISTRY */
+    int e9z_resource_ready_event; /* GWY_PLATFORM_RESOURCE_READY_EVENT / FAST alias */
+    int e9z_resource_ready_done;
+    uint32_t e9z_resource_ready_evt; /* guest event code for 0x30D300 (default 0x14 observed) */
+    uint32_t e9z_import_n;
+    uint32_t e9z_event_n;
+    int e9z_logo_by_resource_event;
+    int e9z_pack_touched;
+    FILE *e9z_import_csv;
+    FILE *e9z_event_csv;
+    FILE *e9z_nodbg_csv;
     /* E9K: post-r4 textbar / 0x305BFC path — keep BD0 assist; delay HWND hold. */
     int e9k_mode;
     int e9k_hold_after_post_r4; /* JJFB_E9K_HOLD_AFTER_POST_R4 */
@@ -560,6 +574,13 @@ static int parse_role_spec(const char *s, uint32_t *pcs, char roles[][4], int ma
     }
     return n;
 }
+
+static void e9z_ensure_pack_registry(void);
+static void e9z_open_trace_files(void);
+static void e9z_log_import(void *uc, uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1,
+                           uint32_t r2, uint32_t r3, uint32_t r9, uint32_t event_code,
+                           const char *note);
+static void e9z_try_resource_ready_event(void *uc, uint32_t r9);
 
 int robotol_flag_writer_trace_enabled(void) {
     const char *sib;
@@ -1276,6 +1297,44 @@ int robotol_flag_writer_trace_enabled(void) {
                    g_e8f.e9y_downimage_abi_ok);
             fflush(stdout);
         }
+        /* E9Z: GWY pack registry + platform resource-ready via real dispatcher. */
+        g_e8f.e9z_mode = env1("JJFB_E9Z_MODE") || env1("JJFB_E9Z_GWY_RESOURCE_READY");
+        g_e8f.e9z_pack_registry =
+            env1("JJFB_GWY_PACK_REGISTRY") || env1("GWY_PACK_REGISTRY") || g_e8f.e9z_mode;
+        g_e8f.e9z_resource_ready_event =
+            env1("GWY_PLATFORM_RESOURCE_READY_EVENT") ||
+            env1("JJFB_FAST_GWY_RESOURCE_READY_EVENT") || env1("JJFB_GWY_RESOURCE_READY_EVENT");
+        {
+            const char *ev = getenv("JJFB_E9Z_RESOURCE_READY_EVT");
+            if (ev && ev[0])
+                g_e8f.e9z_resource_ready_evt = (uint32_t)strtoul(ev, NULL, 0);
+            else
+                g_e8f.e9z_resource_ready_evt = 0x14u; /* OBSERVED at 0x30D300 in E9Y contract */
+        }
+        if (g_e8f.e9z_mode) {
+            g_e8f.e9y_mode = 1;
+            g_e8f.e9y_no_debug_ac8 = 1;
+            g_e8f.e9y_no_workbuf_seed = 1;
+            g_e8f.e9w_mode = 1;
+            g_e8f.e9w_archive_exact = 1;
+            g_e8f.e9w_debug_ac8_force = 0;
+            g_e8f.e9v_mode = 1;
+            g_e8f.e9u_mode = 1;
+            g_e8f.e9g_mode = 1;
+            g_e8f.e9i_mode = 1;
+            g_e8f.e9e_postmatch_shims = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            if (!g_e8f.e9s_bd0_init_call && !g_e8f.e9t_caller_2fc03c &&
+                !g_e8f.e9t_caller_2fc05e && !g_e8f.e9t_caller_30ee8a)
+                g_e8f.e9s_bd0_init_call = 1;
+            if (g_e8f.e9z_pack_registry) e9z_ensure_pack_registry();
+            printf("[JJFB_E9Z] mode=1 pack_registry=%d resource_ready=%d evt=0x%X packs=%u "
+                   "ready=%d note=gwy_prelaunch_contract_NOT_PRODUCT evidence=HYPOTHESIS\n",
+                   g_e8f.e9z_pack_registry, g_e8f.e9z_resource_ready_event,
+                   g_e8f.e9z_resource_ready_evt, (unsigned)gwy_pack_registry_pack_count(),
+                   gwy_pack_registry_ready());
+            fflush(stdout);
+        }
         if (g_e8f.plat_screen_dims) {
             printf("[JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 "
                    "replaces_FAST_TEXTCTX_ASSIST NOT_PRODUCT evidence=HYPOTHESIS\n");
@@ -1939,7 +1998,12 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             }
             if (g_e8f.e9y_mode || g_e8f.e9y_fix_mode)
                 e9y_log_event_contract(uc, bp->pc, lr, r0, r1, r2, r3, r9w, 0, "splash_2EF86C");
+            if (g_e8f.e9z_mode)
+                e9z_log_import(uc, bp->pc, lr, r0, r1, r2, r3, r9w, 0, "splash_2EF86C");
             /* Late path: if FAST pre_splash never finished, still try real ready event once. */
+            if (r9w && g_e8f.e9z_resource_ready_event && !g_e8f.e9z_resource_ready_done &&
+                ac8 == 0u)
+                e9z_try_resource_ready_event(uc, r9w);
             if (r9w && g_e8f.e9y_downimage_ready_event && !g_e8f.e9y_downimage_ready_done &&
                 ac8 == 0u)
                 e9y_try_downimage_ready_event(uc, r9w);
@@ -1955,6 +2019,16 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             g_e8f.e9w_ac8_read_n++;
             if (ac8 > 0u) {
                 g_e8f.e9w_logo_branch_seen = 1;
+                if (!g_e8f.e9w_debug_ac8_force && g_e8f.e9z_resource_ready_done) {
+                    g_e8f.e9z_logo_by_resource_event = 1;
+                    printf("[JJFB_E9Z_CLASS] class=GWY_RESOURCE_READY_EVENT_REACHED_LOGO_BRANCH "
+                           "AC8=0x%X evidence=OBSERVED\n",
+                           ac8);
+                    printf("[JJFB_E9Z_CLASS] class=DOWNIMAGE_UPDATE_CONTRACT_RESTORED "
+                           "evidence=OBSERVED\n");
+                    printf("[JJFB_E9Z_CLASS] class=SPLASH_LOGO_BRANCH_WITHOUT_DEBUG_AC8 "
+                           "evidence=OBSERVED\n");
+                }
                 if (!g_e8f.e9w_debug_ac8_force && g_e8f.e9y_downimage_ready_done) {
                     g_e8f.e9y_logo_branch_by_event = 1;
                     printf("[JJFB_E9Y_CLASS] class=DOWNIMAGE_READY_EVENT_REACHED_LOGO_BRANCH "
@@ -1982,6 +2056,9 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             if (g_e8f.e9y_mode || g_e8f.e9y_fix_mode)
                 e9y_log_event_contract(uc, 0x2EF8AEu, lr, r0, r1, r2, r3, r9w, 0,
                                        ac8 > 0u ? "ac8_logo" : "ac8_loading_only");
+            if (g_e8f.e9z_mode)
+                e9z_log_import(uc, 0x2EF8AEu, lr, r0, r1, r2, r3, r9w, 0,
+                               ac8 > 0u ? "ac8_logo" : "ac8_loading_only");
             fflush(stdout);
         } else if (bp->pc == 0x30CBBCu || bp->pc == 0x30CD82u || bp->pc == 0x30E15Eu) {
             uint32_t slot = 0;
@@ -2038,6 +2115,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             if (g_e8f.e9y_mode || g_e8f.e9y_fix_mode)
                 e9y_log_event_contract(uc, bp->pc, lr, r0, r1, r2, r3, r9w, r1,
                                        "contract_candidate");
+            if (g_e8f.e9z_mode)
+                e9z_log_import(uc, bp->pc, lr, r0, r1, r2, r3, r9w, r1, "external_import_candidate");
             fflush(stdout);
         } else if (bp->pc == 0x2EF9AAu || bp->pc == 0x2EF9DEu || bp->pc == 0x2EF992u) {
             g_e8f.e9w_logo_branch_seen = 1;
@@ -7003,6 +7082,216 @@ static void e9y_try_downimage_ready_event(void *uc, uint32_t r9) {
     fflush(stdout);
 }
 
+static void e9z_ensure_pack_registry(void) {
+    const char *mrp;
+    const char *csv;
+    if (gwy_pack_registry_ready()) return;
+    mrp = getenv("JJFB_REAL_MRP_PATH");
+    (void)gwy_pack_registry_scan(mrp, NULL);
+    csv = getenv("JJFB_E9Z_PACK_CSV");
+    if (!csv || !csv[0]) csv = "reports/e9z_gwy_pack_registry.csv";
+    (void)gwy_pack_registry_export_csv(csv);
+    if (gwy_pack_registry_ready())
+        printf("[JJFB_E9Z_CLASS] class=GWY_PACK_REGISTRY_BUILT packs=%u evidence=OBSERVED\n",
+               (unsigned)gwy_pack_registry_pack_count());
+    fflush(stdout);
+}
+
+static void e9z_open_trace_files(void) {
+    const char *imp;
+    const char *ev;
+    const char *nd;
+    if (!g_e8f.e9z_import_csv) {
+        imp = getenv("JJFB_E9Z_IMPORT_CSV");
+        if (!imp || !imp[0]) imp = "reports/e9z_external_event_import_trace.csv";
+        g_e8f.e9z_import_csv = fopen(imp, "wb");
+        if (g_e8f.e9z_import_csv) {
+            fprintf(g_e8f.e9z_import_csv,
+                    "n,tick,event_code,handler_pc,lr,r0,r1,r2,r3,sp,ui_mode,AC8,A80_digest,"
+                    "resource_request_after,pack_registry_queried,downimage_pack_touched,"
+                    "logo_branch_reached,note\n");
+            fflush(g_e8f.e9z_import_csv);
+        }
+    }
+    if (!g_e8f.e9z_event_csv) {
+        ev = getenv("JJFB_E9Z_EVENT_CSV");
+        if (!ev || !ev[0]) ev = "reports/e9z_resource_ready_event_trace.csv";
+        g_e8f.e9z_event_csv = fopen(ev, "wb");
+        if (g_e8f.e9z_event_csv) {
+            fprintf(g_e8f.e9z_event_csv,
+                    "n,phase,handler_pc,event_code,r0,r1,r2,r3,r9,AC8_before,AC8_after,"
+                    "ok,end,pack_count,note\n");
+            fflush(g_e8f.e9z_event_csv);
+        }
+    }
+    if (!g_e8f.e9z_nodbg_csv) {
+        nd = getenv("JJFB_E9Z_NODEBUG_CSV");
+        if (!nd || !nd[0]) nd = "reports/e9z_no_debug_validation.csv";
+        g_e8f.e9z_nodbg_csv = fopen(nd, "wb");
+        if (g_e8f.e9z_nodbg_csv) {
+            fprintf(g_e8f.e9z_nodbg_csv,
+                    "n,AC8,logo_branch,pack_ready,resource_event,debug_ac8,workbuf_seed,"
+                    "upper_panel,verdict\n");
+            fflush(g_e8f.e9z_nodbg_csv);
+        }
+    }
+}
+
+static void e9z_log_import(void *uc, uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r1,
+                           uint32_t r2, uint32_t r3, uint32_t r9, uint32_t event_code,
+                           const char *note) {
+    uint32_t ui = 0, ac8 = 0, dig = 0, sp = 0;
+    if (!g_e8f.e9z_mode && !g_e8f.e9z_resource_ready_event) return;
+    e9z_open_trace_files();
+    if (!g_e8f.e9z_import_csv) return;
+    if (r9) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + E8I_STATE_OFF, &ui);
+        ac8 = e9w_peek_ac8(uc, r9);
+        dig = e9y_a80_digest(uc, r9);
+    }
+#ifdef GWY_HAVE_UNICORN
+    if (uc) (void)uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+#else
+    (void)sp;
+#endif
+    g_e8f.e9z_import_n++;
+    fprintf(g_e8f.e9z_import_csv,
+            "%u,%u,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%d,%d,%d,%d,%s\n",
+            g_e8f.e9z_import_n, g_e8f.tick ? g_e8f.tick : 0u, event_code, pc, lr, r0, r1, r2, r3,
+            sp, ui, ac8, dig, 0, gwy_pack_registry_ready(), g_e8f.e9z_pack_touched,
+            g_e8f.e9z_logo_by_resource_event || g_e8f.e9y_logo_branch_by_event,
+            note ? note : "");
+    fflush(g_e8f.e9z_import_csv);
+}
+
+/*
+ * Deliver resource-ready through real GWY dispatcher paths (no AC8/8D8/BA0 poke, no branch patch).
+ * Order: pack registry → 0x30D300(event) → 0x300158 → registered 0x10140 handler.
+ */
+static void e9z_try_resource_ready_event(void *uc, uint32_t r9) {
+    GwyUcEntryAbi abi;
+    GwyUcEntryRunOut out;
+    uint32_t ac8_before = 0, ac8_after = 0;
+    uint32_t stop = 0x80000u;
+    uint32_t evt;
+    uint32_t h10140;
+    uint64_t lim = 120000ull;
+    int ok;
+    size_t packs;
+    if (!uc || !r9 || !g_e8f.e9z_resource_ready_event || g_e8f.e9z_resource_ready_done) return;
+    e9z_ensure_pack_registry();
+    packs = gwy_pack_registry_pack_count();
+    if (!gwy_pack_registry_ready()) {
+        printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] skip=pack_registry_empty "
+               "evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    g_e8f.e9z_resource_ready_done = 1;
+    e9z_open_trace_files();
+    evt = g_e8f.e9z_resource_ready_evt ? g_e8f.e9z_resource_ready_evt : 0x14u;
+    ac8_before = e9w_peek_ac8(uc, r9);
+    printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] packs=%u evt=0x%X AC8_before=0x%X "
+           "note=dispatcher_only_no_ac8_poke NOT_PRODUCT evidence=HYPOTHESIS\n",
+           (unsigned)packs, evt, ac8_before);
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9);
+
+    /* 1) External import boundary: 0x30D300 (observed with r1=0x14). */
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = (uint32_t)packs; /* pack-ready status input — not AC8 */
+    abi.set_r1 = 1;
+    abi.r1 = evt;
+    abi.set_r2 = 1;
+    abi.r2 = 0;
+    abi.set_r3 = 1;
+    abi.r3 = 0;
+    abi.set_lr = 1;
+    abi.lr = stop;
+    printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] phase=30D300 handler=0x30D300 "
+           "event_code=0x%X r0=0x%X r1=0x%X evidence=HYPOTHESIS\n",
+           evt, abi.r0, abi.r1);
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x30D301u, stop, lim, &abi, &out);
+    ac8_after = e9w_peek_ac8(uc, r9);
+    g_e8f.e9z_event_n++;
+    if (g_e8f.e9z_event_csv) {
+        fprintf(g_e8f.e9z_event_csv,
+                "%u,30D300,0x30D300,0x%X,0x%X,0x%X,0,0,0x%X,0x%X,0x%X,%d,%s,%u,"
+                "resource_ready_dispatch\n",
+                g_e8f.e9z_event_n, evt, abi.r0, abi.r1, r9, ac8_before, ac8_after, ok,
+                out.end_reason[0] ? out.end_reason : "?", (unsigned)packs);
+        fflush(g_e8f.e9z_event_csv);
+    }
+    e9z_log_import(uc, 0x30D300u, stop, abi.r0, abi.r1, 0, 0, r9, evt, "resource_ready_30D300");
+    printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] phase=30D300_done ok=%d end=%s "
+           "AC8_after=0x%X evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", ac8_after);
+
+    /* 2) Parent switch 0x300158 with r0=event (observed chain). */
+    memset(&abi, 0, sizeof(abi));
+    abi.set_r0 = 1;
+    abi.r0 = evt;
+    abi.set_r1 = 1;
+    abi.r1 = (uint32_t)packs;
+    abi.set_lr = 1;
+    abi.lr = stop;
+    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x300159u, stop, lim, &abi, &out);
+    ac8_after = e9w_peek_ac8(uc, r9);
+    g_e8f.e9z_event_n++;
+    if (g_e8f.e9z_event_csv) {
+        fprintf(g_e8f.e9z_event_csv,
+                "%u,300158,0x300158,0x%X,0x%X,0x%X,0,0,0x%X,0x%X,0x%X,%d,%s,%u,"
+                "resource_ready_parent\n",
+                g_e8f.e9z_event_n, evt, abi.r0, abi.r1, r9, ac8_before, ac8_after, ok,
+                out.end_reason[0] ? out.end_reason : "?", (unsigned)packs);
+        fflush(g_e8f.e9z_event_csv);
+    }
+    e9z_log_import(uc, 0x300158u, stop, abi.r0, abi.r1, 0, 0, r9, evt, "resource_ready_300158");
+    printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] phase=300158_done ok=%d end=%s "
+           "AC8_after=0x%X evidence=OBSERVED\n",
+           ok, out.end_reason[0] ? out.end_reason : "?", ac8_after);
+
+    /* Candidate recorded after real dispatcher hops. */
+    printf("[JJFB_E9Z_CLASS] class=GWY_RESOURCE_READY_EVENT_CANDIDATE_FOUND "
+           "evt=0x%X packs=%u AC8=0x%X->0x%X evidence=OBSERVED\n",
+           evt, (unsigned)packs, ac8_before, ac8_after);
+    fflush(stdout);
+
+    /*
+     * Do NOT nested-call registered 0x10140 here: lifecycle already drains it, and a nested
+     * FIRE stalls pre_splash (insn budget burns wall-clock). Import boundary is 30D300/300158.
+     */
+    h10140 = platform_handler_registry_get(0x10140u);
+    printf("[GWY_PLATFORM_RESOURCE_READY_EVENT] phase=10140 skip=lifecycle_owns_drain "
+           "handler=0x%X note=avoid_nested_stall evidence=OBSERVED\n",
+           h10140 ? (h10140 & ~1u) : 0u);
+
+    if (ac8_after > 0u && ac8_before == 0u) {
+        g_e8f.e9y_ac8_natural_nz = 1;
+        g_e8f.e9z_logo_by_resource_event = 1;
+        printf("[JJFB_E9Z_CLASS] class=GWY_RESOURCE_READY_EVENT_REACHED_LOGO_BRANCH "
+               "AC8=0x%X evidence=OBSERVED\n",
+               ac8_after);
+        printf("[JJFB_E9Z_CLASS] class=DOWNIMAGE_UPDATE_CONTRACT_RESTORED evidence=OBSERVED\n");
+    } else {
+        printf("[JJFB_E9Z_CLASS] class=PRODUCT_STILL_NEEDS_NATURAL_UPDATE_CHAIN "
+               "AC8=0x%X note=dispatcher_ran_gate_still_zero evidence=OBSERVED\n",
+               ac8_after);
+        printf("[JJFB_E9Z_CLASS] class=AC8_BLOCKED_BY_EXTERNAL_GWY_SHELL "
+               "note=pack_ready_but_AC8_not_raised_by_0x30D300_0x300158 "
+               "evidence=OBSERVED\n");
+    }
+    if (g_e8f.e9z_nodbg_csv) {
+        fprintf(g_e8f.e9z_nodbg_csv, "1,0x%X,%d,%d,1,0,0,0,%s\n", ac8_after,
+                g_e8f.e9z_logo_by_resource_event, gwy_pack_registry_ready(),
+                ac8_after > 0u ? "GWY_RESOURCE_READY_EVENT_REACHED_LOGO_BRANCH"
+                               : "AC8_BLOCKED_BY_EXTERNAL_GWY_SHELL");
+        fflush(g_e8f.e9z_nodbg_csv);
+    }
+    fflush(stdout);
+}
+
 static void e9w_debug_force_ac8(void *uc, uint32_t r9) {
     uint32_t oldv = 0, newv = 1u;
     if (!uc || !r9 || !g_e8f.e9w_debug_ac8_force || g_e8f.e9w_ac8_force_done) return;
@@ -7249,33 +7538,59 @@ static void e9w_path_dirname(const char *path, char *out, size_t out_sz) {
     out[1] = '\0';
 }
 
-/* Collect candidate MRP packs for @-qualified member names (beside primary gwy/). */
+/* Collect candidate MRP packs for @-qualified member names (beside primary gwy/).
+ * Prefer GWY pack registry; fall back to stem+"ol"/stem.mrp (no hardcoded show names). */
 static int e9w_collect_at_pack_paths(const char *name, const char *primary_mrp,
                                      char paths[][1024], int max_n) {
     char stem[64];
     char dir[900];
+    char stem_ol[128];
+    char reg_path[1024];
     int n = 0;
     if (!e9w_at_pack_stem(name, stem, sizeof(stem)) || max_n <= 0 || !paths)
         return 0;
-    e9w_path_dirname(primary_mrp ? primary_mrp : "", dir, sizeof(dir));
-    if (dir[0] && n < max_n) {
-        snprintf(paths[n], 1024, "%s/jjfbol/%s.mrp", dir, stem);
+    if (g_e8f.e9z_pack_registry || g_e8f.e9z_mode)
+        e9z_ensure_pack_registry();
+    if (gwy_pack_registry_find_pack_path(stem, reg_path, sizeof(reg_path)) && n < max_n) {
+        snprintf(paths[n], 1024, "%s", reg_path);
         n++;
+        g_e8f.e9z_pack_touched = 1;
+    }
+    e9w_path_dirname(primary_mrp ? primary_mrp : "", dir, sizeof(dir));
+    /* Derive sibling side-pack dir: <target_stem>ol — generic convention. */
+    {
+        char tgt_stem[64];
+        const char *slash;
+        size_t i, len;
+        tgt_stem[0] = '\0';
+        if (primary_mrp && primary_mrp[0]) {
+            slash = primary_mrp;
+            for (i = 0; primary_mrp[i]; i++)
+                if (primary_mrp[i] == '/' || primary_mrp[i] == '\\') slash = primary_mrp + i + 1;
+            len = strlen(slash);
+            if (len > 4u && (slash[len - 4] == '.') &&
+                (slash[len - 3] == 'm' || slash[len - 3] == 'M'))
+                len -= 4u;
+            if (len >= sizeof(tgt_stem)) len = sizeof(tgt_stem) - 1u;
+            memcpy(tgt_stem, slash, len);
+            tgt_stem[len] = '\0';
+        }
+        if (dir[0] && tgt_stem[0] && n < max_n) {
+            snprintf(paths[n], 1024, "%s/%sol/%s.mrp", dir, tgt_stem, stem);
+            n++;
+        }
+        if (dir[0] && n < max_n) {
+            snprintf(stem_ol, sizeof(stem_ol), "%sol", tgt_stem[0] ? tgt_stem : "pack");
+            snprintf(paths[n], 1024, "%s/%s/%s.mrp", dir, stem_ol, stem);
+            n++;
+        }
     }
     if (dir[0] && n < max_n) {
         snprintf(paths[n], 1024, "%s/%s.mrp", dir, stem);
         n++;
     }
     if (n < max_n) {
-        snprintf(paths[n], 1024, "game_files/mythroad/320x480/gwy/jjfbol/%s.mrp", stem);
-        n++;
-    }
-    if (n < max_n) {
-        snprintf(paths[n], 1024, "mythroad/320x480/gwy/jjfbol/%s.mrp", stem);
-        n++;
-    }
-    if (n < max_n) {
-        snprintf(paths[n], 1024, "mythroad/gwy/jjfbol/%s.mrp", stem);
+        snprintf(paths[n], 1024, "game_files/mythroad/320x480/gwy/%s.mrp", stem);
         n++;
     }
     return n;
@@ -8212,6 +8527,11 @@ static void fast_call_splash(void *uc) {
             e9y_log_state(uc, 0, 0, r9_run, "pre_splash", "before_workbuf_or_assist");
             /* Arm A80..AE0 before 0x30CBBC — ABC store @0x30CCB2 is inside workbuf init. */
             e9y_try_arm_a80_watch(uc);
+            /* E9Z: GWY pack registry + resource-ready via real dispatcher (before workbuf). */
+            if (g_e8f.e9z_mode || g_e8f.e9z_pack_registry)
+                e9z_ensure_pack_registry();
+            if (g_e8f.e9z_resource_ready_event)
+                e9z_try_resource_ready_event(uc, r9_run);
             /*
              * Call downimage-ready BEFORE 0x30CBBC: workbuf nested run often does not
              * return within insn limit, which would skip the event entirely.

@@ -28,6 +28,7 @@ add_library(launcher_core STATIC
     src/formats/mrp_archive.c
     src/formats/mrp_guest_index.c
     src/formats/gwy_cfg.c
+    src/formats/gwy_pack_registry.c
     src/formats/mrp_reg_primary.c
     src/profiles/compat_profile.c
     src/runtime/ext_resolver.c

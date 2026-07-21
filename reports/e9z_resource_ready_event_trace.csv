@@ -1,0 +1,3 @@
+n,phase,handler_pc,event_code,r0,r1,r2,r3,r9,AC8_before,AC8_after,ok,end,pack_count,note
+1,30D300,0x30D300,0x14,0x3B,0x14,0,0,0x2B1858,0x0,0x0,1,stop_at_base,59,resource_ready_dispatch
+2,300158,0x300158,0x14,0x14,0x3B,0,0,0x2B1858,0x0,0x0,1,stop_at_base,59,resource_ready_parent
