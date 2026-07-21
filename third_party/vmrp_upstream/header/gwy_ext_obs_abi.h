@@ -142,7 +142,12 @@ void gwy_ext_obs_timer_poll_uc(void *uc);
 void gwy_ext_obs_timer_signal_due(void);
 /* After start_dsm returns: main loop take_due (1 → call timer() under host lock). */
 int gwy_ext_obs_timer_take_due(void);
+/* Peek due without clearing (E10A-3.1c host_loop defer). */
+int gwy_ext_obs_timer_is_due(void);
 int gwy_ext_obs_timer_running(void);
+/* E10A-3.1c: host_loop must not FIRE while guest dispatch is active. */
+int gwy_ext_obs_timer_should_defer(void);
+void gwy_ext_obs_timer_note_defer(void *uc);
 /*
  * After take_due with no classic EXT chunk: run registered 0x10140 and re-arm.
  * Returns 1 if handled (lifecycle), 0 if caller should use MR_TIMER / other.

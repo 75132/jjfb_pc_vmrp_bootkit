@@ -25,6 +25,7 @@
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/e10a31b_publication.h"
+#include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -89,6 +90,7 @@ static const uint32_t GWY_LIFECYCLE_PERIOD_MS = 50u;
 static const uint64_t GWY_LIFECYCLE_INSN_LIMIT = 200000ull;
 
 static void gwy_ext_obs_timer_poll(void *uc);
+static void gwy_ext_obs_deferred_timer_pump(void *uc);
 static void gwy_ext_obs_lifecycle_deliver(void *uc);
 
 static int env_flag(const char *name) {
@@ -143,6 +145,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     e10a31_reset();
     e10a31a_reset();
     e10a31b_reset();
+    e10a31c_reset();
+    e10a31c_set_timer_pump(gwy_ext_obs_deferred_timer_pump);
     g_armed_timer_chunk = 0;
     g_timer_arm_seen = 0;
     g_timer_arm_count = 0;
@@ -377,6 +381,17 @@ void gwy_ext_obs_timer_poll_uc(void *uc) { gwy_ext_obs_timer_poll(uc); }
 void gwy_ext_obs_timer_signal_due(void) { platform_timer_signal_due(); }
 
 int gwy_ext_obs_timer_take_due(void) { return platform_timer_take_due(); }
+
+int gwy_ext_obs_timer_is_due(void) { return platform_timer_is_due(); }
+
+int gwy_ext_obs_timer_should_defer(void) {
+    return e10a31c_enabled() && e10a31c_should_defer_timer();
+}
+
+void gwy_ext_obs_timer_note_defer(void *uc) {
+    /* helper resolved lazily inside poll/pump paths; host_loop may pass NULL uc. */
+    e10a31c_note_timer_defer(uc, 0);
+}
 
 int gwy_ext_obs_timer_running(void) { return platform_timer_running(); }
 
@@ -660,6 +675,43 @@ void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms) {
     fflush(stdout);
 }
 
+static void gwy_ext_obs_deferred_timer_pump(void *uc) {
+    int due;
+    if (g_timer_flushing) return;
+    due = platform_timer_take_due();
+    if (!due) {
+        /* Defer recorded a due that guest may have re-armed over. Still owe one FIRE. */
+        platform_timer_signal_due();
+        due = platform_timer_take_due();
+    }
+    if (!due) {
+        printf("[PLATFORM_TIMER] op=DEFERRED_PUMP_SKIP reason=no_due evidence=OBSERVED\n");
+        fflush(stdout);
+        return;
+    }
+    g_timer_flushing = 1;
+    printf("[PLATFORM_TIMER] op=FIRE_DUE via=deferred_pump evidence=DOCUMENTED\n");
+    fflush(stdout);
+    e10a31c_mark_milestone("DEFERRED_TIMER_FIRED_AFTER_INIT",
+                           e10a31c_init_sequence_complete() ? "after_init_complete"
+                                                            : "after_init_tx_end");
+    if (g_timer_deliver)
+        g_timer_deliver(uc);
+    else if (!gwy_ext_obs_lifecycle_on_timer_due(uc) && g_timer_stop)
+        (void)g_timer_stop();
+    g_timer_flushing = 0;
+    if (env_flag("JJFB_PLATFORM_TIMER_DISPATCH") && g_timer_last_period_ms > 0u &&
+        g_timer_last_period_ms <= 60000u) {
+        platform_timer_start(g_timer_last_period_ms);
+        printf("[JJFB_PLATFORM_TIMER_DISPATCH] op=REARM period_ms=%u id=%u "
+               "note=deferred_pump_periodic evidence=OBSERVED\n",
+               g_timer_last_period_ms, g_timer_last_id ? g_timer_last_id : 1u);
+        fflush(stdout);
+    }
+    printf("[PLATFORM_TIMER] op=FIRE_DONE via=deferred_pump evidence=DOCUMENTED\n");
+    fflush(stdout);
+}
+
 static void gwy_ext_obs_timer_poll(void *uc) {
     static uint32_t wait_hb;
     int due;
@@ -674,6 +726,13 @@ static void gwy_ext_obs_timer_poll(void *uc) {
                    platform_timer_period_ms());
             fflush(stdout);
         }
+    }
+    /* E10A-3.1c: never FIRE while guest helper/init/dispatch is active. */
+    if (e10a31c_enabled() && e10a31c_should_defer_timer() && platform_timer_is_due()) {
+        uint32_t helper = 0, p_guest = 0, erw = 0;
+        (void)gwy_ext_obs_timer_ext_target(&helper, &p_guest, &erw);
+        e10a31c_note_timer_defer(uc, helper);
+        return;
     }
     due = platform_timer_take_due();
     if (!due) return;

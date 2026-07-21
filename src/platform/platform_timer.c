@@ -34,6 +34,14 @@ void platform_timer_signal_due(void) {
     g_deadline_ms = g_clock();
 }
 
+/* 1 if running and now >= deadline; does not clear (for defer-while-busy). */
+int platform_timer_is_due(void) {
+    uint32_t now;
+    if (!g_running || !g_clock) return 0;
+    now = g_clock();
+    return ((int32_t)(now - g_deadline_ms) >= 0) ? 1 : 0;
+}
+
 int platform_timer_running(void) { return g_running; }
 uint32_t platform_timer_period_ms(void) { return g_period_ms; }
 uint32_t platform_timer_deadline_ms(void) { return g_deadline_ms; }

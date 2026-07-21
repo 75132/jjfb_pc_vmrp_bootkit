@@ -25,6 +25,8 @@ void platform_timer_stop(void);
 void platform_timer_signal_due(void);
 
 int platform_timer_running(void);
+/* 1 if running and now >= deadline; does not clear running. */
+int platform_timer_is_due(void);
 uint32_t platform_timer_period_ms(void);
 uint32_t platform_timer_deadline_ms(void);
 

@@ -277,6 +277,12 @@ void gwy_ext_obs_timer_signal_due(void) {}
 
 int gwy_ext_obs_timer_take_due(void) { return 0; }
 
+int gwy_ext_obs_timer_is_due(void) { return 0; }
+
+int gwy_ext_obs_timer_should_defer(void) { return 0; }
+
+void gwy_ext_obs_timer_note_defer(void *uc) { (void)uc; }
+
 int gwy_ext_obs_timer_running(void) { return 0; }
 
 int gwy_ext_obs_lifecycle_on_timer_due(void *uc) {

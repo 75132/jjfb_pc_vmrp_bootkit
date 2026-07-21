@@ -588,6 +588,12 @@ void setEventEnable(int v) {
 
 static void host_timer_poll(void) {
     gwy_ext_obs_post_start_loop_tick((uint32_t)SDL_GetTicks());
+    /* E10A-3.1c: never take_due/FIRE while guest helper/init/dispatch is active. */
+    if (gwy_ext_obs_timer_should_defer()) {
+        if (gwy_ext_obs_timer_is_due())
+            gwy_ext_obs_timer_note_defer(NULL);
+        return;
+    }
     if (!gwy_ext_obs_timer_take_due()) return;
     printf("[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED\n");
     fflush(stdout);

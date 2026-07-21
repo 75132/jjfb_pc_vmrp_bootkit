@@ -1,0 +1,2 @@
+﻿run_id,mode,elapsed,has_exited,exit_code,exit_class,killed_by_runner,observe_stop,primary,note
+1784660268309,init_atomicity,91.4,1,0,NORMAL_EXIT,1,"OBSERVE_STOP_DEFERRED_FIRE_AFTER_INIT_TX","GAMELIST_INIT_METHOD0_FAILED",runner_observed

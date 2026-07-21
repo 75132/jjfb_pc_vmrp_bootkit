@@ -20,9 +20,81 @@
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/e10a_shell_trace.h"
+#include "gwy_launcher/e10a31c_dispatch.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
+#else
+/* Plain build: dispatch atomicity is a no-op. */
+typedef enum {
+    GWY_DISPATCH_NONE = 0,
+    GWY_DISPATCH_DSM_EVENT = 1,
+    GWY_DISPATCH_EXT_HELPER = 2,
+    GWY_DISPATCH_TIMER = 3,
+    GWY_DISPATCH_PLATFORM_CALLBACK = 4,
+    GWY_DISPATCH_INIT_SEQUENCE = 5
+} GwyDispatchKind;
+static inline int e10a31c_enabled(void) { return 0; }
+static inline void e10a31c_enter(void *uc, GwyDispatchKind k, uint32_t h, uint32_t c, uint32_t p,
+                                 uint32_t e) {
+    (void)uc;
+    (void)k;
+    (void)h;
+    (void)c;
+    (void)p;
+    (void)e;
+}
+static inline void e10a31c_leave(void *uc, GwyDispatchKind k) {
+    (void)uc;
+    (void)k;
+}
+static inline uint64_t e10a31c_init_tx_begin(void *uc, uint32_t h, uint32_t p, uint32_t e) {
+    (void)uc;
+    (void)h;
+    (void)p;
+    (void)e;
+    return 0;
+}
+static inline void e10a31c_init_method_enter(void *uc, uint32_t m, uint32_t h, uint32_t p,
+                                             uint32_t e) {
+    (void)uc;
+    (void)m;
+    (void)h;
+    (void)p;
+    (void)e;
+}
+static inline void e10a31c_init_method_return(void *uc, uint32_t m, int32_t r) {
+    (void)uc;
+    (void)m;
+    (void)r;
+}
+static inline void e10a31c_init_tx_end(void *uc, int c, const char *n) {
+    (void)uc;
+    (void)c;
+    (void)n;
+}
+static inline void e10a31c_mem_get_enter(void *uc, uint32_t s) {
+    (void)uc;
+    (void)s;
+}
+static inline void e10a31c_mem_get_return(void *uc, uint32_t p, uint32_t l, int o) {
+    (void)uc;
+    (void)p;
+    (void)l;
+    (void)o;
+}
+static inline int e10a31c_unimpl_policy(void *uc, uint32_t s, const char *n, int32_t *o) {
+    (void)uc;
+    (void)s;
+    (void)n;
+    if (o) *o = -1;
+    return 1;
+}
+static inline void e10a31c_note_last_bridge_api(const char *a) { (void)a; }
+static inline void e10a31c_note_process_exit(int c, const char *r) {
+    (void)c;
+    (void)r;
+}
 #endif
 
 #ifdef _WIN32
@@ -135,13 +207,14 @@ static uint32_t bridge_ext_appinfo_guest(void) {
 /* Deliver DOCUMENTED 6→8→0 once; caller must hold g_in_ext_init_deliver=0. */
 static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_code,
                                         const char *when) {
-    int32_t r6, r8, r0;
+    int32_t r6 = MR_FAILED, r8 = MR_FAILED, r0 = MR_FAILED;
     uint32_t appinfo;
     uint32_t ver = GWY_EXT_INIT_MR_VERSION;
     uint32_t helper = mr_extHelper_addr;
     uint32_t saved_helper = mr_extHelper_addr;
     uint32_t erw = 0;
     uint32_t p_guest = 0;
+    int tx = 0;
 
     /* After shell continue: gamelist helper + own ERW (not sticky gbrwcore P/R9). */
     if (g_e10a_shell_continued) {
@@ -169,20 +242,44 @@ static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_
     fflush(stdout);
 
     if (g_e10a_shell_continued && erw && p_guest) {
-        /* Explicit R9=erw; avoid sticky gbrwcore R9 from bridge_mr_extHelper scope. */
+        /* Explicit R9=erw; avoid sticky gbrwcore R9 from bridge_mr_extHelper scope.
+         * E10A-3.1c: one atomic transaction; no timer pump between 6/8/0. */
+        (void)e10a31c_init_tx_begin(uc, helper, p_guest, erw);
+        tx = 1;
+        e10a31c_init_method_enter(uc, 6u, helper, p_guest, erw);
         r6 = bridge_ext_helper_call(uc, helper, p_guest, 6u, 0u, ver, erw);
+        e10a31c_init_method_return(uc, 6u, r6);
+        if (r6 < 0) {
+            goto init_done;
+        }
+        e10a31c_init_method_enter(uc, 8u, helper, p_guest, erw);
         r8 = bridge_ext_helper_call(uc, helper, p_guest, 8u, appinfo, 16u, erw);
+        e10a31c_init_method_return(uc, 8u, r8);
+        if (r8 < 0) {
+            goto init_done;
+        }
+        e10a31c_init_method_enter(uc, 0u, helper, p_guest, erw);
         r0 = bridge_ext_helper_call(uc, helper, p_guest, 0u, 0u, ver, erw);
+        e10a31c_init_method_return(uc, 0u, r0);
     } else {
         r6 = bridge_mr_extHelper(uc, 6u, 0u, ver);
         r8 = bridge_mr_extHelper(uc, 8u, appinfo, 16u);
         r0 = bridge_mr_extHelper(uc, 0u, 0u, ver);
     }
+init_done:
     printf("[JJFB_INIT_SEQ] delivered ret6=%d ret8=%d ret0=%d evidence=OBSERVED\n", (int)r6,
            (int)r8, (int)r0);
     fflush(stdout);
     g_in_ext_init_deliver = 0;
     mr_extHelper_addr = saved_helper;
+    /* End tx after flag clear so deferred timer pumps outside init deliver. */
+    if (tx) {
+        int ok = (r6 >= 0 && r8 >= 0 && r0 >= 0);
+        e10a31c_init_tx_end(uc, ok, ok ? "ret6_ret8_ret0"
+                                       : (r6 < 0   ? "method6_failed"
+                                          : r8 < 0 ? "method8_failed"
+                                                   : "method0_failed"));
+    }
 }
 
 static const char MUTEX_LOCK_FAIL[] = "mutex lock fail";
@@ -1123,6 +1220,9 @@ static void br_mem_get(BridgeMap *o, uc_engine *uc) {
     void *host;
     uint32_t buffer;
 
+    e10a31c_mem_get_enter(uc, len);
+    e10a31c_note_last_bridge_api("br_mem_get");
+
     /*
      * Shell continue: prefer reusing the tracked 4MB DSM heap so _mr_mem_init
      * re-initializes LG_mem on the same block (avoids second-alloc OOM).
@@ -1143,6 +1243,7 @@ static void br_mem_get(BridgeMap *o, uc_engine *uc) {
         uc_mem_write(uc, mem_base, &buffer, 4);
         uc_mem_write(uc, mem_len, &len, 4);
         SET_RET_V(MR_SUCCESS);
+        e10a31c_mem_get_return(uc, buffer, len, 1);
         return;
     }
 
@@ -1156,6 +1257,7 @@ static void br_mem_get(BridgeMap *o, uc_engine *uc) {
         uc_mem_write(uc, mem_base, &zero, 4);
         uc_mem_write(uc, mem_len, &zero, 4);
         SET_RET_V(MR_FAILED);
+        e10a31c_mem_get_return(uc, 0, 0, 0);
         return;
     }
     buffer = toMrpMemAddr(host);
@@ -1171,6 +1273,7 @@ static void br_mem_get(BridgeMap *o, uc_engine *uc) {
     uc_mem_write(uc, mem_len, &len, 4);
 
     SET_RET_V(MR_SUCCESS);
+    e10a31c_mem_get_return(uc, buffer, len, 1);
 }
 
 static void br_mem_free(BridgeMap *o, uc_engine *uc) {
@@ -1387,6 +1490,8 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
     gwy_ext_obs_e10a31a_br_exit_fallback(uc);
     gwy_ext_obs_mr_exit(uc);
     puts("mythroad exit.\n");
+    e10a31c_note_last_bridge_api("br_exit");
+    e10a31c_note_process_exit(0, "br_exit_fallback");
     gwy_ext_obs_e10a31a_process_exit(0);
     gwy_ext_obs_e10a31a_runtime_stop("br_exit", "GBRWCORE_MR_EXIT_FALLBACK", uc, 0,
                                      "process_exit_0");
@@ -2175,11 +2280,14 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
                  * still fails closed.
                  */
                 if (g_e10a_shell_continued) {
+                    int32_t pol = -1;
                     uint32_t _lr = 0;
-                    uint32_t z = 0;
-                    printf("[JJFB_E10A_UNIMPL_SOFT] api=%s slot=0x%X note=continue_no_process_exit "
-                           "evidence=OBSERVED\n",
-                           obj->name ? obj->name : "?", slot);
+                    uint32_t z;
+                    (void)e10a31c_unimpl_policy(uc, slot, obj->name, &pol);
+                    z = (uint32_t)pol;
+                    printf("[JJFB_E10A_UNIMPL_SOFT] api=%s slot=0x%X r0=%d "
+                           "note=policy_not_blanket_success evidence=OBSERVED\n",
+                           obj->name ? obj->name : "?", slot, (int)pol);
                     fflush(stdout);
                     uc_reg_write(uc, UC_ARM_REG_R0, &z);
                     uc_reg_read(uc, UC_ARM_REG_LR, &_lr);
@@ -2367,7 +2475,9 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     int thumb;
     uc_hook hh = 0;
     int armed_pin = 0;
+    GwyDispatchKind dkind;
     if (!uc || !helper || !p_guest) return MR_FAILED;
+    dkind = (code == 2u) ? GWY_DISPATCH_TIMER : GWY_DISPATCH_EXT_HELPER;
     bridge_uc_save_regs(uc, saved);
     if (erw) uc_reg_write(uc, UC_ARM_REG_R9, &erw);
     /* Timer FIRE (code=2): pin R9 to target ERW; refuse drift to gbrwcore ERW. */
@@ -2384,6 +2494,7 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     uc_reg_write(uc, UC_ARM_REG_R1, &code);
     uc_reg_write(uc, UC_ARM_REG_R2, &input);
     uc_reg_write(uc, UC_ARM_REG_R3, &input_len);
+    e10a31c_enter(uc, dkind, helper, code, p_guest, erw);
     thumb = (helper & 1u) != 0;
     runCode(uc, helper & ~1u, CODE_ADDRESS, thumb);
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
@@ -2392,6 +2503,8 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
         gwy_ext_obs_timer_fire_r9_unpin();
     }
     bridge_uc_restore_regs(uc, saved);
+    /* Leave after context restore so deferred timer pumps at a safe point. */
+    e10a31c_leave(uc, dkind);
     if (g_e10a_shell_continued)
         (void)gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);
     return (int32_t)ret;
@@ -2509,6 +2622,9 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     uint32_t rw_size = 0;
     uint32_t stack_base = 0;
     uint32_t saved[17];
+    GwyDispatchKind dkind =
+        (code == 1u) ? GWY_DISPATCH_DSM_EVENT : GWY_DISPATCH_EXT_HELPER;
+    int entered = 0;
 
     /*
      * After nested game EXT ER_RW/R9 restore, host still only saw method=1 events.
@@ -2547,6 +2663,9 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     /* Phase 6C-A: switch R9 to helper module ER_RW (r0=P unchanged). */
     gwy_ext_obs_r9_switch_enter_helper(uc, mr_extHelper_addr, 3 /* GWY_CALL_MR_HELPER */);
 
+    /* E10A-3.1c: sticky-R9 helper path also owns a dispatch critical section. */
+    e10a31c_enter(uc, dkind, mr_extHelper_addr, code, v, rw_base);
+    entered = 1;
     runCode(uc, mr_extHelper_addr, CODE_ADDRESS, false);
     gwy_ext_obs_r9_switch_leave(uc);
     uc_reg_read(uc, UC_ARM_REG_R0, &v);
@@ -2563,6 +2682,7 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
         bridge_deliver_ext_init_seq(uc, code, "after");
 
+    if (entered) e10a31c_leave(uc, dkind);
     return (int32_t)v;
 }
 
@@ -2581,17 +2701,21 @@ int32_t bridge_dsm_network_cb(uc_engine *uc, uint32_t addr, int32_t p0, uint32_t
     }
     uint32_t ret;
     uint32_t saved[17];
+    uint32_t erw = mr_c_function_P
+                       ? (uint32_t)(uintptr_t)mr_c_function_P->start_of_ER_RW
+                       : 0;
     bridge_uc_save_regs(uc, saved);
 
     // 因为回调不是从mr_extHelper调用，因此需要手动设置r9
-    gwy_ext_obs_r9_write_raw(uc, (uint32_t)(uintptr_t)mr_c_function_P->start_of_ER_RW,
-                             "bridge_dsm_network_cb_set");
+    gwy_ext_obs_r9_write_raw(uc, erw, "bridge_dsm_network_cb_set");
     // 实际上这个r9值被设置成mythroad层的，因为mythroad层的lua部分也会调用
     // 因此由mythroad层去区分是mythroad层的回调函数还是mrp层的回调函数，这就是userData存在的意义
 
     uc_reg_write(uc, UC_ARM_REG_R0, &p0);
     uc_reg_write(uc, UC_ARM_REG_R1, &p1);
+    e10a31c_enter(uc, GWY_DISPATCH_PLATFORM_CALLBACK, addr, 0u, 0u, erw);
     runCode(uc, addr, CODE_ADDRESS, false);
+    e10a31c_leave(uc, GWY_DISPATCH_PLATFORM_CALLBACK);
 
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
     bridge_uc_restore_regs(uc, saved);
