@@ -68,6 +68,9 @@ uint32_t e10a31_timer_armed_chunk(void);
  */
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest,
                               uint32_t *out_erw);
+/* 1 if TIMER_ARM seen this run (binding valid with helper+P). */
+int e10a31_timer_arm_observed(void);
+int e10a31_timer_fire_observed(void);
 void e10a31_on_timer_fire(void *uc, uint32_t helper, uint32_t method, uint32_t p_guest,
                           uint32_t erw, int32_t ret);
 

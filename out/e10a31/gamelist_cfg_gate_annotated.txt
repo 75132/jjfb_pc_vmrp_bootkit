@@ -10,6 +10,7 @@ Runtime observe:
 - GAMELIST_EXT_FIRST_PC != init complete
 - timer method=2 is helper code, not gamelist state id
 - mixed timer tuple (gamelist helper + gbrwcore ERW) blocks cfg/param progression
+- auto ERW heal only when helper/chunk/P owners agree
 
 Success order:
 1. GAMELIST_TIMER_CONTEXT_COHERENT or REBOUND

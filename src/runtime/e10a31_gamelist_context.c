@@ -195,17 +195,40 @@ static const char *mod_name(const GwyLoadedModule *m) {
     return m->resolved_name[0] ? m->resolved_name : m->requested_name;
 }
 
+static int owner_known(uint64_t mid) { return mid != 0; }
+
+static int owners_equal(uint64_t a, uint64_t b) {
+    return owner_known(a) && owner_known(b) && a == b;
+}
+
+/* True when helper/chunk/P share one owner but ERW differs (safe single-field heal). */
+static int erw_only_mismatch(const GwyTimerBinding *b) {
+    if (!b || !owner_known(b->helper_module_id)) return 0;
+    if (!owners_equal(b->helper_module_id, b->chunk_module_id)) return 0;
+    if (!owners_equal(b->helper_module_id, b->p_module_id)) return 0;
+    if (!owner_known(b->erw_module_id)) return 0;
+    return b->helper_module_id != b->erw_module_id;
+}
+
+static int multi_owner_mismatch(const GwyTimerBinding *b) {
+    int bad = 0;
+    if (!b || !owner_known(b->helper_module_id)) return 0;
+    if (owner_known(b->chunk_module_id) && b->chunk_module_id != b->helper_module_id) bad = 1;
+    if (owner_known(b->p_module_id) && b->p_module_id != b->helper_module_id) bad = 1;
+    return bad;
+}
+
 static const char *classify_timer_context(const GwyTimerBinding *b) {
     if (!b->helper || !b->chunk_guest) return "TIMER_BINDING_INCOMPLETE";
-    if (b->helper_module_id && b->erw_module_id && b->helper_module_id != b->erw_module_id)
-        return "TIMER_CONTEXT_MIXED";
+    if (multi_owner_mismatch(b)) return "TIMER_CONTEXT_MIXED_MULTI_OWNER";
     if (b->chunk_module_id && b->helper_module_id &&
         b->chunk_module_id != b->helper_module_id)
         return "TIMER_CHUNK_OWNER_MISMATCH";
     if (b->p_module_id && b->helper_module_id && b->p_module_id != b->helper_module_id)
         return "TIMER_P_OWNER_MISMATCH";
-    if (b->erw_module_id && b->helper_module_id && b->erw_module_id != b->helper_module_id)
-        return "TIMER_ERW_OWNER_MISMATCH";
+    if (erw_only_mismatch(b)) return "TIMER_ERW_OWNER_MISMATCH";
+    if (b->helper_module_id && b->erw_module_id && b->helper_module_id != b->erw_module_id)
+        return "TIMER_CONTEXT_MIXED";
     if (b->helper_module_id && b->module_id && b->helper_module_id != b->module_id)
         return "TIMER_HELPER_OWNER_MISMATCH";
     return "TIMER_CONTEXT_COHERENT";
@@ -325,10 +348,15 @@ uint32_t e10a31_timer_armed_chunk(void) {
     return g_e31.binding_valid ? g_e31.binding.chunk_guest : 0;
 }
 
+int e10a31_timer_arm_observed(void) {
+    return g_e31.binding_valid && g_e31.binding.helper && g_e31.binding.p_guest;
+}
+
+int e10a31_timer_fire_observed(void) { return g_e31.timer_fire_n > 0; }
+
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest,
                               uint32_t *out_erw) {
     GwyTimerBinding fire;
-    GwyTimerBinding *use = &g_e31.binding;
     const GwyLoadedModule *hm;
     const char *cls;
     uint32_t helper = 0, p = 0, erw = 0;
@@ -357,11 +385,24 @@ int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_gu
     erw = fire.er_rw ? fire.er_rw : g_e31.binding.er_rw;
 
     hm = mod_by_helper(helper);
+    /* Refresh owner fields from live chunk before classify. */
+    fire.helper = helper;
+    fire.p_guest = p;
+    fire.er_rw = erw;
+    {
+        const GwyLoadedModule *pm = mod_by_p(p);
+        const GwyLoadedModule *em = mod_by_erw(erw);
+        if (hm) fire.helper_module_id = hm->module_id;
+        if (pm) fire.p_module_id = pm->module_id;
+        if (em) fire.erw_module_id = em->module_id;
+    }
     cls = classify_timer_context(&fire);
 
-    /* Repair mixed context: use module-owned ER_RW when helper owner differs from ERW owner. */
-    if (hm && hm->data.start_of_er_rw && fire.erw_module_id &&
-        fire.helper_module_id && fire.erw_module_id != fire.helper_module_id) {
+    /*
+     * Auto-heal ERW only when helper/chunk/P owners agree and only ERW is wrong.
+     * Do not hide stale P/chunk by rewriting R9 alone.
+     */
+    if (hm && hm->data.start_of_er_rw && erw_only_mismatch(&fire)) {
         uint32_t owned = hm->data.start_of_er_rw;
         if (owned && owned != erw) {
             if (ext_chunk_provider_rebind_chunk_erw(fire.chunk_guest, owned, p)) {
@@ -374,16 +415,24 @@ int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_gu
                 e10a31_mark_milestone("GAMELIST_TIMER_CONTEXT_REBOUND", fire.module_name);
             }
         }
-    } else if (hm && hm->data.start_of_er_rw && !fire.erw_module_id) {
-        erw = hm->data.start_of_er_rw;
-        fire.er_rw = erw;
-        fire.erw_module_id = hm->module_id;
+    } else if (multi_owner_mismatch(&fire)) {
+        cls = "TIMER_CONTEXT_MIXED_MULTI_OWNER";
+        printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk_mod=%llu p_mod=%llu "
+               "erw_mod=%llu class=%s note=refuse_erw_only_heal evidence=OBSERVED\n",
+               (unsigned long long)fire.helper_module_id,
+               (unsigned long long)fire.chunk_module_id, (unsigned long long)fire.p_module_id,
+               (unsigned long long)fire.erw_module_id, cls);
+        fflush(stdout);
     }
 
-    if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0 || rebound)
+    if (rebound)
+        e10a31_mark_milestone("GAMELIST_TIMER_FIRES_WITH_OWN_ERW", "after_safe_erw_rebind");
+    else if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0)
         e10a31_mark_milestone("GAMELIST_TIMER_FIRES_WITH_OWN_ERW", fire.module_name);
 
-    log_timer_row("TIMER_FIRE", &fire, cls, rebound ? "rebound_to_helper_erw" : "fire_resolve");
+    log_timer_row("TIMER_FIRE", &fire, cls,
+                  rebound ? "safe_erw_rebind" : (multi_owner_mismatch(&fire) ? "no_heal_multi_owner"
+                                                                             : "fire_resolve"));
 
     if (out_helper) *out_helper = helper;
     if (out_p_guest) *out_p_guest = p;

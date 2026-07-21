@@ -289,6 +289,10 @@ void gwy_ext_obs_timer_host_disarm(const char *route, uint32_t pc) {
 
 int gwy_ext_obs_timer_arm_seen(void) { return 0; }
 
+int gwy_ext_obs_e10a31_timer_arm_observed(void) { return 0; }
+
+int gwy_ext_obs_e10a31_timer_fire_observed(void) { return 0; }
+
 void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     (void)filename;
     (void)ret;

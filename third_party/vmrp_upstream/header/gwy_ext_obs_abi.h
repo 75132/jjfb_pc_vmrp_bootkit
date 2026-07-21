@@ -156,6 +156,9 @@ int gwy_ext_obs_timer_ext_target(uint32_t *out_helper, uint32_t *out_p_guest,
 void gwy_ext_obs_timer_host_arm(uint32_t period_ms, const char *route, uint32_t pc);
 void gwy_ext_obs_timer_host_disarm(const char *route, uint32_t pc);
 int gwy_ext_obs_timer_arm_seen(void);
+/* E10A-3.1: binding TIMER_ARM / TIMER_FIRE observed (package-scoped). */
+int gwy_ext_obs_e10a31_timer_arm_observed(void);
+int gwy_ext_obs_e10a31_timer_fire_observed(void);
 /* Emit TIMER_ARM_ABSENT once after start_dsm if no arm in the window. */
 void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret);
 /* ~1Hz summary from host SDL loop (gated by JJFB_POST_START_SCHEDULER_TRACE). */

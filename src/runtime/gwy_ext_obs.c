@@ -375,6 +375,10 @@ int gwy_ext_obs_timer_ext_target(uint32_t *out_helper, uint32_t *out_p_guest,
 
 int gwy_ext_obs_timer_arm_seen(void) { return g_timer_arm_seen; }
 
+int gwy_ext_obs_e10a31_timer_arm_observed(void) { return e10a31_timer_arm_observed(); }
+
+int gwy_ext_obs_e10a31_timer_fire_observed(void) { return e10a31_timer_fire_observed(); }
+
 void gwy_ext_obs_timer_host_arm(uint32_t period_ms, const char *route, uint32_t pc) {
     if (env_flag("JJFB_TIMER_ARM_TRACE")) {
         printf("[JJFB_TIMER_ARM_ATTEMPT] module=? pc=0x%X delay_ms=%u period_ms=%u "

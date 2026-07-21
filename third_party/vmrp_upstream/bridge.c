@@ -1192,22 +1192,57 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
             uint32_t t0 = (uint32_t)get_uptime_ms();
             int idle = 0;
             int pumps = 0;
-            printf("[PLATFORM_TIMER] op=POST_CONT_PUMP begin evidence=DOCUMENTED\n");
+            int wait_timer = 0;
+            uint32_t wait_ms = 60000u;
+            const char *wt = getenv("JJFB_E10A31_WAIT_FOR_TIMER");
+            const char *wms = getenv("JJFB_E10A31_WAIT_MS");
+            if (wt && wt[0] == '1') wait_timer = 1;
+            if (wms && wms[0]) wait_ms = (uint32_t)strtoul(wms, NULL, 10);
+            if (wait_ms < 5000u) wait_ms = 5000u;
+            if (wait_ms > 180000u) wait_ms = 180000u;
+            printf("[PLATFORM_TIMER] op=POST_CONT_PUMP begin wait_for_timer=%d wait_ms=%u "
+                   "evidence=DOCUMENTED\n",
+                   wait_timer, wait_ms);
             fflush(stdout);
             for (;;) {
                 gwy_ext_obs_timer_poll_uc(uc);
+                if (wait_timer && gwy_ext_obs_e10a31_timer_fire_observed()) {
+                    printf("[JJFB_E10A31_WAIT_FOR_TIMER] stop=TIMER_FIRE_OBSERVED pumps=%d "
+                           "evidence=OBSERVED\n",
+                           pumps);
+                    fflush(stdout);
+                    break;
+                }
                 if (!gwy_ext_obs_timer_running()) {
-                    if (++idle >= 6) break;
+                    if (wait_timer && !gwy_ext_obs_e10a31_timer_arm_observed()) {
+                        /* Keep host phase alive until arm, fire, fault, or hard timeout. */
+                        idle = 0;
+                    } else if (++idle >= 6) {
+                        if (wait_timer && !gwy_ext_obs_e10a31_timer_fire_observed()) {
+                            /* Armed then stopped — still wait for a fire within budget. */
+                            idle = 0;
+                        } else {
+                            break;
+                        }
+                    }
                 } else {
                     idle = 0;
                 }
-                /* Allow several re-armed periods after first fire (gamelist uses 5s). */
-                if (((uint32_t)get_uptime_ms() - t0) > 60000u) break;
-                if (++pumps > 1500) break;
+                if (((uint32_t)get_uptime_ms() - t0) > wait_ms) {
+                    printf("[JJFB_E10A31_WAIT_FOR_TIMER] stop=HARD_TIMEOUT wait_ms=%u "
+                           "arm=%d fire=%d pumps=%d evidence=OBSERVED\n",
+                           wait_ms, gwy_ext_obs_e10a31_timer_arm_observed(),
+                           gwy_ext_obs_e10a31_timer_fire_observed(), pumps);
+                    fflush(stdout);
+                    break;
+                }
+                if (++pumps > 4000) break;
                 usleep(50000u);
             }
-            printf("[PLATFORM_TIMER] op=POST_CONT_PUMP end pumps=%d evidence=DOCUMENTED\n",
-                   pumps);
+            printf("[PLATFORM_TIMER] op=POST_CONT_PUMP end pumps=%d arm=%d fire=%d "
+                   "evidence=DOCUMENTED\n",
+                   pumps, gwy_ext_obs_e10a31_timer_arm_observed(),
+                   gwy_ext_obs_e10a31_timer_fire_observed());
             fflush(stdout);
         }
         /*

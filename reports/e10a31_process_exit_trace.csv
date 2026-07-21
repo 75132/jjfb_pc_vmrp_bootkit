@@ -1,0 +1,2 @@
+﻿run_id,mode,elapsed,has_exited,exit_code,killed_by_runner,last_phase,last_module,last_pc,last_lr,last_helper,last_api,stop_reason,note
+1784647402479,timer_context,12.3,1,,0,"SHELL_PHASE_GBRWCORE_START","guest_vfs",0x0,0xA2548,0xA4178,"log",NO_CONTINUATION,"exit_verdict=E10A31_HOST_DIAGNOSTIC_EXIT_EARLY;timer_evidence=False;requested_seconds=120"
