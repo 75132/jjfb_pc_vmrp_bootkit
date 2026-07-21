@@ -21,6 +21,7 @@
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
+#include "gwy_launcher/e10a31d_provenance.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -34,6 +35,12 @@ typedef enum {
     GWY_DISPATCH_PLATFORM_CALLBACK = 4,
     GWY_DISPATCH_INIT_SEQUENCE = 5
 } GwyDispatchKind;
+typedef enum {
+    E10A31D_SRC_NATIVE_GUEST = 0,
+    E10A31D_SRC_HOST_FAST_REAL = 1,
+    E10A31D_SRC_TIMER = 2,
+    E10A31D_SRC_PLATFORM_CALLBACK = 3
+} E10a31dSource;
 static inline int e10a31c_enabled(void) { return 0; }
 static inline void e10a31c_enter(void *uc, GwyDispatchKind k, uint32_t h, uint32_t c, uint32_t p,
                                  uint32_t e) {
@@ -93,6 +100,33 @@ static inline int e10a31c_unimpl_policy(void *uc, uint32_t s, const char *n, int
 static inline void e10a31c_note_last_bridge_api(const char *a) { (void)a; }
 static inline void e10a31c_note_process_exit(int c, const char *r) {
     (void)c;
+    (void)r;
+}
+static inline int e10a31d_enabled(void) { return 0; }
+static inline void e10a31d_helper_enter(void *uc, E10a31dSource s, uint32_t h, uint32_t m,
+                                        uint32_t p, uint32_t e, uint32_t in, uint32_t il,
+                                        uint32_t cpc, uint32_t clr) {
+    (void)uc;
+    (void)s;
+    (void)h;
+    (void)m;
+    (void)p;
+    (void)e;
+    (void)in;
+    (void)il;
+    (void)cpc;
+    (void)clr;
+}
+static inline void e10a31d_helper_return(void *uc, uint32_t h, uint32_t m, int32_t r) {
+    (void)uc;
+    (void)h;
+    (void)m;
+    (void)r;
+}
+static inline void e10a31d_note_platform_api(void *uc, const char *a, uint32_t s, int32_t r) {
+    (void)uc;
+    (void)a;
+    (void)s;
     (void)r;
 }
 #endif
@@ -2285,6 +2319,7 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
                     uint32_t z;
                     (void)e10a31c_unimpl_policy(uc, slot, obj->name, &pol);
                     z = (uint32_t)pol;
+                    e10a31d_note_platform_api(uc, obj->name, slot, (int32_t)pol);
                     printf("[JJFB_E10A_UNIMPL_SOFT] api=%s slot=0x%X r0=%d "
                            "note=policy_not_blanket_success evidence=OBSERVED\n",
                            obj->name ? obj->name : "?", slot, (int)pol);
@@ -2476,9 +2511,19 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     uc_hook hh = 0;
     int armed_pin = 0;
     GwyDispatchKind dkind;
+    E10a31dSource dsrc;
+    uint32_t caller_pc = 0, caller_lr = 0;
     if (!uc || !helper || !p_guest) return MR_FAILED;
     dkind = (code == 2u) ? GWY_DISPATCH_TIMER : GWY_DISPATCH_EXT_HELPER;
+    if (code == 2u)
+        dsrc = E10A31D_SRC_TIMER;
+    else if (g_in_ext_init_deliver)
+        dsrc = E10A31D_SRC_HOST_FAST_REAL;
+    else
+        dsrc = E10A31D_SRC_HOST_FAST_REAL;
     bridge_uc_save_regs(uc, saved);
+    caller_pc = saved[15];
+    caller_lr = saved[14];
     if (erw) uc_reg_write(uc, UC_ARM_REG_R9, &erw);
     /* Timer FIRE (code=2): pin R9 to target ERW; refuse drift to gbrwcore ERW. */
     if (code == 2u && erw && g_e10a_shell_continued) {
@@ -2495,9 +2540,12 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     uc_reg_write(uc, UC_ARM_REG_R2, &input);
     uc_reg_write(uc, UC_ARM_REG_R3, &input_len);
     e10a31c_enter(uc, dkind, helper, code, p_guest, erw);
+    e10a31d_helper_enter(uc, dsrc, helper, code, p_guest, erw, input, input_len, caller_pc,
+                         caller_lr);
     thumb = (helper & 1u) != 0;
     runCode(uc, helper & ~1u, CODE_ADDRESS, thumb);
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
+    e10a31d_helper_return(uc, helper, code, (int32_t)ret);
     if (armed_pin) {
         uc_hook_del(uc, hh);
         gwy_ext_obs_timer_fire_r9_unpin();
@@ -2666,9 +2714,15 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     /* E10A-3.1c: sticky-R9 helper path also owns a dispatch critical section. */
     e10a31c_enter(uc, dkind, mr_extHelper_addr, code, v, rw_base);
     entered = 1;
+    e10a31d_helper_enter(uc,
+                         g_in_ext_init_deliver ? E10A31D_SRC_HOST_FAST_REAL
+                                               : E10A31D_SRC_NATIVE_GUEST,
+                         mr_extHelper_addr, code, v, rw_base, input, input_len, saved[15],
+                         saved[14]);
     runCode(uc, mr_extHelper_addr, CODE_ADDRESS, false);
     gwy_ext_obs_r9_switch_leave(uc);
     uc_reg_read(uc, UC_ARM_REG_R0, &v);
+    e10a31d_helper_return(uc, mr_extHelper_addr, code, (int32_t)v);
     gwy_ext_obs_helper_call(mr_extHelper_addr, code, (int32_t)v);
     bridge_uc_restore_regs(uc, saved);
     /*

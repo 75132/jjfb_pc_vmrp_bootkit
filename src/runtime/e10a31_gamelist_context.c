@@ -1,5 +1,6 @@
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a31b_publication.h"
+#include "gwy_launcher/e10a31d_provenance.h"
 
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/ext_chunk_provider.h"
@@ -308,6 +309,7 @@ void e10a31_mark_ext_first_pc(void) {
     if (g_e31.ext_first_pc) return;
     g_e31.ext_first_pc = 1;
     e10a31_mark_milestone("GAMELIST_EXT_FIRST_PC", "first_guest_pc_not_init_complete");
+    e10a31d_on_ext_first_pc();
     e10a3_mark_gamelist_init_ok();
     /*
      * Defer UC_HOOK_MEM_READ until gamelist is live. Arming during gbrwcore
