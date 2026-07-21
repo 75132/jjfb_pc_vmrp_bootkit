@@ -1,0 +1,10 @@
+n,launch_path,module,op,guest_path,host_path,exists,rc,pc,lr
+1,gwy_shell_core_continue,guest_vfs,open,"mythroad/sdk_key.dat","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat",1,1,0x0,0x0
+2,gwy_shell_core_continue,guest_vfs,open,"mythroad/sdk_key.dat","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat",1,1,0x0,0x0
+3,gwy_shell_core_continue,guest_vfs,open,"mythroad/gwy/gbrwcore.mrp","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp",1,1,0x0,0x0
+4,gwy_shell_core_continue,guest_vfs,open,"mythroad/gwy/gamelist.mrp","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gamelist_cfunction.mrp",1,1,0x0,0x0
+5,gwy_shell_core_continue,guest_vfs,open,"mythroad/gwy/gbrwshell.mrp","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp",1,1,0x0,0x0
+6,gwy_shell_core_continue,guest_vfs,open,"mythroad/system/gb16.uc2","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2",1,1,0x0,0x0
+7,gwy_shell_core_continue,guest_vfs,open,"mythroad/gwy/gbrwcore.mrp","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp",1,1,0x0,0x0
+8,gwy_shell_core_continue,guest_vfs,open,"mythroad/gwy/gbrwcore.mrp","C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp",1,1,0x0,0x0
+9,gwy_shell_core_continue,guest_vfs,miss,"","",0,-1,0x0,0x0

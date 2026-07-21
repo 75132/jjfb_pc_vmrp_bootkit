@@ -1,16 +1,27 @@
-# Stage E10A GWY Shell Prelaunch Verdict
+# Stage E10A-Fix GWY Shell Prelaunch Verdict
 
-- **Mode**: direct
-- **Primary**: `DIRECT_PATH_AC8_ZERO`
+- **Mode**: shell_trace
+- **Primary**: `SHELL_AC8_ZERO_AT_SPLASH`
 - **Product success**: **NO** (`NOT_PRODUCT`)
 
+## Focus
+Reconstruct **gbrwcore -> gamelist -> cfg36 -> update/no-update -> runapp -> jjfb -> splash**.
+Do **not** treat robotol resource-ready evt as shell contract.
+
 ## Cases
-- **direct** (94.8s): `DIRECT_PATH_AC8_ZERO` launch=descriptor_direct splash=True ac8_nz=False shell_gbrw=False shell_gl=False post_update=False runapp=False
+- **shell** (22s): `SHELL_AC8_ZERO_AT_SPLASH` gbrw=False continue=False gamelist=False runapp=False splash=True ac8_nz=False
 
 ## Artifacts
-- trace: `reports/e10a_shell_ac8_trace.csv`
-- log: `logs/e10a_gwy_shell_prelaunch_stdout.txt`
-
-## Notes
-- E10A compares `descriptor_direct` vs `gwy_shell_core_continue` without synthetic resource-ready or AC8 poke.
-- If both paths AC8=0 at splash, blocker remains `AC8_BLOCKED_BY_EXTERNAL_GWY_SHELL` (E9Z).
+| Kind | Path |
+|------|------|
+| Shell inventory | `reports/e10a_gwy_shell_inventory.csv` |
+| cfg records | `reports/e10a_gwy_cfg_records.csv` |
+| strings | `reports/e10a_shell_strings.csv` |
+| dependencies | `reports/e10a_shell_file_dependencies.csv` |
+| transition graph | `out/e10a_shell/launch_transition_graph.md` |
+| phase trace | `reports/e10a_shell_phase_trace.csv` |
+| vfs trace | `reports/e10a_shell_vfs_trace.csv` |
+| event loop | `reports/e10a_shell_event_loop_trace.csv` |
+| update contract | `reports/e10a_shell_update_contract_trace.csv` |
+| ac8 trace | `reports/e10a_shell_ac8_trace.csv` |
+| log | `logs/e10a_shell_trace_stdout.txt` |

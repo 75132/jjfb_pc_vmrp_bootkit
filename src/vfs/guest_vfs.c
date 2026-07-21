@@ -1,4 +1,5 @@
 #include "gwy_launcher/guest_vfs.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/platform_call_census.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -511,6 +512,13 @@ void guest_vfs_trace_open(const VfsResolution *res, int ok) {
            res->host_path, ok, vfs_backend_name(res->backend), res->rule);
     guest = res->guest_canonical[0] ? res->guest_canonical : res->guest_normalized;
     gwy_ext_obs_file_open_ex(guest, res->host_path, ok);
+    if (e10a_shell_trace_enabled()) {
+        const char *lp = getenv("JJFB_LAUNCH_PATH");
+        if (lp && (strstr(lp, "shell") || strstr(lp, "gwy_native"))) {
+            e10a_shell_vfs("open", "guest_vfs", res->guest_normalized, res->host_path, ok, ok, 0,
+                           0);
+        }
+    }
 }
 
 void guest_vfs_trace_miss(const GuestVfs *vfs, const char *guest_normalized, VfsMissKind kind) {
@@ -521,6 +529,13 @@ void guest_vfs_trace_miss(const GuestVfs *vfs, const char *guest_normalized, Vfs
            guest_normalized ? guest_normalized : "", canon, vfs_miss_kind_name(kind));
     gwy_ext_obs_file_open(guest_normalized ? guest_normalized : canon, 0);
     platform_call_census_note_file_miss(guest_normalized ? guest_normalized : canon);
+    if (e10a_shell_trace_enabled()) {
+        const char *lp = getenv("JJFB_LAUNCH_PATH");
+        if (lp && (strstr(lp, "shell") || strstr(lp, "gwy_native"))) {
+            e10a_shell_vfs("miss", "guest_vfs", guest_normalized ? guest_normalized : canon, "",
+                           0, -1, 0, 0);
+        }
+    }
 }
 
 size_t guest_vfs_miss_summary(const GuestVfs *vfs) {

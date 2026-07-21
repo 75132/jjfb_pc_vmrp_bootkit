@@ -1,5 +1,6 @@
 #include "gwy_launcher/ext_gwy_shell_shim.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -253,6 +254,11 @@ int ext_gwy_shell_shim_try_init_network(void *uc, uint32_t cb, const char *mode,
         printf("[JJFB_GAME_SELF] untouched=yes\n");
         g_sh.update_stub_logged = 1;
     }
+    if (getenv("GWY_SHELL_OFFLINE_NO_UPDATE") && getenv("GWY_SHELL_OFFLINE_NO_UPDATE")[0] == '1') {
+        e10a_shell_update("initNetwork", "no_update_offline", "GWY_SHELL_OFFLINE_NO_UPDATE");
+        e10a_shell_phase("SHELL_PHASE_UPDATE_NO_UPDATE", g_sh.active_pkg, 0, 0, 0, 0, 0, 0, 0, 0,
+                         "offline_stub");
+    }
     printf("[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=%s pkg=%s result=MR_SUCCESS_sync\n",
            mode ? mode : "?", g_sh.active_pkg[0] ? g_sh.active_pkg : "(pending_shell)");
     fflush(stdout);
@@ -420,12 +426,16 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
                      ext_gwy_shell_native_exec_gamelist_started());
     if (!gbrw_ok || gamelist_done) {
         ext_gwy_shell_shim_emit_exit_source(uc, gamelist_done ? "mr_exit_api" : "gbrwcore_only");
+        e10a_shell_phase("SHELL_PHASE_GBRWCORE_BLOCKED", "gbrwcore.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                         gamelist_done ? "already_gamelist" : "gbrwcore_not_started");
         return 0;
     }
 
     g_sh.shell_chain_continued = 1;
     g_sh.exit_source_emitted = 0;
     ext_gwy_shell_shim_emit_exit_source(uc, "shell_chain_continue");
+    e10a_shell_phase("SHELL_PHASE_GBRWCORE_CONTINUE", "gbrwcore.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                     "to_gamelist");
     printf("[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=init_ok "
            "evidence=TARGET_OBSERVED\n");
     printf("[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm "

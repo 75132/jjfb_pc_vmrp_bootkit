@@ -1,6 +1,7 @@
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -268,6 +269,8 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
     if (path_has(pkg, "gbrwcore")) {
         g_ne.mrp_started_gbrwcore = 1;
         robotol_flag_writer_e10a_shell_phase("gbrwcore_mr_start");
+        e10a_shell_phase("SHELL_PHASE_GBRWCORE_START", "gbrwcore.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                         entry ? entry : "start.mr");
         printf("[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=mr_start entered=yes "
                "pc=pending entry=\"%s\" evidence=OBSERVED\n",
                entry ? entry : "(null)");
@@ -276,6 +279,8 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
     } else if (path_has(pkg, "gamelist")) {
         g_ne.mrp_started_gamelist = 1;
         robotol_flag_writer_e10a_shell_phase("gamelist_mr_start");
+        e10a_shell_phase("SHELL_PHASE_GAMELIST_LOAD", "gamelist.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                         entry ? entry : "start.mr");
         printf("[JJFB_SHELL_EXEC] package=gwy/gamelist.mrp stage=mr_start entered=yes "
                "pc=pending entry=\"%s\" evidence=OBSERVED\n",
                entry ? entry : "(null)");
@@ -293,6 +298,8 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
     } else if (path_has(pkg, "jjfb")) {
         g_ne.mrp_started_jjfb = 1;
         robotol_flag_writer_e10a_shell_phase("jjfb_mr_start");
+        e10a_shell_phase("SHELL_PHASE_JJFB_MR_START", "jjfb.mrp", 0, 0, 0, 0, 0, 0, 0, 0,
+                         entry ? entry : "start.mr");
         if (g_ne.mrp_started_gbrwcore || g_ne.mrp_started_gamelist || g_ne.guest_pc_hit) {
             printf("[JJFB_SHELL_EXPORT_CALL] name=lib.runapp_or_startGame via=nested_start_dsm "
                    "target=gwy/jjfb.mrp pc=nested evidence=HYPOTHESIS_pending_export_pc\n");
@@ -383,6 +390,8 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
                guest_addr + GAMELIST_OFF_CFG36_FMT);
         g_ne.cfg36_build = 1;
         robotol_flag_writer_e10a_shell_phase("gamelist_cfg36_build");
+        e10a_shell_phase("SHELL_PHASE_CFG_RECORD_SELECTED", "gamelist.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                         "cfg36_param_fmt");
         fflush(stdout);
     }
     recompute_gate();
@@ -435,6 +444,7 @@ void ext_gwy_shell_native_exec_on_slot28(uint32_t pc, uint32_t r0, uint32_t r1, 
     /* TARGET_OBSERVED: 0x10102(event_code, handler) registration. */
     if (r0 == 0x10102u && r2) {
         add_handler(r1, r2, 0);
+        e10a_shell_event(r1, r2, pc, 0, "slot28_10102_register");
     }
 }
 
@@ -453,6 +463,8 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
             printf("[JJFB_RUNAPP] source=native_shell target=gwy/jjfb.mrp "
                    "via=guest_native_lib_runapp evidence=TARGET_OBSERVED\n");
             robotol_flag_writer_e10a_shell_phase("shell_runapp");
+            e10a_shell_phase("SHELL_PHASE_RUNAPP_CALLED", module_name ? module_name : "?", pc, 0, 0,
+                             0, 0, 0, 0, 0, buf);
             fflush(stdout);
         }
         if (strstr(buf, "lib.startGame") || strcmp(buf, "startGame") == 0) {
@@ -473,6 +485,9 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
             if (!g_ne.post_update) {
                 g_ne.post_update = 1;
                 robotol_flag_writer_e10a_shell_phase("gamelist_post_update");
+                e10a_shell_phase("SHELL_PHASE_UPDATE_NO_UPDATE", "gamelist.ext", 0, 0, 0, 0, 0, 0,
+                                 0, 0, buf);
+                e10a_shell_update("update_check", "no_update_or_check", buf);
                 printf("[JJFB_GAMELIST_POST_UPDATE] result=no_update_or_check branch=guest "
                        "hint=%s evidence=OBSERVED\n",
                        buf);

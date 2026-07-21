@@ -65,6 +65,7 @@ add_library(launcher_core STATIC
     src/runtime/ext_gwy_startgame_audit.c
     src/runtime/ext_gwy_shell_shim.c
     src/runtime/ext_gwy_shell_native_exec.c
+    src/runtime/e10a_shell_trace.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c

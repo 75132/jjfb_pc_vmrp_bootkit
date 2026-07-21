@@ -8,6 +8,7 @@
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/gwy_pack_registry.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -2040,6 +2041,8 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             if (g_e8f.e10a_mode) {
                 g_e8f.e10a_splash_seen = 1;
                 e10a_log_ac8(uc, r9w, bp->pc, ac8, "splash_enter", "2EF86C");
+                e10a_shell_phase("SHELL_PHASE_SPLASH_ENTER_2EF86C", "robotol.ext", bp->pc, lr, r0,
+                                 r1, r2, r3, r9w, ac8, "splash_enter");
             }
             /* Late path: if FAST pre_splash never finished, still try real ready event once. */
             if (r9w && g_e8f.e9z_resource_ready_event && !g_e8f.e9z_resource_ready_done &&
