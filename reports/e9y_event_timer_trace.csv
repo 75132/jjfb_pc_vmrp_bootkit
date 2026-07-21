@@ -1,4 +1,10 @@
 n,tick,pc,lr,event,note
-1,1,0x2F55FA,0x3056D5,timer_2F55FA,natural
-caller
+1,1,0x301,1,0x2F55FA,0x3056D5,0,0x1,natural_caller
 1,1,0x3124D8,0x2F55FF,0,0x1,natural_or_other
+_candidate,evt=0x0
+3,1,0x2FE84C,0x80000,contract_contract_candidate,evt=0x2B19B4
+4,1,0x2FE82C,0x80000,contract_fast_downimage_ready_call,evt=0x0
+5,1,0x2FE84C,0x30D0B1,contract_contract_candidate,evt=0x2B19B4
+1,1,0x2F55FA,0x3056D5,timer_2F55FA,natural
+6,1,0x2F55FA,0x3056D5,contract_timer_2F55FA,evt=0x10140
+7,1,0x2EF8AE,0x304621,contract_ac8_loading_only,evt=0x0

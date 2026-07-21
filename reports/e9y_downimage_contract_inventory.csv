@@ -1,0 +1,16 @@
+﻿pack_path,member_name,width,height,decoded_size,sha256,name_pattern,referenced_by_pc_if_known,source,note
+game_files/mythroad/320x480/gwy/jjfb.mrp,jjfb.mrp,,,414602,52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036,pack_mrp,,main_mrp,pack_file
+game_files/mythroad/320x480/gwy/jjfb.mrp,loadingbar!201!29.bmp,201,29,11658,6ab17ba601918ab21e1ec7d802ed70027586f2ce231e5b11732e0f97a5d6435d,name!W!H.ext,,main_mrp,member
+game_files/mythroad/320x480/gwy/jjfb.mrp,bar!16!18.bmp,16,18,576,3dfc15b75d265a3593991b6d076e41b678d341c681721628baac21cd081886eb,name!W!H.ext,,main_mrp,member
+game_files/mythroad/320x480/gwy/jjfb.mrp,textbar!120!30.bmp,120,30,7200,1ec9f3d46f79243d4c961afc2b61a241b213a22ef35f43999fd6f2a1adb13bbc,name!W!H.ext,,main_mrp,member
+game_files/mythroad/320x480/gwy/jjfb.mrp,slogo!157!58.bmp,157,58,18212,919d94d541ad0863fd1e7b630475401cde0097801ccdc8a516ef48cb84773fa9,name!W!H.ext,,main_mrp,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage1.mrp,downimage1.mrp,,,26668,f0531e35bf5a41e011583877b3cbfed337a3120a15749e39ff0ecb026a5339d0,pack_mrp,,downimage_pack,pack_file
+game_files/mythroad/320x480/gwy/jjfbol/downimage1.mrp,start.mr,,,3435,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,other,,downimage_pack,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage1.mrp,show1!232!100@downimage1.bmp,232,100,46400,923be74d015e01e75729ddb128c176ca180f9fd2a01f10d6d0b125234f7e14ce,name!W!H@pack.ext,,downimage_pack,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage2.mrp,downimage2.mrp,,,23656,dd54c66757ff59b7023baed7f7453fcaa7d8821e6ea44ca4676c038a84d5d3f8,pack_mrp,,downimage_pack,pack_file
+game_files/mythroad/320x480/gwy/jjfbol/downimage2.mrp,start.mr,,,3435,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,other,,downimage_pack,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage2.mrp,show2!232!100@downimage2.bmp,232,100,46400,09b6e5dc974c85169d9198047913a7c9591cb06852b259229ccb882886443681,name!W!H@pack.ext,,downimage_pack,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage3.mrp,downimage3.mrp,,,24117,3b8f2411bd9147d6caab7b070c8b1309a7ea354f06ed300ff4efba8287ad823c,pack_mrp,,downimage_pack,pack_file
+game_files/mythroad/320x480/gwy/jjfbol/downimage3.mrp,start.mr,,,3435,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,other,,downimage_pack,member
+game_files/mythroad/320x480/gwy/jjfbol/downimage3.mrp,show3!232!100@downimage3.bmp,232,100,46400,969a7efebf1a9591ce677280948585631283d9d0ab2f9c1ab74ffc217b84ae7a,name!W!H@pack.ext,,downimage_pack,member
+out/JJFB_E8A_delivery/02_mrp_extracted/jjfb/robotol.ext,@downimage,,,10,395081f8ee5ae29a557522a148f1b3cefdf6c2e3a06b74b0d7062ab893389ba1,ext_string,,ext,string_literal

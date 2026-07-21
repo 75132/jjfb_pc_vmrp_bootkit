@@ -1,0 +1,16 @@
+# E9Y-Fix downimage string xrefs (readonly)
+# Patterns: downimage / show / loadingbar / textbar / @down / slogo
+
+## file=out/JJFB_E8A_delivery/02_mrp_extracted/jjfb/robotol.ext size=253420
+off=0x3A8EC va≈0x3136E0 str='textbar!120!30.bmp'
+off=0x3A910 va≈0x313704 str='loadingbar!201!29.bmp'
+off=0x3B4D0 va≈0x3142C4 str='@downimage'
+off=0x3B4E8 va≈0x3142DC str='show'
+off=0x3B4F0 va≈0x3142E4 str='slogo!157!58.bmp'
+off=0x3B504 va≈0x3142F8 str='textbar!120!30.bmp'
+off=0x3B528 va≈0x31431C str='loadingbar!201!29.bmp'
+off=0x3D400 va≈0x3161F4 str='mrc_bitmapShowFlip v1003 by Nevo 090603!'
+
+## file=out/JJFB_E8A_delivery/02_mrp_extracted/jjfb/mrc_loader.ext size=232
+(no matching printable strings)
+
