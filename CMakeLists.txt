@@ -69,6 +69,7 @@ add_library(launcher_core STATIC
     src/runtime/e10a3_postselect_trace.c
     src/runtime/e10a31_gamelist_context.c
     src/runtime/e10a31a_precont_diag.c
+    src/runtime/e10a31b_publication.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c

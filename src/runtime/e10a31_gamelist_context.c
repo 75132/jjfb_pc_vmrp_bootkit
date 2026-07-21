@@ -1,7 +1,9 @@
 #include "gwy_launcher/e10a31_gamelist_context.h"
+#include "gwy_launcher/e10a31b_publication.h"
 
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/ext_chunk_provider.h"
+#include "gwy_launcher/ext_gwy_shell_shim.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
@@ -218,17 +220,23 @@ static int multi_owner_mismatch(const GwyTimerBinding *b) {
     return bad;
 }
 
+static void arm_param_read_hook(void *uc);
+
 static const char *classify_timer_context(const GwyTimerBinding *b) {
+    /* Product order: multi-owner first (no heal), then single-field, then coherent. */
     if (!b->helper || !b->chunk_guest) return "TIMER_BINDING_INCOMPLETE";
-    if (multi_owner_mismatch(b)) return "TIMER_CONTEXT_MIXED_MULTI_OWNER";
-    if (b->chunk_module_id && b->helper_module_id &&
-        b->chunk_module_id != b->helper_module_id)
-        return "TIMER_CHUNK_OWNER_MISMATCH";
-    if (b->p_module_id && b->helper_module_id && b->p_module_id != b->helper_module_id)
-        return "TIMER_P_OWNER_MISMATCH";
+    if (multi_owner_mismatch(b)) {
+        if (owner_known(b->chunk_module_id) && b->chunk_module_id != b->helper_module_id)
+            return "TIMER_CHUNK_OWNER_MISMATCH";
+        if (owner_known(b->p_module_id) && b->p_module_id != b->helper_module_id)
+            return "TIMER_P_OWNER_MISMATCH";
+        return "TIMER_CONTEXT_MIXED_MULTI_OWNER";
+    }
+    if (erw_only_mismatch(b) && !b->registry_erw)
+        return "GAMELIST_ERW_NOT_PUBLISHED";
     if (erw_only_mismatch(b)) return "TIMER_ERW_OWNER_MISMATCH";
     if (b->helper_module_id && b->erw_module_id && b->helper_module_id != b->erw_module_id)
-        return "TIMER_CONTEXT_MIXED";
+        return "TIMER_ERW_OWNER_MISMATCH";
     if (b->helper_module_id && b->module_id && b->helper_module_id != b->module_id)
         return "TIMER_HELPER_OWNER_MISMATCH";
     return "TIMER_CONTEXT_COHERENT";
@@ -301,6 +309,12 @@ void e10a31_mark_ext_first_pc(void) {
     g_e31.ext_first_pc = 1;
     e10a31_mark_milestone("GAMELIST_EXT_FIRST_PC", "first_guest_pc_not_init_complete");
     e10a3_mark_gamelist_init_ok();
+    /*
+     * Defer UC_HOOK_MEM_READ until gamelist is live. Arming during gbrwcore
+     * start_dsm (param mapped early) historically aborted ~font-load (~11s)
+     * before br_exit / continue.
+     */
+    if (e10a31_param_trace()) arm_param_read_hook(g_e31.uc);
 }
 
 void e10a31_timer_arm(void *uc, uint32_t source_pc, uint32_t source_lr, uint32_t source_r9,
@@ -318,14 +332,47 @@ void e10a31_timer_arm(void *uc, uint32_t source_pc, uint32_t source_lr, uint32_t
     b.source_lr = source_lr;
     b.source_r9 = source_r9;
     b.package_id = b.module_id;
-    g_e31.binding = b;
-    g_e31.binding_valid = 1;
     g_e31.timer_rebound = 0;
     g_e31.timer_coherent = 0;
     cls = classify_timer_context(&b);
+    /*
+     * E10A-3.1b: if helper/chunk/P owners agree and only live ERW is foreign while
+     * registry already has this module's ERW, rebind before recording ARM.
+     */
+    if (erw_only_mismatch(&b) && b.registry_erw &&
+        ext_chunk_provider_rebind_chunk_erw(timer_chunk, b.registry_erw, b.p_guest)) {
+        uint32_t gen = b.timer_generation;
+        uint32_t tid = b.timer_id;
+        uint32_t per = b.period_ms;
+        uint32_t spc = b.source_pc, slr = b.source_lr, sr9 = b.source_r9;
+        fill_binding_from_chunk(&b, timer_chunk);
+        b.timer_generation = gen;
+        b.timer_id = tid;
+        b.period_ms = per;
+        b.source_pc = spc;
+        b.source_lr = slr;
+        b.source_r9 = sr9;
+        b.package_id = b.module_id;
+        g_e31.timer_rebound = 1;
+        cls = classify_timer_context(&b);
+        if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0)
+            cls = "GAMELIST_TIMER_CONTEXT_REBOUND";
+        e10a31_mark_milestone("GAMELIST_TIMER_CONTEXT_REBOUND", "arm_safe_erw_rebind");
+    }
+    g_e31.binding = b;
+    g_e31.binding_valid = 1;
     log_timer_row("TIMER_ARM", &b, cls, "arm_from_sendAppEvent");
-    if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0) {
-        g_e31.timer_coherent = 1;
+    {
+        int own = (b.registry_erw != 0 && b.helper_module_id && b.erw_module_id &&
+                   b.helper_module_id == b.erw_module_id &&
+                   b.helper_module_id == b.chunk_module_id &&
+                   b.helper_module_id == b.p_module_id);
+        e10a31b_note_timer_arm(b.module_name, b.helper, b.p_guest, b.chunk_guest, b.er_rw,
+                               b.registry_erw, own);
+    }
+    if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0 ||
+        strcmp(cls, "GAMELIST_TIMER_CONTEXT_REBOUND") == 0) {
+        g_e31.timer_coherent = (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0) ? 1 : 0;
         e10a31_mark_milestone("GAMELIST_TIMER_REGISTERED", b.module_name);
     } else {
         printf("[JJFB_E10A31_TIMER_ARM] chunk=0x%X helper=0x%X P=0x%X erw=0x%X "
@@ -353,6 +400,8 @@ int e10a31_timer_arm_observed(void) {
 }
 
 int e10a31_timer_fire_observed(void) { return g_e31.timer_fire_n > 0; }
+
+int e10a31_timer_fire_count(void) { return (int)g_e31.timer_fire_n; }
 
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest,
                               uint32_t *out_erw) {
@@ -399,21 +448,40 @@ int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_gu
     cls = classify_timer_context(&fire);
 
     /*
-     * Auto-heal ERW only when helper/chunk/P owners agree and only ERW is wrong.
-     * Do not hide stale P/chunk by rewriting R9 alone.
+     * Auto-heal ERW only when helper/chunk/P owners agree, only ERW is wrong,
+     * and the helper module has a published registry ER_RW to bind to.
+     * Do not invent ERW or hide stale P/chunk by rewriting R9 alone.
      */
-    if (hm && hm->data.start_of_er_rw && erw_only_mismatch(&fire)) {
-        uint32_t owned = hm->data.start_of_er_rw;
-        if (owned && owned != erw) {
-            if (ext_chunk_provider_rebind_chunk_erw(fire.chunk_guest, owned, p)) {
-                erw = owned;
-                fire.er_rw = owned;
-                fire.erw_module_id = hm->module_id;
-                rebound = 1;
-                g_e31.timer_rebound = 1;
-                cls = "GAMELIST_TIMER_CONTEXT_REBOUND";
-                e10a31_mark_milestone("GAMELIST_TIMER_CONTEXT_REBOUND", fire.module_name);
-            }
+    if (erw_only_mismatch(&fire)) {
+        uint32_t owned = hm ? hm->data.start_of_er_rw : 0;
+        if (!owned) {
+            cls = "GAMELIST_ERW_NOT_PUBLISHED";
+            printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk_mod=%llu p_mod=%llu "
+                   "erw_mod=%llu registry_erw=0x0 live_erw=0x%X class=%s "
+                   "note=helper_has_no_published_er_rw evidence=OBSERVED\n",
+                   (unsigned long long)fire.helper_module_id,
+                   (unsigned long long)fire.chunk_module_id,
+                   (unsigned long long)fire.p_module_id,
+                   (unsigned long long)fire.erw_module_id, erw, cls);
+            fflush(stdout);
+            e10a31_mark_milestone("GAMELIST_ERW_NOT_PUBLISHED", fire.module_name);
+        } else if (owned == erw) {
+            cls = "TIMER_CONTEXT_COHERENT";
+        } else if (ext_chunk_provider_rebind_chunk_erw(fire.chunk_guest, owned, p)) {
+            erw = owned;
+            fire.er_rw = owned;
+            fire.erw_module_id = hm->module_id;
+            fire.registry_erw = owned;
+            rebound = 1;
+            g_e31.timer_rebound = 1;
+            cls = "GAMELIST_TIMER_CONTEXT_REBOUND";
+            e10a31_mark_milestone("GAMELIST_TIMER_CONTEXT_REBOUND", fire.module_name);
+        } else {
+            cls = "TIMER_ERW_OWNER_MISMATCH";
+            printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk=0x%X owned_erw=0x%X "
+                   "live_erw=0x%X class=%s note=rebind_chunk_erw_failed evidence=OBSERVED\n",
+                   (unsigned long long)fire.helper_module_id, fire.chunk_guest, owned, erw, cls);
+            fflush(stdout);
         }
     } else if (multi_owner_mismatch(&fire)) {
         cls = "TIMER_CONTEXT_MIXED_MULTI_OWNER";
@@ -502,10 +570,10 @@ static void param_mem_read_cb(uc_engine *uc, uc_mem_type type, uint64_t address,
     if (g_e31.param_csv) {
         fprintf(g_e31.param_csv,
                 "%llu,%u,0x%X,0x%X,%s,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,"
-                "0x%X,0x%X,0x%llX,%u,\"%s\",0,0x%X,\"%s\",\"mem_read_hook\"\n",
+                "0x%X,0x%X,0x%X,0x%X,%u,\"%s\",0x0,0x%X,\"%s\",\"mem_read_hook\"\n",
                 g_e31.run_id, g_e31.param_read_n, pc, lr, mod, regs[0], regs[1], regs[2],
-                regs[3], regs[4], regs[5], regs[6], regs[7], regs[8], regs[9], regs[10], regs[11],
-                regs[12], sp, (unsigned long long)address, (unsigned)(size > 0 ? size : 0), hex,
+                regs[3], regs[4], regs[5], regs[6], regs[7], regs[8], regs[9], regs[10],
+                regs[11], regs[12], sp, (uint32_t)address, (unsigned)(size > 0 ? size : 0), hex,
                 r9, milestone);
         fflush(g_e31.param_csv);
     }
@@ -524,7 +592,13 @@ static void arm_param_read_hook(void *uc) {
     ue = uc_hook_add((uc_engine *)uc, &g_e31.param_read_hook, UC_HOOK_MEM_READ,
                      (void *)param_mem_read_cb, NULL, g_e31.param_va,
                      (uint64_t)g_e31.param_va + g_e31.param_len - 1u);
-    if (ue == UC_ERR_OK) g_e31.param_hook_armed = 1;
+    if (ue == UC_ERR_OK) {
+        g_e31.param_hook_armed = 1;
+        printf("[JJFB_E10A31] milestone=SHELL_PARAM_READ_HOOK_ARMED va=0x%X len=%u "
+               "evidence=OBSERVED\n",
+               g_e31.param_va, g_e31.param_len);
+        fflush(stdout);
+    }
 }
 #else
 static void arm_param_read_hook(void *uc) { (void)uc; }
@@ -532,10 +606,24 @@ static void arm_param_read_hook(void *uc) { (void)uc; }
 
 void e10a31_launch_param_mapped(void *uc, uint32_t param_va, uint32_t param_len,
                                 const char *entry) {
+    if (uc) g_e31.uc = uc;
+#ifdef GWY_HAVE_UNICORN
+    /* Remap: drop prior hook if the entry string moved (gbrwcore → gamelist). */
+    if (g_e31.param_hook_armed && g_e31.uc && g_e31.param_va && g_e31.param_va != param_va) {
+        uc_hook_del((uc_engine *)g_e31.uc, g_e31.param_read_hook);
+        g_e31.param_hook_armed = 0;
+    }
+#endif
     g_e31.param_va = param_va;
     g_e31.param_len = param_len;
     if (entry) snprintf(g_e31.param_buf, sizeof(g_e31.param_buf), "%s", entry);
-    if (e10a31_param_trace()) arm_param_read_hook(uc);
+    /*
+     * Arm on gamelist start_dsm (before guest may parse entry), not on gbrwcore.
+     * Arming during gbrwcore historically aborted ~font-load before continue.
+     */
+    if (e10a31_param_trace() &&
+        (g_e31.ext_first_pc || ext_gwy_shell_shim_gamelist_started_flag()))
+        arm_param_read_hook(uc ? uc : g_e31.uc);
     if (param_va && param_len)
         e10a31_mark_milestone("SHELL_PARAM_POINTER_COPIED", "mr_start_dsm_entry_mapped");
 }

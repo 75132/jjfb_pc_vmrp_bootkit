@@ -98,6 +98,9 @@ static void bridge_restore_dsm_helper(const char *reason) {
 }
 
 static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input, uint32_t input_len);
+static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p_guest,
+                                      uint32_t code, uint32_t input, uint32_t input_len,
+                                      uint32_t erw);
 
 /*
  * DOCUMENTED (mythroad_mini.c:mr_doExt / doc/反汇编研究.c mr_helper):
@@ -135,24 +138,51 @@ static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_
     int32_t r6, r8, r0;
     uint32_t appinfo;
     uint32_t ver = GWY_EXT_INIT_MR_VERSION;
-    if (!mr_extHelper_addr) return;
+    uint32_t helper = mr_extHelper_addr;
+    uint32_t saved_helper = mr_extHelper_addr;
+    uint32_t erw = 0;
+    uint32_t p_guest = 0;
+
+    /* After shell continue: gamelist helper + own ERW (not sticky gbrwcore P/R9). */
+    if (g_e10a_shell_continued) {
+        uint32_t gh = gwy_ext_obs_module_helper_by_name("gamelist");
+        erw = gwy_ext_obs_module_erw_by_name("gamelist");
+        p_guest = mr_c_function_P ? toMrpMemAddr(mr_c_function_P) : 0;
+        if (gh) helper = gh;
+        if (erw && p_guest) {
+            void *ph = getMrpMemPtr(p_guest);
+            if (ph) {
+                uint32_t *words = (uint32_t *)ph;
+                words[0] = erw;
+                words[1] = 0xA34u; /* gamelist DOCUMENTED ER_RW len */
+            }
+        }
+    }
+    if (!helper) return;
     if (!gwy_ext_obs_take_ext_init_seq()) return;
+    mr_extHelper_addr = helper;
     appinfo = bridge_ext_appinfo_guest();
     g_in_ext_init_deliver = 1;
     printf("[JJFB_INIT_SEQ] action=deliver_%s_code_%u helper=0x%X version=%u appinfo=0x%X "
-           "evidence=DOCUMENTED source=mythroad_mini.c:mr_doExt\n",
-           when, before_or_after_code, mr_extHelper_addr, ver, appinfo);
+           "erw=0x%X P=0x%X evidence=DOCUMENTED source=mythroad_mini.c:mr_doExt\n",
+           when, before_or_after_code, helper, ver, appinfo, erw, p_guest);
     fflush(stdout);
-    /* code 6: only input_len (MR_VERSION) is consumed */
-    r6 = bridge_mr_extHelper(uc, 6u, 0u, ver);
-    /* code 8: guest pointer to mrc_appInfo_st */
-    r8 = bridge_mr_extHelper(uc, 8u, appinfo, 16u);
-    /* code 0: mrc_init; len conventionally MR_VERSION */
-    r0 = bridge_mr_extHelper(uc, 0u, 0u, ver);
+
+    if (g_e10a_shell_continued && erw && p_guest) {
+        /* Explicit R9=erw; avoid sticky gbrwcore R9 from bridge_mr_extHelper scope. */
+        r6 = bridge_ext_helper_call(uc, helper, p_guest, 6u, 0u, ver, erw);
+        r8 = bridge_ext_helper_call(uc, helper, p_guest, 8u, appinfo, 16u, erw);
+        r0 = bridge_ext_helper_call(uc, helper, p_guest, 0u, 0u, ver, erw);
+    } else {
+        r6 = bridge_mr_extHelper(uc, 6u, 0u, ver);
+        r8 = bridge_mr_extHelper(uc, 8u, appinfo, 16u);
+        r0 = bridge_mr_extHelper(uc, 0u, 0u, ver);
+    }
     printf("[JJFB_INIT_SEQ] delivered ret6=%d ret8=%d ret0=%d evidence=OBSERVED\n", (int)r6,
            (int)r8, (int)r0);
     fflush(stdout);
     g_in_ext_init_deliver = 0;
+    mr_extHelper_addr = saved_helper;
 }
 
 static const char MUTEX_LOCK_FAIL[] = "mutex lock fail";
@@ -1007,6 +1037,60 @@ static void br_log(BridgeMap *o, uc_engine *uc) {
     }
 }
 
+/* Guest mr_printf was MAP_FUNC NULL → process exit; stub so mrc_init/cfg can continue. */
+static void br_mr_printf(BridgeMap *o, uc_engine *uc) {
+    uint32_t fmt_a = 0, a1 = 0, a2 = 0, a3 = 0;
+    const char *fmt;
+    char buf[512];
+    int n = 0;
+    (void)o;
+    uc_reg_read(uc, UC_ARM_REG_R0, &fmt_a);
+    uc_reg_read(uc, UC_ARM_REG_R1, &a1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &a2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &a3);
+    fmt = fmt_a ? (const char *)getMrpMemPtr(fmt_a) : "(null)";
+    if (fmt && strstr(fmt, "%s")) {
+        const char *s1 = a1 ? (const char *)getMrpMemPtr(a1) : "(null)";
+        const char *s2 = a2 ? (const char *)getMrpMemPtr(a2) : "(null)";
+        n = snprintf(buf, sizeof(buf), fmt, s1, s2, a3);
+    } else if (fmt) {
+        n = snprintf(buf, sizeof(buf), fmt, a1, a2, a3);
+    }
+    printf("[guest-printf] ");
+    if (n > 0) {
+        fwrite(buf, 1, (size_t)((n < (int)sizeof(buf)) ? n : (int)sizeof(buf) - 1), stdout);
+        if (buf[(n < (int)sizeof(buf) ? n : (int)sizeof(buf)) - 1] != '\n') fputc('\n', stdout);
+    } else {
+        printf("fmt=%s a1=0x%X a2=0x%X a3=0x%X\n", fmt ? fmt : "(null)", a1, a2, a3);
+    }
+    fflush(stdout);
+}
+
+static void br_sprintf(BridgeMap *o, uc_engine *uc) {
+    /* int sprintf(char *buf, const char *fmt, ...); best-effort 3 args. */
+    uint32_t dst_a = 0, fmt_a = 0, a2 = 0, a3 = 0;
+    char *dst;
+    const char *fmt;
+    int n = 0;
+    (void)o;
+    uc_reg_read(uc, UC_ARM_REG_R0, &dst_a);
+    uc_reg_read(uc, UC_ARM_REG_R1, &fmt_a);
+    uc_reg_read(uc, UC_ARM_REG_R2, &a2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &a3);
+    dst = dst_a ? (char *)getMrpMemPtr(dst_a) : NULL;
+    fmt = fmt_a ? (const char *)getMrpMemPtr(fmt_a) : NULL;
+    if (dst && fmt) {
+        if (strstr(fmt, "%s")) {
+            const char *s2 = a2 ? (const char *)getMrpMemPtr(a2) : "";
+            const char *s3 = a3 ? (const char *)getMrpMemPtr(a3) : "";
+            n = sprintf(dst, fmt, s2, s3);
+        } else {
+            n = sprintf(dst, fmt, a2, a3);
+        }
+    }
+    SET_RET_V((uint32_t)(n >= 0 ? n : 0));
+}
+
 /* Track DSM heap so shell-core continue can free before next _mr_mem_init. */
 static uint32_t g_br_mem_guest;
 static void *g_br_mem_host;
@@ -1211,15 +1295,35 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
             for (;;) {
                 gwy_ext_obs_timer_poll_uc(uc);
                 if (wait_timer && gwy_ext_obs_e10a31_timer_fire_observed()) {
-                    printf("[JJFB_E10A31_WAIT_FOR_TIMER] stop=TIMER_FIRE_OBSERVED pumps=%d "
-                           "evidence=OBSERVED\n",
-                           pumps);
-                    fflush(stdout);
-                    break;
+                    int need = 1;
+                    int got = 0;
+                    const char *wn = getenv("JJFB_E10A31_WAIT_FIRE_N");
+                    if (wn && wn[0]) need = (int)strtol(wn, NULL, 10);
+                    if (need < 1) need = 1;
+                    if (need > 8) need = 8;
+                    /* timer_fire_n is latched in e10a31; expose via observed + CSV count. */
+                    got = gwy_ext_obs_e10a31_timer_fire_count();
+                    if (got < 0) got = 1;
+                    if (got >= need) {
+                        printf("[JJFB_E10A31_WAIT_FOR_TIMER] stop=TIMER_FIRE_OBSERVED "
+                               "fires=%d need=%d pumps=%d evidence=OBSERVED\n",
+                               got, need, pumps);
+                        fflush(stdout);
+                        break;
+                    }
                 }
                 if (!gwy_ext_obs_timer_running()) {
+                    int need_fires = 1;
+                    int got_fires = gwy_ext_obs_e10a31_timer_fire_count();
+                    const char *wn2 = getenv("JJFB_E10A31_WAIT_FIRE_N");
+                    if (wn2 && wn2[0]) need_fires = (int)strtol(wn2, NULL, 10);
+                    if (need_fires < 1) need_fires = 1;
+                    if (need_fires > 8) need_fires = 8;
                     if (wait_timer && !gwy_ext_obs_e10a31_timer_arm_observed()) {
                         /* Keep host phase alive until arm, fire, fault, or hard timeout. */
+                        idle = 0;
+                    } else if (wait_timer && got_fires < need_fires) {
+                        /* Need more FIRE samples before ending POST_CONT_PUMP. */
                         idle = 0;
                     } else if (++idle >= 6) {
                         if (wait_timer && !gwy_ext_obs_e10a31_timer_fire_observed()) {
@@ -1263,6 +1367,21 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                    stop_pc);
             fflush(stdout);
         }
+        return;
+    }
+    /*
+     * After shell_core_continue has already consumed mr_exit once, a later sticky
+     * DSM/gamelist mr_exit must not process-exit — park so POST_CONT_PUMP / host
+     * loop can keep delivering timer/cfg. First gbrwcore exit still continues above.
+     */
+    if (g_e10a_shell_continued) {
+        uint32_t stop_pc = CODE_ADDRESS;
+        uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
+        uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
+        printf("[JJFB_E10A_EXIT_PARK] pc=0x%X reason=already_continued "
+               "note=no_process_exit_after_shell_continue evidence=TARGET_OBSERVED\n",
+               stop_pc);
+        fflush(stdout);
         return;
     }
     gwy_ext_obs_e10a31a_br_exit_fallback(uc);
@@ -1846,7 +1965,7 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x38, MAP_FUNC, memset, NULL, br_memset, 0),
     BRIDGE_FUNC_MAP(0x3C, MAP_FUNC, strlen, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x40, MAP_FUNC, strstr, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x44, MAP_FUNC, sprintf, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x44, MAP_FUNC, sprintf, NULL, br_sprintf, 0),
     BRIDGE_FUNC_MAP(0x48, MAP_FUNC, atoi, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x4C, MAP_FUNC, strtoul, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x50, MAP_FUNC, rand, NULL, NULL, 0),
@@ -1855,9 +1974,9 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x5C, MAP_DATA, _mr_c_internal_table, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x60, MAP_DATA, _mr_c_port_table, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x64, MAP_FUNC, _mr_c_function_new, NULL, br__mr_c_function_new, 0),
-    BRIDGE_FUNC_MAP(0x68, MAP_FUNC, mr_printf, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x6C, MAP_FUNC, mr_mem_get, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x70, MAP_FUNC, mr_mem_free, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x68, MAP_FUNC, mr_printf, NULL, br_mr_printf, 0),
+    BRIDGE_FUNC_MAP(0x6C, MAP_FUNC, mr_mem_get, NULL, br_mem_get, 0),
+    BRIDGE_FUNC_MAP(0x70, MAP_FUNC, mr_mem_free, NULL, br_mem_free, 0),
     /* Stage E6: DOCUMENTED draw entry used by plat 0x10113 getProc (mr_table+0x1E0/_DrawBitmap). */
     BRIDGE_FUNC_MAP(0x74, MAP_FUNC, mr_drawBitmap, NULL, br_mr_drawBitmap, 0),
     BRIDGE_FUNC_MAP(0x78, MAP_FUNC, mr_getCharBitmap, NULL, NULL, 0),
@@ -1871,25 +1990,25 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x94, MAP_FUNC, mr_plat, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x98, MAP_FUNC, mr_platEx, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x9C, MAP_FUNC, mr_ferrno, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xA0, MAP_FUNC, mr_open, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xA4, MAP_FUNC, mr_close, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xA8, MAP_FUNC, mr_info, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xAC, MAP_FUNC, mr_write, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xB0, MAP_FUNC, mr_read, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xB4, MAP_FUNC, mr_seek, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xB8, MAP_FUNC, mr_getLen, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xBC, MAP_FUNC, mr_remove, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xC0, MAP_FUNC, mr_rename, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xC4, MAP_FUNC, mr_mkDir, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xC8, MAP_FUNC, mr_rmDir, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0xA0, MAP_FUNC, mr_open, NULL, br_mr_open, 0),
+    BRIDGE_FUNC_MAP(0xA4, MAP_FUNC, mr_close, NULL, br_mr_close, 0),
+    BRIDGE_FUNC_MAP(0xA8, MAP_FUNC, mr_info, NULL, br_info, 0),
+    BRIDGE_FUNC_MAP(0xAC, MAP_FUNC, mr_write, NULL, br_mr_write, 0),
+    BRIDGE_FUNC_MAP(0xB0, MAP_FUNC, mr_read, NULL, br_mr_read, 0),
+    BRIDGE_FUNC_MAP(0xB4, MAP_FUNC, mr_seek, NULL, br_mr_seek, 0),
+    BRIDGE_FUNC_MAP(0xB8, MAP_FUNC, mr_getLen, NULL, br_mr_getLen, 0),
+    BRIDGE_FUNC_MAP(0xBC, MAP_FUNC, mr_remove, NULL, br_mr_remove, 0),
+    BRIDGE_FUNC_MAP(0xC0, MAP_FUNC, mr_rename, NULL, br_mr_rename, 0),
+    BRIDGE_FUNC_MAP(0xC4, MAP_FUNC, mr_mkDir, NULL, br_mr_mkDir, 0),
+    BRIDGE_FUNC_MAP(0xC8, MAP_FUNC, mr_rmDir, NULL, br_mr_rmDir, 0),
     BRIDGE_FUNC_MAP(0xCC, MAP_FUNC, mr_findStart, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0xD0, MAP_FUNC, mr_findGetNext, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0xD4, MAP_FUNC, mr_findStop, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xD8, MAP_FUNC, mr_exit, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xDC, MAP_FUNC, mr_startShake, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xE0, MAP_FUNC, mr_stopShake, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xE4, MAP_FUNC, mr_playSound, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0xE8, MAP_FUNC, mr_stopSound, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0xD8, MAP_FUNC, mr_exit, NULL, br_exit, 0),
+    BRIDGE_FUNC_MAP(0xDC, MAP_FUNC, mr_startShake, NULL, br_mr_startShake, 0),
+    BRIDGE_FUNC_MAP(0xE0, MAP_FUNC, mr_stopShake, NULL, br_mr_stopShake, 0),
+    BRIDGE_FUNC_MAP(0xE4, MAP_FUNC, mr_playSound, NULL, br_mr_playSound, 0),
+    BRIDGE_FUNC_MAP(0xE8, MAP_FUNC, mr_stopSound, NULL, br_mr_stopSound, 0),
     BRIDGE_FUNC_MAP(0xEC, MAP_FUNC, mr_sendSms, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0xF0, MAP_FUNC, mr_call, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0xF4, MAP_FUNC, mr_getNetworkID, NULL, NULL, 0),
@@ -1900,28 +2019,28 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x108, MAP_DATA, reserve, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x10C, MAP_FUNC, mr_menuRelease, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x110, MAP_FUNC, mr_menuRefresh, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x114, MAP_FUNC, mr_dialogCreate, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x118, MAP_FUNC, mr_dialogRelease, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x11C, MAP_FUNC, mr_dialogRefresh, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x120, MAP_FUNC, mr_textCreate, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x124, MAP_FUNC, mr_textRelease, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x128, MAP_FUNC, mr_textRefresh, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x12C, MAP_FUNC, mr_editCreate, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x130, MAP_FUNC, mr_editRelease, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x134, MAP_FUNC, mr_editGetText, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x114, MAP_FUNC, mr_dialogCreate, NULL, br_mr_dialogCreate, 0),
+    BRIDGE_FUNC_MAP(0x118, MAP_FUNC, mr_dialogRelease, NULL, br_mr_dialogRelease, 0),
+    BRIDGE_FUNC_MAP(0x11C, MAP_FUNC, mr_dialogRefresh, NULL, br_mr_dialogRefresh, 0),
+    BRIDGE_FUNC_MAP(0x120, MAP_FUNC, mr_textCreate, NULL, br_mr_textCreate, 0),
+    BRIDGE_FUNC_MAP(0x124, MAP_FUNC, mr_textRelease, NULL, br_mr_textRelease, 0),
+    BRIDGE_FUNC_MAP(0x128, MAP_FUNC, mr_textRefresh, NULL, br_mr_textRefresh, 0),
+    BRIDGE_FUNC_MAP(0x12C, MAP_FUNC, mr_editCreate, NULL, br_mr_editCreate, 0),
+    BRIDGE_FUNC_MAP(0x130, MAP_FUNC, mr_editRelease, NULL, br_mr_editRelease, 0),
+    BRIDGE_FUNC_MAP(0x134, MAP_FUNC, mr_editGetText, NULL, br_mr_editGetText, 0),
     BRIDGE_FUNC_MAP(0x138, MAP_FUNC, mr_winCreate, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x13C, MAP_FUNC, mr_winRelease, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x140, MAP_FUNC, mr_getScreenInfo, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x144, MAP_FUNC, mr_initNetwork, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x148, MAP_FUNC, mr_closeNetwork, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x14C, MAP_FUNC, mr_getHostByName, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x150, MAP_FUNC, mr_socket, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x154, MAP_FUNC, mr_connect, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x158, MAP_FUNC, mr_closeSocket, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x15C, MAP_FUNC, mr_recv, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x160, MAP_FUNC, mr_recvfrom, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x164, MAP_FUNC, mr_send, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x168, MAP_FUNC, mr_sendto, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x144, MAP_FUNC, mr_initNetwork, NULL, br_mr_initNetwork, 0),
+    BRIDGE_FUNC_MAP(0x148, MAP_FUNC, mr_closeNetwork, NULL, br_mr_closeNetwork, 0),
+    BRIDGE_FUNC_MAP(0x14C, MAP_FUNC, mr_getHostByName, NULL, br_mr_getHostByName, 0),
+    BRIDGE_FUNC_MAP(0x150, MAP_FUNC, mr_socket, NULL, br_mr_socket, 0),
+    BRIDGE_FUNC_MAP(0x154, MAP_FUNC, mr_connect, NULL, br_mr_connect, 0),
+    BRIDGE_FUNC_MAP(0x158, MAP_FUNC, mr_closeSocket, NULL, br_mr_closeSocket, 0),
+    BRIDGE_FUNC_MAP(0x15C, MAP_FUNC, mr_recv, NULL, br_mr_recv, 0),
+    BRIDGE_FUNC_MAP(0x160, MAP_FUNC, mr_recvfrom, NULL, br_mr_recvfrom, 0),
+    BRIDGE_FUNC_MAP(0x164, MAP_FUNC, mr_send, NULL, br_mr_send, 0),
+    BRIDGE_FUNC_MAP(0x168, MAP_FUNC, mr_sendto, NULL, br_mr_sendto, 0),
     BRIDGE_FUNC_MAP(0x16C, MAP_DATA, mr_screenBuf, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x170, MAP_DATA, mr_screen_w, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x174, MAP_DATA, mr_screen_h, NULL, NULL, 0),
@@ -2049,6 +2168,24 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
                 /* Phase 6D-A: observe before exit; do not stub or fake the API. */
                 gwy_ext_obs_unimplemented_api(uc, slot, obj->name);
                 printf("!!! %s() Not yet implemented function !!! \n", obj->name);
+                /*
+                 * After shell_core_continue, process-exit on every missing MAP_FUNC
+                 * aborts mrc_init/cfg (mr_printf/mem_get/getCharBitmap…). Soft-return
+                 * so POST_CONT_PUMP can keep delivering timer/cfg; first-boot path
+                 * still fails closed.
+                 */
+                if (g_e10a_shell_continued) {
+                    uint32_t _lr = 0;
+                    uint32_t z = 0;
+                    printf("[JJFB_E10A_UNIMPL_SOFT] api=%s slot=0x%X note=continue_no_process_exit "
+                           "evidence=OBSERVED\n",
+                           obj->name ? obj->name : "?", slot);
+                    fflush(stdout);
+                    uc_reg_write(uc, UC_ARM_REG_R0, &z);
+                    uc_reg_read(uc, UC_ARM_REG_LR, &_lr);
+                    uc_reg_write(uc, UC_ARM_REG_PC, &_lr);
+                    return;
+                }
                 exit(1);
                 return;
             }
@@ -2213,15 +2350,36 @@ static uint32_t bridge_timer_clock_ms(void) {
 }
 
 /* Mutex already held by outer start_dsm / plat stub — do not lock again. */
+/* DOCUMENTED mrc_extHelper case 2 → mrc_timerTimeout (not DSM Lua MR_TIMER). */
+static void bridge_timer_fire_r9_guard_cb(uc_engine *uc, uint64_t address, uint32_t size,
+                                          void *user_data) {
+    (void)address;
+    (void)size;
+    (void)user_data;
+    (void)gwy_ext_obs_timer_fire_r9_guard(uc);
+}
+
 static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p_guest,
                                       uint32_t code, uint32_t input, uint32_t input_len,
                                       uint32_t erw) {
     uint32_t saved[17];
     uint32_t ret = 0;
     int thumb;
+    uc_hook hh = 0;
+    int armed_pin = 0;
     if (!uc || !helper || !p_guest) return MR_FAILED;
     bridge_uc_save_regs(uc, saved);
     if (erw) uc_reg_write(uc, UC_ARM_REG_R9, &erw);
+    /* Timer FIRE (code=2): pin R9 to target ERW; refuse drift to gbrwcore ERW. */
+    if (code == 2u && erw && g_e10a_shell_continued) {
+        uint32_t forbid = gwy_ext_obs_module_erw_by_name("gbrwcore");
+        if (forbid && forbid != erw) {
+            gwy_ext_obs_timer_fire_r9_pin(erw, forbid);
+            if (uc_hook_add(uc, &hh, UC_HOOK_BLOCK, (void *)bridge_timer_fire_r9_guard_cb, NULL, 1,
+                            0) == UC_ERR_OK)
+                armed_pin = 1;
+        }
+    }
     uc_reg_write(uc, UC_ARM_REG_R0, &p_guest);
     uc_reg_write(uc, UC_ARM_REG_R1, &code);
     uc_reg_write(uc, UC_ARM_REG_R2, &input);
@@ -2229,6 +2387,10 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     thumb = (helper & 1u) != 0;
     runCode(uc, helper & ~1u, CODE_ADDRESS, thumb);
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
+    if (armed_pin) {
+        uc_hook_del(uc, hh);
+        gwy_ext_obs_timer_fire_r9_unpin();
+    }
     bridge_uc_restore_regs(uc, saved);
     if (g_e10a_shell_continued)
         (void)gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);

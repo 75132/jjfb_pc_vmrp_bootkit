@@ -125,6 +125,8 @@ void gwy_ext_obs_extchunk_slot28_call(void *uc);
 typedef void *(*GwyExtObsGuestAllocFn)(uint32_t size);
 typedef uint32_t (*GwyExtObsGuestPtrFn)(void *host);
 void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuestPtrFn to_guest);
+/* Zero-filled guest alloc via registered allocator; 0 if unbound/fail. */
+uint32_t gwy_ext_obs_guest_malloc0(uint32_t size);
 
 /* Host timer ABI (registered from bridge: timerStart / timerStop / SDL_GetTicks). */
 typedef int32_t (*GwyExtObsTimerStartFn)(uint16_t ms);
@@ -159,6 +161,7 @@ int gwy_ext_obs_timer_arm_seen(void);
 /* E10A-3.1: binding TIMER_ARM / TIMER_FIRE observed (package-scoped). */
 int gwy_ext_obs_e10a31_timer_arm_observed(void);
 int gwy_ext_obs_e10a31_timer_fire_observed(void);
+int gwy_ext_obs_e10a31_timer_fire_count(void);
 /* Emit TIMER_ARM_ABSENT once after start_dsm if no arm in the window. */
 void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret);
 /* ~1Hz summary from host SDL loop (gated by JJFB_POST_START_SCHEDULER_TRACE). */
@@ -171,6 +174,13 @@ void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms);
  */
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc);
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret);
+/* E10A-3.1 cfg: pin R9 during EXT timer FIRE; refuse drift to foreign module ERW. */
+void gwy_ext_obs_timer_fire_r9_pin(uint32_t pin_erw, uint32_t forbid_erw);
+void gwy_ext_obs_timer_fire_r9_unpin(void);
+uint32_t gwy_ext_obs_timer_fire_r9_pinned(void);
+int gwy_ext_obs_timer_fire_r9_guard(void *uc);
+uint32_t gwy_ext_obs_module_erw_by_name(const char *needle);
+uint32_t gwy_ext_obs_module_helper_by_name(const char *needle);
 
 /* Phase 6F: observe-only start_dsm / file open / plat-testcom peeks. */
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry);

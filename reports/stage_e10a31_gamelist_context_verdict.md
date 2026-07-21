@@ -1,65 +1,69 @@
 # Stage E10A-3.1 Gamelist Context Verdict
 
-- **Mode**: `timer_context`
-- **run_id**: `1784647402479`
+- **Mode**: `cfg_gate`
+- **run_id**: `1784656128442`
+- **overlay**: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay\e10a31\1784656128442`
 - **Requested seconds**: 120
-- **Elapsed**: 12.3s
-- **Process exited**: True (code=)
+- **Elapsed**: 61.2s
+- **Process exited**: True (code=0)
 - **Killed by runner**: False
-- **Stop reason**: `NO_CONTINUATION`
-- **Exit verdict**: `E10A31_HOST_DIAGNOSTIC_EXIT_EARLY`
-- **Primary**: `E10A31_INSUFFICIENT_TIMER_EVIDENCE`
-- **timer_evidence**: False
+- **Observe stop**: ``
+- **Stop reason**: `GUEST_NORMAL_EXIT`
+- **Exit verdict**: `E10A31_REACHED_GAMELIST_TIMER`
+- **Primary**: `GAMELIST_TIMER_CONTEXT_COHERENT`
+- **timer_evidence**: True (binding_ok=True owners_ok=True)
+- **env**: `E10A31_RUN_ENVIRONMENT_DETERMINISTIC` (full JJFB_/GWY_/VMRP_ wipe + unique overlay)
 
-## Focus
-Package-scoped timer P/ERW/R9, launch-param handoff, cfg-open gate 鈥?not post-cfg update yet.
+## Timer sample
+```
+helper=0x2E3089 P=0x2AC8DC chunk=0x682B24 ERW=0x682B6C class=TIMER_CONTEXT_COHERENT helper_mod=4 chunk_mod=4 p_mod=4 erw_mod=4 module=gamelist.ext
+```
 
 ## Process exit
 | Field | Value |
 |------|-------|
-| last_phase | SHELL_PHASE_GBRWCORE_START |
-| last_module | guest_vfs |
+| last_phase | SHELL_PHASE_CFG_FMT_MAPPED |
+| last_module | gamelist.ext |
 | last_pc | 0x0 |
-| last_helper | 0xA4178 |
-| last_api | log |
-| stop_reason | NO_CONTINUATION |
-
-Note: `-Seconds` is outer kill deadline only; do not claim a 120s run if elapsed=12.3.
+| last_helper | 0x6835A4 |
+| last_api | PLATFORM_TIMER/FIRE_DONE |
+| stop_reason | GUEST_NORMAL_EXIT |
 
 ## Flags
 | Flag | Value |
 |------|-------|
-| ext_first_pc | False |
-| timer_arm_csv | False |
-| timer_fire_csv | False |
-| timer_evidence | False |
-| timer_mixed | False |
-| timer_mixed_multi | False |
-| timer_coherent | False |
+| ext_first_pc | True |
+| post_cont | False |
+| continue_apply | True |
+| timer_arm_csv | True |
+| timer_fire_csv | True |
+| timer_evidence | True |
 | timer_rebound | False |
-| param_mem_read | False |
-| param_reg_read | False |
-| start_dsm_abi | True |
-| cfg_gate | False |
-| cfg_open | False |
-| cfg_bin | False |
+| timer_coherent | True |
+| timer_mixed_multi | False |
+| erw_unpublished | False |
+| chunk_retarget / foreign_erw | False / False |
+| chunk_mm / p_mm / erw_mm | False / False / False |
 
-## CSV counts
-timer=0 arm=0 fire=0 param=0 start_dsm=1 cfg_gate=0
+## CSV counts (run_id filtered)
+timer=3 arm=1 fire=1 fire_ret=1 param=310 start_dsm=0 cfg_gate=0
 
 ## Verdicts
-- `E10A31_HOST_DIAGNOSTIC_EXIT_EARLY`
-- `E10A31_INSUFFICIENT_TIMER_EVIDENCE`
-- `START_DSM_PARAM_ABI_CONFIRMED`
+- `E10A31_REACHED_GAMELIST_TIMER`
+- `GAMELIST_EXT_FIRST_PC`
+- `GAMELIST_TIMER_CONTEXT_COHERENT`
+- `GAMELIST_CHUNK_REUSE_REFUSED`
+- `GAMELIST_CHUNK_CREATED`
+- `GAMELIST_ERW_PUBLISHED`
+- `GAMELIST_TIMER_ARMED_WITH_OWN_CHUNK`
+- `START_DSM_PARAM_REACHED_GAMELIST`
 - `NO_REAL_CFG_BIN_OPEN`
 
 ## Artifacts
 | Kind | Path |
 |------|------|
+| env manifest | `reports/e10a31_environment_manifest.csv` |
+| runtime manifest | `reports/e10a31_runtime_manifest.csv` |
 | process exit | `reports/e10a31_process_exit_trace.csv` |
 | timer binding | `reports/e10a31_timer_binding_trace.csv` |
-| param read | `reports/e10a31_launch_param_read_trace.csv` |
-| start_dsm ABI | `reports/e10a31_start_dsm_param_abi.csv` |
-| cfg gate | `reports/e10a31_cfg_gate_predicates.csv` |
-| cfg annotate | `out/e10a31/gamelist_cfg_gate_annotated.txt` |
 | log | `logs/e10a31_gamelist_context_stdout.txt` |

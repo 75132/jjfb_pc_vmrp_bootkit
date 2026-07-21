@@ -24,6 +24,7 @@
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a31a_precont_diag.h"
+#include "gwy_launcher/e10a31b_publication.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -141,6 +142,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_timer_reset();
     e10a31_reset();
     e10a31a_reset();
+    e10a31b_reset();
     g_armed_timer_chunk = 0;
     g_timer_arm_seen = 0;
     g_timer_arm_count = 0;
@@ -300,6 +302,15 @@ void gwy_ext_obs_c_function_new_ex(uint32_t helper,
             mn = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
             ext_mrpgcmap_entry_order_on_module_registered(mn, gm->map.guest_code_base, helper);
         }
+        if (mn && p_guest_addr &&
+            (strstr(mn, "gamelist") || strstr(mn, "gbrwcore") || strstr(mn, "gbrwshell"))) {
+            static uint32_t s_last_shell_p;
+            if (strstr(mn, "gamelist")) {
+                int reused = (s_last_shell_p != 0 && s_last_shell_p == p_guest_addr);
+                e10a31b_note_cfn(mn, helper, p_guest_addr, p_len, reused, s_last_shell_p);
+            }
+            s_last_shell_p = p_guest_addr;
+        }
         ext_mrpgcmap_entry_order_before_continuation(NULL, mn, 0);
         /* Phase 6N: entry emu / cfunction zero-init may clear P+0xC — restore platform publish. */
         ext_chunk_provider_after_entry_order(helper);
@@ -337,6 +348,15 @@ int gwy_ext_obs_extchunk_on_c_function_new(void *uc, uint32_t helper, uint32_t p
 void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuestPtrFn to_guest) {
     g_guest_alloc = alloc;
     g_guest_to_ptr = to_guest;
+}
+
+uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
+    void *host;
+    if (!g_guest_alloc || !g_guest_to_ptr || !size) return 0;
+    host = g_guest_alloc(size);
+    if (!host) return 0;
+    memset(host, 0, size);
+    return g_guest_to_ptr(host);
 }
 
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {
@@ -380,6 +400,8 @@ int gwy_ext_obs_timer_arm_seen(void) { return g_timer_arm_seen; }
 int gwy_ext_obs_e10a31_timer_arm_observed(void) { return e10a31_timer_arm_observed(); }
 
 int gwy_ext_obs_e10a31_timer_fire_observed(void) { return e10a31_timer_fire_observed(); }
+
+int gwy_ext_obs_e10a31_timer_fire_count(void) { return e10a31_timer_fire_count(); }
 
 void gwy_ext_obs_timer_host_arm(uint32_t period_ms, const char *route, uint32_t pc) {
     if (env_flag("JJFB_TIMER_ARM_TRACE")) {
@@ -1022,11 +1044,12 @@ void gwy_ext_obs_helper_call(uint32_t helper, uint32_t method, int32_t ret_value
 }
 
 static int g_pending_ext_init_seq;
+static int g_ext_init_seq_delivered;
 
 void gwy_ext_obs_request_ext_init_seq(void) {
     const char *e = getenv("JJFB_ROBOTOL_RETRY_AFTER_CONTEXT_RESTORE");
     if (!e || e[0] != '1') return;
-    if (g_pending_ext_init_seq) return;
+    if (g_ext_init_seq_delivered || g_pending_ext_init_seq) return;
     g_pending_ext_init_seq = 1;
     printf("[JJFB_INIT_SEQ] queued=1 reason=retry_after_context_restore "
            "evidence=DOCUMENTED source=mythroad.c:mr_doExt/start.mr\n");
@@ -1036,6 +1059,7 @@ void gwy_ext_obs_request_ext_init_seq(void) {
 int gwy_ext_obs_take_ext_init_seq(void) {
     if (!g_pending_ext_init_seq) return 0;
     g_pending_ext_init_seq = 0;
+    g_ext_init_seq_delivered = 1;
     return 1;
 }
 
@@ -1408,4 +1432,78 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
 
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
     e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
+}
+
+static uint32_t g_timer_fire_pin_erw;
+static uint32_t g_timer_fire_forbid_erw;
+static uint32_t g_timer_fire_pin_hits;
+
+void gwy_ext_obs_timer_fire_r9_pin(uint32_t pin_erw, uint32_t forbid_erw) {
+    g_timer_fire_pin_erw = pin_erw;
+    g_timer_fire_forbid_erw = forbid_erw;
+    g_timer_fire_pin_hits = 0;
+    if (pin_erw) {
+        printf("[JJFB_E10A31_TIMER_R9_PIN] begin pin=0x%X forbid=0x%X evidence=DOCUMENTED\n",
+               pin_erw, forbid_erw);
+        fflush(stdout);
+    }
+}
+
+void gwy_ext_obs_timer_fire_r9_unpin(void) {
+    if (g_timer_fire_pin_erw) {
+        printf("[JJFB_E10A31_TIMER_R9_PIN] end pin=0x%X hits=%u evidence=OBSERVED\n",
+               g_timer_fire_pin_erw, g_timer_fire_pin_hits);
+        fflush(stdout);
+    }
+    g_timer_fire_pin_erw = 0;
+    g_timer_fire_forbid_erw = 0;
+}
+
+uint32_t gwy_ext_obs_timer_fire_r9_pinned(void) { return g_timer_fire_pin_erw; }
+
+uint32_t gwy_ext_obs_module_erw_by_name(const char *needle) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    size_t i;
+    if (!reg || !needle || !needle[0]) return 0;
+    for (i = 0; i < reg->count; i++) {
+        const char *a = reg->modules[i].resolved_name;
+        const char *b = reg->modules[i].requested_name;
+        if ((a && strstr(a, needle)) || (b && strstr(b, needle)))
+            return reg->modules[i].data.start_of_er_rw;
+    }
+    return 0;
+}
+
+uint32_t gwy_ext_obs_module_helper_by_name(const char *needle) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    size_t i;
+    if (!reg || !needle || !needle[0]) return 0;
+    for (i = 0; i < reg->count; i++) {
+        const char *a = reg->modules[i].resolved_name;
+        const char *b = reg->modules[i].requested_name;
+        if ((a && strstr(a, needle)) || (b && strstr(b, needle)))
+            return reg->modules[i].entries.registered_helper;
+    }
+    return 0;
+}
+
+/* Called from CODE hook during FIRE: force R9 off forbidden foreign ERW. */
+int gwy_ext_obs_timer_fire_r9_guard(void *uc) {
+#ifdef GWY_HAVE_UNICORN
+    uint32_t r9 = 0;
+    if (!uc || !g_timer_fire_pin_erw || !g_timer_fire_forbid_erw) return 0;
+    if (uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9) != UC_ERR_OK) return 0;
+    if (r9 != g_timer_fire_forbid_erw) return 0;
+    if (uc_reg_write((uc_engine *)uc, UC_ARM_REG_R9, &g_timer_fire_pin_erw) != UC_ERR_OK) return 0;
+    g_timer_fire_pin_hits++;
+    if (g_timer_fire_pin_hits <= 8u) {
+        printf("[JJFB_E10A31_TIMER_R9_PIN] refuse=0x%X force=0x%X hit=%u evidence=OBSERVED\n",
+               r9, g_timer_fire_pin_erw, g_timer_fire_pin_hits);
+        fflush(stdout);
+    }
+    return 1;
+#else
+    (void)uc;
+    return 0;
+#endif
 }

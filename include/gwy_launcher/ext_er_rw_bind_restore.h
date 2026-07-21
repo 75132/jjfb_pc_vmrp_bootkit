@@ -35,6 +35,13 @@ void ext_er_rw_bind_restore_on_p_write(uint32_t p_guest, uint32_t off, uint32_t 
 /* Peek P+0/+4 and bind if ready (post-republish / after entry order). */
 void ext_er_rw_bind_restore_peek_and_bind(uint32_t p_guest, const char *reason);
 
+/*
+ * E10A-3.1b: if P is empty or points at another module's ERW, allocate a distinct
+ * guest ERW, write P+0/+4, and publish to registry (gamelist package isolation).
+ * Returns 1 if this module now has a non-foreign registry ERW.
+ */
+int ext_er_rw_bind_restore_ensure_isolated_erw(uint32_t p_guest, const char *module_hint);
+
 void ext_er_rw_bind_restore_finalize(const char *stop_reason);
 
 int ext_er_rw_bind_restore_bound(void);

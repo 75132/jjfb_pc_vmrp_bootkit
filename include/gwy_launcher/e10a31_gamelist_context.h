@@ -71,6 +71,7 @@ int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_gu
 /* 1 if TIMER_ARM seen this run (binding valid with helper+P). */
 int e10a31_timer_arm_observed(void);
 int e10a31_timer_fire_observed(void);
+int e10a31_timer_fire_count(void);
 void e10a31_on_timer_fire(void *uc, uint32_t helper, uint32_t method, uint32_t p_guest,
                           uint32_t erw, int32_t ret);
 

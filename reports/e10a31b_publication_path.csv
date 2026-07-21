@@ -1,0 +1,6 @@
+run_id,seq,event,module,helper,p_guest,chunk_guest,erw,erw_len,module_id,old_module_id,registry_erw,own_erw,note
+1784656128442,1,GAMELIST_ERW_HOST_ISOLATED,"gamelist.ext",0x0,0x2AC8DC,0x0,0x682B6C,2612,4,0,0x682B6C,0,"empty_or_zero"
+1784656128442,2,GAMELIST_ERW_PUBLISHED,"gamelist.ext",0x0,0x2AC8DC,0x0,0x682B6C,2612,4,0,0x682B6C,1,"host_isolated"
+1784656128442,3,GAMELIST_P_REUSED,"gamelist.ext",0x2E3089,0x2AC8DC,0x0,0x0,0,0,0,0x0,0,"p_reused=1 prior_p=0x2AC8DC"
+1784656128442,4,GAMELIST_P_PUBLISHED,"gamelist.ext",0x2E3089,0x2AC8DC,0x0,0x0,0,0,0,0x0,0,"same_va_as_prior_package"
+1784656128442,5,GAMELIST_TIMER_ARMED_WITH_OWN_CHUNK,"gamelist.ext",0x2E3089,0x2AC8DC,0x682B24,0x682B6C,0,0,0,0x682B6C,1,"helper_p_chunk_erw_coherent"

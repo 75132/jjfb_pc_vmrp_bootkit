@@ -257,6 +257,11 @@ void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuest
     (void)to_guest;
 }
 
+uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
+    (void)size;
+    return 0;
+}
+
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {
     (void)start;
     (void)stop;
@@ -306,6 +311,8 @@ int gwy_ext_obs_e10a31_timer_arm_observed(void) { return 0; }
 
 int gwy_ext_obs_e10a31_timer_fire_observed(void) { return 0; }
 
+int gwy_ext_obs_e10a31_timer_fire_count(void) { return 0; }
+
 void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     (void)filename;
     (void)ret;
@@ -323,6 +330,30 @@ void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t e
     (void)p_guest;
     (void)erw;
     (void)ret;
+}
+
+void gwy_ext_obs_timer_fire_r9_pin(uint32_t pin_erw, uint32_t forbid_erw) {
+    (void)pin_erw;
+    (void)forbid_erw;
+}
+
+void gwy_ext_obs_timer_fire_r9_unpin(void) {}
+
+uint32_t gwy_ext_obs_timer_fire_r9_pinned(void) { return 0; }
+
+int gwy_ext_obs_timer_fire_r9_guard(void *uc) {
+    (void)uc;
+    return 0;
+}
+
+uint32_t gwy_ext_obs_module_erw_by_name(const char *needle) {
+    (void)needle;
+    return 0;
+}
+
+uint32_t gwy_ext_obs_module_helper_by_name(const char *needle) {
+    (void)needle;
+    return 0;
 }
 
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry) {

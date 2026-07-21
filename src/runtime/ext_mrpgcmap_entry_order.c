@@ -289,11 +289,22 @@ void ext_mrpgcmap_entry_order_before_continuation(void *uc, const char *module_n
     reg = gwy_ext_loader_bound_registry();
     if (reg) {
         gm = continuation_pc ? module_registry_find_by_code_addr(reg, continuation_pc) : NULL;
-        if (!gm && name_has(module_name, "gbrwcore")) {
+        /* Shell packages: resolve by name when continuation_pc is not yet mapped. */
+        if (!gm && (name_has(module_name, "gbrwcore") || name_has(module_name, "gamelist") ||
+                    name_has(module_name, "gbrwshell"))) {
             size_t i;
             for (i = 0; i < reg->count; i++) {
-                if (name_has(reg->modules[i].requested_name, "gbrwcore") ||
-                    name_has(reg->modules[i].resolved_name, "gbrwcore")) {
+                if (name_has(reg->modules[i].requested_name, module_name) ||
+                    name_has(reg->modules[i].resolved_name, module_name) ||
+                    (name_has(module_name, "gbrwcore") &&
+                     (name_has(reg->modules[i].requested_name, "gbrwcore") ||
+                      name_has(reg->modules[i].resolved_name, "gbrwcore"))) ||
+                    (name_has(module_name, "gamelist") &&
+                     (name_has(reg->modules[i].requested_name, "gamelist") ||
+                      name_has(reg->modules[i].resolved_name, "gamelist"))) ||
+                    (name_has(module_name, "gbrwshell") &&
+                     (name_has(reg->modules[i].requested_name, "gbrwshell") ||
+                      name_has(reg->modules[i].resolved_name, "gbrwshell")))) {
                     gm = &reg->modules[i];
                     break;
                 }
@@ -319,7 +330,18 @@ void ext_mrpgcmap_entry_order_before_continuation(void *uc, const char *module_n
 
     if (mode_may_run_entry(m->name) && !m->entry_ran) {
         if (!uc) uc = g_eo.uc;
-        if (!m->base) {
+        /*
+         * E10A-3.1b: gamelist documented entry under shell continue fills the shared P
+         * with gbrwcore's ERW (or exits via br_exit) before TIMER_ARM — even after host
+         * isolates a fresh ERW. Keep skip; cfg gate must be pursued without entry emu.
+         */
+        if (name_has(m->name, "gamelist")) {
+            printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP "
+                   "reason=e10a31b_skip_entry_avoid_early_exit evidence=OBSERVED\n",
+                   m->name);
+            fflush(stdout);
+            m->entry_ran = 1;
+        } else if (!m->base) {
             printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP reason=no_code_base "
                    "evidence=TARGET_OBSERVED\n",
                    m->name);

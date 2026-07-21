@@ -1,4 +1,5 @@
 #include "gwy_launcher/ext_chunk_provider.h"
+#include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/module_registry.h"
@@ -179,11 +180,17 @@ static void emit_contract_once(void) {
 
 static ChunkRec *find_by_p(uint32_t p_guest) {
     int i;
+    ChunkRec *best = NULL;
     if (!p_guest) return NULL;
+    /*
+     * Shell continue reuses one guest P VA across packages. After E10A-3.1b
+     * isolation there may be multiple ChunkRecs with the same p_guest — prefer
+     * the latest (gamelist) so set_var / owner_for_p track the active package.
+     */
     for (i = 0; i < g_prov.rec_n; i++) {
-        if (g_prov.recs[i].p_guest == p_guest) return &g_prov.recs[i];
+        if (g_prov.recs[i].p_guest == p_guest) best = &g_prov.recs[i];
     }
-    return NULL;
+    return best;
 }
 
 static ChunkRec *find_by_helper(uint32_t helper) {
@@ -282,8 +289,37 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
         if (!mode_applies_helper(helper)) return 0;
     }
 
-    rec = find_by_p(p_guest);
-    if (!rec) rec = find_by_helper(helper);
+    rec = find_by_helper(helper);
+    if (!rec) {
+        ChunkRec *by_p = find_by_p(p_guest);
+        if (by_p && by_p->helper && by_p->helper != helper) {
+            /*
+             * Same guest P VA as a prior package helper — do not steal that ChunkRec.
+             * Clear stale start_of_ER_RW / len so entry/guest must publish a new ERW.
+             */
+            uint32_t *words = (uint32_t *)p_host;
+            uint32_t old0 = words[0], old1 = words[1];
+            printf("[JJFB_E10A31B] milestone=GAMELIST_P_COLLISION_NEW_CHUNK_REC P=0x%X "
+                   "old_helper=0x%X new_helper=0x%X old_module=%s old_erw=0x%X old_len=0x%X "
+                   "note=isolate_package_publication evidence=OBSERVED\n",
+                   p_guest, by_p->helper, helper, by_p->name[0] ? by_p->name : "?", old0, old1);
+            fflush(stdout);
+            if (old0 || old1) {
+                words[0] = 0;
+                words[1] = 0;
+                printf("[JJFB_E10A31B] milestone=GAMELIST_P_ERW_FIELDS_CLEARED P=0x%X "
+                       "cleared_erw=0x%X cleared_len=0x%X note=force_fresh_erw_fill "
+                       "evidence=OBSERVED\n",
+                       p_guest, old0, old1);
+                fflush(stdout);
+            }
+            rec = add_rec();
+            if (!rec) return 0;
+            memset(rec, 0, sizeof(*rec));
+        } else {
+            rec = by_p;
+        }
+    }
     if (!rec) {
         rec = add_rec();
         if (!rec) return 0;
@@ -292,14 +328,33 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
     {
         uint64_t old_mid = rec->module_id;
         uint32_t old_p = rec->p_guest;
+        uint32_t old_helper = rec->helper;
+        int fresh = (old_mid == 0);
         rec->helper = helper;
-        if (mid && old_mid != mid) rec->module_generation = ++g_prov.global_module_generation;
-        else if (mid && !rec->module_generation)
+        if (mid && old_mid && old_mid != mid) {
+            printf("[JJFB_E10A31B] milestone=GAMELIST_CHUNK_RETARGETED chunk=0x%X P=0x%X "
+                   "old_module_id=%llu new_module_id=%llu old_helper=0x%X new_helper=0x%X "
+                   "module=%s note=reuse_prior_package_chunk evidence=OBSERVED\n",
+                   chunk_guest, p_guest, (unsigned long long)old_mid, (unsigned long long)mid,
+                   old_helper, helper, mn);
+            fflush(stdout);
+            rec->module_generation = ++g_prov.global_module_generation;
+        } else if (mid && old_mid != mid) {
+            rec->module_generation = ++g_prov.global_module_generation;
+        } else if (mid && !rec->module_generation)
             rec->module_generation = ++g_prov.global_module_generation;
         rec->module_id = mid;
         if (p_guest && old_p != p_guest) rec->p_generation = ++g_prov.global_p_generation;
         else if (p_guest && !rec->p_generation)
             rec->p_generation = ++g_prov.global_p_generation;
+
+        if (fresh || (reason && strstr(reason, "mr_c_function_new"))) {
+            printf("[JJFB_E10A31B] milestone=%s chunk=0x%X P=0x%X helper=0x%X module=%s "
+                   "module_id=%llu reason=%s evidence=OBSERVED\n",
+                   fresh ? "GAMELIST_CHUNK_CREATED" : "GAMELIST_CHUNK_REGISTERED", chunk_guest,
+                   p_guest, helper, mn, (unsigned long long)mid, reason ? reason : "?");
+            fflush(stdout);
+        }
     }
     snprintf(rec->name, sizeof(rec->name), "%.47s", mn);
     rec->code_base = code_base;
@@ -320,6 +375,11 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
     publish_to_p(p_host, p_guest, chunk_guest, reason, mn);
     rec->published = 1;
 
+    /* E10A-3.1b: after isolating a new gamelist ChunkRec, host-publish own ERW. */
+    if (mn && strstr(mn, "gamelist")) {
+        (void)ext_er_rw_bind_restore_ensure_isolated_erw(p_guest, mn);
+    }
+
     if (reg && mid && ch->init_func) {
         launcher_error_clear(&err);
         module_registry_set_chunk_field_04(reg, mid, ch->init_func, &err);
@@ -332,7 +392,22 @@ int ext_chunk_provider_try_reuse(void *uc, uint32_t helper, uint32_t p_guest, vo
     parse_mode();
     if (!ext_chunk_provider_enabled() || !helper) return 0;
     rec = find_by_helper(helper);
-    if (!rec) rec = find_by_p(p_guest);
+    if (!rec) {
+        rec = find_by_p(p_guest);
+        /*
+         * E10A-3.1b: never retarget another module's chunk onto a new helper via P VA
+         * collision (shell continue reuses the same guest P). Force a fresh chunk.
+         */
+        if (rec && rec->helper && rec->helper != helper) {
+            printf("[JJFB_E10A31B] milestone=GAMELIST_CHUNK_REUSE_REFUSED chunk=0x%X P=0x%X "
+                   "old_helper=0x%X new_helper=0x%X old_module=%s note=cross_helper_p_hit "
+                   "evidence=OBSERVED\n",
+                   rec->chunk_guest, p_guest, rec->helper, helper,
+                   rec->name[0] ? rec->name : "?");
+            fflush(stdout);
+            return 0;
+        }
+    }
     if (!rec || !rec->chunk_host || !rec->chunk_guest) return 0;
     if (p_guest) rec->p_guest = p_guest;
     if (p_host) rec->p_host = p_host;
@@ -454,15 +529,25 @@ int ext_chunk_provider_rebind_chunk_erw(uint32_t chunk_guest, uint32_t new_erw, 
     ChunkRec *rec = find_by_chunk(chunk_guest);
     GwyMrcExtChunk *ch;
     uint32_t old_erw = 0;
+    uint32_t var_len;
+    uint32_t *words;
     if (!rec || !rec->chunk_host || !new_erw) return 0;
     ch = (GwyMrcExtChunk *)rec->chunk_host;
     old_erw = ch->var_buf;
+    var_len = ch->var_len ? ch->var_len : 20u;
     ch->var_buf = new_erw;
     if (p_guest) {
         rec->p_guest = p_guest;
         ch->global_p_buf = p_guest;
     }
-    (void)ext_chunk_provider_set_var_fields(rec->p_guest, new_erw, ch->var_len ? ch->var_len : 20u);
+    /* Keep P+0/+4 coherent with the rebound ERW (not only chunk var_buf). */
+    if (rec->p_host) {
+        words = (uint32_t *)rec->p_host;
+        if (!var_len && words[1]) var_len = words[1];
+        words[0] = new_erw;
+        if (var_len) words[1] = var_len;
+    }
+    (void)ext_chunk_provider_set_var_fields(rec->p_guest, new_erw, var_len ? var_len : 20u);
     g_prov.global_p_generation++;
     rec->p_generation = g_prov.global_p_generation;
     printf("[JJFB_E10A31_TIMER_REBIND] chunk=0x%X module=%s P=0x%X old_erw=0x%X new_erw=0x%X "
