@@ -21,6 +21,8 @@
 #include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_gwy_shell_shim.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
+#include "gwy_launcher/e10a3_postselect_trace.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/guest_call_observer.h"
@@ -793,6 +795,14 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             fflush(stdout);
         }
     } else if (result.kind == GWY_PLAT_KIND_USERINFO_BLOB) {
+        if (e10a3_enabled()) {
+            e10a3_note_event_10180("request", caller_pc, lr, "sendAppEvent", r0, r1, r2, r3, r4, 0,
+                                   0, 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 0,
+                                   "platform_send_app_event", 1, "platform_userinfo", 0, 0, 0,
+                                   "synchronous_query", "sendAppEvent_entry");
+            e10a_shell_phase("SHELL_PHASE_USERINFO_REQUEST", "gamelist.ext", caller_pc, lr, r0, r1,
+                             r2, r3, 0, 0, "app=subcode");
+        }
         if (!g_userinfo_guest && g_guest_alloc && g_guest_to_ptr) {
             void *host = g_guest_alloc(GWY_USERINFO_BLOB_BYTES);
             if (host) {
@@ -810,6 +820,28 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             printf("[PLATFORM_10180] blob_alloc_failed evidence=%s\n",
                    result.evidence ? result.evidence : "?");
             fflush(stdout);
+        } else if (e10a3_enabled()) {
+            char blob_hex[129];
+            char decoded[96];
+            size_t bi;
+            blob_hex[0] = decoded[0] = 0;
+            if (uc && guest_memory_uc_peek((struct uc_struct *)uc, ret, (uint8_t *)decoded, 63)) {
+                for (bi = 0; bi < 32u; bi++) {
+                    uint8_t b = 0;
+                    char t[3];
+                    if (!guest_memory_uc_peek((struct uc_struct *)uc, ret + (uint32_t)bi, &b, 1))
+                        break;
+                    snprintf(t, sizeof(t), "%02X", (unsigned)b);
+                    strncat(blob_hex, t, sizeof(blob_hex) - strlen(blob_hex) - 1);
+                }
+            }
+            e10a3_note_event_10180("return", caller_pc, lr, "platform_userinfo", r0, r1, r2, r3,
+                                   r4, 0, 0, 0, 0, 0, ret, GWY_USERINFO_BLOB_BYTES, blob_hex,
+                                   decoded, 0, 0, r1, "platform_userinfo_fill", 1,
+                                   "platform_userinfo", 1, 0, ret, "synchronous_query",
+                                   "blob_returned");
+            e10a_shell_phase("SHELL_PHASE_USERINFO_RESPONSE", "gamelist.ext", caller_pc, lr, ret,
+                             r1, 0, 0, 0, 0, "blob_sync");
         }
     } else if (result.kind == GWY_PLAT_KIND_ALLOC) {
         if (g_guest_alloc && g_guest_to_ptr && result.alloc_size) {
@@ -1316,4 +1348,8 @@ void gwy_shell_shim_emit_runapp_chain(void) { ext_gwy_shell_shim_emit_runapp_cha
 void gwy_shell_shim_finalize(const char *stop_reason) {
     ext_gwy_shell_native_exec_finalize(stop_reason);
     ext_gwy_shell_shim_finalize(stop_reason);
+}
+
+void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
+    e10a3_on_timer_fire(helper, 2u, p_guest, erw, ret);
 }

@@ -1,5 +1,6 @@
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/e10a_shell_trace.h"
+#include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
@@ -13,6 +14,9 @@
 /* Static string offsets in gbrwcore.ext (TARGET_OBSERVED; not function entries). */
 #define GBRWCORE_OFF_LIB_STARTGAME 0x223D4u
 #define GBRWCORE_OFF_LIB_RUNAPP 0x224C0u
+#define GBRWCORE_OFF_LIB_GETUSERINFO 0x22330u
+#define GBRWCORE_OFF_LIB_CHECKMRPVER 0x22444u
+#define GBRWCORE_OFF_LIB_GETCLIENTINFO 0x22490u
 #define GBRWCORE_EXT_SIZE 147196u
 /* field0 release site: loads *[ctx]+0 then calls helper via ERW+0x1880 (E10A-2). */
 #define GBRWCORE_OFF_FIELD0_RELEASE 0xD02Cu /* VA 0x30D02C @ base 0x300000 */
@@ -238,25 +242,34 @@ static void recompute_gate(void) {
 }
 
 static void emit_export_table(ShellMod *m) {
-    uint32_t va_sg, va_ra;
+    static const struct {
+        const char *name;
+        uint32_t off;
+    } k_svcs[] = {
+        {"lib.getuserinfo", GBRWCORE_OFF_LIB_GETUSERINFO},
+        {"lib.checkmrpver", GBRWCORE_OFF_LIB_CHECKMRPVER},
+        {"lib.getClientInfo", GBRWCORE_OFF_LIB_GETCLIENTINFO},
+        {"lib.startGame", GBRWCORE_OFF_LIB_STARTGAME},
+        {"lib.runapp", GBRWCORE_OFF_LIB_RUNAPP},
+    };
+    size_t si;
     if (!m || !m->mapped || m->export_reg) return;
     if (strcmp(m->name, "gbrwcore.ext") != 0) return;
     m->export_reg = 1;
     g_ne.export_registered = 1;
-    va_sg = m->base + GBRWCORE_OFF_LIB_STARTGAME;
-    va_ra = m->base + GBRWCORE_OFF_LIB_RUNAPP;
-    printf("[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.startGame registered=yes "
-           "addr=0x%X kind=string_va_not_entry evidence=TARGET_OBSERVED\n",
-           va_sg);
-    printf("[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.runapp registered=yes "
-           "addr=0x%X kind=string_va_not_entry evidence=TARGET_OBSERVED\n",
-           va_ra);
-    printf("[JJFB_SHELL_EXPORT_RESOLVE] name=lib.startGame string_va=0x%X dispatcher=unknown "
-           "status=string_va_not_entry evidence=TARGET_OBSERVED\n",
-           va_sg);
-    printf("[JJFB_SHELL_EXPORT_RESOLVE] name=lib.runapp string_va=0x%X dispatcher=unknown "
-           "status=string_va_not_entry evidence=TARGET_OBSERVED\n",
-           va_ra);
+    for (si = 0; si < sizeof(k_svcs) / sizeof(k_svcs[0]); si++) {
+        uint32_t va = m->base + k_svcs[si].off;
+        printf("[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=%s registered=yes "
+               "addr=0x%X kind=string_va_not_entry evidence=TARGET_OBSERVED\n",
+               k_svcs[si].name, va);
+        printf("[JJFB_SHELL_EXPORT_RESOLVE] name=%s string_va=0x%X dispatcher=unknown "
+               "status=string_va_not_entry evidence=TARGET_OBSERVED\n",
+               k_svcs[si].name, va);
+        e10a3_note_service_registry(k_svcs[si].name, va, 0, "string_va_not_entry",
+                                    "gbrwcore.ext", 1, "static_string_table");
+        e10a3_note_named_service("register", k_svcs[si].name, "gbrwcore.ext", "gbrwcore.ext",
+                                 va, "string_va", 0, 0, "string_table_only");
+    }
     fflush(stdout);
     recompute_gate();
 }
@@ -335,6 +348,9 @@ void ext_gwy_shell_native_exec_on_file_open(const char *guest_path, const char *
         if (path_has(guest_path, "cfg.bin")) {
             e10a_shell_cfg_runtime("cfg_bin_open", 0, 0, 0, "", guest_path, "", 0, "",
                                    "shell_file_open", "SHELL_CFG_BIN_PARSED_RUNTIME");
+            e10a3_mark_real_cfg_selected(guest_path);
+            e10a_shell_phase("SHELL_PHASE_CFG_RECORD_SELECTED", "gamelist.ext", 0, 0, 0, 0, 0, 0,
+                             0, 0, guest_path);
         }
         printf("[JJFB_RESOURCE_REQUEST] guest=\"%s\" host=\"%s\" ok=1 evidence=OBSERVED\n",
                guest_path, host_path ? host_path : "?");
@@ -392,13 +408,14 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
     fflush(stdout);
     emit_export_table(m);
     if (strcmp(label, "gamelist.ext") == 0) {
+        /* Format string mapped != live cfg36 select (E10A-3). */
         printf("[JJFB_GAMELIST_CFG36_BUILD] param_fmt_va=0x%X note=format_string_mapped "
                "evidence=TARGET_OBSERVED\n",
                guest_addr + GAMELIST_OFF_CFG36_FMT);
         g_ne.cfg36_build = 1;
-        robotol_flag_writer_e10a_shell_phase("gamelist_cfg36_build");
-        e10a_shell_phase("SHELL_PHASE_CFG_RECORD_SELECTED", "gamelist.ext", 0, 0, 0, 0, 0, 0, 0, 0,
-                         "cfg36_param_fmt");
+        robotol_flag_writer_e10a_shell_phase("gamelist_cfg36_fmt_mapped");
+        e10a_shell_phase("SHELL_PHASE_CFG_FMT_MAPPED", "gamelist.ext", 0, 0, 0, 0, 0, 0, 0, 0,
+                         "cfg36_param_fmt_not_selected");
         fflush(stdout);
     }
     recompute_gate();
@@ -470,6 +487,10 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
             printf("[JJFB_RUNAPP] source=native_shell target=gwy/jjfb.mrp "
                    "via=guest_native_lib_runapp evidence=TARGET_OBSERVED\n");
             robotol_flag_writer_e10a_shell_phase("shell_runapp");
+            e10a3_note_named_service("lookup", "lib.runapp", module_name ? module_name : "?", "?",
+                                     regs[i], buf, 0, 0, "reg_string_observe");
+            e10a_shell_phase("SHELL_PHASE_RUNAPP_LOOKUP", module_name ? module_name : "?", pc, 0,
+                             regs[i], 0, 0, 0, 0, 0, buf);
             e10a_shell_phase("SHELL_PHASE_RUNAPP_CALLED", module_name ? module_name : "?", pc, 0, 0,
                              0, 0, 0, 0, 0, buf);
             fflush(stdout);
@@ -481,11 +502,33 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                    pc, i, buf, module_name ? module_name : "?");
             printf("[JJFB_STARTGAME] source=gwy_shell cfg_index=36 target=gwy/jjfb.mrp "
                    "via=guest_native_lib_startGame\n");
+            e10a3_note_named_service("lookup", "lib.startGame",
+                                     module_name ? module_name : "?", "?", regs[i], buf, 0, 0,
+                                     "reg_string_observe");
+            e10a_shell_phase("SHELL_PHASE_STARTGAME_LOOKUP", module_name ? module_name : "?", pc,
+                             0, regs[i], 0, 0, 0, 0, 0, buf);
+            fflush(stdout);
+        }
+        if (strstr(buf, "lib.getuserinfo") || strcmp(buf, "getuserinfo") == 0) {
+            e10a3_note_named_service("lookup", "lib.getuserinfo",
+                                     module_name ? module_name : "?", "?", regs[i], buf, 0, 0,
+                                     "reg_string_observe");
+            fflush(stdout);
+        }
+        if (strstr(buf, "lib.checkmrpver") || strcmp(buf, "checkmrpver") == 0) {
+            e10a3_note_named_service("lookup", "lib.checkmrpver",
+                                     module_name ? module_name : "?", "?", regs[i], buf, 0, 0,
+                                     "reg_string_observe");
+            e10a_shell_phase("SHELL_PHASE_VERSION_CHECK_REQUEST",
+                             module_name ? module_name : "?", pc, 0, regs[i], 0, 0, 0, 0, 0, buf);
             fflush(stdout);
         }
         if (strstr(buf, "napptype=") && strstr(buf, "gwyblink")) {
             g_ne.cfg36_build = 1;
             printf("[JJFB_GAMELIST_CFG36_BUILD] param=%s evidence=OBSERVED\n", buf);
+            e10a3_mark_real_cfg_selected("gwyblink_param_in_regs");
+            e10a_shell_phase("SHELL_PHASE_CFG_DESCRIPTOR_BUILT",
+                             module_name ? module_name : "?", pc, 0, regs[i], 0, 0, 0, 0, 0, buf);
             fflush(stdout);
         }
         if (strstr(buf, "no_update") || strstr(buf, "update_ok") || strstr(buf, "checkmrpver")) {
@@ -557,6 +600,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
         printf("[JJFB_SHELL_CORE_MODULE] module=%s stage=init_ok evidence=TARGET_OBSERVED\n",
                m->name);
         fflush(stdout);
+        if (strcmp(m->name, "gamelist.ext") == 0) e10a3_mark_gamelist_init_ok();
         emit_export_table(m);
         recompute_gate();
         /* Do not finalize here: keep observing until fault / export call / exit. */

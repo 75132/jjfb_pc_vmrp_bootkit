@@ -167,6 +167,7 @@ void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms);
  * other codes → 0 (MR_SUCCESS).
  */
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc);
+void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret);
 
 /* Phase 6F: observe-only start_dsm / file open / plat-testcom peeks. */
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry);

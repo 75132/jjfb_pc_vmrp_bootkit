@@ -1,0 +1,6 @@
+﻿run_id,field,shell_continue,gwy_root,note
+1784644937112,loaded_modules,gbrwcore+gamelist,unknown,deferred_root_baseline
+1784644937112,named_service_registry,string_va_only,unknown,no_dispatcher_observed
+1784644937112,userinfo_provider,platform_0x10180_sync,unknown,EVENT_10180_CONTRACT_PARSED
+1784644937112,cfg_bin_open,no,unknown,gamelist_never_opened_cfg
+1784644937112,param_read,no,unknown,gwyblink_not_consumed

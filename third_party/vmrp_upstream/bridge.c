@@ -2210,6 +2210,7 @@ static int32_t bridge_deliver_timer_body(uc_engine *uc) {
             fflush(stdout);
         }
         v = bridge_ext_helper_call(uc, helper, p_guest, 2u, 0u, 0u, erw);
+        gwy_ext_obs_on_timer_fire_ext(helper, p_guest, erw, v);
         printf("[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=%d evidence=DOCUMENTED\n", (int)v);
         if (dtr && dtr[0] == '1') {
             printf("[JJFB_TIMER_DELIVERED] timer_id=1 method=2 ret=%d route=ext_code2 "

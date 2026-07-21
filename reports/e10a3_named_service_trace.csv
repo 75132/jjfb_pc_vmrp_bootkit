@@ -1,0 +1,6 @@
+run_id,seq,operation,name,caller_module,provider_module,target_pc,args,callback,rc,note
+1784644937112,1,register,"lib.getuserinfo",gbrwcore.ext,gbrwcore.ext,0x30DB10,"string_va",0x0,0,"string_table_only"
+1784644937112,2,register,"lib.checkmrpver",gbrwcore.ext,gbrwcore.ext,0x30DC24,"string_va",0x0,0,"string_table_only"
+1784644937112,3,register,"lib.getClientInfo",gbrwcore.ext,gbrwcore.ext,0x30DC70,"string_va",0x0,0,"string_table_only"
+1784644937112,4,register,"lib.startGame",gbrwcore.ext,gbrwcore.ext,0x30DBB4,"string_va",0x0,0,"string_table_only"
+1784644937112,5,register,"lib.runapp",gbrwcore.ext,gbrwcore.ext,0x30DCA0,"string_va",0x0,0,"string_table_only"

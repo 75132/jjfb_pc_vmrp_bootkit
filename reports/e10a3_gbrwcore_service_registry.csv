@@ -1,0 +1,6 @@
+run_id,seq,name,string_va,entry_pc,kind,provider_module,registered,note
+1784644937112,1,"lib.getuserinfo",0x30DB10,0x0,string_va_not_entry,gbrwcore.ext,1,"static_string_table"
+1784644937112,2,"lib.checkmrpver",0x30DC24,0x0,string_va_not_entry,gbrwcore.ext,1,"static_string_table"
+1784644937112,3,"lib.getClientInfo",0x30DC70,0x0,string_va_not_entry,gbrwcore.ext,1,"static_string_table"
+1784644937112,4,"lib.startGame",0x30DBB4,0x0,string_va_not_entry,gbrwcore.ext,1,"static_string_table"
+1784644937112,5,"lib.runapp",0x30DCA0,0x0,string_va_not_entry,gbrwcore.ext,1,"static_string_table"

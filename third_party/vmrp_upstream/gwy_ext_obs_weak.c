@@ -301,6 +301,13 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     return 0;
 }
 
+void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
+    (void)helper;
+    (void)p_guest;
+    (void)erw;
+    (void)ret;
+}
+
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry) {
     (void)filename;
     (void)ext;
