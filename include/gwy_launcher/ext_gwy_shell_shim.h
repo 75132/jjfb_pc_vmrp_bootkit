@@ -79,6 +79,12 @@ void ext_gwy_shell_shim_finalize(const char *stop_reason);
 GwyShellLaunchClass ext_gwy_shell_shim_last_class(void);
 const char *ext_gwy_shell_shim_class_name(GwyShellLaunchClass c);
 
+/* E10A-3.1a: read-only gate state for continue diagnostics. */
+int ext_gwy_shell_shim_gbrwcore_started_flag(void);
+int ext_gwy_shell_shim_gamelist_started_flag(void);
+int ext_gwy_shell_shim_continued_flag(void);
+const char *ext_gwy_shell_shim_active_package(void);
+
 #ifdef __cplusplus
 }
 #endif

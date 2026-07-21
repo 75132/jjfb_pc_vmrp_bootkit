@@ -23,6 +23,7 @@
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/e10a31_gamelist_context.h"
+#include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -139,6 +140,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_handler_registry_reset();
     platform_timer_reset();
     e10a31_reset();
+    e10a31a_reset();
     g_armed_timer_chunk = 0;
     g_timer_arm_seen = 0;
     g_timer_arm_count = 0;
@@ -952,6 +954,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
 
     ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
     platform_call_census_note(r0, r1, caller_pc, ret);
+    e10a31a_note_platform_api(uc, result.name, caller_pc, 0, r0, ret);
     platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
     if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
         platform_call_census_note_refresh();
@@ -1147,6 +1150,8 @@ void gwy_ext_obs_mem_fault(void *uc,
 #ifdef GWY_HAVE_UNICORN
     if (uc) uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &pc);
 #endif
+    e10a31a_runtime_set_stop("mem_fault", "UNICORN_FAULT_BEFORE_CONTINUATION", uc, 0, 0, 0, 0, 0,
+                             "guest_mem_fault");
     /* Finalize shell-native gate before heavy fault dumps (process may be killed). */
     ext_mrpgcmap_entry_order_on_mem_fault(pc, (uint32_t)address);
     ext_gwy_shell_native_exec_on_mem_fault(uc, pc);
@@ -1266,6 +1271,10 @@ int gwy_ext_obs_ensure_dsm_r9(void *uc, uint32_t guest_pc_hint) {
 }
 
 void gwy_ext_obs_emu_exit(int reason) {
+    char detail[48];
+    snprintf(detail, sizeof(detail), "emu_exit_reason=%d", reason);
+    e10a31a_runtime_set_stop("emu_exit", "RUNCODE_RETURNED_BEFORE_CONTINUATION", NULL, 0, 0, 0, 0,
+                             reason, detail);
     module_r9_switch_set_emu_exit_hint((GwyEmuExitReason)reason);
     ext_mrpgcmap_entry_order_finalize("emu_exit");
     ext_entry_abi_cluster_audit_finalize("emu_exit");
@@ -1278,6 +1287,8 @@ void gwy_ext_obs_emu_exit(int reason) {
 }
 
 void gwy_ext_obs_mr_exit(void *uc) {
+    e10a31a_runtime_set_stop("mr_exit_api", "GUEST_EXIT_BEFORE_CONTINUATION", uc, 0, 0, 0, 0, 0,
+                             "mr_exit_api");
     ext_gwy_shell_shim_emit_exit_source(uc, "mr_exit_api");
     ext_entry_abi_cluster_audit_on_mr_exit(uc);
     ext_entry_abi_cluster_audit_finalize("mr_exit");
@@ -1306,6 +1317,24 @@ int gwy_shell_shim_try_continue_after_mr_exit(void *uc) {
         snprintf(g_continue_param, sizeof(g_continue_param), "%s", p ? p : "");
     }
     return 1;
+}
+
+void gwy_ext_obs_e10a31a_br_exit_enter(void *uc) { e10a31a_note_br_exit_enter(uc); }
+
+void gwy_ext_obs_e10a31a_br_exit_fallback(void *uc) {
+    GwyContinueSnapshot snap;
+    e10a31a_continue_snapshot_fill(uc, &snap);
+    e10a31a_log_continue_decision("br_exit_fallback", &snap);
+    e10a31a_note_br_exit_fallback(uc, &snap);
+}
+
+void gwy_ext_obs_e10a31a_process_exit(int code) { e10a31a_note_br_exit_process_exit(code); }
+
+void gwy_ext_obs_e10a31a_note_font_load(void *uc) { e10a31a_note_font_load_suc(uc); }
+
+void gwy_ext_obs_e10a31a_runtime_stop(const char *source, const char *reason, void *uc,
+                                      int32_t return_code, const char *detail) {
+    e10a31a_runtime_set_stop(source, reason, uc, 0, 0, 0, 0, return_code, detail);
 }
 
 const char *gwy_shell_shim_continue_target(void) {

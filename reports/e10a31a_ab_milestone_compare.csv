@@ -1,0 +1,9 @@
+﻿run_id,milestone,case_a,case_b,same
+1784648712654,gbrwcore_font,"True","True",1
+1784648712654,br_exit,"True","True",1
+1784648712654,continue_decision,"GWY_CONTINUE_READY","GWY_CONTINUE_READY",1
+1784648712654,continue_apply,"True","True",1
+1784648712654,post_cont_pump,"True","True",1
+1784648712654,gamelist_first_pc,"True","True",1
+1784648712654,exit_code,"0","0",1
+1784648712654,elapsed_sec,"80.9","80.7",0

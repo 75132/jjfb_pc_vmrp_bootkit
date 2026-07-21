@@ -49,6 +49,8 @@ void ext_gwy_shell_native_exec_finalize(const char *stop_reason);
 int ext_gwy_shell_native_exec_gate_open(void);
 int ext_gwy_shell_native_exec_gbrwcore_started(void);
 int ext_gwy_shell_native_exec_gamelist_started(void);
+/* 1 if any guest PC was observed inside gbrwcore.ext mapping. */
+int ext_gwy_shell_native_exec_gbrwcore_pc_hit(void);
 GwyShellNativeExecClass ext_gwy_shell_native_exec_last_class(void);
 const char *ext_gwy_shell_native_exec_class_name(GwyShellNativeExecClass c);
 

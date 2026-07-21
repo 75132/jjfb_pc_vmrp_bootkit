@@ -209,6 +209,19 @@ const char *gwy_shell_shim_continue_param(void) {
     return "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink";
 }
 
+void gwy_ext_obs_e10a31a_br_exit_enter(void *uc) { (void)uc; }
+void gwy_ext_obs_e10a31a_br_exit_fallback(void *uc) { (void)uc; }
+void gwy_ext_obs_e10a31a_process_exit(int code) { (void)code; }
+void gwy_ext_obs_e10a31a_note_font_load(void *uc) { (void)uc; }
+void gwy_ext_obs_e10a31a_runtime_stop(const char *source, const char *reason, void *uc,
+                                      int32_t return_code, const char *detail) {
+    (void)source;
+    (void)reason;
+    (void)uc;
+    (void)return_code;
+    (void)detail;
+}
+
 void gwy_ext_obs_extchunk_set_sendappevent(uint32_t guest_addr) { (void)guest_addr; }
 
 void gwy_ext_obs_extchunk_set_mr_table(uint32_t guest_addr) { (void)guest_addr; }

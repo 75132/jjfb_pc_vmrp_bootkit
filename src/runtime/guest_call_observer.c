@@ -15,6 +15,7 @@
 #include "gwy_launcher/ext_p_extchunk_audit.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
+#include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/ext_mrpgcmap_entry_order.h"
 #include "gwy_launcher/ext_entry_abi_cluster_audit.h"
 #include "gwy_launcher/ext_cfunction_publication_audit.h"
@@ -290,6 +291,8 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     ext_p_extchunk_audit_on_code(uc, w->module_id, pc, regs, cpsr);
     /* 6H: shell native exec / export call watch. */
     ext_gwy_shell_native_exec_on_code(uc, w->module_id, m ? m->requested_name : NULL, pc, regs);
+    /* E10A-3.1a: gbrwcore post-font tail (observe-only, rate-limited). */
+    e10a31a_on_guest_code(uc, pc, regs[14], regs, m ? m->requested_name : NULL);
     /* 6K: MRPGCMAP entry-hit while running documented init. */
     ext_mrpgcmap_entry_order_on_code(uc, m ? m->requested_name : NULL, pc);
     ext_entry_abi_cluster_audit_on_code(uc, m ? m->requested_name : NULL, pc);

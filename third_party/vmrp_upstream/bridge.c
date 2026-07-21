@@ -1002,6 +1002,7 @@ static void br_log(BridgeMap *o, uc_engine *uc) {
             }
             gwy_ext_obs_c_function_new_ex(helper, p_len, p_addr, 0, 0, 0, "LOG_PARSE");
         }
+        if (strstr(str, "font load suc")) gwy_ext_obs_e10a31a_note_font_load(uc);
         puts(str);
     }
 }
@@ -1143,6 +1144,7 @@ static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, c
 static void br_exit(BridgeMap *o, uc_engine *uc) {
     // void (*exit)(void);
     LOG("ext call %s()\n", o->name);
+    gwy_ext_obs_e10a31a_br_exit_enter(uc);
     /* Phase 6P: first post-gbrwcore exit may continue into gamelist (no process exit). */
     if (gwy_shell_shim_try_continue_after_mr_exit(uc)) {
         const char *tgt = gwy_shell_shim_continue_target();
@@ -1153,6 +1155,8 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                g_br_mem_guest, g_br_mem_len);
         printf("[JJFB_SHELL_CORE_CONTINUE] apply=bridge_dsm_mr_start_dsm target=%s "
                "reason=continue_after_gbrwcore_init\n",
+               tgt ? tgt : "?");
+        printf("[GWY_CONTINUE_APPLY] via=br_exit target=%s evidence=OBSERVED\n",
                tgt ? tgt : "?");
         fflush(stdout);
         /*
@@ -1261,8 +1265,14 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
         }
         return;
     }
+    gwy_ext_obs_e10a31a_br_exit_fallback(uc);
     gwy_ext_obs_mr_exit(uc);
     puts("mythroad exit.\n");
+    gwy_ext_obs_e10a31a_process_exit(0);
+    gwy_ext_obs_e10a31a_runtime_stop("br_exit", "GBRWCORE_MR_EXIT_FALLBACK", uc, 0,
+                                     "process_exit_0");
+    fflush(stdout);
+    fflush(stderr);
     exit(0);
 }
 

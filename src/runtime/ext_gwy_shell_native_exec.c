@@ -224,6 +224,15 @@ int ext_gwy_shell_native_exec_gate_open(void) { return g_ne.gate_open; }
 int ext_gwy_shell_native_exec_gbrwcore_started(void) { return g_ne.mrp_started_gbrwcore; }
 int ext_gwy_shell_native_exec_gamelist_started(void) { return g_ne.mrp_started_gamelist; }
 
+int ext_gwy_shell_native_exec_gbrwcore_pc_hit(void) {
+    int i;
+    for (i = 0; i < g_ne.mod_count; i++) {
+        if (g_ne.mods[i].mapped && strstr(g_ne.mods[i].name, "gbrwcore") && g_ne.mods[i].pc_hit)
+            return 1;
+    }
+    return 0;
+}
+
 static ShellMod *find_or_add_mod(const char *label) {
     int i;
     if (!label) return NULL;

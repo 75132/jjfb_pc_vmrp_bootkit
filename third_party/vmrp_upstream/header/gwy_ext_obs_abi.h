@@ -195,6 +195,14 @@ void gwy_shell_shim_finalize(const char *stop_reason);
 const char *gwy_shell_shim_continue_target(void);
 const char *gwy_shell_shim_continue_param(void);
 
+/* E10A-3.1a pre-continuation diagnostics (observe-only). */
+void gwy_ext_obs_e10a31a_br_exit_enter(void *uc);
+void gwy_ext_obs_e10a31a_br_exit_fallback(void *uc);
+void gwy_ext_obs_e10a31a_process_exit(int code);
+void gwy_ext_obs_e10a31a_note_font_load(void *uc);
+void gwy_ext_obs_e10a31a_runtime_stop(const char *source, const char *reason, void *uc,
+                                      int32_t return_code, const char *detail);
+
 #ifdef __cplusplus
 }
 #endif

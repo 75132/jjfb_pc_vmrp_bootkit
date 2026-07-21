@@ -1,6 +1,7 @@
 #include "gwy_launcher/ext_gwy_shell_shim.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/e10a_shell_trace.h"
+#include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -131,6 +132,16 @@ const char *ext_gwy_shell_shim_class_name(GwyShellLaunchClass c) {
 }
 
 GwyShellLaunchClass ext_gwy_shell_shim_last_class(void) { return g_sh.last_class; }
+
+int ext_gwy_shell_shim_gbrwcore_started_flag(void) { return g_sh.gbrwcore_start_dsm; }
+
+int ext_gwy_shell_shim_gamelist_started_flag(void) { return g_sh.gamelist_start_dsm; }
+
+int ext_gwy_shell_shim_continued_flag(void) { return g_sh.shell_chain_continued; }
+
+const char *ext_gwy_shell_shim_active_package(void) {
+    return g_sh.active_pkg[0] ? g_sh.active_pkg : "";
+}
 
 void ext_gwy_shell_shim_emit_banner(const char *mythroad_root, const char *gwy_root) {
     const char *path;
@@ -413,7 +424,11 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
     const char *param;
     int gbrw_ok;
     int gamelist_done;
-    (void)uc;
+    GwyContinueSnapshot snap;
+
+    e10a31a_continue_snapshot_fill(uc, &snap);
+    e10a31a_log_continue_decision("try_continue", &snap);
+
     if (!ext_gwy_shell_shim_enabled()) return 0;
     if (!ext_gwy_shell_shim_shell_core_continue_mode()) return 0;
     if (g_sh.shell_chain_continued) return 0;
@@ -431,6 +446,14 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
         return 0;
     }
 
+    if (snap.decision != GWY_CONTINUE_READY) {
+        /* Keep product gate identical; diagnostics already logged the blocker. */
+        printf("[GWY_CONTINUE_DECISION] phase=try_continue_product_gate decision=%s "
+               "note=product_gate_blocks evidence=OBSERVED\n",
+               e10a31a_continue_decision_name(snap.decision));
+        fflush(stdout);
+    }
+
     g_sh.shell_chain_continued = 1;
     g_sh.exit_source_emitted = 0;
     ext_gwy_shell_shim_emit_exit_source(uc, "shell_chain_continue");
@@ -440,6 +463,7 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
            "evidence=TARGET_OBSERVED\n");
     printf("[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm "
            "reason=continue_after_gbrwcore_init evidence=TARGET_OBSERVED\n");
+    printf("[GWY_CONTINUE_APPLY] target=gwy/gamelist.mrp evidence=OBSERVED\n");
     fflush(stdout);
 
     param = ext_gwy_shell_shim_jjfb_param();
