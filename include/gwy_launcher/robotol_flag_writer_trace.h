@@ -231,6 +231,9 @@ void robotol_flag_writer_trace_on_lifecycle_fault(void *uc, uint32_t tick, int o
 int jjfb_e9n_try_plat_11f00_text_draw(void *uc, uint32_t app, uint32_t code_obj,
                                       uint32_t param0);
 
+/* E10A: shell-chain milestone (gbrwcore/gamelist/post_update) before robotol AC8. */
+void robotol_flag_writer_e10a_shell_phase(const char *phase);
+
 #ifdef __cplusplus
 }
 #endif

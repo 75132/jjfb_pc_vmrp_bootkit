@@ -17,13 +17,4 @@
 [JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 image_base=0x2D8DF4 image_size=0x3DE2C entry_pc=0x303B92 entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=descriptor_launcher
 [JJFB_ROBOTOL_ENTRY_CALLED] package=gwy/jjfb.mrp module=robotol.ext module_id=3 pc=0x303B92 image_base=0x2D8DF4 evidence=OBSERVED
 [HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=robotol.ext module=robotol.ext module_id=3 module_offset=0x2AD9E pc=0x303B92 helper=0x304AED target=0x303B92 origin=GUEST_NESTED r0=0x0 r1=0x2D8DFC r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
-[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 image_base=0x2D8DF4 image_size=0x3DE2C entry_pc=0x304AEC entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=descriptor_launcher
-[JJFB_ROBOTOL_ENTRY_CALLED] package=gwy/jjfb.mrp module=robotol.ext module_id=3 pc=0x304AEC image_base=0x2D8DF4 evidence=OBSERVED
-[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=robotol.ext module=robotol.ext module_id=3 module_offset=0x2BCF8 pc=0x304AEC helper=0x304AED target=0x304AEC origin=HOST_BRIDGE r0=0x2AC8DC r1=0x6 r2=0x0 r3=0x7DB r9=0x2B1858 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
-[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 image_base=0x2D8DF4 image_size=0x3DE2C entry_pc=0x304AEC entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=descriptor_launcher
-[JJFB_ROBOTOL_ENTRY_CALLED] package=gwy/jjfb.mrp module=robotol.ext module_id=3 pc=0x304AEC image_base=0x2D8DF4 evidence=OBSERVED
-[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=robotol.ext module=robotol.ext module_id=3 module_offset=0x2BCF8 pc=0x304AEC helper=0x304AED target=0x304AEC origin=HOST_BRIDGE r0=0x2AC8DC r1=0x8 r2=0x69EEB4 r3=0x10 r9=0x2B1858 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
-[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 image_base=0x2D8DF4 image_size=0x3DE2C entry_pc=0x304AEC entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=descriptor_launcher
-[JJFB_ROBOTOL_ENTRY_CALLED] package=gwy/jjfb.mrp module=robotol.ext module_id=3 pc=0x304AEC image_base=0x2D8DF4 evidence=OBSERVED
-[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=robotol.ext module=robotol.ext module_id=3 module_offset=0x2BCF8 pc=0x304AEC helper=0x304AED target=0x304AEC origin=GUEST_NESTED r0=0x2AC8DC r1=0x0 r2=0x0 r3=0x7DB r9=0x2B1858 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
 ```

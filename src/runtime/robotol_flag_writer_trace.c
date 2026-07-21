@@ -435,6 +435,12 @@ static struct {
     FILE *e9z_import_csv;
     FILE *e9z_event_csv;
     FILE *e9z_nodbg_csv;
+    /* E10A: GWY shell prelaunch vs descriptor_direct — AC8 at shell/jjfb boundaries. */
+    int e10a_mode;
+    uint32_t e10a_n;
+    int e10a_splash_seen;
+    int e10a_ac8_nz_at_branch;
+    FILE *e10a_csv;
     /* E9K: post-r4 textbar / 0x305BFC path — keep BD0 assist; delay HWND hold. */
     int e9k_mode;
     int e9k_hold_after_post_r4; /* JJFB_E9K_HOLD_AFTER_POST_R4 */
@@ -581,6 +587,9 @@ static void e9z_log_import(void *uc, uint32_t pc, uint32_t lr, uint32_t r0, uint
                            uint32_t r2, uint32_t r3, uint32_t r9, uint32_t event_code,
                            const char *note);
 static void e9z_try_resource_ready_event(void *uc, uint32_t r9);
+static void e10a_open_csv(void);
+static void e10a_log_ac8(void *uc, uint32_t r9, uint32_t pc, uint32_t ac8, const char *phase,
+                         const char *note);
 
 int robotol_flag_writer_trace_enabled(void) {
     const char *sib;
@@ -1335,6 +1344,34 @@ int robotol_flag_writer_trace_enabled(void) {
                    gwy_pack_registry_ready());
             fflush(stdout);
         }
+        /* E10A: shell chain vs descriptor_direct AC8 compare (no synthetic resource-ready). */
+        g_e8f.e10a_mode = env1("JJFB_E10A_MODE") || env1("JJFB_E10A_GWY_SHELL_PRELAUNCH");
+        if (g_e8f.e10a_mode) {
+            g_e8f.e9z_mode = 1;
+            g_e8f.e9y_mode = 1;
+            g_e8f.e9y_no_debug_ac8 = 1;
+            g_e8f.e9y_no_workbuf_seed = 1;
+            g_e8f.e9w_mode = 1;
+            g_e8f.e9w_archive_exact = 1;
+            g_e8f.e9w_debug_ac8_force = 0;
+            g_e8f.e9z_pack_registry = 1;
+            /* Do not auto-enable GWY_PLATFORM_RESOURCE_READY_EVENT — compare natural paths. */
+            g_e8f.e9v_mode = 1;
+            g_e8f.e9u_mode = 1;
+            g_e8f.e9g_mode = 1;
+            g_e8f.e9i_mode = 1;
+            g_e8f.e9e_postmatch_shims = 1;
+            g_e8f.e9d_strcmp_shim = 1;
+            if (!g_e8f.e9s_bd0_init_call && !g_e8f.e9t_caller_2fc03c &&
+                !g_e8f.e9t_caller_2fc05e && !g_e8f.e9t_caller_30ee8a)
+                g_e8f.e9s_bd0_init_call = 1;
+            if (g_e8f.e9z_pack_registry) e9z_ensure_pack_registry();
+            printf("[JJFB_E10A] mode=1 launch_path=%s pack_registry=1 "
+                   "resource_ready_synth=0 note=shell_vs_direct_AC8_NOT_PRODUCT "
+                   "evidence=HYPOTHESIS\n",
+                   getenv("JJFB_LAUNCH_PATH") ? getenv("JJFB_LAUNCH_PATH") : "?");
+            fflush(stdout);
+        }
         if (g_e8f.plat_screen_dims) {
             printf("[JJFB_PLATFORM_SCREEN_DIMS] enabled=1 note=R9_818_81C_830_834_824 "
                    "replaces_FAST_TEXTCTX_ASSIST NOT_PRODUCT evidence=HYPOTHESIS\n");
@@ -2000,6 +2037,10 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                 e9y_log_event_contract(uc, bp->pc, lr, r0, r1, r2, r3, r9w, 0, "splash_2EF86C");
             if (g_e8f.e9z_mode)
                 e9z_log_import(uc, bp->pc, lr, r0, r1, r2, r3, r9w, 0, "splash_2EF86C");
+            if (g_e8f.e10a_mode) {
+                g_e8f.e10a_splash_seen = 1;
+                e10a_log_ac8(uc, r9w, bp->pc, ac8, "splash_enter", "2EF86C");
+            }
             /* Late path: if FAST pre_splash never finished, still try real ready event once. */
             if (r9w && g_e8f.e9z_resource_ready_event && !g_e8f.e9z_resource_ready_done &&
                 ac8 == 0u)
@@ -2059,6 +2100,11 @@ static void on_e8f_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             if (g_e8f.e9z_mode)
                 e9z_log_import(uc, 0x2EF8AEu, lr, r0, r1, r2, r3, r9w, 0,
                                ac8 > 0u ? "ac8_logo" : "ac8_loading_only");
+            if (g_e8f.e10a_mode) {
+                if (ac8 > 0u && !g_e8f.e9w_debug_ac8_force) g_e8f.e10a_ac8_nz_at_branch = 1;
+                e10a_log_ac8(uc, r9w, 0x2EF8AEu, ac8, "ac8_branch",
+                             ac8 > 0u ? "logo" : "loading_only");
+            }
             fflush(stdout);
         } else if (bp->pc == 0x30CBBCu || bp->pc == 0x30CD82u || bp->pc == 0x30E15Eu) {
             uint32_t slot = 0;
@@ -7292,6 +7338,59 @@ static void e9z_try_resource_ready_event(void *uc, uint32_t r9) {
     fflush(stdout);
 }
 
+static void e10a_open_csv(void) {
+    const char *p;
+    if (g_e8f.e10a_csv) return;
+    p = getenv("JJFB_E10A_CSV");
+    if (!p || !p[0]) p = "reports/e10a_shell_ac8_trace.csv";
+    g_e8f.e10a_csv = fopen(p, "wb");
+    if (g_e8f.e10a_csv) {
+        fprintf(g_e8f.e10a_csv,
+                "n,tick,launch_path,shell_phase,pc,r9,AC8,logo_branch,note\n");
+        fflush(g_e8f.e10a_csv);
+    }
+}
+
+static void e10a_log_ac8(void *uc, uint32_t r9, uint32_t pc, uint32_t ac8, const char *phase,
+                         const char *note) {
+    const char *lp;
+    (void)uc;
+    if (!g_e8f.e10a_mode) return;
+    e10a_open_csv();
+    g_e8f.e10a_n++;
+    lp = getenv("JJFB_LAUNCH_PATH");
+    if (!lp || !lp[0]) lp = "?";
+    printf("[JJFB_E10A_AC8] launch_path=%s phase=%s pc=0x%X r9=0x%X AC8=0x%X note=%s "
+           "evidence=OBSERVED\n",
+           lp, phase ? phase : "?", pc, r9, ac8, note ? note : "");
+    if (g_e8f.e10a_csv) {
+        fprintf(g_e8f.e10a_csv, "%u,%u,%s,%s,0x%X,0x%X,0x%X,%d,%s\n", g_e8f.e10a_n,
+                g_e8f.tick ? g_e8f.tick : 0u, lp, phase ? phase : "?", pc, r9, ac8,
+                ac8 > 0u ? 1 : 0, note ? note : "");
+        fflush(g_e8f.e10a_csv);
+    }
+    fflush(stdout);
+}
+
+void robotol_flag_writer_e10a_shell_phase(const char *phase) {
+    const char *lp;
+    if (!g_e8f.e10a_mode && !env1("JJFB_E10A_MODE") && !env1("JJFB_E10A_GWY_SHELL_PRELAUNCH"))
+        return;
+    if (!g_e8f.e10a_mode) g_e8f.e10a_mode = 1;
+    e10a_open_csv();
+    g_e8f.e10a_n++;
+    lp = getenv("JJFB_LAUNCH_PATH");
+    if (!lp || !lp[0]) lp = "?";
+    printf("[JJFB_E10A_SHELL] launch_path=%s phase=%s evidence=OBSERVED\n",
+           lp, phase ? phase : "?");
+    if (g_e8f.e10a_csv) {
+        fprintf(g_e8f.e10a_csv, "%u,%u,%s,%s,0,0,0,0,%s\n", g_e8f.e10a_n,
+                g_e8f.tick ? g_e8f.tick : 0u, lp, phase ? phase : "?", "shell_milestone");
+        fflush(g_e8f.e10a_csv);
+    }
+    fflush(stdout);
+}
+
 static void e9w_debug_force_ac8(void *uc, uint32_t r9) {
     uint32_t oldv = 0, newv = 1u;
     if (!uc || !r9 || !g_e8f.e9w_debug_ac8_force || g_e8f.e9w_ac8_force_done) return;
@@ -7473,6 +7572,8 @@ static void on_e9w_ac8_write(uc_engine *uc, uc_mem_type type, uint64_t address, 
            (uint32_t)address, size, oldv, newv, pc, lr, r0, r9, g_e8f.tick);
     e9w_open_trace_files();
     e9w_log_ac8(pc, lr, oldv, newv, "MEM_WRITE", "natural_or_host");
+    if (g_e8f.e10a_mode)
+        e10a_log_ac8(uc, r9, pc, newv, "ac8_mem_write", newv > 0u ? "natural_nz" : "clear_or_zero");
     fflush(stdout);
 }
 #endif
@@ -8525,6 +8626,8 @@ static void fast_call_splash(void *uc) {
         if (g_e8f.e9y_mode) {
             e9y_open_trace_files();
             e9y_log_state(uc, 0, 0, r9_run, "pre_splash", "before_workbuf_or_assist");
+            if (g_e8f.e10a_mode)
+                e10a_log_ac8(uc, r9_run, 0, e9w_peek_ac8(uc, r9_run), "pre_splash", "before_assist");
             /* Arm A80..AE0 before 0x30CBBC — ABC store @0x30CCB2 is inside workbuf init. */
             e9y_try_arm_a80_watch(uc);
             /* E9Z: GWY pack registry + resource-ready via real dispatcher (before workbuf). */
