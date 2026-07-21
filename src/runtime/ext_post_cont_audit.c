@@ -114,7 +114,9 @@ static struct {
     uint32_t last_pc;
     char last_module[72];
     uint32_t last_offset;
-    uint32_t last_r0, last_r1, last_r2, last_r3, last_r9;
+    uint32_t last_r0, last_r1, last_r2, last_r3;
+    uint32_t last_r4, last_r5, last_r6, last_r7;
+    uint32_t last_r9;
     uint32_t last_sp, last_lr;
     uint32_t last_scope_depth;
 } g_pc;
@@ -159,6 +161,25 @@ uint64_t ext_post_cont_audit_instruction_count(void) { return g_pc.instr_count; 
 int ext_post_cont_gate_open(void) { return g_pc.post_cont_gate_open; }
 int ext_post_cont_graphics_gate_open(void) { return g_pc.graphics_gate_open; }
 int ext_post_cont_event_scheduler_gate_open(void) { return g_pc.event_sched_gate_open; }
+
+void *ext_post_cont_audit_last_uc(void) { return g_pc.uc; }
+uint32_t ext_post_cont_audit_last_pc(void) { return g_pc.last_pc; }
+uint32_t ext_post_cont_audit_last_lr(void) { return g_pc.last_lr; }
+uint32_t ext_post_cont_audit_last_sp(void) { return g_pc.last_sp; }
+uint32_t ext_post_cont_audit_last_r0(void) { return g_pc.last_r0; }
+uint32_t ext_post_cont_audit_last_r1(void) { return g_pc.last_r1; }
+uint32_t ext_post_cont_audit_last_r2(void) { return g_pc.last_r2; }
+uint32_t ext_post_cont_audit_last_r3(void) { return g_pc.last_r3; }
+uint32_t ext_post_cont_audit_last_r4(void) { return g_pc.last_r4; }
+uint32_t ext_post_cont_audit_last_r5(void) { return g_pc.last_r5; }
+uint32_t ext_post_cont_audit_last_r6(void) { return g_pc.last_r6; }
+uint32_t ext_post_cont_audit_last_r7(void) { return g_pc.last_r7; }
+uint32_t ext_post_cont_audit_last_r9(void) { return g_pc.last_r9; }
+uint32_t ext_post_cont_audit_last_offset(void) { return g_pc.last_offset; }
+const char *ext_post_cont_audit_last_module(void) { return g_pc.last_module; }
+uint32_t ext_post_cont_audit_last_scope_depth(void) { return g_pc.last_scope_depth; }
+uint32_t ext_post_cont_audit_last_p_er_rw(void) { return g_pc.p_er_rw; }
+uint32_t ext_post_cont_audit_last_registry_er_rw(void) { return g_pc.registry_er_rw; }
 
 int ext_post_cont_audit_enabled(void) {
     const char *e;
@@ -513,6 +534,10 @@ void ext_post_cont_audit_on_continuation_resume(void *uc, uint64_t module_id, co
     g_pc.last_r1 = g_pc.cont_r1;
     g_pc.last_r2 = g_pc.cont_r2;
     g_pc.last_r3 = g_pc.cont_r3;
+    g_pc.last_r4 = regs ? regs[4] : 0;
+    g_pc.last_r5 = regs ? regs[5] : 0;
+    g_pc.last_r6 = regs ? regs[6] : 0;
+    g_pc.last_r7 = regs ? regs[7] : 0;
     g_pc.last_r9 = g_pc.cont_r9;
     g_pc.last_sp = sp;
     g_pc.last_lr = lr;
@@ -549,6 +574,10 @@ void ext_post_cont_audit_on_code(void *uc, uint64_t module_id, uint32_t pc, cons
     g_pc.last_r1 = regs[1];
     g_pc.last_r2 = regs[2];
     g_pc.last_r3 = regs[3];
+    g_pc.last_r4 = regs[4];
+    g_pc.last_r5 = regs[5];
+    g_pc.last_r6 = regs[6];
+    g_pc.last_r7 = regs[7];
     g_pc.last_r9 = regs[9];
     g_pc.last_sp = regs[13];
     g_pc.last_lr = regs[14];
@@ -571,7 +600,7 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
                                      int is_enter, uint32_t result_r0) {
     ApiCat cat;
     PostContEventType evt;
-    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, r9 = 0, sp = 0, lr = 0;
+    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, r5 = 0, r6 = 0, r7 = 0, r9 = 0, sp = 0, lr = 0;
     FirstApi *slot = NULL;
     if (!ext_post_cont_audit_enabled() || !g_pc.armed || g_pc.finalized) return;
     (void)slot_addr;
@@ -584,6 +613,10 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R1, &r1);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R2, &r2);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R3, &r3);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R4, &r4);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R5, &r5);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R6, &r6);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R7, &r7);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr);
@@ -599,6 +632,20 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
             g_pc.first_platform.result = result_r0;
         return;
     }
+
+    /* Refresh "last registers" so VFS/file trace can correlate path pointer ABI. */
+    g_pc.last_r0 = r0;
+    g_pc.last_r1 = r1;
+    g_pc.last_r2 = r2;
+    g_pc.last_r3 = r3;
+    g_pc.last_r4 = r4;
+    g_pc.last_r5 = r5;
+    g_pc.last_r6 = r6;
+    g_pc.last_r7 = r7;
+    g_pc.last_r9 = r9;
+    g_pc.last_sp = sp;
+    g_pc.last_lr = lr;
+    g_pc.last_scope_depth = module_r9_switch_depth();
 
     switch (cat) {
     case API_CAT_FILE: slot = &g_pc.first_file; break;

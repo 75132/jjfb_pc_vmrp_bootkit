@@ -88,6 +88,30 @@ void ext_post_cont_audit_note_unimplemented(const char *api_name);
 /* Emit summary if armed and not yet finalized (harness end / process teardown). */
 void ext_post_cont_audit_finalize(const char *stop_reason);
 
+/*
+ * Accessors for VFS/shell instrumentation:
+ * Provide the last observed guest register/PC/LR/SP context captured at
+ * post-continuation boundaries (e.g. PLATFORM_API entering a file API).
+ */
+void *ext_post_cont_audit_last_uc(void);
+uint32_t ext_post_cont_audit_last_pc(void);
+uint32_t ext_post_cont_audit_last_lr(void);
+uint32_t ext_post_cont_audit_last_sp(void);
+uint32_t ext_post_cont_audit_last_r0(void);
+uint32_t ext_post_cont_audit_last_r1(void);
+uint32_t ext_post_cont_audit_last_r2(void);
+uint32_t ext_post_cont_audit_last_r3(void);
+uint32_t ext_post_cont_audit_last_r4(void);
+uint32_t ext_post_cont_audit_last_r5(void);
+uint32_t ext_post_cont_audit_last_r6(void);
+uint32_t ext_post_cont_audit_last_r7(void);
+uint32_t ext_post_cont_audit_last_r9(void);
+uint32_t ext_post_cont_audit_last_offset(void);
+const char *ext_post_cont_audit_last_module(void);
+uint32_t ext_post_cont_audit_last_scope_depth(void);
+uint32_t ext_post_cont_audit_last_p_er_rw(void);
+uint32_t ext_post_cont_audit_last_registry_er_rw(void);
+
 #ifdef __cplusplus
 }
 #endif

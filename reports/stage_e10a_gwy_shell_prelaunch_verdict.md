@@ -9,7 +9,7 @@ Reconstruct **gbrwcore -> gamelist -> cfg36 -> update/no-update -> runapp -> jjf
 Do **not** treat robotol resource-ready evt as shell contract.
 
 ## Cases
-- **shell** (22s): `SHELL_AC8_ZERO_AT_SPLASH` gbrw=False continue=False gamelist=False runapp=False splash=True ac8_nz=False
+- **shell** (20.9s): `SHELL_AC8_ZERO_AT_SPLASH` gbrw=False continue=False gamelist=False runapp=False splash=True ac8_nz=False
 
 ## Artifacts
 | Kind | Path |

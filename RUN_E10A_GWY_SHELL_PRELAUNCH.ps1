@@ -34,8 +34,11 @@ $verdictMd = Join-Path $reportDir 'stage_e10a_gwy_shell_prelaunch_verdict.md'
 function Stop-E10Children {
   Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
     Where-Object {
-      $_.Name -match '^(main|jjfb|vmrp|gwy)' -or
-      ($_.Name -eq 'powershell.exe' -and $_.CommandLine -match 'E10A_GWY|stage_e_product')
+      # Do not kill the current PowerShell process (self-termination).
+      $_.ProcessId -ne $PID -and (
+        $_.Name -match '^(main|jjfb|vmrp|gwy)' -or
+        ($_.Name -eq 'powershell.exe' -and $_.CommandLine -match 'E10A_GWY|stage_e_product')
+      )
     } |
     ForEach-Object { try { Stop-Process -Id $_.ProcessId -Force -EA SilentlyContinue } catch {} }
 }
