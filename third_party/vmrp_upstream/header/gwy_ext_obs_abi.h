@@ -173,6 +173,9 @@ void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t e
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry);
 /* D5b: guest pointer for entry string after copyStrToMrp. */
 void gwy_ext_obs_launch_param_mapped(uint32_t entry_va, const char *entry);
+/* E10A-3.1: trace start_t ABI at MR_START_DSM. */
+void gwy_ext_obs_note_start_dsm_abi(void *uc, uint32_t start_t_guest, const char *filename,
+                                    const char *ext, const char *entry);
 void gwy_ext_obs_file_open(const char *guest_path, int ok);
 
 /* Phase 6G: file open with host path + shell update stub / runapp chain helpers. */

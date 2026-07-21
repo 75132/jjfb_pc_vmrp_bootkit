@@ -1,0 +1,201 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0xC00000
+START_ADDRESS:0x80000, END_ADDRESS:0xE80000
+TOTAL_MEMORY:0xE00000(14680064)
+[JJFB_WINDOW] kind=SDL_software flags=0 zoom=2 size=480x640 note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED
+initMemoryManager: baseAddress:0x280000 len: 0xC00000
+[JJFB_E10A_OPEN_STUB] addr=0x280284 evidence=OBSERVED
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[JJFB_E10A_BRIDGE_STALE_LR] api=_mr_c_function_new stub=0x280068 lr=0x80034 r0=0xA4178 r1=0x14 r9=0x0 sp=0x27FFF0 evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0xA4178 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_CFN_P_SLOT] package=? module=? helper=0xA4178 P=0x2803E4 slot=0x80004 lr=0x80034 reason=fixr9_c_function_p_image_plus4 evidence=DOCUMENTED wrote=1
+[JJFB_GAME_P_TIMELINE] package=? module=? event=CFN_P_SLOT_PUBLISH P=0x2803E4 p0=0 p4=0 registry_base=0x0 registry_len=0 slot=0x80004 evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CALLBACK_FRAME] boundary=HOST_CALLBACK_RETURN callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre=0x0 leave=0x0 resume=0x0 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=1 changed=no r4_pre=0x80008 r4_post=0x80008 r9_pre=0x0 r9_post=0x0 r10_pre=0x0 r10_post=0x0 sp_pre=0x27FFF0 sp_post=0x27FFF0 cpsr_t_pre=0 cpsr_t_post=0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=1 module= module_id=0 cfn_path=HOST_MAP_FUNC call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 helper=0xA4178 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=mr_malloc stub=0x280004 lr=0xA4324 r0=0x25D4 r1=0x280004 r9=0x0 sp=0x27FFE8 evidence=OBSERVED
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=memcpy stub=0x280010 lr=0x800D0 r0=0x280400 r1=0xD103C r9=0x0 sp=0x27FFF0 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=memset stub=0x28003C lr=0x80104 r0=0x280518 r1=0x0 r9=0x0 sp=0x27FFF0 evidence=OBSERVED
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[JJFB_E10A_BRIDGE_STALE_LR] api=get_uptime_ms stub=0x280278 lr=0x90DC8 r0=0x280278 r1=0x0 r9=0x280400 sp=0x27FFD0 evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=0 owns_frame=no requested_by=bridge_mr_extHelper requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=bridge_mr_extHelper owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=NORMAL_GUEST_RETURN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x00000000	R1=0x00000000	 R2=0x000024B8	 R3=0x00000000	N:0
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=09284da0
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[JJFB_GWY_LAUNCH] mode=gwy_shell_core_continue launcher_mode=1 alias_direct=disabled guest_native=yes shell_core_continue=yes
+[JJFB_GWY_ROOT] mythroad_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[JJFB_GWY_ROOT] gwy_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=reg_primary scope=mrp_member result=HIT reason=reg_ext_primary
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwcore.mrp primary=gbrwcore.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwcore.ext insert_at=318 entry_size=30 index_end=318 offset=2058 stored_size=98264 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwcore.mrp requested=gbrwcore.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwcore.mrp primary=gbrwcore.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp original_sha256=dc7c2134d214e0667174d1806227ea88b41357269e92845d15afdb7f10267b44 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gamelist.mrp primary=gamelist.ext evidence=CROSS_TARGET source=reg.ext+embedded_package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gamelist.ext insert_at=897 entry_size=30 index_end=897 offset=13325 stored_size=58522 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gamelist.mrp requested=gamelist.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gamelist.mrp requested=gamelist.ext resolved=gamelist.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gamelist.mrp module=gamelist.ext module_id=4 requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=58522 unpacked_size=91532 extracted_size=91532 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gamelist.mrp primary=gamelist.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gamelist_cfunction.mrp original_sha256=4b24babfc82be19015fdf5eb9e2468c7ea030130f61f617a8644ab1e7bf7d956 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwshell.mrp primary=gbrwshell.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwshell.ext insert_at=482 entry_size=30 index_end=482 offset=3236 stored_size=29946 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwshell.mrp requested=gbrwshell.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gbrwshell.mrp module=gbrwshell.ext module_id=5 requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=29946 unpacked_size=45216 extracted_size=45216 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwshell.mrp primary=gbrwshell.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp original_sha256=3cc99e87680b7ebb94dc6f4c3d765d4480a0595650ee97e3c5463400d1819916 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=robotol.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=6 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/jjfb.mrp primary=robotol.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/game_jjfb_cfunction.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/jjfb.mrp primary=installed status=installed mode=all_shell_and_game evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp primary=mmochat.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=mmochat.ext insert_at=791 entry_size=30 index_end=791 offset=92949 stored_size=206148 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/wxjwq.mrp requested=mmochat.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/wxjwq.mrp module=mmochat.ext module_id=7 requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=206148 unpacked_size=320292 extracted_size=320292 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/wxjwq.mrp primary=mmochat.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/game_wxjwq_cfunction.mrp original_sha256=6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/wxjwq.mrp primary=installed status=installed mode=all_shell_and_game evidence=CROSS_TARGET
+[JJFB_PACKAGE_SCOPE] package=gwy/gbrwcore.mrp primary=gbrwcore.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[JJFB_CLOAD_SCOPE] request=cfunction.ext package=gwy/gbrwcore.mrp resolved=gbrwcore.ext reason=package_reg_primary evidence=CROSS_TARGET
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=dsm:cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=8 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=8 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=8 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=EXTRACTED size=147196
+[EXT_LOAD] module_id=4 load_id=5 package=gwy/gamelist.mrp requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER stage=EXTRACTED size=91532
+[EXT_LOAD] module_id=5 load_id=6 package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER stage=EXTRACTED size=45216
+[EXT_LOAD] module_id=6 load_id=7 package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=7 load_id=8 package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER stage=EXTRACTED size=320292
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwcore.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gamelist_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gamelist.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gamelist_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gamelist.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/gwy/gamelist.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gamelist_cfunction.mrp" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gamelist.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwshell.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwshell.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/gwy/gbrwshell.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwshell.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_GWY_LAUNCH] mode=gwy_shell_core_continue dsm_target=gwy/gbrwcore.mrp note=guest_shell_exec
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/gbrwcore.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_PACKAGE_SCOPE] package=gwy/gbrwcore.mrp primary=gbrwcore.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_E10A_SHELL] launch_path=gwy_shell_core_continue phase=gbrwcore_mr_start evidence=OBSERVED
+[JJFB_E10A_SHELL] launch_path=gwy_shell_core_continue phase=SHELL_PHASE_GBRWCORE_START module=gbrwcore.ext pc=0x0 lr=0x0 r0=0x0 r1=0x0 AC8=0x0 note=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink evidence=OBSERVED
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=mr_start entered=yes pc=pending entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_PARAM_MAP] va=0x2829FC len=79 param="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=DOCUMENTED
+[JJFB_E10A31] milestone=SHELL_PARAM_POINTER_COPIED note=mr_start_dsm_entry_mapped evidence=OBSERVED
+[JJFB_E10A31_START_DSM] start_t=0x2803D4 filename="gwy/gbrwcore.mrp" ext="start.mr" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" verdict=START_DSM_PARAM_ABI_CONFIRMED evidence=OBSERVED
+[JJFB_E10A31] milestone=SHELL_PARAM_START_STRUCT_READ note=start_dsm_abi_trace evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=8 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=8 method=1 return=0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=8 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=8 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=LEGAL_HELPER_EVENT_WITH_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=8 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=dsm:cfunction.ext module_id=8 image_base=0x80000 image_size=0x51154 entry_pc=0xA4178 entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=gwy_shell
+[JJFB_ROBOTOL_ENTER_REJECT] reason=dsm_context module=dsm:cfunction.ext package=gwy/jjfb.mrp pc=0xA4178 module_id=8 evidence=OBSERVED
+[HELPER_ABI] stage=MODULE_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=8 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+[R9_WRITE] event_seq=1 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x0 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=? to=cfunction.ext old_r9=0x0 new_r9=0x280400 call_kind=MR_HELPER depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=1 owns_frame=yes requested_kind=MR_HELPER caller=? callee=cfunction.ext current_r9=0x0 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=DSM_R9_GUARD_ATTACH code=[0x80000,0xD1154) module_id=8 evidence=DOCUMENTED note=block_hook_r9_only
+[JJFB_E10A_BRIDGE_STALE_LR] api=log stub=0x280258 lr=0xA2548 r0=0x27FD98 r1=0x280258 r9=0x280400 sp=0x27FD90 evidence=OBSERVED
+gwy/gbrwcore.mrp
+[JJFB_E10A_BRIDGE_STALE_LR] api=mem_get stub=0x280268 lr=0x8CBB0 r0=0x282374 r1=0x282378 r9=0x280400 sp=0x27FF80 evidence=OBSERVED
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+[JJFB_E10A_BRIDGE_STALE_LR] api=log stub=0x280258 lr=0xA2548 r0=0x27FD68 r1=0x280258 r9=0x280400 sp=0x27FD60 evidence=OBSERVED
+got Origin_LG_mem_len:4194304
+[JJFB_E10A_BRIDGE_STALE_LR] api=log stub=0x280258 lr=0xA2548 r0=0x27FD70 r1=0x280258 r9=0x280400 sp=0x27FD68 evidence=OBSERVED
+Total memory:4194304
+[JJFB_E10A_BRIDGE_STALE_LR] api=mkDir stub=0x2802A4 lr=0x90E2C r0=0xCF968 r1=0x2802A4 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=mkDir stub=0x2802A4 lr=0x90E40 r0=0xCF974 r1=0x2802A4 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=mkDir stub=0x2802A4 lr=0x90E54 r0=0xCF9E8 r1=0x2802A4 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=mkDir stub=0x2802A4 lr=0x90E68 r0=0xCFA00 r1=0x2802A4 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=mkDir stub=0x2802A4 lr=0x90E7C r0=0xCF9D4 r1=0x2802A4 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_E10A_BRIDGE_STALE_LR] api=open stub=0x280284 lr=0x90EA0 r0=0x27FE78 r1=0x1 r9=0x280400 sp=0x27FE78 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[JJFB_E10A_VFS] launch_path=gwy_shell_core_continue op=open module=guest_vfs guest="mythroad/system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" exists=1 rc=1 pc=0x0 lr=0x0 evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[JJFB_E10A_BRIDGE_STALE_LR] api=log stub=0x280258 lr=0xA2548 r0=0x27FC60 r1=0x280258 r9=0x280400 sp=0x27FC58 evidence=OBSERVED
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[JJFB_E10A_BRIDGE_STALE_LR] api=log stub=0x280258 lr=0xA2548 r0=0x27FC60 r1=0x280258 r9=0x280400 sp=0x27FC58 evidence=OBSERVED
+[INFO]font load suc fd=1

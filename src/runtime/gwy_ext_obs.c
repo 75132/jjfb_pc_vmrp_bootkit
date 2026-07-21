@@ -22,6 +22,7 @@
 #include "gwy_launcher/ext_gwy_shell_shim.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/e10a3_postselect_trace.h"
+#include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -81,6 +82,7 @@ static int g_lifecycle_host_armed;
 static int g_lifecycle_pending;
 static int g_lifecycle_delivering;
 static uint32_t g_lifecycle_ticks;
+static void *g_bound_uc;
 static const uint32_t GWY_LIFECYCLE_PERIOD_MS = 50u;
 static const uint64_t GWY_LIFECYCLE_INSN_LIMIT = 200000ull;
 
@@ -93,6 +95,7 @@ static int env_flag(const char *name) {
 }
 
 void gwy_ext_obs_bind_uc(void *uc) {
+    g_bound_uc = uc;
     gwy_guest_call_observer_bind_uc(uc);
     ext_entry_observe_bind_uc(uc);
     ext_chunk_observe_bind_uc(uc);
@@ -135,6 +138,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     guest_memory_r9_write_reset();
     platform_handler_registry_reset();
     platform_timer_reset();
+    e10a31_reset();
     g_armed_timer_chunk = 0;
     g_timer_arm_seen = 0;
     g_timer_arm_count = 0;
@@ -354,10 +358,16 @@ int gwy_ext_obs_timer_take_due(void) { return platform_timer_take_due(); }
 
 int gwy_ext_obs_timer_running(void) { return platform_timer_running(); }
 
-uint32_t gwy_ext_obs_timer_armed_chunk(void) { return g_armed_timer_chunk; }
+uint32_t gwy_ext_obs_timer_armed_chunk(void) {
+    uint32_t c = e10a31_timer_armed_chunk();
+    return c ? c : g_armed_timer_chunk;
+}
 
 int gwy_ext_obs_timer_ext_target(uint32_t *out_helper, uint32_t *out_p_guest,
                                  uint32_t *out_erw) {
+    if (e10a31_timer_armed_chunk()) {
+        return e10a31_timer_fire_resolve(g_bound_uc, out_helper, out_p_guest, out_erw);
+    }
     if (!g_armed_timer_chunk) return 0;
     return ext_chunk_provider_timer_dispatch_target(g_armed_timer_chunk, out_helper, out_p_guest,
                                                     out_erw);
@@ -402,6 +412,7 @@ void gwy_ext_obs_timer_host_arm(uint32_t period_ms, const char *route, uint32_t 
 void gwy_ext_obs_timer_host_disarm(const char *route, uint32_t pc) {
     platform_timer_stop();
     g_armed_timer_chunk = 0;
+    e10a31_timer_disarm();
     if (g_timer_stop) (void)g_timer_stop();
     if (env_flag("JJFB_TIMER_ARM_TRACE")) {
         printf("[JJFB_TIMER_CANCEL] timer_id=%u owner_module=? reason=%s pc=0x%X "
@@ -668,7 +679,7 @@ static void gwy_ext_obs_timer_poll(void *uc) {
 }
 
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
-    uint32_t pc = 0, lr = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, sp = 0;
+    uint32_t pc = 0, lr = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, sp = 0, r9 = 0;
     uint32_t ret = 0;
     uint32_t arg4 = 0;
     uint32_t caller_pc = 0;
@@ -685,6 +696,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R3, &r3);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R4, &r4);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+        (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9);
         /* DOCUMENTED 5th sendAppEvent arg (period) lives at SP[0]. */
         if (sp && !guest_memory_uc_peek_u32((struct uc_struct *)uc, sp, &arg4))
             arg4 = 0;
@@ -874,6 +886,9 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     } else if (result.kind == GWY_PLAT_KIND_TIMER_START) {
         platform_timer_start(result.timer_period_ms);
         g_armed_timer_chunk = result.timer_chunk;
+        e10a31_timer_arm(uc, caller_pc, lr, r9, result.timer_chunk,
+                         result.timer_id ? result.timer_id : (uint32_t)(g_timer_arm_count + 1),
+                         result.timer_period_ms);
         g_timer_arm_seen = 1;
         g_timer_arm_count++;
         g_timer_last_period_ms = result.timer_period_ms;
@@ -898,6 +913,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     } else if (result.kind == GWY_PLAT_KIND_TIMER_STOP) {
         platform_timer_stop();
         g_armed_timer_chunk = 0;
+        e10a31_timer_disarm();
         if (g_timer_stop) (void)g_timer_stop();
         ret = result.status_ret;
         printf("[PLATFORM_TIMER] op=STOP chunk=0x%X name=%s evidence=%s\n", result.timer_chunk,
@@ -1315,6 +1331,13 @@ void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *en
 
 void gwy_ext_obs_launch_param_mapped(uint32_t entry_va, const char *entry) {
     ext_gwy_shell_native_exec_on_launch_param(entry_va, entry);
+    e10a31_launch_param_mapped(g_bound_uc, entry_va, entry ? (uint32_t)strlen(entry) + 1u : 0,
+                               entry);
+}
+
+void gwy_ext_obs_note_start_dsm_abi(void *uc, uint32_t start_t_guest, const char *filename,
+                                    const char *ext, const char *entry) {
+    e10a31_note_start_dsm(uc ? uc : g_bound_uc, start_t_guest, filename, ext, entry);
 }
 
 void gwy_ext_obs_file_open(const char *guest_path, int ok) {
@@ -1351,5 +1374,5 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
 }
 
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
-    e10a3_on_timer_fire(helper, 2u, p_guest, erw, ret);
+    e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
 }

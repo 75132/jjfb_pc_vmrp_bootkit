@@ -1,6 +1,7 @@
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a3_postselect_trace.h"
+#include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
@@ -597,10 +598,11 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
         printf("[JJFB_SHELL_EXEC] package=gwy/%s stage=shell_guest_pc_hit entered=yes pc=0x%X "
                "evidence=OBSERVED\n",
                m->name, pc);
-        printf("[JJFB_SHELL_CORE_MODULE] module=%s stage=init_ok evidence=TARGET_OBSERVED\n",
+        printf("[JJFB_SHELL_CORE_MODULE] module=%s stage=GAMELIST_EXT_FIRST_PC "
+               "evidence=TARGET_OBSERVED\n",
                m->name);
         fflush(stdout);
-        if (strcmp(m->name, "gamelist.ext") == 0) e10a3_mark_gamelist_init_ok();
+        if (strcmp(m->name, "gamelist.ext") == 0) e10a31_mark_ext_first_pc();
         emit_export_table(m);
         recompute_gate();
         /* Do not finalize here: keep observing until fault / export call / exit. */
@@ -680,6 +682,16 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
              off == GAMELIST_OFF_CFG_WRAP ||
              (off >= GAMELIST_OFF_CFG_OPEN && off < GAMELIST_OFF_CFG_OPEN + 0x2C0u))) {
             g_ne.cfg_gate_hit = 1;
+            {
+                uint32_t r9v = 0;
+                if (uc) (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9v);
+                e10a31_note_cfg_site(uc ? uc : g_ne.uc, pc, m->base, off,
+                                     off == GAMELIST_OFF_CFG_OPEN
+                                         ? "cfg_open"
+                                         : (off == GAMELIST_OFF_CFG_GATE ? "cfg_gate"
+                                                                         : "cfg_wrap"),
+                                     m->name, r9v, r9v);
+            }
             printf("[JJFB_GAMELIST_CFG_GATE] pc=0x%X off=0x%X hit=yes evidence=TARGET_OBSERVED\n",
                    pc, off);
             fflush(stdout);
@@ -687,6 +699,10 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
         if (!g_ne.cmd_disp_hit &&
             (off == GAMELIST_OFF_CMD_DISP ||
              (off >= GAMELIST_OFF_CMD_DISP && off < GAMELIST_OFF_CMD_DISP + 0x80u))) {
+            uint32_t r9v = 0;
+            if (uc) (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9v);
+            e10a31_note_cfg_site(uc ? uc : g_ne.uc, pc, m->base, off, "cmd_dispatcher", m->name,
+                                 r9v, r9v);
             uint8_t fb[8];
             int ni;
             g_ne.cmd_disp_hit = 1;

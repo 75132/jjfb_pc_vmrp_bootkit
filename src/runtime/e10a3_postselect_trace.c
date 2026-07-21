@@ -119,7 +119,8 @@ void e10a3_mark_gamelist_init_ok(void) {
     if (!e10a3_enabled()) return;
     g_e10a3.gamelist_init_ok = 1;
     g_e10a3.postselect_armed = 1;
-    printf("[JJFB_E10A3] mark=gamelist_init_ok postselect_armed=1 evidence=OBSERVED\n");
+    printf("[JJFB_E10A3] mark=GAMELIST_EXT_FIRST_PC postselect_armed=1 "
+           "note=legacy_alias_not_init_complete evidence=OBSERVED\n");
     fflush(stdout);
 }
 
@@ -256,7 +257,8 @@ void e10a3_on_timer_fire(uint32_t helper, uint32_t method, uint32_t p, uint32_t 
     e10a3_note_wait_state(g_e10a3.timer_tick, helper, method, 0, (uint32_t)ret, 0,
                           g_e10a3.real_cfg_selected ? "post_cfg_timer"
                                                    : "pre_cfg_idle_timer",
-                          g_e10a3.real_cfg_selected, "helper_timer_fire");
+                          g_e10a3.real_cfg_selected,
+                          "helper_timer_fire method_is_helper_code_not_state_id");
     e10a3_note_postselect(helper, 0, NULL, erw, 0, "gamelist.ext", "timer_fire", 0, "",
                           "PLATFORM_TIMER", 2, "", "idle_or_wait", "timer_ret",
                           "FIRE_EXT");

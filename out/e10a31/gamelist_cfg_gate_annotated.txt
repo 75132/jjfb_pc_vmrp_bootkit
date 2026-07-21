@@ -1,0 +1,17 @@
+﻿# gamelist cfg-open predecessor graph (E10A-3.1)
+
+Candidates (gamelist.ext base + offset):
+- cfg_open: base + 0x1AF8  (live ~0x2D5E4C)
+- cfg_gate: base + 0x392C   (live ~0x2D7C80)
+- cfg_wrap: base + 0xF670  (live ~0x2E39C4)
+- cmd_disp: base + 0xF6C4  (live ~0x2E3A18)
+
+Runtime observe:
+- GAMELIST_EXT_FIRST_PC != init complete
+- timer method=2 is helper code, not gamelist state id
+- mixed timer tuple (gamelist helper + gbrwcore ERW) blocks cfg/param progression
+
+Success order:
+1. GAMELIST_TIMER_CONTEXT_COHERENT or REBOUND
+2. START_DSM_PARAM_REACHED_GAMELIST or ABI mismatch verdict
+3. GAMELIST_CFG_GATE_REACHED / cfg.bin open

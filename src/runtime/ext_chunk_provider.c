@@ -10,6 +10,7 @@ typedef struct {
     uint32_t helper;
     uint64_t module_id;
     char name[48];
+    char package_name[128];
     uint32_t code_base;
     uint32_t code_size;
     uint32_t p_guest;
@@ -18,6 +19,8 @@ typedef struct {
     void *chunk_host;
     uint32_t init_func;
     int published;
+    uint32_t module_generation;
+    uint32_t p_generation;
 } ChunkRec;
 
 static struct {
@@ -34,6 +37,8 @@ static struct {
     ChunkRec recs[8];
     int rec_n;
     int contract_emitted;
+    uint32_t global_module_generation;
+    uint32_t global_p_generation;
 } g_prov;
 
 static int env_is_1(const char *k) {
@@ -190,6 +195,8 @@ static ChunkRec *find_by_helper(uint32_t helper) {
     return NULL;
 }
 
+static ChunkRec *find_by_chunk(uint32_t chunk_guest);
+
 static ChunkRec *add_rec(void) {
     if (g_prov.rec_n >= 8) return NULL;
     return &g_prov.recs[g_prov.rec_n++];
@@ -282,8 +289,18 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
         if (!rec) return 0;
         memset(rec, 0, sizeof(*rec));
     }
-    rec->helper = helper;
-    rec->module_id = mid;
+    {
+        uint64_t old_mid = rec->module_id;
+        uint32_t old_p = rec->p_guest;
+        rec->helper = helper;
+        if (mid && old_mid != mid) rec->module_generation = ++g_prov.global_module_generation;
+        else if (mid && !rec->module_generation)
+            rec->module_generation = ++g_prov.global_module_generation;
+        rec->module_id = mid;
+        if (p_guest && old_p != p_guest) rec->p_generation = ++g_prov.global_p_generation;
+        else if (p_guest && !rec->p_generation)
+            rec->p_generation = ++g_prov.global_p_generation;
+    }
     snprintf(rec->name, sizeof(rec->name), "%.47s", mn);
     rec->code_base = code_base;
     rec->code_size = code_size;
@@ -351,8 +368,108 @@ void ext_chunk_provider_on_module_registered(const char *module_name, uint64_t m
     if (module_name) {
         snprintf(rec->name, sizeof(rec->name), "%.47s", module_name);
     }
+    rec->module_generation = ++g_prov.global_module_generation;
     ensure_and_publish(g_prov.uc, helper, rec->p_guest, rec->p_host, rec->chunk_host,
                        rec->chunk_guest, "ext_register_contract");
+}
+
+static void fill_owner_info(ChunkRec *rec, ExtChunkOwnerInfo *out) {
+    GwyMrcExtChunk *ch;
+    ModuleRegistry *reg;
+    const GwyLoadedModule *gm;
+    if (!rec || !out) return;
+    memset(out, 0, sizeof(*out));
+    out->helper = rec->helper;
+    out->p_guest = rec->p_guest;
+    out->chunk_guest = rec->chunk_guest;
+    out->module_id = rec->module_id;
+    out->module_generation = rec->module_generation;
+    out->p_generation = rec->p_generation;
+    snprintf(out->module_name, sizeof(out->module_name), "%.47s",
+             rec->name[0] ? rec->name : "?");
+    reg = gwy_ext_loader_bound_registry();
+    gm = reg && rec->module_id ? module_registry_find_by_id(reg, rec->module_id) : NULL;
+    if (gm && gm->package_path[0])
+        snprintf(out->package_name, sizeof(out->package_name), "%.127s", gm->package_path);
+    if (rec->chunk_host) {
+        ch = (GwyMrcExtChunk *)rec->chunk_host;
+        out->chunk_erw = ch->var_buf;
+    }
+    (void)ext_chunk_provider_peek_p_er_rw(rec->p_guest, &out->p_erw, NULL);
+    out->erw = out->chunk_erw ? out->chunk_erw : out->p_erw;
+    if (gm && gm->data.start_of_er_rw) out->registry_erw = gm->data.start_of_er_rw;
+}
+
+int ext_chunk_provider_owner_for_chunk(uint32_t chunk_guest, ExtChunkOwnerInfo *out) {
+    ChunkRec *rec = find_by_chunk(chunk_guest);
+    if (!rec || !out) return 0;
+    fill_owner_info(rec, out);
+    return 1;
+}
+
+int ext_chunk_provider_owner_for_helper(uint32_t helper, ExtChunkOwnerInfo *out) {
+    ChunkRec *rec = find_by_helper(helper);
+    if (!rec || !out) return 0;
+    fill_owner_info(rec, out);
+    return 1;
+}
+
+int ext_chunk_provider_owner_for_p(uint32_t p_guest, ExtChunkOwnerInfo *out) {
+    ChunkRec *rec = find_by_p(p_guest);
+    if (!rec || !out) return 0;
+    fill_owner_info(rec, out);
+    return 1;
+}
+
+int ext_chunk_provider_owner_for_erw(uint32_t erw, ExtChunkOwnerInfo *out) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    size_t i;
+    if (!reg || !erw || !out) return 0;
+    for (i = 0; i < reg->count; i++) {
+        if (reg->modules[i].data.start_of_er_rw == erw) {
+            ChunkRec *rec = find_by_helper(reg->modules[i].map.helper_address);
+            memset(out, 0, sizeof(*out));
+            out->erw = erw;
+            out->registry_erw = erw;
+            out->module_id = reg->modules[i].module_id;
+            out->helper = reg->modules[i].map.helper_address;
+            snprintf(out->module_name, sizeof(out->module_name), "%.47s",
+                     reg->modules[i].resolved_name[0] ? reg->modules[i].resolved_name
+                                                      : reg->modules[i].requested_name);
+            snprintf(out->package_name, sizeof(out->package_name), "%.127s",
+                     reg->modules[i].package_path);
+            if (rec) {
+                out->p_guest = rec->p_guest;
+                out->chunk_guest = rec->chunk_guest;
+                out->p_generation = rec->p_generation;
+                out->module_generation = rec->module_generation;
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int ext_chunk_provider_rebind_chunk_erw(uint32_t chunk_guest, uint32_t new_erw, uint32_t p_guest) {
+    ChunkRec *rec = find_by_chunk(chunk_guest);
+    GwyMrcExtChunk *ch;
+    uint32_t old_erw = 0;
+    if (!rec || !rec->chunk_host || !new_erw) return 0;
+    ch = (GwyMrcExtChunk *)rec->chunk_host;
+    old_erw = ch->var_buf;
+    ch->var_buf = new_erw;
+    if (p_guest) {
+        rec->p_guest = p_guest;
+        ch->global_p_buf = p_guest;
+    }
+    (void)ext_chunk_provider_set_var_fields(rec->p_guest, new_erw, ch->var_len ? ch->var_len : 20u);
+    g_prov.global_p_generation++;
+    rec->p_generation = g_prov.global_p_generation;
+    printf("[JJFB_E10A31_TIMER_REBIND] chunk=0x%X module=%s P=0x%X old_erw=0x%X new_erw=0x%X "
+           "reason=helper_owner_mismatch evidence=TARGET_OBSERVED\n",
+           chunk_guest, rec->name[0] ? rec->name : "?", rec->p_guest, old_erw, new_erw);
+    fflush(stdout);
+    return 1;
 }
 
 void ext_chunk_provider_on_pxc_cleared(uint32_t p_guest, uint32_t pc) {

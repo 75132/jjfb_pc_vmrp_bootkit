@@ -2407,6 +2407,7 @@ static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, c
     /* D5b observe-only: guest VA of entry string for PARAM_MAP/READ. */
     if (entry && mr_start_dsm_param->entry)
         gwy_ext_obs_launch_param_mapped((uint32_t)(uintptr_t)mr_start_dsm_param->entry, entry);
+    gwy_ext_obs_note_start_dsm_abi(uc, toMrpMemAddr(mr_start_dsm_param), filename, ext, entry);
 
     v = bridge_mr_event(uc, MR_START_DSM, toMrpMemAddr(mr_start_dsm_param), 0);
 

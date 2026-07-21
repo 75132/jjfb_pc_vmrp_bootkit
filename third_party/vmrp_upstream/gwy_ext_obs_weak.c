@@ -319,6 +319,15 @@ void gwy_ext_obs_launch_param_mapped(uint32_t entry_va, const char *entry) {
     (void)entry;
 }
 
+void gwy_ext_obs_note_start_dsm_abi(void *uc, uint32_t start_t_guest, const char *filename,
+                                    const char *ext, const char *entry) {
+    (void)uc;
+    (void)start_t_guest;
+    (void)filename;
+    (void)ext;
+    (void)entry;
+}
+
 void gwy_ext_obs_file_open(const char *guest_path, int ok) {
     (void)guest_path;
     (void)ok;

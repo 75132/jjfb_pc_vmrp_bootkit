@@ -109,6 +109,27 @@ int ext_chunk_provider_set_var_fields(uint32_t p_guest, uint32_t var_buf, uint32
 /* Peek P+0 / P+4 via host pointer when known. Returns 1 if p_host found. */
 int ext_chunk_provider_peek_p_er_rw(uint32_t p_guest, uint32_t *out_base, uint32_t *out_len);
 
+typedef struct ExtChunkOwnerInfo {
+    uint32_t helper;
+    uint32_t p_guest;
+    uint32_t chunk_guest;
+    uint32_t erw;
+    uint32_t p_erw;
+    uint32_t chunk_erw;
+    uint32_t registry_erw;
+    uint64_t module_id;
+    uint32_t module_generation;
+    uint32_t p_generation;
+    char module_name[48];
+    char package_name[128];
+} ExtChunkOwnerInfo;
+
+int ext_chunk_provider_owner_for_chunk(uint32_t chunk_guest, ExtChunkOwnerInfo *out);
+int ext_chunk_provider_owner_for_helper(uint32_t helper, ExtChunkOwnerInfo *out);
+int ext_chunk_provider_owner_for_p(uint32_t p_guest, ExtChunkOwnerInfo *out);
+int ext_chunk_provider_owner_for_erw(uint32_t erw, ExtChunkOwnerInfo *out);
+int ext_chunk_provider_rebind_chunk_erw(uint32_t chunk_guest, uint32_t new_erw, uint32_t p_guest);
+
 #ifdef __cplusplus
 }
 #endif
