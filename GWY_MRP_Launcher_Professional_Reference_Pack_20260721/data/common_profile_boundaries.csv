@@ -1,0 +1,16 @@
+﻿capability,layer,required_behavior,forbidden_coupling
+MRPG container/parser,common runtime,"strict read-only, index bounds, gzip/zlib/raw",none
+VFS/path normalization,common runtime,"mythroad root, slash variants, package-scoped view",no target paths hardcoded
+package/member identity,common runtime,"archive id, current member view, nested load stack",none
+reg.ext primary,common runtime,package-local first valid EXT reference,no JJFB special-case
+MRPGCMAP/entry/callback,common runtime,"image mapping, image+8 entry candidate, Thumb bit, continuation distinction",none
+"P/extChunk, ER_RW/R9",common runtime,nest-safe module context provider,none
+allocator/workbuf,common runtime,guest allocator semantics and collision-free ranges,none
+timer/event/lifecycle,common runtime,"registered callbacks, queue, rearm, ABI-preserving frames",none
+bitmap/text/color-key,common runtime,"generic RGB565, colorkey, measure/draw",none
+side-pack @pack resolver,common runtime,"registry by target root, exact member and original bytes",no show1/downimage hardcode
+cfg.bin record model,shell compatibility/profile,versioned parser with validation metrics,do not call documented ABI
+gbrw named services,shell compatibility/profile,named dispatcher and observed update/file/runapp semantics,no string VA as function pointer
+offline no-update,shell compatibility/profile,only after observed request and exact callback contract,never fake game login
+descriptor launch parameters,app descriptor/profile,parsed cfg record and source label,"minimal data, no memory state writes"
+robotol AC8/BD0/C9D addresses,diagnostic only,breakpoints/traces/FAST experiments,must never be product default

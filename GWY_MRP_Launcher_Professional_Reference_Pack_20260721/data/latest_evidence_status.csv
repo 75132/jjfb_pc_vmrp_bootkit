@@ -1,0 +1,11 @@
+﻿stage,subject,status,evidence,owner_layer,action
+E9V,generic color-key transparency,OBSERVED,magenta 2360 -> 0,COMMON_RUNTIME,retain
+E9V,text measure ABI/layout,OBSERVED,"R7=width, R4=height, x=84 for 72px text",COMMON_RUNTIME,retain
+E9W,generic @pack resolve and upper image draw,OBSERVED_DEBUG,show1@downimage1 can draw with DEBUG AC8/workbuf seed,COMMON_RESOLVER + DIAGNOSTIC_GATE,retain resolver; reject gate assist as product
+E9Y,workbuf allocation,OBSERVED,"0x30CBBC -> 0x30CD82 -> R9+0x8D8, no seed",COMMON_ALLOCATOR/ABI,retain
+E9Y,natural progress timer path,OBSERVED,0x2F55FA reached; AC8 remains 0,EVENT_RUNTIME,timer not AC8 setter
+E9Y-Fix,resource-ready candidate 0x2FE82C,FALSIFIED,real call returns but AC8 remains 0,DIAGNOSTIC,stop using as ready event
+E9Z,resource ready event 0x14,FALSIFIED_AS_SUFFICIENT,"dispatcher reached, AC8 remains 0",SHELL_CONTRACT,pack ready is necessary but not sufficient
+E10A,descriptor_direct AC8,OBSERVED,direct reaches splash with AC8=0,PRODUCT_TRACK,direct boot still lacks shell-imported state
+E10A,native shell chain,PARTIAL,gbrwcore start/continue -> gamelist load; cfg/runapp not proven,RESEARCH_TRACK,repair package context/file API and continue
+E10A,current verdict parser,INVALID/STALE,claims shell AC8 at splash despite missing phase evidence,TEST_INFRA,add run_id and milestone-gated verdicts

@@ -19,6 +19,7 @@
 #ifdef GWY_USE_VM_FILE_SERVICE
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/jjfb_plat_11f00.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -66,6 +67,35 @@ static event_t *dsm_event;   // 用于传递真实事件
 static start_t *mr_start_dsm_param;
 static uint32_t mr_extHelper_addr;
 static int g_in_ext_init_deliver;
+/* E10A-2: after gbrwcore→gamelist continue, re-pin DSM R9 when nested MRP helpers return. */
+static int g_e10a_shell_continued;
+/* DSM cfunction helper/P saved before nested MRP retargets mr_extHelper_addr. */
+static uint32_t g_dsm_extHelper_addr;
+static uint32_t g_dsm_c_function_P_guest;
+static mr_c_function_P_t *g_dsm_c_function_P;
+
+static void bridge_note_dsm_helper(uint32_t helper, mr_c_function_P_t *p, uint32_t p_guest) {
+    if (helper < CODE_ADDRESS || helper >= CODE_ADDRESS + CODE_SIZE) return;
+    g_dsm_extHelper_addr = helper;
+    if (p) g_dsm_c_function_P = p;
+    if (p_guest) g_dsm_c_function_P_guest = p_guest;
+}
+
+static void bridge_restore_dsm_helper(const char *reason) {
+    uint32_t old_h = mr_extHelper_addr;
+    if (!g_dsm_extHelper_addr) return;
+    mr_extHelper_addr = g_dsm_extHelper_addr;
+    if (g_dsm_c_function_P_guest) {
+        void *ph = getMrpMemPtr(g_dsm_c_function_P_guest);
+        if (ph) mr_c_function_P = (mr_c_function_P_t *)ph;
+    } else if (g_dsm_c_function_P) {
+        mr_c_function_P = g_dsm_c_function_P;
+    }
+    printf("[JJFB_E10A_DSM_HELPER_RESTORE] old_helper=0x%X new_helper=0x%X P_guest=0x%X "
+           "reason=%s evidence=TARGET_OBSERVED\n",
+           old_h, mr_extHelper_addr, g_dsm_c_function_P_guest, reason ? reason : "?");
+    fflush(stdout);
+}
 
 static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input, uint32_t input_len);
 
@@ -154,6 +184,7 @@ static void br__mr_c_function_new(BridgeMap *o, uc_engine *uc) {
     memset(mr_c_function_P, 0, p_len);
 
     uint32_t v = toMrpMemAddr(mr_c_function_P);
+    bridge_note_dsm_helper(p_f, mr_c_function_P, v);
     /*
      * DOCUMENTED FixR9/mythroad: guest reads P via C_FUNCTION_P() at
      * (mr_c_function_load - 1) == caller EXT image+4. Nested mrc_loader/robotol
@@ -673,6 +704,113 @@ static void br_mr_open(BridgeMap *o, uc_engine *uc) {
     uint32_t filename, mode;
     uc_reg_read(uc, UC_ARM_REG_R0, &filename);
     uc_reg_read(uc, UC_ARM_REG_R1, &mode);
+#ifdef GWY_USE_VM_FILE_SERVICE
+    /* Capture live Unicorn regs at the real file API boundary before VFS. */
+    if (e10a_shell_trace_enabled()) {
+        e10a_vfs_set_ctx_from_uc(uc, o && o->name ? o->name : "mr_open", "bridge_mr_open",
+                                 NULL, filename, "R0");
+    }
+#endif
+    /* R0==0 is not a guest path pointer; getMrpMemPtr(0) yields host garbage (e.g. "\b"). */
+    if (!filename) {
+#ifdef GWY_USE_VM_FILE_SERVICE
+        if (e10a_shell_trace_enabled()) {
+            uint32_t pc0 = 0, lr0 = 0, r4 = 0, r9 = 0, sp = 0;
+            uint32_t obj = 0, field0 = 0, field8 = 0, erw1880 = 0, erw12e4 = 0;
+            uint8_t f0b[32];
+            char f0hex[80];
+            int i;
+            uc_reg_read(uc, UC_ARM_REG_PC, &pc0);
+            uc_reg_read(uc, UC_ARM_REG_LR, &lr0);
+            uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+            uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+            uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+            printf("[JJFB_E10A_OPEN_NULL] pc=0x%X lr=0x%X r1=0x%X r4=0x%X r9=0x%X sp=0x%X "
+                   "evidence=OBSERVED\n",
+                   pc0, lr0, mode, r4, r9, sp);
+            fflush(stdout);
+            {
+                uint32_t dsm_erw = 0;
+                uint32_t slot2084 = 0, fn_at4 = 0;
+                if (mr_c_function_P)
+                    dsm_erw = (uint32_t)(uintptr_t)mr_c_function_P->start_of_ER_RW;
+                if (r9) {
+                    uc_mem_read(uc, r9 + 0x2084u, &slot2084, 4);
+                    if (slot2084) uc_mem_read(uc, slot2084 + 4u, &fn_at4, 4);
+                }
+                printf("[JJFB_E10A_OPEN_NULL_R9] r9=0x%X dsm_erw=0x%X match=%s "
+                       "[r9+0x2084]=0x%X [that+4]=0x%X evidence=OBSERVED\n",
+                       r9, dsm_erw, (dsm_erw && r9 == dsm_erw) ? "yes" : "no", slot2084, fn_at4);
+                fflush(stdout);
+            }
+            e10a_dump_open_enter_branches("mr_open_r0_null");
+            e10a_dump_guest_pc_ring("mr_open_r0_null");
+            {
+                uint32_t ri;
+                uint32_t rv[13];
+                for (ri = 0; ri < 13u; ri++) {
+                    uc_reg_read(uc, UC_ARM_REG_R0 + (int)ri, &rv[ri]);
+                    if ((rv[ri] & ~1u) == (pc0 & ~1u)) {
+                        printf("[JJFB_E10A_OPEN_NULL_BXREG] rm=%u val=0x%X stub=0x%X "
+                               "note=reg_still_holds_open_stub evidence=OBSERVED\n",
+                               ri, rv[ri], pc0);
+                        fflush(stdout);
+                    }
+                }
+            }
+            {
+                uint32_t call_pc = (lr0 & ~1u) >= 4u ? ((lr0 & ~1u) - 4u) : 0;
+                uint8_t ib[8];
+                uint8_t ib2[8];
+                uint8_t *host;
+                memset(ib, 0, sizeof(ib));
+                memset(ib2, 0, sizeof(ib2));
+                if (call_pc) {
+                    uc_err e1 = uc_mem_read(uc, call_pc, ib, sizeof(ib));
+                    host = (uint8_t *)getMrpMemPtr(call_pc);
+                    printf("[JJFB_E10A_OPEN_NULL_CALLSITE] lr=0x%X call_pc=0x%X uc_err=%d "
+                           "uc_bytes=%02X%02X%02X%02X%02X%02X%02X%02X "
+                           "host=%p host_bytes=%02X%02X%02X%02X%02X%02X%02X%02X evidence=OBSERVED\n",
+                           lr0, call_pc, (int)e1, ib[0], ib[1], ib[2], ib[3], ib[4], ib[5],
+                           ib[6], ib[7], (void *)host,
+                           host ? host[0] : 0, host ? host[1] : 0, host ? host[2] : 0,
+                           host ? host[3] : 0, host ? host[4] : 0, host ? host[5] : 0,
+                           host ? host[6] : 0, host ? host[7] : 0);
+                    fflush(stdout);
+                }
+                (void)ib2;
+            }
+            memset(f0b, 0, sizeof(f0b));
+            f0hex[0] = 0;
+            if (r4) uc_mem_read(uc, r4, &obj, 4);
+            if (obj) {
+                uc_mem_read(uc, obj, &field0, 4);
+                uc_mem_read(uc, obj + 8, &field8, 4);
+            }
+            if (r9) {
+                uc_mem_read(uc, r9 + 0x1880u, &erw1880, 4);
+                uc_mem_read(uc, r9 + 0x12E4u, &erw12e4, 4);
+            }
+            if (field0) uc_mem_read(uc, field0, f0b, sizeof(f0b));
+            for (i = 0; i < 16; i++) {
+                char t[4];
+                snprintf(t, sizeof(t), "%02X", f0b[i]);
+                strncat(f0hex, t, sizeof(f0hex) - strlen(f0hex) - 1);
+            }
+            printf("[JJFB_E10A_OPEN_NULL_DETAIL] obj=0x%X field0=0x%X field8=0x%X "
+                   "erw+1880=0x%X erw+12e4=0x%X field0_bytes=%s evidence=OBSERVED\n",
+                   obj, field0, field8, erw1880, erw12e4, f0hex);
+            fflush(stdout);
+            e10a_shell_cfg_runtime("mr_open_r0_null", r4, obj, field0, "",
+                                   field0 ? (const char *)f0b : "(null)", "", erw1880, f0hex,
+                                   "R0=0 R1=erw_or_mode", "SHELL_VFS_BADPATH_ORIGIN_FOUND");
+            e10a_shell_vfs("miss", "bridge_mr_open", "(null)", "", 0, -1, pc0, lr0);
+        }
+#endif
+        LOG("ext call %s(NULL, 0x%X): reject\n", o->name, mode);
+        SET_RET_V(0);
+        return;
+    }
     char *filenameStr = getMrpMemPtr(filename);
     int32_t ret = my_open(filenameStr, mode);
     LOG("ext call %s(0x%X[%s], 0x%X): %d\n", o->name, filename, filenameStr, mode, ret);
@@ -734,6 +872,12 @@ static void br_mr_getLen(BridgeMap *o, uc_engine *uc) {
     // typedef int32 (*T_mr_getLen)(const char* filename);
     uint32_t filename;
     uc_reg_read(uc, UC_ARM_REG_R0, &filename);
+#ifdef GWY_USE_VM_FILE_SERVICE
+    if (e10a_shell_trace_enabled()) {
+        e10a_vfs_set_ctx_from_uc(uc, o && o->name ? o->name : "mr_getLen", "bridge_mr_getLen",
+                                 NULL, filename, "R0");
+    }
+#endif
     char *filenameStr = getMrpMemPtr(filename);
     LOG("ext call %s(%s)\n", o->name, filenameStr);
     SET_RET_V(my_getLen(filenameStr));
@@ -837,6 +981,7 @@ static void br_log(BridgeMap *o, uc_engine *uc) {
                     /* Guest-owned P for nested EXT; host must dispatch with same VA. */
                     mr_c_function_P = (mr_c_function_P_t *)p_host;
                 }
+                bridge_note_dsm_helper(helper, mr_c_function_P, p_addr);
                 if (!slot) slot = dsm_slot;
                 if (uc_mem_write(uc, slot, &p_addr, 4) == UC_ERR_OK) wrote = 1;
                 if (slot != dsm_slot) (void)uc_mem_write(uc, dsm_slot, &p_addr, 4);
@@ -896,13 +1041,17 @@ static void br_mem_get(BridgeMap *o, uc_engine *uc) {
     /*
      * Shell continue: prefer reusing the tracked 4MB DSM heap so _mr_mem_init
      * re-initializes LG_mem on the same block (avoids second-alloc OOM).
+     *
+     * Do NOT memset the whole block: gbrwcore/gamelist EXT images and ERW live
+     * inside this DSM heap (e.g. gbrwcore @ 0x2EB7FC within 0x282A54+4MB).
+     * Zeroing here wiped live code → stale LR into zeros → bogus mr_open(NULL)
+     * / drawBitmap with garbage args (E10A-2 SHELL_VFS_BADPATH).
      */
     if (g_br_mem_host && g_br_mem_guest && g_br_mem_len >= len) {
         buffer = g_br_mem_guest;
         len = g_br_mem_len;
-        memset(g_br_mem_host, 0, (size_t)len);
         printf("[JJFB_DSM_HEAP] action=reuse guest=0x%X len=%u reason=shell_package_restart "
-               "evidence=TARGET_OBSERVED\n",
+               "memset=no note=preserve_ext_images evidence=TARGET_OBSERVED\n",
                buffer, len);
         printf("br_mem_get base=0x%X len=%d(%d kb) =================\n", buffer, len, len / 1024);
         fflush(stdout);
@@ -1006,6 +1155,31 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                "reason=continue_after_gbrwcore_init\n",
                tgt ? tgt : "?");
         fflush(stdout);
+        /*
+         * E10A-2: gbrwcore RUNTIME_ENTRY left R9 on gbrwcore ER_RW. DSM/start.mr
+         * loads platform fnptrs via R9+0x2084; with gbrwcore R9 that is OOB and
+         * yields sticky-LR bridge entries (open R0=NULL, drawBitmap garbage).
+         * Do not trust mr_c_function_P here — it may already point at gbrwcore P.
+         * Use registry DSM ER_RW via ensure_dsm_r9.
+         */
+        {
+            uint32_t cur_r9 = 0;
+            uint32_t after_r9 = 0;
+            int rc;
+            g_e10a_shell_continued = 1;
+            /*
+             * MR_START_DSM must reach DSM cfunction (0xA4178), not the nested
+             * gbrwcore helper that LOG_PARSE retargeted onto mr_extHelper_addr.
+             */
+            bridge_restore_dsm_helper("shell_core_continue");
+            uc_reg_read(uc, UC_ARM_REG_R9, &cur_r9);
+            rc = gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);
+            uc_reg_read(uc, UC_ARM_REG_R9, &after_r9);
+            printf("[JJFB_E10A_R9_RESTORE] from=0x%X to=0x%X switched=%d "
+                   "reason=shell_core_continue evidence=TARGET_OBSERVED\n",
+                   cur_r9, after_r9, rc);
+            fflush(stdout);
+        }
         (void)bridge_dsm_mr_start_dsm_unlocked(uc, (char *)tgt, "start.mr",
                                                prm ? (char *)prm : NULL);
         /*
@@ -1034,6 +1208,20 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
             }
             printf("[PLATFORM_TIMER] op=POST_CONT_PUMP end pumps=%d evidence=DOCUMENTED\n",
                    pumps);
+            fflush(stdout);
+        }
+        /*
+         * mr_exit was reached via a sticky DSM table walk; returning would resume
+         * that walk (srand/mem_get/...). Park at stop so outer runCode unwinds and
+         * the host loop owns gamelist events.
+         */
+        {
+            uint32_t stop_pc = CODE_ADDRESS;
+            uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
+            uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
+            printf("[JJFB_E10A_EXIT_PARK] pc=0x%X reason=shell_core_continue "
+                   "note=no_resume_exit_caller evidence=TARGET_OBSERVED\n",
+                   stop_pc);
             fflush(stdout);
         }
         return;
@@ -1819,6 +2007,26 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
                 exit(1);
                 return;
             }
+#ifdef GWY_USE_VM_FILE_SERVICE
+            /* E10A-2: bridge entry while LR still in gbrwcore dispatch or DSM CODE. */
+            if (e10a_shell_trace_enabled()) {
+                uint32_t lr = 0, r0 = 0, r1 = 0, sp = 0, r9v = 0;
+                uint32_t lra;
+                uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+                uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+                uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+                uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+                uc_reg_read(uc, UC_ARM_REG_R9, &r9v);
+                lra = lr & ~1u;
+                if ((lra >= 0x30CFE0u && lra < 0x30D100u) ||
+                    (lra >= 0x80000u && lra < 0xD2000u)) {
+                    printf("[JJFB_E10A_BRIDGE_STALE_LR] api=%s stub=0x%X lr=0x%X r0=0x%X r1=0x%X "
+                           "r9=0x%X sp=0x%X evidence=OBSERVED\n",
+                           obj->name ? obj->name : "?", slot, lr, r0, r1, r9v, sp);
+                    fflush(stdout);
+                }
+            }
+#endif
             /* Phase 6C-D1: observe-only snapshots; must not mutate r4-r11/r9. */
             gwy_ext_obs_host_callback_enter(uc, slot, obj->name);
             obj->fn(obj, uc);
@@ -1867,12 +2075,43 @@ static void *hooks_init(uc_engine *uc, BridgeMap *map, uint32_t mapCount, uint32
             printf("uIntMap_insert() failed %d exists.\n", addr);
             goto end;
         }
+#ifdef GWY_USE_VM_FILE_SERVICE
+        if (obj->name && strcmp(obj->name, "open") == 0) {
+            e10a_note_mr_open_stub(addr);
+        }
+#endif
     }
     return ptr;
 end:
     my_freeExt(ptr);
     exit(1);
     return NULL;
+}
+
+/* Nested runCode (timer/event/helper) must not clobber the outer guest context.
+ * Especially LR/PC: after an inner BL, LR can remain a gbrwcore cookie (e.g. 0x30D043)
+ * while pop{pc} returned to stop — outer then returns from bridge stubs to the wrong place
+ * (E10A-2: srand→mem_get→open with stale LR). */
+static const int g_bridge_uc_regs[17] = {
+    UC_ARM_REG_R0,  UC_ARM_REG_R1,  UC_ARM_REG_R2,  UC_ARM_REG_R3,  UC_ARM_REG_R4,
+    UC_ARM_REG_R5,  UC_ARM_REG_R6,  UC_ARM_REG_R7,  UC_ARM_REG_R8,  UC_ARM_REG_R9,
+    UC_ARM_REG_R10, UC_ARM_REG_R11, UC_ARM_REG_R12, UC_ARM_REG_SP,  UC_ARM_REG_LR,
+    UC_ARM_REG_PC,  UC_ARM_REG_CPSR};
+
+static void bridge_uc_save_regs(uc_engine *uc, uint32_t out[17]) {
+    int i;
+    for (i = 0; i < 17; i++) {
+        out[i] = 0;
+        uc_reg_read(uc, g_bridge_uc_regs[i], &out[i]);
+    }
+}
+
+static void bridge_uc_restore_regs(uc_engine *uc, const uint32_t in[17]) {
+    int i;
+    for (i = 0; i < 17; i++) {
+        uint32_t v = in[i];
+        uc_reg_write(uc, g_bridge_uc_regs[i], &v);
+    }
 }
 
 static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool isThumb) {
@@ -1884,8 +2123,25 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
     pc = isThumb ? (startAddr | 1u) : startAddr;
     for (;;) {
         uint32_t cpsr = 0;
+        uint32_t pc_before_poll = 0;
+        uint32_t lr_before_poll = 0;
+        uint32_t cpsr_before_poll = 0;
         uc_err err = uc_emu_start(uc, pc, stopAddr, 0, 100000ull);
+        /* Preserve outer PC/LR across nested helper deliveries inside the poll. */
+        uc_reg_read(uc, UC_ARM_REG_PC, &pc_before_poll);
+        uc_reg_read(uc, UC_ARM_REG_LR, &lr_before_poll);
+        uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr_before_poll);
         gwy_ext_obs_timer_poll_uc(uc);
+        {
+            uint32_t pc_after = 0;
+            uc_reg_read(uc, UC_ARM_REG_PC, &pc_after);
+            if ((pc_after & ~1u) == (stopAddr & ~1u) &&
+                (pc_before_poll & ~1u) != (stopAddr & ~1u)) {
+                uc_reg_write(uc, UC_ARM_REG_PC, &pc_before_poll);
+                uc_reg_write(uc, UC_ARM_REG_LR, &lr_before_poll);
+                uc_reg_write(uc, UC_ARM_REG_CPSR, &cpsr_before_poll);
+            }
+        }
         /* E9B: keep HWND responsive while Unicorn owns the UI thread. */
         guiPumpEvents();
         uc_reg_read(uc, UC_ARM_REG_PC, &pc);
@@ -1915,11 +2171,11 @@ static uint32_t bridge_timer_clock_ms(void) {
 static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p_guest,
                                       uint32_t code, uint32_t input, uint32_t input_len,
                                       uint32_t erw) {
-    uint32_t r9_save = 0;
+    uint32_t saved[17];
     uint32_t ret = 0;
     int thumb;
     if (!uc || !helper || !p_guest) return MR_FAILED;
-    uc_reg_read(uc, UC_ARM_REG_R9, &r9_save);
+    bridge_uc_save_regs(uc, saved);
     if (erw) uc_reg_write(uc, UC_ARM_REG_R9, &erw);
     uc_reg_write(uc, UC_ARM_REG_R0, &p_guest);
     uc_reg_write(uc, UC_ARM_REG_R1, &code);
@@ -1928,7 +2184,9 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     thumb = (helper & 1u) != 0;
     runCode(uc, helper & ~1u, CODE_ADDRESS, thumb);
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
-    uc_reg_write(uc, UC_ARM_REG_R9, &r9_save);
+    bridge_uc_restore_regs(uc, saved);
+    if (g_e10a_shell_continued)
+        (void)gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);
     return (int32_t)ret;
 }
 
@@ -2042,6 +2300,7 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     uint32_t rw_base = 0;
     uint32_t rw_size = 0;
     uint32_t stack_base = 0;
+    uint32_t saved[17];
 
     /*
      * After nested game EXT ER_RW/R9 restore, host still only saw method=1 events.
@@ -2065,6 +2324,7 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
                mr_extHelper_addr, code, v, input, input_len, rw_base);
         fflush(stdout);
     }
+    bridge_uc_save_regs(uc, saved);
     uc_reg_write(uc, UC_ARM_REG_R0, &v);          // p
     uc_reg_write(uc, UC_ARM_REG_R1, &code);       // code
     uc_reg_write(uc, UC_ARM_REG_R2, &input);      // input
@@ -2083,6 +2343,13 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     gwy_ext_obs_r9_switch_leave(uc);
     uc_reg_read(uc, UC_ARM_REG_R0, &v);
     gwy_ext_obs_helper_call(mr_extHelper_addr, code, (int32_t)v);
+    bridge_uc_restore_regs(uc, saved);
+    /*
+     * Nested gbrwcore helper may leave R9 on MRP ER_RW (leave REJECT or
+     * ALREADY_SWITCHED save). Outer gamelist/DSM needs cfunction ER_RW.
+     */
+    if (g_e10a_shell_continued)
+        (void)gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);
 
     /* Mid-call queue (R9 restore during nested guest) → deliver before returning. */
     if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
@@ -2104,8 +2371,9 @@ int32_t bridge_dsm_network_cb(uc_engine *uc, uint32_t addr, int32_t p0, uint32_t
         perror(MUTEX_LOCK_FAIL);
         exit(EXIT_FAILURE);
     }
-    uint32_t ret, r9;
-    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    uint32_t ret;
+    uint32_t saved[17];
+    bridge_uc_save_regs(uc, saved);
 
     // 因为回调不是从mr_extHelper调用，因此需要手动设置r9
     gwy_ext_obs_r9_write_raw(uc, (uint32_t)(uintptr_t)mr_c_function_P->start_of_ER_RW,
@@ -2117,8 +2385,8 @@ int32_t bridge_dsm_network_cb(uc_engine *uc, uint32_t addr, int32_t p0, uint32_t
     uc_reg_write(uc, UC_ARM_REG_R1, &p1);
     runCode(uc, addr, CODE_ADDRESS, false);
 
-    gwy_ext_obs_r9_write_raw(uc, r9, "bridge_dsm_network_cb_restore");  // 恢复r9
     uc_reg_read(uc, UC_ARM_REG_R0, &ret);
+    bridge_uc_restore_regs(uc, saved);
     if (pthread_mutex_unlock(&mutex) != 0) {
         perror(MUTEX_UNLOCK_FAIL);
         exit(EXIT_FAILURE);

@@ -1,0 +1,12 @@
+﻿target,role,purpose,found,path,class,primary,start_sha256,mrc_loader_sha256,member_count,asset_count
+gwy.mrp,platform_root,Root shell package; cfunction/graphics bootstrap,1,gwy.mrp,mrc_loader_game,,a2fa653706222b39d34b01e6a3eb4861aeb1e8190a2a9088ec6962f68ebab604,d36151ee3c119717305afe4b1f0ba47f0f0154f8ba6f2c5081d6402c8eddd938,8,4
+gbrwcore.mrp,shell_api_broker,"Export broker, file/update/runapp services",1,gwy/gbrwcore.mrp,gwy_shell_core,gbrwcore.ext,ff67eea7e6eed10e3871bd465953e7137001e2495b1eb13309c56db8659bfc7c,,3,0
+gamelist.mrp,catalog_descriptor,"cfg.bin parsing, descriptor construction, selection",1,gwy/gamelist.mrp,gwy_shell_core,gamelist.ext,ff67eea7e6eed10e3871bd465953e7137001e2495b1eb13309c56db8659bfc7c,,26,23
+gbrwshell.mrp,download_ui,download/task/file-manager shell,1,gwy/gbrwshell.mrp,gwy_shell_core,gbrwshell.ext,7fc8d5412ac5d932196ebd2b1f22b042965442057f604371f3025d072e94c5fb,,9,6
+roomlist.mrp,minimal_shell_control,small direct-primary shell/service control,1,gwy/roomlist.mrp,gwy_service_module,roomlist.ext,ff67eea7e6eed10e3871bd465953e7137001e2495b1eb13309c56db8659bfc7c,,3,0
+vdload.mrp,transport_control,small direct-primary network/download control,1,gwy/vdload.mrp,gwy_service_module,vdload.ext,ff67eea7e6eed10e3871bd465953e7137001e2495b1eb13309c56db8659bfc7c,,3,0
+jjfb.mrp,mrc_loader_complex,target: shared loader + robotol + many modules + side packs,1,gwy/jjfb.mrp,mrc_loader_game,robotol.ext,c8d664aa7034d044ded428158f9cca1d49a3781242421eb1b1de7f201949ff05,d36151ee3c119717305afe4b1f0ba47f0f0154f8ba6f2c5081d6402c8eddd938,50,28
+wxjwq.mrp,mrc_loader_positive_control,"same start/mrc_loader, different main EXT",1,gwy/wxjwq.mrp,mrc_loader_game,mmochat.ext,c8d664aa7034d044ded428158f9cca1d49a3781242421eb1b1de7f201949ff05,d36151ee3c119717305afe4b1f0ba47f0f0154f8ba6f2c5081d6402c8eddd938,21,17
+tlbb.mrp,direct_primary_control,single primary dream.ext family,1,gwy/tlbb.mrp,native_ext_package,dream.ext,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,,18,15
+spacetime.mrp,resource_heavy_control,single primary with hundreds of resources,1,gwy/spacetime.mrp,native_ext_package,spacetime.ext,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,,422,419
+sanguo.mrp,large_ext_control,large primary EXT and many resources,1,gwy/sanguo.mrp,native_ext_package,sanguo.ext,e318e580d789041a524a656038fcf38c6be35f9abba48902c8d4580ea8563ed7,,274,271

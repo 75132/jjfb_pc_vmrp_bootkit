@@ -1,0 +1,28 @@
+{
+  "root": "/mnt/data/gwy_reference_work/raw/240x320",
+  "file_count": 1601,
+  "total_bytes": 27858891,
+  "gwy_file_count": 1552,
+  "mrp_count_scanned": 134,
+  "mrp_count_parsed": 134,
+  "parse_error_count": 0,
+  "top_level_gwy_mrp_count": 45,
+  "member_count": 11514,
+  "ext_count": 77,
+  "side_pack_count": 65,
+  "start_template_family_count": 8,
+  "mrc_loader_family_count": 1,
+  "cfg_metrics": {
+    "cfg_size": 20728,
+    "record_base": 1024,
+    "record_size": 272,
+    "candidate_records": 72,
+    "rows_emitted": 61,
+    "target_rows": 52,
+    "title_rows": 25,
+    "icon_rows": 17,
+    "model_status": "PARSER_MODEL_CROSS_RECORD_PLAUSIBLE",
+    "present": true,
+    "sha256": "0d5837d251e9e0bbfb82495c0b73fd32ea4bcb5d817ca55495c35a23e8b7a806"
+  }
+}

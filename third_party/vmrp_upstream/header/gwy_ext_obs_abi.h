@@ -101,6 +101,8 @@ void gwy_ext_obs_r9_switch_abort(void *uc, const char *reason);
 /* Phase 6C-D2: observe raw R9 writes / emu exit hints from bridge. */
 void gwy_ext_obs_r9_write_raw(void *uc, uint32_t new_r9, const char *callsite);
 void gwy_ext_obs_emu_exit(int reason);
+/* Force R9 to DSM cfunction ER_RW when shell continues after an MRP EXT left R9 on itself. */
+int gwy_ext_obs_ensure_dsm_r9(void *uc, uint32_t guest_pc_hint);
 
 /* Phase 6D-A: observe unimplemented MAP_FUNC before process exit (no behavior change). */
 void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *name);

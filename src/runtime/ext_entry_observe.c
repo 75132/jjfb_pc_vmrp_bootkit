@@ -174,8 +174,21 @@ int ext_entry_decode_thumb_blx_rm(uint16_t half, int *out_rm) {
     return 1;
 }
 
+int ext_entry_decode_thumb_bx_rm(uint16_t half, int *out_rm) {
+    /* 010001 11 0 Rm 000 */
+    if ((half & 0xFF87u) != 0x4700u) return 0;
+    if (out_rm) *out_rm = (int)((half >> 3) & 0xFu);
+    return 1;
+}
+
 int ext_entry_decode_arm_blx_rm(uint32_t insn, int *out_rm) {
     if ((insn & 0x0FFFFFF0u) != 0x012FFF30u) return 0;
+    if (out_rm) *out_rm = (int)(insn & 0xFu);
+    return 1;
+}
+
+int ext_entry_decode_arm_bx_rm(uint32_t insn, int *out_rm) {
+    if ((insn & 0x0FFFFFF0u) != 0x012FFF10u) return 0;
     if (out_rm) *out_rm = (int)(insn & 0xFu);
     return 1;
 }

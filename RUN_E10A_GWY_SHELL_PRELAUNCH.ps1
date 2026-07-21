@@ -4,7 +4,7 @@ param(
   [int]$Seconds = 120,
   [int]$HoldSec = 10,
   [int]$Zoom = 2,
-  [ValidateSet('parse','shell_trace','no_update','compare','classify','direct','shell')]
+  [ValidateSet('parse','shell_trace','no_update','compare','classify','direct','shell','badpath','cfg','abi')]
   [string]$Mode = 'shell_trace',
   [int]$TickN = 12,
   [switch]$SkipBuild
@@ -30,6 +30,7 @@ $exe = Join-Path $RunDir 'main.exe'
 $mrpPath = Join-Path $ResourceRoot 'gwy\jjfb.mrp'
 $param = "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink"
 $verdictMd = Join-Path $reportDir 'stage_e10a_gwy_shell_prelaunch_verdict.md'
+$RunId = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 
 function Stop-E10Children {
   Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
@@ -51,7 +52,26 @@ function Clear-E10Env {
   ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 }
 
+function Reset-E10AArtifacts {
+  @(
+    'reports\e10a_shell_vfs_trace.csv',
+    'reports\e10a_shell_vfs_badpath_trace.csv',
+    'reports\e10a_gamelist_cfg_runtime_trace.csv',
+    'reports\e10a_shell_phase_trace.csv',
+    'reports\e10a_shell_vs_direct_ac8_compare.csv',
+    'reports\e10a_shell_event_loop_trace.csv',
+    'reports\e10a_shell_update_contract_trace.csv',
+    'reports\e10a_shell_ac8_trace.csv',
+    'logs\e10a_shell_trace_stdout.txt',
+    'logs\e10a_shell_badpath_stdout.txt'
+  ) | ForEach-Object {
+    $p = Join-Path $Root $_
+    if (Test-Path $p) { Clear-Content -Path $p -ErrorAction SilentlyContinue }
+  }
+}
+
 function Set-E10ATraceEnv {
+  $env:JJFB_E10A_RUN_ID = "$RunId"
   $env:JJFB_E10A_MODE = '1'
   $env:JJFB_E10A_SHELL_TRACE = '1'
   $env:JJFB_E9Y_MODE = '1'
@@ -72,6 +92,8 @@ function Set-E10ATraceEnv {
   $env:JJFB_E9U_TICK_N = "$TickN"
   $env:JJFB_E10A_PHASE_CSV = (Join-Path $reportDir 'e10a_shell_phase_trace.csv')
   $env:JJFB_E10A_VFS_CSV = (Join-Path $reportDir 'e10a_shell_vfs_trace.csv')
+  $env:JJFB_E10A_VFS_BADPATH_CSV = (Join-Path $reportDir 'e10a_shell_vfs_badpath_trace.csv')
+  $env:JJFB_E10A_CFG_RUNTIME_CSV = (Join-Path $reportDir 'e10a_gamelist_cfg_runtime_trace.csv')
   $env:JJFB_E10A_EVENT_CSV = (Join-Path $reportDir 'e10a_shell_event_loop_trace.csv')
   $env:JJFB_E10A_UPDATE_CSV = (Join-Path $reportDir 'e10a_shell_update_contract_trace.csv')
   $env:JJFB_E10A_CSV = (Join-Path $reportDir 'e10a_shell_ac8_trace.csv')
@@ -123,30 +145,56 @@ function Set-E10AShellEnv([switch]$OfflineNoUpdate) {
 
 function Analyze-E10A([string]$log, [string]$launchPath) {
   $t = if (Test-Path $log) { Get-Content $log -Raw -EA SilentlyContinue } else { '' }
-  $phases = @{
-    gbrw = $t -match 'SHELL_PHASE_GBRWCORE_START'
-    cont = $t -match 'SHELL_PHASE_GBRWCORE_CONTINUE'
-    gl = $t -match 'SHELL_PHASE_GAMELIST_LOAD'
-    cfg = $t -match 'SHELL_PHASE_CFG_RECORD_SELECTED'
-    upd = $t -match 'SHELL_PHASE_UPDATE'
-    runapp = $t -match 'SHELL_PHASE_RUNAPP_CALLED'
-    jjfb = $t -match 'SHELL_PHASE_JJFB_MR_START'
-    splash = $t -match 'SHELL_PHASE_SPLASH_ENTER_2EF86C|phase=splash_enter'
-    ac8nz = $t -match 'phase=ac8_branch.*logo|SHELL_AC8_NONZERO|AC8=0x[1-9A-Fa-f]'
+  $phaseCsv = Join-Path $reportDir 'e10a_shell_phase_trace.csv'
+  $vfsCsv = Join-Path $reportDir 'e10a_shell_vfs_trace.csv'
+  $badCsv = Join-Path $reportDir 'e10a_shell_vfs_badpath_trace.csv'
+  $phaseRows = @()
+  $vfsRows = @()
+  $badRows = @()
+  if (Test-Path $phaseCsv) {
+    $phaseRows = Import-Csv $phaseCsv | Where-Object { $_.run_id -eq "$RunId" }
   }
-  $vfsMiss = (Test-Path (Join-Path $reportDir 'e10a_shell_vfs_trace.csv')) -and
-    (Select-String -Path (Join-Path $reportDir 'e10a_shell_vfs_trace.csv') -Pattern ',miss,' -Quiet -EA SilentlyContinue)
+  if (Test-Path $vfsCsv) {
+    $vfsRows = Import-Csv $vfsCsv | Where-Object { $_.run_id -eq "$RunId" }
+  }
+  if (Test-Path $badCsv) {
+    $badRows = Import-Csv $badCsv | Where-Object { $_.run_id -eq "$RunId" }
+  }
+  $phaseText = ($phaseRows.phase -join "`n") + "`n" + $t
+  $phases = @{
+    gbrw = $phaseText -match 'SHELL_PHASE_GBRWCORE_START'
+    cont = $phaseText -match 'SHELL_PHASE_GBRWCORE_CONTINUE'
+    gl = $phaseText -match 'SHELL_PHASE_GAMELIST_LOAD'
+    cfg = $phaseText -match 'SHELL_PHASE_CFG_RECORD_SELECTED'
+    upd = $phaseText -match 'SHELL_PHASE_UPDATE'
+    runapp = $phaseText -match 'SHELL_PHASE_RUNAPP_CALLED'
+    jjfb = $phaseText -match 'SHELL_PHASE_JJFB_MR_START'
+    splash = $phaseText -match 'SHELL_PHASE_SPLASH_ENTER_2EF86C'
+    ac8nz = $phaseText -match 'SHELL_AC8_NONZERO|AC8=0x[1-9A-Fa-f]'
+  }
+  $vfsMiss = @($vfsRows | Where-Object { $_.op -eq 'miss' }).Count -gt 0
+  $badpath = @($badRows).Count -gt 0
+  $originFound = $false
+  $argWrong = $false
+  foreach ($br in $badRows) {
+    if ($br.note -match 'SHELL_VFS_BADPATH_ORIGIN_FOUND') { $originFound = $true }
+    if ($br.note -match 'SHELL_FILE_API_ARG_REGISTER_WRONG') { $argWrong = $true }
+  }
   $cls = 'PRODUCT_STILL_NEEDS_GWY_SHELL_CHAIN'
-  if ($phases.ac8nz -and $launchPath -match 'shell') { $cls = 'SHELL_AC8_NONZERO_AT_SPLASH' }
+  if ($phases.splash -and $phases.ac8nz -and $launchPath -match 'shell') { $cls = 'SHELL_AC8_NONZERO_AT_SPLASH' }
   elseif ($phases.splash -and -not $phases.ac8nz -and $launchPath -match 'shell') { $cls = 'SHELL_AC8_ZERO_AT_SPLASH' }
   elseif ($phases.splash -and -not $phases.ac8nz -and $launchPath -match 'direct') { $cls = 'DIRECT_PATH_AC8_ZERO' }
   elseif ($phases.runapp) { $cls = 'SHELL_RUNAPP_REACHED' }
   elseif ($phases.upd) { $cls = 'SHELL_POST_UPDATE_REACHED' }
+  elseif ($phases.cfg) { $cls = 'SHELL_CFG_REACHED' }
+  elseif ($argWrong) { $cls = 'SHELL_FILE_API_ARG_REGISTER_WRONG' }
+  elseif ($originFound -and $phases.gl -and $badpath) { $cls = 'SHELL_VFS_BADPATH_ORIGIN_FOUND' }
+  elseif ($phases.gl -and $badpath) { $cls = 'SHELL_CHAIN_INCOMPLETE_BADPATH' }
   elseif ($phases.gl) { $cls = 'SHELL_GAMELIST_REACHED' }
   elseif ($phases.cont) { $cls = 'SHELL_GBRWCORE_CONTINUED' }
   elseif ($phases.gbrw -and -not $phases.cont) { $cls = 'SHELL_CHAIN_INCOMPLETE' }
   elseif ($vfsMiss) { $cls = 'SHELL_BLOCKED_BY_VFS' }
-  return [pscustomobject]@{ class = $cls; launch_path = $launchPath; phases = $phases; vfs_miss = [bool]$vfsMiss }
+  return [pscustomobject]@{ class = $cls; launch_path = $launchPath; phases = $phases; vfs_miss = [bool]$vfsMiss; badpath = [bool]$badpath; origin = [bool]$originFound }
 }
 
 function Invoke-ParseOnly {
@@ -159,6 +207,7 @@ function Invoke-E10ACase([string]$CaseName, [scriptblock]$EnvFn) {
   $caseLog = Join-Path $logDir "e10a_${CaseName}_stdout.txt"
   $caseErr = Join-Path $logDir "e10a_${CaseName}_stderr.txt"
   Clear-E10Env
+  Reset-E10AArtifacts
   Stop-E10Children
   & $EnvFn
   New-Item -ItemType Directory -Force -Path $env:GWY_OVERLAY_ROOT | Out-Null
@@ -179,10 +228,14 @@ function Invoke-E10ACase([string]$CaseName, [scriptblock]$EnvFn) {
     Stop-E10Children
   }
   $src = Join-Path $logDir 'stage_e_product_robotol_stdout.txt'
-  if ((Test-Path $src) -and (Select-String -Path $src -Pattern 'JJFB_E10A_' -Quiet -EA SilentlyContinue)) {
+  if ($CaseName -eq 'direct' -and (Test-Path $src) -and
+      (Select-String -Path $src -Pattern 'JJFB_E10A_' -Quiet -EA SilentlyContinue)) {
     Copy-Item -Force $src $caseLog
   }
   Copy-Item -Force $caseLog (Join-Path $logDir 'e10a_shell_trace_stdout.txt') -EA SilentlyContinue
+  if ($CaseName -match 'shell|badpath|cfg|abi') {
+    Copy-Item -Force $caseLog (Join-Path $logDir 'e10a_shell_badpath_stdout.txt') -EA SilentlyContinue
+  }
   $an = Analyze-E10A $caseLog $env:JJFB_LAUNCH_PATH
   $elapsed = [Math]::Round(((Get-Date) - $t0).TotalSeconds, 1)
   Write-Host "== E10A_CASE_DONE name=$CaseName verdict=$($an.class) elapsed=$elapsed"
@@ -202,6 +255,9 @@ switch ($Mode) {
     $results += Invoke-ParseOnly
   }
   'shell_trace' { $results += Invoke-E10ACase 'shell' { Set-E10AShellEnv } }
+  'badpath'     { $results += Invoke-E10ACase 'badpath' { Set-E10AShellEnv } }
+  'cfg'         { $results += Invoke-E10ACase 'cfg' { Set-E10AShellEnv } }
+  'abi'         { $results += Invoke-E10ACase 'abi' { Set-E10AShellEnv } }
   'no_update'   { $results += Invoke-E10ACase 'no_update' { Set-E10AShellEnv -OfflineNoUpdate } }
   'direct'      { $results += Invoke-E10ACase 'direct' { Set-E10ADirectEnv } }
   'shell'       { $results += Invoke-E10ACase 'shell' { Set-E10AShellEnv } }
@@ -252,6 +308,8 @@ $(if ($results.analysis) {
 | transition graph | ``out/e10a_shell/launch_transition_graph.md`` |
 | phase trace | ``reports/e10a_shell_phase_trace.csv`` |
 | vfs trace | ``reports/e10a_shell_vfs_trace.csv`` |
+| vfs badpath | ``reports/e10a_shell_vfs_badpath_trace.csv`` |
+| file API ABI | ``reports/e10a_shell_file_api_abi.md`` |
 | event loop | ``reports/e10a_shell_event_loop_trace.csv`` |
 | update contract | ``reports/e10a_shell_update_contract_trace.csv`` |
 | ac8 trace | ``reports/e10a_shell_ac8_trace.csv`` |

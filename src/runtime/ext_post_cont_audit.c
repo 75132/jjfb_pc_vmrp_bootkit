@@ -1,4 +1,5 @@
 #include "gwy_launcher/ext_post_cont_audit.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
@@ -600,7 +601,7 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
                                      int is_enter, uint32_t result_r0) {
     ApiCat cat;
     PostContEventType evt;
-    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, r5 = 0, r6 = 0, r7 = 0, r9 = 0, sp = 0, lr = 0;
+    uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, r5 = 0, r6 = 0, r7 = 0, r9 = 0, sp = 0, lr = 0, pc = 0;
     FirstApi *slot = NULL;
     if (!ext_post_cont_audit_enabled() || !g_pc.armed || g_pc.finalized) return;
     (void)slot_addr;
@@ -620,6 +621,7 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &pc);
     }
 #else
     (void)uc;
@@ -645,7 +647,18 @@ void ext_post_cont_audit_on_host_api(void *uc, uint32_t slot_addr, const char *a
     g_pc.last_r9 = r9;
     g_pc.last_sp = sp;
     g_pc.last_lr = lr;
+    g_pc.last_pc = pc;
     g_pc.last_scope_depth = module_r9_switch_depth();
+    if (cat == API_CAT_FILE) {
+        uint32_t path_ptr = r0;
+        const char *arg_source = "R0";
+        if (r0 == 0x08u || r0 == 0 || (r0 < 0x1000u && r1 >= 0x1000u)) {
+            path_ptr = r1;
+            arg_source = "R1";
+        }
+        e10a_vfs_set_ctx_from_uc(uc, api_name, g_pc.last_module,
+                                 NULL, path_ptr, arg_source);
+    }
 
     switch (cat) {
     case API_CAT_FILE: slot = &g_pc.first_file; break;

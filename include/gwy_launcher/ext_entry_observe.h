@@ -166,8 +166,14 @@ int ext_entry_decode_ldr_imm(uint32_t insn,
 /* Thumb BLX Rm: 010001 11 1 Rm 000. Returns 1 and Rm index. */
 int ext_entry_decode_thumb_blx_rm(uint16_t half, int *out_rm);
 
+/* Thumb BX Rm: 010001 11 0 Rm 000. Returns 1 and Rm index. */
+int ext_entry_decode_thumb_bx_rm(uint16_t half, int *out_rm);
+
 /* ARM BLX Rm. Returns 1 and Rm index. */
 int ext_entry_decode_arm_blx_rm(uint32_t insn, int *out_rm);
+
+/* ARM BX Rm. Returns 1 and Rm index. */
+int ext_entry_decode_arm_bx_rm(uint32_t insn, int *out_rm);
 
 /* Observe-only: remember P from _mr_c_function_new; optional field write watch. */
 void ext_entry_observe_on_p_candidate(uint32_t p_guest, uint32_t p_len, void *uc);

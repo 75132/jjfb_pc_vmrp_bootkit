@@ -1,0 +1,5 @@
+﻿role,source,size,sha256,equals_embedded_seed,path_hit_count
+loose_runtime_cfg,gwy/cfg.bin,20728,0d5837d251e9e0bbfb82495c0b73fd32ea4bcb5d817ca55495c35a23e8b7a806,0,75
+embedded_seed_cfg,gwy/gamelist.mrp::cfg.bin,6898,12fdc4f2b83516e9f9cd5e2691dfe394243c2101ca1ad3c8ad14b68edf791042,1,66
+hxsg_seed_copy,gwy/hxsg_cfg.bin,6898,12fdc4f2b83516e9f9cd5e2691dfe394243c2101ca1ad3c8ad14b68edf791042,1,66
+qqgh_seed_copy,gwy/qqgh_cfg.bin,6898,12fdc4f2b83516e9f9cd5e2691dfe394243c2101ca1ad3c8ad14b68edf791042,1,66

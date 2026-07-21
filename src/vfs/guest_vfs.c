@@ -1,5 +1,6 @@
 #include "gwy_launcher/guest_vfs.h"
 #include "gwy_launcher/e10a_shell_trace.h"
+#include "gwy_launcher/ext_post_cont_audit.h"
 #include "gwy_launcher/platform_call_census.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -532,6 +533,11 @@ void guest_vfs_trace_miss(const GuestVfs *vfs, const char *guest_normalized, Vfs
     if (e10a_shell_trace_enabled()) {
         const char *lp = getenv("JJFB_LAUNCH_PATH");
         if (lp && (strstr(lp, "shell") || strstr(lp, "gwy_native"))) {
+            void *uc0 = ext_post_cont_audit_last_uc();
+            if (uc0) {
+                e10a_vfs_set_ctx_from_uc(uc0, "vfs_miss", ext_post_cont_audit_last_module(),
+                                         NULL, 0, "MISS_SITE");
+            }
             e10a_shell_vfs("miss", "guest_vfs", guest_normalized ? guest_normalized : canon, "",
                            0, -1, 0, 0);
         }

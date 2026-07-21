@@ -1,4 +1,5 @@
 #include "gwy_launcher/guest_call_observer.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_entry_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
 #include "gwy_launcher/ext_dsm_record_observe.h"
@@ -121,12 +122,16 @@ static int gco_try_decode_branch_target(uc_engine *uc,
                                         uint32_t pc,
                                         uint32_t cpsr,
                                         const uint32_t regs[16],
-                                        uint32_t *out_target) {
+                                        uint32_t *out_target,
+                                        const char **out_kind,
+                                        int *out_rm) {
     int thumb = (cpsr & (1u << 5)) != 0;
     uint32_t word = 0;
     int rm = -1;
 
     if (out_target) *out_target = 0;
+    if (out_kind) *out_kind = NULL;
+    if (out_rm) *out_rm = -1;
 
     if (thumb) {
         uint16_t half;
@@ -134,6 +139,14 @@ static int gco_try_decode_branch_target(uc_engine *uc,
         half = (uint16_t)((pc & 2u) ? (word >> 16) : (word & 0xFFFFu));
         if (ext_entry_decode_thumb_blx_rm(half, &rm) && rm >= 0 && rm < 16) {
             if (out_target) *out_target = regs[rm];
+            if (out_kind) *out_kind = "blx_rm";
+            if (out_rm) *out_rm = rm;
+            return 1;
+        }
+        if (ext_entry_decode_thumb_bx_rm(half, &rm) && rm >= 0 && rm < 16) {
+            if (out_target) *out_target = regs[rm];
+            if (out_kind) *out_kind = "bx_rm";
+            if (out_rm) *out_rm = rm;
             return 1;
         }
         /* Thumb BL/BLX immediate: two halfwords starting with 0xF000 / 0xF8xx */
@@ -157,6 +170,7 @@ static int gco_try_decode_branch_target(uc_engine *uc,
                                   (imm11 << 1));
                 if (S) imm32 |= (int32_t)0xFE000000;
                 if (out_target) *out_target = (pc + 4u + (uint32_t)imm32) | 1u;
+                if (out_kind) *out_kind = "bl_imm";
                 return 1;
             }
             if ((hi & 0xD000u) == 0xC000u) {
@@ -172,6 +186,7 @@ static int gco_try_decode_branch_target(uc_engine *uc,
                 imm32 = (int32_t)((S << 24) | (I1 << 23) | (I2 << 22) | (imm10 << 12) | imm11);
                 if (S) imm32 |= (int32_t)0xFE000000;
                 if (out_target) *out_target = ((pc + 4u + (uint32_t)imm32) & ~3u);
+                if (out_kind) *out_kind = "blx_imm";
                 return 1;
             }
         }
@@ -181,6 +196,14 @@ static int gco_try_decode_branch_target(uc_engine *uc,
     if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, pc, &word)) return 0;
     if (ext_entry_decode_arm_blx_rm(word, &rm) && rm >= 0 && rm < 16) {
         if (out_target) *out_target = regs[rm];
+        if (out_kind) *out_kind = "arm_blx_rm";
+        if (out_rm) *out_rm = rm;
+        return 1;
+    }
+    if (ext_entry_decode_arm_bx_rm(word, &rm) && rm >= 0 && rm < 16) {
+        if (out_target) *out_target = regs[rm];
+        if (out_kind) *out_kind = "arm_bx_rm";
+        if (out_rm) *out_rm = rm;
         return 1;
     }
     /* ARM BL / BLX imm */
@@ -188,6 +211,7 @@ static int gco_try_decode_branch_target(uc_engine *uc,
         int32_t imm24 = (int32_t)(word & 0x00FFFFFFu);
         if (imm24 & 0x00800000) imm24 |= (int32_t)0xFF000000;
         if (out_target) *out_target = pc + 8u + (uint32_t)(imm24 << 2);
+        if (out_kind) *out_kind = "arm_bl_imm";
         return 1;
     }
     if ((word & 0xFE000000u) == 0xFA000000u) {
@@ -195,6 +219,7 @@ static int gco_try_decode_branch_target(uc_engine *uc,
         uint32_t H = (word >> 24) & 1u;
         if (imm24 & 0x00800000) imm24 |= (int32_t)0xFF000000;
         if (out_target) *out_target = (pc + 8u + (uint32_t)(imm24 << 2) + (H << 1)) | 1u;
+        if (out_kind) *out_kind = "arm_blx_imm";
         return 1;
     }
     return 0;
@@ -209,6 +234,8 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     uint32_t regs[16];
     uint32_t cpsr = 0;
     uint32_t target = 0;
+    const char *branch_kind = NULL;
+    int branch_rm = -1;
     (void)size;
 
     if (!w || !w->in_use || !obs->loader) return;
@@ -217,6 +244,7 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     gco_read_regs(uc, regs, &cpsr);
     reg = gwy_ext_loader_bound_registry();
     m = reg ? module_registry_find_by_id(reg, w->module_id) : NULL;
+    e10a_note_guest_pc_sample(pc, regs[0], regs[1], regs[14]);
 
     if (m && m->origin == MODULE_ORIGIN_DSM)
         module_r9_switch_note_dsm_code(m->module_id);
@@ -355,12 +383,17 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         ext_entry_observe_push_insn(w->module_id, pc, regs, cpsr);
     }
 
-    /* CALL_SITE_BEFORE: BL/BLX toward a registered nested EXT helper/region. */
-    if (gco_try_decode_branch_target(uc, pc, cpsr, regs, &target) && target) {
+    /* CALL_SITE_BEFORE: BL/BLX/BX toward nested EXT helper/region or mr_open stub. */
+    if (gco_try_decode_branch_target(uc, pc, cpsr, regs, &target, &branch_kind, &branch_rm) &&
+        target) {
         const GwyLoadedModule *tgt = gco_find_call_target(reg, target);
         const GwyLoadedModule *from = reg ? module_registry_find_by_id(reg, w->module_id) : NULL;
         const GwyLoadedModule *to_by_addr =
             reg ? module_registry_find_by_code_addr(reg, target & ~1u) : NULL;
+        if (e10a_is_mr_open_stub(target)) {
+            e10a_note_open_enter_branch(pc, target, branch_kind ? branch_kind : "?", branch_rm,
+                                        regs[0], regs[1], regs[9], regs[14]);
+        }
         if (to_by_addr && from && to_by_addr->module_id != from->module_id) {
             /* Pre-BLX: switch R9 for cross-module target. */
             GwyModuleCallKind ck;

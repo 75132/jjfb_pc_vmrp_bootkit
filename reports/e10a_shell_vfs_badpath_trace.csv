@@ -1,0 +1,1 @@
+run_id,seq,module,phase,op,decoded_path,path_len,path_ptr,raw64_hex,pc,lr,sp,r0,r1,r2,r3,r4,r5,r6,r7,r9,erw,arg_source_guess,previous_file_op,previous_successful_path,last_10_bl,last_30_instr,r0_decoded,r1_decoded,r2_decoded,sp0_decoded,sp4_decoded,chosen_arg,best_candidate,note

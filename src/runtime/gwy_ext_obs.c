@@ -1173,6 +1173,46 @@ void gwy_ext_obs_r9_write_raw(void *uc, uint32_t new_r9, const char *callsite) {
     }
 }
 
+int gwy_ext_obs_ensure_dsm_r9(void *uc, uint32_t guest_pc_hint) {
+    ModuleRegistry *reg;
+    const GwyLoadedModule *dsm = NULL;
+    uint32_t pc = guest_pc_hint;
+    uint32_t cur_r9 = 0;
+    uint32_t dsm_r9 = 0;
+    size_t i;
+
+    if (!uc) return 0;
+    if (!pc) pc = 0x80008u; /* CODE_ADDRESS+8: known DSM-mapped VA for lookup */
+
+    /* Prefer switch path (pc-gated ENSURE_DSM_R9 log). */
+    if (module_r9_switch_ensure_dsm_r9(uc, pc)) return 1;
+
+    /*
+     * Fallback for shell continue / sticky MRP R9: registry DSM ER_RW even when
+     * the pc-gate rejects (e.g. hint not mapped as DSM yet) or switch already
+     * skipped because of an edge case. Never trust live mr_c_function_P.
+     */
+    reg = gwy_ext_loader_bound_registry();
+    if (!reg) return 0;
+    for (i = 0; i < reg->count; i++) {
+        if (reg->modules[i].origin == MODULE_ORIGIN_DSM &&
+            reg->modules[i].data.start_of_er_rw) {
+            dsm = &reg->modules[i];
+            break;
+        }
+    }
+    if (!dsm) return 0;
+    dsm_r9 = dsm->data.start_of_er_rw;
+    if (!guest_memory_uc_read_r9((struct uc_struct *)uc, &cur_r9)) return 0;
+    if (cur_r9 == dsm_r9) return 0;
+    gwy_ext_obs_r9_write_raw(uc, dsm_r9, "ensure_dsm_r9_force");
+    printf("[R9_SWITCH] stage=ENSURE_DSM_R9_FORCE pc=0x%X old_r9=0x%X new_r9=0x%X "
+           "evidence=TARGET_OBSERVED note=registry_dsm_er_rw\n",
+           pc, cur_r9, dsm_r9);
+    fflush(stdout);
+    return 1;
+}
+
 void gwy_ext_obs_emu_exit(int reason) {
     module_r9_switch_set_emu_exit_hint((GwyEmuExitReason)reason);
     ext_mrpgcmap_entry_order_finalize("emu_exit");

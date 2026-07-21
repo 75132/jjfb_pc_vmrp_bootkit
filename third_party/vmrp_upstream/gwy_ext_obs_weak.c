@@ -182,6 +182,12 @@ void gwy_ext_obs_r9_write_raw(void *uc, uint32_t new_r9, const char *callsite) {
     (void)callsite;
 }
 
+int gwy_ext_obs_ensure_dsm_r9(void *uc, uint32_t guest_pc_hint) {
+    (void)uc;
+    (void)guest_pc_hint;
+    return 0;
+}
+
 void gwy_ext_obs_emu_exit(int reason) { (void)reason; }
 
 void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *name) {

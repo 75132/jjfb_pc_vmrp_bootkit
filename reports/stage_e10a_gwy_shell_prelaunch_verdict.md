@@ -1,7 +1,7 @@
 # Stage E10A-Fix GWY Shell Prelaunch Verdict
 
-- **Mode**: shell_trace
-- **Primary**: `SHELL_AC8_ZERO_AT_SPLASH`
+- **Mode**: badpath
+- **Primary**: `SHELL_GAMELIST_REACHED`
 - **Product success**: **NO** (`NOT_PRODUCT`)
 
 ## Focus
@@ -9,7 +9,7 @@ Reconstruct **gbrwcore -> gamelist -> cfg36 -> update/no-update -> runapp -> jjf
 Do **not** treat robotol resource-ready evt as shell contract.
 
 ## Cases
-- **shell** (20.9s): `SHELL_AC8_ZERO_AT_SPLASH` gbrw=False continue=False gamelist=False runapp=False splash=True ac8_nz=False
+- **badpath** (108.8s): `SHELL_GAMELIST_REACHED` gbrw=True continue=True gamelist=True runapp=False splash=False ac8_nz=False
 
 ## Artifacts
 | Kind | Path |
@@ -21,6 +21,8 @@ Do **not** treat robotol resource-ready evt as shell contract.
 | transition graph | `out/e10a_shell/launch_transition_graph.md` |
 | phase trace | `reports/e10a_shell_phase_trace.csv` |
 | vfs trace | `reports/e10a_shell_vfs_trace.csv` |
+| vfs badpath | `reports/e10a_shell_vfs_badpath_trace.csv` |
+| file API ABI | `reports/e10a_shell_file_api_abi.md` |
 | event loop | `reports/e10a_shell_event_loop_trace.csv` |
 | update contract | `reports/e10a_shell_update_contract_trace.csv` |
 | ac8 trace | `reports/e10a_shell_ac8_trace.csv` |

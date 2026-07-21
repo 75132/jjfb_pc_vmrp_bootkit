@@ -1,4 +1,5 @@
-n,launch_path,phase,module,pc,lr,r0,r1,r2,r3,r9,AC8,note
-1,gwy_shell_core_continue,SHELL_PHASE_GBRWCORE_START,gbrwcore.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
-2,gwy_shell_core_continue,SHELL_PHASE_GBRWCORE_CONTINUE,gbrwcore.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,to_gamelist
-3,gwy_shell_core_continue,SHELL_PHASE_GAMELIST_LOAD,gamelist.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+run_id,n,launch_path,phase,module,pc,lr,r0,r1,r2,r3,r9,AC8,note
+1784635636510,1,gwy_shell_core_continue,SHELL_PHASE_GBRWCORE_START,gbrwcore.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+1784635636510,2,gwy_shell_core_continue,SHELL_PHASE_GBRWCORE_CONTINUE,gbrwcore.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,to_gamelist
+1784635636510,3,gwy_shell_core_continue,SHELL_PHASE_GAMELIST_LOAD,gamelist.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+1784635636510,4,gwy_shell_core_continue,SHELL_PHASE_CFG_RECORD_SELECTED,gamelist.ext,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,cfg36_param_fmt

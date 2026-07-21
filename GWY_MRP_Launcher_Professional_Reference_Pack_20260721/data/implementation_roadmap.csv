@@ -1,0 +1,9 @@
+﻿phase,goal,work,exit_criteria
+A,Reproducible static baseline,Run full scanner in CI; freeze hashes and parser-model metrics,all 134 MRPs parsed; zero errors; source manifest generated
+B,Generic package context,"Unify package scope, member view, reg primary, EXT image/context stack",roomlist/vdload/gamelist direct-primary controls all reach primary init without target hacks
+C,File/platform ABI,Capture true VM context at API boundary; descriptor/path argument candidates; callback preservation,no one-byte/invalid paths; same ABI passes shell and game controls
+D,Product descriptor launcher,Parse cfg; launch original target with truthful source label; no obsolete shell UI dependency,JJFB/WXJWQ/TLBB at least reach primary init through common runtime
+E,Native shell compatibility research,Continue gbrwcore -> gamelist -> cfg -> named export -> runapp,cfg36 selected and native runapp observed; separate verdict from product track
+F,Resource and graphics completeness,"Side-pack registry, bitmap/text, refresh, font and screen semantics",non-JJFB and JJFB original pixels draw using common APIs
+G,Multi-target acceptance,Matrix across loader/direct/resource-heavy/service classes,at least one success per class and no JJFB diagnostic profile on other apps
+H,Product hardening,Remove default FAST assists; stable run_id; crash/fault reports; packaging,"clean launcher executable, reproducible build, no MRP modifications"

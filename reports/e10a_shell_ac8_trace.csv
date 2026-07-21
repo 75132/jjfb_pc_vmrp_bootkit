@@ -1,3 +1,4 @@
 n,tick,launch_path,shell_phase,pc,r9,AC8,logo_branch,note
 1,0,gwy_shell_core_continue,gbrwcore_mr_start,0,0,0,0,shell_milestone
 2,0,gwy_shell_core_continue,gamelist_mr_start,0,0,0,0,shell_milestone
+3,0,gwy_shell_core_continue,gamelist_cfg36_build,0,0,0,0,shell_milestone

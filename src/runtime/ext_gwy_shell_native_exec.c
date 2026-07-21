@@ -1,7 +1,7 @@
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
+#include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
-#include "gwy_launcher/e10a_shell_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +14,8 @@
 #define GBRWCORE_OFF_LIB_STARTGAME 0x223D4u
 #define GBRWCORE_OFF_LIB_RUNAPP 0x224C0u
 #define GBRWCORE_EXT_SIZE 147196u
+/* field0 release site: loads *[ctx]+0 then calls helper via ERW+0x1880 (E10A-2). */
+#define GBRWCORE_OFF_FIELD0_RELEASE 0xD02Cu /* VA 0x30D02C @ base 0x300000 */
 #define GAMELIST_EXT_SIZE 91532u
 #define GBRWSHELL_EXT_SIZE 45216u
 #define GAMELIST_OFF_CFG36_FMT 0x1412Cu
@@ -69,6 +71,7 @@ static struct {
     int post_update;
     int cfg_gate_hit;
     int cmd_disp_hit;
+    int field0_release_hit;
     int gamelist_call;
     int strcom_601;
     int strcom_800;
@@ -329,6 +332,10 @@ void ext_gwy_shell_native_exec_on_file_open(const char *guest_path, const char *
         (path_has(guest_path, "cfg.bin") || path_has(guest_path, ".bmp") ||
          path_has(guest_path, "gifs/") || path_has(guest_path, "loading") ||
          path_has(guest_path, "slogo") || path_has(guest_path, "bar"))) {
+        if (path_has(guest_path, "cfg.bin")) {
+            e10a_shell_cfg_runtime("cfg_bin_open", 0, 0, 0, "", guest_path, "", 0, "",
+                                   "shell_file_open", "SHELL_CFG_BIN_PARSED_RUNTIME");
+        }
         printf("[JJFB_RESOURCE_REQUEST] guest=\"%s\" host=\"%s\" ok=1 evidence=OBSERVED\n",
                guest_path, host_path ? host_path : "?");
         fflush(stdout);
@@ -505,6 +512,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
     (void)module_id;
     if (!ext_gwy_shell_native_exec_enabled()) return;
     if (uc) g_ne.uc = uc;
+    e10a_vfs_note_guest_code(module_name ? module_name : "?", pc);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
     for (i = 0; i < g_ne.mod_count; i++) {
@@ -571,6 +579,55 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
             fflush(stdout);
         }
     }
+    /* E10A-2: gbrwcore field0-release (absolute VA; do not require mapped mod). */
+    if (regs && ((module_name && strstr(module_name, "gbrwcore")) ||
+                 (m && m->name[0] && strstr(m->name, "gbrwcore")))) {
+        uint32_t pca = pc & ~1u;
+        if (!g_ne.field0_release_hit && pca >= 0x30D02Cu && pca < 0x30D04Cu) {
+            uint32_t obj = 0, field0 = 0, field8 = 0, erw1880 = 0;
+            uint8_t fb[32];
+            char fb_hex[80];
+            int ni;
+            void *ucu = uc ? uc : g_ne.uc;
+            g_ne.field0_release_hit = 1;
+            fb_hex[0] = 0;
+            memset(fb, 0, sizeof(fb));
+            if (ucu && regs[4])
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, regs[4], &obj);
+            if (ucu && obj) {
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, obj, &field0);
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, obj + 8u, &field8);
+            }
+            if (ucu && regs[9])
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, regs[9] + 0x1880u, &erw1880);
+            if (ucu && field0)
+                guest_memory_uc_peek((struct uc_struct *)ucu, field0, fb, sizeof(fb));
+            for (ni = 0; ni < 16; ni++) {
+                char t[3];
+                snprintf(t, sizeof(t), "%02X", fb[ni]);
+                strncat(fb_hex, t, sizeof(fb_hex) - strlen(fb_hex) - 1);
+            }
+            printf("[JJFB_GBRWCORE_FIELD0_RELEASE] pc=0x%X r0=0x%X r1=0x%X r4=0x%X r5=0x%X "
+                   "r6=0x%X r9=0x%X obj=0x%X field0=0x%X field8=0x%X erw+1880=0x%X "
+                   "field0_bytes=%s evidence=OBSERVED\n",
+                   pc, regs[0], regs[1], regs[4], regs[5], regs[6], regs[9], obj, field0,
+                   field8, erw1880, fb_hex);
+            fflush(stdout);
+            if (ucu && regs[6]) {
+                uint32_t a0 = 0, a4 = 0, a8 = 0;
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, regs[6], &a0);
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, regs[6] + 4u, &a4);
+                guest_memory_uc_peek_u32((struct uc_struct *)ucu, regs[6] + 8u, &a8);
+                printf("[JJFB_GBRWCORE_DISPATCH_ARG] pc=0x%X r5(P)=0x%X r6=0x%X "
+                       "[r6]=0x%X [r6+4]=0x%X [r6+8]=0x%X evidence=OBSERVED\n",
+                       pc, regs[5], regs[6], a0, a4, a8);
+                fflush(stdout);
+            }
+            e10a_shell_cfg_runtime("gbrwcore_field0_release", regs[4], obj, field0, "",
+                                   field0 ? (const char *)fb : "", "", erw1880, fb_hex,
+                                   "ERW+0x1880 helper", "SHELL_FIELD0_RELEASE_SITE");
+        }
+    }
     /* D5: one-shot — did guest enter cfg-open / command-dispatch (not timer)? */
     if (m && strcmp(m->name, "gamelist.ext") == 0 && m->base && m->size) {
         uint32_t off = pc - m->base;
@@ -597,6 +654,16 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
                    pc, regs ? regs[0] : 0, regs ? regs[1] : 0, regs ? regs[2] : 0);
             if (uc && regs && regs[0] &&
                 guest_memory_uc_peek((struct uc_struct *)uc, regs[0], fb, sizeof(fb))) {
+                char fb_hex[32];
+                fb_hex[0] = 0;
+                for (ni = 0; ni < 8; ni++) {
+                    char t[3];
+                    snprintf(t, sizeof(t), "%02X", fb[ni]);
+                    strncat(fb_hex, t, sizeof(fb_hex) - strlen(fb_hex) - 1);
+                }
+                e10a_shell_cfg_runtime("cmd_dispatch_path_candidate", 0, 0, off, "",
+                                       "", "", regs[0], fb_hex,
+                                       "r0_path_candidate", fb[0] == 0x08 ? "badpath=yes" : "badpath=no");
                 printf("[JJFB_GAMELIST_CMD_DISP_CHAR] first_bytes=");
                 for (ni = 0; ni < 8; ni++) printf("%02X", fb[ni]);
                 if (fb[0] >= 32 && fb[0] < 127) printf(" char='%c'", (char)fb[0]);

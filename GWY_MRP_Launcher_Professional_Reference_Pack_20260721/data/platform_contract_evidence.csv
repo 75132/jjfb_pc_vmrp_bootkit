@@ -1,0 +1,13 @@
+﻿contract,evidence_level,sources,launcher_implication
+MRPG container/index/decompression,RAW_SCAN,all 130 gwy MRPs,Implement strict read-only archive parser; preserve package identity
+start.mr bootstrap families,RAW_SCAN,bootstrap_hash_groups.csv,"Select bootstrap by archive content/hash family, not target name"
+reg.ext primary selection,RAW_SCAN,mrp_members.csv; reg_primary_groups.csv,Resolve primary within package scope
+MRPGCMAP EXT image+8 candidate,RAW_SCAN+REPO_MODEL,ext_modules.csv,Map image and preserve Thumb/entry/callback distinctions
+cfg descriptor table,PARSER_MODEL,cfg_records_parser_model.csv,Treat layout as versioned parser model; validate before launch
+gbrwcore named service exports,RAW_STRINGS,interesting_strings.csv,Build generic named service dispatcher
+side-pack @pack resource resolution,RAW_MEMBERS+RUNTIME_OBSERVED,resource_name_grammar.csv; side_pack_registry.csv,First-class side-pack registry; exact member resolution
+package-scoped VFS/member view,CROSS_TARGET_INFERENCE,all shell/game classes,Do not use global cfunction.ext or global primary
+P/extChunk + ER_RW/R9 context,LATEST_RUNTIME_OBSERVED,repository stages 6N/6O/E-series,Module context provider must be common and nest-safe
+timer/event/lifecycle dispatch,LATEST_RUNTIME_OBSERVED,E7-E9Y traces,Deliver registered guest callbacks with correct ABI
+graphics/text/color-key,LATEST_RUNTIME_OBSERVED,E9V,"Generic platform APIs, not app-specific drawing"
+legacy shell update boundary,RAW_STRINGS+RUNTIME_OPEN,gamelist/gbrwcore/gbrwshell/vdload,Separate shell update compatibility from game-server behavior

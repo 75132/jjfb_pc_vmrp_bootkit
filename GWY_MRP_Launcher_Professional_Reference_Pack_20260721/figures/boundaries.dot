@@ -1,0 +1,10 @@
+digraph G {
+ graph [rankdir=LR, bgcolor="white", pad=0.2, nodesep=0.4, ranksep=0.5, fontname="Noto Sans CJK SC"];
+ node [shape=box, style="rounded,filled", fontname="Noto Sans CJK SC", fontsize=10.5, margin="0.15,0.09"];
+ edge [color="#657786", arrowsize=0.7];
+ common [label="COMMON RUNTIME\nMRPG parser / VFS / package scope\nreg primary / EXT context / allocator\ntimer-event / bitmap-text / side-pack resolver", fillcolor="#E9F5EF", color="#2E7D5B"];
+ shell [label="SHELL COMPAT PROFILE\ncfg model / gbrw services\noffline no-update only after observed request", fillcolor="#EEF3FB", color="#4472A6"];
+ game [label="APP PROFILE (minimal)\n仅描述已证实的包类型和启动参数\n不包含 UI 状态内存写入", fillcolor="#FFF4E5", color="#C47A16"];
+ diag [label="DIAGNOSTIC ONLY\nrobotol 地址、AC8/BD0/C9D、FAST calls\n不得进入产品默认路径", fillcolor="#FDECEC", color="#B34747"];
+ common -> shell; common -> game; game -> diag [style=dashed,label="隔离"];
+}

@@ -1,0 +1,13 @@
+{
+  "cfg_size": 20728,
+  "record_base": 1024,
+  "record_size": 272,
+  "candidate_records": 72,
+  "rows_emitted": 61,
+  "target_rows": 52,
+  "title_rows": 25,
+  "icon_rows": 17,
+  "model_status": "PARSER_MODEL_CROSS_RECORD_PLAUSIBLE",
+  "present": true,
+  "sha256": "0d5837d251e9e0bbfb82495c0b73fd32ea4bcb5d817ca55495c35a23e8b7a806"
+}

@@ -1,0 +1,2066 @@
+﻿archive,member,offset,text,matched,source,category
+gwy/directpay.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/directpay.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/directpay.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/directpay.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/directpay.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/directpay.mrp,start.mr,436,resume,resume,ascii,other
+gwy/directpay.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/directpay.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/directpay.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/directpay.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/directpay.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/directpay.mrp,reg.ext,684,directpay.ext,,ascii,dependency
+gwy/directpay.mrp,directpay.ext,29924,lbtn1.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,29945,>mbtn1.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,29967,>rbtn1.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,29989,>lbtn2.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,30011,>mbtn2.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,30033,>rbtn2.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,30055,>msgbox.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,30077,>logo.bmp,,ascii,other
+gwy/directpay.mrp,directpay.ext,30136,timer err:%d,timer,ascii,lifecycle
+gwy/directpay.mrp,directpay.ext,30152,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/directpay.mrp,directpay.ext,30164,timerCreate err 01,timer,ascii,lifecycle
+gwy/directpay.mrp,directpay.ext,30332,TimerState = %d,timer,ascii,lifecycle
+gwy/directpay.mrp,directpay.ext,30372,cache/exdet.dat,,ascii,other
+gwy/directpay.mrp,directpay.ext,30456,cache/exr.sav,,ascii,other
+gwy/dload.mrp,start.mr,241,_mr_c_load,_mr_c_load,ascii,other
+gwy/dload.mrp,start.mr,276,dealevent,dealevent|event,ascii,lifecycle
+gwy/dload.mrp,start.mr,291,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/dload.mrp,start.mr,306,suspend,suspend,ascii,other
+gwy/dload.mrp,start.mr,319,resume,resume,ascii,other
+gwy/dload.mrp,start.mr,331,sysinfo,sysinfo,ascii,other
+gwy/dload.mrp,start.mr,344,GetSysInfo,sysinfo,ascii,other
+gwy/dload.mrp,start.mr,360,_strCom,_strcom,ascii,other
+gwy/dload.mrp,start.mr,559,_strCom,_strcom,ascii,other
+gwy/dload.mrp,start.mr,577,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/dload.mrp,start.mr,1300,_strCom,_strcom,ascii,other
+gwy/dload.mrp,start.mr,1662,_strCom,_strcom,ascii,other
+gwy/dload.mrp,start.mr,1827,_strCom,_strcom,ascii,other
+gwy/dload.mrp,start.mr,1992,_strCom,_strcom,ascii,other
+gwy/dload.mrp,reg.ext,776,download.ext,download,ascii,download_update
+gwy/dload.mrp,download.ext,9988,gwy.mrp,,ascii,dependency
+gwy/dload.mrp,download.ext,10040,gwy/td.cfg,,ascii,other
+gwy/dload.mrp,download.ext,10088,timer err:%d,timer,ascii,lifecycle
+gwy/dload.mrp,download.ext,10104,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/dload.mrp,download.ext,10116,timerCreate err 01,timer,ascii,lifecycle
+gwy/dload.mrp,download.ext,10284,TimerState = %d,timer,ascii,lifecycle
+gwy/dload.mrp,download.ext,10324,cache/exdet.dat,,ascii,other
+gwy/dload.mrp,download.ext,10408,cache/exr.sav,,ascii,other
+gwy/dload.mrp,download.ext,1705,!HD@h,resource_grammar,ascii,other
+gwy/font.mrp,start.mr,267,_mr_c_load,_mr_c_load,ascii,other
+gwy/font.mrp,start.mr,302,dealevent,dealevent|event,ascii,lifecycle
+gwy/font.mrp,start.mr,317,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/font.mrp,start.mr,332,suspend,suspend,ascii,other
+gwy/font.mrp,start.mr,345,resume,resume,ascii,other
+gwy/font.mrp,start.mr,357,sysinfo,sysinfo,ascii,other
+gwy/font.mrp,start.mr,370,GetSysInfo,sysinfo,ascii,other
+gwy/font.mrp,start.mr,460,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,629,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,647,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/font.mrp,start.mr,1480,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,1900,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,2051,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,2202,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,2748,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,3683,sysinfo,sysinfo,ascii,other
+gwy/font.mrp,start.mr,4168,_strCom,_strcom,ascii,other
+gwy/font.mrp,start.mr,4191,sysinfo,sysinfo,ascii,other
+gwy/font.mrp,reg.ext,964,font.ext,,ascii,dependency
+gwy/font.mrp,reg.ext,988,timer err:%d,timer,ascii,lifecycle
+gwy/font.mrp,reg.ext,1004,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/font.mrp,reg.ext,1044,timerCreate err 01,timer,ascii,lifecycle
+gwy/font.mrp,reg.ext,1212,TimerState = %d,timer,ascii,lifecycle
+gwy/font.mrp,font.ext,3712,gb12%d.uc2,,ascii,other
+gwy/font.mrp,font.ext,3736,gb12.uc2,,ascii,other
+gwy/font.mrp,font.ext,3748,timer err:%d,timer,ascii,lifecycle
+gwy/font.mrp,font.ext,3776,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/font.mrp,font.ext,3816,timerCreate err 01,timer,ascii,lifecycle
+gwy/font.mrp,font.ext,3984,TimerState = %d,timer,ascii,lifecycle
+gwy/gamelist.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/gamelist.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/gamelist.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/gamelist.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gamelist.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/gamelist.mrp,start.mr,436,resume,resume,ascii,other
+gwy/gamelist.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/gamelist.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/gamelist.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/gamelist.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gamelist.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/gamelist.mrp,cfg.bin,13,Fgwy/property.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,61,1gwy/sge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,110,gwy/sme.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,158,gwy/roomlist.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,205,Rgwy/embfrd.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,253,(gwy/embchat.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,302,gwy/currency.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,349,Ugwy/map.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,397,'gwy/mapquery.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,445,8gwy/dragonpic.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,493,8gwy/dgame1.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,541,3gwy/judge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,589,3gwy/bazoo.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,638,gwy/sysset.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,685,]gwy/gamelobby.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,733, gwy/font.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,781,Qgwy/charge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,830,gwy/wapgame.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,877,8gwy/dgame2.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,925,Rgwy/nets.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,973,Wgwy/mapview.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1021,^gwy/cellmap.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1069,[gwy/forum.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1117,Vgwy/browser.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1166,gwy/gbrwcore.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1214,gwy/gbrwshell.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1261,Qgwy/embcharge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1310,gwy/cardcharge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1358,gwy/caclobby.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1406,gwy/caccharge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1454,gwy/cactask.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1502,gwy/cacchat.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1550,gwy/cacddzani.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1598,gwy/cacpublic.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1645,Igwy/cacddz.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1694,gwy/cacmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1742,gwy/smscharge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1790,gwy/comLottery.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1838,gwy/csjaccount.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1886,gwy/digit.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1934,gwy/football.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,1982,gwy/digit_ticai.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2030,gwy/cobuy.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2077,Hgwy/chatroom.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2126,gwy/gui_sns.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2174,gwy/directpay.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2222,gwy/minicharge.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2270,gwy/cacmoneyrank.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2318,gwy/cacprofile.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2366,gwy/cacissue.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2414,gwy/photo.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2462,gwy/wedding.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2510,gwy/groupwar.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2557,[gwy/lbsns.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,2748,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,2811,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,3020,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,3083,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,3292,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,3355,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,3564,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,3627,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,3836,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,3899,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,4108,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,4171,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,4380,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,4443,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,4652,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,4715,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,4924,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,4987,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,5196,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,5259,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,5468,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,5531,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,5740,dload.gif,,ascii,other
+gwy/gamelist.mrp,cfg.bin,5803,gwy/pmsg.mrp,,ascii,dependency
+gwy/gamelist.mrp,cfg.bin,6766,http://i.51mrp.com,,ascii,network_endpoint
+gwy/gamelist.mrp,gamelist.ext,81240,http://www.51mrp.com/wap/mpt/showThread/tid/702742,,ascii,network_endpoint
+gwy/gamelist.mrp,gamelist.ext,81292,http://i.51mrp.com/commonprofile/userpassport.ftl,,ascii,network_endpoint
+gwy/gamelist.mrp,gamelist.ext,81408,logo.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81560,cfg.bin,cfg.bin,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,81568,_cfg.bin.td,cfg.bin,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,81588,_cfg.bin,cfg.bin,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,81600,gwy/cfg.bin.td,cfg.bin,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,81616,gwy/cfg.bin,cfg.bin,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,81656,gamelist.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81678,new.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81700,exit.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81722,dtiele.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81744,border.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81766,dload.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81788,dload1.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81810,head.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81832,dl_list.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81854,dbhead.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81876,dbbot.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81898,dbboard.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81920,dbtitle.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81942,1.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81964,2.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,81986,3.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,82008,4.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,82030,5.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,82052,6.bmp,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,82100,gwy/font.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82116,gwy/gbrwcore.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82136,gwy/gbrwshell.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82188,napptype=%d_nurl=%s_gwyblink,gwyblink|napptype,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,82220,napptype=%d_nextid=%d_ncode=%d_narg=%d_narg1=%d_nmrpname=%s_gwyblink,gwyblink|napptype|nmrpname,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,82300,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82352,gwyblink,gwyblink,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,82364,napptype,napptype,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,82416,nmrpname,nmrpname,ascii,descriptor_cfg
+gwy/gamelist.mrp,gamelist.ext,82428,gwy/%s.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82448,%s.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82528,gwy.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82536,reglogin.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82552,resmng.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82564,dload.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82576,gamelist.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82592,gui.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82632,gwy\wizard.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82648,gwy\hotchat.mrp,,ascii,dependency
+gwy/gamelist.mrp,gamelist.ext,82696,msg.mid,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,89204,timer err:%d,timer,ascii,lifecycle
+gwy/gamelist.mrp,gamelist.ext,89220,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gamelist.mrp,gamelist.ext,89232,timerCreate err 01,timer,ascii,lifecycle
+gwy/gamelist.mrp,gamelist.ext,89400,TimerState = %d,timer,ascii,lifecycle
+gwy/gamelist.mrp,gamelist.ext,89440,cache/exdet.dat,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,89524,cache/exr.sav,,ascii,other
+gwy/gamelist.mrp,gamelist.ext,14268,@h0!,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,31922,hF@!lF,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,35261,!HD@8C,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,65876,@!hFlF,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,67117,!xD@,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,69336,!K@h,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,73572,"Ih ""!c@h",resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,73821,1Ih!c@h,resource_grammar,ascii,other
+gwy/gamelist.mrp,gamelist.ext,77745,!xD@,resource_grammar,ascii,other
+gwy/gamelist.mrp,reg.ext,848,gamelist.ext,,ascii,dependency
+gwy/gbrwcore.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/gbrwcore.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/gbrwcore.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/gbrwcore.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gbrwcore.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/gbrwcore.mrp,start.mr,436,resume,resume,ascii,other
+gwy/gbrwcore.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/gbrwcore.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/gbrwcore.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/gbrwcore.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gbrwcore.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/gbrwcore.mrp,reg.ext,664,gbrwcore.ext,,ascii,dependency
+gwy/gbrwcore.mrp,gbrwcore.ext,140040,lib.savelogininfo,,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140060,lib.saveuserinfo,,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140204,lib.sendsms,send,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140244,lib.startGame,startgame,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140356,lib.checkmrpver,checkmrpver,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140372,lib.isFileOnServerNewer,isfileonservernewer,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140412,lib.getFileVersion,getfileversion,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140452,lib.download,download,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140480,lib.runapp,runapp,ascii,service_export
+gwy/gbrwcore.mrp,gbrwcore.ext,140588,skyurl.cfg,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,140600,C:/Download,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,140620,:/Download,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,140632,C:/Download/,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,140648,:/Download/,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,141024,index.dat,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,141056,/index.dat,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,141068,%s/index.dat,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,141212,http://mrp.fm,,ascii,network_endpoint
+gwy/gbrwcore.mrp,gbrwcore.ext,141264,connection,connect,ascii,network_endpoint
+gwy/gbrwcore.mrp,gbrwcore.ext,141564,Connection: ,connect,ascii,network_endpoint
+gwy/gbrwcore.mrp,gbrwcore.ext,142388,sky_download:,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,142764,http://mrp.fm,,ascii,network_endpoint
+gwy/gbrwcore.mrp,gbrwcore.ext,142812,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gbrwcore.mrp,gbrwcore.ext,142828,logo.ext,,ascii,dependency
+gwy/gbrwcore.mrp,gbrwcore.ext,142924,ontimer,timer,ascii,lifecycle
+gwy/gbrwcore.mrp,gbrwcore.ext,145648,temp.dat,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,145700,download,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,145720,download/dwnlist.dat,download,ascii,download_update
+gwy/gbrwcore.mrp,gbrwcore.ext,145828,http://sta.proxy.51mrp.com/,,ascii,network_endpoint
+gwy/gbrwcore.mrp,gbrwcore.ext,145900,timer err:%d,timer,ascii,lifecycle
+gwy/gbrwcore.mrp,gbrwcore.ext,145916,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gbrwcore.mrp,gbrwcore.ext,145928,timerCreate err 01,timer,ascii,lifecycle
+gwy/gbrwcore.mrp,gbrwcore.ext,146096,TimerState = %d,timer,ascii,lifecycle
+gwy/gbrwcore.mrp,gbrwcore.ext,146136,cache/exdet.dat,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,146220,cache/exr.sav,,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,10393,!Y^@,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,18595,"""HD@h!",resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,26644,(l<!@i,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,29757,d!l@,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,62210,H!aC@iA,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,73063,H)!HD@0,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,74129,!Ab@HxD@IID,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,92646,2!Y^@,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,112109,!BP@IyD,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,127275,!Y^@,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,133996,H!iC`i@,resource_grammar,ascii,other
+gwy/gbrwcore.mrp,gbrwcore.ext,139551,!#h@HHD,resource_grammar,ascii,other
+gwy/gbrwshell.mrp,start.mr,241,_mr_c_load,_mr_c_load,ascii,other
+gwy/gbrwshell.mrp,start.mr,276,dealevent,dealevent|event,ascii,lifecycle
+gwy/gbrwshell.mrp,start.mr,291,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gbrwshell.mrp,start.mr,306,suspend,suspend,ascii,other
+gwy/gbrwshell.mrp,start.mr,319,resume,resume,ascii,other
+gwy/gbrwshell.mrp,start.mr,331,sysinfo,sysinfo,ascii,other
+gwy/gbrwshell.mrp,start.mr,344,GetSysInfo,sysinfo,ascii,other
+gwy/gbrwshell.mrp,start.mr,360,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,start.mr,559,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,start.mr,577,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gbrwshell.mrp,start.mr,1300,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,start.mr,1662,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,start.mr,1827,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,start.mr,1992,_strCom,_strcom,ascii,other
+gwy/gbrwshell.mrp,reg.ext,608,gbrwshell.ext,,ascii,dependency
+gwy/gbrwshell.mrp,gbrwshell.ext,39888,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/gbrwshell.mrp,gbrwshell.ext,39904,logo.ext,,ascii,dependency
+gwy/gbrwshell.mrp,gbrwshell.ext,39952,gbrw/brw2.cfg,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,39968,http://help.proxy.51mrp.com/help,,ascii,network_endpoint
+gwy/gbrwshell.mrp,gbrwshell.ext,40004,http://help.proxy.51mrp.com/feedback,,ascii,network_endpoint
+gwy/gbrwshell.mrp,gbrwshell.ext,40044,http://help.proxy.51mrp.com/recommend,,ascii,network_endpoint
+gwy/gbrwshell.mrp,gbrwshell.ext,41568,wait.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41590,extred.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41612,dlfail.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41634,dled.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41656,paused.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41678,expnded.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41700,dling.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41722,fmimg.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41744,fmfolder.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41766,fmcmmn.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41788,fmback.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41810,listf.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,41832,progbar.bmp,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,43908,http://dmrp.wapproxy.sky-mobi.com/sd?type=2&ver=0&appid=480006&shortname=wmplay&extid=6&mrpname=wmplay.mrp&extname=wmplay.ext&path=/plugins&func=1&param=NULL,,ascii,network_endpoint
+gwy/gbrwshell.mrp,gbrwshell.ext,44068,/plugins/wmplay.mrp,,ascii,dependency
+gwy/gbrwshell.mrp,gbrwshell.ext,44108,gbrw/download,download,ascii,download_update
+gwy/gbrwshell.mrp,gbrwshell.ext,44128,%s/DOWNLOADLIST%d,download,ascii,download_update
+gwy/gbrwshell.mrp,gbrwshell.ext,44148,gbrw/download,download,ascii,download_update
+gwy/gbrwshell.mrp,gbrwshell.ext,44164,%s/TMPDOWNLOADLIST%d,download,ascii,download_update
+gwy/gbrwshell.mrp,gbrwshell.ext,44224,timer err:%d,timer,ascii,lifecycle
+gwy/gbrwshell.mrp,gbrwshell.ext,44240,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/gbrwshell.mrp,gbrwshell.ext,44252,timerCreate err 01,timer,ascii,lifecycle
+gwy/gbrwshell.mrp,gbrwshell.ext,44420,TimerState = %d,timer,ascii,lifecycle
+gwy/gbrwshell.mrp,gbrwshell.ext,44460,cache/exdet.dat,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,44544,cache/exr.sav,,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,2915,!oF@KhFKD,resource_grammar,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,4919,!hF@,resource_grammar,ascii,other
+gwy/gbrwshell.mrp,gbrwshell.ext,26757,!%J@=,resource_grammar,ascii,other
+gwy/jjfb.mrp,start.mr,691,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/jjfb.mrp,start.mr,765,_mr_c_load,_mr_c_load,ascii,other
+gwy/jjfb.mrp,start.mr,800,dealevent,dealevent|event,ascii,lifecycle
+gwy/jjfb.mrp,start.mr,815,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,start.mr,830,suspend,suspend,ascii,other
+gwy/jjfb.mrp,start.mr,843,resume,resume,ascii,other
+gwy/jjfb.mrp,start.mr,855,sysinfo,sysinfo,ascii,other
+gwy/jjfb.mrp,start.mr,868,GetSysInfo,sysinfo,ascii,other
+gwy/jjfb.mrp,start.mr,924,sdk_key.dat,sdk_key.dat,ascii,other
+gwy/jjfb.mrp,start.mr,972,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,start.mr,1132,_mr_param,mr_param,ascii,other
+gwy/jjfb.mrp,start.mr,1517,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,start.mr,1535,mrc_loader.ext,mrc_loader,ascii,dependency
+gwy/jjfb.mrp,start.mr,2419,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,start.mr,2781,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,start.mr,2946,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,start.mr,3111,_strCom,_strcom,ascii,other
+gwy/jjfb.mrp,mrc_loader.ext,212,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/jjfb.mrp,bigworldmapmodule.ext,16308,mapcity!150!30.bmp,,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,16328,mapload!23!15.bmp,,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,16412,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,bigworldmapmodule.ext,16428,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,bigworldmapmodule.ext,16440,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,bigworldmapmodule.ext,16608,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,bigworldmapmodule.ext,16648,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,16732,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,3447,"!@""#",resource_grammar,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,9417,!HD@j,resource_grammar,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,10909,"!@"";",resource_grammar,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,10991,"!@""7",resource_grammar,ascii,other
+gwy/jjfb.mrp,bigworldmapmodule.ext,14127,"!5""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27144,m8!160!120@bmm8.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27164,m7!160!120@bmm7.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27184,m6!160!120@bmm6.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27204,m5!160!120@bmm5.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27224,m4!160!120@bmm4.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27244,m3!160!120@bmm3.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27264,m2!160!120@bmm2.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27284,m1!160!120@bmm1.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27304,m4!120!160@mainmenu4.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27332,m3!120!160@mainmenu3.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27360,m2!120!160@mainmenu2.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27388,m1!120!160@mainmenu1.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27424,top!76!28.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27676,robot2!165!115.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27696,robot1!191!104.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27716,menutext!76!80.bmp,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27772,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,mainmenumodule.ext,27788,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,mainmenumodule.ext,27800,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,mainmenumodule.ext,27968,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,mainmenumodule.ext,28008,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,28092,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,1379, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,1561, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,3149, D!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,3723,r@!HU,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,4343, 6!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,4687, @!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,6133,"""0!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,6183,"""/!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,6983,"""0!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,7033,"""/!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,8015, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,11179,"!""2@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,11425, 8!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,12287, 1!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,12489,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,13011, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14349,"""@!.#(",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14871,#?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14903, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14929, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14951, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,14979, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,15027, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,15129, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,15391, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,15895,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,16133,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,18703,hK!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,19609, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,19781, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,22665, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,24975, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27144,m8!160!120@bmm8.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27164,m7!160!120@bmm7.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27184,m6!160!120@bmm6.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27204,m5!160!120@bmm5.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27224,m4!160!120@bmm4.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27244,m3!160!120@bmm3.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27264,m2!160!120@bmm2.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27284,m1!160!120@bmm1.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27304,m4!120!160@mainmenu4.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27332,m3!120!160@mainmenu3.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27360,m2!120!160@mainmenu2.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mainmenumodule.ext,27388,m1!120!160@mainmenu1.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,25744,fujian!15!15.bmp,,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,25764,money!13!14.bmp,,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,26716,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,mailmodule.ext,26732,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,mailmodule.ext,26744,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,mailmodule.ext,26912,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,mailmodule.ext,26952,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,27036,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,1597, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,2749,"!m""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,6421, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,7013, B!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,7037,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,7403, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,7697,"""@!#",resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,8617, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,9679, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,10131, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,10773, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,11041, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,11173, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,11533, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,12105, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,12445, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,12805, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,14169, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,14611, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,18437,"!m""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,24365, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,24549, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,mailmodule.ext,24733, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,moduletest.ext,14520,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,moduletest.ext,14536,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,moduletest.ext,14548,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,moduletest.ext,14716,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,moduletest.ext,14756,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,moduletest.ext,14840,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,13472,face!120!12.bmp,,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,14296,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,chatmodule.ext,14312,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,chatmodule.ext,14324,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,chatmodule.ext,14492,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,chatmodule.ext,14532,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,14616,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,1359, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,2195,"""@!+",resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,2353, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,2805, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,2897, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,3691, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,4627, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,4681,##!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,5009,"""@!#",resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,5227, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,5317, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,chatmodule.ext,5673, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gezimodule.ext,6724,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,gezimodule.ext,6740,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,gezimodule.ext,6752,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,gezimodule.ext,6920,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,gezimodule.ext,6960,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,gezimodule.ext,7044,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,15572,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,taobaomodule.ext,15588,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,taobaomodule.ext,15600,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,taobaomodule.ext,15768,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,taobaomodule.ext,15808,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,15892,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,4269, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,4887, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,6709, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,6763,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,7171, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,7229,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,8738,@:5!8,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,10391, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,14360,HD@iI!,resource_grammar,ascii,other
+gwy/jjfb.mrp,taobaomodule.ext,14591, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,45184,wy_baoji!120!14.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,45204,wy_shanbi!44!14.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,45636,wy_jiaxue!110!12.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,45660,wy_shanghai!100!12.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,45708,effect!49!30.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,46276,shandow!49!17@attack.bmp,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,46428,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,gameattackmodule.ext,46444,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,gameattackmodule.ext,46456,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,gameattackmodule.ext,46624,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,gameattackmodule.ext,46664,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,46748,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,4602,@X-!,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,9071,"!h""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,11101, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,11155, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,13425, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,13473, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,14863,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,16055, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,16325, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,20685, r!jB@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,22429,"!F""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,28737,"!]""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,30291, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,30753,"!V""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,33569, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,33885, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,34081, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,34917, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,35021, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,35431, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,36577, 6!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,39649, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,40241, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,40449, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,40681, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,40937, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,41129, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,44087, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,44137, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,gameattackmodule.ext,46276,shandow!49!17@attack.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,17780,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,monsterstatemodule.ext,17796,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,monsterstatemodule.ext,17808,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,monsterstatemodule.ext,17976,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,monsterstatemodule.ext,18016,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,18100,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,3797, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,4137, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,4231, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,4529, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,4907,#2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,5417,"!-""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,6449, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,6487, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,6541, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,7639, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,9047, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,9917,"""@!;",resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,10749,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,11615,"!V""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12397, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12475, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12553, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12671, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12749, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,12827, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monsterstatemodule.ext,17005, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,42028,bag_hand!17!16.bmp,,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,42048,money!13!14.bmp,,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,42480,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,itembagshopmodule.ext,42496,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,itembagshopmodule.ext,42508,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,itembagshopmodule.ext,42676,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,itembagshopmodule.ext,42716,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,42800,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,2757, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,6219, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,8083,"![""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,10793,"!i""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,13603, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,13653, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,14119, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,14341, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,14681, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,14757, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,16563,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,16671,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,18046,HD@l'!Bk,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,18351,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,19291, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,19479, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,19583, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,19811, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,20251, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,22619, s!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,22711, s!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,22807, s!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,23667, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,28559, &!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,29419, &!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,29486,@h}!I,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,32275, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,32365, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,32435, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,32525, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,37327, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,37399, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,37469, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,37541, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,38533, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,38741, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,38949, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,39205, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,39389, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itembagshopmodule.ext,39597, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,18328,bag_hand!17!16.bmp,,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,18504,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,viewmanmodule.ext,18520,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,viewmanmodule.ext,18532,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,viewmanmodule.ext,18700,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,viewmanmodule.ext,18740,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,18824,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,1445, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,2549,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,2923, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,3125, =!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,3357, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,3899, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,5631, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,5727, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,5769, =!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,8177, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,9125,"""@!3",resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,9695,"!-""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,11752,@XP!,resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,12713,""")!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,12749,""")!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,viewmanmodule.ext,16893, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,13572,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,betmodule.ext,13588,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,betmodule.ext,13600,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,betmodule.ext,13768,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,betmodule.ext,13808,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,betmodule.ext,13892,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,betmodule.ext,4127, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,4191, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,4251, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,4603, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,4647, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,6451, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7041, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7251, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7401, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7427, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7449,!81@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7479, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7561, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,7871, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,12603, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,betmodule.ext,12833, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,18612,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,monstermodule.ext,18628,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,monstermodule.ext,18640,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,monstermodule.ext,18808,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,monstermodule.ext,18848,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,18932,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,1327, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,2731, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,3067, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,3619, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,3697, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,8419, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,8803, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,8929, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,9899, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,12839, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,12907, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,16377, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,16561, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,16769, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,16953, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,17185, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,monstermodule.ext,17401, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,20304,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,leitaimodule.ext,20320,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,leitaimodule.ext,20332,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,leitaimodule.ext,20500,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,leitaimodule.ext,20540,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,20624,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,3647, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,3673, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,5269, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,5605, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,6137, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,6193, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,6371, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,8097,!HD@k,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,8159,!HD@k,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,8423, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,8451, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,8721,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,9059, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,9833, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,12395, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,12497, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,12933, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,15393, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,15449, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,15541, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,15673, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,18857, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,leitaimodule.ext,19173, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,reg.ext,2104,robotol.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2116,moduletest.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2132,mainmenumodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2152,bigworldmapmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2176,gameattackmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2200,taobaomodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2220,gezimodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2236,mailmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2252,chatmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2268,monsterstatemodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2292,viewmanmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2312,itembagshopmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2336,leitaimodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2356,monstermodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2376,lianmengmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2396,othermodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2412,itemhechengmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2436,shopmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,reg.ext,2452,betmodule.ext,,ascii,dependency
+gwy/jjfb.mrp,lianmengmodule.ext,35284,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,lianmengmodule.ext,35300,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,lianmengmodule.ext,35312,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,lianmengmodule.ext,35480,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,lianmengmodule.ext,35520,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,35604,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,3875, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,4503, P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,4902,@2P!,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,6731, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,7437, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,10771, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,12853, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,13269,#/!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,13301,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,13457, P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,13549, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,14593, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15199, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15433, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15459, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15601, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15681, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15829, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,15943, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,16157, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,17411, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,17545, (;B!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,17785, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,18343, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,18403, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,18877, 5!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,18905, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,22310,@25!(,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,26183, 82P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,26305, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,26409,2P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,26463, 72P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,28173, P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,28341, P!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,31079, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,32107, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,32291, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,32497, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,32731, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,32939, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,33243, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,lianmengmodule.ext,33499, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,45756,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,othermodule.ext,45772,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,othermodule.ext,45784,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,othermodule.ext,45952,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,othermodule.ext,45992,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,othermodule.ext,46076,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,othermodule.ext,6387,"""@!3",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,7521,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,7985, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,8233,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,9675, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,9725, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,9809, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,9873, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,10879, <!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,11559,"""@X/!",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,11989, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,12513, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,13395, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,13653, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,15063, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,16775, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,16803, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,18941, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,19275, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,19611, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,19907, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,20603,"""@!3",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,20631, *!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,20753, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,20981, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,21029, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,21163, %!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,21199, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,21249,"""#!@",resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,21877, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,24339, .!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,24371, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,24635, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,24871, =!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,25055, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,25103, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,25275, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,30991, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,31165, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,39747, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,40331, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,42193, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,42405, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,42591, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,42799, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,othermodule.ext,43725, '!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,239048,default.mrp,,ascii,dependency
+gwy/jjfb.mrp,robotol.ext,239060,default2.mrp,,ascii,dependency
+gwy/jjfb.mrp,robotol.ext,239076,default3.mrp,,ascii,dependency
+gwy/jjfb.mrp,robotol.ext,239092,jiantou_x!12!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239112,jiantou_t!12!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239132,jiantou!12!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239152,wy_jiao5!11!11.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239172,wy_xian3!15!5.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239192,wy_jiao32!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239212,wy_jiao3!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239232,wy_xian2!15!5.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239252,wy_jiao22!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239272,wy_jiao2!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239292,wy_xian0!15!6.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239312,wy_jiao02!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239332,wy_jiao0!10!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239352,wy_xian1!15!7.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239372,wy_jiao12!11!11.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239392,wy_jiao1!11!11.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239420,face!120!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239520,boygirl!40!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239540,star!8!8.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239556,keypress!28!21.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239576,e!7!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239588,finger!14!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239608,vip!34!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239624,downArrow!14!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239644,updown!28!8.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239660,upArrow!14!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239680,money!5!10.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239696,lrarrow!16!14.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239716,chilunbar!23!23.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239736,icon1!100!25.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239756,buttons!36!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239776,bighand!25!25.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239796,topright!12!4.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239816,topleft!15!5.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239852,textbar!120!30.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239872,bar!16!18.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239888,loadingbar!201!29.bmp,,ascii,resource_sidepack
+gwy/jjfb.mrp,robotol.ext,239912,gunModel!47!28.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239932,wingModel!72!41.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239952,weaponModel!41!42.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,239976,dongModel!28!48.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240704,dir!100!100@vmimage.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240728,vmleft!57!36@vmimage.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240756,vmright!57!36@vmimage.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240784,taskbutton!57!36@vmimage.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240916,buttons!36!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,240936,keypress!28!21.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,242896,@downimage,downimage,ascii,resource_sidepack
+gwy/jjfb.mrp,robotol.ext,242928,slogo!157!58.bmp,,ascii,resource_sidepack
+gwy/jjfb.mrp,robotol.ext,242948,textbar!120!30.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,242968,bar!16!18.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,242984,loadingbar!201!29.bmp,,ascii,resource_sidepack
+gwy/jjfb.mrp,robotol.ext,243540,zuobiao!60!8.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243560,dirarrow!13!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243592,monstersheji!48!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243616,monsterquanneng!48!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243644,monstergedou!48!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243684,sysinfo.ani,sysinfo,ascii,other
+gwy/jjfb.mrp,robotol.ext,243696,fasticon!112!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243716,cheng!8!8.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243732,smallicon!140!20.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243756,text2!36!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243772,upArrow!14!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243792,downArrow!14!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243812,exp!14!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243828,frame!16!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243844,fuhao!40!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243860,lchars!96!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,243876,shine!27!9.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,245720,chilun!123!35.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,245912,explight!102!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,245932,moneylight!102!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,245956,powerlight!138!29.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,245980,teclight!102!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,246000,defendlight!132!23.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,246024,speedlight!102!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,246048,lucklight!102!15.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,247436,jt!30!16.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,249724,face!120!12.bmp,,ascii,other
+gwy/jjfb.mrp,robotol.ext,250200,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,robotol.ext,250216,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,robotol.ext,250228,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,robotol.ext,250396,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,robotol.ext,250436,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,robotol.ext,250520,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,robotol.ext,250860,bgappinf/appinf.dat,,ascii,other
+gwy/jjfb.mrp,robotol.ext,36579,"!@H""",resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,56978,@h!M,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,57619,"!@""HD",resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,80581,!HD@i,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,83941, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,161851,!HD@j,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,237229,C[!@h,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,238746,"K""@!",resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,238770,"@!K""",resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,240704,dir!100!100@vmimage.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,240728,vmleft!57!36@vmimage.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,240756,vmright!57!36@vmimage.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,240784,taskbutton!57!36@vmimage.bmp,resource_grammar,ascii,other
+gwy/jjfb.mrp,robotol.ext,242896,@downimage,resource_grammar,ascii,resource_sidepack
+gwy/jjfb.mrp,shopmodule.ext,13900,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,shopmodule.ext,13916,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,shopmodule.ext,13928,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,shopmodule.ext,14096,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,shopmodule.ext,14136,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,14220,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,2787, 1!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,3039, V!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,3277,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,3947, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,4201, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,5841, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,5869,X/!@h+,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,6911, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,6995, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,7087, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,7179, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,9491, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,shopmodule.ext,12881, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,24204,timer err:%d,timer,ascii,lifecycle
+gwy/jjfb.mrp,itemhechengmodule.ext,24220,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/jjfb.mrp,itemhechengmodule.ext,24232,timerCreate err 01,timer,ascii,lifecycle
+gwy/jjfb.mrp,itemhechengmodule.ext,24400,TimerState = %d,timer,ascii,lifecycle
+gwy/jjfb.mrp,itemhechengmodule.ext,24440,cache/exdet.dat,,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,24524,cache/exr.sav,,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,3149, ;!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,3269, /!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,3375, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,6987,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,7413, 2!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,7999, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,8755, 1!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,9711, 1!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,10231,"!X""@",resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,11431, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,11621, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,11675, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,12097, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,12475, -!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,13707, 0!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,16441, ?!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,17731, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,17823, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,17925, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,18027, )!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,20667, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,20931, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,21179, F!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,21419, E!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,22595, R!@,resource_grammar,ascii,other
+gwy/jjfb.mrp,itemhechengmodule.ext,22851, R!@,resource_grammar,ascii,other
+gwy/reglogin.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/reglogin.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/reglogin.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/reglogin.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/reglogin.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/reglogin.mrp,start.mr,436,resume,resume,ascii,other
+gwy/reglogin.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/reglogin.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/reglogin.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/reglogin.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/reglogin.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/reglogin.mrp,reg.ext,776,reglogin.ext,,ascii,dependency
+gwy/reglogin.mrp,reglogin.ext,32488,checkbo.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32510,setting.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32532,msgbox.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32554,button.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32576,arrow.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32598,menu_h.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32620,func_set.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32642,netset.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32664,select.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,32686,select_h.bmp,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,35176,napptype=3_nurl=%s_bapptype=1_bextid=%d,napptype,ascii,descriptor_cfg
+gwy/reglogin.mrp,reglogin.ext,35344,timer err:%d,timer,ascii,lifecycle
+gwy/reglogin.mrp,reglogin.ext,35360,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/reglogin.mrp,reglogin.ext,35372,timerCreate err 01,timer,ascii,lifecycle
+gwy/reglogin.mrp,reglogin.ext,35540,TimerState = %d,timer,ascii,lifecycle
+gwy/reglogin.mrp,reglogin.ext,35580,cache/exdet.dat,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,35664,cache/exr.sav,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,36136,bgappinf/appinf.dat,,ascii,other
+gwy/reglogin.mrp,reglogin.ext,9953,!MD@=(`,resource_grammar,ascii,other
+gwy/resmng.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/resmng.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/resmng.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/resmng.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/resmng.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/resmng.mrp,start.mr,436,resume,resume,ascii,other
+gwy/resmng.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/resmng.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/resmng.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/resmng.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/resmng.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/resmng.mrp,reg.ext,896,resmng.ext,,ascii,dependency
+gwy/resmng.mrp,resmng.ext,11248,headpic.bmp,,ascii,other
+gwy/resmng.mrp,resmng.ext,11552,timer err:%d,timer,ascii,lifecycle
+gwy/resmng.mrp,resmng.ext,11568,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/resmng.mrp,resmng.ext,11580,timerCreate err 01,timer,ascii,lifecycle
+gwy/resmng.mrp,resmng.ext,11748,TimerState = %d,timer,ascii,lifecycle
+gwy/resmng.mrp,resmng.ext,11788,cache/exdet.dat,,ascii,other
+gwy/resmng.mrp,resmng.ext,11872,cache/exr.sav,,ascii,other
+gwy/resmng.mrp,resmng.ext,1842,HC!h@,resource_grammar,ascii,other
+gwy/roomlist.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/roomlist.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/roomlist.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/roomlist.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/roomlist.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/roomlist.mrp,start.mr,436,resume,resume,ascii,other
+gwy/roomlist.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/roomlist.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/roomlist.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/roomlist.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/roomlist.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/roomlist.mrp,reg.ext,776,roomlist.ext,,ascii,dependency
+gwy/roomlist.mrp,roomlist.ext,16352,timer err:%d,timer,ascii,lifecycle
+gwy/roomlist.mrp,roomlist.ext,16368,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/roomlist.mrp,roomlist.ext,16380,timerCreate err 01,timer,ascii,lifecycle
+gwy/roomlist.mrp,roomlist.ext,16548,TimerState = %d,timer,ascii,lifecycle
+gwy/roomlist.mrp,roomlist.ext,16588,cache/exdet.dat,,ascii,other
+gwy/roomlist.mrp,roomlist.ext,16672,cache/exr.sav,,ascii,other
+gwy/roomlist.mrp,roomlist.ext,3722, h}!@h,resource_grammar,ascii,other
+gwy/roomlist.mrp,roomlist.ext,3871,!@hY^,resource_grammar,ascii,other
+gwy/roomlist.mrp,roomlist.ext,13710, h}!@h,resource_grammar,ascii,other
+gwy/sanguo.mrp,start.mr,691,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/sanguo.mrp,start.mr,765,_mr_c_load,_mr_c_load,ascii,other
+gwy/sanguo.mrp,start.mr,800,dealevent,dealevent|event,ascii,lifecycle
+gwy/sanguo.mrp,start.mr,815,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/sanguo.mrp,start.mr,830,suspend,suspend,ascii,other
+gwy/sanguo.mrp,start.mr,843,resume,resume,ascii,other
+gwy/sanguo.mrp,start.mr,855,sysinfo,sysinfo,ascii,other
+gwy/sanguo.mrp,start.mr,868,GetSysInfo,sysinfo,ascii,other
+gwy/sanguo.mrp,start.mr,924,sdk_key.dat,sdk_key.dat,ascii,other
+gwy/sanguo.mrp,start.mr,972,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,start.mr,1132,_mr_param,mr_param,ascii,other
+gwy/sanguo.mrp,start.mr,1326,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,start.mr,1344,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/sanguo.mrp,start.mr,2067,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,start.mr,2429,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,start.mr,2594,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,start.mr,2759,_strCom,_strcom,ascii,other
+gwy/sanguo.mrp,reg.ext,612,sanguo.ext,,ascii,dependency
+gwy/sanguo.mrp,sanguo.ext,149048,sc_bg_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149070,sc_bg_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149092,sc_bg_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149114,sc_bg_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149136,sc_bg_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149158,sc_bg_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149180,tit_bg.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149202,site_xt.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149224,help.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149246,sc_fjbg.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149268,t_img1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149290,t_img2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149312,t_img3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149334,t_img4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149356,t_img5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149378,t_img6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149400,t_img7.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149422,t_img8.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149444,t_img9.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149466,t_img10.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149488,t_img11.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149510,t_img12.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149532,t_img13.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149554,t_img14.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149576,t_img15.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149598,t_img16.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149620,t_img17.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149642,tit_m.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149664,sc_gn_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149686,sc_gn_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149708,sc_gn_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149730,sc_gn_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149752,gn_sel.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149774,sc_gx_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149796,sc_gx_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149818,chat_bg1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149840,chat_bg2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149862,chat_t.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149884,chat_ts.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149906,chat_fy.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149928,sc_gn_i.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149950,gnk_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149972,gnk_n.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,149994,gnk_s1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150016,gnk_s.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150038,gnk_l1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150060,gnk_l2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150082,gnk_l3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150104,th.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150126,npc_jt.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150148,npc_ico.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150170,site_m1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150192,site_m2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150214,site_m3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150236,site_m4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150258,site_m5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150280,site_m6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150302,site_m7.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150324,site_m8.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150346,site_m9.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150368,site_m10.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150390,site_m10.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150412,site_m12.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150434,site_m13.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150456,site_m14.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150478,site_m15.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150500,site_m16.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150522,site_m17.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150544,map_tit.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150566,map_zz.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150588,map_zzn.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150610,map_wh.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150632,ss_m_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150654,ss_m_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150676,ss_m_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150698,ss_m_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150720,ss_m_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150742,ss_m_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150764,ss_m_7.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150786,ss_m_8.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150808,ss_m_9.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150830,ss_m_10.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150852,ss_m_11.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150874,ss_m_12.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150896,ss_m_13.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150918,ss_m_14.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150940,ss_m_15.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150962,ss_m_16.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,150984,ss_m_17.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151006,gnl_bk.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151028,gln_b_jt.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151050,gln_but.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151072,r1_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151094,r2_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151116,r3_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151138,r1n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151160,r2n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151182,r3n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151204,r1_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151226,r2_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151248,r3_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151270,r1n_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151292,r2n_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151314,r3n_h50.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151336,r1_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151358,r1_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151380,r1n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151402,r1n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151424,r2_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151446,r2_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151468,r2n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151490,r2n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151512,r3_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151534,r3_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151556,r3n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151578,r3n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151600,n1_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151622,n2_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151644,n3_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151666,n1n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151688,n2n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151710,n3n_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151732,n1_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151754,n1_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151776,n1n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151798,n1n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151820,n2_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151842,n2_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151864,n2n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151886,n2n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151908,n3_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151930,n3_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151952,n3n_b.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151974,n3n_f.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,151996,npc_hgln.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152018,img_gln.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152040,cr_tit.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152062,cr_tit_m.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152084,sr_tit_m.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152106,sa_tit_m.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152128,sr_i_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152150,sr_i_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152172,sr_i_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152194,sr_i_j.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152216,sr_i_wh.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152238,f_bg2_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152260,f_bg2_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152282,f_bg2_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152304,f_bg2_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152326,f_bg2_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152348,f_bg2_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152370,f_bg4_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152392,f_bg4_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152414,f_bg4_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152436,f_bg4_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152458,f_bg4_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152480,f_bg4_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152502,f_bg5_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152524,f_bg5_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152546,f_bg5_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152568,f_bg5_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152590,f_bg5_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152612,f_bg5_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152634,f_bg6_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152656,f_bg6_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152678,f_bg6_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152700,f_bg6_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152722,f_bg6_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152744,f_bg6_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152766,f_bg7_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152788,f_bg7_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152810,f_bg7_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152832,f_bg7_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152854,f_bg7_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152876,f_bg7_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152898,f_bg8_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152920,f_bg8_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152942,f_bg8_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152964,f_bg8_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,152986,f_bg8_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153008,f_bg8_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153030,f_bg9_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153052,f_bg9_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153074,f_bg9_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153096,f_bg9_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153118,f_bg9_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153140,f_bg9_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153162,f_bg20_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153184,f_bg20_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153206,f_bg20_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153228,f_bg20_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153250,f_bg20_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153272,f_bg20_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153294,f_bg_c.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153316,f_bg_c2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153338,f_bg_c3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153360,f_bg_c4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153382,fig_tit.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153404,ftg_ibg.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153426,fig_acb.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153448,blood.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153470,f_sd.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153492,f_sl.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153514,f_bb.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153536,zgzj.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153558,num.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153580,num2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153602,wz.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153624,dead_fl.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153646,dead_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153668,dead_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153690,fg.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153712,fg3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153734,fg2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153756,smoke.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153778,pi_fl.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153800,f_jt.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153822,chat.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153844,yz.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153866,fire.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153888,qiang.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153910,lei.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153932,f_stat.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153954,ma_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153976,ma_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,153998,ma_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154020,ma_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154042,ma_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154064,ma_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154086,ma_7.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154108,ma_8.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154130,ma_9.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154152,ma_10.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154174,ma_11.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154196,ma_12.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154218,ma_13.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154240,ma_14.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154262,ma_15.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154284,ma_16.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154306,ma_17.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154328,ma_18.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154350,ma_19.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154372,ma_20.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154394,ma_21.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154416,ma_22.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154438,ma_23.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154460,ma_24.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154482,helpa.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154504,h_1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154526,h_2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154548,h_3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154570,h_4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154592,h_5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154614,h_6.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154636,h_7.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154658,h_8.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154680,h_9.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154702,hy_but.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154724,fig_rep1.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154746,fig_rep2.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154768,fig_rep3.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154790,fig_rep4.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154812,fig_rep5.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154834,map_ico.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154856,r1z_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154878,r2z_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154900,r3z_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154922,r1zn_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154944,r2zn_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,154966,r3zn_h.bmp,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,158796,timer err:%d,timer,ascii,lifecycle
+gwy/sanguo.mrp,sanguo.ext,158812,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/sanguo.mrp,sanguo.ext,158824,timerCreate err 01,timer,ascii,lifecycle
+gwy/sanguo.mrp,sanguo.ext,158992,TimerState = %d,timer,ascii,lifecycle
+gwy/sanguo.mrp,sanguo.ext,159032,cache/exdet.dat,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,159116,cache/exr.sav,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,159500,bgappinf/appinf.dat,,ascii,other
+gwy/sanguo.mrp,sanguo.ext,6973,!@%+,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,48557,"3|""0!@",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,52747,"!@""y&0",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,52791,"!@"";",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,58970,"I""@!8",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,59082,"S""@!8",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,60895,!LJ@H,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,65927,!HJ@H,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,66419,!@J:H,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,80949,"!'""@",resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,92089,&d'@!,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,97575,&d'@!,resource_grammar,ascii,other
+gwy/sanguo.mrp,sanguo.ext,132213,!-1@,resource_grammar,ascii,other
+gwy/smscharge.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/smscharge.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/smscharge.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/smscharge.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/smscharge.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/smscharge.mrp,start.mr,436,resume,resume,ascii,other
+gwy/smscharge.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/smscharge.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/smscharge.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/smscharge.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/smscharge.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/smscharge.mrp,reg.ext,688,smscharge.ext,,ascii,dependency
+gwy/smscharge.mrp,smscharge.ext,38312,&sendtime=,send,ascii,other
+gwy/smscharge.mrp,smscharge.ext,38556,&recv=,recv,ascii,other
+gwy/smscharge.mrp,smscharge.ext,38804,timer err:%d,timer,ascii,lifecycle
+gwy/smscharge.mrp,smscharge.ext,38820,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/smscharge.mrp,smscharge.ext,38832,timerCreate err 01,timer,ascii,lifecycle
+gwy/smscharge.mrp,smscharge.ext,39000,TimerState = %d,timer,ascii,lifecycle
+gwy/smscharge.mrp,smscharge.ext,39040,cache/exdet.dat,,ascii,other
+gwy/smscharge.mrp,smscharge.ext,39124,cache/exr.sav,,ascii,other
+gwy/smscharge.mrp,smscharge.ext,17967,"""@!8",resource_grammar,ascii,other
+gwy/smscharge.mrp,smscharge.ext,18207,!HD@0,resource_grammar,ascii,other
+gwy/smscharge.mrp,smscharge.ext,18378,"!H,IHD@0Bi(",resource_grammar,ascii,other
+gwy/smscharge.mrp,smscharge.ext,27449,"""@!HD",resource_grammar,ascii,other
+gwy/spacetime.mrp,start.mr,691,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/spacetime.mrp,start.mr,765,_mr_c_load,_mr_c_load,ascii,other
+gwy/spacetime.mrp,start.mr,800,dealevent,dealevent|event,ascii,lifecycle
+gwy/spacetime.mrp,start.mr,815,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/spacetime.mrp,start.mr,830,suspend,suspend,ascii,other
+gwy/spacetime.mrp,start.mr,843,resume,resume,ascii,other
+gwy/spacetime.mrp,start.mr,855,sysinfo,sysinfo,ascii,other
+gwy/spacetime.mrp,start.mr,868,GetSysInfo,sysinfo,ascii,other
+gwy/spacetime.mrp,start.mr,924,sdk_key.dat,sdk_key.dat,ascii,other
+gwy/spacetime.mrp,start.mr,972,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,start.mr,1132,_mr_param,mr_param,ascii,other
+gwy/spacetime.mrp,start.mr,1326,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,start.mr,1344,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/spacetime.mrp,start.mr,2067,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,start.mr,2429,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,start.mr,2594,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,start.mr,2759,_strCom,_strcom,ascii,other
+gwy/spacetime.mrp,reg.ext,680,spacetime.ext,,ascii,dependency
+gwy/spacetime.mrp,spacetime.ext,240492,clientskill.dat,,ascii,other
+gwy/spacetime.mrp,spacetime.ext,241300,timer err:%d,timer,ascii,lifecycle
+gwy/spacetime.mrp,spacetime.ext,241316,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/spacetime.mrp,spacetime.ext,241328,timerCreate err 01,timer,ascii,lifecycle
+gwy/spacetime.mrp,spacetime.ext,241496,TimerState = %d,timer,ascii,lifecycle
+gwy/spacetime.mrp,spacetime.ext,241536,cache/exdet.dat,,ascii,other
+gwy/spacetime.mrp,spacetime.ext,241620,cache/exr.sav,,ascii,other
+gwy/spacetime.mrp,spacetime.ext,28841,J!0@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,33453,"!@j""",resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,33523,"!@j""",resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,34915,"!@j""",resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,36465,"!@j""",resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,36953,!@j!,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,37043,!@j!,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,38967,C@j!,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,64635,!Y^d#YC@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,64735,!Y^d#YC@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,64853,!Y^d#YC@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,85842,(y@!LD&h,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,86384,@0!bG,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,103142,@K!hKD,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,106946,@X!j,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,158968,@4!y,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,169435,#HCP!@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,170298,@X!l,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,171653, LD!h@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,173169, LD!h@,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,192047,h$!@Y,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,199205,!@2Qq,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,219446,8h@!,resource_grammar,ascii,other
+gwy/spacetime.mrp,spacetime.ext,219654,8h@!,resource_grammar,ascii,other
+gwy/tlbb.mrp,start.mr,691,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/tlbb.mrp,start.mr,765,_mr_c_load,_mr_c_load,ascii,other
+gwy/tlbb.mrp,start.mr,800,dealevent,dealevent|event,ascii,lifecycle
+gwy/tlbb.mrp,start.mr,815,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/tlbb.mrp,start.mr,830,suspend,suspend,ascii,other
+gwy/tlbb.mrp,start.mr,843,resume,resume,ascii,other
+gwy/tlbb.mrp,start.mr,855,sysinfo,sysinfo,ascii,other
+gwy/tlbb.mrp,start.mr,868,GetSysInfo,sysinfo,ascii,other
+gwy/tlbb.mrp,start.mr,924,sdk_key.dat,sdk_key.dat,ascii,other
+gwy/tlbb.mrp,start.mr,972,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,start.mr,1132,_mr_param,mr_param,ascii,other
+gwy/tlbb.mrp,start.mr,1326,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,start.mr,1344,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/tlbb.mrp,start.mr,2067,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,start.mr,2429,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,start.mr,2594,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,start.mr,2759,_strCom,_strcom,ascii,other
+gwy/tlbb.mrp,reg.ext,608,dream.ext,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,260896,strtab.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,260936,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,261420,goods_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,261484,equips_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,265892,script_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,265944,skills.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,265984,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,266164,fightinfo.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,266208,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,268172,gwy\tlbb.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,268520,selectRole.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268536,serviceID.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268552,http://wap.51mrp.com,,ascii,network_endpoint
+gwy/tlbb.mrp,dream.ext,268576,napptype=%d_nurl=%s_bapptype=%d_bextid=%d_bcode=%d_barg=%d_barg1=%d_bmrpname=%s,napptype,ascii,descriptor_cfg
+gwy/tlbb.mrp,dream.ext,268656,tlbb.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,268668,script%d.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268768,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,268808,mapdata0.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268824,fuben.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268836,mapnpc.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268848,forgeparam.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,268864,mixstone.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,270496,common_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271842,actorzj_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271862,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271882,equips_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271902,fight_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271922,goods_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,271942,script_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,272000,config.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,272296,actorzj_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,272360,fight_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,272636,formula.bin,,ascii,other
+gwy/tlbb.mrp,dream.ext,272676,data_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,272756,gwy\tlbb.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,273336,gwy\tlbb.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,273368,9.bmp,,ascii,other
+gwy/tlbb.mrp,dream.ext,273376,8.bmp,,ascii,other
+gwy/tlbb.mrp,dream.ext,273892,actorzj_m480.mrp,,ascii,dependency
+gwy/tlbb.mrp,dream.ext,276144,timer err:%d,timer,ascii,lifecycle
+gwy/tlbb.mrp,dream.ext,276160,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/tlbb.mrp,dream.ext,276172,timerCreate err 01,timer,ascii,lifecycle
+gwy/tlbb.mrp,dream.ext,276340,TimerState = %d,timer,ascii,lifecycle
+gwy/tlbb.mrp,dream.ext,276380,cache/exdet.dat,,ascii,other
+gwy/tlbb.mrp,dream.ext,276464,cache/exr.sav,,ascii,other
+gwy/tlbb.mrp,dream.ext,276804,bgappinf/appinf.dat,,ascii,other
+gwy/tlbb.mrp,dream.ext,18984,PH@!xD,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,19124,0H@!xD,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,27295,!@5),resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,46328,@^!i@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,52060,@Z!n,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,77047,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,77249,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,80353,!HD@k,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,80387,!HD@k,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,80463,!HD@k,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,85951,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,86988,$!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,88705,^<!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,91224,HD@k !,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,120889,h ```!i@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,121393,^:!Y^HC@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,123382, `!a``@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,125455,H@!xD,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,158658,!b i@Y,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,159029,!HD@0,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,177503,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,177609,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,180543,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,180595,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,180631,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,184473,!HD@i,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191239,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191433,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191581,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191645,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191675,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,191765,!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,192321,!HD@h,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,199250,<!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,199304,<!Y^@,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,206631,N~D@!mFhF,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,223842,"!K@""KD",resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,250252,&p-!ap@B,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,254340,@X_!,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,255346,@!hF,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,255590,hF@!lF,resource_grammar,ascii,other
+gwy/tlbb.mrp,dream.ext,258573,!Y^@,resource_grammar,ascii,other
+gwy/vdload.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/vdload.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy/vdload.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy/vdload.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/vdload.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy/vdload.mrp,start.mr,436,resume,resume,ascii,other
+gwy/vdload.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy/vdload.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy/vdload.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy/vdload.mrp,start.mr,737,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,start.mr,755,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/vdload.mrp,start.mr,1478,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,start.mr,1840,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,start.mr,2005,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,start.mr,2170,_strCom,_strcom,ascii,other
+gwy/vdload.mrp,reg.ext,776,vdload.ext,,ascii,dependency
+gwy/vdload.mrp,vdload.ext,11824,Connection: Keep-Alive,connect,ascii,network_endpoint
+gwy/vdload.mrp,vdload.ext,11868,Proxy-Connection: Keep-Alive,connect,ascii,network_endpoint
+gwy/vdload.mrp,vdload.ext,12148,/continueDownload,download|continuedownload,ascii,download_update
+gwy/vdload.mrp,vdload.ext,12168,/simpleDownload,download|simpledownload,ascii,download_update
+gwy/vdload.mrp,vdload.ext,12244,timer err:%d,timer,ascii,lifecycle
+gwy/vdload.mrp,vdload.ext,12260,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/vdload.mrp,vdload.ext,12272,timerCreate err 01,timer,ascii,lifecycle
+gwy/vdload.mrp,vdload.ext,12440,TimerState = %d,timer,ascii,lifecycle
+gwy/vdload.mrp,vdload.ext,12480,cache/exdet.dat,,ascii,other
+gwy/vdload.mrp,vdload.ext,12564,cache/exr.sav,,ascii,other
+gwy/wxjwq.mrp,start.mr,691,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy/wxjwq.mrp,start.mr,765,_mr_c_load,_mr_c_load,ascii,other
+gwy/wxjwq.mrp,start.mr,800,dealevent,dealevent|event,ascii,lifecycle
+gwy/wxjwq.mrp,start.mr,815,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/wxjwq.mrp,start.mr,830,suspend,suspend,ascii,other
+gwy/wxjwq.mrp,start.mr,843,resume,resume,ascii,other
+gwy/wxjwq.mrp,start.mr,855,sysinfo,sysinfo,ascii,other
+gwy/wxjwq.mrp,start.mr,868,GetSysInfo,sysinfo,ascii,other
+gwy/wxjwq.mrp,start.mr,924,sdk_key.dat,sdk_key.dat,ascii,other
+gwy/wxjwq.mrp,start.mr,972,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,start.mr,1132,_mr_param,mr_param,ascii,other
+gwy/wxjwq.mrp,start.mr,1517,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,start.mr,1535,mrc_loader.ext,mrc_loader,ascii,dependency
+gwy/wxjwq.mrp,start.mr,2419,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,start.mr,2781,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,start.mr,2946,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,start.mr,3111,_strCom,_strcom,ascii,other
+gwy/wxjwq.mrp,mrc_loader.ext,212,cfunction.ext,cfunction.ext,ascii,dependency
+gwy/wxjwq.mrp,reg.ext,688,mmochat.ext,,ascii,dependency
+gwy/wxjwq.mrp,mmochat.ext,306796,gwy/xjwq/xjwq.res,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,308396,text.res,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,309748,mmochat.ext,,ascii,dependency
+gwy/wxjwq.mrp,mmochat.ext,309760,gwy/rollscr.mrp,,ascii,dependency
+gwy/wxjwq.mrp,mmochat.ext,311892,src\mmochat_update.c,update,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,311984,gwy/xjwq/xjwq.res,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312004,%smmochat_res%d.mrp.rs,,ascii,dependency
+gwy/wxjwq.mrp,mmochat.ext,312028,face1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312050,face2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312072,face3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312094,face4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312116,face5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312138,hill1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312160,hill2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312182,name1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312204,name2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312226,name3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312248,load1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312270,load2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312292,load3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312314,zhang.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,312356,system/gb12.uc2,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313216,gwy/xjwq/sfc.bin,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313236,sfcidx.bin,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313312,line1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313334,line2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313356,loghead.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313378,logfra1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313400,logfra2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313422,logfra3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313444,logfra4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313466,logbutt.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313488,logbutt2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313510,serbg1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313532,serbg2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313554,logser.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313576,light.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313598,loguser.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313620,light2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313642,rolebg1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313664,rolebg2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313686,rolebg3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313708,rolebg4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313730,pkbg.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313752,boy1_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313774,boy1_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313796,boy1_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313818,girl1_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313840,girl1_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313862,girl1_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313884,boy2_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313906,boy2_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313928,boy2_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313950,girl2_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313972,girl2_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,313994,girl2_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314016,boy3_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314038,boy3_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314060,boy3_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314082,girl3_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314104,girl3_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314126,girl3_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314148,frame.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314170,list.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314192,arrow.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314214,arrow2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314236,arrow3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314258,m1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314280,m1_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314302,m2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314324,m2_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314346,m3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314368,m4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314390,m4_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314412,1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314434,2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314456,3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314478,4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314500,5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314522,6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314544,7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314566,8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314588,9.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314610,10.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314632,11.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314654,13.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314676,14.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314698,15.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314720,16.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314742,17.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314764,18.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314786,19.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314808,20.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314830,21.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314852,22.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314874,30.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314896,31.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314918,32.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314940,33.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314962,34.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,314984,35.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315006,37.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315028,39.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315050,40.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315072,42.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315094,43.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315116,45.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315138,46.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315160,48.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315182,49.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315204,entry.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315226,entry2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315248,1_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315270,11_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315292,13_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315314,16_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315336,49_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315358,entry_s.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315380,roletag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315402,npctag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315424,guai1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315446,guai2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315468,guai3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315490,guai4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315512,guai5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315534,guai5_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315556,guai6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315578,guai7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315600,guai8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315622,guai9.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315644,guai10.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315666,guai11.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315688,guai12.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315710,guai13.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315732,guai14.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315754,guai15.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315776,guai16.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315798,guai17.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315820,guai18.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315842,guai19.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315864,guai20.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315886,guai21.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315908,guai22.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315930,guai23.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315952,guai24.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315974,guai25.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,315996,guai11_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316018,guai12_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316040,guai13_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316062,guai14_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316084,guai15_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316106,guai16_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316128,guai17_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316150,guai18_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316172,guai19_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316194,guai20_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316216,guai21_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316238,guai25_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316260,teamtag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316282,fight1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316304,fight2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316326,tool.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316348,shop1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316370,shop2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316392,nopet.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316414,pethead.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316436,role2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316458,posnum.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316480,num0.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316502,num1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316524,num2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316546,num3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316568,num4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316590,num5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316612,num6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316634,num7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316656,num8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316678,num9.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316700,wait.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316722,blood0.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316744,blood1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316766,blood2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316788,blood3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316810,blood4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316832,blood5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316854,blood6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316876,blood7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316898,blood8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316920,blood9.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316942,blood10.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316964,god1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,316986,god2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317008,god3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317030,god4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317052,god5_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317074,god5_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317096,god5_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317118,god5_4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317140,god5_5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317162,god5_6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317184,god5_7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317206,god5_8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317228,devil1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317250,devil2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317272,devil3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317294,devil4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317316,devil5_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317338,devil5_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317360,devil5_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317382,devil5_4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317404,devil5_5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317426,devil5_6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317448,devil5_7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317470,devil5_8.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317492,devil5_9.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317514,devil5_a.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317536,devil5_b.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317558,human1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317580,human2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317602,human3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317624,human5_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317646,human5_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317668,human5_3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317690,human5_4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317712,human5_5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317734,human5_6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317756,physical.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317778,act_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317800,act_b1_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317822,act_b1_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317844,act_g1_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317866,act_g1_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317888,act_b2_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317910,act_b2_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317932,act_g2_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317954,act_g2_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317976,act_b3_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,317998,act_b3_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318020,act_g3_1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318042,act_g3_2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318064,action2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318086,blood.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318108,sprit.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318130,dead.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318152,dead2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318174,catch.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318196,levelup1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318218,levelup2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318240,select.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318262,select2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318284,listbmp.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318306,pattern1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318328,pattern2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318350,title1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318372,add.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318394,worldtag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318416,white.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318438,prop1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318460,prop2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318482,prop3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318504,prop4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318526,prop5.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318548,prop6.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318570,prop7.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318592,drug.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318614,material.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318636,boytag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318658,girltag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318680,target.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318702,chattag.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318724,em23.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318746,weffect1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318768,weffect2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318790,hide.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318812,guide1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318834,guide2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318856,guide3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318878,guide4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318900,grid1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318922,gridnum.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318944,bet1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318966,ready.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,318988,go.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319010,win.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319032,newtask.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319054,dotask.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319076,fly1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319098,fly2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319120,fly3.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319142,fly4.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319164,clock.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319186,new.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319208,suit1.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319230,suit2.bmp,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319348,timer err:%d,timer,ascii,lifecycle
+gwy/wxjwq.mrp,mmochat.ext,319364,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy/wxjwq.mrp,mmochat.ext,319376,timerCreate err 01,timer,ascii,lifecycle
+gwy/wxjwq.mrp,mmochat.ext,319544,TimerState = %d,timer,ascii,lifecycle
+gwy/wxjwq.mrp,mmochat.ext,319584,cache/exdet.dat,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,319668,cache/exr.sav,,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,12367,"""P!@",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,63189,GfJzD! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,79181,JzD! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,79273,JzD! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,79613,GDJzD! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,99147,!HD@i,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,99249,!HD@i,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,99357,!HD@i,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,104401,!Y^@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,106073,h!6@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,116137,!HD00@h,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,121372,yD! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,135694,3K! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,136115,H !HD@h,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,138103,!HD@i,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,159579,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,159723,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,159889,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,160597,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,160885,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,171854,2!HD$8@j,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,173879,!aC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,180517,G! @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,182577,!aC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,182613,!aC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,182659,!aC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,195857,!A1@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,199053,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,199197,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,199367,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,201741,"G@""@!",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,201891,"G@!@""",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,202041,"G@""@!",resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,219609,!aC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,223242,HC!h@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,223313,!u @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,227561,!u @,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,284049,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,284089,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,284171,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,284211,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,286363,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,286383,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,287003,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,287597,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,288045,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,288947,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,289531,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,289973,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,290881,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,291463,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,291945,!iC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,295121,!aC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,295141,!aC@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,302049,h@!BRboA,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304164,!h #@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304286,!h #@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304336,!h(#@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304454,!h(#@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304947,!yC(i@,resource_grammar,ascii,other
+gwy/wxjwq.mrp,mmochat.ext,304983,!yC(i@,resource_grammar,ascii,other
+gwy.mrp,start.mr,284,p_mr_param,p_mr_param|mr_param,ascii,other
+gwy.mrp,start.mr,358,_mr_c_load,_mr_c_load,ascii,other
+gwy.mrp,start.mr,393,dealevent,dealevent|event,ascii,lifecycle
+gwy.mrp,start.mr,408,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy.mrp,start.mr,423,suspend,suspend,ascii,other
+gwy.mrp,start.mr,436,resume,resume,ascii,other
+gwy.mrp,start.mr,448,sysinfo,sysinfo,ascii,other
+gwy.mrp,start.mr,461,GetSysInfo,sysinfo,ascii,other
+gwy.mrp,start.mr,477,_strCom,_strcom,ascii,other
+gwy.mrp,start.mr,531,_mr_param,mr_param,ascii,other
+gwy.mrp,start.mr,928,_strCom,_strcom,ascii,other
+gwy.mrp,start.mr,946,mrc_loader.ext,mrc_loader,ascii,dependency
+gwy.mrp,start.mr,1830,_strCom,_strcom,ascii,other
+gwy.mrp,start.mr,2192,_strCom,_strcom,ascii,other
+gwy.mrp,start.mr,2357,_strCom,_strcom,ascii,other
+gwy.mrp,start.mr,2522,_strCom,_strcom,ascii,other
+gwy.mrp,mrc_loader.ext,212,cfunction.ext,cfunction.ext,ascii,dependency
+gwy.mrp,graphics.ext,13240,system/gb12.uc2,,ascii,other
+gwy.mrp,graphics.ext,13256,sfc.bin,,ascii,other
+gwy.mrp,graphics.ext,13360,timer err:%d,timer,ascii,lifecycle
+gwy.mrp,graphics.ext,13376,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy.mrp,graphics.ext,13388,timerCreate err 01,timer,ascii,lifecycle
+gwy.mrp,graphics.ext,13556,TimerState = %d,timer,ascii,lifecycle
+gwy.mrp,graphics.ext,13596,cache/exdet.dat,,ascii,other
+gwy.mrp,graphics.ext,13680,cache/exr.sav,,ascii,other
+gwy.mrp,cfunction.ext,46528,Proxy-Connection: Close,connect,ascii,network_endpoint
+gwy.mrp,cfunction.ext,46556,Connection: Close,connect,ascii,network_endpoint
+gwy.mrp,cfunction.ext,46768,Proxy-Connection: Keep-Alive,connect,ascii,network_endpoint
+gwy.mrp,cfunction.ext,46800,Connection: Keep-Alive,connect,ascii,network_endpoint
+gwy.mrp,cfunction.ext,46928,CONNECT ,connect,ascii,network_endpoint
+gwy.mrp,cfunction.ext,47540,cfunction.ext,cfunction.ext,ascii,dependency
+gwy.mrp,cfunction.ext,47572,gwy\reglogin.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47592,gwy\dload.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47608,gwy\gui.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47620,gwy\rollscr.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47636,gwy\gamelist.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47656,gwy\resmng.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47672,bubble.bmp,,ascii,other
+gwy.mrp,cfunction.ext,47684,logo.bmp,,ascii,other
+gwy.mrp,cfunction.ext,47696,bubble_bk.bmp,,ascii,other
+gwy.mrp,cfunction.ext,47724,gwy\vdload.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47740,gwy\gamelist.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47760,gwy\rollscr.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47776,gwy\pmsg.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47792,gwy\dload.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47808,gwy\reglogin.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47828,gwy\gui.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47840,gwy\resmng.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47856,gwy\embfrd.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47872,gwy\svrctrl.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47888,gwy\font.mrp,,ascii,dependency
+gwy.mrp,cfunction.ext,47912,reg.ext,,ascii,dependency
+gwy.mrp,cfunction.ext,48500,mainext.ext,,ascii,dependency
+gwy.mrp,cfunction.ext,48512,graphics.ext,,ascii,dependency
+gwy.mrp,cfunction.ext,48624,timer err:%d,timer,ascii,lifecycle
+gwy.mrp,cfunction.ext,48640,dealtimer,dealtimer|timer,ascii,lifecycle
+gwy.mrp,cfunction.ext,48652,timerCreate err 01,timer,ascii,lifecycle
+gwy.mrp,cfunction.ext,48808,TimerState = %d,timer,ascii,lifecycle
+gwy.mrp,cfunction.ext,48848,cache/exdet.dat,,ascii,other
+gwy.mrp,cfunction.ext,48932,cache/exr.sav,,ascii,other
+gwy.mrp,cfunction.ext,7211,!hF@,resource_grammar,ascii,other
+gwy.mrp,cfunction.ext,12357,!HD@h,resource_grammar,ascii,other

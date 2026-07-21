@@ -1,0 +1,13 @@
+digraph G {
+ graph [rankdir=LR, bgcolor="white", pad=0.2, nodesep=0.35, ranksep=0.5, fontname="Noto Sans CJK SC"];
+ node [shape=box, style="rounded,filled", fontname="Noto Sans CJK SC", fontsize=11, margin="0.14,0.08", color="#4472A6", fillcolor="#F4F7FB"];
+ edge [fontname="Noto Sans CJK SC", fontsize=9, color="#657786", arrowsize=0.7];
+ input [label="同一份只读文件资料\ncfg.bin / reg.ext / MRP members / hashes"];
+ product [label="产品轨：descriptor-direct\n解析真实 cfg → 原始目标 MRP\n诚实标记 source=descriptor_launcher", fillcolor="#E9F5EF", color="#2E7D5B"];
+ research [label="研究兼容轨：native GWY shell\ngbrwcore → gamelist → update → runapp", fillcolor="#FFF4E5", color="#C47A16"];
+ runtime [label="同一通用 runtime\npackage scope / VFS / EXT / event / graphics"];
+ games [label="多类原始游戏验收\nJJFB / WXJWQ / TLBB / spacetime / sanguo"];
+ input -> product; input -> research;
+ product -> runtime; research -> runtime;
+ runtime -> games;
+}

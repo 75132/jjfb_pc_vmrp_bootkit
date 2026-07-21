@@ -1,0 +1,28 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="white", pad=0.2, nodesep=0.35, ranksep=0.45, fontname="Noto Sans CJK SC"];
+  node [shape=box, style="rounded,filled", fillcolor="#F3F7FB", color="#4472A6", fontname="Noto Sans CJK SC", fontsize=11, margin="0.14,0.08"];
+  edge [color="#657786", arrowsize=0.7, fontname="Noto Sans CJK SC", fontsize=9];
+  root [label="mythroad/240x320\n平台根目录"];
+  gwyroot [label="gwy.mrp\n社区根包\nstart.mr + mrc_loader + graphics/cfunction"];
+  core [label="gbrwcore.mrp\n命名服务 / 文件 / 更新 / runapp 代理"];
+  list [label="gamelist.mrp\ncfg.bin 目录 / descriptor / 选择"];
+  shell [label="gbrwshell.mrp\n下载任务 / 文件管理 / 进度 UI"];
+  services [label="服务包族\nroomlist / reglogin / resmng / font\ndload / vdload / pay modules"];
+  game [label="目标游戏 MRP\nstart.mr → reg.ext / mrc_loader → primary EXT"];
+  mrc [label="mrc_loader 类\nJJFB(robotol) / WXJWQ(mmochat)"];
+  direct [label="直接 primary EXT 类\nTLBB(dream) / spacetime / sanguo / ..."];
+  side [label="外置资源与 side-pack\njjfbol/*.mrp + .v / xjwq/res/mrp / 游戏子目录"];
+  platform [label="通用平台运行时\nMRP/VFS • package scope • EXT context\nallocator • timer/event • graphics/text • network boundary", fillcolor="#E9F5EF", color="#2E7D5B"];
+  root -> gwyroot -> core;
+  core -> list [label="服务导出 / 回调"];
+  core -> shell;
+  core -> services;
+  list -> game [label="cfg descriptor → startGame/runapp"];
+  game -> mrc;
+  game -> direct;
+  mrc -> side;
+  direct -> side;
+  platform -> gwyroot [dir=both, label="平台契约"];
+  platform -> core [dir=both];
+  platform -> game [dir=both];
+}
