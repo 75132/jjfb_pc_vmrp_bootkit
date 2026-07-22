@@ -8,6 +8,7 @@
 #include "gwy_launcher/e10a31j_smscfg_long.h"
 #include "gwy_launcher/e10a31l_config_map.h"
 #include "gwy_launcher/e10a31m_fail_2e5404.h"
+#include "gwy_launcher/e10a31n_post_range.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
@@ -24,7 +25,7 @@
 #include <time.h>
 
 #define E10A31D_HIST_MAX 512
-#define E10A31D_INSN_MAX 20000
+#define E10A31D_INSN_MAX 80000
 #define E10A31D_CALL_MAX 2048
 #define E10A31D_API_MAX 256
 #define E10A31D_APPINFO_READ_MAX 64
@@ -463,6 +464,7 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
     if (method == 0u) e10a31j_on_method0_enter(uc, helper);
     if (method == 0u) e10a31l_on_method0_enter(uc, helper);
     if (method == 0u) e10a31m_on_method0_enter(uc, helper);
+    if (method == 0u) e10a31n_on_method0_enter(uc, helper);
     if (method == 0u && g_d.m0_trace) e10a31d_method0_trace_arm(uc, helper);
 }
 
@@ -480,6 +482,7 @@ void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t r
         e10a31j_on_method0_return(uc, helper, ret);
         e10a31l_on_method0_return(uc, helper, ret);
         e10a31m_on_method0_return(uc, helper, ret);
+        e10a31n_on_method0_return(uc, helper, ret);
     }
 
     if (g_d.history && g_d.hist_n > 0) {
@@ -643,7 +646,26 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
     InsnRow *row;
     (void)user_data;
     if (!g_d.m0_active || g_d.first_failure_proven) return;
-    if (g_d.m0_insn_used >= g_d.m0_insn_budget) return;
+    /* After dense D budget, still forward to e10a31n so post-range strstr chain is observed. */
+    if (g_d.m0_insn_used >= g_d.m0_insn_budget) {
+        uint32_t r5 = 0;
+        if (!e10a31n_enabled()) return;
+        uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+        uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+        uc_reg_read(uc, UC_ARM_REG_R0, &r0);
+        uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+        uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+        uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+        uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+        uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+        uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+        uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
+        memset(raw, 0, sizeof(raw));
+        if (size > 8) size = 8;
+        (void)uc_mem_read(uc, address, raw, size);
+        e10a31n_on_method0_insn(uc, pc, lr, sp, r0, r1, r2, r3, r4, r5, r9, cpsr, raw, size);
+        return;
+    }
     g_d.m0_insn_used++;
     g_d.insn_count_global++;
 
@@ -734,6 +756,7 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
         uint32_t r5 = 0;
         uc_reg_read(uc, UC_ARM_REG_R5, &r5);
         e10a31m_on_method0_insn(uc, pc, lr, sp, r0, r1, r2, r3, r4, r5, r9, cpsr, raw, size);
+        e10a31n_on_method0_insn(uc, pc, lr, sp, r0, r1, r2, r3, r4, r5, r9, cpsr, raw, size);
     }
 
     /* Detect R0 *becoming* -1 (edge), not remaining -1 across stores. */

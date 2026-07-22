@@ -1,5 +1,6 @@
 #include "gwy_launcher/gwy_sms_cfg.h"
 
+#include "gwy_launcher/e10a31n_post_range.h"
 #include "gwy_launcher/ext_chunk_provider.h"
 #include "gwy_launcher/sha256.h"
 
@@ -41,7 +42,8 @@ static void ensure_flags(void) {
     g_known = 1;
     g_diag = env1("GWY_DIAG_SMSCFG_GPT_MINIMAL");
     g_bootstrap = env1("GWY_SMSCFG_BOOTSTRAP") || env1("JJFB_E10A31K_MODE") ||
-                  env1("JJFB_E10A31L_MODE") || env1("JJFB_E10A31M_MODE");
+                  env1("JJFB_E10A31L_MODE") || env1("JJFB_E10A31M_MODE") ||
+                  env1("JJFB_E10A31N_MODE");
     g_s.cfg_len = GWY_SMS_CFG_LEN;
     g_s.mr_version = GWY_SMS_CFG_MR_VERSION;
 }
@@ -179,6 +181,18 @@ static int apply_compat_profile(void *uc, uint32_t cfg_guest) {
         const SmsCfgCompatTag *t = &prof->required_tags[i];
         if (!t->length || t->length > GWY_SMS_CFG_TAG_DATA_MAX) continue;
         if ((uint32_t)t->offset + t->length > g_s.cfg_len) continue;
+        /*
+         * E10A-3.1m/n: int16@0x355 is content-valid but early bootstrap write
+         * causes host ACCESS_VIOLATION. Defer to method0-enter diagnostic apply
+         * (JJFB_E10A31N_APPLY_INT16) until a safe product lifecycle point exists.
+         */
+        if (t->offset == 0x355u) {
+            printf("[SMSCFG_PROFILE_DEFER] offset=0x355 length=%u reason=EARLY_APPLICATION_UNSAFE "
+                   "apply=method0_enter_diagnostic evidence=OBSERVED\n",
+                   t->length);
+            fflush(stdout);
+            continue;
+        }
         if (!write_guest(uc, cfg_guest + t->offset, t->data, t->length)) return 0;
     }
     snprintf(g_s.profile_id, sizeof(g_s.profile_id), "%s",
@@ -338,9 +352,10 @@ static int apply_bootstrap(void *uc) {
     g_s.initialized = 1;
     g_applied_bootstrap = 1;
     log_bootstrap(src);
+    e10a31n_on_smscfg_bootstrap_applied(g_s.cfg_guest, g_s.dsm_generation, source_name(src));
     /* Bootstrap-time APPLY_INT16 disabled: early write at 0x355 caused host crash
      * before method0 (see APPLY_HOST_CRASH_BEFORE_METHOD0). Controlled apply is
-     * performed at method0 enter in e10a31m instead. */
+     * performed at method0 enter in e10a31m/e10a31n instead. */
     {
         uint8_t gpt[3] = {0, 0, 0};
         uint8_t gwy[3] = {0, 0, 0};
@@ -368,6 +383,7 @@ void gwy_sms_cfg_on_erw(void *uc, uint32_t helper, uint32_t erw_base, uint32_t e
         return;
     }
     if (!gwy_sms_cfg_resolve(uc, erw_base, erw_size, 0)) return;
+    e10a31n_on_smscfg_buffer_ready(g_s.cfg_guest, g_s.erw_base, g_s.dsm_generation);
     /* Diagnostic A/B takes precedence when explicitly requested. */
     if (g_diag) {
         (void)apply_diagnostic_gpt(uc ? uc : g_uc);

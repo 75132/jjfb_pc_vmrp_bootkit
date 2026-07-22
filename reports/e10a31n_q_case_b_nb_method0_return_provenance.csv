@@ -1,0 +1,2 @@
+run_id,first_failure_seq,failure_pc,failure_lr,enclosing_function,failing_callee,platform_api,input_args,return_value,branch_pc,predicate,final_helper_return_path,evidence,class
+1784738290521,27764,0xA1B8C,0xA1B90,method0_dispatch,0x4B6E8E,"",input=0x0_len=2011,-1,0xA1B8C,"RETURN_NEG1_IMMEDIATE",helper_r0,r0_became_-1_at_pc=0x2802A4 after=0xA1B8C,RETURN_NEG1_IMMEDIATE

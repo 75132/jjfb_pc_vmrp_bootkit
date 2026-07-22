@@ -1,0 +1,20 @@
+{
+  "stage": "e10a31n",
+  "original_default_recovered": false,
+  "requirements": [
+    {"source":"sms_cfg","offset":841,"length":3,"bytes_hex":"475054","ascii":"GPT","required":true,"note":"proven_e10a31k"},
+    {"source":"sms_cfg","offset":844,"length":3,"bytes_hex":"677779","ascii":"gwy","required":true,"note":"proven_e10a31l"},
+    {"source":"sms_cfg","offset":853,"length":2,"encoding":"int16_le","expected_hex":"0100","min_inclusive":1,"max_inclusive":434,"required":true,"note":"proven_e10a31m_diag_apply_method0_enter"},
+    {"source":"sms_cfg","offset":887,"length":1,"observed_hex":"6E","compare_literal":"bapptype","evidence_pc":"0x2E3FB4","causal_status":"CAUSAL_PATH_TO_0x2E3FBA","required":false,"note":"0x377 is C-string haystack for strstr(,napptype); 0x355 is copy length (not a separate gate once length>=needle). Apply paired len+string diagnostically — original_default unknown","helper":"strstr@0xAC4A4","strlen_helper":"0xAC374","original_default_recovered":false}
+  ],
+  "requirement_count": 4,
+  "first_negative_pc": "0x2E3FBA",
+  "producer": "MVNS_after_strstr_NULL_from_0xAC4A4",
+  "predicate_pc": "0x2E3FB8",
+  "application_timing": {
+    "profile_content_valid": true,
+    "early_bootstrap_0x355_unsafe": true,
+    "diagnostic_apply_point": "method0_enter",
+    "product_bootstrap_ready": false
+  }
+}

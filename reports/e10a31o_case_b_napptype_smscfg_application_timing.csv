@@ -1,0 +1,6 @@
+run_id,phase,event,dsm_generation,cfg_guest,erw_base,note,evidence
+1784727364487,erw_ready,BUFFER_RESOLVED,1,0x280CD4,0x280400,"cfunction_erw_mapped",OBSERVED
+1784727364487,bootstrap,PROFILE_APPLIED,1,0x280CD4,0x0,"COMPAT_PROFILE",OBSERVED
+1784727364487,erw_ready,BUFFER_RESOLVED,1,0x280CD4,0x280400,"cfunction_erw_mapped",OBSERVED
+1784727364487,erw_ready,BUFFER_RESOLVED,1,0x280CD4,0x280400,"cfunction_erw_mapped",OBSERVED
+1784727364487,erw_ready,BUFFER_RESOLVED,1,0x280CD4,0x280400,"cfunction_erw_mapped",OBSERVED

@@ -1,0 +1,177 @@
+# E10A-3.1n function / call-site annotate around 0x2E5410
+
+- mrp: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480\gwy\gamelist.mrp`
+- code_base: 0x2D4354
+
+## Critical clarification
+
+- `0x2E5410` is a **BL call site**, not a function entry.
+- Target = `0x2E2FED` (PUSH at 0x2E2FEC): thin wrapper that calls `[R9+off]` with r0=value+1.
+- After return: `CMP r0,#0`; zero → shared -1 epilogue; nonzero → continue.
+- Dynamic path then copies SMSCFG+**0x377**, calls `0x2E2FED` again, then `BL 0x2E3F85`.
+
+## Literals
+
+  lit 0x2E5700 = 0x6DC
+  lit 0x2E5704 = 0x95C
+  lit 0x2E571C = 0x377
+  lit 0x2E3018 = 0xA14
+  lit 0x2E4028 = 0x960
+  lit 0x2E402C = 0x95C
+  lit 0x2E4030 = 0x964
+
+## Call site + continuation (0x2E5408..)
+
+  0x002E5408: 10AB          ADD r3, SP, #0x40
+  0x002E540A: 0820          MOVS r0, #0x8
+  0x002E540C: 185E          LDRSH r0, [r3, r0]
+  0x002E540E: 0130          ADDS r0, #0x1
+  0x002E5410: FDF7ECFD      BL -> 0x2E2FEC  <<< CALL_SITE BL alloc/dispatch 0x2E2FED (NOT a function entry)
+  0x002E5414: BA49          LDR r1, [pc, #0x2E8] lit=0x2E5700
+  0x002E5416: 0028          CMP r0, #0x0
+  0x002E5418: 4944          ADD r1, r9
+  0x002E541A: 0864          STR r0, [r1, #0x40]
+  0x002E541C: 01D1          BNE -> 0x2E5422
+  0x002E541E: 281C          ADDS r0, r5, #0x0
+  0x002E5420: C6E7          B -> 0x2E53B0
+  0x002E5422: 10AB          ADD r3, SP, #0x40
+  0x002E5424: 0822          MOVS r2, #0x8
+  0x002E5426: 9A5E          h0=0x5E9A
+  0x002E5428: B64B          LDR r3, [pc, #0x2D8] lit=0x2E5704
+  0x002E542A: 0D1C          ADDS r5, r1, #0x0
+  0x002E542C: 4B44          ADD r3, r9
+  0x002E542E: 1B68          LDR r3, [r3, #0x0]
+  0x002E5430: 0132          ADDS r2, #0x1
+  0x002E5432: 0021          MOVS r1, #0x0
+  0x002E5434: 9847          BLX r3
+  0x002E5436: 10AB          ADD r3, SP, #0x40
+  0x002E5438: 0822          MOVS r2, #0x8
+  0x002E543A: 9A5E          h0=0x5E9A
+  0x002E543C: 296C          LDR r1, [r5, #0x40]
+  0x002E543E: B748          LDR r0, [pc, #0x2DC] lit=0x2E571C
+  0x002E5440: FDF79EFE      BL -> 0x2E3180  <<< SMSCFG copy off=0x377 (from dynamic)
+  0x002E5444: 10AB          ADD r3, SP, #0x40
+  0x002E5446: 1889          h0=0x8918
+  0x002E5448: E887          h0=0x87E8
+  0x002E544A: B548          LDR r0, [pc, #0x2D4] lit=0x2E5720
+  0x002E544C: 4844          ADD r0, r9
+  0x002E544E: C068          LDR r0, [r0, #0xC]
+  0x002E5450: 0028          CMP r0, #0x0
+  0x002E5452: 0ED1          BNE -> 0x2E5472
+  0x002E5454: 1498          LDR r0, [SP, #0x50]
+  0x002E5456: 0028          CMP r0, #0x0
+  0x002E5458: 0BD1          BNE -> 0x2E5472
+  0x002E545A: B249          LDR r1, [pc, #0x2C8] lit=0x2E5724
+  0x002E545C: 7944          ADD r1, r15
+  0x002E545E: B24A          LDR r2, [pc, #0x2C8] lit=0x2E5728
+  0x002E5460: 286C          LDR r0, [r5, #0x40]
+  0x002E5462: 4A44          ADD r2, r9
+  0x002E5464: 1268          LDR r2, [r2, #0x0]
+  0x002E5466: 9047          BLX r2
+  0x002E5468: 0028          CMP r0, #0x0
+  0x002E546A: 02D0          BEQ -> 0x2E5472
+  0x002E546C: 01F01AFD      BL -> 0x2E6EA4
+  0x002E5470: 7FE0          B -> 0x2E5572
+  0x002E5472: 1020          MOVS r0, #0x10
+  0x002E5474: FDF7BAFD      BL -> 0x2E2FEC
+  0x002E5478: AC4B          LDR r3, [pc, #0x2B0] lit=0x2E572C
+  0x002E547A: 1190          h0=0x9011
+  0x002E547C: 2F1C          ADDS r7, r5, #0x0
+  0x002E547E: 7B44          ADD r3, r15
+  0x002E5480: 10AA          ADD r2, SP, #0x40
+  0x002E5482: 11A9          ADD r1, SP, #0x44
+  0x002E5484: 286C          LDR r0, [r5, #0x40]
+  0x002E5486: FEF77DFD      BL -> 0x2E3F84  <<< BL into fail-fn 0x2E3F85
+  0x002E548A: 431C          ADDS r3, r0, #0x1
+  0x002E548C: 71D0          BEQ -> 0x2E5572
+  0x002E548E: A849          LDR r1, [pc, #0x2A0] lit=0x2E5730
+  0x002E5490: 1198          LDR r0, [SP, #0x44]
+  0x002E5492: 4944          ADD r1, r9
+  0x002E5494: 0968          LDR r1, [r1, #0x0]
+  0x002E5496: 8847          BLX r1
+  0x002E5498: 0422          MOVS r2, #0x4
+  0x002E549A: 994F          LDR r7, [pc, #0x264] lit=0x2E5700
+  0x002E549C: 4F44          ADD r7, r9
+  0x002E549E: 3880          h0=0x8038
+  0x002E54A0: 391C          ADDS r1, r7, #0x0
+  0x002E54A2: 3431          ADDS r1, #0x34
+  0x002E54A4: A348          LDR r0, [pc, #0x28C] lit=0x2E5734
+  0x002E54A6: FDF76BFE      BL -> 0x2E3180
+  0x002E54AA: 786B          LDR r0, [r7, #0x34]
+  0x002E54AC: 0028          CMP r0, #0x0
+  0x002E54AE: 0CD1          BNE -> 0x2E54CA
+  0x002E54B0: A14B          LDR r3, [pc, #0x284] lit=0x2E5738
+  0x002E54B2: 7B44          ADD r3, r15
+  0x002E54B4: 10AA          ADD r2, SP, #0x40
+  0x002E54B6: 11A9          ADD r1, SP, #0x44
+  0x002E54B8: 386C          LDR r0, [r7, #0x40]
+  0x002E54BA: FEF763FD      BL -> 0x2E3F84
+  0x002E54BE: 9C49          LDR r1, [pc, #0x270] lit=0x2E5730
+  0x002E54C0: 1198          LDR r0, [SP, #0x44]
+  0x002E54C2: 4944          ADD r1, r9
+  0x002E54C4: 0968          LDR r1, [r1, #0x0]
+  0x002E54C6: 8847          BLX r1
+  0x002E54C8: 7863          STR r0, [r7, #0x34]
+  0x002E54CA: 8D4F          LDR r7, [pc, #0x234] lit=0x2E5700
+  0x002E54CC: 0126          MOVS r6, #0x1
+  0x002E54CE: 4F44          ADD r7, r9
+  0x002E54D0: 3888          h0=0x8838
+  0x002E54D2: 391D          h0=0x1D39
+  0x002E54D4: 1391          h0=0x9113
+  0x002E54D6: 0128          CMP r0, #0x1
+  0x002E54D8: 35D0          BEQ -> 0x2E5546
+  0x002E54DA: 0228          CMP r0, #0x2
+  0x002E54DC: 6CD0          BEQ -> 0x2E55B8
+  0x002E54DE: 0328          CMP r0, #0x3
+  0x002E54E0: 5DD1          BNE -> 0x2E559E
+  0x002E54E2: 0020          MOVS r0, #0x0
+  0x002E54E4: 0B90          h0=0x900B
+  0x002E54E6: 0A90          h0=0x900A
+  0x002E54E8: 381C          ADDS r0, r7, #0x0
+  0x002E54EA: 006C          LDR r0, [r0, #0x40]
+  0x002E54EC: 934B          LDR r3, [pc, #0x24C] lit=0x2E573C
+  0x002E54EE: 7B44          ADD r3, r15
+  0x002E54F0: 0AAA          ADD r2, SP, #0x28
+  0x002E54F2: 0BA9          ADD r1, SP, #0x2C
+  0x002E54F4: FEF746FD      BL -> 0x2E3F84
+  0x002E54F8: 041C          ADDS r4, r0, #0x0
+  0x002E54FA: 0B98          LDR r0, [SP, #0x2C]
+  0x002E54FC: 0028          CMP r0, #0x0
+  0x002E54FE: 4ED0          BEQ -> 0x2E559E
+  0x002E5500: 0A98          LDR r0, [SP, #0x28]
+  0x002E5502: 0028          CMP r0, #0x0
+  0x002E5504: 4BDD          BLE -> 0x2E559E
+  0x002E5506: F442          h0=0x42F4
+  0x002E5508: 49D0          BEQ -> 0x2E559E
+  0x002E550A: 0130          ADDS r0, #0x1
+  0x002E550C: FDF76EFD      BL -> 0x2E2FEC
+  0x002E5510: 7C4B          LDR r3, [pc, #0x1F0] lit=0x2E5704
+  0x002E5512: 0A9A          LDR r2, [SP, #0x28]
+  0x002E5514: 051C          ADDS r5, r0, #0x0
+  0x002E5516: 4B44          ADD r3, r9
+  0x002E5518: 1B68          LDR r3, [r3, #0x0]
+  0x002E551A: 0132          ADDS r2, #0x1
+  0x002E551C: 0021          MOVS r1, #0x0
+  0x002E551E: 9847          BLX r3
+  0x002E5520: 0B99          LDR r1, [SP, #0x2C]
+  0x002E5522: 0A9A          LDR r2, [SP, #0x28]
+  0x002E5524: 281C          ADDS r0, r5, #0x0
+  0x002E5526: 864B          LDR r3, [pc, #0x218] lit=0x2E5740
+
+## Callee 0x2E2FED
+
+  0x002E2FEC: 10B5          PUSH  <<< CALLEE entry (thumb)
+  0x002E2FEE: 041C          ADDS r4, r0, #0x0
+  0x002E2FF0: 0948          LDR r0, [pc, #0x24] lit=0x2E3018
+  0x002E2FF2: 4844          ADD r0, r9
+  0x002E2FF4: 0168          LDR r1, [r0, #0x0]
+  0x002E2FF6: 0029          h0=0x2900
+  0x002E2FF8: 02D0          BEQ -> 0x2E3000
+  0x002E2FFA: 201C          ADDS r0, r4, #0x0
+  0x002E2FFC: 8847          BLX r1
+  0x002E2FFE: 10BD          POP PC
+
+## Verdicts (static)
+
+- `METHOD0_2E5410_FUNCTION_IDENTIFIED` (as CALL_SITE_TO_0x2E2FED)
+

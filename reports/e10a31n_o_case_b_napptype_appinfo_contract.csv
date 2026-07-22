@@ -1,0 +1,5 @@
+run_id,phase,erw,slot_addr,expected,actual,appinfo_ptr,raw_hex,id,ver,sidName,sidName_mapped,sidName_str,ram,pkg_appid,pkg_appver,env_appid,env_appver,ret,note
+1784728142511,r9_plus_91c_code6,0x682B6C,0x683488,2011,0x7DB,0,,,0,0,0,0,,0,400101,1006,"","",0,gamelist_method6_store
+1784728142511,after_code6,0x682B6C,0x682B8C,2011,0x0,0,,,0,0,0,0,,0,400101,1006,"","",0,ERW_plus_0x20
+1784728142511,erw_scan_code6,0x682B6C,0x0,2011,0x0,0,"0000000000000000000000000000000000000000000000000000000000000000",0,0,0,0,,0,400101,1006,"","",0,scan_0_3c
+1784728142511,after_code8,0x682B6C,0x682B90,16,0x0,0x692594,E51A0600EE0300000000000000000000,400101,1006,0x0,0,"",0,400101,1006,"","",0,appinfo_16b

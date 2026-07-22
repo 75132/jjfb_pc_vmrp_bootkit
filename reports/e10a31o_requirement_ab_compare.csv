@@ -1,0 +1,3 @@
+case,method0_ret,armed,napptype_strstr,fail_needle,apply_napptype,note
+A_len1,-1,1,FAIL,napptype,0,"int16@0x355=1 only; empty haystack"
+B_napptype,-1,1,PASS,entry,1,"len=78+GWY_LAUNCH_PARAM; napptype ok atoi=12; next fail strstr entry"

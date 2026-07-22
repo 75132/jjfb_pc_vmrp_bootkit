@@ -1,0 +1,8 @@
+run_id,seq,pc,kind,r0,r1,lhs_str,rhs_str,note
+1784738290521,170,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E8510,"napptype=1_nextid=482_ncode=512_","napptype","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,186,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E8524,"napptype=1_nextid=482_ncode=512_","nextid","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,196,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E852C,"napptype=1_nextid=482_ncode=512_","ncode","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,206,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E8534,"napptype=1_nextid=482_ncode=512_","narg","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,216,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E853C,"napptype=1_nextid=482_ncode=512_","narg1","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,226,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E8544,"napptype=1_nextid=482_ncode=512_","nmrpname","lhs_smscfg=1 dest=0x2A83D8"
+1784738290521,237,0x2E3FB4,STRCMP_LIKE,0x2A83D8,0x2E8574,"napptype=1_nextid=482_ncode=512_","bapptype","lhs_smscfg=1 dest=0x2A83D8"

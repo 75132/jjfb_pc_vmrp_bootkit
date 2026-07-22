@@ -1,0 +1,3 @@
+case,ret0,fail_pc,apply,note
+A,-1,0x2E3FBA,GPT+gwy+int16@355(method0_enter),"baseline post-e10a31m; no new exact tag"
+B,skipped,skipped,none,"0x377 causal but expected value unproven — no apply this stage"
