@@ -1,0 +1,23 @@
+digraph fail_2e5404 {
+  rankdir=TB;
+  node [shape=box, fontname="Consolas"];
+  gwy_cmp [label="0x2E53DA BLX strcmp(gwy)\nCMP r0,#0"];
+  gwy_fail [label="0x2E53E0 ADDS r0,r5,#0\nB epilogue", style=filled, fillcolor="#ffcccc"];
+  copy355 [label="0x2E53EA BL sms_get\noff=0x355 len=2 -> SP+0x48"];
+  load [label="0x2E53EE ADD r3,SP,#0x40\n0x2E53F0 MOVS r0,#8\n0x2E53F2 LDRSH r0,[r3,r0]"];
+  pred_a [label="0x2E53F4 CMP r0,#0\n0x2E53F6 BLE fail\n(fail if <=0)", style=filled, fillcolor="#ffe0a0"];
+  pred_b [label="0x2E53FC..02 CMP vs 0x1B2\nBLE success / fallthrough fail\n(fail if >0x1B2)", style=filled, fillcolor="#ffe0a0"];
+  fail [label="0x2E5404 ADDS r0,r5,#0\n(r5=-1)\n0x2E5406 B epilogue", style=filled, fillcolor="#ff6666"];
+  ok [label="0x2E5408..10 value+1\nBL 0x2E2FED", style=filled, fillcolor="#ccffcc"];
+  epi [label="0x2E53B0 ADD SP / POP return -1"];
+
+  gwy_cmp -> gwy_fail [label="NE"];
+  gwy_cmp -> copy355 [label="EQ"];
+  gwy_fail -> epi;
+  copy355 -> load -> pred_a;
+  pred_a -> fail [label="LE (<=0)"];
+  pred_a -> pred_b [label="GT"];
+  pred_b -> ok [label="LE (<=0x1B2)"];
+  pred_b -> fail [label="GT"];
+  fail -> epi;
+}

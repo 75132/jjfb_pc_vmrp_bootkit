@@ -1,0 +1,121 @@
+# E10A-3.1m fail block annotate (0x2E5404 predecessor)
+
+- mrp: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480\gwy\gamelist.mrp`
+- code_base: 0x2D4354
+- window_va: 0x2E5380 .. 0x2E5430
+- file_off: 0x1102C
+
+## Critical finding
+
+- After gwy strcmp passes, guest copies **2 bytes** from SMSCFG+**0x355** to SP+0x48.
+- Loads them as **signed halfword** (`LDRSH`) via `ADD r3,SP,#0x40` + `MOVS r0,#8`.
+- Predicate A @ 0x2E53F4: `CMP r0, #0` / `BLE 0x2E5404` → fail if value <= 0.
+- Predicate B @ 0x2E5400: `MOVS r1,#0xFF; ADDS r1,#0xB3` → r1=**0x1B2**;
+  `CMP r0,r1` / `BLE success`; fallthrough to 0x2E5404 if value > 0x1B2.
+- Required range (from immediates, not brute force): **1 <= int16_le <= 0x1B2**.
+- 0x2E5404 is **common failure epilogue**: `ADDS r0, r5, #0` with r5=-1
+  (materialized earlier by `MVNS r5, r4` at 0x2E53A8), then `B` to function exit.
+- 0x355/0x356 are **one little-endian int16**, not two independent uint8 fields.
+
+## Literal pool
+
+  lit 0x2E5708 = 0x349
+  lit 0x2E570C = 0x30BC
+  lit 0x2E5710 = 0x94C
+  lit 0x2E5714 = 0x3084
+  lit 0x2E5718 = 0x355
+
+## Disassembly
+
+  0x002E5380: 9847          BLX r3
+  0x002E5382: 1022          MOVS r2, #0x10
+  0x002E5384: 0021          MOVS r1, #0x0
+  0x002E5386: 0CA8          ADD r0, SP, #0x30
+  0x002E5388: DE4B          LDR r3, [pc, #0x378] lit=0x2E5704
+  0x002E538A: 4B44          ADD r3, r9
+  0x002E538C: 1B68          LDR r3, [r3, #0x0]
+  0x002E538E: 9847          BLX r3
+  0x002E5390: 0322          MOVS r2, #0x3
+  0x002E5392: 0CA9          ADD r1, SP, #0x30
+  0x002E5394: DC48          LDR r0, [pc, #0x370] lit=0x2E5708
+  0x002E5396: FDF7F3FE      BL -> 0x2E3181
+  0x002E539A: DC49          LDR r1, [pc, #0x370] lit=0x2E570C
+  0x002E539C: 7944          ADD r1, r15
+  0x002E539E: DC4A          LDR r2, [pc, #0x370] lit=0x2E5710
+  0x002E53A0: 0CA8          ADD r0, SP, #0x30
+  0x002E53A2: 4A44          ADD r2, r9
+  0x002E53A4: 1268          LDR r2, [r2, #0x0]
+  0x002E53A6: 9047          BLX r2
+  0x002E53A8: E543          MVNS r5, r4  <<< MVNS r5,r4  (r4==0 => r5=0xFFFFFFFF for failure returns)
+  0x002E53AA: 0028          CMP r0, #0x0
+  0x002E53AC: 02D0          BEQ -> 0x2E53B4
+  0x002E53AE: 281C          ADDS r0, r5, #0x0
+  0x002E53B0: 15B0          ADD SP, #0x54
+  0x002E53B2: F0BD          POP
+  0x002E53B4: D34F          LDR r7, [pc, #0x34C] lit=0x2E5704
+  0x002E53B6: 1022          MOVS r2, #0x10
+  0x002E53B8: 4F44          ADD r7, r9
+  0x002E53BA: 3B68          LDR r3, [r7, #0x0]
+  0x002E53BC: 0021          MOVS r1, #0x0
+  0x002E53BE: 301C          ADDS r0, r6, #0x0
+  0x002E53C0: 9847          BLX r3
+  0x002E53C2: 0822          MOVS r2, #0x8
+  0x002E53C4: 311C          ADDS r1, r6, #0x0
+  0x002E53C6: D320          MOVS r0, #0xD3
+  0x002E53C8: 8000          h0=0x0080
+  0x002E53CA: FDF7D9FE      BL -> 0x2E3181
+  0x002E53CE: D149          LDR r1, [pc, #0x344] lit=0x2E5714
+  0x002E53D0: 7944          ADD r1, r15
+  0x002E53D2: CF4A          LDR r2, [pc, #0x33C] lit=0x2E5710
+  0x002E53D4: 301C          ADDS r0, r6, #0x0
+  0x002E53D6: 4A44          ADD r2, r9
+  0x002E53D8: 1268          LDR r2, [r2, #0x0]
+  0x002E53DA: 9047          BLX r2
+  0x002E53DC: 0028          CMP r0, #0x0
+  0x002E53DE: 01D0          BEQ -> 0x2E53E4
+  0x002E53E0: 281C          ADDS r0, r5, #0x0
+  0x002E53E2: E5E7          B -> 0x2E53B0
+  0x002E53E4: 0222          MOVS r2, #0x2
+  0x002E53E6: 12A9          ADD r1, SP, #0x48
+  0x002E53E8: CB48          LDR r0, [pc, #0x32C] lit=0x2E5718
+  0x002E53EA: FDF7C9FE      BL -> 0x2E3181  <<< copy SMSCFG+0x355 len=2 -> SP+0x48
+  0x002E53EE: 10AB          ADD r3, SP, #0x40
+  0x002E53F0: 0820          MOVS r0, #0x8
+  0x002E53F2: 185E          LDRSH r0, [r3, r0]
+  0x002E53F4: 0028          CMP r0, #0x0  <<< PREDICATE_A: CMP r0,#0 after LDRSH of SMSCFG+0x355
+  0x002E53F6: 05DD          BLE -> 0x2E5404  <<< BRANCH_A: BLE -> fail if int16_le <= 0  <<< TO_FAIL_EPILOGUE
+  0x002E53F8: 0820          MOVS r0, #0x8
+  0x002E53FA: 185E          LDRSH r0, [r3, r0]
+  0x002E53FC: FF21          MOVS r1, #0xFF
+  0x002E53FE: B331          ADDS r1, #0xB3
+  0x002E5400: 8842          CMP r0, r1  <<< PREDICATE_B: CMP r0,r1 (r1=0xFF+0xB3=0x1B2)
+  0x002E5402: 01DD          BLE -> 0x2E5408  <<< BRANCH_B: BLE -> success; fallthrough fail if value > 0x1B2
+  0x002E5404: 281C          ADDS r0, r5, #0x0  <<< FAILURE_PC: ADDS r0,r5,#0 (r5=-1 via prior MVNS) COMMON_EPILOGUE
+  0x002E5406: D3E7          B -> 0x2E53B0
+  0x002E5408: 10AB          ADD r3, SP, #0x40
+  0x002E540A: 0820          MOVS r0, #0x8
+  0x002E540C: 185E          LDRSH r0, [r3, r0]
+  0x002E540E: 0130          ADDS r0, #0x1
+  0x002E5410: FDF7ECFD      BL -> 0x2E2FED
+  0x002E5414: BA49          LDR r1, [pc, #0x2E8] lit=0x2E5700
+  0x002E5416: 0028          CMP r0, #0x0
+  0x002E5418: 4944          ADD r1, r9
+  0x002E541A: 0864          STR r0, [r1, #0x40]
+  0x002E541C: 01D1          BNE -> 0x2E5422
+  0x002E541E: 281C          ADDS r0, r5, #0x0
+  0x002E5420: C6E7          B -> 0x2E53B0
+  0x002E5422: 10AB          ADD r3, SP, #0x40
+  0x002E5424: 0822          MOVS r2, #0x8
+  0x002E5426: 9A5E          h0=0x5E9A
+  0x002E5428: B64B          LDR r3, [pc, #0x2D8] lit=0x2E5704
+  0x002E542A: 0D1C          ADDS r5, r1, #0x0
+  0x002E542C: 4B44          ADD r3, r9
+  0x002E542E: 1B68          LDR r3, [r3, #0x0]
+
+## Verdicts (static)
+
+- `METHOD0_2E5404_PREDECESSOR_IDENTIFIED`
+- `METHOD0_2E5404_COMMON_FAILURE_EPILOGUE`
+- `METHOD0_2E5404_RETURN_NEG1_IMMEDIATE` (via r5==-1 MOV)
+- Field type: int16_le @ SMSCFG+0x355 (covers bytes 0x355 and 0x356)
+

@@ -41,7 +41,7 @@ static void ensure_flags(void) {
     g_known = 1;
     g_diag = env1("GWY_DIAG_SMSCFG_GPT_MINIMAL");
     g_bootstrap = env1("GWY_SMSCFG_BOOTSTRAP") || env1("JJFB_E10A31K_MODE") ||
-                  env1("JJFB_E10A31L_MODE");
+                  env1("JJFB_E10A31L_MODE") || env1("JJFB_E10A31M_MODE");
     g_s.cfg_len = GWY_SMS_CFG_LEN;
     g_s.mr_version = GWY_SMS_CFG_MR_VERSION;
 }
@@ -338,6 +338,9 @@ static int apply_bootstrap(void *uc) {
     g_s.initialized = 1;
     g_applied_bootstrap = 1;
     log_bootstrap(src);
+    /* Bootstrap-time APPLY_INT16 disabled: early write at 0x355 caused host crash
+     * before method0 (see APPLY_HOST_CRASH_BEFORE_METHOD0). Controlled apply is
+     * performed at method0 enter in e10a31m instead. */
     {
         uint8_t gpt[3] = {0, 0, 0};
         uint8_t gwy[3] = {0, 0, 0};

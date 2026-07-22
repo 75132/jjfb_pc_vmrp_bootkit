@@ -7,6 +7,7 @@
 #include "gwy_launcher/e10a31h_smscfg.h"
 #include "gwy_launcher/e10a31j_smscfg_long.h"
 #include "gwy_launcher/e10a31l_config_map.h"
+#include "gwy_launcher/e10a31m_fail_2e5404.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
@@ -461,6 +462,7 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
 
     if (method == 0u) e10a31j_on_method0_enter(uc, helper);
     if (method == 0u) e10a31l_on_method0_enter(uc, helper);
+    if (method == 0u) e10a31m_on_method0_enter(uc, helper);
     if (method == 0u && g_d.m0_trace) e10a31d_method0_trace_arm(uc, helper);
 }
 
@@ -477,6 +479,7 @@ void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t r
         e10a31h_on_method0_return(uc, helper, ret);
         e10a31j_on_method0_return(uc, helper, ret);
         e10a31l_on_method0_return(uc, helper, ret);
+        e10a31m_on_method0_return(uc, helper, ret);
     }
 
     if (g_d.history && g_d.hist_n > 0) {
@@ -727,6 +730,11 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
     e10a31h_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
     e10a31j_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9);
     e10a31l_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
+    {
+        uint32_t r5 = 0;
+        uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+        e10a31m_on_method0_insn(uc, pc, lr, sp, r0, r1, r2, r3, r4, r5, r9, cpsr, raw, size);
+    }
 
     /* Detect R0 *becoming* -1 (edge), not remaining -1 across stores. */
     if (r0 == 0xFFFFFFFFu &&

@@ -1,0 +1,23 @@
+{
+  "source": "sms_cfg",
+  "offset": 853,
+  "length": 2,
+  "encoding": "int16_le",
+  "min_inclusive": 1,
+  "max_inclusive": 434,
+  "expected_hex": "0100",
+  "expected_note": "minimal_positive_within_immediates_1..0x1B2; not original_default",
+  "predicate": "1 <= int16_le(cfg+0x355) <= 0x1B2",
+  "predicate_pc": "0x2E53F4",
+  "predicate_b_pc": "0x2E5400",
+  "failure_pc": "0x2E5404",
+  "predecessor_pc": "0x2E53F6",
+  "field_type": "one_little_endian_int16_not_two_uint8",
+  "observed_value_before": 0,
+  "observed_value_after_apply": 1,
+  "after_apply_next_fail_pc": "0x2E3FBA",
+  "required": true,
+  "original_default_recovered": false,
+  "apply_phase": "method0_enter_not_bootstrap",
+  "apply_note": "bootstrap write caused host crash before method0; apply at method0 enter is safe"
+}

@@ -19,7 +19,7 @@
 
 static const SmsCfgCompatProfile g_profiles[] = {
     {
-        .profile_id = "mythroad_mini_2011_smscfg_0x10E0_gpt349_gwy34c",
+        .profile_id = "mythroad_mini_2011_smscfg_0x10E0_gpt349_gwy34c_i16_355",
         .cfunction_sha256 =
             {
                 0x8F, 0x85, 0xE3, 0xCF, 0x8F, 0x0E, 0xD4, 0xA8, 0xE0, 0x9E, 0xB6, 0x58,
@@ -41,12 +41,19 @@ static const SmsCfgCompatProfile g_profiles[] = {
                     .length = 3u,
                     .data = {'g', 'w', 'y'},
                 },
+                {
+                    /* Proven E10A-3.1m: int16_le @0x355; require 1..0x1B2 (immediates).
+                     * Minimal satisfying value 1 (le 01 00). original_default unknown. */
+                    .offset = 0x355u,
+                    .length = 2u,
+                    .data = {0x01, 0x00},
+                },
             },
-        .required_tag_count = 2u,
+        .required_tag_count = 3u,
     },
     {
         /* Diagnostic-only fallback — not for product selection. */
-        .profile_id = "mythroad_mini_2011_smscfg_0x10E0_gpt349_gwy34c_anyhash",
+        .profile_id = "mythroad_mini_2011_smscfg_0x10E0_gpt349_gwy34c_i16_355_anyhash",
         .cfunction_sha256 = {0},
         .mr_version = GWY_SMS_CFG_MR_VERSION,
         .cfg_length = GWY_SMS_CFG_LEN,
@@ -62,8 +69,13 @@ static const SmsCfgCompatProfile g_profiles[] = {
                     .length = 3u,
                     .data = {'g', 'w', 'y'},
                 },
+                {
+                    .offset = 0x355u,
+                    .length = 2u,
+                    .data = {0x01, 0x00},
+                },
             },
-        .required_tag_count = 2u,
+        .required_tag_count = 3u,
     },
 };
 

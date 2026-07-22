@@ -1,0 +1,3 @@
+classification,detail,evidence
+SMS_CFG,"int16_le@0x355 causal; range 1..0x1B2; apply moves fail to 0x2E3FBA",OBSERVED
+NEXT_FAIL_PC,"0x2E3FBA RETURN_NEG1_IMMEDIATE after gate pass",OBSERVED
