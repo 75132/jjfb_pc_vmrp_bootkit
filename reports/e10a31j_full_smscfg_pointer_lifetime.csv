@@ -1,0 +1,13 @@
+run_id,seq,phase,package,module,dsm_generation,mr_table,slot_1c0,cfg_base,cfg_len,mapped,changed,note
+1784714245920,1,DSM_BOOT_ENTER,dsm,bridge,1,0x280004,0x0,0x0,0x10E0,0,0,"slot_1c0_zero"
+1784714245920,3,DSM_BOOT_ENTER,dsm,bridge,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,5,DSM_BOOT_ENTER,dsm,bridge,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,7,SHELL_PHASE_GBRWCORE_START,gbrwcore.ext,gbrwcore.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,9,SHELL_PHASE_GBRWCORE_START,gbrwcore.ext,gbrwcore.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,19,SHELL_PHASE_GBRWCORE_CONTINUE,gbrwcore.ext,gbrwcore.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,21,SHELL_PHASE_GAMELIST_LOAD,gamelist.ext,gamelist.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,23,SHELL_PHASE_GAMELIST_LOAD,gamelist.ext,gamelist.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,33,SHELL_PHASE_CFG_FMT_MAPPED,gamelist.ext,gamelist.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,34,GAMELIST_EXT_FIRST_PC,gamelist,gamelist.ext,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,36,METHOD0_ENTER,gamelist,method0,1,0x280004,0x280CD4,0x280CD4,0x10E0,1,0,"erw+0x8D4_while_slot_1c0_zero"
+1784714245920,39,METHOD0_ENTER,gamelist,method0,1,0x281EFC,0x280CD4,0x280CD4,0x10E0,1,0,"live_r4_mr_table"

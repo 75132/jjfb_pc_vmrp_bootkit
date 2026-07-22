@@ -1,0 +1,3 @@
+﻿run_id,window,any_write,write_before,write_during,write_349,setbytes_349,direct_copy,load_called,dsm_open,dsm_missing,dsm_loaded,never_init,empty_gpt_fail,observe_stop,elapsed
+1784714245920,full,0,0,0,0,0,0,0,0,0,0,1,1,OBSERVE_STOP_E10A31J,85.2
+1784714331478,gamelist,0,0,0,0,0,0,0,0,0,0,1,1,OBSERVE_STOP_E10A31J,83.8

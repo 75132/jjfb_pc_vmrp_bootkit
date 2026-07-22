@@ -1,4 +1,4 @@
-#include "gwy_launcher/ext_loader.h"
+﻿#include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/ext_entry_observe.h"
 #include "gwy_launcher/ext_chunk_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
@@ -26,6 +26,7 @@
 #include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/e10a31b_publication.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
+#include "gwy_launcher/e10a31j_smscfg_long.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -100,6 +101,7 @@ static int env_flag(const char *name) {
 
 void gwy_ext_obs_bind_uc(void *uc) {
     g_bound_uc = uc;
+    e10a31j_bind_uc(uc);
     gwy_guest_call_observer_bind_uc(uc);
     ext_entry_observe_bind_uc(uc);
     ext_chunk_observe_bind_uc(uc);
@@ -172,6 +174,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
     ext_callback_frame_on_host_enter(uc, slot_addr, name);
+    e10a31j_on_host_api_enter(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 1, 0);
     ext_gwy_startgame_audit_on_plat_or_testcom(uc, name, slot_addr);
     if (name && (strstr(name, "TestCom") || strstr(name, "testcom") || strstr(name, "plat"))) {
@@ -196,6 +199,7 @@ void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *n
 
 void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *name) {
     ext_callback_frame_on_host_leave(uc, slot_addr, name);
+    e10a31j_on_host_api_leave(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 0, 0);
 }
 
@@ -334,6 +338,7 @@ void gwy_ext_obs_extchunk_set_sendappevent(uint32_t guest_addr) {
 
 void gwy_ext_obs_extchunk_set_mr_table(uint32_t guest_addr) {
     ext_chunk_provider_set_mr_table_guest(guest_addr);
+    e10a31j_on_mr_table(guest_addr);
 }
 
 int gwy_ext_obs_extchunk_want(uint32_t helper) {
@@ -1065,6 +1070,7 @@ void gwy_ext_obs_p_update(uint32_t helper,
                           uint32_t stack_base) {
     ExtLoader *L = gwy_ext_loader_ensure();
     if (!helper) return;
+    if (rw_base) e10a31j_on_erw(g_bound_uc, rw_base, rw_size);
     ext_module_data_init_on_cfunction_p(helper, 0, 0, rw_base, rw_size);
     ext_er_rw_producer_on_cfunction_p(helper, 0, 0, rw_base, rw_size);
     ext_bootstrap_abi_on_cfunction_p(helper, 0, 0, rw_base, rw_size);
@@ -1188,6 +1194,7 @@ void gwy_ext_obs_alloc(uint32_t guest_addr, uint32_t size) {
 }
 
 void gwy_ext_obs_block_copy(uint32_t dst, uint32_t src, uint32_t len) {
+    e10a31j_on_block_copy(g_bound_uc, dst, src, len);
     ext_chunk_observe_block_copy(dst, src, len);
     ext_helper_handoff_on_block_copy(dst, src, len);
     ext_dsm_record_on_block_copy(dst, src, len);
@@ -1430,6 +1437,7 @@ const char *gwy_shell_shim_continue_param(void) {
 }
 
 void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *name) {
+    e10a31j_on_unimpl_api(uc, slot_addr, name);
     ext_gwy_startgame_audit_on_plat_or_testcom(uc, name, slot_addr);
     ext_post_cont_audit_note_unimplemented(name);
     printf("[POST_CONT_UNIMPLEMENTED_API] api=%s slot=0x%X evidence=OBSERVED "

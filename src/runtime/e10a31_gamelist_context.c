@@ -1,6 +1,7 @@
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a31b_publication.h"
 #include "gwy_launcher/e10a31d_provenance.h"
+#include "gwy_launcher/e10a31j_smscfg_long.h"
 
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/ext_chunk_provider.h"
@@ -310,6 +311,7 @@ void e10a31_mark_ext_first_pc(void) {
     g_e31.ext_first_pc = 1;
     e10a31_mark_milestone("GAMELIST_EXT_FIRST_PC", "first_guest_pc_not_init_complete");
     e10a31d_on_ext_first_pc();
+    e10a31j_on_ext_first_pc();
     e10a3_mark_gamelist_init_ok();
     /*
      * Defer UC_HOOK_MEM_READ until gamelist is live. Arming during gbrwcore
@@ -610,7 +612,7 @@ void e10a31_launch_param_mapped(void *uc, uint32_t param_va, uint32_t param_len,
                                 const char *entry) {
     if (uc) g_e31.uc = uc;
 #ifdef GWY_HAVE_UNICORN
-    /* Remap: drop prior hook if the entry string moved (gbrwcore → gamelist). */
+    /* Remap: drop prior hook if the entry string moved (gbrwcore 鈫?gamelist). */
     if (g_e31.param_hook_armed && g_e31.uc && g_e31.param_va && g_e31.param_va != param_va) {
         uc_hook_del((uc_engine *)g_e31.uc, g_e31.param_read_hook);
         g_e31.param_hook_armed = 0;

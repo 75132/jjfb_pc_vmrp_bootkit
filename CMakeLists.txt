@@ -76,6 +76,7 @@ add_library(launcher_core STATIC
     src/runtime/e10a31f_failsite.c
     src/runtime/e10a31g_strcmp.c
     src/runtime/e10a31h_smscfg.c
+    src/runtime/e10a31j_smscfg_long.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c

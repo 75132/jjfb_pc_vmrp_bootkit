@@ -5,6 +5,7 @@
 #include "gwy_launcher/e10a31f_failsite.h"
 #include "gwy_launcher/e10a31g_strcmp.h"
 #include "gwy_launcher/e10a31h_smscfg.h"
+#include "gwy_launcher/e10a31j_smscfg_long.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
@@ -457,6 +458,7 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
            g_d.method0_count);
     fflush(stdout);
 
+    if (method == 0u) e10a31j_on_method0_enter(uc, helper);
     if (method == 0u && g_d.m0_trace) e10a31d_method0_trace_arm(uc, helper);
 }
 
@@ -471,6 +473,7 @@ void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t r
         e10a31f_on_method0_return(uc, helper, ret);
         e10a31g_on_method0_return(uc, helper, ret);
         e10a31h_on_method0_return(uc, helper, ret);
+        e10a31j_on_method0_return(uc, helper, ret);
     }
 
     if (g_d.history && g_d.hist_n > 0) {
@@ -608,9 +611,9 @@ static int is_neg1_imm_thumb(uint16_t h0, uint16_t h1, int size) {
      */
     (void)h1;
     if (size == 2) {
-        /* mvns r0, r0 → not necessarily; movs r0, #0 then separate.
+        /* mvns r0, r0 鈫?not necessarily; movs r0, #0 then separate.
          * ldr r0, [pc, #imm] loading 0xFFFFFFFF handled elsewhere.
-         * movs r0, #imm: 00100 000 iiiiiiii → 0x2000|imm — imm 0..255, not -1.
+         * movs r0, #imm: 00100 000 iiiiiiii 鈫?0x2000|imm 鈥?imm 0..255, not -1.
          */
         if ((h0 & 0xFFC0) == 0x4240) return 0; /* negs */
         /* Thumb-1 cannot encode -1 as MOV imm. */
@@ -618,7 +621,7 @@ static int is_neg1_imm_thumb(uint16_t h0, uint16_t h1, int size) {
     }
     /* Thumb-2 MOVW/MOVT or MVN immediate: rough detect MVN rd,#imm with result -1 */
     if ((h0 & 0xFBE0) == 0xF06F && (h1 & 0x8000) == 0x0000) {
-        /* MVN.W Rd, #const — if const expands to 0 => Rd=-1 */
+        /* MVN.W Rd, #const 鈥?if const expands to 0 => Rd=-1 */
         return 1; /* treat MVN.W as candidate; refine via runtime r0 */
     }
     return 0;
@@ -719,6 +722,7 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
     e10a31f_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
     e10a31g_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
     e10a31h_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
+    e10a31j_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9);
 
     /* Detect R0 *becoming* -1 (edge), not remaining -1 across stores. */
     if (r0 == 0xFFFFFFFFu &&

@@ -1,4 +1,5 @@
 #include "gwy_launcher/e10a_shell_trace.h"
+#include "gwy_launcher/e10a31j_smscfg_long.h"
 #include "gwy_launcher/ext_post_cont_audit.h"
 #include "gwy_launcher/guest_memory.h"
 
@@ -320,6 +321,9 @@ void e10a_shell_phase(const char *phase, const char *module, uint32_t pc, uint32
                       uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3, uint32_t r9,
                       uint32_t ac8, const char *note) {
     const char *lp;
+    if (e10a31j_enabled()) {
+        e10a31j_on_phase(NULL, phase, module, module);
+    }
     if (!e10a_shell_trace_enabled()) return;
     ensure_files();
     g_e10a.phase_n++;
@@ -344,6 +348,9 @@ void e10a_shell_phase(const char *phase, const char *module, uint32_t pc, uint32
 void e10a_shell_vfs(const char *op, const char *module, const char *guest_path,
                     const char *host_path, int exists, int rc, uint32_t pc, uint32_t lr) {
     const char *lp;
+    if (e10a31j_enabled()) {
+        e10a31j_on_vfs(NULL, op, module, guest_path, host_path, exists, rc, pc, lr);
+    }
     if (!e10a_shell_trace_enabled()) return;
     ensure_files();
     g_e10a.vfs_n++;
