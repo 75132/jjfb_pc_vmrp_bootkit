@@ -80,6 +80,17 @@ int gwy_ext_obs_take_ext_init_seq(void) {
     return 0;
 }
 
+void gwy_ext_obs_request_product_handshake(void) {}
+
+int gwy_ext_obs_try_product_handshake(void *uc) {
+    (void)uc;
+    return 0;
+}
+
+void gwy_ext_obs_set_product_helper_call(GwyExtObsHelperCallFn fn) { (void)fn; }
+void gwy_ext_obs_set_product_appinfo_alloc(GwyExtObsAppInfoAllocFn fn) { (void)fn; }
+void gwy_ext_obs_set_product_run_id(const char *run_id) { (void)run_id; }
+
 void gwy_ext_obs_alloc(uint32_t guest_addr, uint32_t size) {
     (void)guest_addr;
     (void)size;

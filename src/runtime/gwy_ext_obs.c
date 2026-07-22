@@ -38,6 +38,10 @@
 #include "gwy_launcher/platform_timer.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/platform_call_census.h"
+#include "gwy_launcher/platform_scheduler.h"
+#include "gwy_launcher/ext_abi_adapter.h"
+#include "gwy_launcher/ext_lifecycle.h"
+#include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
@@ -48,6 +52,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/* Forward decls for product P2 helpers defined later in this file. */
+void gwy_ext_obs_set_product_run_id(const char *run_id);
+int gwy_ext_obs_try_product_handshake(void *uc);
+void gwy_ext_obs_request_product_handshake(void);
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -101,7 +110,10 @@ static int env_flag(const char *name) {
 }
 
 void gwy_ext_obs_bind_uc(void *uc) {
+    const char *rid;
     g_bound_uc = uc;
+    rid = getenv("GWY_PRODUCT_RUN_ID");
+    if (rid && rid[0]) gwy_ext_obs_set_product_run_id(rid);
     e10a31j_bind_uc(uc);
     gwy_guest_call_observer_bind_uc(uc);
     ext_entry_observe_bind_uc(uc);
@@ -145,6 +157,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
     guest_memory_r9_write_reset();
     platform_handler_registry_reset();
     platform_timer_reset();
+    platform_scheduler_reset();
+    ext_lifecycle_reset();
+    ext_abi_adapter_reset();
     e10a31_reset();
     e10a31a_reset();
     e10a31b_reset();
@@ -478,6 +493,7 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     g_start_dsm_returned = 1;
     (void)filename;
     (void)ret;
+    (void)gwy_ext_obs_try_product_handshake(g_bound_uc);
     if (!g_arm_absent_emitted && !g_timer_arm_seen) {
         g_arm_absent_emitted = 1;
         printf("[JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return "
@@ -486,18 +502,28 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     }
     /*
      * CROSS_TARGET: 0x10140 is the period/main handler. When guest never calls
-     * classic timerStart, host arms a 50ms tick (matches SDL_WaitEventTimeout)
-     * and runs the *registered* handler only — no fixed JJFB PC.
+     * classic timerStart, host may arm a tick for liveness — tagged forced so it
+     * cannot satisfy SCHEDULER_NATURAL_CALLBACK.
      */
     if (!g_lifecycle_host_armed && !g_timer_arm_seen &&
         platform_handler_registry_has(0x10140u)) {
         uint32_t h = platform_handler_registry_get(0x10140u);
         g_lifecycle_host_armed = 1;
-        gwy_ext_obs_timer_host_arm(GWY_LIFECYCLE_PERIOD_MS, "lifecycle_10140", 0);
+        gwy_ext_obs_timer_host_arm(GWY_LIFECYCLE_PERIOD_MS, "lifecycle_10140_forced_host", 0);
         printf("[JJFB_LIFECYCLE] op=ARM period_ms=%u handler=0x%X family=0x%X "
-               "reason=10140_registered_no_classic_timer evidence=CROSS_TARGET+docs/06\n",
+               "reason=10140_registered_no_classic_timer forced=yes "
+               "evidence=CROSS_TARGET+docs/06\n",
                GWY_LIFECYCLE_PERIOD_MS, h, platform_handler_registry_family(0x10140u));
         fflush(stdout);
+        {
+            GwyScheduledWork w;
+            memset(&w, 0, sizeof(w));
+            w.source = GWY_SCHED_SRC_PLATFORM_TIMER;
+            w.handler_or_helper = h;
+            w.forced = 1; /* fabricated host arm — not natural */
+            snprintf(w.owner_module, sizeof(w.owner_module), "robotol.ext");
+            (void)platform_scheduler_enqueue(&w, module_r9_switch_depth());
+        }
     }
 }
 
@@ -569,6 +595,41 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
 
     ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
                                       GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+    {
+        GwyScheduledWork delivered;
+        int have = platform_scheduler_try_dequeue(0, &delivered);
+        if (!have) {
+            memset(&delivered, 0, sizeof(delivered));
+            delivered.source = GWY_SCHED_SRC_PLATFORM_TIMER;
+            delivered.handler_or_helper = handler;
+            delivered.forced = (g_lifecycle_host_armed && !g_timer_arm_seen) ? 1 : 0;
+            delivered.owner_module_id = owner ? owner->module_id : 0;
+            snprintf(delivered.owner_module, sizeof(delivered.owner_module), "%s",
+                     owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name)
+                           : "robotol.ext");
+        }
+        platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after, 1);
+        if (platform_scheduler_natural_callback_observed()) {
+            char path[512];
+            FILE *csv;
+            const char *root = getenv("GWY_PRODUCT_REPORTS_DIR");
+            if (root && root[0])
+                snprintf(path, sizeof(path), "%s/product_scheduler_natural_callback.csv", root);
+            else
+                snprintf(path, sizeof(path), "reports/product_scheduler_natural_callback.csv");
+            csv = fopen(path, "a");
+            if (!csv) {
+                csv = fopen(path, "w");
+                if (csv) fprintf(csv, "run_id,source,handler,ret,forced\n");
+            }
+            if (csv) {
+                fprintf(csv, "%s,%s,0x%X,%d,%d\n", platform_scheduler_run_id(),
+                        gwy_scheduler_source_name(delivered.source), delivered.handler_or_helper,
+                        (int)out.r0_after, delivered.forced);
+                fclose(csv);
+            }
+        }
+    }
     if (handler_forensic_enabled() && g_lifecycle_ticks == 1u) {
         handler_forensic_end(uc, ok, out.uc_err, out.end_reason[0] ? out.end_reason : "?",
                              out.pc_after, out.r0_after, out.r9_after, out.sp_after, out.lr_after,
@@ -889,8 +950,32 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     } else if (result.kind == GWY_PLAT_KIND_REGISTER) {
         ret = result.status_ret;
         if (result.reg_handler) {
-            (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+            const GwyLoadedModule *owner =
+                reg ? module_registry_find_by_code_addr(reg, result.reg_handler & ~1u) : NULL;
+            const char *oname = owner
+                                    ? (owner->resolved_name[0] ? owner->resolved_name
+                                                               : owner->requested_name)
+                                    : NULL;
+            ExtChunkOwnerInfo oi;
+            uint64_t gen = 0;
+            GwyHandlerIsa isa =
+                (result.reg_handler & 1u) ? GWY_HANDLER_ISA_THUMB : GWY_HANDLER_ISA_ARM;
+            memset(&oi, 0, sizeof(oi));
+            if (owner && owner->map.helper_address &&
+                ext_chunk_provider_owner_for_helper(owner->map.helper_address, &oi))
+                gen = oi.module_generation;
+            if (!gen && owner) gen = owner->module_id;
+            if (owner && oname) {
+                (void)platform_handler_registry_register_owned(
+                    r0, result.reg_family, result.reg_handler, owner->module_id, gen, oname, isa,
+                    result.name ? result.name : "sendAppEvent");
+            } else {
+                (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            }
             robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
+            if (owner && oname && strstr(oname, "robotol"))
+                platform_scheduler_note_work_source(GWY_SCHED_SRC_PLATFORM_EVENT);
         }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X family=0x%X handler=0x%X ret=%d kind=REGISTER "
@@ -962,8 +1047,32 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         /* 0x10165/10162: alloc size in R1 + optional enqueue handler in R2. */
         if (result.reg_handler) {
-            (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+            const GwyLoadedModule *owner =
+                reg ? module_registry_find_by_code_addr(reg, result.reg_handler & ~1u) : NULL;
+            const char *oname = owner
+                                    ? (owner->resolved_name[0] ? owner->resolved_name
+                                                               : owner->requested_name)
+                                    : NULL;
+            ExtChunkOwnerInfo oi;
+            uint64_t gen = 0;
+            GwyHandlerIsa isa =
+                (result.reg_handler & 1u) ? GWY_HANDLER_ISA_THUMB : GWY_HANDLER_ISA_ARM;
+            memset(&oi, 0, sizeof(oi));
+            if (owner && owner->map.helper_address &&
+                ext_chunk_provider_owner_for_helper(owner->map.helper_address, &oi))
+                gen = oi.module_generation;
+            if (!gen && owner) gen = owner->module_id;
+            if (owner && oname) {
+                (void)platform_handler_registry_register_owned(
+                    r0, result.reg_family, result.reg_handler, owner->module_id, gen, oname, isa,
+                    result.name ? result.name : "sendAppEvent_alloc");
+            } else {
+                (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            }
             robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
+            if (owner && oname && strstr(oname, "robotol"))
+                platform_scheduler_note_work_source(GWY_SCHED_SRC_PLATFORM_EVENT);
         }
         printf("[PLATFORM_ALLOC] code=0x%X size=0x%X buf=0x%X ret=0x%X tag_u16=%u name=%s "
                "evidence=%s\n",
@@ -986,6 +1095,19 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         g_timer_arm_count++;
         g_timer_last_period_ms = result.timer_period_ms;
         g_timer_last_id = result.timer_id ? result.timer_id : (uint32_t)g_timer_arm_count;
+        platform_scheduler_note_work_source(GWY_SCHED_SRC_PLATFORM_TIMER);
+        {
+            GwyScheduledWork w;
+            uint32_t depth = module_r9_switch_depth();
+            memset(&w, 0, sizeof(w));
+            w.source = GWY_SCHED_SRC_PLATFORM_TIMER;
+            w.handler_or_helper = platform_handler_registry_get(0x10140u);
+            w.method_or_event = 2u;
+            w.due_time = 0;
+            w.forced = 0;
+            snprintf(w.owner_module, sizeof(w.owner_module), "robotol.ext");
+            (void)platform_scheduler_enqueue(&w, depth);
+        }
         if (g_timer_start && result.timer_period_ms) {
             (void)g_timer_start((uint16_t)result.timer_period_ms);
         }
@@ -1127,6 +1249,145 @@ int gwy_ext_obs_take_ext_init_seq(void) {
     if (!g_pending_ext_init_seq) return 0;
     g_pending_ext_init_seq = 0;
     g_ext_init_seq_delivered = 1;
+    return 1;
+}
+
+void gwy_ext_obs_set_product_helper_call(GwyExtHelperCallFn fn) {
+    ext_abi_adapter_set_helper_call(fn);
+}
+
+void gwy_ext_obs_set_product_appinfo_alloc(GwyExtAppInfoAllocFn fn) {
+    ext_abi_adapter_set_appinfo_alloc(fn);
+}
+
+void gwy_ext_obs_set_product_run_id(const char *run_id) {
+    ext_abi_adapter_set_run_id(run_id);
+    ext_lifecycle_set_run_id(run_id);
+    platform_scheduler_set_run_id(run_id);
+    platform_handler_registry_set_run_id(run_id);
+}
+
+void gwy_ext_obs_request_product_handshake(void) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    const GwyLoadedModule *m = NULL;
+    ExtChunkOwnerInfo owner;
+    const char *primary;
+    uint64_t gen = 0;
+    size_t i;
+
+    if (!reg) return;
+    primary = package_scope_active_primary();
+    if (primary) m = module_registry_find(reg, primary);
+    if (!m) {
+        for (i = 0; i < reg->count; i++) {
+            const GwyLoadedModule *cand = &reg->modules[i];
+            const char *n = cand->resolved_name[0] ? cand->resolved_name : cand->requested_name;
+            if (cand->origin == MODULE_ORIGIN_MRP_MEMBER && n && strstr(n, "robotol")) {
+                m = cand;
+                break;
+            }
+        }
+    }
+    if (!m) return;
+
+    memset(&owner, 0, sizeof(owner));
+    if (m->map.helper_address &&
+        ext_chunk_provider_owner_for_helper(m->map.helper_address, &owner))
+        gen = owner.module_generation;
+    if (!gen) gen = m->module_id;
+
+    ext_lifecycle_ensure(m->module_id, gen,
+                         m->resolved_name[0] ? m->resolved_name : m->requested_name);
+    if (!ext_lifecycle_find(m->module_id) ||
+        ext_lifecycle_find(m->module_id)->state < EXT_LIFECYCLE_BOOTSTRAP_RETURNED) {
+        ext_lifecycle_note_bootstrap_return(m->module_id, 0);
+    }
+    platform_scheduler_set_live_generation(
+        m->module_id, gen, m->resolved_name[0] ? m->resolved_name : m->requested_name);
+    ext_abi_adapter_request_handshake(
+        m->module_id, gen, m->resolved_name[0] ? m->resolved_name : m->requested_name);
+}
+
+int gwy_ext_obs_try_product_handshake(void *uc) {
+    GwyExtHandshakeResult r;
+    if (!ext_abi_adapter_handshake_pending()) return 0;
+    r = ext_abi_adapter_try_deliver(uc);
+    if (r == GWY_EXT_HS_CONTEXT_NOT_READY) return 0;
+    if (r == GWY_EXT_HS_OK) {
+        /* After init=0, classify handler gap if none registered yet. */
+        if (!platform_handler_registry_robotol_owned_observed()) {
+            printf("[ROBOTOL_INIT_ZERO_NO_HANDLER_REGISTRATION] run_id=%s evidence=OBSERVED\n",
+                   ext_abi_adapter_run_id());
+            fflush(stdout);
+        } else {
+            char path_csv[512];
+            FILE *csv;
+            const char *root = getenv("GWY_PRODUCT_REPORTS_DIR");
+            if (root && root[0])
+                snprintf(path_csv, sizeof(path_csv), "%s/product_robotol_init_trace.csv", root);
+            else
+                snprintf(path_csv, sizeof(path_csv), "reports/product_robotol_init_trace.csv");
+            csv = fopen(path_csv, "w");
+            if (csv) {
+                fprintf(csv, "run_id,verdict,ret6,ret8,ret0\n");
+                fprintf(csv, "%s,ROBOTOL_INIT_RETURN_ZERO,%d,%d,%d\n", ext_abi_adapter_run_id(),
+                        (int)ext_abi_adapter_last_version_ret(),
+                        (int)ext_abi_adapter_last_appinfo_ret(),
+                        (int)ext_abi_adapter_last_init_ret());
+                fclose(csv);
+            }
+        }
+        return 1;
+    }
+    /* Bounded product failure provenance (Lane E). */
+    {
+        char path_md[512], path_csv[512];
+        FILE *f;
+        const char *root = getenv("GWY_PRODUCT_REPORTS_DIR");
+        const char *verdict = "ROBOTOL_INIT_NOT_DISPATCHED";
+        if (r == GWY_EXT_HS_VERSION_FAILED) verdict = "ROBOTOL_VERSION_CALL_FAILED";
+        else if (r == GWY_EXT_HS_APPINFO_FAILED) verdict = "ROBOTOL_APPINFO_CALL_FAILED";
+        else if (r == GWY_EXT_HS_INIT_FAILED) verdict = "ROBOTOL_INIT_PLATFORM_API_FAILED";
+        else if (r == GWY_EXT_HS_CONTEXT_NOT_READY) verdict = "ROBOTOL_INIT_CONTEXT_INVALID";
+        if (root && root[0]) {
+            snprintf(path_md, sizeof(path_md), "%s/product_robotol_init_failure.md", root);
+            snprintf(path_csv, sizeof(path_csv), "%s/product_robotol_init_trace.csv", root);
+        } else {
+            snprintf(path_md, sizeof(path_md), "reports/product_robotol_init_failure.md");
+            snprintf(path_csv, sizeof(path_csv), "reports/product_robotol_init_trace.csv");
+        }
+        f = fopen(path_md, "w");
+        if (f) {
+            fprintf(f,
+                    "# Product Robotol Init Failure\n\n"
+                    "- **run_id:** %s\n"
+                    "- **verdict:** %s\n"
+                    "- **ret6:** %d\n"
+                    "- **ret8:** %d\n"
+                    "- **ret0:** %d\n"
+                    "- **note:** bounded product trace; no E10A SMSCFG assumptions\n",
+                    ext_abi_adapter_run_id(), verdict, (int)ext_abi_adapter_last_version_ret(),
+                    (int)ext_abi_adapter_last_appinfo_ret(), (int)ext_abi_adapter_last_init_ret());
+            fclose(f);
+        }
+        {
+            FILE *csv = fopen(path_csv, "w");
+            if (csv) {
+                fprintf(csv, "run_id,verdict,ret6,ret8,ret0\n");
+                fprintf(csv, "%s,%s,%d,%d,%d\n", ext_abi_adapter_run_id(), verdict,
+                        (int)ext_abi_adapter_last_version_ret(),
+                        (int)ext_abi_adapter_last_appinfo_ret(),
+                        (int)ext_abi_adapter_last_init_ret());
+                fclose(csv);
+            }
+        }
+        printf("[ROBOTOL_INIT_FAILURE] verdict=%s ret6=%d ret8=%d ret0=%d run_id=%s "
+               "evidence=OBSERVED\n",
+               verdict, (int)ext_abi_adapter_last_version_ret(),
+               (int)ext_abi_adapter_last_appinfo_ret(), (int)ext_abi_adapter_last_init_ret(),
+               ext_abi_adapter_run_id());
+        fflush(stdout);
+    }
     return 1;
 }
 

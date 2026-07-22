@@ -11,6 +11,7 @@
 
 /* Strong impl in gwy_ext_obs.c (launcher_core). */
 void gwy_ext_obs_request_ext_init_seq(void);
+void gwy_ext_obs_request_product_handshake(void);
 uint32_t gwy_ext_obs_guest_malloc0(uint32_t size);
 
 /* Observed gamelist P+4 when guest fills after entry (heap-reuse path). */
@@ -205,9 +206,10 @@ static void try_deferred_r9(const GwyLoadedModule *gm) {
                pkg_of(gm), gm->resolved_name[0] ? gm->resolved_name : gm->requested_name,
                (unsigned long long)gm->module_id, gm->data.start_of_er_rw, gm->data.er_rw_size);
         /* Queue DOCUMENTED 6→8→0 for next host helper enter (not from this Unicorn hook). */
-        if (g_bind.mode == GWY_ER_RW_BIND_GAME_PACKAGE)
+        if (g_bind.mode == GWY_ER_RW_BIND_GAME_PACKAGE) {
+            gwy_ext_obs_request_product_handshake();
             gwy_ext_obs_request_ext_init_seq();
-        else if ((g_bind.mode == GWY_ER_RW_BIND_SHELL_CORE ||
+        } else if ((g_bind.mode == GWY_ER_RW_BIND_SHELL_CORE ||
                   g_bind.mode == GWY_ER_RW_BIND_SHELL_AND_GAME) &&
                  strstr(gm->resolved_name[0] ? gm->resolved_name : gm->requested_name,
                         "gamelist"))
@@ -217,9 +219,10 @@ static void try_deferred_r9(const GwyLoadedModule *gm) {
                "evidence=DOCUMENTED\n",
                pkg_of(gm), gm->resolved_name[0] ? gm->resolved_name : gm->requested_name,
                (unsigned long long)gm->module_id, gm->data.start_of_er_rw);
-        if (g_bind.mode == GWY_ER_RW_BIND_GAME_PACKAGE)
+        if (g_bind.mode == GWY_ER_RW_BIND_GAME_PACKAGE) {
+            gwy_ext_obs_request_product_handshake();
             gwy_ext_obs_request_ext_init_seq();
-        else if ((g_bind.mode == GWY_ER_RW_BIND_SHELL_CORE ||
+        } else if ((g_bind.mode == GWY_ER_RW_BIND_SHELL_CORE ||
                   g_bind.mode == GWY_ER_RW_BIND_SHELL_AND_GAME) &&
                  strstr(gm->resolved_name[0] ? gm->resolved_name : gm->requested_name,
                         "gamelist"))

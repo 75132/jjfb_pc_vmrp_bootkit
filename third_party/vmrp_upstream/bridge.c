@@ -2793,6 +2793,23 @@ static void bridge_deliver_mr_timer_unlocked(void *uc_ptr) {
     (void)bridge_deliver_timer_body(uc);
 }
 
+static int32_t bridge_product_helper_call(void *uc_ptr, uint32_t helper, uint32_t p_guest,
+                                          uint32_t method, uint32_t input, uint32_t input_len,
+                                          uint32_t erw) {
+    return bridge_ext_helper_call((uc_engine *)uc_ptr, helper, p_guest, method, input, input_len,
+                                  erw);
+}
+
+static uint32_t bridge_product_appinfo_alloc(uint32_t appid, uint32_t appver) {
+    int32_t *host = (int32_t *)my_mallocExt(16u);
+    if (!host) return 0u;
+    memset(host, 0, 16u);
+    host[0] = (int32_t)appid;
+    host[1] = (int32_t)appver;
+    /* sidName=0 ram=0 — do not invent */
+    return toMrpMemAddr(host);
+}
+
 uc_err bridge_init(uc_engine *uc) {
     if (pthread_mutex_init(&mutex, NULL) != 0) {
         perror("mutex init fail");
@@ -2802,6 +2819,8 @@ uc_err bridge_init(uc_engine *uc) {
     gwy_ext_obs_set_timer_fns(timerStart, timerStop);
     gwy_ext_obs_set_timer_clock(bridge_timer_clock_ms);
     gwy_ext_obs_set_timer_deliver(bridge_deliver_mr_timer_unlocked);
+    gwy_ext_obs_set_product_helper_call(bridge_product_helper_call);
+    gwy_ext_obs_set_product_appinfo_alloc(bridge_product_appinfo_alloc);
     uint32_t len = 4 * countof(mr_table_funcMap);  // 因为都是指针，所以直接可以算出来总内存大小
     mr_table = hooks_init(uc, mr_table_funcMap, countof(mr_table_funcMap), len);
     /* Phase 6N: publish sendAppEvent stub guest address (+0x54 in mr_table). */
@@ -2860,6 +2879,9 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
      */
     if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
         bridge_deliver_ext_init_seq(uc, code, "before");
+    /* Product P2: ExtAbiAdapter handshake (independent of research init-seq env). */
+    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
+        (void)gwy_ext_obs_try_product_handshake(uc);
 
     if (mr_c_function_P) {
         /* Guest writes guest addresses into P; bit-pattern is the guest VA. */
@@ -2914,6 +2936,8 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
     /* Mid-call queue (R9 restore during nested guest) → deliver before returning. */
     if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
         bridge_deliver_ext_init_seq(uc, code, "after");
+    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
+        (void)gwy_ext_obs_try_product_handshake(uc);
 
     if (entered) e10a31c_leave(uc, dkind);
     return (int32_t)v;

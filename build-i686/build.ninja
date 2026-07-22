@@ -349,6 +349,26 @@ build CMakeFiles/launcher_core.dir/src/runtime/ext_bootstrap_abi.c.obj: C_COMPIL
   OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
   TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
 
+build CMakeFiles/launcher_core.dir/src/runtime/ext_lifecycle.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_lifecycle.c || cmake_object_order_depends_target_launcher_core
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\ext_lifecycle.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\launcher_core.dir
+  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
+
+build CMakeFiles/launcher_core.dir/src/runtime/ext_abi_adapter.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_abi_adapter.c || cmake_object_order_depends_target_launcher_core
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\ext_abi_adapter.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\launcher_core.dir
+  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
+
 build CMakeFiles/launcher_core.dir/src/runtime/ext_callback_frame.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_callback_frame.c || cmake_object_order_depends_target_launcher_core
   CONFIG = RelWithDebInfo
   DEFINES = -DGWY_HAVE_UNICORN=1
@@ -599,6 +619,16 @@ build CMakeFiles/launcher_core.dir/src/platform/platform_handler_registry.c.obj:
   OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\platform
   TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
 
+build CMakeFiles/launcher_core.dir/src/platform/platform_scheduler.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_scheduler.c || cmake_object_order_depends_target_launcher_core
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\launcher_core.dir\src\platform\platform_scheduler.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\launcher_core.dir
+  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\platform
+  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
+
 build CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_call_census.c || cmake_object_order_depends_target_launcher_core
   CONFIG = RelWithDebInfo
   DEFINES = -DGWY_HAVE_UNICORN=1
@@ -617,7 +647,7 @@ build CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj: C_CO
 #############################################
 # Link the static library liblauncher_core.a
 
-build liblauncher_core.a: C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo CMakeFiles/launcher_core.dir/src/launcher/error.c.obj CMakeFiles/launcher_core.dir/src/launcher/byte_buffer.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_descriptor.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_runtime.c.obj CMakeFiles/launcher_core.dir/src/launcher/utf.c.obj CMakeFiles/launcher_core.dir/src/launcher/game_catalog.c.obj CMakeFiles/launcher_core.dir/src/vfs/guest_vfs.c.obj CMakeFiles/launcher_core.dir/src/formats/sha256.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_archive.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_guest_index.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_cfg.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_pack_registry.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_reg_primary.c.obj CMakeFiles/launcher_core.dir/src/profiles/compat_profile.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_resolver.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_registry.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_loader.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_ext_obs.c.obj CMakeFiles/launcher_core.dir/src/runtime/handler_forensic.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_call_observer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_object_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_helper_handoff.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_dsm_record_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_entry_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_null_contract.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_data_init.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_producer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_bootstrap_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_callback_frame.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_r9_scope_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cont_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cfn_r9_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_p_extchunk_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_shell_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_mrpgcmap_entry_order.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_abi_cluster_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_cfunction_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_provider.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_bind_restore.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_startgame_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_r9_switch.c.obj CMakeFiles/launcher_core.dir/src/runtime/mrp_member_view.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_scope.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_metadata.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_runtime.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_memory.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_file_service.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_vmrp_vfs_bootstrap.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_identity.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_userinfo.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_send_app_event.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_timer.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_handler_registry.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj
+build liblauncher_core.a: C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo CMakeFiles/launcher_core.dir/src/launcher/error.c.obj CMakeFiles/launcher_core.dir/src/launcher/byte_buffer.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_descriptor.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_runtime.c.obj CMakeFiles/launcher_core.dir/src/launcher/utf.c.obj CMakeFiles/launcher_core.dir/src/launcher/game_catalog.c.obj CMakeFiles/launcher_core.dir/src/vfs/guest_vfs.c.obj CMakeFiles/launcher_core.dir/src/formats/sha256.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_archive.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_guest_index.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_cfg.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_pack_registry.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_reg_primary.c.obj CMakeFiles/launcher_core.dir/src/profiles/compat_profile.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_resolver.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_registry.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_loader.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_ext_obs.c.obj CMakeFiles/launcher_core.dir/src/runtime/handler_forensic.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_call_observer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_object_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_helper_handoff.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_dsm_record_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_entry_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_null_contract.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_data_init.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_producer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_bootstrap_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_lifecycle.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_abi_adapter.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_callback_frame.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_r9_scope_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cont_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cfn_r9_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_p_extchunk_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_shell_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_mrpgcmap_entry_order.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_abi_cluster_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_cfunction_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_provider.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_bind_restore.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_startgame_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_r9_switch.c.obj CMakeFiles/launcher_core.dir/src/runtime/mrp_member_view.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_scope.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_metadata.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_runtime.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_memory.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_file_service.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_vmrp_vfs_bootstrap.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_identity.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_userinfo.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_send_app_event.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_timer.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_handler_registry.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_scheduler.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj
   CONFIG = RelWithDebInfo
   LANGUAGE_COMPILE_FLAGS = -m32 -O2 -g -DNDEBUG
   OBJECT_DIR = CMakeFiles\launcher_core.dir
@@ -2611,6 +2641,46 @@ build test_platform_handler_registry.exe: C_EXECUTABLE_LINKER__test_platform_han
   TARGET_SUPPORT_DIR = CMakeFiles\test_platform_handler_registry.dir
 
 # =============================================================================
+# Object build statements for EXECUTABLE target test_ext_abi_adapter_p2
+
+
+#############################################
+# Order-only phony target for test_ext_abi_adapter_p2
+
+build cmake_object_order_depends_target_test_ext_abi_adapter_p2: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
+
+build CMakeFiles/test_ext_abi_adapter_p2.dir/tests/unit/test_ext_abi_adapter_p2.c.obj: C_COMPILER__test_ext_abi_adapter_p2_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_abi_adapter_p2.c || cmake_object_order_depends_target_test_ext_abi_adapter_p2
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\test_ext_abi_adapter_p2.dir\tests\unit\test_ext_abi_adapter_p2.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\test_ext_abi_adapter_p2.dir
+  OBJECT_FILE_DIR = CMakeFiles\test_ext_abi_adapter_p2.dir\tests\unit
+  TARGET_SUPPORT_DIR = CMakeFiles\test_ext_abi_adapter_p2.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_ext_abi_adapter_p2
+
+
+#############################################
+# Link the executable test_ext_abi_adapter_p2.exe
+
+build test_ext_abi_adapter_p2.exe: C_EXECUTABLE_LINKER__test_ext_abi_adapter_p2_RelWithDebInfo CMakeFiles/test_ext_abi_adapter_p2.dir/tests/unit/test_ext_abi_adapter_p2.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
+  CONFIG = RelWithDebInfo
+  FLAGS = -m32 -O2 -g -DNDEBUG
+  LINK_FLAGS = -m32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\test_ext_abi_adapter_p2.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = test_ext_abi_adapter_p2.exe
+  TARGET_IMPLIB = libtest_ext_abi_adapter_p2.dll.a
+  TARGET_PDB = test_ext_abi_adapter_p2.exe.dbg
+  TARGET_SUPPORT_DIR = CMakeFiles\test_ext_abi_adapter_p2.dir
+
+# =============================================================================
 # Object build statements for EXECUTABLE target test_vm_runtime
 
 
@@ -2778,6 +2848,8 @@ build research_gwy_shell_stubs: phony libresearch_gwy_shell_stubs.a
 
 build test_cfg36: phony test_cfg36.exe
 
+build test_ext_abi_adapter_p2: phony test_ext_abi_adapter_p2.exe
+
 build test_ext_bootstrap_abi: phony test_ext_bootstrap_abi.exe
 
 build test_ext_callback_frame: phony test_ext_callback_frame.exe
@@ -2872,7 +2944,7 @@ build test_vm_runtime: phony test_vm_runtime.exe
 #############################################
 # Folder: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
 
-build all: phony liblauncher_core.a libresearch_gwy_shell.a libresearch_gwy_shell_stubs.a gwy_launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_vm_runtime.exe test_guest_memory.exe test_vm_file_service.exe
+build all: phony liblauncher_core.a libresearch_gwy_shell.a libresearch_gwy_shell_stubs.a gwy_launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_ext_abi_adapter_p2.exe test_vm_runtime.exe test_guest_memory.exe test_vm_file_service.exe
 
 # =============================================================================
 # Built-in targets

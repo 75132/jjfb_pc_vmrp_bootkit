@@ -8,6 +8,6 @@
 - **source_class (candidate):** `PLATFORM_TABLE`
 - **Promotion to product:** **blocked** until live callee ABI + cross-target evidence
 - **Artifacts:** `research/e10a31r/*`
-- **Runner:** `RUN_E10A31R_A1B8C_PROVENANCE.ps1` (GwyResearch only)
+- **Runner:** `research/runners/RUN_E10A31R_A1B8C_PROVENANCE.ps1` (GwyResearch only)
 
 Do not continue 3.1s/t/u SMSCFG string chasing for this PC.

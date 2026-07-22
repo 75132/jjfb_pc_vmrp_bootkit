@@ -49,6 +49,8 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/ext_module_data_init.c
     src/runtime/ext_er_rw_producer.c
     src/runtime/ext_bootstrap_abi.c
+    src/runtime/ext_lifecycle.c
+    src/runtime/ext_abi_adapter.c
     src/runtime/ext_callback_frame.c
     src/runtime/ext_r9_scope_audit.c
     src/runtime/ext_post_cont_audit.c
@@ -74,6 +76,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_send_app_event.c
     src/platform/platform_timer.c
     src/platform/platform_handler_registry.c
+    src/platform/platform_scheduler.c
     src/platform/platform_call_census.c
 )
 
@@ -356,6 +359,10 @@ add_test(NAME platform_send_app_event COMMAND test_platform_send_app_event)
 add_executable(test_platform_handler_registry tests/unit/test_platform_handler_registry.c)
 gwy_link_product_runtime(test_platform_handler_registry)
 add_test(NAME platform_handler_registry COMMAND test_platform_handler_registry)
+
+add_executable(test_ext_abi_adapter_p2 tests/unit/test_ext_abi_adapter_p2.c)
+gwy_link_product_runtime(test_ext_abi_adapter_p2)
+add_test(NAME ext_abi_adapter_p2 COMMAND test_ext_abi_adapter_p2)
 
 add_executable(test_vm_runtime tests/unit/test_vm_runtime.c)
 gwy_link_product_runtime(test_vm_runtime)

@@ -267,6 +267,13 @@ def main() -> int:
         'RUN_RESEARCH_GWY_SHELL.ps1',
         'RUN_PRODUCT_DIRECT_JJFB.ps1',
         'RUN_E_PRODUCT_ROBOTOL_MRCINIT.ps1',
+        'RUN_GAMES.ps1',
+        'RUN_VMRP_VISUAL.ps1',
+        'research/runners/README.md',
+        'docs/REPO_LAYOUT.md',
+        'docs/00_READ_ME_FIRST.md',
+        'docs/cursor/START_CURSOR_HERE.md',
+        'docs/cursor/CURSOR_MASTER_PROMPT.md',
     }
     for p in args.root.rglob('*'):
         if not p.is_file() or p.suffix.lower() not in EXTS: continue

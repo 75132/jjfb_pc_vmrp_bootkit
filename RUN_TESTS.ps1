@@ -53,6 +53,7 @@ $env:GWY_FIXTURE_ROOT = $FixtureRoot
   'test_platform_timer.exe',
   'test_platform_send_app_event.exe',
   'test_platform_handler_registry.exe',
+  'test_ext_abi_adapter_p2.exe',
   'test_vm_runtime.exe',
   'test_guest_memory.exe',
   'test_vm_file_service.exe',

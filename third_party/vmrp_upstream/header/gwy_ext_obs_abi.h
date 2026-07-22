@@ -57,6 +57,19 @@ void gwy_ext_obs_request_ext_init_seq(void);
 /* Returns 1 once if a pending init-seq was queued; clears the flag. */
 int gwy_ext_obs_take_ext_init_seq(void);
 
+/* Product P2: queue ExtAbiAdapter handshake (6→8→0) — not gated by research env. */
+void gwy_ext_obs_request_product_handshake(void);
+/* Deliver pending product handshake via registered helper call; returns 1 if attempted. */
+int gwy_ext_obs_try_product_handshake(void *uc);
+
+typedef int32_t (*GwyExtObsHelperCallFn)(void *uc, uint32_t helper, uint32_t p_guest,
+                                         uint32_t method, uint32_t input, uint32_t input_len,
+                                         uint32_t erw);
+typedef uint32_t (*GwyExtObsAppInfoAllocFn)(uint32_t appid, uint32_t appver);
+void gwy_ext_obs_set_product_helper_call(GwyExtObsHelperCallFn fn);
+void gwy_ext_obs_set_product_appinfo_alloc(GwyExtObsAppInfoAllocFn fn);
+void gwy_ext_obs_set_product_run_id(const char *run_id);
+
 void gwy_ext_obs_alloc(uint32_t guest_addr, uint32_t size);
 
 /* Observe-only: guest memcpy/block copy may fill chunk fields. */

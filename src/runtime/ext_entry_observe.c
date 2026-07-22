@@ -7,6 +7,8 @@
 #include "gwy_launcher/ext_module_data_init.h"
 #include "gwy_launcher/ext_er_rw_producer.h"
 #include "gwy_launcher/ext_bootstrap_abi.h"
+#include "gwy_launcher/ext_lifecycle.h"
+#include "gwy_launcher/ext_chunk_provider.h"
 #include "gwy_launcher/ext_callback_frame.h"
 #include "gwy_launcher/ext_post_cont_audit.h"
 #include "gwy_launcher/ext_post_cfn_r9_audit.h"
@@ -1419,6 +1421,14 @@ void ext_entry_observe_on_entry_begin(uint64_t module_id,
         emit_module_identity(reg, m, entry_pc, in_range);
 
         if (robotol_ok) {
+            ExtChunkOwnerInfo oi;
+            uint64_t gen = 0;
+            memset(&oi, 0, sizeof(oi));
+            if (m->map.helper_address &&
+                ext_chunk_provider_owner_for_helper(m->map.helper_address, &oi))
+                gen = oi.module_generation;
+            if (!gen) gen = module_id;
+            ext_lifecycle_note_bootstrap_enter(module_id, gen, "robotol.ext", entry_pc);
             ext_entry_observe_bootstrap_event("ROBOTOL_ENTER");
             printf("[JJFB_ROBOTOL_ENTRY_CALLED] package=%s module=robotol.ext module_id=%llu "
                    "pc=0x%X image_base=0x%X evidence=OBSERVED\n",
