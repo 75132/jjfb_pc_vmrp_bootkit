@@ -43,6 +43,7 @@
 #include "gwy_launcher/ext_lifecycle.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/product_callback_trace.h"
+#include "gwy_launcher/product_p4_progress.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -105,6 +106,23 @@ static const uint64_t GWY_LIFECYCLE_INSN_LIMIT = 200000ull;
 static void gwy_ext_obs_timer_poll(void *uc);
 static void gwy_ext_obs_deferred_timer_pump(void *uc);
 static void gwy_ext_obs_lifecycle_deliver(void *uc);
+static void gwy_ext_obs_drain_family_events(void *uc);
+static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app);
+
+#define GWY_P4_FAMILY_EVENT_Q 16
+typedef struct GwyFamilyEvent {
+    uint32_t event_code;
+    uint32_t app;
+    uint32_t handler;
+    uint64_t owner_module_id;
+    uint64_t owner_generation;
+    char owner_module[64];
+    int used;
+} GwyFamilyEvent;
+static GwyFamilyEvent g_family_eq[GWY_P4_FAMILY_EVENT_Q];
+static int g_family_eq_n;
+static int g_family_contract_fixed;
+static int g_family_draining;
 
 static int env_flag(const char *name) {
     const char *e = getenv(name);
@@ -162,6 +180,14 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_scheduler_reset();
     platform_timer_cadence_reset();
     product_callback_trace_reset();
+    product_p4_reset();
+    if (getenv("GWY_PRODUCT_RUN_ID") && getenv("GWY_PRODUCT_RUN_ID")[0]) {
+        product_callback_trace_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+        product_p4_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+        platform_timer_cadence_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+        platform_scheduler_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+        platform_handler_registry_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+    }
     ext_lifecycle_reset();
     ext_abi_adapter_reset();
     e10a31_reset();
@@ -185,6 +211,10 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_lifecycle_ticks = 0;
     g_helper_r9_scope_valid = 0;
     memset(&g_helper_r9_scope, 0, sizeof(g_helper_r9_scope));
+    memset(g_family_eq, 0, sizeof(g_family_eq));
+    g_family_eq_n = 0;
+    g_family_contract_fixed = 0;
+    g_family_draining = 0;
     platform_call_census_reset();
     robotol_idle_watch_reset();
     robotol_idle_watch_bind_uc(uc);
@@ -531,6 +561,140 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     }
 }
 
+static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
+    const GwyPlatformHandlerRecord *fam;
+    const GwyPlatformHandlerRecord *enq;
+    const GwyPlatformHandlerRecord *target;
+    GwyFamilyEvent *slot;
+    int i;
+
+    fam = platform_handler_registry_find_family_event(event_code);
+    enq = platform_handler_registry_enqueue_handler();
+    /* Family-band sendAppEvent (e.g. 0x1E209 under 0x1E200) goes to the 10102
+     * family switch. 10165 is the queue drain path, not the direct event ABI. */
+    target = fam ? fam : enq;
+    if (!target || !target->handler) return 0;
+
+    for (i = 0; i < g_family_eq_n; i++) {
+        if (g_family_eq[i].used && g_family_eq[i].event_code == event_code &&
+            g_family_eq[i].app == app && g_family_eq[i].handler == target->handler)
+            return 1; /* already queued */
+    }
+    if (g_family_eq_n >= GWY_P4_FAMILY_EVENT_Q) return 0;
+    slot = &g_family_eq[g_family_eq_n++];
+    memset(slot, 0, sizeof(*slot));
+    slot->used = 1;
+    slot->event_code = event_code;
+    slot->app = app;
+    slot->handler = target->handler;
+    slot->owner_module_id = target->owner_module_id;
+    slot->owner_generation = target->owner_generation;
+    snprintf(slot->owner_module, sizeof(slot->owner_module), "%s",
+             target->owner_module[0] ? target->owner_module : "robotol.ext");
+
+    {
+        GwyScheduledWork w;
+        memset(&w, 0, sizeof(w));
+        w.source = GWY_SCHED_SRC_PLATFORM_EVENT;
+        w.handler_or_helper = target->handler;
+        w.method_or_event = event_code;
+        w.owner_module_id = target->owner_module_id;
+        w.owner_generation = target->owner_generation;
+        w.forced = 0;
+        snprintf(w.owner_module, sizeof(w.owner_module), "%s", slot->owner_module);
+        (void)platform_scheduler_enqueue(&w, module_r9_switch_depth());
+    }
+
+    if (product_p4_enabled()) {
+        product_p4_note_work("event_completion_generated", target->plat_code, target->family,
+                             target->handler, target->owner_module_id, target->owner_generation,
+                             target->owner_module, 1, 1, 1, 0, 0);
+    }
+    if (!g_family_contract_fixed) {
+        g_family_contract_fixed = 1;
+        printf("[PROVEN_PLATFORM_CONTRACT_FIXED] contract=family_event_dispatch "
+               "event=0x%X app=0x%X handler=0x%X via=%s run_id=%s evidence=OBSERVED\n",
+               event_code, app, target->handler, fam ? "10102_family" : "10165_enqueue",
+               product_callback_trace_run_id());
+        fflush(stdout);
+    }
+    printf("[PLATFORM_FAMILY_EVENT] op=ENQUEUE event=0x%X app=0x%X handler=0x%X "
+           "owner=%s evidence=OBSERVED\n",
+           event_code, app, target->handler, slot->owner_module);
+    fflush(stdout);
+    return 1;
+}
+
+static void gwy_ext_obs_drain_family_events(void *uc) {
+    int i;
+    if (!uc || g_family_draining || g_family_eq_n <= 0) return;
+    /* Host lifecycle already runs nested under package depth; do not require
+     * guest_depth==0 here — that would permanently drop registered completions. */
+    g_family_draining = 1;
+    for (i = 0; i < g_family_eq_n; i++) {
+        GwyFamilyEvent *ev = &g_family_eq[i];
+        GwyUcEntryAbi abi;
+        GwyUcEntryRunOut out;
+        uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+        uint32_t r9_save = 0, r9_run = 0;
+        ModuleRegistry *reg;
+        const GwyLoadedModule *owner;
+        int ok;
+        if (!ev->used || !ev->handler) continue;
+
+        (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+        r9_run = r9_save;
+        reg = gwy_ext_loader_bound_registry();
+        owner = reg ? module_registry_find_by_code_addr(reg, ev->handler & ~1u) : NULL;
+        if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
+        if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+
+        memset(&abi, 0, sizeof(abi));
+        abi.set_r0 = 1;
+        /* Family switch ABI: subcode in R0 (sendAppEvent app), event id in R1. */
+        abi.r0 = ev->app;
+        abi.set_r1 = 1;
+        abi.r1 = ev->event_code;
+        abi.set_lr = 1;
+        abi.lr = stop;
+
+        printf("[PLATFORM_FAMILY_EVENT] op=DELIVER event=0x%X app=0x%X handler=0x%X r9=0x%X "
+               "evidence=OBSERVED\n",
+               ev->event_code, ev->app, ev->handler, r9_run);
+        fflush(stdout);
+
+        ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, ev->handler, stop,
+                                          GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+        (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+
+        printf("[PLATFORM_FAMILY_EVENT] op=DELIVER_DONE ok=%d ret=%d end=%s handler=0x%X "
+               "evidence=OBSERVED\n",
+               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", ev->handler);
+        fflush(stdout);
+
+        if (product_p4_enabled()) {
+            product_p4_note_work("event_completion_delivered", 0x10102u, ev->event_code, ev->handler,
+                                 ev->owner_module_id, ev->owner_generation, ev->owner_module, 1, 1,
+                                 1, 1, ok ? 1 : 0);
+        }
+        {
+            GwyScheduledWork delivered;
+            memset(&delivered, 0, sizeof(delivered));
+            delivered.source = GWY_SCHED_SRC_PLATFORM_EVENT;
+            delivered.handler_or_helper = ev->handler;
+            delivered.method_or_event = ev->event_code;
+            delivered.forced = 0;
+            delivered.owner_module_id = ev->owner_module_id;
+            delivered.owner_generation = ev->owner_generation;
+            snprintf(delivered.owner_module, sizeof(delivered.owner_module), "%s", ev->owner_module);
+            platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after, ok ? 1 : 0);
+        }
+        ev->used = 0;
+    }
+    g_family_eq_n = 0;
+    g_family_draining = 0;
+}
+
 static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     uint32_t handler;
     GwyUcEntryAbi abi;
@@ -544,6 +708,10 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
 
     if (!uc) return;
     g_lifecycle_pending = 0;
+
+    /* Drain guest-registered family/enqueue completions before the timer poller. */
+    gwy_ext_obs_drain_family_events(uc);
+
     handler = platform_handler_registry_get(0x10140u);
     if (!handler) return;
 
@@ -630,11 +798,38 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         platform_timer_cadence_note_inflight_begin(1u, occ);
 
         seq = product_callback_trace_on_enter(&snap);
+        snap.seq = seq;
         product_callback_trace_frame_enter(seq, (uint64_t)seq << 32 | handler, handler, r9_run,
                                            stop);
 
+        /*
+         * P4 observes host-lifecycle and classic-timer fires alike. P3 may mark
+         * host_lifecycle as forced_tick for scheduler enqueue provenance, but the
+         * guest entry itself is still the natural Robotol handler under test.
+         * Instrument whenever P4 mode is on and the guest actually enters.
+         */
+        if (product_p4_enabled() && seq) {
+            uint32_t mt = ext_chunk_provider_mr_table_guest();
+            uint32_t chunk = ext_chunk_provider_last_chunk_guest();
+            uint32_t pg = ext_chunk_provider_last_p_guest();
+            uint32_t draw_fp = 0, disp_fp = 0;
+            if (uc && mt) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, mt + 0x1E0u, &draw_fp);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, mt + 0x1E4u, &disp_fp);
+            }
+            if (draw_fp) product_p4_note_display_target("draw_blit", draw_fp);
+            if (disp_fp) product_p4_note_display_target("_DispUpEx", disp_fp);
+            product_p4_callback_begin(uc, &snap, owner ? owner->map.guest_code_base : 0,
+                                      owner ? owner->map.guest_code_size : 0, r9_run, pg, chunk);
+        }
+
         ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
                                           GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+
+        if (product_p4_enabled() && seq)
+            product_p4_callback_end(uc, seq, ok, out.uc_err,
+                                    out.end_reason[0] ? out.end_reason : "?",
+                                    (int32_t)out.r0_after);
 
         product_callback_trace_handler_return(seq, out.pc_after, (int32_t)out.r0_after);
         product_callback_trace_frame_restore_begin(seq, r9_save);
@@ -732,6 +927,11 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     }
     /* E8F: writer BP summary + sibling/counterfactual after tick returns (depth 0). */
     robotol_flag_writer_trace_on_lifecycle(uc, g_lifecycle_ticks);
+    /* Family events posted during this 10140 tick become deliverable now. */
+    gwy_ext_obs_drain_family_events(uc);
+    if (product_p4_enabled() && product_p4_callback_count() >= 8u &&
+        (product_p4_callback_count() >= GWY_P4_MAX_CALLBACKS || (g_lifecycle_ticks % 16u) == 0u))
+        product_p4_finalize();
     fflush(stdout);
     /* R9 already restored in traced path above. */
 }
@@ -1207,6 +1407,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    result.evidence ? result.evidence : "?");
             fflush(stdout);
         }
+        /* Proven P4 gap: guest posts family ops (e.g. 0x1E209) after 10102 register;
+         * returning STATUS alone never delivered the registered handler. */
+        if (platform_handler_registry_find_family_event(r0))
+            (void)gwy_ext_obs_note_family_event(r0, r1);
     } else {
         ret = 0;
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
@@ -1216,6 +1420,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    result.evidence ? result.evidence : "?");
             fflush(stdout);
         }
+        if (platform_handler_registry_find_family_event(r0))
+            (void)gwy_ext_obs_note_family_event(r0, r1);
     }
 
     ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
@@ -1224,6 +1430,29 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
     if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
         platform_call_census_note_refresh();
+    if (product_p4_enabled()) {
+        int sync = 1;
+        int need_comp = 0;
+        int out_init = 1;
+        if (result.kind == GWY_PLAT_KIND_REGISTER || result.kind == GWY_PLAT_KIND_ALLOC) {
+            /* Handler registration / enqueue alloc: completion is separate work. */
+            if (r0 == 0x10102u || r0 == 0x10120u || r0 == 0x10165u) need_comp = 1;
+        }
+        if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
+            out_init = (ret == 0);
+        if (result.kind == GWY_PLAT_KIND_USERINFO_BLOB) out_init = (ret != 0);
+        product_p4_note_platform_call(r0, r1, r2, r3, arg4, ret, caller_pc,
+                                      result.name ? result.name : "sendAppEvent", sync, need_comp,
+                                      out_init);
+        if (need_comp && (r0 == 0x10102u || r0 == 0x10120u || r0 == 0x10165u)) {
+            product_p4_note_work("event_handler_registration", r0, r1,
+                                 result.reg_handler ? result.reg_handler : r2, 0, 0, "guest", 1, 1,
+                                 0, 0, 0);
+        }
+        if (result.kind == GWY_PLAT_KIND_TIMER_START) {
+            product_p4_note_work("timer_registration", r0, r1, r2, 0, 0, "guest", 1, 0, 0, 0, 0);
+        }
+    }
     robotol_idle_watch_helper_fx_end(r0, r1, ret);
     /* Poll after every plat call — SDL timers do not run during nested emu. */
     gwy_ext_obs_timer_poll(uc);
@@ -1558,6 +1787,7 @@ void gwy_ext_obs_note_product_draw(const char *api) {
     g_draw_count++;
     platform_call_census_note_draw();
     product_callback_trace_note_draw();
+    if (product_p4_enabled()) product_p4_note_draw_or_refresh(api ? api : "draw", 0);
 }
 
 void gwy_ext_obs_note_product_refresh(const char *api) {
@@ -1565,6 +1795,7 @@ void gwy_ext_obs_note_product_refresh(const char *api) {
     g_refresh_count++;
     platform_call_census_note_refresh();
     product_callback_trace_note_refresh();
+    if (product_p4_enabled()) product_p4_note_draw_or_refresh(api ? api : "_DispUpEx", 1);
 }
 
 void gwy_ext_obs_note_product_framebuffer(const char *api, const char *sha256_hex, int32_t x,

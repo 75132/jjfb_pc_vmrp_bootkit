@@ -180,6 +180,27 @@ int platform_handler_registry_has(uint32_t plat_code) {
     return platform_handler_registry_get(plat_code) != 0;
 }
 
+const GwyPlatformHandlerRecord *platform_handler_registry_find_family_event(uint32_t event_code) {
+    int i;
+    for (i = 0; i < GWY_PLAT_HANDLER_SLOTS; i++) {
+        if (!g_slots[i].used || !g_slots[i].product_accepted) continue;
+        if (g_slots[i].plat_code != 0x10102u) continue;
+        if (!g_slots[i].family || !g_slots[i].handler) continue;
+        /* Same top-24-bit family band (0x1E200 covers 0x1E209). */
+        if ((event_code & 0xFFFFFF00u) == (g_slots[i].family & 0xFFFFFF00u)) return &g_slots[i];
+    }
+    return NULL;
+}
+
+const GwyPlatformHandlerRecord *platform_handler_registry_enqueue_handler(void) {
+    int i;
+    for (i = 0; i < GWY_PLAT_HANDLER_SLOTS; i++) {
+        if (!g_slots[i].used || !g_slots[i].product_accepted) continue;
+        if (g_slots[i].plat_code == 0x10165u && g_slots[i].handler) return &g_slots[i];
+    }
+    return NULL;
+}
+
 int platform_handler_registry_robotol_owned_observed(void) { return g_robotol_owned; }
 
 const GwyPlatformHandlerRecord *platform_handler_registry_robotol_record(void) {

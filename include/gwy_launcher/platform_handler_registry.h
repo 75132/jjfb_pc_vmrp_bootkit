@@ -51,6 +51,15 @@ uint32_t platform_handler_registry_get(uint32_t plat_code);
 uint32_t platform_handler_registry_family(uint32_t plat_code);
 int platform_handler_registry_has(uint32_t plat_code);
 
+/*
+ * Find product-accepted 0x10102 family registration whose family band covers
+ * event_code (same top 24 bits). Returns NULL if none.
+ */
+const GwyPlatformHandlerRecord *platform_handler_registry_find_family_event(uint32_t event_code);
+
+/* Enqueue-handler registration (0x10165), if product-accepted. */
+const GwyPlatformHandlerRecord *platform_handler_registry_enqueue_handler(void);
+
 /* Product gate: robotol-owned registration observed this run. */
 int platform_handler_registry_robotol_owned_observed(void);
 const GwyPlatformHandlerRecord *platform_handler_registry_robotol_record(void);

@@ -1,0 +1,7 @@
+run_id,target,target_va,nearest_caller,nearest_pc,depth_remaining,first_unentered,blocking_predicate,source_subsystem,evidence,verdict
+p4_validate_20260723_023558_96760,resource_open,0x0,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
+p4_validate_20260723_023558_96760,bitmap_decode,0x0,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
+p4_validate_20260723_023558_96760,screen_buf,0x0,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
+p4_validate_20260723_023558_96760,draw_blit,0x2801E4,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
+p4_validate_20260723_023558_96760,_DispUpEx,0x2801E8,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
+p4_validate_20260723_023558_96760,guiDrawBitmap,0x0,0x0,0x0,99,entry_branch,UNKNOWN,display,NOT_REACHED,DISPLAY_PATH_NOT_REACHED
