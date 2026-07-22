@@ -27,6 +27,7 @@
 #include "gwy_launcher/e10a31b_publication.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31j_smscfg_long.h"
+#include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/module_r9_switch.h"
@@ -1071,6 +1072,7 @@ void gwy_ext_obs_p_update(uint32_t helper,
     ExtLoader *L = gwy_ext_loader_ensure();
     if (!helper) return;
     if (rw_base) e10a31j_on_erw(g_bound_uc, rw_base, rw_size);
+    if (rw_base) gwy_sms_cfg_on_erw(g_bound_uc, helper, rw_base, rw_size);
     ext_module_data_init_on_cfunction_p(helper, 0, 0, rw_base, rw_size);
     ext_er_rw_producer_on_cfunction_p(helper, 0, 0, rw_base, rw_size);
     ext_bootstrap_abi_on_cfunction_p(helper, 0, 0, rw_base, rw_size);

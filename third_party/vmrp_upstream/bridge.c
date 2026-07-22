@@ -26,6 +26,7 @@
 #include "gwy_launcher/e10a31f_failsite.h"
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/package_scope.h"
+#include "gwy_launcher/gwy_sms_cfg.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -407,6 +408,10 @@ static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_
     fflush(stdout);
 
     if (g_e10a_shell_continued && erw && p_guest) {
+#ifdef GWY_USE_VM_FILE_SERVICE
+        /* DSM SMSCFG must be published before method0 GPT gate. */
+        (void)gwy_sms_cfg_ensure_ready(uc);
+#endif
         /* Explicit R9=erw; avoid sticky gbrwcore R9 from bridge_mr_extHelper scope.
          * E10A-3.1c: one atomic transaction; no timer pump between 6/8/0. */
         (void)e10a31c_init_tx_begin(uc, helper, p_guest, erw);
@@ -1008,6 +1013,30 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
            "r2=0x%X r3=0x%X note=real_refresh evidence=OBSERVED\n",
            o && o->name ? o->name : "_DispUpEx", pc, lr, r0, r1, r2, r3);
     fflush(stdout);
+}
+
+static void br_mr_load_sms_cfg(BridgeMap *o, uc_engine *uc) {
+    int32_t ret;
+    (void)o;
+#ifdef GWY_USE_VM_FILE_SERVICE
+    ret = gwy_sms_cfg_load(uc);
+#else
+    (void)uc;
+    ret = MR_FAILED;
+#endif
+    SET_RET_V((uint32_t)ret);
+}
+
+static void br_mr_save_sms_cfg(BridgeMap *o, uc_engine *uc) {
+    int32_t ret;
+    (void)o;
+#ifdef GWY_USE_VM_FILE_SERVICE
+    ret = gwy_sms_cfg_save(uc);
+#else
+    (void)uc;
+    ret = MR_FAILED;
+#endif
+    SET_RET_V((uint32_t)ret);
 }
 
 static void br_mr_open(BridgeMap *o, uc_engine *uc) {
@@ -2355,8 +2384,8 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x1C4, MAP_FUNC, mr_md5_init, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1C8, MAP_FUNC, mr_md5_append, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1CC, MAP_FUNC, mr_md5_finish, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x1D0, MAP_FUNC, _mr_load_sms_cfg, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x1D4, MAP_FUNC, _mr_save_sms_cfg, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x1D0, MAP_FUNC, _mr_load_sms_cfg, NULL, br_mr_load_sms_cfg, 0),
+    BRIDGE_FUNC_MAP(0x1D4, MAP_FUNC, _mr_save_sms_cfg, NULL, br_mr_save_sms_cfg, 0),
     BRIDGE_FUNC_MAP(0x1D8, MAP_FUNC, _DispUpEx, NULL, br_observe_disp_up, 0),
     BRIDGE_FUNC_MAP(0x1DC, MAP_FUNC, _DrawPoint, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x1E0, MAP_FUNC, _DrawBitmap, NULL, br_mr_drawBitmap, 0),
