@@ -22,6 +22,10 @@
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31d_provenance.h"
+#include "gwy_launcher/e10a31e_appinfo.h"
+#include "gwy_launcher/e10a31f_failsite.h"
+#include "gwy_launcher/package_metadata.h"
+#include "gwy_launcher/package_scope.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -129,6 +133,81 @@ static inline void e10a31d_note_platform_api(void *uc, const char *a, uint32_t s
     (void)s;
     (void)r;
 }
+static inline int e10a31e_enabled(void) { return 0; }
+static inline void e10a31e_note_metadata(const char *p) { (void)p; }
+static inline void e10a31e_note_binding(uint32_t g, uint32_t a, uint32_t v, int s) {
+    (void)g;
+    (void)a;
+    (void)v;
+    (void)s;
+}
+static inline void e10a31e_before_code8(void *uc, uint32_t h, uint32_t e, uint32_t a) {
+    (void)uc;
+    (void)h;
+    (void)e;
+    (void)a;
+}
+static inline void e10a31e_after_code6(void *uc, uint32_t e, uint32_t il, int32_t r) {
+    (void)uc;
+    (void)e;
+    (void)il;
+    (void)r;
+}
+static inline void e10a31e_after_code8(void *uc, uint32_t e, uint32_t a, int32_t r) {
+    (void)uc;
+    (void)e;
+    (void)a;
+    (void)r;
+}
+static inline void e10a31e_after_method0(void *uc, uint32_t h, int32_t r) {
+    (void)uc;
+    (void)h;
+    (void)r;
+}
+static inline void e10a31e_read_proof_arm(void *uc, uint32_t e, uint32_t a) {
+    (void)uc;
+    (void)e;
+    (void)a;
+}
+static inline void e10a31e_read_proof_disarm(void *uc) { (void)uc; }
+static inline void e10a31e_note_ab_case(const char *n, int32_t a, int32_t b, int32_t c, uint32_t d,
+                                        uint32_t e, uint32_t f, const char *g) {
+    (void)n;
+    (void)a;
+    (void)b;
+    (void)c;
+    (void)d;
+    (void)e;
+    (void)f;
+    (void)g;
+}
+static inline void e10a31e_mark_milestone(const char *n, const char *note) {
+    (void)n;
+    (void)note;
+}
+static inline uint32_t e10a31f_method0_input_override(uint32_t d) { return d; }
+static inline int gwy_package_appinfo_resolve_id_ver(uint32_t *a, uint32_t *v, int *s) {
+    if (a) *a = 0;
+    if (v) *v = 0;
+    if (s) *s = 0;
+    return 0;
+}
+static inline void gwy_package_appinfo_binding_set(uint32_t g, uint32_t a, uint32_t v, int s) {
+    (void)g;
+    (void)a;
+    (void)v;
+    (void)s;
+}
+static inline int gwy_package_appinfo_binding_matches_active(uint32_t g,
+                                                            int (*m)(uint32_t)) {
+    (void)g;
+    (void)m;
+    return 0;
+}
+static inline const char *gwy_package_metadata_source_name(int s) {
+    (void)s;
+    return "NONE";
+}
 #endif
 
 #ifdef _WIN32
@@ -219,23 +298,70 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
 #define GWY_EXT_INIT_MR_VERSION 2011u
 #endif
 
-static uint32_t g_ext_appinfo_guest;
+/* E10A-3.1e: package-scoped appInfo (keyed by package_id+generation). No global forever-cache. */
+static int bridge_appinfo_guest_mapped(uint32_t guest_ptr) {
+    return guest_ptr != 0u && getMrpMemPtr(guest_ptr) != NULL;
+}
 
 static uint32_t bridge_ext_appinfo_guest(void) {
     int32_t *host;
-    const char *aid;
-    const char *aver;
-    if (g_ext_appinfo_guest) return g_ext_appinfo_guest;
+    uint32_t appid = 0, appver = 0;
+    int src = 0;
+    uint32_t guest;
+
+#ifdef GWY_USE_VM_FILE_SERVICE
+    /* Ensure active package metadata is loaded (e.g. gamelist after shell continue). */
+    if (!gwy_package_registry_active_metadata()) {
+        const char *pkg = package_scope_active_package();
+        if (pkg) (void)gwy_package_metadata_activate(pkg);
+    }
+    e10a31e_note_metadata("before_appinfo_bind");
+#endif
+
+    if (!gwy_package_appinfo_resolve_id_ver(&appid, &appver, &src)) {
+#ifdef GWY_USE_VM_FILE_SERVICE
+        /* Product path: refuse env-only silent fill. Binding broken. */
+        e10a31e_mark_milestone("ACTIVE_PACKAGE_METADATA_BINDING_BROKEN", "resolve_id_ver");
+        printf("[GWY_APPINFO_BIND] FAIL reason=no_active_metadata evidence=OBSERVED\n");
+        fflush(stdout);
+        return 0u;
+#else
+        {
+            const char *aid = getenv("GWY_PACKAGE_APPID");
+            const char *aver = getenv("GWY_PACKAGE_APPVER");
+            if (aid && aid[0]) appid = (uint32_t)strtoul(aid, NULL, 10);
+            if (aver && aver[0]) appver = (uint32_t)strtoul(aver, NULL, 10);
+        }
+#endif
+    }
+
+#ifdef GWY_USE_VM_FILE_SERVICE
+    {
+        const GwyPackageAppInfoBinding *bind = gwy_package_appinfo_binding_active();
+        if (bind && bind->valid && bind->appid == appid && bind->appver == appver &&
+            gwy_package_appinfo_binding_matches_active(bind->appinfo_guest,
+                                                       bridge_appinfo_guest_mapped)) {
+            return bind->appinfo_guest;
+        }
+    }
+#endif
+
     host = (int32_t *)my_mallocExt(16u);
     if (!host) return 0u;
     memset(host, 0, 16u);
-    aid = getenv("GWY_PACKAGE_APPID");
-    aver = getenv("GWY_PACKAGE_APPVER");
-    if (aid && aid[0]) host[0] = (int32_t)strtoul(aid, NULL, 10);
-    if (aver && aver[0]) host[1] = (int32_t)strtoul(aver, NULL, 10);
-    /* host[2]=sidName ptr 0; host[3]=ram 0 */
-    g_ext_appinfo_guest = toMrpMemAddr(host);
-    return g_ext_appinfo_guest;
+    host[0] = (int32_t)appid;
+    host[1] = (int32_t)appver;
+    /* host[2]=sidName ptr 0; host[3]=ram 0 — do not invent */
+    guest = toMrpMemAddr(host);
+    gwy_package_appinfo_binding_set(guest, appid, appver, src);
+#ifdef GWY_USE_VM_FILE_SERVICE
+    e10a31e_note_binding(guest, appid, appver, src);
+#else
+    printf("[GWY_APPINFO_BIND] source=%s appid=%u appver=%u guest_ptr=0x%X sidName=0x0 ram=0\n",
+           gwy_package_metadata_source_name(src), appid, appver, guest);
+    fflush(stdout);
+#endif
+    return guest;
 }
 
 /* Deliver DOCUMENTED 6→8→0 once; caller must hold g_in_ext_init_deliver=0. */
@@ -264,6 +390,11 @@ static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_
                 words[1] = 0xA34u; /* gamelist DOCUMENTED ER_RW len */
             }
         }
+        /* E10A-3.1e: appInfo must come from gamelist MRP header, not prior package. */
+#ifdef GWY_USE_VM_FILE_SERVICE
+        (void)package_scope_set_active("gwy/gamelist.mrp");
+        (void)gwy_package_metadata_activate("gwy/gamelist.mrp");
+#endif
     }
     if (!helper) return;
     if (!gwy_ext_obs_take_ext_init_seq()) return;
@@ -283,18 +414,37 @@ static void bridge_deliver_ext_init_seq(uc_engine *uc, uint32_t before_or_after_
         e10a31c_init_method_enter(uc, 6u, helper, p_guest, erw);
         r6 = bridge_ext_helper_call(uc, helper, p_guest, 6u, 0u, ver, erw);
         e10a31c_init_method_return(uc, 6u, r6);
+        e10a31e_after_code6(uc, erw, ver, r6);
         if (r6 < 0) {
             goto init_done;
         }
+        e10a31e_before_code8(uc, helper, erw, appinfo);
         e10a31c_init_method_enter(uc, 8u, helper, p_guest, erw);
         r8 = bridge_ext_helper_call(uc, helper, p_guest, 8u, appinfo, 16u, erw);
         e10a31c_init_method_return(uc, 8u, r8);
+        e10a31e_after_code8(uc, erw, appinfo, r8);
         if (r8 < 0) {
             goto init_done;
         }
+        e10a31e_read_proof_arm(uc, erw, appinfo);
         e10a31c_init_method_enter(uc, 0u, helper, p_guest, erw);
-        r0 = bridge_ext_helper_call(uc, helper, p_guest, 0u, 0u, ver, erw);
+        {
+            uint32_t m0_input = e10a31f_method0_input_override(0u);
+            r0 = bridge_ext_helper_call(uc, helper, p_guest, 0u, m0_input, ver, erw);
+        }
         e10a31c_init_method_return(uc, 0u, r0);
+        e10a31e_read_proof_disarm(uc);
+        e10a31e_after_method0(uc, helper, r0);
+        {
+            const char *ab = getenv("JJFB_E10A31E_AB_CASE");
+            uint32_t aid = 0, aver = 0;
+            int32_t *hp = appinfo ? (int32_t *)getMrpMemPtr(appinfo) : NULL;
+            if (hp) {
+                aid = (uint32_t)hp[0];
+                aver = (uint32_t)hp[1];
+            }
+            e10a31e_note_ab_case(ab && ab[0] ? ab : "metadata", r6, r8, r0, aid, aver, 0u, "");
+        }
     } else {
         r6 = bridge_mr_extHelper(uc, 6u, 0u, ver);
         r8 = bridge_mr_extHelper(uc, 8u, appinfo, 16u);

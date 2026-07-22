@@ -1,0 +1,3 @@
+﻿run_id,case,appid,appver,ret6,ret8,ret0,fail_pc,fail_class,platform_api_count,cfg_gate
+1784664569831,"legacy_env_ver12",400101,12,0,0,-1,0x2E1C24,"RETURN_NEG1_IMMEDIATE",0,0
+1784664657123,"package_metadata",400101,1006,0,0,-1,0x2E1C24,"RETURN_NEG1_IMMEDIATE",0,0

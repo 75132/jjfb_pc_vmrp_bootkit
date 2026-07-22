@@ -1,0 +1,3 @@
+run_id,phase,erw,slot,value,expected,appinfo,id,ver,sid,ram,ret,note
+1784664746119,code6,0x682B6C,0x91C,0x7DB,2011,0,0,0,0,0,0,MR_VERSION
+1784664746119,code8,0x682B6C,0x920,0x692594,0x692594,0x692594,400101,1006,0x0,0,0,appInfo

@@ -2,10 +2,14 @@
 
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
+#include "gwy_launcher/e10a31f_failsite.h"
+#include "gwy_launcher/e10a31g_strcmp.h"
+#include "gwy_launcher/e10a31h_smscfg.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/mrp_archive.h"
+#include "gwy_launcher/package_metadata.h"
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -158,6 +162,8 @@ static struct {
     int last_bl_ret_valid;
     uint32_t last_neg1_imm_pc;
     int last_neg1_imm_valid;
+    uint32_t prev_sampled_r0;
+    int prev_sampled_r0_valid;
     FILE *insn_csv;
     FILE *call_csv;
     FILE *prov_csv;
@@ -201,10 +207,7 @@ static const char *src_name(E10a31dSource s) {
 }
 
 static void load_package_metadata(void) {
-    const char *root = getenv("GWY_RESOURCE_ROOT");
-    char path[1100];
-    MrpArchive *arch = NULL;
-    LauncherError err;
+    const GwyPackageMetadata *m;
     const char *aid = getenv("GWY_PACKAGE_APPID");
     const char *aver = getenv("GWY_PACKAGE_APPVER");
     g_d.pkg_meta_ok = 0;
@@ -213,15 +216,30 @@ static void load_package_metadata(void) {
     g_d.pkg_internal[0] = 0;
     snprintf(g_d.env_appid, sizeof(g_d.env_appid), "%s", (aid && aid[0]) ? aid : "");
     snprintf(g_d.env_appver, sizeof(g_d.env_appver), "%s", (aver && aver[0]) ? aver : "");
-    if (!root || !root[0]) return;
-    snprintf(path, sizeof(path), "%s/gwy/gamelist.mrp", root);
-    memset(&err, 0, sizeof(err));
-    if (mrp_archive_open(path, &arch, &err) != L_OK || !arch) return;
-    g_d.pkg_appid = arch->appid_le;
-    g_d.pkg_appver = arch->appver_le;
-    snprintf(g_d.pkg_internal, sizeof(g_d.pkg_internal), "%.31s", arch->internal_name);
-    g_d.pkg_meta_ok = 1;
-    mrp_archive_close(arch);
+    /* Prefer live package-scoped registry (E10A-3.1e); fall back to gamelist MRP open. */
+    m = gwy_package_registry_active_metadata();
+    if (m && m->valid) {
+        g_d.pkg_appid = m->appid;
+        g_d.pkg_appver = m->appver;
+        snprintf(g_d.pkg_internal, sizeof(g_d.pkg_internal), "%.31s", m->internal_name);
+        g_d.pkg_meta_ok = 1;
+        return;
+    }
+    {
+        const char *root = getenv("GWY_RESOURCE_ROOT");
+        char path[1100];
+        MrpArchive *arch = NULL;
+        LauncherError err;
+        if (!root || !root[0]) return;
+        snprintf(path, sizeof(path), "%s/gwy/gamelist.mrp", root);
+        memset(&err, 0, sizeof(err));
+        if (mrp_archive_open(path, &arch, &err) != L_OK || !arch) return;
+        g_d.pkg_appid = arch->appid_le;
+        g_d.pkg_appver = arch->appver_le;
+        snprintf(g_d.pkg_internal, sizeof(g_d.pkg_internal), "%.31s", arch->internal_name);
+        g_d.pkg_meta_ok = 1;
+        mrp_archive_close(arch);
+    }
 }
 
 static void ensure_enabled(void) {
@@ -450,6 +468,9 @@ void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t r
     if (method == 0u) {
         g_d.method0_count++;
         if (g_d.m0_trace) e10a31d_method0_trace_disarm(uc);
+        e10a31f_on_method0_return(uc, helper, ret);
+        e10a31g_on_method0_return(uc, helper, ret);
+        e10a31h_on_method0_return(uc, helper, ret);
     }
 
     if (g_d.history && g_d.hist_n > 0) {
@@ -605,7 +626,7 @@ static int is_neg1_imm_thumb(uint16_t h0, uint16_t h1, int size) {
 
 static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
     uint32_t pc = (uint32_t)address;
-    uint32_t lr = 0, sp = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r9 = 0, cpsr = 0;
+    uint32_t lr = 0, sp = 0, r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0, r9 = 0, cpsr = 0;
     uint8_t raw[8];
     uint16_t h0 = 0, h1 = 0;
     int is_bl = 0, is_blx = 0;
@@ -623,6 +644,7 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
     uc_reg_read(uc, UC_ARM_REG_R1, &r1);
     uc_reg_read(uc, UC_ARM_REG_R2, &r2);
     uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+    uc_reg_read(uc, UC_ARM_REG_R4, &r4);
     uc_reg_read(uc, UC_ARM_REG_R9, &r9);
     uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
     memset(raw, 0, sizeof(raw));
@@ -662,12 +684,22 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
         if (is_bl) {
             snprintf(row->kind, sizeof(row->kind), "%s", is_blx ? "BLX" : "BL");
             row->target = tgt;
+        } else if (e10a31f_is_neg1_sentinel_store(pc, raw, size)) {
+            snprintf(row->kind, sizeof(row->kind), "NEG1_SENTINEL");
         } else if (is_neg1_imm_thumb(h0, h1, (int)size)) {
             snprintf(row->kind, sizeof(row->kind), "NEG1_IMM_CAND");
         } else {
             snprintf(row->kind, sizeof(row->kind), "INSN");
         }
         g_d.insn_n++;
+    }
+
+    /* Fill r0_out for previous BL when we land at its LR. */
+    if (g_d.call_n > 0) {
+        CallRow *prevc = &g_d.call_rows[g_d.call_n - 1];
+        if (prevc->lr == pc || (prevc->lr | 1u) == (pc | 1u)) {
+            prevc->r0_out = (int32_t)r0;
+        }
     }
 
     if (is_bl && g_d.call_n < E10A31D_CALL_MAX) {
@@ -684,12 +716,20 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
         g_d.last_bl_ret_valid = 0;
     }
 
-    /* Detect R0 becoming -1 after previous insn via sampling next entry:
-     * if current r0==0xFFFFFFFF and last kind was NEG1 or return from BL. */
-    if (r0 == 0xFFFFFFFFu) {
+    e10a31f_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
+    e10a31g_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
+    e10a31h_on_method0_insn(uc, pc, lr, r0, r1, r2, r3, r4, r9, cpsr, raw, size);
+
+    /* Detect R0 *becoming* -1 (edge), not remaining -1 across stores. */
+    if (r0 == 0xFFFFFFFFu &&
+        (!g_d.prev_sampled_r0_valid || g_d.prev_sampled_r0 != 0xFFFFFFFFu)) {
         if (g_d.insn_n >= 2) {
             InsnRow *prev = &g_d.insn_rows[g_d.insn_n - 2];
-            if (strcmp(prev->kind, "BL") == 0 || strcmp(prev->kind, "BLX") == 0) {
+            /* E10A-3.1f: ignore known unconditional MVNS sentinel store at 0x2E1C24. */
+            if (e10a31f_should_ignore_neg1_at(prev->pc, pc, prev->bytes, prev->size)) {
+                e10a31d_mark_milestone("FAILSITE_2E1C24_IGNORED_AS_SENTINEL", "continue_trace");
+                /* do not set first_failure_proven */
+            } else if (strcmp(prev->kind, "BL") == 0 || strcmp(prev->kind, "BLX") == 0) {
                 g_d.last_bl_ret = -1;
                 g_d.last_bl_ret_valid = 1;
                 if (!g_d.first_failure_proven) {
@@ -703,6 +743,12 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
                              "after_bl pc=0x%X target=0x%X r0=-1", prev->pc, prev->target);
                     e10a31d_mark_milestone("MRC_INIT_FIRST_FAILURE_FOUND",
                                            g_d.first_fail_class);
+                    {
+                        char n[48];
+                        snprintf(n, sizeof(n), "pc=0x%X_%s", g_d.first_fail_pc,
+                                 g_d.first_fail_class);
+                        e10a31d_mark_milestone("MRC_INIT_TRUE_FAILURE_PC_FOUND", n);
+                    }
                 }
             } else {
                 g_d.last_neg1_imm_pc = prev->pc;
@@ -718,12 +764,19 @@ static void m0_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
                              "r0_became_-1_at_pc=0x%X after=0x%X", pc, prev->pc);
                     e10a31d_mark_milestone("MRC_INIT_FIRST_FAILURE_FOUND",
                                            g_d.first_fail_class);
+                    {
+                        char n[48];
+                        snprintf(n, sizeof(n), "pc=0x%X_%s", g_d.first_fail_pc,
+                                 g_d.first_fail_class);
+                        e10a31d_mark_milestone("MRC_INIT_TRUE_FAILURE_PC_FOUND", n);
+                    }
                 }
             }
         }
     }
+    g_d.prev_sampled_r0 = r0;
+    g_d.prev_sampled_r0_valid = 1;
 
-    /* Only keep interesting rows in CSV to bound size: BL/BLX, NEG1, first 64, around failure */
     (void)cpsr;
 }
 
@@ -785,6 +838,8 @@ void e10a31d_method0_trace_arm(void *uc, uint32_t helper) {
     g_d.first_fail_evidence[0] = 0;
     g_d.last_bl_ret_valid = 0;
     g_d.last_neg1_imm_valid = 0;
+    g_d.prev_sampled_r0 = 0;
+    g_d.prev_sampled_r0_valid = 0;
     if (!g_d.insn_csv) {
         g_d.insn_csv = open_csv(
             "JJFB_E10A31D_INSN_CSV", "reports/e10a31d_method0_instruction_trace.csv",
@@ -848,6 +903,7 @@ void e10a31d_method0_trace_disarm(void *uc) {
             int keep = 0;
             if (strcmp(r->kind, "BL") == 0 || strcmp(r->kind, "BLX") == 0) keep = 1;
             if (strcmp(r->kind, "NEG1_IMM_CAND") == 0) keep = 1;
+            if (strcmp(r->kind, "NEG1_SENTINEL") == 0) keep = 1;
             if (i < 32) keep = 1;
             if (g_d.first_fail_seq &&
                 r->seq + 8 >= g_d.first_fail_seq && r->seq <= g_d.first_fail_seq + 8)
@@ -1038,6 +1094,8 @@ void e10a31d_after_code8(void *uc, uint32_t erw, uint32_t appinfo, uint32_t inpu
     }
     if (g_d.env_appid[0]) env_id = (uint32_t)strtoul(g_d.env_appid, NULL, 10);
     if (g_d.env_appver[0]) env_ver = (uint32_t)strtoul(g_d.env_appver, NULL, 10);
+    /* Refresh MRP header compare from live package-scoped metadata. */
+    load_package_metadata();
 
     printf("[JJFB_E10A31D_APPINFO] phase=after_code8 erw=0x%X ERW+0x24=0x%X appinfo=0x%X "
            "id=%u ver=%u sidName=0x%X ram=%u pkg=%u/%u env=%u/%u ret=%d evidence=OBSERVED\n",

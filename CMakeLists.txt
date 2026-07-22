@@ -72,9 +72,14 @@ add_library(launcher_core STATIC
     src/runtime/e10a31b_publication.c
     src/runtime/e10a31c_dispatch.c
     src/runtime/e10a31d_provenance.c
+    src/runtime/e10a31e_appinfo.c
+    src/runtime/e10a31f_failsite.c
+    src/runtime/e10a31g_strcmp.c
+    src/runtime/e10a31h_smscfg.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c
+    src/runtime/package_metadata.c
     src/runtime/vm_runtime.c
     src/runtime/guest_memory.c
     src/runtime/vm_file_service.c
@@ -164,6 +169,10 @@ add_test(NAME mrp_reg_primary COMMAND test_mrp_reg_primary)
 add_executable(test_package_scope tests/unit/test_package_scope.c)
 target_link_libraries(test_package_scope PRIVATE launcher_core)
 add_test(NAME package_scope COMMAND test_package_scope)
+
+add_executable(test_package_metadata tests/unit/test_package_metadata.c)
+target_link_libraries(test_package_metadata PRIVATE launcher_core)
+add_test(NAME package_metadata COMMAND test_package_metadata)
 
 add_executable(test_ext_entry_observe tests/unit/test_ext_entry_observe.c)
 target_link_libraries(test_ext_entry_observe PRIVATE launcher_core)

@@ -1,4 +1,5 @@
 #include "gwy_launcher/package_scope.h"
+#include "gwy_launcher/package_metadata.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,6 +68,7 @@ static const PackageScopeEntry *lookup_loose(const char *pkg) {
 
 void package_scope_reset(void) {
     memset(&g_ps, 0, sizeof(g_ps));
+    gwy_package_metadata_reset();
 }
 
 int package_scope_enabled(void) {
@@ -96,6 +98,8 @@ int package_scope_set_active(const char *package_guest_path) {
            "cload=scoped evidence=CROSS_TARGET\n",
            g_ps.active_pkg, g_ps.active_primary, e->class_name);
     fflush(stdout);
+    /* E10A-3.1e: bind MRP header metadata to this package generation. */
+    (void)gwy_package_metadata_activate(g_ps.active_pkg);
     return 1;
 }
 

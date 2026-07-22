@@ -1,0 +1,195 @@
+# E10A-3.1f gamelist fail-site annotate (0x2E1BBD / 0x2E1C24)
+
+- mrp: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480\gwy\gamelist.mrp`
+- code_base: 0x2D4354
+- window_va: 0x2E1BBC
+- file_off: 0xD868
+
+## Critical finding
+
+- `0x2E1BC0`: `MOVS r4, #0`
+- Function zeroes many `R9+offset` fields via `STR r4, [...]`
+- Makes indirect `BLX r3` calls (likely memset via `[R9+0x95C]`)
+- `0x2E1C24`: **unconditional** `MVNS r0, r4` → r0=-1 (because r4==0)
+- `0x2E1C26`: `STRH r0, [r1, #0]` stores the -1 sentinel into a halfword field
+- Execution **continues** (BL 0x2E33AD, more stores, POP at 0x2E1C72)
+- **No Bcond targets 0x2E1C24** — not a version/appInfo gate
+- E10A-3.1d `RETURN_NEG1_IMMEDIATE @ 0x2E1C24` is a **false-positive first-failure**
+  because the tracer stops when r0 first becomes -1 (sentinel materialization)
+
+- branches_to_0x2E1C24_count: 0
+
+## Literal pool (R9-relative offsets used nearby)
+
+  lit 0x2E1C74 = 0x3E4  ; R9+0x3E4 if used as ERW offset
+  lit 0x2E1C78 = 0x120  ; R9+0x120 if used as ERW offset
+  lit 0x2E1C7C = 0x6B4  ; R9+0x6B4 if used as ERW offset
+  lit 0x2E1C80 = 0x95C  ; R9+0x95C if used as ERW offset
+  lit 0x2E1C84 = 0x3D0  ; R9+0x3D0 if used as ERW offset
+  lit 0x2E1C88 = 0x116  ; R9+0x116 if used as ERW offset
+  lit 0x2E1C8C = 0x114  ; R9+0x114 if used as ERW offset
+  lit 0x2E1C90 = 0x4  ; R9+0x4 if used as ERW offset
+  lit 0x2E1C94 = 0x118  ; R9+0x118 if used as ERW offset
+  lit 0x2E1C98 = 0x11A  ; R9+0x11A if used as ERW offset
+  lit 0x2E1C9C = 0x37E  ; R9+0x37E if used as ERW offset
+  lit 0x2E1CA0 = 0x11C  ; R9+0x11C if used as ERW offset
+  lit 0x2E1CA4 = 0xC  ; R9+0xC if used as ERW offset
+  lit 0x2E1CA8 = 0x10  ; R9+0x10 if used as ERW offset
+  lit 0x2E1CAC = 0x10C  ; R9+0x10C if used as ERW offset
+  lit 0x2E1CB0 = 0x110  ; R9+0x110 if used as ERW offset
+  lit 0x2E1CB4 = 0x3C4  ; R9+0x3C4 if used as ERW offset
+
+## Note on R9+0x920 / appInfo
+
+- This function uses offsets like 0x3E4, 0x120, 0x6B4, **0x95C**, 0x116, 0x114, ...
+- It does **not** reference 0x91C / 0x920 — consistent with
+  `METHOD0_DOES_NOT_READ_APPINFO_BEFORE_FAILURE`
+
+## Disassembly
+
+  0x002E1BBC: 70B5          PUSH
+  0x002E1BBE: 2D4D          LDR r5, [pc, #0xB4] lit=0x2E1C74
+  0x002E1BC0: 0024          MOVS r4, #0x0  <<< r4:=0 for zeroing / -1 materialization
+  0x002E1BC2: 2D48          LDR r0, [pc, #0xB4] lit=0x2E1C78
+  0x002E1BC4: 4D44          ADD r5, r9
+  0x002E1BC6: EC62          STR r4, [r5, #0x2C]
+  0x002E1BC8: EC66          STR r4, [r5, #0x6C]
+  0x002E1BCA: 4844          ADD r0, r9
+  0x002E1BCC: 0460          STR r4, [r0, #0x0]
+  0x002E1BCE: 6C61          STR r4, [r5, #0x14]
+  0x002E1BD0: EC60          STR r4, [r5, #0xC]
+  0x002E1BD2: AC63          STR r4, [r5, #0x38]
+  0x002E1BD4: 2A4E          LDR r6, [pc, #0xA8] lit=0x2E1C80
+  0x002E1BD6: 2C63          STR r4, [r5, #0x30]
+  0x002E1BD8: 2C66          STR r4, [r5, #0x60]
+  0x002E1BDA: 2848          LDR r0, [pc, #0xA0] lit=0x2E1C7C
+  0x002E1BDC: 4E44          ADD r6, r9
+  0x002E1BDE: 3368          LDR r3, [r6, #0x0]
+  0x002E1BE0: 1022          MOVS r2, #0x10
+  0x002E1BE2: 0021          MOVS r1, #0x0
+  0x002E1BE4: 4844          ADD r0, r9
+  0x002E1BE6: 9847          BLX r3  <<< indirect call (memset/platform?)
+  0x002E1BE8: 0822          MOVS r2, #0x8
+  0x002E1BEA: 0021          MOVS r1, #0x0
+  0x002E1BEC: 3368          LDR r3, [r6, #0x0]
+  0x002E1BEE: 2148          LDR r0, [pc, #0x84] lit=0x2E1C74
+  0x002E1BF0: 4844          ADD r0, r9
+  0x002E1BF2: 7830          ADDS r0, #0x78
+  0x002E1BF4: 9847          BLX r3  <<< indirect call (memset/platform?)
+  0x002E1BF6: 1422          MOVS r2, #0x14
+  0x002E1BF8: 3368          LDR r3, [r6, #0x0]
+  0x002E1BFA: 0021          MOVS r1, #0x0
+  0x002E1BFC: 2148          LDR r0, [pc, #0x84] lit=0x2E1C84
+  0x002E1BFE: 4844          ADD r0, r9
+  0x002E1C00: 9847          BLX r3  <<< indirect call (memset/platform?)
+  0x002E1C02: 2148          LDR r0, [pc, #0x84] lit=0x2E1C88
+  0x002E1C04: 2549          LDR r1, [pc, #0x94] lit=0x2E1C9C
+  0x002E1C06: 4844          ADD r0, r9
+  0x002E1C08: 0480          STRH r4, [r0, #0x0]
+  0x002E1C0A: 2048          LDR r0, [pc, #0x80] lit=0x2E1C8C
+  0x002E1C0C: 4944          ADD r1, r9
+  0x002E1C0E: 4844          ADD r0, r9
+  0x002E1C10: 0480          STRH r4, [r0, #0x0]
+  0x002E1C12: 1F48          LDR r0, [pc, #0x7C] lit=0x2E1C90
+  0x002E1C14: 4844          ADD r0, r9
+  0x002E1C16: 0480          STRH r4, [r0, #0x0]
+  0x002E1C18: 1E48          LDR r0, [pc, #0x78] lit=0x2E1C94
+  0x002E1C1A: 4844          ADD r0, r9
+  0x002E1C1C: 0480          STRH r4, [r0, #0x0]
+  0x002E1C1E: 1E48          LDR r0, [pc, #0x78] lit=0x2E1C98
+  0x002E1C20: 4844          ADD r0, r9
+  0x002E1C22: 0480          STRH r4, [r0, #0x0]
+  0x002E1C24: E043          MVNS r0, r4  <<< E10A31D_FALSE_POSITIVE: unconditional MVNS r0,r4 (r4=0 => -1 store)
+  0x002E1C26: 0880          STRH r0, [r1, #0x0]
+  0x002E1C28: 01F0C0FB      BL -> 0x2E33AD
+  0x002E1C2C: A864          STR r0, [r5, #0x48]
+  0x002E1C2E: 1C48          LDR r0, [pc, #0x70] lit=0x2E1CA0
+  0x002E1C30: EC64          STR r4, [r5, #0x4C]
+  0x002E1C32: 4844          ADD r0, r9
+  0x002E1C34: 0480          STRH r4, [r0, #0x0]
+  0x002E1C36: 1B48          LDR r0, [pc, #0x6C] lit=0x2E1CA4
+  0x002E1C38: 1422          MOVS r2, #0x14
+  0x002E1C3A: 4844          ADD r0, r9
+  0x002E1C3C: 0460          STR r4, [r0, #0x0]
+  0x002E1C3E: 1A48          LDR r0, [pc, #0x68] lit=0x2E1CA8
+  0x002E1C40: 0021          MOVS r1, #0x0
+  0x002E1C42: 4844          ADD r0, r9
+  0x002E1C44: 0460          STR r4, [r0, #0x0]
+  0x002E1C46: 1948          LDR r0, [pc, #0x64] lit=0x2E1CAC
+  0x002E1C48: 4844          ADD r0, r9
+  0x002E1C4A: 0460          STR r4, [r0, #0x0]
+  0x002E1C4C: 1848          LDR r0, [pc, #0x60] lit=0x2E1CB0
+  0x002E1C4E: 4844          ADD r0, r9
+  0x002E1C50: 0460          STR r4, [r0, #0x0]
+  0x002E1C52: 0A48          LDR r0, [pc, #0x28] lit=0x2E1C7C
+  0x002E1C54: 3368          LDR r3, [r6, #0x0]
+  0x002E1C56: 4844          ADD r0, r9
+  0x002E1C58: 2C38          SUBS r0, #0x2C
+  0x002E1C5A: 9847          BLX r3  <<< indirect call (memset/platform?)
+  0x002E1C5C: 0C22          MOVS r2, #0xC
+  0x002E1C5E: 3368          LDR r3, [r6, #0x0]
+  0x002E1C60: 0021          MOVS r1, #0x0
+  0x002E1C62: 1448          LDR r0, [pc, #0x50] lit=0x2E1CB4
+  0x002E1C64: 4844          ADD r0, r9
+  0x002E1C66: 9847          BLX r3  <<< indirect call (memset/platform?)
+  0x002E1C68: 2C70          h0=0x702C
+  0x002E1C6A: 6C70          h0=0x706C
+  0x002E1C6C: 01F09EFB      BL -> 0x2E33AD
+  0x002E1C70: E865          STR r0, [r5, #0x5C]
+  0x002E1C72: 70BD          POP
+  0x002E1C74: E403          h0=0x03E4
+  0x002E1C76: 0000          h0=0x0000
+  0x002E1C78: 2001          h0=0x0120
+  0x002E1C7A: 0000          h0=0x0000
+  0x002E1C7C: B406          h0=0x06B4
+  0x002E1C7E: 0000          h0=0x0000
+  0x002E1C80: 5C09          h0=0x095C
+  0x002E1C82: 0000          h0=0x0000
+  0x002E1C84: D003          h0=0x03D0
+  0x002E1C86: 0000          h0=0x0000
+  0x002E1C88: 1601          h0=0x0116
+  0x002E1C8A: 0000          h0=0x0000
+  0x002E1C8C: 1401          h0=0x0114
+  0x002E1C8E: 0000          h0=0x0000
+  0x002E1C90: 0400          h0=0x0004
+  0x002E1C92: 0000          h0=0x0000
+  0x002E1C94: 1801          h0=0x0118
+  0x002E1C96: 0000          h0=0x0000
+  0x002E1C98: 1A01          h0=0x011A
+  0x002E1C9A: 0000          h0=0x0000
+  0x002E1C9C: 7E03          h0=0x037E
+  0x002E1C9E: 0000          h0=0x0000
+  0x002E1CA0: 1C01          h0=0x011C
+  0x002E1CA2: 0000          h0=0x0000
+  0x002E1CA4: 0C00          h0=0x000C
+  0x002E1CA6: 0000          h0=0x0000
+  0x002E1CA8: 1000          h0=0x0010
+  0x002E1CAA: 0000          h0=0x0000
+  0x002E1CAC: 0C01          h0=0x010C
+  0x002E1CAE: 0000          h0=0x0000
+  0x002E1CB0: 1001          h0=0x0110
+  0x002E1CB2: 0000          h0=0x0000
+  0x002E1CB4: C403          h0=0x03C4
+  0x002E1CB6: 0000          h0=0x0000
+  0x002E1CB8: 08B5          PUSH
+  0x002E1CBA: FFF7FFFE      BL -> 0x2E1ABD
+  0x002E1CBE: 0020          MOVS r0, #0x0
+  0x002E1CC0: FAF7FEF8      BL -> 0x2DBEC1
+  0x002E1CC4: 02F0C6FA      BL -> 0x2E4255
+  0x002E1CC8: 08BD          POP
+  0x002E1CCA: 0000          h0=0x0000
+  0x002E1CCC: 0648          LDR r0, [pc, #0x18] lit=0x2E1CE8
+  0x002E1CCE: 08B5          PUSH
+  0x002E1CD0: 4844          ADD r0, r9
+  0x002E1CD2: C06E          LDR r0, [r0, #0x6C]
+  0x002E1CD4: 0128          CMP r0, #0x1
+  0x002E1CD6: 02D1          BNE -> 0x2E1CDF
+  0x002E1CD8: 05F0B4F9      BL -> 0x2E7045
+
+## Verdicts (static)
+
+- `FAILSITE_2E1C24_IS_NEG1_SENTINEL_STORE`
+- `FAILSITE_NO_BRANCH_PREDICATE_INTO_2E1C24`
+- `E10A31D_FIRST_FAILURE_FALSE_POSITIVE`
+- Next: continue method0 trace past sentinel to find true helper return -1
+
