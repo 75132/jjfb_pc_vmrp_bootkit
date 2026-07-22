@@ -14,10 +14,11 @@ ifeq ($(DEBUG),1)
 endif
 
 LAUNCHER_LIB ?= ../../build-i686/liblauncher_core.a
+RESEARCH_LIB ?= ../../build-i686/libresearch_gwy_shell_stubs.a
 LAUNCHER_INC ?= ../../include
 
 # Default make target keeps historical name but builds plain baseline.
-.PHONY: main plain gwy clean
+.PHONY: main plain gwy gwy-research clean
 
 main: plain
 
@@ -27,14 +28,27 @@ plain: $(CORE_OBJS) gwy_vm_file_weak.o gwy_ext_obs_weak.o main.o
 		-lws2_32 -lgdi32 -lmingw32 -L$(SDL2)/lib/ -lSDL2main -lSDL2
 	@echo "[OK] built bin/main_plain.exe (stub unbound)"
 
+# Product gwy: launcher_core + research stubs (no E10A/shell probe implementations).
 # Dual targets: `plain` links strong stubs in gwy_vm_file_weak.c (no ELF weak; MinGW PE);
-# `gwy` links liblauncher_core.a and must not link the stub object.
+# `gwy` must not link gwy_vm_file_weak / gwy_ext_obs_weak.
 gwy: CFLAGS += -DGWY_USE_VM_FILE_SERVICE -I$(LAUNCHER_INC)
 gwy: $(CORE_OBJS) main.o
 	@if [ ! -f "$(LAUNCHER_LIB)" ]; then echo "missing $(LAUNCHER_LIB); build gwy_launcher first"; exit 1; fi
+	@if [ ! -f "$(RESEARCH_LIB)" ]; then echo "missing $(RESEARCH_LIB); build research stubs first"; exit 1; fi
 	$(CC) $(CFLAGS) -m32 -o ./bin/main_gwy.exe $(CORE_OBJS) main.o \
-		$(LAUNCHER_LIB) $(UNICORN) $(CAPSTONE) -lz -lpthread -lm -lws2_32 -lgdi32 -lmingw32 -L$(SDL2)/lib/ -lSDL2main -lSDL2
-	@echo "[OK] built bin/main_gwy.exe (VmFileService bound)"
+		-Wl,--start-group $(LAUNCHER_LIB) $(RESEARCH_LIB) -Wl,--end-group \
+		$(UNICORN) $(CAPSTONE) -lz -lpthread -lm -lws2_32 -lgdi32 -lmingw32 -L$(SDL2)/lib/ -lSDL2main -lSDL2
+	@echo "[OK] built bin/main_gwy.exe (product: core + research stubs)"
+
+# Research gwy: launcher_core + real research_gwy_shell (E10A / shell probes).
+gwy-research: CFLAGS += -DGWY_USE_VM_FILE_SERVICE -I$(LAUNCHER_INC)
+gwy-research: $(CORE_OBJS) main.o
+	@if [ ! -f "$(LAUNCHER_LIB)" ]; then echo "missing $(LAUNCHER_LIB); build gwy_launcher first"; exit 1; fi
+	@if [ ! -f "$(RESEARCH_LIB)" ]; then echo "missing $(RESEARCH_LIB); pass RESEARCH_LIB=libresearch_gwy_shell.a"; exit 1; fi
+	$(CC) $(CFLAGS) -m32 -o ./bin/main_gwy_research.exe $(CORE_OBJS) main.o \
+		-Wl,--start-group $(LAUNCHER_LIB) $(RESEARCH_LIB) -Wl,--end-group \
+		$(UNICORN) $(CAPSTONE) -lz -lpthread -lm -lws2_32 -lgdi32 -lmingw32 -L$(SDL2)/lib/ -lSDL2main -lSDL2
+	@echo "[OK] built bin/main_gwy_research.exe (research: core + research_gwy_shell)"
 
 dll: $(CORE_OBJS) gwy_vm_file_weak.o gwy_ext_obs_weak.o
 	$(CC) $(CFLAGS) -m32 -shared -o ./bin/vmrp.dll $^ $(UNICORN) $(CAPSTONE) -lpthread -lm -lws2_32 -lgdi32 -lmingw32
@@ -44,4 +58,4 @@ dll: $(CORE_OBJS) gwy_vm_file_weak.o gwy_ext_obs_weak.o
 
 clean:
 	-rm -f *.o
-	-rm -f ./bin/main_plain.exe ./bin/main_gwy.exe ./bin/main.exe
+	-rm -f ./bin/main_plain.exe ./bin/main_gwy.exe ./bin/main_gwy_research.exe ./bin/main.exe

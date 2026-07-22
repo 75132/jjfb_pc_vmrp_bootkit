@@ -1,0 +1,17 @@
+digraph a1b8c {
+  label="cfunction.ext @0xA1B8C (file 0x21B8C) — static CFG seed";
+  labelloc=t;
+  node [shape=box, fontname="Consolas"];
+
+  entry [label="0xA1B50\nSTMFD {r4,lr}\nfunction entry"];
+  setup [label="0xA1B54..A1B74\nframe + helpers"];
+  load_obj [label="0xA1B78..A1B80\nLDR lit; ADD r9;\nLDR [r0] → object"];
+  load_fn [label="0xA1B84\nLDR r1,[r0,#0x50]\nfn ptr slot +0x50"];
+  call [label="0xA1B8C\nBLX r1\n*** live fail PC ***", style=filled, fillcolor="#ffcccc"];
+  epilogue [label="0xA1B90..A1B94\nADD sp; LDMFD {r4,pc}"];
+  callee [label="callee(r1)\nUNKNOWN until live\n(candidate PLATFORM_TABLE)", shape=ellipse];
+
+  entry -> setup -> load_obj -> load_fn -> call;
+  call -> callee;
+  callee -> epilogue;
+}

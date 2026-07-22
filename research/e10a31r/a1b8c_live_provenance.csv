@@ -1,0 +1,2 @@
+caller_pc,callee_entry,platform_slot,args,first_bad_value,predicate_pc,predicate,branch_taken,failure_pc,source_class,note
+0xA1B8C,UNKNOWN_VIA_R1,obj+0x50 (not mr_table slot yet),r0=r4_frame,UNKNOWN,UNKNOWN,UNKNOWN,n/a,0xA1B8C,PLATFORM_TABLE,STATIC_ONLY — live provenance pending; not RETURN_NEG1_IMMEDIATE

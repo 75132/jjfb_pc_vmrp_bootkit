@@ -1,0 +1,8 @@
+﻿stage=e10a31r
+failure_pc=0xA1B8C
+file_off=0x21B8C
+cfunction_sha256=8f85e3cf8f0ed4a8e09eb658f9daba566989fbc06c510e4e76cd474dd275cad5
+static_verdict=BLX_r1_indirect_not_imm_neg1
+source_class_candidate=PLATFORM_TABLE
+promotion=blocked_pending_live_callee_and_cross_target
+seconds=5

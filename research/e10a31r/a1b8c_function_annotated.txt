@@ -1,0 +1,59 @@
+# E10A-3.1r — Static mapping for failure PC 0xA1B8C
+
+## Build identity
+
+| Field | Value |
+|-------|-------|
+| file | `third_party/vmrp_upstream/wasm/dist/fs/cfunction.ext` |
+| sha256 | `8f85e3cf8f0ed4a8e09eb658f9daba566989fbc06c510e4e76cd474dd275cad5` |
+| size | 332116 |
+| live_pc | `0xA1B8C` |
+| file_offset | `0x21B8C` (= live − DSM base `0x80000`) |
+| ISA at site | **ARM A32** (word-aligned `E12FFF31`); do **not** assume Thumb |
+
+## Recovered function (annotated)
+
+Function entry (nearest `STMFD sp!,{r4,lr}`): **`0xA1B50`** / file `0x21B50`.
+
+```
+0xA1B50  E92D4010   STMFD sp!, {r4, lr}
+0xA1B54  E24DDF40   SUB   sp, sp, #0x100   ; stack frame
+0xA1B58  E1A01000   MOV   r1, r0
+0xA1B5C  E1A0000D   MOV   r0, sp
+0xA1B60  E1A0400D   MOV   r4, sp
+0xA1B64  EBFFC04E   BL    <helper>         ; local frame setup
+...
+0xA1B78  E59F001C   LDR   r0, [pc, #0x1C]  ; pool literal
+0xA1B7C  E0800009   ADD   r0, r0, r9       ; r9-scoped base
+0xA1B80  E5900000   LDR   r0, [r0]         ; load object / table ptr
+0xA1B84  E5901050   LDR   r1, [r0, #0x50]  ; slot +0x50 → callee
+0xA1B88  E1A00004   MOV   r0, r4           ; arg0 = local frame (r4)
+0xA1B8C  E12FFF31   BLX   r1              ; *** failure PC ***
+0xA1B90  E28DDF40   ADD   sp, sp, #0x100
+0xA1B94  E8BD8010   LDMFD sp!, {r4, pc}
+```
+
+### Interpretation (static only)
+
+- `0xA1B8C` is **not** a direct `MVN r0,#0` / immediate −1 epilogue.
+- It is an **indirect call** `BLX r1` where `r1 = *( *(r9+lit) + 0x50 )`.
+- Observed method0 `ret=-1` after this site implies the **callee** (or a later path) produced −1; classifying the PC itself as `RETURN_NEG1_IMMEDIATE` is **incorrect**.
+
+## Source classification (static candidate)
+
+| Class | Fit |
+|-------|-----|
+| PLATFORM_TABLE | Strong — `+0x50` function pointer off object/table |
+| INTERNAL_DSM_STATE | Possible — object loaded via `r9` |
+| FILE/VFS / SMSCFG / NETWORK / USERINFO | Not proven at this PC |
+| SHELL_ONLY_STATE | Unknown until cross-target |
+
+**Promotion:** not yet. Need live `r1` target, platform slot (if any), and ≥1 control package.
+
+## Forbidden (research policy)
+
+- no patch at `0xA1B8C`
+- no forced ret0
+- no new b* strings
+- no guessed SMSCFG bytes
+- no inclusion in `launcher_core`

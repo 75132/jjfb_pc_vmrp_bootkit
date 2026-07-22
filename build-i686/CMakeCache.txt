@@ -203,6 +203,9 @@ CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\c
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Link real research_gwy_shell instead of stubs
+GWY_LINK_RESEARCH_GWY_SHELL:BOOL=OFF
+
 //Path to a file.
 ZLIB_INCLUDE_DIR:PATH=C:/msys64/mingw32/include
 

@@ -1,4 +1,4 @@
-# Local preflight + unit tests. No GUI required.
+# Product-track preflight + unit tests. No GUI / no E10A live provenance.
 param(
   [string]$BuildDir = "build-i686",
   [string]$FixtureRoot = "",
@@ -38,7 +38,7 @@ if (-not $SkipBuild) {
   if ($LASTEXITCODE -ne 0) { throw "build failed" }
 }
 
-Write-Host '== unit tests =='
+Write-Host '== unit tests (product) =='
 $env:GWY_FIXTURE_ROOT = $FixtureRoot
 @(
   'test_smoke.exe',
@@ -49,21 +49,19 @@ $env:GWY_FIXTURE_ROOT = $FixtureRoot
   'test_launch_descriptor.exe',
   'test_ext_resolver.exe',
   'test_platform_identity.exe',
+  'test_platform_userinfo.exe',
+  'test_platform_timer.exe',
+  'test_platform_send_app_event.exe',
+  'test_platform_handler_registry.exe',
   'test_vm_runtime.exe',
   'test_guest_memory.exe',
   'test_vm_file_service.exe',
   'test_module_registry.exe',
   'test_ext_loader.exe',
   'test_mrp_member_view.exe',
-  'test_ext_entry_observe.exe',
-  'test_ext_object_observe.exe',
-  'test_ext_helper_handoff.exe',
-  'test_ext_dsm_record_observe.exe',
-  'test_ext_callback_frame.exe',
-  'test_ext_post_cont_audit.exe',
-  'test_ext_post_cfn_r9_audit.exe',
-  'test_ext_p_extchunk_audit.exe',
-  'test_ext_gwy_startgame_audit.exe'
+  'test_mrp_reg_primary.exe',
+  'test_package_scope.exe',
+  'test_package_metadata.exe'
 ) | ForEach-Object {
   $p = Join-Path $Root "$BuildDir\$_"
   if (-not (Test-Path $p)) { throw "missing $_" }
@@ -108,107 +106,7 @@ if ($FixtureRoot -and (Test-Path (Join-Path $FixtureRoot 'gwy\jjfb.mrp'))) {
   if ($LASTEXITCODE -ne 0) { throw 'vfs-check overlay install failed' }
   if (Test-Path $runMyth) { throw "cwd mythroad/sdk_key.dat must not exist after VFS install" }
   Write-Host '[OK] no cwd mythroad/sdk_key.dat'
-
-  Write-Host '== Phase 4C live file trace (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_FILE_TRACE.ps1') -Seconds 6
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_FILE_TRACE failed' }
-
-  Write-Host '== Phase 5A live ext resolve (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_EXT_RESOLVE.ps1') -Seconds 6
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_EXT_RESOLVE failed' }
-
-  Write-Host '== Phase 5D live entry fault (short) =='
-  # 14s: observe chain through robotol second-hop fault needs headroom under A5–A7 hooks.
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_EXT_ENTRY_FAULT.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_EXT_ENTRY_FAULT failed' }
-
-  Write-Host '== Phase 6A nested helper ABI (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_HELPER_ABI.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_HELPER_ABI failed' }
-
-  Write-Host '== Phase 6B-A EXT bootstrap evidence (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_EXT_BOOTSTRAP.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_EXT_BOOTSTRAP failed' }
-
-  Write-Host '== Phase 6B-A2 entry reconcile (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_ENTRY_RECONCILE.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_ENTRY_RECONCILE failed' }
-
-  Write-Host '== Phase 6B-A3 chunk provenance (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_CHUNK_PROVENANCE.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_CHUNK_PROVENANCE failed' }
-
-  Write-Host '== Phase 6B-A4 object identity (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_OBJECT_IDENTITY.ps1') -Seconds 14
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_OBJECT_IDENTITY failed' }
-
-  Write-Host '== Phase 6B-A5 dispatch hop (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_DISPATCH_HOP.ps1') -Seconds 14 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_DISPATCH_HOP failed' }
-
-  Write-Host '== Phase 6B-A6 helper handoff (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_HELPER_HANDOFF.ps1') -Seconds 14 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_HELPER_HANDOFF failed' }
-
-  Write-Host '== Phase 6B-A7 DSM handoff contract (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_DSM_HANDOFF_CONTRACT.ps1') -Seconds 14 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_DSM_HANDOFF_CONTRACT failed' }
-
-  Write-Host '== Phase 6B-A8 CODE_IMAGE entry ABI (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_MODULE_ENTRY_ABI.ps1') -Seconds 20 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_MODULE_ENTRY_ABI failed' }
-
-  Write-Host '== Phase 6B-A9 NULL contract discrimination (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_MODULE_ENTRY_NULL_CONTRACT.ps1') -Seconds 18 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_MODULE_ENTRY_NULL_CONTRACT failed' }
-
-  Write-Host '== Phase 6B-A10 module data init contract (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_MODULE_DATA_INIT.ps1') -Seconds 18 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_MODULE_DATA_INIT failed' }
-
-  Write-Host '== Phase 6C-A nested EXT R9 switch (short) =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_MODULE_R9_SWITCH.ps1') -Seconds 18 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_MODULE_R9_SWITCH failed' }
-
-  Write-Host '== Live: Phase 6C-B ER_RW producer timing =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_ER_RW_PRODUCER.ps1') -Seconds 18 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_ER_RW_PRODUCER failed' }
-
-  Write-Host '== Live: Phase 6C-C bootstrap entry ABI =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_BOOTSTRAP_ENTRY_ABI.ps1') -Seconds 18 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_BOOTSTRAP_ENTRY_ABI failed' }
-
-  Write-Host '== Live: Phase 6C-D1 callback continuation frame =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_CALLBACK_FRAME.ps1') -Seconds 28 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_CALLBACK_FRAME failed' }
-
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_NESTED_R9_SCOPE.ps1') -Seconds 24 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_NESTED_R9_SCOPE failed' }
-
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_TOKENIZED_R9_SCOPE.ps1') -Seconds 28 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_TOKENIZED_R9_SCOPE failed' }
-
-  Write-Host '== Live: Phase 6D-A post-continuation progress audit =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_POST_CONT_AUDIT.ps1') -Seconds 45 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_POST_CONT_AUDIT failed' }
-
-  Write-Host '== Live: Phase 6D-B post-CFN R9 promotion audit =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_LIVE_POST_CFN_R9_AUDIT.ps1') -Seconds 45 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_LIVE_POST_CFN_R9_AUDIT failed' }
-
-  Write-Host '== Live: Phase 6E P.mrc_extChunk provider audit =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_PHASE6E_P_EXTCHUNK_AUDIT.ps1') -Seconds 45 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_PHASE6E_P_EXTCHUNK_AUDIT failed' }
-
-  Write-Host '== Live: Phase 6F GWY startGame/runapp context audit =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_PHASE6F_GWY_STARTGAME_CONTEXT_AUDIT.ps1') -Seconds 50 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_PHASE6F_GWY_STARTGAME_CONTEXT_AUDIT failed' }
-
-  Write-Host '== Live: Phase 6G restore GWY startGame/runapp context =='
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_PHASE6G_RESTORE_GWY_CONTEXT.ps1') -Seconds 55 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_PHASE6G_RESTORE_GWY_CONTEXT failed' }
-  & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_PHASE6H_GWY_GUEST_RUNAPP.ps1') -Seconds 70 -SkipBuild
-  if ($LASTEXITCODE -ne 0) { throw 'RUN_PHASE6H_GWY_GUEST_RUNAPP failed' }
 }
 
-Write-Host "[OK] RUN_TESTS complete (GWY_FIXTURE_ROOT=$FixtureRoot)"
+Write-Host "[OK] RUN_TESTS complete (product track; GWY_FIXTURE_ROOT=$FixtureRoot)"
+Write-Host "     Research live/E10A runners: .\RUN_RESEARCH_GWY_SHELL.ps1"

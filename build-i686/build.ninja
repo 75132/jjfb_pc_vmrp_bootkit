@@ -239,46 +239,6 @@ build CMakeFiles/launcher_core.dir/src/runtime/handler_forensic.c.obj: C_COMPILE
   OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
   TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
 
-build CMakeFiles/launcher_core.dir/src/runtime/robotol_idle_watch.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/robotol_idle_watch.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\robotol_idle_watch.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/robotol_flag_writer_trace.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/robotol_flag_writer_trace.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\robotol_flag_writer_trace.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/jjfb_bmp_meta.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/jjfb_bmp_meta.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\jjfb_bmp_meta.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/jjfb_plat_11f00.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/jjfb_plat_11f00.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\jjfb_plat_11f00.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
 build CMakeFiles/launcher_core.dir/src/runtime/guest_call_observer.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/guest_call_observer.c || cmake_object_order_depends_target_launcher_core
   CONFIG = RelWithDebInfo
   DEFINES = -DGWY_HAVE_UNICORN=1
@@ -509,196 +469,6 @@ build CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_startgame_audit.c.obj: C_
   OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
   TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
 
-build CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_shell_shim.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_gwy_shell_shim.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\ext_gwy_shell_shim.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_shell_native_exec.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_gwy_shell_native_exec.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\ext_gwy_shell_native_exec.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a_shell_trace.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a_shell_trace.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a_shell_trace.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a3_postselect_trace.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a3_postselect_trace.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a3_postselect_trace.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31_gamelist_context.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31_gamelist_context.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31_gamelist_context.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31a_precont_diag.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31a_precont_diag.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31a_precont_diag.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31b_publication.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31b_publication.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31b_publication.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31c_dispatch.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31c_dispatch.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31c_dispatch.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31d_provenance.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31d_provenance.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31d_provenance.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31e_appinfo.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31e_appinfo.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31e_appinfo.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31f_failsite.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31f_failsite.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31f_failsite.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31g_strcmp.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31g_strcmp.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31g_strcmp.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31h_smscfg.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31h_smscfg.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31h_smscfg.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31j_smscfg_long.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31j_smscfg_long.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31j_smscfg_long.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31l_config_map.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31l_config_map.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31l_config_map.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31m_fail_2e5404.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31m_fail_2e5404.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31m_fail_2e5404.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/e10a31n_post_range.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31n_post_range.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\e10a31n_post_range.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/sms_cfg_compat_profile.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/sms_cfg_compat_profile.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\sms_cfg_compat_profile.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
-build CMakeFiles/launcher_core.dir/src/runtime/gwy_sms_cfg.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_sms_cfg.c || cmake_object_order_depends_target_launcher_core
-  CONFIG = RelWithDebInfo
-  DEFINES = -DGWY_HAVE_UNICORN=1
-  DEP_FILE = CMakeFiles\launcher_core.dir\src\runtime\gwy_sms_cfg.c.obj.d
-  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
-  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
-  OBJECT_DIR = CMakeFiles\launcher_core.dir
-  OBJECT_FILE_DIR = CMakeFiles\launcher_core.dir\src\runtime
-  TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
-
 build CMakeFiles/launcher_core.dir/src/runtime/module_r9_switch.c.obj: C_COMPILER__launcher_core_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/module_r9_switch.c || cmake_object_order_depends_target_launcher_core
   CONFIG = RelWithDebInfo
   DEFINES = -DGWY_HAVE_UNICORN=1
@@ -847,7 +617,7 @@ build CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj: C_CO
 #############################################
 # Link the static library liblauncher_core.a
 
-build liblauncher_core.a: C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo CMakeFiles/launcher_core.dir/src/launcher/error.c.obj CMakeFiles/launcher_core.dir/src/launcher/byte_buffer.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_descriptor.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_runtime.c.obj CMakeFiles/launcher_core.dir/src/launcher/utf.c.obj CMakeFiles/launcher_core.dir/src/launcher/game_catalog.c.obj CMakeFiles/launcher_core.dir/src/vfs/guest_vfs.c.obj CMakeFiles/launcher_core.dir/src/formats/sha256.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_archive.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_guest_index.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_cfg.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_pack_registry.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_reg_primary.c.obj CMakeFiles/launcher_core.dir/src/profiles/compat_profile.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_resolver.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_registry.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_loader.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_ext_obs.c.obj CMakeFiles/launcher_core.dir/src/runtime/handler_forensic.c.obj CMakeFiles/launcher_core.dir/src/runtime/robotol_idle_watch.c.obj CMakeFiles/launcher_core.dir/src/runtime/robotol_flag_writer_trace.c.obj CMakeFiles/launcher_core.dir/src/runtime/jjfb_bmp_meta.c.obj CMakeFiles/launcher_core.dir/src/runtime/jjfb_plat_11f00.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_call_observer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_object_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_helper_handoff.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_dsm_record_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_entry_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_null_contract.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_data_init.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_producer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_bootstrap_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_callback_frame.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_r9_scope_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cont_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cfn_r9_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_p_extchunk_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_shell_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_mrpgcmap_entry_order.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_abi_cluster_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_cfunction_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_provider.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_bind_restore.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_startgame_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_shell_shim.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_shell_native_exec.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a_shell_trace.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a3_postselect_trace.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31_gamelist_context.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31a_precont_diag.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31b_publication.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31c_dispatch.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31d_provenance.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31e_appinfo.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31f_failsite.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31g_strcmp.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31h_smscfg.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31j_smscfg_long.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31l_config_map.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31m_fail_2e5404.c.obj CMakeFiles/launcher_core.dir/src/runtime/e10a31n_post_range.c.obj CMakeFiles/launcher_core.dir/src/runtime/sms_cfg_compat_profile.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_sms_cfg.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_r9_switch.c.obj CMakeFiles/launcher_core.dir/src/runtime/mrp_member_view.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_scope.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_metadata.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_runtime.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_memory.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_file_service.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_vmrp_vfs_bootstrap.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_identity.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_userinfo.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_send_app_event.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_timer.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_handler_registry.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj
+build liblauncher_core.a: C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo CMakeFiles/launcher_core.dir/src/launcher/error.c.obj CMakeFiles/launcher_core.dir/src/launcher/byte_buffer.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_descriptor.c.obj CMakeFiles/launcher_core.dir/src/launcher/launch_runtime.c.obj CMakeFiles/launcher_core.dir/src/launcher/utf.c.obj CMakeFiles/launcher_core.dir/src/launcher/game_catalog.c.obj CMakeFiles/launcher_core.dir/src/vfs/guest_vfs.c.obj CMakeFiles/launcher_core.dir/src/formats/sha256.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_archive.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_guest_index.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_cfg.c.obj CMakeFiles/launcher_core.dir/src/formats/gwy_pack_registry.c.obj CMakeFiles/launcher_core.dir/src/formats/mrp_reg_primary.c.obj CMakeFiles/launcher_core.dir/src/profiles/compat_profile.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_resolver.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_registry.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_loader.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_ext_obs.c.obj CMakeFiles/launcher_core.dir/src/runtime/handler_forensic.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_call_observer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_object_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_helper_handoff.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_dsm_record_observe.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_entry_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_null_contract.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_module_data_init.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_producer.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_bootstrap_abi.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_callback_frame.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_r9_scope_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cont_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_post_cfn_r9_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_p_extchunk_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_shell_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_mrpgcmap_entry_order.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_entry_abi_cluster_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_cfunction_publication_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_chunk_provider.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_er_rw_bind_restore.c.obj CMakeFiles/launcher_core.dir/src/runtime/ext_gwy_startgame_audit.c.obj CMakeFiles/launcher_core.dir/src/runtime/module_r9_switch.c.obj CMakeFiles/launcher_core.dir/src/runtime/mrp_member_view.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_scope.c.obj CMakeFiles/launcher_core.dir/src/runtime/package_metadata.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_runtime.c.obj CMakeFiles/launcher_core.dir/src/runtime/guest_memory.c.obj CMakeFiles/launcher_core.dir/src/runtime/vm_file_service.c.obj CMakeFiles/launcher_core.dir/src/runtime/gwy_vmrp_vfs_bootstrap.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_identity.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_userinfo.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_send_app_event.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_timer.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_handler_registry.c.obj CMakeFiles/launcher_core.dir/src/platform/platform_call_census.c.obj
   CONFIG = RelWithDebInfo
   LANGUAGE_COMPILE_FLAGS = -m32 -O2 -g -DNDEBUG
   OBJECT_DIR = CMakeFiles\launcher_core.dir
@@ -858,13 +628,306 @@ build liblauncher_core.a: C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo 
   TARGET_SUPPORT_DIR = CMakeFiles\launcher_core.dir
 
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target research_gwy_shell
+
+
+#############################################
+# Order-only phony target for research_gwy_shell
+
+build cmake_object_order_depends_target_research_gwy_shell: phony || .
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/robotol_idle_watch.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/robotol_idle_watch.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\robotol_idle_watch.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/robotol_flag_writer_trace.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/robotol_flag_writer_trace.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\robotol_flag_writer_trace.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/jjfb_bmp_meta.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/jjfb_bmp_meta.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\jjfb_bmp_meta.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/jjfb_plat_11f00.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/jjfb_plat_11f00.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\jjfb_plat_11f00.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/ext_gwy_shell_shim.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_gwy_shell_shim.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\ext_gwy_shell_shim.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/ext_gwy_shell_native_exec.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/ext_gwy_shell_native_exec.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\ext_gwy_shell_native_exec.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a_shell_trace.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a_shell_trace.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a_shell_trace.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a3_postselect_trace.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a3_postselect_trace.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a3_postselect_trace.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31_gamelist_context.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31_gamelist_context.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31_gamelist_context.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31a_precont_diag.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31a_precont_diag.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31a_precont_diag.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31b_publication.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31b_publication.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31b_publication.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31c_dispatch.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31c_dispatch.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31c_dispatch.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31d_provenance.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31d_provenance.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31d_provenance.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31e_appinfo.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31e_appinfo.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31e_appinfo.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31f_failsite.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31f_failsite.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31f_failsite.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31g_strcmp.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31g_strcmp.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31g_strcmp.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31h_smscfg.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31h_smscfg.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31h_smscfg.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31j_smscfg_long.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31j_smscfg_long.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31j_smscfg_long.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31l_config_map.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31l_config_map.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31l_config_map.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31m_fail_2e5404.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31m_fail_2e5404.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31m_fail_2e5404.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31n_post_range.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/e10a31n_post_range.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\e10a31n_post_range.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/sms_cfg_compat_profile.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/sms_cfg_compat_profile.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\sms_cfg_compat_profile.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+build CMakeFiles/research_gwy_shell.dir/src/runtime/gwy_sms_cfg.c.obj: C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_sms_cfg.c || cmake_object_order_depends_target_research_gwy_shell
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\research_gwy_shell.dir\src\runtime\gwy_sms_cfg.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wpedantic
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell.dir\src\runtime
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target research_gwy_shell
+
+
+#############################################
+# Link the static library libresearch_gwy_shell.a
+
+build libresearch_gwy_shell.a: C_STATIC_LIBRARY_LINKER__research_gwy_shell_RelWithDebInfo CMakeFiles/research_gwy_shell.dir/src/runtime/robotol_idle_watch.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/robotol_flag_writer_trace.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/jjfb_bmp_meta.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/jjfb_plat_11f00.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/ext_gwy_shell_shim.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/ext_gwy_shell_native_exec.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a_shell_trace.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a3_postselect_trace.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31_gamelist_context.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31a_precont_diag.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31b_publication.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31c_dispatch.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31d_provenance.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31e_appinfo.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31f_failsite.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31g_strcmp.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31h_smscfg.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31j_smscfg_long.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31l_config_map.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31m_fail_2e5404.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/e10a31n_post_range.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/sms_cfg_compat_profile.c.obj CMakeFiles/research_gwy_shell.dir/src/runtime/gwy_sms_cfg.c.obj
+  CONFIG = RelWithDebInfo
+  LANGUAGE_COMPILE_FLAGS = -m32 -O2 -g -DNDEBUG
+  OBJECT_DIR = CMakeFiles\research_gwy_shell.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libresearch_gwy_shell.a
+  TARGET_PDB = research_gwy_shell.a.dbg
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell.dir
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target research_gwy_shell_stubs
+
+
+#############################################
+# Order-only phony target for research_gwy_shell_stubs
+
+build cmake_object_order_depends_target_research_gwy_shell_stubs: phony || .
+
+build CMakeFiles/research_gwy_shell_stubs.dir/src/research/gwy_shell/research_gwy_shell_stubs.c.obj: C_COMPILER__research_gwy_shell_stubs_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/research/gwy_shell/research_gwy_shell_stubs.c || cmake_object_order_depends_target_research_gwy_shell_stubs
+  CONFIG = RelWithDebInfo
+  DEP_FILE = CMakeFiles\research_gwy_shell_stubs.dir\src\research\gwy_shell\research_gwy_shell_stubs.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11 -Wall -Wno-unused-parameter
+  INCLUDES = -IC:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/include
+  OBJECT_DIR = CMakeFiles\research_gwy_shell_stubs.dir
+  OBJECT_FILE_DIR = CMakeFiles\research_gwy_shell_stubs.dir\src\research\gwy_shell
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell_stubs.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target research_gwy_shell_stubs
+
+
+#############################################
+# Link the static library libresearch_gwy_shell_stubs.a
+
+build libresearch_gwy_shell_stubs.a: C_STATIC_LIBRARY_LINKER__research_gwy_shell_stubs_RelWithDebInfo CMakeFiles/research_gwy_shell_stubs.dir/src/research/gwy_shell/research_gwy_shell_stubs.c.obj
+  CONFIG = RelWithDebInfo
+  LANGUAGE_COMPILE_FLAGS = -m32 -O2 -g -DNDEBUG
+  OBJECT_DIR = CMakeFiles\research_gwy_shell_stubs.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = libresearch_gwy_shell_stubs.a
+  TARGET_PDB = research_gwy_shell_stubs.a.dbg
+  TARGET_SUPPORT_DIR = CMakeFiles\research_gwy_shell_stubs.dir
+
+# =============================================================================
 # Object build statements for EXECUTABLE target gwy_launcher
 
 
 #############################################
 # Order-only phony target for gwy_launcher
 
-build cmake_object_order_depends_target_gwy_launcher: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_gwy_launcher: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/gwy_launcher.dir/src/app/main.c.obj: C_COMPILER__gwy_launcher_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/src/app/main.c || cmake_object_order_depends_target_gwy_launcher
   CONFIG = RelWithDebInfo
@@ -894,11 +957,11 @@ build CMakeFiles/gwy_launcher.dir/src/app/games_picker_win32.c.obj: C_COMPILER__
 #############################################
 # Link the executable gwy_launcher.exe
 
-build gwy_launcher.exe: C_EXECUTABLE_LINKER__gwy_launcher_RelWithDebInfo CMakeFiles/gwy_launcher.dir/src/app/main.c.obj CMakeFiles/gwy_launcher.dir/src/app/games_picker_win32.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build gwy_launcher.exe: C_EXECUTABLE_LINKER__gwy_launcher_RelWithDebInfo CMakeFiles/gwy_launcher.dir/src/app/main.c.obj CMakeFiles/gwy_launcher.dir/src/app/games_picker_win32.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  -luser32  -lgdi32  -lcomctl32  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  -luser32  -lgdi32  -lcomctl32  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\gwy_launcher.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/build-info.json C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/build-info.json && cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -914,7 +977,7 @@ build gwy_launcher.exe: C_EXECUTABLE_LINKER__gwy_launcher_RelWithDebInfo CMakeFi
 #############################################
 # Order-only phony target for test_smoke
 
-build cmake_object_order_depends_target_test_smoke: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_smoke: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_smoke.dir/tests/unit/test_smoke.c.obj: C_COMPILER__test_smoke_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_smoke.c || cmake_object_order_depends_target_test_smoke
   CONFIG = RelWithDebInfo
@@ -934,11 +997,11 @@ build CMakeFiles/test_smoke.dir/tests/unit/test_smoke.c.obj: C_COMPILER__test_sm
 #############################################
 # Link the executable test_smoke.exe
 
-build test_smoke.exe: C_EXECUTABLE_LINKER__test_smoke_RelWithDebInfo CMakeFiles/test_smoke.dir/tests/unit/test_smoke.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_smoke.exe: C_EXECUTABLE_LINKER__test_smoke_RelWithDebInfo CMakeFiles/test_smoke.dir/tests/unit/test_smoke.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_smoke.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -954,7 +1017,7 @@ build test_smoke.exe: C_EXECUTABLE_LINKER__test_smoke_RelWithDebInfo CMakeFiles/
 #############################################
 # Order-only phony target for test_mrp_jjfb
 
-build cmake_object_order_depends_target_test_mrp_jjfb: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_mrp_jjfb: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_mrp_jjfb.dir/tests/unit/test_mrp_jjfb.c.obj: C_COMPILER__test_mrp_jjfb_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_mrp_jjfb.c || cmake_object_order_depends_target_test_mrp_jjfb
   CONFIG = RelWithDebInfo
@@ -974,11 +1037,11 @@ build CMakeFiles/test_mrp_jjfb.dir/tests/unit/test_mrp_jjfb.c.obj: C_COMPILER__t
 #############################################
 # Link the executable test_mrp_jjfb.exe
 
-build test_mrp_jjfb.exe: C_EXECUTABLE_LINKER__test_mrp_jjfb_RelWithDebInfo CMakeFiles/test_mrp_jjfb.dir/tests/unit/test_mrp_jjfb.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_mrp_jjfb.exe: C_EXECUTABLE_LINKER__test_mrp_jjfb_RelWithDebInfo CMakeFiles/test_mrp_jjfb.dir/tests/unit/test_mrp_jjfb.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_mrp_jjfb.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -994,7 +1057,7 @@ build test_mrp_jjfb.exe: C_EXECUTABLE_LINKER__test_mrp_jjfb_RelWithDebInfo CMake
 #############################################
 # Order-only phony target for test_cfg36
 
-build cmake_object_order_depends_target_test_cfg36: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_cfg36: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_cfg36.dir/tests/unit/test_cfg36.c.obj: C_COMPILER__test_cfg36_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_cfg36.c || cmake_object_order_depends_target_test_cfg36
   CONFIG = RelWithDebInfo
@@ -1014,11 +1077,11 @@ build CMakeFiles/test_cfg36.dir/tests/unit/test_cfg36.c.obj: C_COMPILER__test_cf
 #############################################
 # Link the executable test_cfg36.exe
 
-build test_cfg36.exe: C_EXECUTABLE_LINKER__test_cfg36_RelWithDebInfo CMakeFiles/test_cfg36.dir/tests/unit/test_cfg36.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_cfg36.exe: C_EXECUTABLE_LINKER__test_cfg36_RelWithDebInfo CMakeFiles/test_cfg36.dir/tests/unit/test_cfg36.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_cfg36.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1034,7 +1097,7 @@ build test_cfg36.exe: C_EXECUTABLE_LINKER__test_cfg36_RelWithDebInfo CMakeFiles/
 #############################################
 # Order-only phony target for test_game_catalog
 
-build cmake_object_order_depends_target_test_game_catalog: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_game_catalog: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_game_catalog.dir/tests/unit/test_game_catalog.c.obj: C_COMPILER__test_game_catalog_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_game_catalog.c || cmake_object_order_depends_target_test_game_catalog
   CONFIG = RelWithDebInfo
@@ -1054,11 +1117,11 @@ build CMakeFiles/test_game_catalog.dir/tests/unit/test_game_catalog.c.obj: C_COM
 #############################################
 # Link the executable test_game_catalog.exe
 
-build test_game_catalog.exe: C_EXECUTABLE_LINKER__test_game_catalog_RelWithDebInfo CMakeFiles/test_game_catalog.dir/tests/unit/test_game_catalog.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_game_catalog.exe: C_EXECUTABLE_LINKER__test_game_catalog_RelWithDebInfo CMakeFiles/test_game_catalog.dir/tests/unit/test_game_catalog.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_game_catalog.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1074,7 +1137,7 @@ build test_game_catalog.exe: C_EXECUTABLE_LINKER__test_game_catalog_RelWithDebIn
 #############################################
 # Order-only phony target for test_guest_vfs
 
-build cmake_object_order_depends_target_test_guest_vfs: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_guest_vfs: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_guest_vfs.dir/tests/unit/test_guest_vfs.c.obj: C_COMPILER__test_guest_vfs_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_guest_vfs.c || cmake_object_order_depends_target_test_guest_vfs
   CONFIG = RelWithDebInfo
@@ -1094,11 +1157,11 @@ build CMakeFiles/test_guest_vfs.dir/tests/unit/test_guest_vfs.c.obj: C_COMPILER_
 #############################################
 # Link the executable test_guest_vfs.exe
 
-build test_guest_vfs.exe: C_EXECUTABLE_LINKER__test_guest_vfs_RelWithDebInfo CMakeFiles/test_guest_vfs.dir/tests/unit/test_guest_vfs.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_guest_vfs.exe: C_EXECUTABLE_LINKER__test_guest_vfs_RelWithDebInfo CMakeFiles/test_guest_vfs.dir/tests/unit/test_guest_vfs.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_guest_vfs.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1114,7 +1177,7 @@ build test_guest_vfs.exe: C_EXECUTABLE_LINKER__test_guest_vfs_RelWithDebInfo CMa
 #############################################
 # Order-only phony target for test_launch_descriptor
 
-build cmake_object_order_depends_target_test_launch_descriptor: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_launch_descriptor: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_launch_descriptor.dir/tests/unit/test_launch_descriptor.c.obj: C_COMPILER__test_launch_descriptor_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_launch_descriptor.c || cmake_object_order_depends_target_test_launch_descriptor
   CONFIG = RelWithDebInfo
@@ -1134,11 +1197,11 @@ build CMakeFiles/test_launch_descriptor.dir/tests/unit/test_launch_descriptor.c.
 #############################################
 # Link the executable test_launch_descriptor.exe
 
-build test_launch_descriptor.exe: C_EXECUTABLE_LINKER__test_launch_descriptor_RelWithDebInfo CMakeFiles/test_launch_descriptor.dir/tests/unit/test_launch_descriptor.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_launch_descriptor.exe: C_EXECUTABLE_LINKER__test_launch_descriptor_RelWithDebInfo CMakeFiles/test_launch_descriptor.dir/tests/unit/test_launch_descriptor.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_launch_descriptor.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1154,7 +1217,7 @@ build test_launch_descriptor.exe: C_EXECUTABLE_LINKER__test_launch_descriptor_Re
 #############################################
 # Order-only phony target for test_ext_resolver
 
-build cmake_object_order_depends_target_test_ext_resolver: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_resolver: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_resolver.dir/tests/unit/test_ext_resolver.c.obj: C_COMPILER__test_ext_resolver_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_resolver.c || cmake_object_order_depends_target_test_ext_resolver
   CONFIG = RelWithDebInfo
@@ -1174,11 +1237,11 @@ build CMakeFiles/test_ext_resolver.dir/tests/unit/test_ext_resolver.c.obj: C_COM
 #############################################
 # Link the executable test_ext_resolver.exe
 
-build test_ext_resolver.exe: C_EXECUTABLE_LINKER__test_ext_resolver_RelWithDebInfo CMakeFiles/test_ext_resolver.dir/tests/unit/test_ext_resolver.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_resolver.exe: C_EXECUTABLE_LINKER__test_ext_resolver_RelWithDebInfo CMakeFiles/test_ext_resolver.dir/tests/unit/test_ext_resolver.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_resolver.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1194,7 +1257,7 @@ build test_ext_resolver.exe: C_EXECUTABLE_LINKER__test_ext_resolver_RelWithDebIn
 #############################################
 # Order-only phony target for test_module_registry
 
-build cmake_object_order_depends_target_test_module_registry: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_module_registry: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_module_registry.dir/tests/unit/test_module_registry.c.obj: C_COMPILER__test_module_registry_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_module_registry.c || cmake_object_order_depends_target_test_module_registry
   CONFIG = RelWithDebInfo
@@ -1214,11 +1277,11 @@ build CMakeFiles/test_module_registry.dir/tests/unit/test_module_registry.c.obj:
 #############################################
 # Link the executable test_module_registry.exe
 
-build test_module_registry.exe: C_EXECUTABLE_LINKER__test_module_registry_RelWithDebInfo CMakeFiles/test_module_registry.dir/tests/unit/test_module_registry.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_module_registry.exe: C_EXECUTABLE_LINKER__test_module_registry_RelWithDebInfo CMakeFiles/test_module_registry.dir/tests/unit/test_module_registry.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_module_registry.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1234,7 +1297,7 @@ build test_module_registry.exe: C_EXECUTABLE_LINKER__test_module_registry_RelWit
 #############################################
 # Order-only phony target for test_ext_loader
 
-build cmake_object_order_depends_target_test_ext_loader: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_loader: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_loader.dir/tests/unit/test_ext_loader.c.obj: C_COMPILER__test_ext_loader_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_loader.c || cmake_object_order_depends_target_test_ext_loader
   CONFIG = RelWithDebInfo
@@ -1254,11 +1317,11 @@ build CMakeFiles/test_ext_loader.dir/tests/unit/test_ext_loader.c.obj: C_COMPILE
 #############################################
 # Link the executable test_ext_loader.exe
 
-build test_ext_loader.exe: C_EXECUTABLE_LINKER__test_ext_loader_RelWithDebInfo CMakeFiles/test_ext_loader.dir/tests/unit/test_ext_loader.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_loader.exe: C_EXECUTABLE_LINKER__test_ext_loader_RelWithDebInfo CMakeFiles/test_ext_loader.dir/tests/unit/test_ext_loader.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_loader.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1274,7 +1337,7 @@ build test_ext_loader.exe: C_EXECUTABLE_LINKER__test_ext_loader_RelWithDebInfo C
 #############################################
 # Order-only phony target for test_mrp_member_view
 
-build cmake_object_order_depends_target_test_mrp_member_view: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_mrp_member_view: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_mrp_member_view.dir/tests/unit/test_mrp_member_view.c.obj: C_COMPILER__test_mrp_member_view_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_mrp_member_view.c || cmake_object_order_depends_target_test_mrp_member_view
   CONFIG = RelWithDebInfo
@@ -1294,11 +1357,11 @@ build CMakeFiles/test_mrp_member_view.dir/tests/unit/test_mrp_member_view.c.obj:
 #############################################
 # Link the executable test_mrp_member_view.exe
 
-build test_mrp_member_view.exe: C_EXECUTABLE_LINKER__test_mrp_member_view_RelWithDebInfo CMakeFiles/test_mrp_member_view.dir/tests/unit/test_mrp_member_view.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_mrp_member_view.exe: C_EXECUTABLE_LINKER__test_mrp_member_view_RelWithDebInfo CMakeFiles/test_mrp_member_view.dir/tests/unit/test_mrp_member_view.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_mrp_member_view.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1314,7 +1377,7 @@ build test_mrp_member_view.exe: C_EXECUTABLE_LINKER__test_mrp_member_view_RelWit
 #############################################
 # Order-only phony target for test_mrp_reg_primary
 
-build cmake_object_order_depends_target_test_mrp_reg_primary: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_mrp_reg_primary: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_mrp_reg_primary.dir/tests/unit/test_mrp_reg_primary.c.obj: C_COMPILER__test_mrp_reg_primary_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_mrp_reg_primary.c || cmake_object_order_depends_target_test_mrp_reg_primary
   CONFIG = RelWithDebInfo
@@ -1334,11 +1397,11 @@ build CMakeFiles/test_mrp_reg_primary.dir/tests/unit/test_mrp_reg_primary.c.obj:
 #############################################
 # Link the executable test_mrp_reg_primary.exe
 
-build test_mrp_reg_primary.exe: C_EXECUTABLE_LINKER__test_mrp_reg_primary_RelWithDebInfo CMakeFiles/test_mrp_reg_primary.dir/tests/unit/test_mrp_reg_primary.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_mrp_reg_primary.exe: C_EXECUTABLE_LINKER__test_mrp_reg_primary_RelWithDebInfo CMakeFiles/test_mrp_reg_primary.dir/tests/unit/test_mrp_reg_primary.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_mrp_reg_primary.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1354,7 +1417,7 @@ build test_mrp_reg_primary.exe: C_EXECUTABLE_LINKER__test_mrp_reg_primary_RelWit
 #############################################
 # Order-only phony target for test_package_scope
 
-build cmake_object_order_depends_target_test_package_scope: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_package_scope: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_package_scope.dir/tests/unit/test_package_scope.c.obj: C_COMPILER__test_package_scope_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_package_scope.c || cmake_object_order_depends_target_test_package_scope
   CONFIG = RelWithDebInfo
@@ -1374,11 +1437,11 @@ build CMakeFiles/test_package_scope.dir/tests/unit/test_package_scope.c.obj: C_C
 #############################################
 # Link the executable test_package_scope.exe
 
-build test_package_scope.exe: C_EXECUTABLE_LINKER__test_package_scope_RelWithDebInfo CMakeFiles/test_package_scope.dir/tests/unit/test_package_scope.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_package_scope.exe: C_EXECUTABLE_LINKER__test_package_scope_RelWithDebInfo CMakeFiles/test_package_scope.dir/tests/unit/test_package_scope.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_package_scope.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1394,7 +1457,7 @@ build test_package_scope.exe: C_EXECUTABLE_LINKER__test_package_scope_RelWithDeb
 #############################################
 # Order-only phony target for test_package_metadata
 
-build cmake_object_order_depends_target_test_package_metadata: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_package_metadata: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_package_metadata.dir/tests/unit/test_package_metadata.c.obj: C_COMPILER__test_package_metadata_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_package_metadata.c || cmake_object_order_depends_target_test_package_metadata
   CONFIG = RelWithDebInfo
@@ -1414,11 +1477,11 @@ build CMakeFiles/test_package_metadata.dir/tests/unit/test_package_metadata.c.ob
 #############################################
 # Link the executable test_package_metadata.exe
 
-build test_package_metadata.exe: C_EXECUTABLE_LINKER__test_package_metadata_RelWithDebInfo CMakeFiles/test_package_metadata.dir/tests/unit/test_package_metadata.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_package_metadata.exe: C_EXECUTABLE_LINKER__test_package_metadata_RelWithDebInfo CMakeFiles/test_package_metadata.dir/tests/unit/test_package_metadata.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_package_metadata.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1434,7 +1497,7 @@ build test_package_metadata.exe: C_EXECUTABLE_LINKER__test_package_metadata_RelW
 #############################################
 # Order-only phony target for test_ext_entry_observe
 
-build cmake_object_order_depends_target_test_ext_entry_observe: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_entry_observe: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_entry_observe.dir/tests/unit/test_ext_entry_observe.c.obj: C_COMPILER__test_ext_entry_observe_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_entry_observe.c || cmake_object_order_depends_target_test_ext_entry_observe
   CONFIG = RelWithDebInfo
@@ -1454,11 +1517,11 @@ build CMakeFiles/test_ext_entry_observe.dir/tests/unit/test_ext_entry_observe.c.
 #############################################
 # Link the executable test_ext_entry_observe.exe
 
-build test_ext_entry_observe.exe: C_EXECUTABLE_LINKER__test_ext_entry_observe_RelWithDebInfo CMakeFiles/test_ext_entry_observe.dir/tests/unit/test_ext_entry_observe.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_entry_observe.exe: C_EXECUTABLE_LINKER__test_ext_entry_observe_RelWithDebInfo CMakeFiles/test_ext_entry_observe.dir/tests/unit/test_ext_entry_observe.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_entry_observe.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1474,7 +1537,7 @@ build test_ext_entry_observe.exe: C_EXECUTABLE_LINKER__test_ext_entry_observe_Re
 #############################################
 # Order-only phony target for test_ext_chunk_observe
 
-build cmake_object_order_depends_target_test_ext_chunk_observe: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_chunk_observe: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_chunk_observe.dir/tests/unit/test_ext_chunk_observe.c.obj: C_COMPILER__test_ext_chunk_observe_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_chunk_observe.c || cmake_object_order_depends_target_test_ext_chunk_observe
   CONFIG = RelWithDebInfo
@@ -1494,11 +1557,11 @@ build CMakeFiles/test_ext_chunk_observe.dir/tests/unit/test_ext_chunk_observe.c.
 #############################################
 # Link the executable test_ext_chunk_observe.exe
 
-build test_ext_chunk_observe.exe: C_EXECUTABLE_LINKER__test_ext_chunk_observe_RelWithDebInfo CMakeFiles/test_ext_chunk_observe.dir/tests/unit/test_ext_chunk_observe.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_chunk_observe.exe: C_EXECUTABLE_LINKER__test_ext_chunk_observe_RelWithDebInfo CMakeFiles/test_ext_chunk_observe.dir/tests/unit/test_ext_chunk_observe.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_chunk_observe.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1514,7 +1577,7 @@ build test_ext_chunk_observe.exe: C_EXECUTABLE_LINKER__test_ext_chunk_observe_Re
 #############################################
 # Order-only phony target for test_ext_object_observe
 
-build cmake_object_order_depends_target_test_ext_object_observe: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_object_observe: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_object_observe.dir/tests/unit/test_ext_object_observe.c.obj: C_COMPILER__test_ext_object_observe_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_object_observe.c || cmake_object_order_depends_target_test_ext_object_observe
   CONFIG = RelWithDebInfo
@@ -1534,11 +1597,11 @@ build CMakeFiles/test_ext_object_observe.dir/tests/unit/test_ext_object_observe.
 #############################################
 # Link the executable test_ext_object_observe.exe
 
-build test_ext_object_observe.exe: C_EXECUTABLE_LINKER__test_ext_object_observe_RelWithDebInfo CMakeFiles/test_ext_object_observe.dir/tests/unit/test_ext_object_observe.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_object_observe.exe: C_EXECUTABLE_LINKER__test_ext_object_observe_RelWithDebInfo CMakeFiles/test_ext_object_observe.dir/tests/unit/test_ext_object_observe.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_object_observe.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1554,7 +1617,7 @@ build test_ext_object_observe.exe: C_EXECUTABLE_LINKER__test_ext_object_observe_
 #############################################
 # Order-only phony target for test_ext_helper_handoff
 
-build cmake_object_order_depends_target_test_ext_helper_handoff: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_helper_handoff: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_helper_handoff.dir/tests/unit/test_ext_helper_handoff.c.obj: C_COMPILER__test_ext_helper_handoff_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_helper_handoff.c || cmake_object_order_depends_target_test_ext_helper_handoff
   CONFIG = RelWithDebInfo
@@ -1574,11 +1637,11 @@ build CMakeFiles/test_ext_helper_handoff.dir/tests/unit/test_ext_helper_handoff.
 #############################################
 # Link the executable test_ext_helper_handoff.exe
 
-build test_ext_helper_handoff.exe: C_EXECUTABLE_LINKER__test_ext_helper_handoff_RelWithDebInfo CMakeFiles/test_ext_helper_handoff.dir/tests/unit/test_ext_helper_handoff.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_helper_handoff.exe: C_EXECUTABLE_LINKER__test_ext_helper_handoff_RelWithDebInfo CMakeFiles/test_ext_helper_handoff.dir/tests/unit/test_ext_helper_handoff.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_helper_handoff.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1594,7 +1657,7 @@ build test_ext_helper_handoff.exe: C_EXECUTABLE_LINKER__test_ext_helper_handoff_
 #############################################
 # Order-only phony target for test_ext_dsm_record_observe
 
-build cmake_object_order_depends_target_test_ext_dsm_record_observe: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_dsm_record_observe: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_dsm_record_observe.dir/tests/unit/test_ext_dsm_record_observe.c.obj: C_COMPILER__test_ext_dsm_record_observe_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_dsm_record_observe.c || cmake_object_order_depends_target_test_ext_dsm_record_observe
   CONFIG = RelWithDebInfo
@@ -1614,11 +1677,11 @@ build CMakeFiles/test_ext_dsm_record_observe.dir/tests/unit/test_ext_dsm_record_
 #############################################
 # Link the executable test_ext_dsm_record_observe.exe
 
-build test_ext_dsm_record_observe.exe: C_EXECUTABLE_LINKER__test_ext_dsm_record_observe_RelWithDebInfo CMakeFiles/test_ext_dsm_record_observe.dir/tests/unit/test_ext_dsm_record_observe.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_dsm_record_observe.exe: C_EXECUTABLE_LINKER__test_ext_dsm_record_observe_RelWithDebInfo CMakeFiles/test_ext_dsm_record_observe.dir/tests/unit/test_ext_dsm_record_observe.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_dsm_record_observe.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1634,7 +1697,7 @@ build test_ext_dsm_record_observe.exe: C_EXECUTABLE_LINKER__test_ext_dsm_record_
 #############################################
 # Order-only phony target for test_ext_module_entry_abi
 
-build cmake_object_order_depends_target_test_ext_module_entry_abi: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_module_entry_abi: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_module_entry_abi.dir/tests/unit/test_ext_module_entry_abi.c.obj: C_COMPILER__test_ext_module_entry_abi_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_module_entry_abi.c || cmake_object_order_depends_target_test_ext_module_entry_abi
   CONFIG = RelWithDebInfo
@@ -1654,11 +1717,11 @@ build CMakeFiles/test_ext_module_entry_abi.dir/tests/unit/test_ext_module_entry_
 #############################################
 # Link the executable test_ext_module_entry_abi.exe
 
-build test_ext_module_entry_abi.exe: C_EXECUTABLE_LINKER__test_ext_module_entry_abi_RelWithDebInfo CMakeFiles/test_ext_module_entry_abi.dir/tests/unit/test_ext_module_entry_abi.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_module_entry_abi.exe: C_EXECUTABLE_LINKER__test_ext_module_entry_abi_RelWithDebInfo CMakeFiles/test_ext_module_entry_abi.dir/tests/unit/test_ext_module_entry_abi.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_module_entry_abi.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1674,7 +1737,7 @@ build test_ext_module_entry_abi.exe: C_EXECUTABLE_LINKER__test_ext_module_entry_
 #############################################
 # Order-only phony target for test_ext_entry_null_contract
 
-build cmake_object_order_depends_target_test_ext_entry_null_contract: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_entry_null_contract: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_entry_null_contract.dir/tests/unit/test_ext_entry_null_contract.c.obj: C_COMPILER__test_ext_entry_null_contract_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_entry_null_contract.c || cmake_object_order_depends_target_test_ext_entry_null_contract
   CONFIG = RelWithDebInfo
@@ -1694,11 +1757,11 @@ build CMakeFiles/test_ext_entry_null_contract.dir/tests/unit/test_ext_entry_null
 #############################################
 # Link the executable test_ext_entry_null_contract.exe
 
-build test_ext_entry_null_contract.exe: C_EXECUTABLE_LINKER__test_ext_entry_null_contract_RelWithDebInfo CMakeFiles/test_ext_entry_null_contract.dir/tests/unit/test_ext_entry_null_contract.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_entry_null_contract.exe: C_EXECUTABLE_LINKER__test_ext_entry_null_contract_RelWithDebInfo CMakeFiles/test_ext_entry_null_contract.dir/tests/unit/test_ext_entry_null_contract.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_entry_null_contract.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -1714,7 +1777,7 @@ build test_ext_entry_null_contract.exe: C_EXECUTABLE_LINKER__test_ext_entry_null
 #############################################
 # Order-only phony target for test_ext_module_data_init
 
-build cmake_object_order_depends_target_test_ext_module_data_init: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_module_data_init: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_module_data_init.dir/tests/unit/test_ext_module_data_init.c.obj: C_COMPILER__test_ext_module_data_init_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_module_data_init.c || cmake_object_order_depends_target_test_ext_module_data_init
   CONFIG = RelWithDebInfo
@@ -1734,11 +1797,11 @@ build CMakeFiles/test_ext_module_data_init.dir/tests/unit/test_ext_module_data_i
 #############################################
 # Link the executable test_ext_module_data_init.exe
 
-build test_ext_module_data_init.exe: C_EXECUTABLE_LINKER__test_ext_module_data_init_RelWithDebInfo CMakeFiles/test_ext_module_data_init.dir/tests/unit/test_ext_module_data_init.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_module_data_init.exe: C_EXECUTABLE_LINKER__test_ext_module_data_init_RelWithDebInfo CMakeFiles/test_ext_module_data_init.dir/tests/unit/test_ext_module_data_init.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_module_data_init.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1754,7 +1817,7 @@ build test_ext_module_data_init.exe: C_EXECUTABLE_LINKER__test_ext_module_data_i
 #############################################
 # Order-only phony target for test_module_r9_switch
 
-build cmake_object_order_depends_target_test_module_r9_switch: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_module_r9_switch: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_module_r9_switch.dir/tests/unit/test_module_r9_switch.c.obj: C_COMPILER__test_module_r9_switch_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_module_r9_switch.c || cmake_object_order_depends_target_test_module_r9_switch
   CONFIG = RelWithDebInfo
@@ -1774,11 +1837,11 @@ build CMakeFiles/test_module_r9_switch.dir/tests/unit/test_module_r9_switch.c.ob
 #############################################
 # Link the executable test_module_r9_switch.exe
 
-build test_module_r9_switch.exe: C_EXECUTABLE_LINKER__test_module_r9_switch_RelWithDebInfo CMakeFiles/test_module_r9_switch.dir/tests/unit/test_module_r9_switch.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_module_r9_switch.exe: C_EXECUTABLE_LINKER__test_module_r9_switch_RelWithDebInfo CMakeFiles/test_module_r9_switch.dir/tests/unit/test_module_r9_switch.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_module_r9_switch.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1794,7 +1857,7 @@ build test_module_r9_switch.exe: C_EXECUTABLE_LINKER__test_module_r9_switch_RelW
 #############################################
 # Order-only phony target for test_ext_er_rw_producer
 
-build cmake_object_order_depends_target_test_ext_er_rw_producer: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_er_rw_producer: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_er_rw_producer.dir/tests/unit/test_ext_er_rw_producer.c.obj: C_COMPILER__test_ext_er_rw_producer_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_er_rw_producer.c || cmake_object_order_depends_target_test_ext_er_rw_producer
   CONFIG = RelWithDebInfo
@@ -1814,11 +1877,11 @@ build CMakeFiles/test_ext_er_rw_producer.dir/tests/unit/test_ext_er_rw_producer.
 #############################################
 # Link the executable test_ext_er_rw_producer.exe
 
-build test_ext_er_rw_producer.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_producer_RelWithDebInfo CMakeFiles/test_ext_er_rw_producer.dir/tests/unit/test_ext_er_rw_producer.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_er_rw_producer.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_producer_RelWithDebInfo CMakeFiles/test_ext_er_rw_producer.dir/tests/unit/test_ext_er_rw_producer.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_er_rw_producer.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1834,7 +1897,7 @@ build test_ext_er_rw_producer.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_producer_
 #############################################
 # Order-only phony target for test_ext_bootstrap_abi
 
-build cmake_object_order_depends_target_test_ext_bootstrap_abi: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_bootstrap_abi: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_bootstrap_abi.dir/tests/unit/test_ext_bootstrap_abi.c.obj: C_COMPILER__test_ext_bootstrap_abi_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_bootstrap_abi.c || cmake_object_order_depends_target_test_ext_bootstrap_abi
   CONFIG = RelWithDebInfo
@@ -1854,11 +1917,11 @@ build CMakeFiles/test_ext_bootstrap_abi.dir/tests/unit/test_ext_bootstrap_abi.c.
 #############################################
 # Link the executable test_ext_bootstrap_abi.exe
 
-build test_ext_bootstrap_abi.exe: C_EXECUTABLE_LINKER__test_ext_bootstrap_abi_RelWithDebInfo CMakeFiles/test_ext_bootstrap_abi.dir/tests/unit/test_ext_bootstrap_abi.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_bootstrap_abi.exe: C_EXECUTABLE_LINKER__test_ext_bootstrap_abi_RelWithDebInfo CMakeFiles/test_ext_bootstrap_abi.dir/tests/unit/test_ext_bootstrap_abi.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_bootstrap_abi.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1874,7 +1937,7 @@ build test_ext_bootstrap_abi.exe: C_EXECUTABLE_LINKER__test_ext_bootstrap_abi_Re
 #############################################
 # Order-only phony target for test_ext_callback_frame
 
-build cmake_object_order_depends_target_test_ext_callback_frame: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_callback_frame: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_callback_frame.dir/tests/unit/test_ext_callback_frame.c.obj: C_COMPILER__test_ext_callback_frame_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_callback_frame.c || cmake_object_order_depends_target_test_ext_callback_frame
   CONFIG = RelWithDebInfo
@@ -1894,11 +1957,11 @@ build CMakeFiles/test_ext_callback_frame.dir/tests/unit/test_ext_callback_frame.
 #############################################
 # Link the executable test_ext_callback_frame.exe
 
-build test_ext_callback_frame.exe: C_EXECUTABLE_LINKER__test_ext_callback_frame_RelWithDebInfo CMakeFiles/test_ext_callback_frame.dir/tests/unit/test_ext_callback_frame.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_callback_frame.exe: C_EXECUTABLE_LINKER__test_ext_callback_frame_RelWithDebInfo CMakeFiles/test_ext_callback_frame.dir/tests/unit/test_ext_callback_frame.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_callback_frame.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1914,7 +1977,7 @@ build test_ext_callback_frame.exe: C_EXECUTABLE_LINKER__test_ext_callback_frame_
 #############################################
 # Order-only phony target for test_ext_post_cont_audit
 
-build cmake_object_order_depends_target_test_ext_post_cont_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_post_cont_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_post_cont_audit.dir/tests/unit/test_ext_post_cont_audit.c.obj: C_COMPILER__test_ext_post_cont_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_post_cont_audit.c || cmake_object_order_depends_target_test_ext_post_cont_audit
   CONFIG = RelWithDebInfo
@@ -1934,11 +1997,11 @@ build CMakeFiles/test_ext_post_cont_audit.dir/tests/unit/test_ext_post_cont_audi
 #############################################
 # Link the executable test_ext_post_cont_audit.exe
 
-build test_ext_post_cont_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cont_audit_RelWithDebInfo CMakeFiles/test_ext_post_cont_audit.dir/tests/unit/test_ext_post_cont_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_post_cont_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cont_audit_RelWithDebInfo CMakeFiles/test_ext_post_cont_audit.dir/tests/unit/test_ext_post_cont_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_post_cont_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1954,7 +2017,7 @@ build test_ext_post_cont_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cont_audi
 #############################################
 # Order-only phony target for test_ext_post_cfn_r9_audit
 
-build cmake_object_order_depends_target_test_ext_post_cfn_r9_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_post_cfn_r9_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_post_cfn_r9_audit.dir/tests/unit/test_ext_post_cfn_r9_audit.c.obj: C_COMPILER__test_ext_post_cfn_r9_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_post_cfn_r9_audit.c || cmake_object_order_depends_target_test_ext_post_cfn_r9_audit
   CONFIG = RelWithDebInfo
@@ -1974,11 +2037,11 @@ build CMakeFiles/test_ext_post_cfn_r9_audit.dir/tests/unit/test_ext_post_cfn_r9_
 #############################################
 # Link the executable test_ext_post_cfn_r9_audit.exe
 
-build test_ext_post_cfn_r9_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cfn_r9_audit_RelWithDebInfo CMakeFiles/test_ext_post_cfn_r9_audit.dir/tests/unit/test_ext_post_cfn_r9_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_post_cfn_r9_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cfn_r9_audit_RelWithDebInfo CMakeFiles/test_ext_post_cfn_r9_audit.dir/tests/unit/test_ext_post_cfn_r9_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_post_cfn_r9_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -1994,7 +2057,7 @@ build test_ext_post_cfn_r9_audit.exe: C_EXECUTABLE_LINKER__test_ext_post_cfn_r9_
 #############################################
 # Order-only phony target for test_ext_p_extchunk_audit
 
-build cmake_object_order_depends_target_test_ext_p_extchunk_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_p_extchunk_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_p_extchunk_audit.dir/tests/unit/test_ext_p_extchunk_audit.c.obj: C_COMPILER__test_ext_p_extchunk_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_p_extchunk_audit.c || cmake_object_order_depends_target_test_ext_p_extchunk_audit
   CONFIG = RelWithDebInfo
@@ -2014,11 +2077,11 @@ build CMakeFiles/test_ext_p_extchunk_audit.dir/tests/unit/test_ext_p_extchunk_au
 #############################################
 # Link the executable test_ext_p_extchunk_audit.exe
 
-build test_ext_p_extchunk_audit.exe: C_EXECUTABLE_LINKER__test_ext_p_extchunk_audit_RelWithDebInfo CMakeFiles/test_ext_p_extchunk_audit.dir/tests/unit/test_ext_p_extchunk_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_p_extchunk_audit.exe: C_EXECUTABLE_LINKER__test_ext_p_extchunk_audit_RelWithDebInfo CMakeFiles/test_ext_p_extchunk_audit.dir/tests/unit/test_ext_p_extchunk_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_p_extchunk_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2034,7 +2097,7 @@ build test_ext_p_extchunk_audit.exe: C_EXECUTABLE_LINKER__test_ext_p_extchunk_au
 #############################################
 # Order-only phony target for test_ext_shell_publication_audit
 
-build cmake_object_order_depends_target_test_ext_shell_publication_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_shell_publication_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_shell_publication_audit.dir/tests/unit/test_ext_shell_publication_audit.c.obj: C_COMPILER__test_ext_shell_publication_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_shell_publication_audit.c || cmake_object_order_depends_target_test_ext_shell_publication_audit
   CONFIG = RelWithDebInfo
@@ -2054,11 +2117,11 @@ build CMakeFiles/test_ext_shell_publication_audit.dir/tests/unit/test_ext_shell_
 #############################################
 # Link the executable test_ext_shell_publication_audit.exe
 
-build test_ext_shell_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_shell_publication_audit_RelWithDebInfo CMakeFiles/test_ext_shell_publication_audit.dir/tests/unit/test_ext_shell_publication_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_shell_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_shell_publication_audit_RelWithDebInfo CMakeFiles/test_ext_shell_publication_audit.dir/tests/unit/test_ext_shell_publication_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_shell_publication_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2074,7 +2137,7 @@ build test_ext_shell_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_shell_
 #############################################
 # Order-only phony target for test_ext_mrpgcmap_entry_order
 
-build cmake_object_order_depends_target_test_ext_mrpgcmap_entry_order: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_mrpgcmap_entry_order: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_mrpgcmap_entry_order.dir/tests/unit/test_ext_mrpgcmap_entry_order.c.obj: C_COMPILER__test_ext_mrpgcmap_entry_order_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_mrpgcmap_entry_order.c || cmake_object_order_depends_target_test_ext_mrpgcmap_entry_order
   CONFIG = RelWithDebInfo
@@ -2094,11 +2157,11 @@ build CMakeFiles/test_ext_mrpgcmap_entry_order.dir/tests/unit/test_ext_mrpgcmap_
 #############################################
 # Link the executable test_ext_mrpgcmap_entry_order.exe
 
-build test_ext_mrpgcmap_entry_order.exe: C_EXECUTABLE_LINKER__test_ext_mrpgcmap_entry_order_RelWithDebInfo CMakeFiles/test_ext_mrpgcmap_entry_order.dir/tests/unit/test_ext_mrpgcmap_entry_order.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_mrpgcmap_entry_order.exe: C_EXECUTABLE_LINKER__test_ext_mrpgcmap_entry_order_RelWithDebInfo CMakeFiles/test_ext_mrpgcmap_entry_order.dir/tests/unit/test_ext_mrpgcmap_entry_order.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_mrpgcmap_entry_order.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2114,7 +2177,7 @@ build test_ext_mrpgcmap_entry_order.exe: C_EXECUTABLE_LINKER__test_ext_mrpgcmap_
 #############################################
 # Order-only phony target for test_ext_entry_abi_cluster_audit
 
-build cmake_object_order_depends_target_test_ext_entry_abi_cluster_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_entry_abi_cluster_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_entry_abi_cluster_audit.dir/tests/unit/test_ext_entry_abi_cluster_audit.c.obj: C_COMPILER__test_ext_entry_abi_cluster_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_entry_abi_cluster_audit.c || cmake_object_order_depends_target_test_ext_entry_abi_cluster_audit
   CONFIG = RelWithDebInfo
@@ -2134,11 +2197,11 @@ build CMakeFiles/test_ext_entry_abi_cluster_audit.dir/tests/unit/test_ext_entry_
 #############################################
 # Link the executable test_ext_entry_abi_cluster_audit.exe
 
-build test_ext_entry_abi_cluster_audit.exe: C_EXECUTABLE_LINKER__test_ext_entry_abi_cluster_audit_RelWithDebInfo CMakeFiles/test_ext_entry_abi_cluster_audit.dir/tests/unit/test_ext_entry_abi_cluster_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_entry_abi_cluster_audit.exe: C_EXECUTABLE_LINKER__test_ext_entry_abi_cluster_audit_RelWithDebInfo CMakeFiles/test_ext_entry_abi_cluster_audit.dir/tests/unit/test_ext_entry_abi_cluster_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_entry_abi_cluster_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2154,7 +2217,7 @@ build test_ext_entry_abi_cluster_audit.exe: C_EXECUTABLE_LINKER__test_ext_entry_
 #############################################
 # Order-only phony target for test_ext_cfunction_publication_audit
 
-build cmake_object_order_depends_target_test_ext_cfunction_publication_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_cfunction_publication_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_cfunction_publication_audit.dir/tests/unit/test_ext_cfunction_publication_audit.c.obj: C_COMPILER__test_ext_cfunction_publication_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_cfunction_publication_audit.c || cmake_object_order_depends_target_test_ext_cfunction_publication_audit
   CONFIG = RelWithDebInfo
@@ -2174,11 +2237,11 @@ build CMakeFiles/test_ext_cfunction_publication_audit.dir/tests/unit/test_ext_cf
 #############################################
 # Link the executable test_ext_cfunction_publication_audit.exe
 
-build test_ext_cfunction_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_cfunction_publication_audit_RelWithDebInfo CMakeFiles/test_ext_cfunction_publication_audit.dir/tests/unit/test_ext_cfunction_publication_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_cfunction_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_cfunction_publication_audit_RelWithDebInfo CMakeFiles/test_ext_cfunction_publication_audit.dir/tests/unit/test_ext_cfunction_publication_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_cfunction_publication_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2194,7 +2257,7 @@ build test_ext_cfunction_publication_audit.exe: C_EXECUTABLE_LINKER__test_ext_cf
 #############################################
 # Order-only phony target for test_ext_chunk_provider
 
-build cmake_object_order_depends_target_test_ext_chunk_provider: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_chunk_provider: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_chunk_provider.dir/tests/unit/test_ext_chunk_provider.c.obj: C_COMPILER__test_ext_chunk_provider_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_chunk_provider.c || cmake_object_order_depends_target_test_ext_chunk_provider
   CONFIG = RelWithDebInfo
@@ -2214,11 +2277,11 @@ build CMakeFiles/test_ext_chunk_provider.dir/tests/unit/test_ext_chunk_provider.
 #############################################
 # Link the executable test_ext_chunk_provider.exe
 
-build test_ext_chunk_provider.exe: C_EXECUTABLE_LINKER__test_ext_chunk_provider_RelWithDebInfo CMakeFiles/test_ext_chunk_provider.dir/tests/unit/test_ext_chunk_provider.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_chunk_provider.exe: C_EXECUTABLE_LINKER__test_ext_chunk_provider_RelWithDebInfo CMakeFiles/test_ext_chunk_provider.dir/tests/unit/test_ext_chunk_provider.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_chunk_provider.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2234,7 +2297,7 @@ build test_ext_chunk_provider.exe: C_EXECUTABLE_LINKER__test_ext_chunk_provider_
 #############################################
 # Order-only phony target for test_ext_er_rw_bind_restore
 
-build cmake_object_order_depends_target_test_ext_er_rw_bind_restore: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_er_rw_bind_restore: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_er_rw_bind_restore.dir/tests/unit/test_ext_er_rw_bind_restore.c.obj: C_COMPILER__test_ext_er_rw_bind_restore_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_er_rw_bind_restore.c || cmake_object_order_depends_target_test_ext_er_rw_bind_restore
   CONFIG = RelWithDebInfo
@@ -2254,11 +2317,11 @@ build CMakeFiles/test_ext_er_rw_bind_restore.dir/tests/unit/test_ext_er_rw_bind_
 #############################################
 # Link the executable test_ext_er_rw_bind_restore.exe
 
-build test_ext_er_rw_bind_restore.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_bind_restore_RelWithDebInfo CMakeFiles/test_ext_er_rw_bind_restore.dir/tests/unit/test_ext_er_rw_bind_restore.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_er_rw_bind_restore.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_bind_restore_RelWithDebInfo CMakeFiles/test_ext_er_rw_bind_restore.dir/tests/unit/test_ext_er_rw_bind_restore.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_er_rw_bind_restore.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2274,7 +2337,7 @@ build test_ext_er_rw_bind_restore.exe: C_EXECUTABLE_LINKER__test_ext_er_rw_bind_
 #############################################
 # Order-only phony target for test_ext_gwy_startgame_audit
 
-build cmake_object_order_depends_target_test_ext_gwy_startgame_audit: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_gwy_startgame_audit: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_ext_gwy_startgame_audit.dir/tests/unit/test_ext_gwy_startgame_audit.c.obj: C_COMPILER__test_ext_gwy_startgame_audit_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_gwy_startgame_audit.c || cmake_object_order_depends_target_test_ext_gwy_startgame_audit
   CONFIG = RelWithDebInfo
@@ -2294,11 +2357,11 @@ build CMakeFiles/test_ext_gwy_startgame_audit.dir/tests/unit/test_ext_gwy_startg
 #############################################
 # Link the executable test_ext_gwy_startgame_audit.exe
 
-build test_ext_gwy_startgame_audit.exe: C_EXECUTABLE_LINKER__test_ext_gwy_startgame_audit_RelWithDebInfo CMakeFiles/test_ext_gwy_startgame_audit.dir/tests/unit/test_ext_gwy_startgame_audit.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_gwy_startgame_audit.exe: C_EXECUTABLE_LINKER__test_ext_gwy_startgame_audit_RelWithDebInfo CMakeFiles/test_ext_gwy_startgame_audit.dir/tests/unit/test_ext_gwy_startgame_audit.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_gwy_startgame_audit.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2314,7 +2377,7 @@ build test_ext_gwy_startgame_audit.exe: C_EXECUTABLE_LINKER__test_ext_gwy_startg
 #############################################
 # Order-only phony target for test_ext_gwy_shell_shim
 
-build cmake_object_order_depends_target_test_ext_gwy_shell_shim: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_ext_gwy_shell_shim: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell
 
 build CMakeFiles/test_ext_gwy_shell_shim.dir/tests/unit/test_ext_gwy_shell_shim.c.obj: C_COMPILER__test_ext_gwy_shell_shim_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_ext_gwy_shell_shim.c || cmake_object_order_depends_target_test_ext_gwy_shell_shim
   CONFIG = RelWithDebInfo
@@ -2334,11 +2397,11 @@ build CMakeFiles/test_ext_gwy_shell_shim.dir/tests/unit/test_ext_gwy_shell_shim.
 #############################################
 # Link the executable test_ext_gwy_shell_shim.exe
 
-build test_ext_gwy_shell_shim.exe: C_EXECUTABLE_LINKER__test_ext_gwy_shell_shim_RelWithDebInfo CMakeFiles/test_ext_gwy_shell_shim.dir/tests/unit/test_ext_gwy_shell_shim.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_ext_gwy_shell_shim.exe: C_EXECUTABLE_LINKER__test_ext_gwy_shell_shim_RelWithDebInfo CMakeFiles/test_ext_gwy_shell_shim.dir/tests/unit/test_ext_gwy_shell_shim.c.obj | liblauncher_core.a libresearch_gwy_shell.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_ext_gwy_shell_shim.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2354,7 +2417,7 @@ build test_ext_gwy_shell_shim.exe: C_EXECUTABLE_LINKER__test_ext_gwy_shell_shim_
 #############################################
 # Order-only phony target for test_platform_identity
 
-build cmake_object_order_depends_target_test_platform_identity: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_platform_identity: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_platform_identity.dir/tests/unit/test_platform_identity.c.obj: C_COMPILER__test_platform_identity_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_platform_identity.c || cmake_object_order_depends_target_test_platform_identity
   CONFIG = RelWithDebInfo
@@ -2374,11 +2437,11 @@ build CMakeFiles/test_platform_identity.dir/tests/unit/test_platform_identity.c.
 #############################################
 # Link the executable test_platform_identity.exe
 
-build test_platform_identity.exe: C_EXECUTABLE_LINKER__test_platform_identity_RelWithDebInfo CMakeFiles/test_platform_identity.dir/tests/unit/test_platform_identity.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_platform_identity.exe: C_EXECUTABLE_LINKER__test_platform_identity_RelWithDebInfo CMakeFiles/test_platform_identity.dir/tests/unit/test_platform_identity.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_platform_identity.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2394,7 +2457,7 @@ build test_platform_identity.exe: C_EXECUTABLE_LINKER__test_platform_identity_Re
 #############################################
 # Order-only phony target for test_platform_userinfo
 
-build cmake_object_order_depends_target_test_platform_userinfo: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_platform_userinfo: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_platform_userinfo.dir/tests/unit/test_platform_userinfo.c.obj: C_COMPILER__test_platform_userinfo_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_platform_userinfo.c || cmake_object_order_depends_target_test_platform_userinfo
   CONFIG = RelWithDebInfo
@@ -2414,11 +2477,11 @@ build CMakeFiles/test_platform_userinfo.dir/tests/unit/test_platform_userinfo.c.
 #############################################
 # Link the executable test_platform_userinfo.exe
 
-build test_platform_userinfo.exe: C_EXECUTABLE_LINKER__test_platform_userinfo_RelWithDebInfo CMakeFiles/test_platform_userinfo.dir/tests/unit/test_platform_userinfo.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_platform_userinfo.exe: C_EXECUTABLE_LINKER__test_platform_userinfo_RelWithDebInfo CMakeFiles/test_platform_userinfo.dir/tests/unit/test_platform_userinfo.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_platform_userinfo.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2434,7 +2497,7 @@ build test_platform_userinfo.exe: C_EXECUTABLE_LINKER__test_platform_userinfo_Re
 #############################################
 # Order-only phony target for test_platform_timer
 
-build cmake_object_order_depends_target_test_platform_timer: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_platform_timer: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_platform_timer.dir/tests/unit/test_platform_timer.c.obj: C_COMPILER__test_platform_timer_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_platform_timer.c || cmake_object_order_depends_target_test_platform_timer
   CONFIG = RelWithDebInfo
@@ -2454,11 +2517,11 @@ build CMakeFiles/test_platform_timer.dir/tests/unit/test_platform_timer.c.obj: C
 #############################################
 # Link the executable test_platform_timer.exe
 
-build test_platform_timer.exe: C_EXECUTABLE_LINKER__test_platform_timer_RelWithDebInfo CMakeFiles/test_platform_timer.dir/tests/unit/test_platform_timer.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_platform_timer.exe: C_EXECUTABLE_LINKER__test_platform_timer_RelWithDebInfo CMakeFiles/test_platform_timer.dir/tests/unit/test_platform_timer.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_platform_timer.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2474,7 +2537,7 @@ build test_platform_timer.exe: C_EXECUTABLE_LINKER__test_platform_timer_RelWithD
 #############################################
 # Order-only phony target for test_platform_send_app_event
 
-build cmake_object_order_depends_target_test_platform_send_app_event: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_platform_send_app_event: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_platform_send_app_event.dir/tests/unit/test_platform_send_app_event.c.obj: C_COMPILER__test_platform_send_app_event_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_platform_send_app_event.c || cmake_object_order_depends_target_test_platform_send_app_event
   CONFIG = RelWithDebInfo
@@ -2494,11 +2557,11 @@ build CMakeFiles/test_platform_send_app_event.dir/tests/unit/test_platform_send_
 #############################################
 # Link the executable test_platform_send_app_event.exe
 
-build test_platform_send_app_event.exe: C_EXECUTABLE_LINKER__test_platform_send_app_event_RelWithDebInfo CMakeFiles/test_platform_send_app_event.dir/tests/unit/test_platform_send_app_event.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_platform_send_app_event.exe: C_EXECUTABLE_LINKER__test_platform_send_app_event_RelWithDebInfo CMakeFiles/test_platform_send_app_event.dir/tests/unit/test_platform_send_app_event.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_platform_send_app_event.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2514,7 +2577,7 @@ build test_platform_send_app_event.exe: C_EXECUTABLE_LINKER__test_platform_send_
 #############################################
 # Order-only phony target for test_platform_handler_registry
 
-build cmake_object_order_depends_target_test_platform_handler_registry: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_platform_handler_registry: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_platform_handler_registry.dir/tests/unit/test_platform_handler_registry.c.obj: C_COMPILER__test_platform_handler_registry_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_platform_handler_registry.c || cmake_object_order_depends_target_test_platform_handler_registry
   CONFIG = RelWithDebInfo
@@ -2534,11 +2597,11 @@ build CMakeFiles/test_platform_handler_registry.dir/tests/unit/test_platform_han
 #############################################
 # Link the executable test_platform_handler_registry.exe
 
-build test_platform_handler_registry.exe: C_EXECUTABLE_LINKER__test_platform_handler_registry_RelWithDebInfo CMakeFiles/test_platform_handler_registry.dir/tests/unit/test_platform_handler_registry.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_platform_handler_registry.exe: C_EXECUTABLE_LINKER__test_platform_handler_registry_RelWithDebInfo CMakeFiles/test_platform_handler_registry.dir/tests/unit/test_platform_handler_registry.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_platform_handler_registry.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2554,7 +2617,7 @@ build test_platform_handler_registry.exe: C_EXECUTABLE_LINKER__test_platform_han
 #############################################
 # Order-only phony target for test_vm_runtime
 
-build cmake_object_order_depends_target_test_vm_runtime: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_vm_runtime: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_vm_runtime.dir/tests/unit/test_vm_runtime.c.obj: C_COMPILER__test_vm_runtime_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_vm_runtime.c || cmake_object_order_depends_target_test_vm_runtime
   CONFIG = RelWithDebInfo
@@ -2574,11 +2637,11 @@ build CMakeFiles/test_vm_runtime.dir/tests/unit/test_vm_runtime.c.obj: C_COMPILE
 #############################################
 # Link the executable test_vm_runtime.exe
 
-build test_vm_runtime.exe: C_EXECUTABLE_LINKER__test_vm_runtime_RelWithDebInfo CMakeFiles/test_vm_runtime.dir/tests/unit/test_vm_runtime.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_vm_runtime.exe: C_EXECUTABLE_LINKER__test_vm_runtime_RelWithDebInfo CMakeFiles/test_vm_runtime.dir/tests/unit/test_vm_runtime.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_vm_runtime.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2594,7 +2657,7 @@ build test_vm_runtime.exe: C_EXECUTABLE_LINKER__test_vm_runtime_RelWithDebInfo C
 #############################################
 # Order-only phony target for test_guest_memory
 
-build cmake_object_order_depends_target_test_guest_memory: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_guest_memory: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_guest_memory.dir/tests/unit/test_guest_memory.c.obj: C_COMPILER__test_guest_memory_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_guest_memory.c || cmake_object_order_depends_target_test_guest_memory
   CONFIG = RelWithDebInfo
@@ -2614,11 +2677,11 @@ build CMakeFiles/test_guest_memory.dir/tests/unit/test_guest_memory.c.obj: C_COM
 #############################################
 # Link the executable test_guest_memory.exe
 
-build test_guest_memory.exe: C_EXECUTABLE_LINKER__test_guest_memory_RelWithDebInfo CMakeFiles/test_guest_memory.dir/tests/unit/test_guest_memory.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_guest_memory.exe: C_EXECUTABLE_LINKER__test_guest_memory_RelWithDebInfo CMakeFiles/test_guest_memory.dir/tests/unit/test_guest_memory.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_guest_memory.dir
   POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
   PRE_LINK = cd .
@@ -2634,7 +2697,7 @@ build test_guest_memory.exe: C_EXECUTABLE_LINKER__test_guest_memory_RelWithDebIn
 #############################################
 # Order-only phony target for test_vm_file_service
 
-build cmake_object_order_depends_target_test_vm_file_service: phony || cmake_object_order_depends_target_launcher_core
+build cmake_object_order_depends_target_test_vm_file_service: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
 
 build CMakeFiles/test_vm_file_service.dir/tests/unit/test_vm_file_service.c.obj: C_COMPILER__test_vm_file_service_unscanned_RelWithDebInfo C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_vm_file_service.c || cmake_object_order_depends_target_test_vm_file_service
   CONFIG = RelWithDebInfo
@@ -2654,11 +2717,11 @@ build CMakeFiles/test_vm_file_service.dir/tests/unit/test_vm_file_service.c.obj:
 #############################################
 # Link the executable test_vm_file_service.exe
 
-build test_vm_file_service.exe: C_EXECUTABLE_LINKER__test_vm_file_service_RelWithDebInfo CMakeFiles/test_vm_file_service.dir/tests/unit/test_vm_file_service.c.obj | liblauncher_core.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a
+build test_vm_file_service.exe: C_EXECUTABLE_LINKER__test_vm_file_service_RelWithDebInfo CMakeFiles/test_vm_file_service.dir/tests/unit/test_vm_file_service.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
   CONFIG = RelWithDebInfo
   FLAGS = -m32 -O2 -g -DNDEBUG
   LINK_FLAGS = -m32
-  LINK_LIBRARIES = liblauncher_core.a  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\test_vm_file_service.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -2708,6 +2771,10 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 build gwy_launcher: phony gwy_launcher.exe
 
 build launcher_core: phony liblauncher_core.a
+
+build research_gwy_shell: phony libresearch_gwy_shell.a
+
+build research_gwy_shell_stubs: phony libresearch_gwy_shell_stubs.a
 
 build test_cfg36: phony test_cfg36.exe
 
@@ -2805,7 +2872,7 @@ build test_vm_runtime: phony test_vm_runtime.exe
 #############################################
 # Folder: C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686
 
-build all: phony liblauncher_core.a gwy_launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_vm_runtime.exe test_guest_memory.exe test_vm_file_service.exe
+build all: phony liblauncher_core.a libresearch_gwy_shell.a libresearch_gwy_shell_stubs.a gwy_launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_vm_runtime.exe test_guest_memory.exe test_vm_file_service.exe
 
 # =============================================================================
 # Built-in targets

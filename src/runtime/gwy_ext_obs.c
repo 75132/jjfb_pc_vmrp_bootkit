@@ -1563,7 +1563,7 @@ int gwy_ext_obs_timer_fire_r9_guard(void *uc) {
     if (!uc || !g_timer_fire_pin_erw || !g_timer_fire_forbid_erw) return 0;
     if (uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9) != UC_ERR_OK) return 0;
     if (r9 != g_timer_fire_forbid_erw) return 0;
-    if (uc_reg_write((uc_engine *)uc, UC_ARM_REG_R9, &g_timer_fire_pin_erw) != UC_ERR_OK) return 0;
+    if (guest_memory_uc_write_r9((uc_engine *)uc, g_timer_fire_pin_erw) != 0) return 0;
     g_timer_fire_pin_hits++;
     if (g_timer_fire_pin_hits <= 8u) {
         printf("[JJFB_E10A31_TIMER_R9_PIN] refuse=0x%X force=0x%X hit=%u evidence=OBSERVED\n",

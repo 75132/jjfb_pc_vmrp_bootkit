@@ -33,6 +33,44 @@ rule C_STATIC_LIBRARY_LINKER__launcher_core_RelWithDebInfo
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER__research_gwy_shell_unscanned_RelWithDebInfo
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__research_gwy_shell_RelWithDebInfo
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\cmake.exe -E rm -f $TARGET_FILE && C:\msys64\mingw32\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\msys64\mingw32\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
+rule C_COMPILER__research_gwy_shell_stubs_unscanned_RelWithDebInfo
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER__research_gwy_shell_stubs_RelWithDebInfo
+  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\cmake.exe -E rm -f $TARGET_FILE && C:\msys64\mingw32\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\msys64\mingw32\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER__gwy_launcher_unscanned_RelWithDebInfo
   depfile = $DEP_FILE
   deps = gcc

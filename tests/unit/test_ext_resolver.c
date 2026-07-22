@@ -75,12 +75,14 @@ int main(void) {
     }
     printf("[EXT_RESOLVE] requested=mrc_loader.ext strategy=exact resolved=mrc_loader.ext\n");
 
-    /* 2 alias */
+    /* 2 alias / reg_primary → robotol (product accepts either path to robotol.ext) */
     req.requested_member = "cfunction.ext";
     if (ext_resolver_resolve_request(&resolver, &req, &resolved, &err) != L_OK ||
-        resolved.strategy != EXT_RESOLVE_PROFILE_ALIAS ||
-        strcmp(resolved.resolved_name, "robotol.ext") != 0) {
-        fprintf(stderr, "cfunction alias failed: %s\n", err.message);
+        strcmp(resolved.resolved_name, "robotol.ext") != 0 ||
+        (resolved.strategy != EXT_RESOLVE_PROFILE_ALIAS &&
+         resolved.strategy != EXT_RESOLVE_REG_PRIMARY)) {
+        fprintf(stderr, "cfunction→robotol failed: strategy=%d msg=%s\n",
+                (int)resolved.strategy, err.message);
         mrp_archive_close(a);
         return 1;
     }
@@ -94,50 +96,69 @@ int main(void) {
         return 1;
     }
 
-    /* 4 sha mismatch reject */
+    /* 4–7: profile identity gates (use synthetic alias — cfunction hits reg_primary first) */
     {
-        CompatibilityProfile bad = profile;
-        char badsha[65];
-        snprintf(badsha, sizeof(badsha), "%s", hex);
-        badsha[0] = (badsha[0] == 'a') ? 'b' : 'a';
+        CompatibilityProfile pgate = profile;
+        ExtResolver rgate;
+        if (pgate.alias_count < 8) {
+            snprintf(pgate.alias_from[pgate.alias_count], sizeof(pgate.alias_from[0]),
+                     "%s", "probe_alias.ext");
+            snprintf(pgate.alias_to[pgate.alias_count], sizeof(pgate.alias_to[0]),
+                     "%s", "robotol.ext");
+            pgate.alias_count++;
+        }
+        ext_resolver_init(&rgate, a, &pgate);
         req.scope = GWY_RESOLVE_MRP_MEMBER;
-        req.package_sha256 = badsha;
-        req.requested_member = "cfunction.ext";
-        if (ext_resolver_resolve_request(&resolver, &req, &resolved, &err) == L_OK) {
-            fprintf(stderr, "sha mismatch should reject\n");
+        req.package_guest_path = "gwy/jjfb.mrp";
+        req.package_sha256 = hex;
+        req.package_appid = a->appid_le;
+        req.package_appver = a->appver_le;
+        req.requested_member = "probe_alias.ext";
+
+        if (ext_resolver_resolve_request(&rgate, &req, &resolved, &err) != L_OK ||
+            resolved.strategy != EXT_RESOLVE_PROFILE_ALIAS) {
+            fprintf(stderr, "probe_alias profile path failed\n");
             mrp_archive_close(a);
             return 1;
         }
-        (void)bad;
-    }
 
-    /* 5 appid mismatch */
-    req.package_sha256 = hex;
-    req.package_appid = 1;
-    if (ext_resolver_resolve_request(&resolver, &req, &resolved, &err) == L_OK) {
-        fprintf(stderr, "appid mismatch should reject\n");
-        mrp_archive_close(a);
-        return 1;
-    }
-    req.package_appid = a->appid_le;
+        {
+            char badsha[65];
+            snprintf(badsha, sizeof(badsha), "%s", hex);
+            badsha[0] = (badsha[0] == 'a') ? 'b' : 'a';
+            req.package_sha256 = badsha;
+            if (ext_resolver_resolve_request(&rgate, &req, &resolved, &err) == L_OK) {
+                fprintf(stderr, "sha mismatch should reject\n");
+                mrp_archive_close(a);
+                return 1;
+            }
+        }
+        req.package_sha256 = hex;
 
-    /* 6 appver mismatch */
-    req.package_appver = 999;
-    if (ext_resolver_resolve_request(&resolver, &req, &resolved, &err) == L_OK) {
-        fprintf(stderr, "appver mismatch should reject\n");
-        mrp_archive_close(a);
-        return 1;
-    }
-    req.package_appver = a->appver_le;
+        req.package_appid = 1;
+        if (ext_resolver_resolve_request(&rgate, &req, &resolved, &err) == L_OK) {
+            fprintf(stderr, "appid mismatch should reject\n");
+            mrp_archive_close(a);
+            return 1;
+        }
+        req.package_appid = a->appid_le;
 
-    /* 7 target mismatch */
-    req.package_guest_path = "gwy/other.mrp";
-    if (ext_resolver_resolve_request(&resolver, &req, &resolved, &err) == L_OK) {
-        fprintf(stderr, "target mismatch should reject\n");
-        mrp_archive_close(a);
-        return 1;
+        req.package_appver = 999;
+        if (ext_resolver_resolve_request(&rgate, &req, &resolved, &err) == L_OK) {
+            fprintf(stderr, "appver mismatch should reject\n");
+            mrp_archive_close(a);
+            return 1;
+        }
+        req.package_appver = a->appver_le;
+
+        req.package_guest_path = "gwy/other.mrp";
+        if (ext_resolver_resolve_request(&rgate, &req, &resolved, &err) == L_OK) {
+            fprintf(stderr, "target mismatch should reject\n");
+            mrp_archive_close(a);
+            return 1;
+        }
+        req.package_guest_path = "gwy/jjfb.mrp";
     }
-    req.package_guest_path = "gwy/jjfb.mrp";
 
     /* 8 alias target missing */
     {
@@ -145,6 +166,15 @@ int main(void) {
         snprintf(p2.alias_to[0], sizeof(p2.alias_to[0]), "%s", "__no_such__.ext");
         ExtResolver r2;
         ext_resolver_init(&r2, a, &p2);
+        req.requested_member = "cfunction.ext";
+        /* reg_primary may still succeed — force alias-only miss via non-cfunction name */
+        req.requested_member = p2.alias_from[0][0] ? p2.alias_from[0] : "cfunction.ext";
+        if (strcmp(req.requested_member, "cfunction.ext") == 0) {
+            /* rewrite from to a unique name that only hits alias */
+            snprintf(p2.alias_from[0], sizeof(p2.alias_from[0]), "%s", "missing_alias_src.ext");
+            req.requested_member = "missing_alias_src.ext";
+            ext_resolver_init(&r2, a, &p2);
+        }
         if (ext_resolver_resolve_request(&r2, &req, &resolved, &err) == L_OK) {
             fprintf(stderr, "missing alias target should reject\n");
             mrp_archive_close(a);

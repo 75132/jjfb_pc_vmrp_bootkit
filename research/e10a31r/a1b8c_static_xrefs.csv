@@ -1,0 +1,7 @@
+xref_kind,from_pc,to_pc_or_slot,note
+function_entry,0xA1B50,0xA1B94,STMFD/LDMFD pair — recovered function bounds
+indirect_call,0xA1B8C,r1_slot_plus_0x50,BLX r1; callee from *(obj+0x50)
+object_load,0xA1B80,r9_relative,LDR [r0] after ADD r0,r0,r9
+pool_literal,0xA1B78,pc_rel,LDR r0,[pc,#0x1C] before r9 add
+bl_helper,0xA1B64,pc_rel_bl,local BL before object load (setup)
+bl_helper,0xA1B74,pc_rel_bl,second BL before object load
