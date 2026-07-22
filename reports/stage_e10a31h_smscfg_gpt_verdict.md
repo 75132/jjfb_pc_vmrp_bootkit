@@ -41,6 +41,16 @@ strcmp(dst, "GPT") @ 0xAC2D0 鈫?-1 @ 0xAC2E8
 - `DSM_CFG_FILE_ABSENT_IN_TREE`
 - `METHOD0_FAIL_IS_EMPTY_SMS_CFG_GPT_TAG`
 
+## Runtime negative evidence
+
+- No `500/501/502/503/504` sms-config helper calls were observed in `e10a31d_helper_call_history.csv` before method0 fail.
+- In the live run, only `_mr_smsGetBytes(0x349, ..., 3)` read is observed on this path; no prior write to the same slot is visible in current traces.
+
+## Static cross-reference
+
+- Other `0x349` literals in gamelist (`0x2E58E4`, `0x2E7F60`) call `0x2E334C`, which is a second `_mr_smsGetBytes`-style reader (same `0x87<<5` range check and `mr_table+0x1C0` source).
+- So currently all identified `0x349` uses are **reads** from `mr_sms_cfg_buf`, not writers.
+
 ## Flags
 
 - saw_sms=True empty_349=True table_ok=True
@@ -48,9 +58,12 @@ strcmp(dst, "GPT") @ 0xAC2D0 鈫?-1 @ 0xAC2E8
 
 ## Next (still no cfg.bin / no force ret0)
 
-1. Find who should `smsSetBytes(0x349, "GPT", 3)` (gwy pack registration?).
-2. Decide guest mapping for `mr_sms_cfg_buf`: publish real buffer + run `_mr_load_sms_cfg`, or sync host `dsm.cfg`.
-3. method0 `input=filebuf` remains **secondary** (orthogonal to sms_cfg GPT check).
+1. `mythroad.c` confirms only two generic writers can hit `0x349`:
+   - debug/TestCom path `case 502 -> _mr_smsSetBytes(input1, buf, len)`
+   - SMS chunk path `code 6 -> _mr_smsSetBytes((chunk[1]<<8)+chunk[2], chunk+4, chunk[3])`
+2. Verify whether gamelist ever triggers TestCom `500/502/504` or SMS-chunk `code 6` before method0.
+3. Decide guest mapping for `mr_sms_cfg_buf`: publish real buffer + run `_mr_load_sms_cfg`, or sync host `dsm.cfg`.
+4. method0 `input=filebuf` remains **secondary** (orthogonal to sms_cfg GPT check).
 
 ## Artifacts
 
