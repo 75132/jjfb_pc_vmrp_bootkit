@@ -42,6 +42,8 @@
 #include "gwy_launcher/ext_abi_adapter.h"
 #include "gwy_launcher/ext_lifecycle.h"
 #include "gwy_launcher/package_scope.h"
+#include "gwy_launcher/product_callback_trace.h"
+#include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
@@ -158,6 +160,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_handler_registry_reset();
     platform_timer_reset();
     platform_scheduler_reset();
+    platform_timer_cadence_reset();
+    product_callback_trace_reset();
     ext_lifecycle_reset();
     ext_abi_adapter_reset();
     e10a31_reset();
@@ -593,40 +597,87 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
             r9_run);
     }
 
-    ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
-                                      GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
     {
-        GwyScheduledWork delivered;
-        int have = platform_scheduler_try_dequeue(0, &delivered);
-        if (!have) {
-            memset(&delivered, 0, sizeof(delivered));
-            delivered.source = GWY_SCHED_SRC_PLATFORM_TIMER;
-            delivered.handler_or_helper = handler;
-            delivered.forced = (g_lifecycle_host_armed && !g_timer_arm_seen) ? 1 : 0;
-            delivered.owner_module_id = owner ? owner->module_id : 0;
-            snprintf(delivered.owner_module, sizeof(delivered.owner_module), "%s",
-                     owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name)
-                           : "robotol.ext");
+        GwyP3CallbackSnap snap;
+        uint32_t seq;
+        uint64_t occ = (uint64_t)g_lifecycle_ticks;
+        int forced_tick = (g_lifecycle_host_armed && !g_timer_arm_seen) ? 1 : 0;
+        memset(&snap, 0, sizeof(snap));
+        snap.timer_or_event_id = occ;
+        snap.owner_module_id = owner ? owner->module_id : 0;
+        snap.owner_generation = owner ? owner->module_id : 0;
+        snap.source = (uint32_t)GWY_SCHED_SRC_PLATFORM_TIMER;
+        snap.handler = handler;
+        snap.pc = handler;
+        snap.lr = stop;
+        snap.r9 = r9_run;
+        snap.guest_depth = module_r9_switch_depth();
+        snap.forced = forced_tick;
+        if (owner)
+            snprintf(snap.owner_module, sizeof(snap.owner_module), "%s",
+                     owner->resolved_name[0] ? owner->resolved_name : owner->requested_name);
+        else
+            snprintf(snap.owner_module, sizeof(snap.owner_module), "robotol.ext");
+
+        platform_timer_cadence_note_arm(1u, snap.owner_generation, GWY_LIFECYCLE_PERIOD_MS, 1,
+                                        forced_tick ? "host_lifecycle" : "platform_timer");
+        if (!platform_timer_cadence_try_queue_occurrence(1u, occ)) {
+            /* duplicate occurrence while in-flight — skip deliver */
+            (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+            return;
         }
-        platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after, 1);
-        if (platform_scheduler_natural_callback_observed()) {
-            char path[512];
-            FILE *csv;
-            const char *root = getenv("GWY_PRODUCT_REPORTS_DIR");
-            if (root && root[0])
-                snprintf(path, sizeof(path), "%s/product_scheduler_natural_callback.csv", root);
-            else
-                snprintf(path, sizeof(path), "reports/product_scheduler_natural_callback.csv");
-            csv = fopen(path, "a");
-            if (!csv) {
-                csv = fopen(path, "w");
-                if (csv) fprintf(csv, "run_id,source,handler,ret,forced\n");
+        platform_timer_cadence_note_dequeue(1u, occ);
+        platform_timer_cadence_note_inflight_begin(1u, occ);
+
+        seq = product_callback_trace_on_enter(&snap);
+        product_callback_trace_frame_enter(seq, (uint64_t)seq << 32 | handler, handler, r9_run,
+                                           stop);
+
+        ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
+                                          GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+
+        product_callback_trace_handler_return(seq, out.pc_after, (int32_t)out.r0_after);
+        product_callback_trace_frame_restore_begin(seq, r9_save);
+        (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+        product_callback_trace_frame_restore_complete(seq, r9_save, 1);
+        product_callback_trace_on_leave(seq, ok, out.uc_err, out.end_reason[0] ? out.end_reason : "?",
+                                        out.pc_after, out.lr_after, out.sp_after, out.r9_after,
+                                        (int32_t)out.r0_after, r9_save);
+        platform_timer_cadence_note_inflight_end(1u, occ, ok);
+
+        {
+            GwyScheduledWork delivered;
+            int have = platform_scheduler_try_dequeue(0, &delivered);
+            if (!have) {
+                memset(&delivered, 0, sizeof(delivered));
+                delivered.source = GWY_SCHED_SRC_PLATFORM_TIMER;
+                delivered.handler_or_helper = handler;
+                delivered.forced = forced_tick;
+                delivered.owner_module_id = owner ? owner->module_id : 0;
+                snprintf(delivered.owner_module, sizeof(delivered.owner_module), "%s",
+                         snap.owner_module);
             }
-            if (csv) {
-                fprintf(csv, "%s,%s,0x%X,%d,%d\n", platform_scheduler_run_id(),
-                        gwy_scheduler_source_name(delivered.source), delivered.handler_or_helper,
-                        (int)out.r0_after, delivered.forced);
-                fclose(csv);
+            if (!delivered.forced)
+                platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after, 1);
+            if (platform_scheduler_natural_callback_observed()) {
+                char path[512];
+                FILE *csv;
+                const char *root = getenv("GWY_PRODUCT_REPORTS_DIR");
+                if (root && root[0])
+                    snprintf(path, sizeof(path), "%s/product_scheduler_natural_callback.csv", root);
+                else
+                    snprintf(path, sizeof(path), "reports/product_scheduler_natural_callback.csv");
+                csv = fopen(path, "a");
+                if (!csv) {
+                    csv = fopen(path, "w");
+                    if (csv) fprintf(csv, "run_id,source,handler,ret,forced\n");
+                }
+                if (csv) {
+                    fprintf(csv, "%s,%s,0x%X,%d,%d\n", platform_scheduler_run_id(),
+                            gwy_scheduler_source_name(delivered.source), delivered.handler_or_helper,
+                            (int)out.r0_after, delivered.forced);
+                    fclose(csv);
+                }
             }
         }
     }
@@ -658,6 +709,7 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         (g_lifecycle_ticks == 1u || (g_lifecycle_ticks % 25u) == 0u)) {
         platform_call_census_dump("lifecycle_tick");
     }
+    if ((g_lifecycle_ticks % 10u) == 0u) platform_timer_cadence_flush_csv();
     robotol_idle_watch_set_tick(g_lifecycle_ticks);
     robotol_flag_writer_trace_set_tick(g_lifecycle_ticks);
     robotol_flag_writer_trace_try_arm(uc);
@@ -681,10 +733,14 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     /* E8F: writer BP summary + sibling/counterfactual after tick returns (depth 0). */
     robotol_flag_writer_trace_on_lifecycle(uc, g_lifecycle_ticks);
     fflush(stdout);
-    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+    /* R9 already restored in traced path above. */
 }
 
 int gwy_ext_obs_lifecycle_on_timer_due(void *uc) {
+    if (product_callback_trace_halted()) {
+        platform_timer_cadence_flush_csv();
+        return 0;
+    }
     if (g_armed_timer_chunk) return 0;
     if (!g_lifecycle_host_armed && !platform_handler_registry_has(0x10140u)) return 0;
     if (g_lifecycle_delivering) {
@@ -693,9 +749,10 @@ int gwy_ext_obs_lifecycle_on_timer_due(void *uc) {
     }
     g_lifecycle_delivering = 1;
     gwy_ext_obs_lifecycle_deliver(uc);
-    if (g_lifecycle_host_armed) {
+    if (g_lifecycle_host_armed && !product_callback_trace_halted()) {
         platform_timer_start(GWY_LIFECYCLE_PERIOD_MS);
         if (g_timer_start) (void)g_timer_start((uint16_t)GWY_LIFECYCLE_PERIOD_MS);
+        platform_timer_cadence_note_arm(1u, 0, GWY_LIFECYCLE_PERIOD_MS, 1, "lifecycle_rearm");
     }
     g_lifecycle_delivering = 0;
     return 1;
@@ -1265,6 +1322,8 @@ void gwy_ext_obs_set_product_run_id(const char *run_id) {
     ext_lifecycle_set_run_id(run_id);
     platform_scheduler_set_run_id(run_id);
     platform_handler_registry_set_run_id(run_id);
+    product_callback_trace_set_run_id(run_id);
+    platform_timer_cadence_set_run_id(run_id);
 }
 
 void gwy_ext_obs_request_product_handshake(void) {
@@ -1494,6 +1553,39 @@ void gwy_ext_obs_entry_begin(uint32_t helper,
     ext_post_cont_audit_on_helper_call(helper, method, p_guest, er_rw);
 }
 
+void gwy_ext_obs_note_product_draw(const char *api) {
+    (void)api;
+    g_draw_count++;
+    platform_call_census_note_draw();
+    product_callback_trace_note_draw();
+}
+
+void gwy_ext_obs_note_product_refresh(const char *api) {
+    (void)api;
+    g_refresh_count++;
+    platform_call_census_note_refresh();
+    product_callback_trace_note_refresh();
+}
+
+void gwy_ext_obs_note_product_framebuffer(const char *api, const char *sha256_hex, int32_t x,
+                                          int32_t y, int32_t w, int32_t h, uint32_t nbytes,
+                                          int nonempty, int hwnd_visible, int captured) {
+    if (sha256_hex && sha256_hex[0]) product_callback_trace_set_fb_sha256(sha256_hex);
+    product_callback_trace_note_visual_row(api, x, y, w, h, sha256_hex, nonempty, hwnd_visible,
+                                           captured);
+    if (sha256_hex && sha256_hex[0])
+        product_callback_trace_append_fb_hash(api, sha256_hex, nbytes);
+    if (nonempty)
+        printf("[FRAMEBUFFER_NONEMPTY] run_id=%s sha256=%s evidence=OBSERVED\n",
+               product_callback_trace_run_id(), sha256_hex);
+    if (hwnd_visible)
+        printf("[HWND_VISIBLE] run_id=%s evidence=OBSERVED\n", product_callback_trace_run_id());
+    if (captured)
+        printf("[FIRST_NATURAL_FRAME_CAPTURED] run_id=%s evidence=OBSERVED\n",
+               product_callback_trace_run_id());
+    fflush(stdout);
+}
+
 void gwy_ext_obs_mem_fault(void *uc,
                            uint32_t access_type,
                            uint64_t address,
@@ -1503,6 +1595,8 @@ void gwy_ext_obs_mem_fault(void *uc,
 #ifdef GWY_HAVE_UNICORN
     if (uc) uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &pc);
 #endif
+    product_callback_trace_on_mem_fault(pc, (uint32_t)address, size,
+                                        (access_type & 2) ? 1 : 0, (access_type & 4) ? 1 : 0);
     e10a31a_runtime_set_stop("mem_fault", "UNICORN_FAULT_BEFORE_CONTINUATION", uc, 0, 0, 0, 0, 0,
                              "guest_mem_fault");
     /* Finalize shell-native gate before heavy fault dumps (process may be killed). */

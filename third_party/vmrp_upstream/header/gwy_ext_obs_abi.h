@@ -70,6 +70,13 @@ void gwy_ext_obs_set_product_helper_call(GwyExtObsHelperCallFn fn);
 void gwy_ext_obs_set_product_appinfo_alloc(GwyExtObsAppInfoAllocFn fn);
 void gwy_ext_obs_set_product_run_id(const char *run_id);
 
+/* Product P3: real draw/refresh from bridge (not BIND_REFRESH noise). */
+void gwy_ext_obs_note_product_draw(const char *api);
+void gwy_ext_obs_note_product_refresh(const char *api);
+void gwy_ext_obs_note_product_framebuffer(const char *api, const char *sha256_hex, int32_t x,
+                                          int32_t y, int32_t w, int32_t h, uint32_t nbytes,
+                                          int nonempty, int hwnd_visible, int captured);
+
 void gwy_ext_obs_alloc(uint32_t guest_addr, uint32_t size);
 
 /* Observe-only: guest memcpy/block copy may fill chunk fields. */

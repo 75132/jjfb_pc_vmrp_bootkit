@@ -315,6 +315,7 @@ char *editGetText(int32 edit) {
 
 void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
     static int s_first_real_saved = 0;
+    static int s_p3_saved = 0;
     SDL_Surface *surface = SDL_GetWindowSurface(window);
     if (!bmp || w <= 0 || h <= 0) return;
     if (SDL_MUSTLOCK(surface)) {
@@ -365,6 +366,17 @@ void guiDrawBitmap(uint16_t *bmp, int32_t x, int32_t y, int32_t w, int32_t h) {
             } else {
                 printf("[JJFB_E8U_FIRST_REAL_FRAME] save_fail path=%s err=%s evidence=OBSERVED\n",
                        path, SDL_GetError());
+                fflush(stdout);
+            }
+        }
+        /* Product P3: capture first nontrivial natural frame (runner may set path). */
+        if (!s_p3_saved && nontrivial) {
+            const char *p3 = getenv("JJFB_PRODUCT_P3_SCREENSHOT");
+            if (p3 && p3[0] && SDL_SaveBMP(surface, p3) == 0) {
+                s_p3_saved = 1;
+                printf("[FIRST_NATURAL_FRAME_CAPTURED] path=%s note=guiDrawBitmap "
+                       "evidence=OBSERVED\n",
+                       p3);
                 fflush(stdout);
             }
         }

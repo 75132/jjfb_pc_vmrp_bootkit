@@ -77,7 +77,9 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_timer.c
     src/platform/platform_handler_registry.c
     src/platform/platform_scheduler.c
+    src/platform/platform_timer_cadence.c
     src/platform/platform_call_census.c
+    src/runtime/product_callback_trace.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES
@@ -363,6 +365,10 @@ add_test(NAME platform_handler_registry COMMAND test_platform_handler_registry)
 add_executable(test_ext_abi_adapter_p2 tests/unit/test_ext_abi_adapter_p2.c)
 gwy_link_product_runtime(test_ext_abi_adapter_p2)
 add_test(NAME ext_abi_adapter_p2 COMMAND test_ext_abi_adapter_p2)
+
+add_executable(test_product_p3_visual_stability tests/unit/test_product_p3_visual_stability.c)
+gwy_link_product_runtime(test_product_p3_visual_stability)
+add_test(NAME product_p3_visual_stability COMMAND test_product_p3_visual_stability)
 
 add_executable(test_vm_runtime tests/unit/test_vm_runtime.c)
 gwy_link_product_runtime(test_vm_runtime)

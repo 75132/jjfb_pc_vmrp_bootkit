@@ -27,6 +27,7 @@
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
+#include "gwy_launcher/sha256.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -755,6 +756,7 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     printf("[JJFB_DRAW] api=mr_drawBitmap bmp=0x%X x=%d y=%d w=%u h=%u "
            "evidence=DOCUMENTED\n",
            bmp, (int)x, (int)y, w, h);
+    gwy_ext_obs_note_product_draw("mr_drawBitmap");
     {
         uint32_t pc = 0, lr = 0;
         uc_reg_read(uc, UC_ARM_REG_PC, &pc);
@@ -1001,18 +1003,144 @@ static void br_observe_draw_rect(BridgeMap *o, uc_engine *uc) {
 
 static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
     uint32_t r0 = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0;
+    int16_t x, y;
+    uint16_t w, h;
+    uint32_t table_g = 0, screen_g = 0;
+    static uint16_t host_fb[SCREEN_WIDTH * SCREEN_HEIGHT];
+    static int s_first_draw = 0;
+    static int s_first_refresh = 0;
+    static int s_first_captured = 0;
+    uint32_t nbytes = (uint32_t)SCREEN_WIDTH * (uint32_t)SCREEN_HEIGHT * 2u;
+    uc_err ue;
+    int nonempty = 0;
+    uint32_t black = 0, white = 0, other = 0;
+    int32_t i, j;
+    char sha_hex[65];
+    const char *run_id;
+    int captured = 0;
+
     uc_reg_read(uc, UC_ARM_REG_R0, &r0);
     uc_reg_read(uc, UC_ARM_REG_R1, &r1);
     uc_reg_read(uc, UC_ARM_REG_R2, &r2);
     uc_reg_read(uc, UC_ARM_REG_R3, &r3);
     uc_reg_read(uc, UC_ARM_REG_PC, &pc);
     uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    x = (int16_t)r0;
+    y = (int16_t)r1;
+    w = (uint16_t)r2;
+    h = (uint16_t)r3;
+
     printf("[JJFB_REFRESH] api=%s r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
            o && o->name ? o->name : "_DispUpEx", r0, r1, r2, r3);
     printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
            "r2=0x%X r3=0x%X note=real_refresh evidence=OBSERVED\n",
            o && o->name ? o->name : "_DispUpEx", pc, lr, r0, r1, r2, r3);
     fflush(stdout);
+
+    gwy_ext_obs_note_product_refresh(o && o->name ? o->name : "_DispUpEx");
+
+    run_id = getenv("GWY_PRODUCT_RUN_ID");
+
+    if (!mr_table) {
+        SET_RET_V(0);
+        return;
+    }
+    table_g = toMrpMemAddr(mr_table);
+    if (uc_mem_read(uc, table_g + 0x16Cu, &screen_g, 4) != UC_ERR_OK || !screen_g)
+        screen_g = *(uint32_t *)((uint8_t *)mr_table + 0x16Cu);
+    if (!screen_g || w == 0 || h == 0) {
+        SET_RET_V(0);
+        return;
+    }
+    if ((int)x < 0) {
+        w = (uint16_t)((int)w + (int)x);
+        x = 0;
+    }
+    if ((int)y < 0) {
+        h = (uint16_t)((int)h + (int)y);
+        y = 0;
+    }
+    if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT) {
+        SET_RET_V(0);
+        return;
+    }
+    if ((int)x + (int)w > SCREEN_WIDTH) w = (uint16_t)(SCREEN_WIDTH - x);
+    if ((int)y + (int)h > SCREEN_HEIGHT) h = (uint16_t)(SCREEN_HEIGHT - y);
+    if (w == 0 || h == 0) {
+        SET_RET_V(0);
+        return;
+    }
+
+    memset(host_fb, 0, sizeof(host_fb));
+    ue = uc_mem_read(uc, screen_g, host_fb, nbytes);
+    if (ue != UC_ERR_OK) {
+        void *host = getMrpMemPtr(screen_g);
+        if (!host) {
+            printf("[JJFB_REFRESH] api=_DispUpEx note=screenBuf_unreadable guest=0x%X "
+                   "evidence=OBSERVED\n",
+                   screen_g);
+            fflush(stdout);
+            SET_RET_V(0);
+            return;
+        }
+        memcpy(host_fb, host, nbytes);
+    }
+
+    for (j = 0; j < (int32_t)h; j++) {
+        for (i = 0; i < (int32_t)w; i++) {
+            uint16_t c = host_fb[(y + j) * SCREEN_WIDTH + (x + i)];
+            if (c == 0)
+                black++;
+            else if (c == 0xFFFFu)
+                white++;
+            else
+                other++;
+        }
+    }
+    nonempty = (other > 0) || (black > 0 && white > 0);
+
+#ifdef GWY_USE_VM_FILE_SERVICE
+    {
+        uint8_t dig[32];
+        gwy_sha256(host_fb, nbytes, dig);
+        gwy_sha256_hex(dig, sha_hex);
+    }
+#else
+    memset(sha_hex, 0, sizeof(sha_hex));
+    snprintf(sha_hex, sizeof(sha_hex), "nogwy");
+#endif
+
+    /* Generic product present: guest mr_screenBuf → SDL via existing guiDrawBitmap. */
+    guiDrawBitmap(host_fb, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
+    gwy_ext_obs_note_product_draw("_DispUpEx");
+
+    if (!s_first_draw) {
+        s_first_draw = 1;
+        printf("[FIRST_NATURAL_DRAW] api=_DispUpEx x=%d y=%d w=%u h=%u screenBuf=0x%X "
+               "run_id=%s evidence=OBSERVED\n",
+               (int)x, (int)y, (unsigned)w, (unsigned)h, screen_g,
+               run_id && run_id[0] ? run_id : "unknown");
+    }
+    if (!s_first_refresh) {
+        s_first_refresh = 1;
+        printf("[FIRST_NATURAL_REFRESH] api=_DispUpEx x=%d y=%d w=%u h=%u run_id=%s "
+               "evidence=OBSERVED\n",
+               (int)x, (int)y, (unsigned)w, (unsigned)h,
+               run_id && run_id[0] ? run_id : "unknown");
+    }
+    if (nonempty && !s_first_captured) {
+        s_first_captured = 1;
+        captured = 1;
+    }
+    fflush(stdout);
+
+    gwy_ext_obs_note_product_framebuffer("_DispUpEx", sha_hex, (int32_t)x, (int32_t)y, (int32_t)w,
+                                         (int32_t)h, nbytes, nonempty, 1, captured);
+    if (nonempty)
+        printf("[JJFB_FB_STATS] black=%u white=%u other=%u evidence=OBSERVED\n", black, white,
+               other);
+    fflush(stdout);
+    SET_RET_V(0);
 }
 
 static void br_mr_load_sms_cfg(BridgeMap *o, uc_engine *uc) {

@@ -215,9 +215,10 @@ $forbidden = [ordered]@{
   forced_callback         = [bool]($all -match 'FORCE_CALLBACK|V64_ENQUEUE|FAMILY_C0_AFTER')
 }
 
-$drawHit = [bool]($all -match 'DRAW|DispUpEx|mr_draw')
-$refreshHit = [bool]($all -match 'REFRESH|refreshBitmap|DispUp')
-$faultHit = [bool]($all -match 'UC_ERR|mem_fault|LIFECYCLE.*FAULT')
+$drawHit = [bool]($all -match '\[FIRST_NATURAL_DRAW\]|\[JJFB_DRAW\]')
+$refreshHit = [bool]($all -match '\[FIRST_NATURAL_REFRESH\]|\[JJFB_REFRESH\] api=_DispUpEx|\[JJFB_REFRESH\] api=DispUpEx')
+# Never treat uc_err=0 / BIND_REFRESH as fault or draw (substring UC_ERR / REFRESH noise).
+$faultHit = [bool]($all -match 'FIRE_DONE ok=0|\[EXT_FAULT\]|\[P3_FAULT\]|uc_err=[1-9]')
 $postVerdict = 'NATURAL_CALLBACK_NO_DRAW_YET'
 if ($gates.SCHEDULER_NATURAL_CALLBACK) {
   if ($faultHit) { $postVerdict = 'NATURAL_CALLBACK_FAULT' }

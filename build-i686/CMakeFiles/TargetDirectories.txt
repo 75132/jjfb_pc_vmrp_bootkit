@@ -44,6 +44,7 @@ C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_send_app_event.dir
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_handler_registry.dir
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_ext_abi_adapter_p2.dir
+C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_product_p3_visual_stability.dir
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_vm_runtime.dir
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_guest_memory.dir
 C:/Users/24231/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_vm_file_service.dir
