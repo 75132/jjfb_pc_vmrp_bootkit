@@ -1,0 +1,2 @@
+run_id,seq,strcmp_pc,caller_pc,lr,lhs,rhs,lhs_source,cfg_offset,cfg_base,r9,sp,lhs_hex,rhs_hex,lhs_ascii,rhs_ascii,package,module,verdict
+1784719371649,13,0xAC2D0,0x2E53D9,0x2E53DD,0x27FA30,0x2E8458,STACK_FROM_SMSCFG,844,0x280CD4,0x280400,0x27FA00,6777790000000000000000000000000010000000000000000000000002000000,67777900475054006E617070747970653D25645F6E75726C3D25735F67777962,"gwy.............................","gwy.GPT.napptype=%d_nurl=%s_gwyb","gwy/gamelist.mrp","gamelist",GWY_COMPARE_SOURCE_SMSCFG

@@ -77,6 +77,7 @@ add_library(launcher_core STATIC
     src/runtime/e10a31g_strcmp.c
     src/runtime/e10a31h_smscfg.c
     src/runtime/e10a31j_smscfg_long.c
+    src/runtime/e10a31l_config_map.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
     src/runtime/module_r9_switch.c

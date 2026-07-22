@@ -40,7 +40,8 @@ static void ensure_flags(void) {
     if (g_known) return;
     g_known = 1;
     g_diag = env1("GWY_DIAG_SMSCFG_GPT_MINIMAL");
-    g_bootstrap = env1("GWY_SMSCFG_BOOTSTRAP") || env1("JJFB_E10A31K_MODE");
+    g_bootstrap = env1("GWY_SMSCFG_BOOTSTRAP") || env1("JJFB_E10A31K_MODE") ||
+                  env1("JJFB_E10A31L_MODE");
     g_s.cfg_len = GWY_SMS_CFG_LEN;
     g_s.mr_version = GWY_SMS_CFG_MR_VERSION;
 }
@@ -339,12 +340,15 @@ static int apply_bootstrap(void *uc) {
     log_bootstrap(src);
     {
         uint8_t gpt[3] = {0, 0, 0};
-        char gpt_hex[16];
+        uint8_t gwy[3] = {0, 0, 0};
+        char gpt_hex[16], gwy_hex[16];
         (void)read_guest(uc, g_s.cfg_guest + GWY_SMS_CFG_GPT_OFF, gpt, 3);
+        (void)read_guest(uc, g_s.cfg_guest + 0x34Cu, gwy, 3);
         hex_n(gpt, 3, gpt_hex, sizeof(gpt_hex));
+        hex_n(gwy, 3, gwy_hex, sizeof(gwy_hex));
         printf("[SMSCFG_BOOTSTRAP_COMPLETE] source=%s cfg_guest=0x%X gpt_off=0x%X "
-               "gpt_hex=%s evidence=OBSERVED\n",
-               source_name(src), g_s.cfg_guest, GWY_SMS_CFG_GPT_OFF, gpt_hex);
+               "gpt_hex=%s gwy_off=0x34C gwy_hex=%s evidence=OBSERVED\n",
+               source_name(src), g_s.cfg_guest, GWY_SMS_CFG_GPT_OFF, gpt_hex, gwy_hex);
         fflush(stdout);
     }
     return 1;

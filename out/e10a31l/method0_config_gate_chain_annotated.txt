@@ -1,0 +1,22 @@
+# E10A-3.1l method0 config gate chain (dynamic)
+cfg_base=0x280CD4 cfg_len=0x10E0 gpt_pass=1 gwy_cmp=1 true_fail_pc=0x0
+
+REQ_1:
+  call_pc=0x2E53A6 enter_pc=0xAC2D0
+  lhs=0x27FA30 rhs=0x2E845C
+  source=STACK_FROM_SMSCFG
+  cfg_offset=841 copy_len=3
+  lhs_ascii=GPT.............................
+  rhs_ascii=GPT.napptype=%d_nurl=%s_gwyblink
+  is_gpt=1 is_gwy=0 leads_to_neg1=0
+
+REQ_2:
+  call_pc=0x2E53D9 enter_pc=0xAC2D0
+  lhs=0x27FA30 rhs=0x2E8458
+  source=STACK_FROM_SMSCFG
+  cfg_offset=844 copy_len=8
+  lhs_ascii=gwy.............................
+  rhs_ascii=gwy.GPT.napptype=%d_nurl=%s_gwyb
+  is_gpt=0 is_gwy=1 leads_to_neg1=1
+
+NOTE: literal adjacency gwy\\0GPT\\0 is NOT sufficient provenance.

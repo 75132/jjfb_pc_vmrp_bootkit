@@ -1,0 +1,40 @@
+{
+  "platform_fingerprint": {
+    "cfunction_sha256": "8f85e3cf8f0ed4a8e09eb658f9daba566989fbc06c510e4e76cd474dd275cad5",
+    "mr_version": 2011,
+    "sms_cfg_len": 4320
+  },
+  "original_default_recovered": false,
+  "requirements": [
+    {
+      "source": "sms_cfg",
+      "offset": 841,
+      "length": 3,
+      "bytes_hex": "475054",
+      "ascii": "GPT",
+      "evidence_pc": "0x2E53A6",
+      "required": true,
+      "note": "first_gate_proven_e10a31k_confirmed_e10a31l"
+    },
+    {
+      "source": "sms_cfg",
+      "offset": 844,
+      "length": 3,
+      "bytes_hex": "677779",
+      "ascii": "gwy",
+      "evidence_pc": "0x2E53D9",
+      "required": true,
+      "note": "STACK_FROM_SMSCFG copy from cfg+0x34C; not literal-adjacency"
+    }
+  ],
+  "requirement_count": 2,
+  "gwy_lhs_source": "STACK_FROM_SMSCFG",
+  "gwy_verdict": "GWY_COMPARE_SOURCE_SMSCFG",
+  "after_apply": {
+    "gpt_gate": "pass",
+    "gwy_gate": "pass",
+    "method0_ret": -1,
+    "next_fail_pc": "0x2E5404",
+    "verdict": "SMSCFG_REQUIREMENTS_PASSED_NEXT_SUBSYSTEM_FOUND"
+  }
+}
