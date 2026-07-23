@@ -123,6 +123,8 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
 int guest_memory_uc_read_r9(struct uc_struct *uc, uint32_t *out_r9);
 int guest_memory_uc_write_r9(struct uc_struct *uc, uint32_t r9);
 int guest_memory_uc_write_r9_ex(struct uc_struct *uc, uint32_t r9, const GwyR9WriteAudit *audit);
+int guest_memory_uc_read_sp(struct uc_struct *uc, uint32_t *out_sp);
+int guest_memory_uc_write_sp(struct uc_struct *uc, uint32_t sp);
 
 const char *gwy_r9_write_reason_name(GwyR9WriteReason r);
 uint64_t guest_memory_r9_write_event_seq(void);

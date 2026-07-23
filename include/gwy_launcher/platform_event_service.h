@@ -171,6 +171,20 @@ int platform_event_service_state_advanced(void);
 void platform_event_service_suggest_delivery_abi(const GwyPlatformEvent *ev,
                                                 GwyEventDeliveryAbi *out);
 
+/*
+ * Resolve owner-scoped 10165/10162 + enqueue handler for Path-A completion.
+ * Never falls back to "latest object". Requires owner_store when available.
+ * Returns 1 when both buffers and enqueue handler are known.
+ */
+int platform_event_service_resolve_completion_objs(uint32_t *out_10165, uint32_t *out_10162,
+                                                   uint32_t *out_enq_handler,
+                                                   uint32_t *out_owner_store);
+
+/* Guest-visible unfinished field: ER_RW+(0x800+0xD0) UI_MODE / state switch. */
+#define GWY_PES_UI_MODE_OFF (0x800u + 0xD0u)
+uint32_t platform_event_service_read_ui_mode(void *uc, uint32_t er_rw);
+void platform_event_service_note_ui_mode(void *uc, uint32_t er_rw, uint64_t request_id);
+
 void platform_event_service_finalize(void);
 
 #ifdef __cplusplus

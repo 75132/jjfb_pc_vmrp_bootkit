@@ -60,8 +60,12 @@ static uint32_t g_hook_handler_base;
 #ifdef GWY_HAVE_UNICORN
 static uc_hook g_mem_hook;
 static uc_hook g_code_hook;
+static uc_hook g_code_305e09;
 static int g_mem_hook_ok;
 static int g_code_hook_ok;
+static int g_code_305e09_ok;
+static int g_305e09_entries;
+static uint32_t g_ui_mode_at_sample;
 #endif
 
 static int env1(const char *name) {
@@ -131,6 +135,20 @@ int product_ffp_apply_abi(void) {
     return g_apply;
 }
 
+int product_ffp_trace_305e09(void) {
+    return env1("JJFB_PRODUCT_TRACE_305E09") || env1("JJFB_PRODUCT_EVENT_CONTRACT");
+}
+
+void product_ffp_enter_resource_phase(void) {
+    if (g_phase == GWY_FFP_PHASE_RESOURCE) return;
+    g_phase = GWY_FFP_PHASE_RESOURCE;
+    g_phase_known = 1;
+    printf("[FFP_AUTO_PHASE] from=event to=resource reason=state_advanced "
+           "internal=EventContract run_id=%s evidence=OBSERVED\n",
+           product_ffp_run_id());
+    fflush(stdout);
+}
+
 void product_ffp_set_run_id(const char *run_id) {
     if (!run_id) {
         g_run_id[0] = 0;
@@ -153,6 +171,10 @@ void product_ffp_reset(void) {
             uc_hook_del((uc_engine *)g_hook_uc, g_code_hook);
             g_code_hook_ok = 0;
         }
+        if (g_code_305e09_ok) {
+            uc_hook_del((uc_engine *)g_hook_uc, g_code_305e09);
+            g_code_305e09_ok = 0;
+        }
     }
 #endif
     platform_event_service_reset();
@@ -170,6 +192,8 @@ void product_ffp_reset(void) {
     g_hook_uc = NULL;
     g_hook_sp = 0;
     g_hook_handler_base = 0;
+    g_305e09_entries = 0;
+    g_ui_mode_at_sample = 0;
     g_en_known = 0;
     g_en = 0;
     g_apply_known = 0;
@@ -395,6 +419,53 @@ static void ffp_hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *
         }
     }
 }
+
+static void ffp_hook_305e09(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+    uint32_t r[13];
+    uint32_t sp = 0, lr = 0, r9 = 0, cpsr = 0;
+    uint32_t stack[17];
+    int i;
+    (void)size;
+    (void)user_data;
+    if (!product_ffp_trace_305e09()) return;
+    if ((uint32_t)address != 0x305E08u && (uint32_t)address != 0x305E09u) return;
+    if (g_305e09_entries >= 8) return;
+    g_305e09_entries++;
+    for (i = 0; i < 13; i++) uc_reg_read(uc, UC_ARM_REG_R0 + i, &r[i]);
+    uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
+    memset(stack, 0, sizeof(stack));
+    for (i = 0; i < 17 && sp; i++)
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + (uint32_t)i * 4u, &stack[i]);
+    printf("[EVENT_305E09_ENTRY] n=%d pc=0x%X thumb=%d r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
+           "r4=0x%X r9=0x%X sp=0x%X lr=0x%X cpsr=0x%X ui_mode=0x%X "
+           "note=r0_minus_4_for_10133=0x%X run_id=%s evidence=OBSERVED\n",
+           g_305e09_entries, (uint32_t)address, (cpsr & 0x20) ? 1 : 0, r[0], r[1], r[2], r[3],
+           r[4], r9, sp, lr, cpsr, platform_event_service_read_ui_mode(uc, r9),
+           r[0] ? (r[0] - 4u) : 0u, product_ffp_run_id());
+    printf("[EVENT_305E09_FUNCTION_CONTRACT_IDENTIFIED] abi=sendAppEvent(0x10133,r0-4,0,0) "
+           "role=platform_free_wrapper case9_passes_event_code evidence=OBSERVED\n");
+    fflush(stdout);
+    {
+        char path[512];
+        FILE *f;
+        report_path(path, sizeof(path), "product_event_305e09_entry.csv");
+        f = fopen(path, g_305e09_entries == 1 ? "wb" : "ab");
+        if (f) {
+            if (g_305e09_entries == 1)
+                fprintf(f, "run_id,n,pc,r0,r1,r2,r3,r4,r9,sp,lr,cpsr,ui_mode,stack0,stack1,"
+                           "request_id\n");
+            fprintf(f,
+                    "%s,%d,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,0x%X,%llu\n",
+                    product_ffp_run_id(), g_305e09_entries, (uint32_t)address, r[0], r[1], r[2],
+                    r[3], r[4], r9, sp, lr, cpsr, platform_event_service_read_ui_mode(uc, r9),
+                    stack[0], stack[1], (unsigned long long)g_hook_req);
+            fclose(f);
+        }
+    }
+}
 #endif
 
 void product_ffp_on_handler_enter(void *uc, uint64_t request_id, uint32_t handler,
@@ -445,6 +516,11 @@ void product_ffp_on_handler_enter(void *uc, uint64_t request_id, uint32_t handle
         e = uc_hook_add((uc_engine *)uc, &g_code_hook, UC_HOOK_CODE, (void *)ffp_hook_code, NULL,
                         base, (uint64_t)base + 0x20ull); /* prologue only; avoid case-body slowdown */
         g_code_hook_ok = (e == UC_ERR_OK);
+        if (product_ffp_trace_305e09() && !g_code_305e09_ok) {
+            e = uc_hook_add((uc_engine *)uc, &g_code_305e09, UC_HOOK_CODE, (void *)ffp_hook_305e09,
+                            NULL, 0x305E08ull, 0x305E09ull);
+            g_code_305e09_ok = (e == UC_ERR_OK);
+        }
     }
 #else
     (void)uc;
@@ -467,6 +543,11 @@ void product_ffp_on_handler_leave(void *uc, uint64_t request_id, int ok, int32_t
         if (g_code_hook_ok) {
             uc_hook_del((uc_engine *)g_hook_uc, g_code_hook);
             g_code_hook_ok = 0;
+        }
+        /* Keep 305E09 hook across deliveries while Trace305E09 is armed. */
+        if (g_code_305e09_ok && !product_ffp_trace_305e09()) {
+            uc_hook_del((uc_engine *)g_hook_uc, g_code_305e09);
+            g_code_305e09_ok = 0;
         }
     }
     g_hook_req = 0;
@@ -491,10 +572,7 @@ void product_ffp_on_handler_leave(void *uc, uint64_t request_id, int ok, int32_t
     }
 
     if (platform_event_service_state_advanced() && product_ffp_phase() == GWY_FFP_PHASE_EVENT) {
-        printf("[FFP_AUTO_PHASE] from=event to=resource reason=state_advanced run_id=%s "
-               "evidence=OBSERVED\n",
-               product_ffp_run_id());
-        fflush(stdout);
+        product_ffp_enter_resource_phase();
     }
 }
 
@@ -639,6 +717,96 @@ static void write_mem_csv(void) {
     fclose(f);
 }
 
+static void write_ack_contract(void) {
+    char path[512];
+    FILE *f;
+    GwyPlatformEvent *ev = NULL;
+    int i;
+    uint32_t p65 = 0, p62 = 0, enq = 0, store = 0;
+    (void)platform_event_service_resolve_completion_objs(&p65, &p62, &enq, &store);
+    for (i = 0; i < platform_event_service_event_count(); i++) {
+        GwyPlatformEvent *e = platform_event_service_event_at(i);
+        if (e && e->from_guest) {
+            ev = e;
+            break;
+        }
+    }
+    report_path(path, sizeof(path), "product_event_ack_contract.json");
+    f = fopen(path, "wb");
+    if (!f) return;
+    fprintf(f,
+            "{\n"
+            "  \"request\": {\"event\": \"0x1E209\", \"app\": 9},\n"
+            "  \"unfinished_predicate\": {\n"
+            "    \"pc\": \"0x30634C\",\n"
+            "    \"object\": \"ER_RW\",\n"
+            "    \"offset\": \"0x800+0xD0\",\n"
+            "    \"size\": 4,\n"
+            "    \"condition\": \"ui_mode == 0\",\n"
+            "    \"current\": \"0\",\n"
+            "    \"completed\": \"nonzero (Path A / natural writer e.g. 0x45)\"\n"
+            "  },\n"
+            "  \"writer\": {\n"
+            "    \"kind\": \"platform\",\n"
+            "    \"api\": \"0x101AB via 10165 enqueue 0x30D24C -> 0x2E4D6C B54\",\n"
+            "    \"evidence\": \"STATIC+OBSERVED: case9/0x305E08 only issues 0x10133 free; "
+            "timer reissues while ER_RW+(0x800+0xD0)==0\"\n"
+            "  },\n"
+            "  \"305e09_contract\": {\n"
+            "    \"role\": \"platform_free_wrapper\",\n"
+            "    \"nested\": \"sendAppEvent(0x10133, r0-4)\",\n"
+            "    \"case9_r0\": \"event_code 0x1E209 (not heap ptr)\"\n"
+            "  },\n"
+            "  \"completion_objs\": {\"10165\": \"0x%X\", \"10162\": \"0x%X\", "
+            "\"enq_handler\": \"0x%X\", \"owner_store\": \"0x%X\"},\n"
+            "  \"request_id\": %llu,\n"
+            "  \"state_advanced\": %s,\n"
+            "  \"run_id\": \"%s\"\n"
+            "}\n",
+            p65, p62, enq, store, ev ? (unsigned long long)ev->request_id : 0ull,
+            platform_event_service_state_advanced() ? "true" : "false", product_ffp_run_id());
+    fclose(f);
+
+    report_path(path, sizeof(path), "product_event_unfinished_predicate.csv");
+    f = fopen(path, "wb");
+    if (f) {
+        fprintf(f, "run_id,pc,object,offset,size,condition,current,completed,writer\n");
+        fprintf(f,
+                "%s,0x30634C,ER_RW,0x800+0xD0,4,ui_mode==0,0,nonzero,"
+                "platform_101AB_via_30D24C\n",
+                product_ffp_run_id());
+        fclose(f);
+    }
+
+    report_path(path, sizeof(path), "product_event_completion_validate.csv");
+    f = fopen(path, "wb");
+    if (f) {
+        fprintf(f, "run_id,state_advanced,305e09_entries,ctx_count,ack\n");
+        fprintf(f, "%s,%d,%d,%d,%d\n", product_ffp_run_id(),
+                platform_event_service_state_advanced(), g_305e09_entries,
+                platform_event_service_ctx_count(),
+                ev && ev->acknowledged ? 1 : 0);
+        fclose(f);
+    }
+
+    report_path(path, sizeof(path), "product_event_context_access_map.csv");
+    f = fopen(path, "wb");
+    if (f) {
+        fprintf(f, "run_id,classification,note\n");
+        fprintf(f, "%s,EVENT_CONTEXT_NOT_AN_INPUT,case9/305E08 does not read 10165\n",
+                product_ffp_run_id());
+        fprintf(f, "%s,EVENT_CONTEXT_EXPECTS_PLATFORM_WRITE,"
+                   "101AB Path-A fill into owner-scoped 10165 before/with enqueue\n",
+                product_ffp_run_id());
+        fprintf(f, "%s,FAMILY_HANDLER_IS_NOTIFICATION_ONLY,case9 only 10133 free\n",
+                product_ffp_run_id());
+        fprintf(f, "%s,PLATFORM_MUST_PUBLISH_COMPLETION_BEFORE_HANDLER,"
+                   "enqueue 30D2F9/30D24C then family notify\n",
+                product_ffp_run_id());
+        fclose(f);
+    }
+}
+
 void product_ffp_finalize(void) {
     if (g_finalized || !product_ffp_enabled()) return;
     g_finalized = 1;
@@ -646,10 +814,13 @@ void product_ffp_finalize(void) {
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();
+    write_ack_contract();
     printf("[FFP_FINALIZE] samples=%d mem_hits=%d abi_confirmed=%d state_advanced=%d "
-           "resource_open=%d resource_read=%d fb=%d disp=%d run_id=%s evidence=OBSERVED\n",
+           "resource_open=%d resource_read=%d fb=%d disp=%d entries_305e09=%d run_id=%s "
+           "evidence=OBSERVED\n",
            g_sample_n, g_mem_n, g_abi_confirmed, platform_event_service_state_advanced(),
-           g_resource_open, g_resource_read, g_fb_write, g_disp_up, product_ffp_run_id());
+           g_resource_open, g_resource_read, g_fb_write, g_disp_up, g_305e09_entries,
+           product_ffp_run_id());
     fflush(stdout);
 }
 

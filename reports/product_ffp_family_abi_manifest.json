@@ -19,7 +19,7 @@
   },
   "return_contract": {"ret": 0, "state_changed": false},
   "ack_contract": {"acknowledged": false, "identity_class": "SAME_UNFINISHED_REQUEST"},
-  "apply_abi_round_b": true,
+  "apply_abi_round_b": false,
   "abi_confirmed": false,
-  "run_id": "ffp_event_20260724_010820_81327"
+  "run_id": "ffp_event_20260724_014705_31801"
 }

@@ -28,6 +28,7 @@ static int test_same_identity_suppresses_requeue(void) {
     platform_event_service_reset();
     platform_event_service_set_run_id("unit_pes");
     (void)platform_event_service_note_alloc(0x10165u, 0xE200u, 0x690CF4u, 0x30D2F9u, 3u);
+    platform_event_service_note_ctx_owner_store(0x690CF4u, 0x2B215Cu);
     a1 = platform_event_service_on_guest_request(NULL, 0x1E209u, 9u, 0x1E200u, 0x30D301u,
                                                  0x30D2F9u, 0x304589u, 0x304589u, r, 0x2B1854u, 0, 0,
                                                  0, 3u, 3u, &ev);

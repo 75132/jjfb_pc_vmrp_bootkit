@@ -1,0 +1,5 @@
+run_id,pc,lr,rw,addr,size,base_object,offset,note
+ffp_event_20260724_014705_31801,0x305E08,0x30E1A5,none,-,0,none,-,case9_entry_no_10165_touch
+ffp_event_20260724_014705_31801,0x305E22,0x305E26,plat,0x10133,0,none,-,nested_free_event_minus_4
+ffp_live_prior_ungated,0x30D2AC,-,write,0x6AD11C,46,10165,0,101AB_path_a_fill_observed_then_fault
+ffp_live_prior_ungated,0x312A78,-,read,0x4,4,B54_list,4,NULL_list_head_ENTRY_ARGUMENT

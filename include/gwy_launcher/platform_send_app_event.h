@@ -24,7 +24,9 @@ typedef enum GwyPlatCallKind {
     /* CROSS_TARGET: register family/chunk handler; status_ret usually 1. */
     GWY_PLAT_KIND_REGISTER = 6,
     /* DOCUMENTED/CROSS_TARGET: write graphics fp to *out_guest; status_ret=0. */
-    GWY_PLAT_KIND_GRAPHICS_FP = 7
+    GWY_PLAT_KIND_GRAPHICS_FP = 7,
+    /* TARGET_OBSERVED: fill guest buffer in-place (0x101AB Path A). */
+    GWY_PLAT_KIND_BUFFER_FILL = 8
 } GwyPlatCallKind;
 
 typedef struct GwyPlatCall {
@@ -50,12 +52,17 @@ typedef struct GwyPlatCallResult {
     uint32_t reg_handler;     /* REGISTER: guest handler/chunk */
     uint32_t graphics_id;     /* GRAPHICS_FP: query id (e.g. 0x11F02) */
     uint32_t graphics_out;    /* GRAPHICS_FP: guest *out for fp write */
+    uint32_t fill_buf;        /* BUFFER_FILL: guest buffer (R1/app) */
+    uint32_t fill_type;       /* BUFFER_FILL: type (R3; Path A uses 2) */
     const char *name;
     const char *evidence;
     PlatformUserInfoBlob userinfo; /* valid when kind == USERINFO_BLOB */
 } GwyPlatCallResult;
 
 void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult *out);
+
+/* Fill Path-A 0x101AB payload into a mapped guest buffer. Returns bytes written. */
+uint32_t platform_101ab_fill_path_a(uint8_t *dst, uint32_t dst_cap, int with_record);
 
 #ifdef __cplusplus
 }

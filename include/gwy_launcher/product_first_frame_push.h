@@ -23,6 +23,8 @@ typedef enum GwyFfpPhase {
 int product_ffp_enabled(void);
 GwyFfpPhase product_ffp_phase(void);
 int product_ffp_apply_abi(void); /* Round B: apply recovered delivery ABI */
+int product_ffp_trace_305e09(void);
+void product_ffp_enter_resource_phase(void);
 
 void product_ffp_reset(void);
 void product_ffp_set_run_id(const char *run_id);

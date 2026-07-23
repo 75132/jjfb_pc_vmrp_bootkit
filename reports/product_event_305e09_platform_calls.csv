@@ -1,0 +1,3 @@
+api,app,role,evidence
+0x10133,r0-4,free_companion,STATIC+DOCUMENTED
+0x101AB,10165_buf,path_a_fill,STATIC+TARGET_OBSERVED_30D24C

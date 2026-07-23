@@ -90,6 +90,34 @@ int main(void) {
         return 1;
     }
 
+    memset(&call, 0, sizeof(call));
+    call.code = 0x10133u;
+    call.app = 0x1E205u;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10133", out.kind, GWY_PLAT_KIND_STATUS) || out.status_ret != 0u) {
+        fprintf(stderr, "10133 free mismatch\n");
+        return 1;
+    }
+
+    memset(&call, 0, sizeof(call));
+    call.code = 0x101ABu;
+    call.app = 0x6AD11Cu;
+    call.arg3 = 2u;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("101AB", out.kind, GWY_PLAT_KIND_BUFFER_FILL) || out.fill_buf != 0x6AD11Cu ||
+        out.fill_type != 2u) {
+        fprintf(stderr, "101AB fill mismatch\n");
+        return 1;
+    }
+    {
+        uint8_t buf[128];
+        uint32_t n = platform_101ab_fill_path_a(buf, sizeof(buf), 0);
+        if (n < 16u || buf[0] != 2) {
+            fprintf(stderr, "101AB fill_path_a failed n=%u\n", n);
+            return 1;
+        }
+    }
+
     printf("ok\n");
     return 0;
 }

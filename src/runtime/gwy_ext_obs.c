@@ -122,6 +122,10 @@ typedef struct GwyFamilyEvent {
     uint32_t del_stack0;
     uint32_t del_stack1;
     int del_apply_stack;
+    /* 1 = 10165 Path-A enqueue ABI: R0=buf10165 R1=buf10162 (not family app/event). */
+    int enqueue_mode;
+    uint32_t enq_r0;
+    uint32_t enq_r1;
     uint64_t owner_module_id;
     uint64_t owner_generation;
     uint64_t request_id;
@@ -665,6 +669,72 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
         }
 
         if (g_family_eq_n >= GWY_P4_FAMILY_EVENT_Q) return 0;
+
+        /*
+         * Event Completion Contract: before family notification (case 9 → 0x305E08
+         * free via 0x10133), publish Path-A via registered 10165 enqueue handler.
+         * Proven: UI_MODE@ER_RW+(0x800+0xD0) stays 0 until B54 Path A runs; case 9 does not
+         * consume 10165 context. Requires JJFB_PRODUCT_EVENT_CONTRACT=1.
+         */
+        if (product_ffp_enabled() && env_flag("JJFB_PRODUCT_EVENT_CONTRACT") &&
+            event_code == 0x1E209u && app == 9u) {
+            uint32_t p65 = 0, p62 = 0, enq_h = 0, store = 0;
+            uint32_t b54 = 0, flag15c = 0;
+            if (platform_event_service_resolve_completion_objs(&p65, &p62, &enq_h, &store) &&
+                enq_h && g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
+                /* Path A list insert @0x312A60 requires a non-null queue head (ER_RW+0xB54).
+                 * Invoking 30D24C while B54==0 → UC_FAULT @ LDR [r4,#4] (ENTRY_ARGUMENT). */
+                if (uc && erw) {
+                    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB54u, &b54);
+                    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0x15Cu, &flag15c);
+                }
+                if (!b54) {
+                    printf("[EVENT_PATH_A_BLOCKED_NULL_LIST_HEAD] er_rw=0x%X off=0xB54 b54=0 "
+                           "flag15c=0x%X enq_handler=0x%X ctx=0x%X sib=0x%X "
+                           "note=defer_30D24C_until_B54_ready evidence=OBSERVED\n",
+                           erw, flag15c, enq_h, p65, p62);
+                    fflush(stdout);
+                } else if (g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
+                GwyFamilyEvent *es = &g_family_eq[g_family_eq_n++];
+                memset(es, 0, sizeof(*es));
+                es->used = 1;
+                es->event_code = event_code;
+                es->app = app;
+                es->handler = enq_h;
+                es->enqueue_mode = 1;
+                es->enq_r0 = p65;
+                es->enq_r1 = p62;
+                es->owner_module_id = target->owner_module_id;
+                es->owner_generation = target->owner_generation;
+                es->request_id = rid;
+                snprintf(es->owner_module, sizeof(es->owner_module), "%s",
+                         target->owner_module[0] ? target->owner_module : "robotol.ext");
+                printf("[PROVEN_EVENT_COMPLETION_CONTRACT_FIXED] request_id=%llu object=0x%X "
+                       "offset=path_a_via_101ab owner_store=0x%X old=ui_mode_0 new=enqueue_30D24C "
+                       "source=0x101AB_path_a owner_module=robotol.ext enq_handler=0x%X "
+                       "sib=0x%X b54=0x%X evidence=OBSERVED\n",
+                       (unsigned long long)rid, p65, store, enq_h, p62, b54);
+                printf("[EVENT_FIRST_MISSING_OUTPUT_PRODUCER_FOUND] producer=0x101AB "
+                       "via_handler=0x%X note=case9_305E08_is_10133_free_not_ack "
+                       "unfinished=ER_RW+0x800+0xD0 evidence=OBSERVED\n",
+                       enq_h);
+                fflush(stdout);
+                {
+                    GwyScheduledWork w2;
+                    memset(&w2, 0, sizeof(w2));
+                    w2.source = GWY_SCHED_SRC_PLATFORM_EVENT;
+                    w2.handler_or_helper = enq_h;
+                    w2.method_or_event = event_code;
+                    w2.owner_module_id = target->owner_module_id;
+                    w2.owner_generation = target->owner_generation;
+                    w2.forced = 0;
+                    snprintf(w2.owner_module, sizeof(w2.owner_module), "%s", es->owner_module);
+                    (void)platform_scheduler_enqueue(&w2, module_r9_switch_depth());
+                }
+                }
+            }
+        }
+
         slot = &g_family_eq[g_family_eq_n++];
         memset(slot, 0, sizeof(*slot));
         slot->used = 1;
@@ -747,35 +817,45 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
 
         memset(&abi, 0, sizeof(abi));
         abi.set_r0 = 1;
-        /* Family switch ABI: subcode in R0 (sendAppEvent app), event id in R1. */
-        abi.r0 = ev->app;
         abi.set_r1 = 1;
-        abi.r1 = ev->event_code;
         abi.set_lr = 1;
         abi.lr = stop;
-        if (ev->del_r2 || product_ffp_apply_abi()) {
-            abi.set_r2 = 1;
-            abi.r2 = ev->del_r2;
-        }
-        if (ev->del_r3 || product_ffp_apply_abi()) {
-            abi.set_r3 = 1;
-            abi.r3 = ev->del_r3;
+        if (ev->enqueue_mode) {
+            /* 10165 enqueue: R0=10165 buf, R1=10162 buf (legacy V64 ABI). */
+            abi.r0 = ev->enq_r0;
+            abi.r1 = ev->enq_r1;
+            printf("[PLATFORM_FAMILY_EVENT] op=ENQUEUE_PATH_A handler=0x%X r0=0x%X r1=0x%X "
+                   "request_id=%llu evidence=OBSERVED\n",
+                   ev->handler, abi.r0, abi.r1, (unsigned long long)ev->request_id);
+            fflush(stdout);
+        } else {
+            /* Family switch ABI: subcode in R0 (sendAppEvent app), event id in R1. */
+            abi.r0 = ev->app;
+            abi.r1 = ev->event_code;
+            if (ev->del_r2 || product_ffp_apply_abi()) {
+                abi.set_r2 = 1;
+                abi.r2 = ev->del_r2;
+            }
+            if (ev->del_r3 || product_ffp_apply_abi()) {
+                abi.set_r3 = 1;
+                abi.r3 = ev->del_r3;
+            }
         }
 
         /* Round B: place recovered stack args at entry SP[0]/SP[4] (AAPCS). */
-        if (ev->del_apply_stack) {
+        if (ev->del_apply_stack && !ev->enqueue_mode) {
 #ifdef GWY_HAVE_UNICORN
             uint32_t sp = 0;
-            uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
-            if (sp >= 8u) {
+            if (guest_memory_uc_read_sp((struct uc_struct *)uc, &sp) && sp >= 8u) {
                 uint32_t sp2 = sp - 8u;
-                uc_reg_write((uc_engine *)uc, UC_ARM_REG_SP, &sp2);
-                (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2, ev->del_stack0);
-                (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2 + 4u, ev->del_stack1);
-                printf("[PLATFORM_FAMILY_EVENT] op=STACK_ARGS sp=0x%X stack0=0x%X stack1=0x%X "
-                       "evidence=OBSERVED\n",
-                       sp2, ev->del_stack0, ev->del_stack1);
-                fflush(stdout);
+                if (guest_memory_uc_write_sp((struct uc_struct *)uc, sp2)) {
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2, ev->del_stack0);
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2 + 4u, ev->del_stack1);
+                    printf("[PLATFORM_FAMILY_EVENT] op=STACK_ARGS sp=0x%X stack0=0x%X stack1=0x%X "
+                           "evidence=OBSERVED\n",
+                           sp2, ev->del_stack0, ev->del_stack1);
+                    fflush(stdout);
+                }
             }
 #endif
         }
@@ -1527,6 +1607,33 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    result.reg_handler, result.evidence ? result.evidence : "?");
         }
         fflush(stdout);
+    } else if (result.kind == GWY_PLAT_KIND_BUFFER_FILL) {
+        static int g_101ab_with_rec = 1;
+        uint8_t tmp[192];
+        uint32_t n = 0;
+        ret = result.status_ret;
+        if (uc && result.fill_buf) {
+            n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), g_101ab_with_rec);
+            if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
+                if (g_101ab_with_rec) g_101ab_with_rec = 0;
+                printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X type=%u bytes=%u "
+                       "with_rec=%d name=%s evidence=%s\n",
+                       result.fill_buf, result.fill_type, n, g_101ab_with_rec ? 0 : 1,
+                       result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+                fflush(stdout);
+            } else {
+                printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X FAILED n=%u evidence=OBSERVED\n",
+                       result.fill_buf, n);
+                fflush(stdout);
+            }
+        }
+        if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
+            printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X arg2=0x%X arg3=0x%X ret=%d "
+                   "kind=BUFFER_FILL name=%s evidence=%s\n",
+                   r0, r1, r2, r3, (int)ret, result.name ? result.name : "?",
+                   result.evidence ? result.evidence : "?");
+            fflush(stdout);
+        }
     } else if (result.kind == GWY_PLAT_KIND_TIMER_START) {
         platform_timer_start(result.timer_period_ms);
         g_armed_timer_chunk = result.timer_chunk;

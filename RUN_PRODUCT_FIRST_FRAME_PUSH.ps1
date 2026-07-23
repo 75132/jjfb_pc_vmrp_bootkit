@@ -8,7 +8,8 @@ param(
   [int]$Seconds = 50,
   [switch]$SkipBuild,
   [switch]$SkipVmrpBuild,
-  [switch]$ApplyAbi
+  [switch]$ApplyAbi,
+  [switch]$Trace305E09
 )
 
 $ErrorActionPreference = 'Stop'
@@ -42,7 +43,8 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_FAST_REAL_BMP_HANDLE', 'JJFB_E9B_MODE', 'JJFB_VISIBLE_WINDOW',
   'JJFB_E8E_DRAIN_ORDER', 'JJFB_E8D_10165_PROBE', 'JJFB_E8C_IDLE_WATCH',
   'JJFB_E8E_EVENT_PROBE', 'JJFB_HANDLER_FORENSIC', 'JJFB_PLAT_CENSUS',
-  'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE'
+  'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE',
+  'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
 if (-not $SkipBuild) {
@@ -140,6 +142,16 @@ if ($ApplyAbi -or $Mode -eq 'Validate') {
   $env:JJFB_PRODUCT_FFP_APPLY_ABI = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_FFP_APPLY_ABI -ErrorAction SilentlyContinue
+}
+
+# Event Completion Contract Closure (not P6c): Trace 0x305E09 + Path-A publish.
+# Internal phase=EventContract; user-facing mode remains Event/Resource/Validate.
+if ($Trace305E09 -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
+  $env:JJFB_PRODUCT_EVENT_CONTRACT = '1'
+  $env:JJFB_PRODUCT_TRACE_305E09 = '1'
+} else {
+  Remove-Item Env:JJFB_PRODUCT_EVENT_CONTRACT -ErrorAction SilentlyContinue
+  Remove-Item Env:JJFB_PRODUCT_TRACE_305E09 -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.

@@ -332,6 +332,19 @@ int guest_memory_uc_write_r9(struct uc_struct *uc, uint32_t r9) {
     return guest_memory_uc_write_r9_ex(uc, r9, NULL);
 }
 
+int guest_memory_uc_read_sp(struct uc_struct *uc, uint32_t *out_sp) {
+    uint32_t sp = 0;
+    if (!uc || !out_sp) return 0;
+    if (uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp) != UC_ERR_OK) return 0;
+    *out_sp = sp;
+    return 1;
+}
+
+int guest_memory_uc_write_sp(struct uc_struct *uc, uint32_t sp) {
+    if (!uc) return 0;
+    return uc_reg_write((uc_engine *)uc, UC_ARM_REG_SP, &sp) == UC_ERR_OK;
+}
+
 int guest_memory_uc_write_r9_ex(struct uc_struct *uc, uint32_t r9, const GwyR9WriteAudit *audit) {
     uint32_t old_r9 = 0;
     GwyR9WriteRecord rec;

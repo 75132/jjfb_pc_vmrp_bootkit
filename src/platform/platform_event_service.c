@@ -42,10 +42,18 @@ static uint32_t digest_bytes(const uint8_t *buf, size_t n) {
 
 static uint32_t er_digest(void *uc, uint32_t er_rw) {
     uint8_t buf[256];
+    uint32_t ui = 0;
+    uint32_t h;
     if (!uc || !er_rw) return 0;
     memset(buf, 0, sizeof(buf));
     (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw, buf, sizeof(buf));
-    return digest_bytes(buf, sizeof(buf));
+    h = digest_bytes(buf, sizeof(buf));
+    /* UI_MODE / state switch lives past the 256B head window (0x800+0xD0). */
+    if (guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + GWY_PES_UI_MODE_OFF, &ui)) {
+        h ^= ui + 0x9e3779b9u;
+        h *= 16777619u;
+    }
+    return h;
 }
 
 static int one_shot_diag(void) {
@@ -131,13 +139,17 @@ uint64_t platform_event_identity_hash(uint32_t event_code, uint32_t app, const u
 
 static uint32_t pick_context_for_request(uint32_t er_rw, const uint32_t r[8]) {
     int i, j;
-    /* Prefer a live 10165 object whose pointer appears in regs or ER_RW. */
+    /* Prefer live 10165 whose pointer appears in regs. */
     for (i = 0; i < g_ctx_n; i++) {
         if (!g_ctx[i].used || !g_ctx[i].guest_ptr || g_ctx[i].plat_code != 0x10165u) continue;
         if (r) {
             for (j = 0; j < 8; j++)
                 if (r[j] == g_ctx[i].guest_ptr) return g_ctx[i].guest_ptr;
         }
+    }
+    /* Prefer 10165 with proven owner store — no latest-object fallback. */
+    for (i = 0; i < g_ctx_n; i++) {
+        if (!g_ctx[i].used || !g_ctx[i].guest_ptr || g_ctx[i].plat_code != 0x10165u) continue;
         if (g_ctx[i].owner_store_addr) return g_ctx[i].guest_ptr;
     }
     for (i = 0; i < g_ctx_n; i++) {
@@ -148,16 +160,73 @@ static uint32_t pick_context_for_request(uint32_t er_rw, const uint32_t r[8]) {
         }
     }
     (void)er_rw;
-    /* Prefer latest 10165 object (event queue buffer). */
-    for (i = g_ctx_n - 1; i >= 0; i--) {
-        if (g_ctx[i].used && g_ctx[i].guest_ptr && g_ctx[i].plat_code == 0x10165u)
-            return g_ctx[i].guest_ptr;
-    }
-    for (i = g_ctx_n - 1; i >= 0; i--) {
-        if (g_ctx[i].used && g_ctx[i].guest_ptr)
-            return g_ctx[i].guest_ptr;
-    }
     return 0;
+}
+
+int platform_event_service_resolve_completion_objs(uint32_t *out_10165, uint32_t *out_10162,
+                                                   uint32_t *out_enq_handler,
+                                                   uint32_t *out_owner_store) {
+    int i;
+    uint32_t p65 = 0, p62 = 0, enq = 0, store = 0, store62 = 0;
+    if (out_10165) *out_10165 = 0;
+    if (out_10162) *out_10162 = 0;
+    if (out_enq_handler) *out_enq_handler = 0;
+    if (out_owner_store) *out_owner_store = 0;
+    /* Prefer owner-scoped objects (ER_RW stores). Never use the first stale alloc pair. */
+    for (i = 0; i < g_ctx_n; i++) {
+        if (!g_ctx[i].used || !g_ctx[i].guest_ptr) continue;
+        if (g_ctx[i].plat_code == 0x10165u && g_ctx[i].owner_store_addr) {
+            p65 = g_ctx[i].guest_ptr;
+            store = g_ctx[i].owner_store_addr;
+            if (g_ctx[i].handler) enq = g_ctx[i].handler;
+        }
+    }
+    for (i = 0; i < g_ctx_n; i++) {
+        if (!g_ctx[i].used || !g_ctx[i].guest_ptr) continue;
+        if (g_ctx[i].plat_code != 0x10162u) continue;
+        if (g_ctx[i].owner_store_addr) {
+            p62 = g_ctx[i].guest_ptr;
+            store62 = g_ctx[i].owner_store_addr;
+            if (!enq && g_ctx[i].handler) enq = g_ctx[i].handler;
+        }
+    }
+    /* If 10162 lacks owner_store, pick latest 10162 (second alloc wave). */
+    if (!p62) {
+        for (i = g_ctx_n - 1; i >= 0; i--) {
+            if (g_ctx[i].used && g_ctx[i].guest_ptr && g_ctx[i].plat_code == 0x10162u) {
+                p62 = g_ctx[i].guest_ptr;
+                break;
+            }
+        }
+    }
+    (void)store62;
+    if (!p65 || !enq) return 0;
+    if (!p62) p62 = p65;
+    if (out_10165) *out_10165 = p65;
+    if (out_10162) *out_10162 = p62;
+    if (out_enq_handler) *out_enq_handler = enq;
+    if (out_owner_store) *out_owner_store = store;
+    return 1;
+}
+
+uint32_t platform_event_service_read_ui_mode(void *uc, uint32_t er_rw) {
+    uint32_t ui = 0;
+    if (!uc || !er_rw) return 0;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + GWY_PES_UI_MODE_OFF, &ui);
+    return ui;
+}
+
+void platform_event_service_note_ui_mode(void *uc, uint32_t er_rw, uint64_t request_id) {
+    uint32_t ui;
+    if (!uc || !er_rw) return;
+    ui = platform_event_service_read_ui_mode(uc, er_rw);
+    if (ui != 0u) {
+        printf("[EVENT_COMPLETION_GUEST_VISIBLE] request_id=%llu ui_mode=0x%X off=0x%X "
+               "er_rw=0x%X run_id=%s evidence=OBSERVED\n",
+               (unsigned long long)request_id, ui, GWY_PES_UI_MODE_OFF, er_rw,
+               platform_event_service_run_id());
+        fflush(stdout);
+    }
 }
 
 GwyEventContextObject *platform_event_service_note_alloc(uint32_t plat_code, uint32_t size,
@@ -439,13 +508,25 @@ void platform_event_service_on_deliver_leave(void *uc, uint64_t request_id, int 
                                              uint32_t er_rw) {
     GwyPlatformEvent *ev = platform_event_service_by_id(request_id);
     uint32_t dig;
+    uint32_t ui_before = 0, ui_after = 0;
     (void)ok;
     if (!ev) return;
+    ui_before = platform_event_service_read_ui_mode(uc, er_rw);
     dig = er_digest(uc, er_rw);
+    ui_after = platform_event_service_read_ui_mode(uc, er_rw);
     ev->state_digest_after = dig;
     ev->handler_ret = ret;
     ev->delivered = 1;
-    ev->state_changed = (dig != ev->state_digest_before && dig != 0 && ev->state_digest_before != 0);
+    ev->state_changed = (dig != ev->state_digest_before && dig != 0 && ev->state_digest_before != 0) ||
+                        (ui_after != ui_before);
+    if (ui_after != 0u && (ui_after != ui_before || ev->state_changed)) {
+        platform_event_service_note_ui_mode(uc, er_rw, request_id);
+        printf("[EVENT_UNFINISHED_PREDICATE_FOUND] pc=0x30634C object=ER_RW offset=0x%X "
+               "size=4 condition=ui_mode==0 current=0x%X completed=nonzero "
+               "run_id=%s evidence=OBSERVED\n",
+               GWY_PES_UI_MODE_OFF, ui_before, platform_event_service_run_id());
+        fflush(stdout);
+    }
     if (ev->guest_context) {
         GwyEventContextObject *c = platform_event_service_ctx_by_ptr(ev->guest_context);
         if (c) {
@@ -495,16 +576,22 @@ void platform_event_service_on_deliver_leave(void *uc, uint64_t request_id, int 
 void platform_event_service_on_next_timer(void *uc, uint32_t er_rw) {
     int i;
     uint32_t dig;
+    uint32_t ui;
     if (!er_rw) return;
     dig = er_digest(uc, er_rw);
-    if (!dig) return;
+    ui = platform_event_service_read_ui_mode(uc, er_rw);
+    if (!dig && ui == 0u) return;
     for (i = 0; i < g_ev_n; i++) {
         if (!g_ev[i].delivered || g_ev[i].acknowledged) continue;
-        if (dig != g_ev[i].state_digest_before && g_ev[i].state_digest_before != 0) {
+        if ((dig != g_ev[i].state_digest_before && g_ev[i].state_digest_before != 0) || ui != 0u) {
             g_ev[i].acknowledged = 1;
             g_ev[i].state_changed = 1;
             g_ev[i].state = GWY_EVT_GUEST_ACKNOWLEDGED;
             g_state_advanced = 1;
+            platform_event_service_note_ui_mode(uc, er_rw, g_ev[i].request_id);
+            printf("[EVENT_TRANSACTION_GUEST_ACKNOWLEDGED] request_id=%llu ui_mode=0x%X "
+                   "run_id=%s evidence=OBSERVED\n",
+                   (unsigned long long)g_ev[i].request_id, ui, platform_event_service_run_id());
             printf("[ROBOTOL_STATE_DIGEST_CHANGED] request_id=%llu before=0x%08X after=0x%08X "
                    "phase=next_timer run_id=%s evidence=OBSERVED\n",
                    (unsigned long long)g_ev[i].request_id, g_ev[i].state_digest_before, dig,

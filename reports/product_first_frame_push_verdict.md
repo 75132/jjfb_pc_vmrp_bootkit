@@ -1,103 +1,108 @@
-﻿# Product First-Frame Push Verdict
+﻿# Product First-Frame Push Verdict — Event Completion Contract Closure
 
-- **run_id (Round B):** ffp_event_20260724_010820_81327
-- **run_id (Round A):** ffp_event_20260724_010631_8498
-- **mode:** Event (P6 complete — two live runs)
-- **verdict:** P6_EVENT_PROVENANCE_MAPPED_ABI_APPLIED_NO_ADVANCE
+- **run_id:** ffp_event_20260724_014705_31801
+- **mode:** Event (internal phase **EventContract**; not P6c)
+- **verdict:** EVENT_COMPLETION_CONTRACT_IDENTIFIED_PATH_A_BLOCKED
 - **runtime:** Gwy+stubs
-- **apply_abi Round B:** yes
+- **Trace305E09:** yes
+- **state_advanced:** no
 
-## Farthest natural milestone
+## Proven contract (this knife)
 
-- **farthest:** event_identity_confirmed + stack ABI delivered
-- **last_successful_transaction:** EVENT_TRANSACTION_IDENTITY_CONFIRMED / FAMILY_HANDLER_ACK_CONTRACT
-- **first_unmet_platform_contract:** case-9 callee does not consume 10165 context → Robotol state unchanged
+### A. `0x305E09` / `0x305E08` function contract — **IDENTIFIED**
 
-## P6 Round A (observe)
-
-| Finding | Result |
-|---------|--------|
-| 8 guest `sendAppEvent(0x1E209,9)` samples | yes — identical regs/stack/ctx/digest |
-| Identity class | **SAME_UNFINISHED_REQUEST** |
-| 10165 object | `0x6AD11C` size `0xE200`, handler stub `0x30D2F9` |
-| Owner store | `ER_RW+…` @ `0x2B215C` → **EVENT_CONTEXT_OWNER_CONFIRMED** |
-| Baseline delivery | `r0=9 r1=0x1E209 r2=r3=0`; stack leftovers `0x248/0x280004` |
-| State change | no |
-
-**Fork decision:** same object/token + unchanged ER_RW → guest is polling one unfinished request. One-shot is *semantically* reasonable as a diagnostic, but the missing piece is completion/ABI consumption — not “66 independent requests”.
-
-## P6 Round B (one ApplyAbi merge)
-
-Delivered:
-
-```text
-r0=9  r1=0x1E209  r2=0x6AD11C  r3=0
-stack0=0x6AD11C  stack1=0x30D2F9
-```
-
-Observed at handler prologue loads:
-
-```text
-sp+32 = 0x6AD11C   sp+36 = 0x30D2F9
-```
-
-| Gate | Status |
+| Item | Value |
 |------|--------|
-| EVENT_TRANSACTION_IDENTITY_CONFIRMED | yes |
-| EVENT_CONTEXT_OBJECT_IDENTIFIED | yes |
-| EVENT_CONTEXT_OWNER_CONFIRMED | yes |
-| FAMILY_HANDLER_ACK_CONTRACT (stack reads) | yes |
-| FAMILY_EVENT_ABI_CONFIRMED (ctx touched) | **no** — `ctx_touch=0` |
-| EVENT_CONTEXT_WRITES / LIFETIME | **no** |
-| ROBOTOL_STATE_DIGEST_CHANGED | **no** |
-| ROBOTOL_CALLBACK_SIGNATURE_CHANGED | **no** |
+| Entry | Thumb `0x305E08` (live `0x305E09`) |
+| Role | Thin **platform free wrapper** |
+| ABI | `sendAppEvent(0x10133, r0-4, 0, 0, …)` |
+| Case-9 call | `lr=0x30E1A5`, `r0=0x1E209` (event code, **not** heap) |
+| Nested plat | `0x10133` / app=`0x1E205` → status success (non-heap no-op) |
 
-## Blocker migration (do not open P6c)
+Live: `[EVENT_305E09_FUNCTION_CONTRACT_IDENTIFIED]`, `reports/product_event_305e09_entry.csv` (6+ entries).
+
+### B/C. Context role + missing producer
+
+| Classification | Result |
+|----------------|--------|
+| `EVENT_CONTEXT_NOT_AN_INPUT` | case 9 / `0x305E08` does **not** read/write 10165 |
+| `FAMILY_HANDLER_IS_NOTIFICATION_ONLY` | case 9 only frees via `0x10133` |
+| `PLATFORM_MUST_PUBLISH_COMPLETION_BEFORE_HANDLER` | Path A via `0x30D2F9→0x30D24C→0x101AB→0x2E4D6C` |
+| `EVENT_FIRST_MISSING_OUTPUT_PRODUCER_FOUND` | **`0x101AB` Path-A fill** (implemented) |
+
+Round B falsified “pass 10165 into family handler ⇒ complete”.
+
+### D. Unfinished predicate — **FOUND**
+
+| Field | Value |
+|-------|--------|
+| PC | `0x30634C` (timer load of switch subject) |
+| Object | `ER_RW` |
+| Offset | `0x800+0xD0` (UI_MODE / state) |
+| Condition | `ui_mode == 0` → state-0 arm → `sendAppEvent(0x1E209, 9)` forever |
+| Completed | nonzero (natural writer e.g. `0x2FC418` stores `0x45`) |
+| Writer kind | platform Path A (`0x101AB` + enqueue) → guest STR to UI_MODE |
+
+Artifacts: `reports/product_event_unfinished_predicate.csv`, `product_event_ack_contract.json`.
+
+### E. 10165 role
+
+- Owner store confirmed: `0x2B215C` → `0x6AD11C`
+- Sibling 10162 (owner-scoped): `0x69EF14` @ `0x2B2158`
+- Enqueue handler: `0x30D2F9`
+- Not consumed by case 9; expects platform Path-A publish into owner-scoped buffer
+
+### F. Platform fix applied (evidence-backed)
+
+1. **`0x10133`** — documented free/status (`plat_10133_free`)
+2. **`0x101AB`** — Path-A buffer fill (`GWY_PLAT_KIND_BUFFER_FILL` + `platform_101ab_fill_path_a`)
+3. **Removed latest-10165 fallback** — resolve via owner_store only
+4. **ER digest includes UI_MODE** (`0x800+0xD0`) so real state change is observable
+5. **Enqueue gated:** do **not** call `0x30D2F9` while `ER_RW+0xB54 == 0` (live fault at `0x312A78` / null list head)
+
+Ungated enqueue previously: `101AB` filled OK → then `UC_FAULT` `LDR [r4,#4]` @ `0x312A60` with `r4=0`.
+
+### G. Forward progress / Resource
+
+- Same unfinished request still reissued (`SAME_UNFINISHED_REQUEST`)
+- UI_MODE stays `0` → no `ROBOTOL_STATE_ADVANCED_AFTER_COMPLETION`
+- Auto Resource **not** entered (correct: gate not cleared)
+
+**New precise blocker (apply-run stop rule):**
 
 ```text
-Platform now supplies recovered context + stack ABI
-→ case 9 still returns 0 without reading/writing 0x6AD11C
-→ ER_RW digest stays 0x25D6A3D6
-→ guest reissues identical unfinished request
+EVENT_PATH_A_BLOCKED_NULL_LIST_HEAD
+  ER_RW+0xB54 == 0
+  flag15c == 0
+  cannot safely run 30D24C→2E4D6C→312A60
 ```
 
-Next causal target (still P6-class, before P7 resources):
-
-```text
-0x30D301 case 9 @ 0x30E1A0
-→ BL 0x305E09 (observed earlier with r0=event)
-→ what does 0x305E09 require beyond pointer presence?
-→ platform write-into 10165 object / ack field / queue slot?
-```
-
-Hypothesis retained (not proven): platform must **publish completion bytes into the 10165 object** (or a sibling 10162 object @ `0x69EF14` / store `0x2B2158`), not only invoke the family switch with the pointer.
-
-## Resource / display
-
-- resource request: no
-- framebuffer / `_DispUpEx` / first frame: no
-- HWND: correctly deferred
-
-## Gates
-
-| Gate | OK |
-|------|----|
-| SCHEDULER_NATURAL_CALLBACK forced=no | yes |
-| ROBOTOL_INIT_RETURN_ZERO | yes |
-| EVENT samples / identity | yes |
-| FAMILY DELIVER with ApplyAbi | yes |
-| ROBOTOL_STATE_ADVANCED | no |
-| FIRST_NATURAL_REFRESH | no |
+Next work (not another event ABI guess): recover who initializes B54 / `15C`, then one gated Path-A enqueue → expect UI_MODE advance → auto Resource.
 
 ## Artifacts
 
-- Runner: `RUN_PRODUCT_FIRST_FRAME_PUSH.ps1` (`Event` / `Resource` / `Validate`)
-- Service: `src/platform/platform_event_service.c`
-- Probe: `src/runtime/product_first_frame_push.c`
-- CSV: `reports/product_ffp_event_requests.csv`, `product_ffp_10165_objects.csv`, `product_ffp_guest_request_samples.csv`
-- ABI JSON: `reports/product_ffp_family_abi_manifest.json`
-- Logs: `logs/product_ffp_stdout.txt`
+| Path | Status |
+|------|--------|
+| `reports/product_event_305e09_entry.csv` | live |
+| `reports/product_event_305e09_callers.csv` | static+case9 |
+| `reports/product_event_305e09_memory.csv` | stub+live hooks |
+| `reports/product_event_305e09_call_tree.csv` | static |
+| `reports/product_event_305e09_platform_calls.csv` | static |
+| `reports/product_event_context_access_map.csv` | yes |
+| `reports/product_event_unfinished_predicate.csv` | yes |
+| `reports/product_event_ack_contract.json` | yes |
+| `reports/product_event_completion_validate.csv` | yes |
+| `out/product_event/305e09_annotated.txt` | yes |
+| `out/product_event/305e09_cfg.dot` | yes |
 
-## Discipline note
+## Runner
 
-P6 live budget used: **2/2**. Round B did not clear the strong gate (`ROBOTOL_STATE_*`). Per plan: do **not** invent P6c — next work must prove `0x305E09` / 10165 **write-ack** contract from data flow, then one more Apply if evidence warrants (or fold into Validate once state moves and auto-enter Resource).
+```powershell
+.\RUN_PRODUCT_FIRST_FRAME_PUSH.ps1 -Mode Event -Seconds 60 -SkipBuild -Trace305E09
+# sets JJFB_PRODUCT_EVENT_CONTRACT=1 (EventContract) — no P6c
+```
+
+## Discipline
+
+- No P6c, no forced UI_MODE, no fixed object addresses in product logic, no guessed r2/r3 matrix.
+- Stopped on precise subsystem blocker after contract + writer identification.

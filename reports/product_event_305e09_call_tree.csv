@@ -1,0 +1,5 @@
+pc,op,target,role
+0x305E08,entry,-,free_wrapper
+0x305E22,BL,0x304558,sendAppEvent_trampoline
+0x304558,BLX,extchunk+0x28,platform_slot
+platform,code,0x10133,free_status
