@@ -46,7 +46,9 @@
 #include "gwy_launcher/product_p4_progress.h"
 #include "gwy_launcher/product_p5_event_advance.h"
 #include "gwy_launcher/product_first_frame_push.h"
+#include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/platform_event_service.h"
+#include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -683,10 +685,29 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
             if (platform_event_service_resolve_completion_objs(&p65, &p62, &enq_h, &store) &&
                 enq_h && g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
                 /* Path A list insert @0x312A60 requires a non-null queue head (ER_RW+0xB54).
-                 * Invoking 30D24C while B54==0 → UC_FAULT @ LDR [r4,#4] (ENTRY_ARGUMENT). */
+                 * Invoking 30D24C while B54==0 → UC_FAULT @ LDR [r4,#4] (ENTRY_ARGUMENT).
+                 * Case E: if guest never ran 0x30CBBC→0x2FE82C→0x312AA4, publish the proven
+                 * 8-byte list control via PlatformEventQueue into the live B54 slot. */
                 if (uc && erw) {
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB54u, &b54);
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0x15Cu, &flag15c);
+                    product_eqb_note_er_rw(erw, "path_a");
+                    product_eqb_note_owner_store(0x10165u, p65, store);
+                    product_eqb_note_owner_store(0x10162u, p62, 0);
+                    /* Round B (Validate / ApplyAbi): publish proven list control if missing.
+                     * Round A TraceQueueBootstrap alone remains observe-only. */
+                    if (!b54 && (product_ffp_apply_abi() ||
+                                 product_ffp_phase() == GWY_FFP_PHASE_VALIDATE)) {
+                        if (platform_event_queue_ensure_list_head(uc, erw, target->owner_module_id,
+                                                                 target->owner_generation)) {
+                            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB54u,
+                                                           &b54);
+                            printf("[EVENT_PATH_A_LIST_HEAD_RECOVERED] er_rw=0x%X b54=0x%X "
+                                   "via=platform_event_queue evidence=OBSERVED\n",
+                                   erw, b54);
+                            fflush(stdout);
+                        }
+                    }
                 }
                 if (!b54) {
                     printf("[EVENT_PATH_A_BLOCKED_NULL_LIST_HEAD] er_rw=0x%X off=0xB54 b54=0 "
@@ -694,6 +715,7 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
                            "note=defer_30D24C_until_B54_ready evidence=OBSERVED\n",
                            erw, flag15c, enq_h, p65, p62);
                     fflush(stdout);
+                    product_eqb_on_path_a_blocked(uc, erw, b54, store, p65, p62);
                 } else if (g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
                 GwyFamilyEvent *es = &g_family_eq[g_family_eq_n++];
                 memset(es, 0, sizeof(*es));
@@ -714,6 +736,10 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
                        "source=0x101AB_path_a owner_module=robotol.ext enq_handler=0x%X "
                        "sib=0x%X b54=0x%X evidence=OBSERVED\n",
                        (unsigned long long)rid, p65, store, enq_h, p62, b54);
+                printf("[EVENT_PATH_A_ENQUEUE_BEGIN] enq_handler=0x%X ctx=0x%X sib=0x%X b54=0x%X "
+                       "evidence=OBSERVED\n",
+                       enq_h, p65, p62, b54);
+                printf("[EVENT_PATH_A_ENQUEUE_OK] note=list_head_ready evidence=OBSERVED\n");
                 printf("[EVENT_FIRST_MISSING_OUTPUT_PRODUCER_FOUND] producer=0x101AB "
                        "via_handler=0x%X note=case9_305E08_is_10133_free_not_ack "
                        "unfinished=ER_RW+0x800+0xD0 evidence=OBSERVED\n",
@@ -1599,6 +1625,17 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         if (product_ffp_enabled() && ret) {
             product_ffp_on_alloc(uc, r0, result.alloc_size, ret, result.reg_handler, r9,
                                 0 /* owner filled via registry path above */);
+        }
+        if (product_eqb_enabled() && ret && (r0 == 0x10162u || r0 == 0x10165u)) {
+            uint32_t rr[8];
+            memset(rr, 0, sizeof(rr));
+            rr[0] = r0;
+            rr[1] = r1;
+            rr[2] = r2;
+            rr[3] = r3;
+            product_eqb_on_alloc(uc, r0, result.alloc_size, ret, result.reg_handler, r9, r9, rr, 0, 0,
+                                 caller_pc, lr);
+            product_eqb_on_platform(r0, r1, r2);
         }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X size=0x%X ret=0x%X kind=ALLOC name=%s "

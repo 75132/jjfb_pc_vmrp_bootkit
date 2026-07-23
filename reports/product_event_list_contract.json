@@ -1,0 +1,28 @@
+{
+  "base_source": "ER_RW+B54",
+  "role": "list_control_object",
+  "fields": [
+    {"offset": "0x0", "size": 4, "access": "read|write", "role": "head_pointer", "evidence_pc": "0x312A7E/0x312A86"},
+    {"offset": "0x4", "size": 4, "access": "read|write", "role": "count_or_tail_aux", "evidence_pc": "0x312A78/0x312A82"}
+  ],
+  "node": {
+    "size": 12,
+    "fields": [
+      {"offset": "0x0", "role": "prev", "evidence_pc": "0x312A74"},
+      {"offset": "0x4", "role": "next", "evidence_pc": "0x312A76"},
+      {"offset": "0x8", "role": "item", "evidence_pc": "0x312A72"}
+    ]
+  },
+  "initializer": {
+    "function": "0x312AA4",
+    "caller": "0x2FE82C",
+    "trigger": "0x30CBBC via family dispatcher case app=2 @ 0x30E15E"
+  },
+  "verdicts": [
+    "EVENT_LIST_OBJECT_ROLE_IDENTIFIED",
+    "EVENT_LIST_INITIALIZER_IDENTIFIED",
+    "EVENT_LIST_SENTINEL_CONTRACT_IDENTIFIED",
+    "EVENT_LIST_FAULT_IS_MISSING_INITIALIZATION"
+  ],
+  "run_id": "ffp_validate_20260724_024141_66224"
+}

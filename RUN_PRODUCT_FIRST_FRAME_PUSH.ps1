@@ -9,7 +9,8 @@ param(
   [switch]$SkipBuild,
   [switch]$SkipVmrpBuild,
   [switch]$ApplyAbi,
-  [switch]$Trace305E09
+  [switch]$Trace305E09,
+  [switch]$TraceQueueBootstrap
 )
 
 $ErrorActionPreference = 'Stop'
@@ -44,7 +45,8 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_E8E_DRAIN_ORDER', 'JJFB_E8D_10165_PROBE', 'JJFB_E8C_IDLE_WATCH',
   'JJFB_E8E_EVENT_PROBE', 'JJFB_HANDLER_FORENSIC', 'JJFB_PLAT_CENSUS',
   'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE',
-  'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT'
+  'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT',
+  'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
 if (-not $SkipBuild) {
@@ -152,6 +154,13 @@ if ($Trace305E09 -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
 } else {
   Remove-Item Env:JJFB_PRODUCT_EVENT_CONTRACT -ErrorAction SilentlyContinue
   Remove-Item Env:JJFB_PRODUCT_TRACE_305E09 -ErrorAction SilentlyContinue
+}
+
+# Event Queue Bootstrap Closure: normalize B54/owner-store + write history.
+if ($TraceQueueBootstrap -or $Mode -eq 'Validate') {
+  $env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP = '1'
+} else {
+  Remove-Item Env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.
@@ -333,6 +342,10 @@ $forbidden = [ordered]@{
 }
 $forbidHit = ($forbidden.GetEnumerator() | Where-Object { $_.Value }).Name
 
+$listHeadOk = [bool]($all -match '\[EVENT_LIST_HEAD_INITIALIZED\]')
+$pathAOk = [bool]($all -match '\[EVENT_PATH_A_ENQUEUE_OK\]')
+$pathARecovered = [bool]($all -match '\[EVENT_PATH_A_LIST_HEAD_RECOVERED\]')
+
 $farthest = 'timer_stable_poll'
 if ($captureHit -and $fbHit -and $hwndHit) { $farthest = 'first_natural_frame' }
 elseif ($dispUp -or $refreshHit) { $farthest = 'disp_up_ex' }
@@ -340,6 +353,8 @@ elseif ($fbHit -or $dispPred) { $farthest = 'framebuffer_mutation' }
 elseif ($resRead) { $farthest = 'resource_bytes_consumed' }
 elseif ($resReq) { $farthest = 'resource_request' }
 elseif ($stateAdv -or $sigChanged) { $farthest = 'robotol_state_changed' }
+elseif ($pathAOk) { $farthest = 'event_path_a_enqueue_ok' }
+elseif ($listHeadOk) { $farthest = 'event_list_head_initialized' }
 elseif ($abiOk) { $farthest = 'family_abi_confirmed' }
 elseif ($idConfirmed) { $farthest = 'event_identity_confirmed' }
 elseif ($deliverN -ge 1) { $farthest = 'family_handler_delivered' }
@@ -348,6 +363,8 @@ elseif ($ctxIdent) { $farthest = '10165_object_identified' }
 
 $lastOk = 'none'
 if ($stateAdv) { $lastOk = 'ROBOTOL_STATE_DIGEST_CHANGED' }
+elseif ($pathAOk) { $lastOk = 'EVENT_PATH_A_ENQUEUE_OK' }
+elseif ($listHeadOk) { $lastOk = 'EVENT_LIST_HEAD_INITIALIZED' }
 elseif ($outWrites) { $lastOk = 'FAMILY_HANDLER_OUTPUT_WRITES_OBSERVED' }
 elseif ($idConfirmed) { $lastOk = 'EVENT_TRANSACTION_IDENTITY_CONFIRMED' }
 elseif ($ctxOwner) { $lastOk = 'EVENT_CONTEXT_OWNER_CONFIRMED' }
@@ -359,13 +376,21 @@ $firstGap = 'unknown'
 if (-not $ctxIdent) { $firstGap = '10165 context object not identified' }
 elseif (-not $idConfirmed) { $firstGap = 'request identity not classified across samples' }
 elseif (-not $abiOk) { $firstGap = 'family handler ABI / context not proven in delivery' }
+elseif ($pathARecovered -and $pathAOk -and -not $stateAdv) {
+  $firstGap = 'Path A enqueued after B54 recover; new blocker DSM/cfunction fault @0x94E40 (UI_MODE still 0)'
+}
 elseif (-not $stateAdv) { $firstGap = 'Robotol state unchanged after delivery' }
 elseif (-not $resReq) { $firstGap = 'no natural resource request after state change' }
 elseif (-not $refreshHit) { $firstGap = 'no guest _DispUpEx / framebuffer present' }
 else { $firstGap = 'none' }
 
 $verdict = 'INCOMPLETE'
-if ($forbidHit -or $faultHit) {
+if ($forbidHit) {
+  $verdict = 'FORBIDDEN_OR_FAULT'
+} elseif ($pathARecovered -and $pathAOk -and $faultHit -and -not $stateAdv) {
+  # Plan Round-B stop: one proven fix exposed a new exact platform subsystem blocker.
+  $verdict = 'EVENT_QUEUE_BOOTSTRAP_FIXED_NEW_BLOCKER'
+} elseif ($faultHit) {
   $verdict = 'FORBIDDEN_OR_FAULT'
 } elseif ($Mode -eq 'Event') {
   if ($stateAdv -or $sigChanged) {
@@ -429,6 +454,8 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 - **FAMILY DELIVER:** $deliverN
 - **SUPPRESS:** $suppressN
 - **identity_class:** $idClass
+- **EVENT_LIST_HEAD_INITIALIZED:** $(if ($listHeadOk) { 'yes' } else { 'no' })
+- **EVENT_PATH_A_ENQUEUE_OK:** $(if ($pathAOk) { 'yes' } else { 'no' })
 - **EVENT_TRANSACTION_IDENTITY_CONFIRMED:** $(if ($idConfirmed) { 'yes' } else { 'no' })
 - **EVENT_CONTEXT_OBJECT_IDENTIFIED:** $(if ($ctxIdent) { 'yes' } else { 'no' })
 - **EVENT_CONTEXT_OWNER_CONFIRMED:** $(if ($ctxOwner) { 'yes' } else { 'no' })

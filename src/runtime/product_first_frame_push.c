@@ -1,4 +1,5 @@
 #include "gwy_launcher/product_first_frame_push.h"
+#include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -156,6 +157,7 @@ void product_ffp_set_run_id(const char *run_id) {
     }
     snprintf(g_run_id, sizeof(g_run_id), "%s", run_id);
     platform_event_service_set_run_id(run_id);
+    product_eqb_set_run_id(run_id);
 }
 
 const char *product_ffp_run_id(void) { return g_run_id[0] ? g_run_id : "unknown"; }
@@ -178,6 +180,7 @@ void product_ffp_reset(void) {
     }
 #endif
     platform_event_service_reset();
+    product_eqb_reset();
     memset(g_samples, 0, sizeof(g_samples));
     memset(g_mem, 0, sizeof(g_mem));
     g_sample_n = 0;
@@ -202,7 +205,7 @@ void product_ffp_reset(void) {
     g_phase = GWY_FFP_PHASE_NONE;
 }
 
-static void scan_erw_for_ctx(void *uc, uint32_t er_rw, uint32_t guest_ptr) {
+static void scan_erw_for_ctx(void *uc, uint32_t er_rw, uint32_t guest_ptr, uint32_t plat_code) {
     uint32_t off;
     if (!uc || !er_rw || !guest_ptr) return;
     /* Scan first 4KB of ER_RW for a stored pointer to the context object. */
@@ -211,6 +214,7 @@ static void scan_erw_for_ctx(void *uc, uint32_t er_rw, uint32_t guest_ptr) {
         if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + off, &v)) continue;
         if (v == guest_ptr) {
             platform_event_service_note_ctx_owner_store(guest_ptr, er_rw + off);
+            product_eqb_on_alloc_stored(uc, plat_code, guest_ptr, er_rw + off, er_rw, er_rw);
             return;
         }
     }
@@ -224,7 +228,7 @@ void product_ffp_on_alloc(void *uc, uint32_t plat_code, uint32_t size, uint32_t 
     c = platform_event_service_note_alloc(plat_code, size, guest_ptr, handler, owner_module_id);
     if (!c) return;
     platform_event_service_refresh_ctx_digest(uc, c);
-    if (er_rw) scan_erw_for_ctx(uc, er_rw, guest_ptr);
+    if (er_rw) scan_erw_for_ctx(uc, er_rw, guest_ptr, plat_code);
     /* Delayed owner scan: guest may STR the return value after we return. */
 }
 
@@ -242,7 +246,7 @@ void product_ffp_on_guest_sendappevent(void *uc, uint32_t code, uint32_t app, co
         for (i = 0; i < platform_event_service_ctx_count(); i++) {
             GwyEventContextObject *c = platform_event_service_ctx_at(i);
             if (!c || c->owner_store_addr) continue;
-            scan_erw_for_ctx(uc, er_rw, c->guest_ptr);
+            scan_erw_for_ctx(uc, er_rw, c->guest_ptr, c->plat_code);
         }
     }
 
@@ -317,6 +321,28 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
 
     product_ffp_on_guest_sendappevent(uc, event_code, app, r, stack0, stack1, caller_pc, caller_lr,
                                       er_rw);
+
+    if (product_eqb_enabled()) {
+        product_eqb_bind_uc(uc);
+        product_eqb_note_er_rw(er_rw, "family");
+        if (er_rw) {
+            product_eqb_arm_write_hooks(uc, er_rw);
+            product_eqb_arm_code_hooks(uc);
+            product_eqb_phase(uc, GWY_EQB_EXT_INIT_ENTER, er_rw, r9, 0, 0, 0, owner_module_id,
+                              owner_generation, 0);
+        }
+        if (event_code == 0x1E209u && app == 9u) {
+            static int once_1e209;
+            if (!once_1e209) {
+                once_1e209 = 1;
+                product_eqb_phase(uc, GWY_EQB_FIRST_1E209_REQUEST, er_rw, r9, 0, 0, 0,
+                                  owner_module_id, owner_generation, 0);
+                printf("[EVENT_QUEUE_CONTEXT_READY] er_rw=0x%X r9=0x%X evidence=OBSERVED\n", er_rw,
+                       r9);
+                fflush(stdout);
+            }
+        }
+    }
 
     accept = platform_event_service_on_guest_request(
         uc, event_code, app, family, handler, secondary_handler, caller_pc, caller_lr, r, r9,
@@ -582,7 +608,12 @@ void product_ffp_on_next_timer(void *uc, uint32_t er_rw) {
 }
 
 void product_ffp_note_resource_open(const char *path) {
+    GwyFfpPhase ph = product_ffp_phase();
     if (!product_ffp_enabled()) return;
+    /* Only emit after Event→Resource transition (or Resource/Validate modes). */
+    if (ph != GWY_FFP_PHASE_RESOURCE && ph != GWY_FFP_PHASE_VALIDATE &&
+        !platform_event_service_state_advanced())
+        return;
     g_resource_open = 1;
     printf("[FIRST_NATURAL_VFS_OPEN] path=%s run_id=%s evidence=OBSERVED\n", path ? path : "?",
            product_ffp_run_id());
@@ -592,7 +623,11 @@ void product_ffp_note_resource_open(const char *path) {
 }
 
 void product_ffp_note_resource_read(uint32_t bytes) {
+    GwyFfpPhase ph = product_ffp_phase();
     if (!product_ffp_enabled() || !bytes) return;
+    if (ph != GWY_FFP_PHASE_RESOURCE && ph != GWY_FFP_PHASE_VALIDATE &&
+        !platform_event_service_state_advanced())
+        return;
     g_resource_read = 1;
     printf("[FIRST_NATURAL_RESOURCE_READ] bytes=%u run_id=%s evidence=OBSERVED\n", bytes,
            product_ffp_run_id());
@@ -811,6 +846,7 @@ void product_ffp_finalize(void) {
     if (g_finalized || !product_ffp_enabled()) return;
     g_finalized = 1;
     platform_event_service_finalize();
+    product_eqb_finalize();
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();

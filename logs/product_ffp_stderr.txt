@@ -1,5 +1,5 @@
-[VM_FILE_BIND] runtime=1 svc=05b211a8
-[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_ffp_event_20260724_014705_31801
+[VM_FILE_BIND] runtime=1 svc=058f11a8
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_ffp_validate_20260724_024141_66224
 [JJFB_VFS] gwy_vm_file bound=1
 [GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
 [VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1

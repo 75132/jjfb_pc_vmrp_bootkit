@@ -10,6 +10,9 @@
 /* Strong symbol from launcher_core (gwy_ext_obs.c); weak in plain vmrp. */
 void gwy_ext_obs_file_open(const char *guest_path, int ok);
 void gwy_ext_obs_file_open_ex(const char *guest_path, const char *host_path, int ok);
+void product_ffp_note_resource_open(const char *path);
+void product_ffp_note_resource_read(uint32_t bytes);
+void product_p4_note_vfs(const char *op, const char *path, int ok);
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -513,6 +516,10 @@ void guest_vfs_trace_open(const VfsResolution *res, int ok) {
            res->host_path, ok, vfs_backend_name(res->backend), res->rule);
     guest = res->guest_canonical[0] ? res->guest_canonical : res->guest_normalized;
     gwy_ext_obs_file_open_ex(guest, res->host_path, ok);
+    if (ok) {
+        product_p4_note_vfs("vfs_open", guest, 1);
+        product_ffp_note_resource_open(guest);
+    }
     if (e10a_shell_trace_enabled()) {
         const char *lp = getenv("JJFB_LAUNCH_PATH");
         if (lp && (strstr(lp, "shell") || strstr(lp, "gwy_native"))) {
@@ -653,6 +660,7 @@ LauncherStatus guest_vfs_read(GuestVfs *vfs,
     }
     n = fread(buf, 1, len, f->fp);
     if (out_read) *out_read = n;
+    if (n > 0) product_ffp_note_resource_read((uint32_t)n);
     return L_OK;
 }
 

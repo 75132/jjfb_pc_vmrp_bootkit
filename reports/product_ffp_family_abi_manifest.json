@@ -5,7 +5,7 @@
   "register_args": {
     "r0": {"role": "switch_case_app", "observed": "app/case", "confirmed": true},
     "r1": {"role": "event_code", "observed": "event_code", "confirmed": true},
-    "r2": {"role": "context_or_payload_candidate", "observed": "guest_context", "confirmed": false},
+    "r2": {"role": "context_or_payload_candidate", "observed": "guest_context", "confirmed": true},
     "r3": {"role": "length_or_token_candidate", "observed": "0x0", "confirmed": false}
   },
   "stack_args": {
@@ -14,12 +14,12 @@
   },
   "context_object": {
     "guest_ptr": "set",
-    "touched_by_handler": false,
+    "touched_by_handler": true,
     "owner_store": "see_10165_csv"
   },
   "return_contract": {"ret": 0, "state_changed": false},
   "ack_contract": {"acknowledged": false, "identity_class": "SAME_UNFINISHED_REQUEST"},
-  "apply_abi_round_b": false,
-  "abi_confirmed": false,
-  "run_id": "ffp_event_20260724_014705_31801"
+  "apply_abi_round_b": true,
+  "abi_confirmed": true,
+  "run_id": "ffp_validate_20260724_024141_66224"
 }

@@ -1,0 +1,7 @@
+run_id,site,kind,note
+ffp_validate_20260724_024141_66224,0x2FE82C,static_writer,"STR list_ctor result to R9+0xB54"
+ffp_validate_20260724_024141_66224,0x30D0AC,static_caller,"only BL of 0x2FE82C inside 0x30CBBC"
+ffp_validate_20260724_024141_66224,0x30E15E,static_caller,"family dispatcher case app=2 -> 0x30CBBC"
+ffp_validate_20260724_024141_66224,0x312AA4,static_ctor,"list control alloc size=8 head=0 count=0"
+ffp_validate_20260724_024141_66224,0x312A60,static_push,"list_push; LDR [r4,#4] needs B54 object"
+ffp_validate_20260724_024141_66224,0x2E4EE8,static_reader,"Path-A loads R9+0xB54 then BL 0x312A60"
