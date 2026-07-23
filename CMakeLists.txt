@@ -79,9 +79,11 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_scheduler.c
     src/platform/platform_timer_cadence.c
     src/platform/platform_call_census.c
+    src/platform/platform_event_service.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c
+    src/runtime/product_first_frame_push.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES
@@ -379,6 +381,10 @@ add_test(NAME product_p4_natural_progress COMMAND test_product_p4_natural_progre
 add_executable(test_product_p5_event_advance tests/unit/test_product_p5_event_advance.c)
 gwy_link_product_runtime(test_product_p5_event_advance)
 add_test(NAME product_p5_event_advance COMMAND test_product_p5_event_advance)
+
+add_executable(test_platform_event_service tests/unit/test_platform_event_service.c)
+gwy_link_product_runtime(test_platform_event_service)
+add_test(NAME platform_event_service COMMAND test_platform_event_service)
 
 add_executable(test_vm_runtime tests/unit/test_vm_runtime.c)
 gwy_link_product_runtime(test_vm_runtime)

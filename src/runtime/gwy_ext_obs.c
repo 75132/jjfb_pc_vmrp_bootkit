@@ -45,6 +45,8 @@
 #include "gwy_launcher/product_callback_trace.h"
 #include "gwy_launcher/product_p4_progress.h"
 #include "gwy_launcher/product_p5_event_advance.h"
+#include "gwy_launcher/product_first_frame_push.h"
+#include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -115,6 +117,11 @@ typedef struct GwyFamilyEvent {
     uint32_t event_code;
     uint32_t app;
     uint32_t handler;
+    uint32_t del_r2;
+    uint32_t del_r3;
+    uint32_t del_stack0;
+    uint32_t del_stack1;
+    int del_apply_stack;
     uint64_t owner_module_id;
     uint64_t owner_generation;
     uint64_t request_id;
@@ -184,10 +191,12 @@ void gwy_ext_obs_bind_uc(void *uc) {
     product_callback_trace_reset();
     product_p4_reset();
     product_p5_reset();
+    product_ffp_reset();
     if (getenv("GWY_PRODUCT_RUN_ID") && getenv("GWY_PRODUCT_RUN_ID")[0]) {
         product_callback_trace_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
         product_p4_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
         product_p5_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
+        product_ffp_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
         platform_timer_cadence_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
         platform_scheduler_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
         platform_handler_registry_set_run_id(getenv("GWY_PRODUCT_RUN_ID"));
@@ -603,7 +612,7 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
         if (g_family_eq[i].used && g_family_eq[i].event_code == event_code &&
             g_family_eq[i].app == app && g_family_eq[i].handler == target->handler) {
             /* Still pending in host queue — guest reissued before delivery. */
-            if (product_p5_enabled()) {
+            if (product_p5_enabled() || product_ffp_enabled()) {
                 printf("[PLATFORM_FAMILY_EVENT] op=ALREADY_QUEUED event=0x%X app=0x%X "
                        "note=guest_reissue_while_pending evidence=OBSERVED\n",
                        event_code, app);
@@ -613,31 +622,70 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
         }
     }
 
-    if (product_p5_enabled()) {
+    {
         uint32_t erw = r9;
-        if (!product_p5_on_guest_request(uc, event_code, app, arg2, arg3, arg4, lr ? lr : pc, lr, r,
-                                         r9, erw, target->owner_module_id, target->owner_generation,
-                                         fam ? fam->handler : 0, enq ? enq->handler : 0)) {
-            printf("[PLATFORM_FAMILY_EVENT] op=SUPPRESS event=0x%X app=0x%X note=one_shot_or_dup "
-                   "evidence=OBSERVED\n",
-                   event_code, app);
-            fflush(stdout);
-            return 0;
+        uint32_t sp0 = 0, sp1 = 0;
+        uint64_t rid = 0;
+#ifdef GWY_HAVE_UNICORN
+        if (uc) {
+            uint32_t sp = 0;
+            uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+            if (sp) {
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp, &sp0);
+                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 4u, &sp1);
+                if (!arg4) arg4 = sp0;
+            }
         }
-    }
+#endif
+        /* P6+: PlatformEventService owns identity. P5 one-shot is diagnostic-only. */
+        if (product_ffp_enabled()) {
+            if (!product_ffp_on_family_request(uc, event_code, app, fam ? fam->family : 0,
+                                              fam ? fam->handler : 0, enq ? enq->handler : 0,
+                                              lr ? lr : pc, lr, r, r9, sp0, sp1, erw,
+                                              target->owner_module_id, target->owner_generation,
+                                              &rid)) {
+                printf("[PLATFORM_FAMILY_EVENT] op=SUPPRESS event=0x%X app=0x%X note=ffp_identity "
+                       "evidence=OBSERVED\n",
+                       event_code, app);
+                fflush(stdout);
+                return 0;
+            }
+        } else if (product_p5_enabled()) {
+            if (!product_p5_on_guest_request(uc, event_code, app, arg2, arg3, arg4, lr ? lr : pc, lr,
+                                             r, r9, erw, target->owner_module_id,
+                                             target->owner_generation, fam ? fam->handler : 0,
+                                             enq ? enq->handler : 0)) {
+                printf("[PLATFORM_FAMILY_EVENT] op=SUPPRESS event=0x%X app=0x%X note=one_shot_or_dup "
+                       "evidence=OBSERVED\n",
+                       event_code, app);
+                fflush(stdout);
+                return 0;
+            }
+            rid = product_p5_pending_request_id(event_code, app);
+        }
 
-    if (g_family_eq_n >= GWY_P4_FAMILY_EVENT_Q) return 0;
-    slot = &g_family_eq[g_family_eq_n++];
-    memset(slot, 0, sizeof(*slot));
-    slot->used = 1;
-    slot->event_code = event_code;
-    slot->app = app;
-    slot->handler = target->handler;
-    slot->owner_module_id = target->owner_module_id;
-    slot->owner_generation = target->owner_generation;
-    slot->request_id = product_p5_enabled() ? product_p5_pending_request_id(event_code, app) : 0;
-    snprintf(slot->owner_module, sizeof(slot->owner_module), "%s",
-             target->owner_module[0] ? target->owner_module : "robotol.ext");
+        if (g_family_eq_n >= GWY_P4_FAMILY_EVENT_Q) return 0;
+        slot = &g_family_eq[g_family_eq_n++];
+        memset(slot, 0, sizeof(*slot));
+        slot->used = 1;
+        slot->event_code = event_code;
+        slot->app = app;
+        slot->handler = target->handler;
+        slot->owner_module_id = target->owner_module_id;
+        slot->owner_generation = target->owner_generation;
+        slot->request_id = rid;
+        if (product_ffp_enabled() && rid) {
+            GwyEventDeliveryAbi dabi;
+            product_ffp_prepare_delivery_abi(rid, &dabi);
+            slot->del_r2 = dabi.r2;
+            slot->del_r3 = dabi.r3;
+            slot->del_stack0 = dabi.stack0;
+            slot->del_stack1 = dabi.stack1;
+            slot->del_apply_stack = dabi.have_stack && product_ffp_apply_abi();
+        }
+        snprintf(slot->owner_module, sizeof(slot->owner_module), "%s",
+                 target->owner_module[0] ? target->owner_module : "robotol.ext");
+    }
 
     {
         GwyScheduledWork w;
@@ -705,22 +753,63 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         abi.r1 = ev->event_code;
         abi.set_lr = 1;
         abi.lr = stop;
+        if (ev->del_r2 || product_ffp_apply_abi()) {
+            abi.set_r2 = 1;
+            abi.r2 = ev->del_r2;
+        }
+        if (ev->del_r3 || product_ffp_apply_abi()) {
+            abi.set_r3 = 1;
+            abi.r3 = ev->del_r3;
+        }
+
+        /* Round B: place recovered stack args at entry SP[0]/SP[4] (AAPCS). */
+        if (ev->del_apply_stack) {
+#ifdef GWY_HAVE_UNICORN
+            uint32_t sp = 0;
+            uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+            if (sp >= 8u) {
+                uint32_t sp2 = sp - 8u;
+                uc_reg_write((uc_engine *)uc, UC_ARM_REG_SP, &sp2);
+                (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2, ev->del_stack0);
+                (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp2 + 4u, ev->del_stack1);
+                printf("[PLATFORM_FAMILY_EVENT] op=STACK_ARGS sp=0x%X stack0=0x%X stack1=0x%X "
+                       "evidence=OBSERVED\n",
+                       sp2, ev->del_stack0, ev->del_stack1);
+                fflush(stdout);
+            }
+#endif
+        }
 
         printf("[PLATFORM_FAMILY_EVENT] op=DELIVER event=0x%X app=0x%X handler=0x%X r9=0x%X "
-               "request_id=%llu evidence=OBSERVED\n",
-               ev->event_code, ev->app, ev->handler, r9_run,
+               "r2=0x%X r3=0x%X request_id=%llu evidence=OBSERVED\n",
+               ev->event_code, ev->app, ev->handler, r9_run, abi.r2, abi.r3,
                (unsigned long long)ev->request_id);
         fflush(stdout);
 
-        if (product_p5_enabled())
-            product_p5_on_handler_enter(uc, ev->request_id, ev->handler, abi.r0, abi.r1, 0, 0,
-                                        r9_run);
+        if (product_ffp_enabled()) {
+            GwyEventDeliveryAbi dabi;
+            memset(&dabi, 0, sizeof(dabi));
+            dabi.r0 = abi.r0;
+            dabi.r1 = abi.r1;
+            dabi.r2 = abi.r2;
+            dabi.r3 = abi.r3;
+            dabi.stack0 = ev->del_stack0;
+            dabi.stack1 = ev->del_stack1;
+            dabi.have_stack = ev->del_apply_stack;
+            product_ffp_on_handler_enter(uc, ev->request_id, ev->handler, &dabi);
+        } else if (product_p5_enabled()) {
+            product_p5_on_handler_enter(uc, ev->request_id, ev->handler, abi.r0, abi.r1, abi.r2,
+                                        abi.r3, r9_run);
+        }
 
         ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, ev->handler, stop,
                                           GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 
-        if (product_p5_enabled()) {
+        if (product_ffp_enabled()) {
+            product_ffp_on_handler_leave(uc, ev->request_id, ok, (int32_t)out.r0_after, r9_run);
+            /* Defer FFP finalize to lifecycle cadence so Round A can collect ≥8 samples. */
+        } else if (product_p5_enabled()) {
             product_p5_on_handler_leave(uc, ev->request_id, ok, (int32_t)out.r0_after, r9_run);
             /* Flush after ≥2 deliveries so Round A sees guest reissue before kill. */
             if (product_p5_txn_by_id(ev->request_id) &&
@@ -771,7 +860,19 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     g_lifecycle_pending = 0;
 
     /* Capture post-completion digest on subsequent timer ticks (before drain). */
-    if (product_p5_enabled() && g_lifecycle_ticks > 0u) {
+    if (product_ffp_enabled() && g_lifecycle_ticks > 0u) {
+        uint32_t erw = 0;
+        ModuleRegistry *reg0 = gwy_ext_loader_bound_registry();
+        const GwyLoadedModule *own0 =
+            reg0 ? module_registry_find_by_code_addr(
+                       reg0, platform_handler_registry_get(0x10140u) & ~1u)
+                 : NULL;
+        if (own0 && own0->data.start_of_er_rw)
+            erw = own0->data.start_of_er_rw;
+        else
+            (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &erw);
+        product_ffp_on_next_timer(uc, erw);
+    } else if (product_p5_enabled() && g_lifecycle_ticks > 0u) {
         uint32_t erw = 0;
         ModuleRegistry *reg0 = gwy_ext_loader_bound_registry();
         const GwyLoadedModule *own0 =
@@ -1005,6 +1106,8 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     robotol_flag_writer_trace_on_lifecycle(uc, g_lifecycle_ticks);
     /* Family events posted during this 10140 tick become deliverable now. */
     gwy_ext_obs_drain_family_events(uc);
+    if (product_ffp_enabled() && g_lifecycle_ticks >= 2u && (g_lifecycle_ticks % 4u) == 0u)
+        product_ffp_finalize();
     if (product_p5_enabled() && g_lifecycle_ticks >= 4u && (g_lifecycle_ticks % 8u) == 0u)
         product_p5_finalize();
     if (product_p4_enabled() && product_p4_callback_count() >= 8u &&
@@ -1413,6 +1516,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                "evidence=%s\n",
                r0, result.alloc_size, r2, ret, (unsigned)result.alloc_u16_at0,
                result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+        if (product_ffp_enabled() && ret) {
+            product_ffp_on_alloc(uc, r0, result.alloc_size, ret, result.reg_handler, r9,
+                                0 /* owner filled via registry path above */);
+        }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X size=0x%X ret=0x%X kind=ALLOC name=%s "
                    "handler=0x%X evidence=%s\n",
