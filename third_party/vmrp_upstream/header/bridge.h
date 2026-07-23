@@ -43,6 +43,8 @@ extern void guiDrawBitmapSpriteKey(uint16_t *bmp, int32_t x, int32_t y, int32_t 
 extern void guiPumpEvents(void);
 /* E9C: HWND capture + responsive hold after multi-tile contactsheet. */
 extern void guiVisibleWindowFinalize(void);
+/* Product P5: reveal HWND only after first nonempty guest _DispUpEx. */
+extern void guiProductShowWindowIfReady(int framebuffer_nonempty);
 extern int32_t timerStart(uint16_t t);
 extern int32_t timerStop();
 extern int32_t editCreate(const char *title, const char *text, int32_t type, int32_t max_size);

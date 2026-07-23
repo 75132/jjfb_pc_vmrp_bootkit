@@ -1135,7 +1135,9 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
     fflush(stdout);
 
     gwy_ext_obs_note_product_framebuffer("_DispUpEx", sha_hex, (int32_t)x, (int32_t)y, (int32_t)w,
-                                         (int32_t)h, nbytes, nonempty, 1, captured);
+                                         (int32_t)h, nbytes, nonempty, nonempty ? 1 : 0, captured);
+    if (nonempty)
+        guiProductShowWindowIfReady(1);
     if (nonempty)
         printf("[JJFB_FB_STATS] black=%u white=%u other=%u evidence=OBSERVED\n", black, white,
                other);

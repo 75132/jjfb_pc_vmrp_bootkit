@@ -36,6 +36,8 @@
 
 static SDL_TimerID timeId = 0;
 static SDL_Window *window;
+static int g_hwnd_defer_until_dispup;
+static int g_hwnd_shown;
 static bool isMouseDown = false;
 static bool isEditMode = false;
 static int32_t editMaxSize = 0;
@@ -260,6 +262,17 @@ void guiVisibleWindowFinalize(void) {
     guiPumpEvents();
     (void)SDL_UpdateWindowSurface(window);
     e9b_after_first_frame_present(surface, 1u, 0u, 0u);
+}
+
+void guiProductShowWindowIfReady(int framebuffer_nonempty) {
+    if (!g_hwnd_defer_until_dispup || g_hwnd_shown || !window) return;
+    if (!framebuffer_nonempty) return;
+    SDL_ShowWindow(window);
+    guiPumpEvents();
+    (void)SDL_UpdateWindowSurface(window);
+    g_hwnd_shown = 1;
+    printf("[HWND_VISIBLE] note=shown_after_dispup_nonempty evidence=OBSERVED\n");
+    fflush(stdout);
 }
 
 void saveEditText(char *str) {
@@ -872,8 +885,17 @@ int main(int argc, char *args[]) {
     {
         int ww = SCREEN_WIDTH * g_window_zoom;
         int hh = SCREEN_HEIGHT * g_window_zoom;
+        Uint32 flags = 0;
+        /* Product: keep HWND hidden until first guest _DispUpEx with nonempty FB. */
+        g_hwnd_defer_until_dispup = env1("JJFB_PRODUCT_P5_MODE") || env1("JJFB_HWND_UNTIL_DISPUP");
+        if (g_hwnd_defer_until_dispup) {
+            flags |= SDL_WINDOW_HIDDEN;
+            printf("[JJFB_WINDOW] defer_show=1 note=hidden_until_DispUpEx_nonempty "
+                   "evidence=OBSERVED\n");
+            fflush(stdout);
+        }
         window = SDL_CreateWindow("vmrp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww,
-                                  hh, 0);
+                                  hh, flags);
     }
     if (window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
