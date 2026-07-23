@@ -100,6 +100,16 @@ int main(void) {
     }
 
     memset(&call, 0, sizeof(call));
+    call.code = 0x10132u;
+    call.app = 0x6AD120u;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10132", out.kind, GWY_PLAT_KIND_ALLOC) || out.fill_buf != 0x6AD120u ||
+        out.alloc_size != 0u) {
+        fprintf(stderr, "10132 strdup classify mismatch\n");
+        return 1;
+    }
+
+    memset(&call, 0, sizeof(call));
     call.code = 0x101ABu;
     call.app = 0x6AD11Cu;
     call.arg3 = 2u;

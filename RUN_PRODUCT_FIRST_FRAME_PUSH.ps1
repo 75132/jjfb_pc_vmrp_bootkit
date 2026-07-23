@@ -10,7 +10,8 @@ param(
   [switch]$SkipVmrpBuild,
   [switch]$ApplyAbi,
   [switch]$Trace305E09,
-  [switch]$TraceQueueBootstrap
+  [switch]$TraceQueueBootstrap,
+  [switch]$TraceNodeAlloc
 )
 
 $ErrorActionPreference = 'Stop'
@@ -46,7 +47,8 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_E8E_EVENT_PROBE', 'JJFB_HANDLER_FORENSIC', 'JJFB_PLAT_CENSUS',
   'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE',
   'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT',
-  'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP'
+  'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP', 'JJFB_PRODUCT_TRACE_NODE_ALLOC',
+  'JJFB_101AB_EMPTY', 'JJFB_101AB_WITH_RECORD'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
 if (-not $SkipBuild) {
@@ -161,6 +163,13 @@ if ($TraceQueueBootstrap -or $Mode -eq 'Validate') {
   $env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP -ErrorAction SilentlyContinue
+}
+
+# List-Node Allocation Contract Closure: classify 0x94E40 + first causal zero.
+if ($TraceNodeAlloc -or $Mode -eq 'Validate') {
+  $env:JJFB_PRODUCT_TRACE_NODE_ALLOC = '1'
+} else {
+  Remove-Item Env:JJFB_PRODUCT_TRACE_NODE_ALLOC -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.
@@ -345,6 +354,15 @@ $forbidHit = ($forbidden.GetEnumerator() | Where-Object { $_.Value }).Name
 $listHeadOk = [bool]($all -match '\[EVENT_LIST_HEAD_INITIALIZED\]')
 $pathAOk = [bool]($all -match '\[EVENT_PATH_A_ENQUEUE_OK\]')
 $pathARecovered = [bool]($all -match '\[EVENT_PATH_A_LIST_HEAD_RECOVERED\]')
+$node94Id = [bool]($all -match '\[NODE_94E40_FUNCTION_IDENTIFIED\]')
+$nodeFirstZero = [bool]($all -match '\[NODE_FIRST_CAUSAL_ZERO_FOUND\]')
+$nodeLinked = [bool]($all -match '\[EVENT_LIST_NODE_LINKED\]')
+$nodeAllocOk = [bool]($all -match '\[NODE_ALLOCATION_RETURN_VALID\]')
+$pathAComplete = [bool]($all -match '\[EVENT_PATH_A_ENQUEUE_COMPLETE\]')
+# Do not match NODE_94E40_FUNCTION_IDENTIFIED lines that merely name fault_pc=.
+$fault94 = [bool]($all -match '\[EXT_FAULT\].*fault_pc=0x94E40|\[NA_FAULT_94E40\]|memory_access_pc=0x94E40')
+$nodeCtorOk = [bool]($all -match '\[EVENT_NODE_CONSTRUCTION_COMPLETE\]')
+$uiModeNz = [bool]($all -match 'ui_mode=0x[1-9A-Fa-f]|UI_MODE.*nonzero|ui_mode=[1-9]')
 
 $farthest = 'timer_stable_poll'
 if ($captureHit -and $fbHit -and $hwndHit) { $farthest = 'first_natural_frame' }
@@ -353,6 +371,8 @@ elseif ($fbHit -or $dispPred) { $farthest = 'framebuffer_mutation' }
 elseif ($resRead) { $farthest = 'resource_bytes_consumed' }
 elseif ($resReq) { $farthest = 'resource_request' }
 elseif ($stateAdv -or $sigChanged) { $farthest = 'robotol_state_changed' }
+elseif ($pathAComplete -or $nodeCtorOk) { $farthest = 'event_path_a_enqueue_complete' }
+elseif ($nodeLinked) { $farthest = 'event_list_node_linked' }
 elseif ($pathAOk) { $farthest = 'event_path_a_enqueue_ok' }
 elseif ($listHeadOk) { $farthest = 'event_list_head_initialized' }
 elseif ($abiOk) { $farthest = 'family_abi_confirmed' }
@@ -376,8 +396,14 @@ $firstGap = 'unknown'
 if (-not $ctxIdent) { $firstGap = '10165 context object not identified' }
 elseif (-not $idConfirmed) { $firstGap = 'request identity not classified across samples' }
 elseif (-not $abiOk) { $firstGap = 'family handler ABI / context not proven in delivery' }
-elseif ($pathARecovered -and $pathAOk -and -not $stateAdv) {
-  $firstGap = 'Path A enqueued after B54 recover; new blocker DSM/cfunction fault @0x94E40 (UI_MODE still 0)'
+elseif ($fault94 -and -not $stateAdv) {
+  $firstGap = 'list-node/path-A DSM mem primitive fault @0x94E40 (UI_MODE still 0)'
+}
+elseif ($pathAComplete -and -not $uiModeNz -and -not $stateAdv) {
+  $firstGap = 'Path A node construction complete; UI_MODE still 0 / state not advanced'
+}
+elseif ($pathARecovered -and $pathAOk -and -not $stateAdv -and -not $pathAComplete) {
+  $firstGap = 'Path A enqueued after B54 recover; node construction incomplete'
 }
 elseif (-not $stateAdv) { $firstGap = 'Robotol state unchanged after delivery' }
 elseif (-not $resReq) { $firstGap = 'no natural resource request after state change' }
@@ -387,14 +413,27 @@ else { $firstGap = 'none' }
 $verdict = 'INCOMPLETE'
 if ($forbidHit) {
   $verdict = 'FORBIDDEN_OR_FAULT'
-} elseif ($pathARecovered -and $pathAOk -and $faultHit -and -not $stateAdv) {
-  # Plan Round-B stop: one proven fix exposed a new exact platform subsystem blocker.
-  $verdict = 'EVENT_QUEUE_BOOTSTRAP_FIXED_NEW_BLOCKER'
-} elseif ($faultHit) {
-  $verdict = 'FORBIDDEN_OR_FAULT'
+} elseif ($fault94 -and -not ($nodeCtorOk -and $pathAComplete)) {
+  if ($node94Id -and $nodeFirstZero) {
+    $verdict = 'EVENT_NODE_ALLOC_PROVENANCE_MAPPED'
+  } elseif ($pathARecovered -and $pathAOk) {
+    $verdict = 'EVENT_QUEUE_BOOTSTRAP_FIXED_NEW_BLOCKER'
+  } else {
+    $verdict = 'FORBIDDEN_OR_FAULT'
+  }
+} elseif ($nodeCtorOk -and $pathAComplete -and $stateAdv) {
+  $verdict = 'EVENT_NODE_CONSTRUCTION_COMPLETE'
+} elseif ($pathAComplete -and -not $fault94 -and $stateAdv) {
+  $verdict = 'EVENT_PATH_A_ENQUEUE_OK'
+} elseif ($nodeCtorOk -and $pathAComplete -and -not $fault94 -and $resReq) {
+  $verdict = 'EVENT_NODE_CONSTRUCTION_COMPLETE'
+} elseif ($nodeCtorOk -and $pathAComplete -and -not $fault94) {
+  $verdict = 'EVENT_PATH_A_ENQUEUE_OK'
 } elseif ($Mode -eq 'Event') {
   if ($stateAdv -or $sigChanged) {
     $verdict = 'P6_ROBOTOL_STATE_CHANGED'
+  } elseif ($node94Id -and $nodeFirstZero -and $fault94) {
+    $verdict = 'EVENT_NODE_ALLOC_PROVENANCE_MAPPED'
   } elseif ($abiOk -and $idConfirmed) {
     $verdict = 'P6_ABI_AND_IDENTITY_MAPPED_NO_ADVANCE'
   } elseif ($idConfirmed -and $ctxIdent -and $sampleN -ge 2 -and $deliverN -ge 1) {
@@ -416,6 +455,10 @@ if ($forbidHit) {
     $verdict = 'ROBOTOL_STATE_ADVANCED_AFTER_COMPLETION'
   } elseif ($stateAdv) {
     $verdict = 'ROBOTOL_STATE_ADVANCED_AFTER_COMPLETION'
+  } elseif ($nodeCtorOk -and $pathAComplete -and -not $fault94 -and $resReq) {
+    $verdict = 'EVENT_NODE_CONSTRUCTION_COMPLETE'
+  } elseif ($nodeLinked -and $nodeAllocOk -and -not $fault94) {
+    $verdict = 'EVENT_PATH_A_ENQUEUE_OK'
   } elseif ($abiOk) {
     $verdict = 'FAMILY_EVENT_ABI_CONFIRMED_NO_ADVANCE_YET'
   } else {
@@ -456,6 +499,12 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 - **identity_class:** $idClass
 - **EVENT_LIST_HEAD_INITIALIZED:** $(if ($listHeadOk) { 'yes' } else { 'no' })
 - **EVENT_PATH_A_ENQUEUE_OK:** $(if ($pathAOk) { 'yes' } else { 'no' })
+- **NODE_94E40_FUNCTION_IDENTIFIED:** $(if ($node94Id) { 'yes' } else { 'no' })
+- **NODE_FIRST_CAUSAL_ZERO_FOUND:** $(if ($nodeFirstZero) { 'yes' } else { 'no' })
+- **EVENT_LIST_NODE_LINKED:** $(if ($nodeLinked) { 'yes' } else { 'no' })
+- **NODE_ALLOCATION_RETURN_VALID:** $(if ($nodeAllocOk) { 'yes' } else { 'no' })
+- **EVENT_PATH_A_ENQUEUE_COMPLETE:** $(if ($pathAComplete) { 'yes' } else { 'no' })
+- **fault_at_0x94E40:** $(if ($fault94) { 'yes' } else { 'no' })
 - **EVENT_TRANSACTION_IDENTITY_CONFIRMED:** $(if ($idConfirmed) { 'yes' } else { 'no' })
 - **EVENT_CONTEXT_OBJECT_IDENTIFIED:** $(if ($ctxIdent) { 'yes' } else { 'no' })
 - **EVENT_CONTEXT_OWNER_CONFIRMED:** $(if ($ctxOwner) { 'yes' } else { 'no' })
@@ -513,6 +562,9 @@ $okModes = @(
   'P6_EVENT_PARTIAL',
   'P6_ABI_AND_IDENTITY_MAPPED_NO_ADVANCE',
   'P6_ROBOTOL_STATE_CHANGED',
+  'EVENT_NODE_ALLOC_PROVENANCE_MAPPED',
+  'EVENT_NODE_CONSTRUCTION_COMPLETE',
+  'EVENT_PATH_A_ENQUEUE_OK',
   'P7_RESOURCE_REQUEST_SEEN',
   'P7_RESOURCE_TRANSACTION_COMPLETE',
   'P7_WAITING_RESOURCE_AFTER_STATE',

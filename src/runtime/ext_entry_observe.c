@@ -1,4 +1,5 @@
 #include "gwy_launcher/ext_entry_observe.h"
+#include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/ext_chunk_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
 #include "gwy_launcher/ext_dsm_record_observe.h"
@@ -1623,6 +1624,7 @@ void ext_entry_observe_on_mem_fault(void *uc,
     snprintf(f->fail_stage, sizeof(f->fail_stage), "ENTRY_EXECUTION");
     /* D2: classify R9 scope before heavy bootstrap dumps (short live runs may be killed). */
     ext_r9_scope_audit_on_mem_fault(uc, f->fault_pc, (uint32_t)address, regs, cpsr);
+    product_na_on_mem_fault(uc, f->fault_pc, (uint32_t)address, regs[0]);
     ext_callback_frame_on_mem_fault(uc, f->fault_pc, (uint32_t)address, size, regs, cpsr);
     ext_post_cont_audit_on_mem_fault(uc, f->fault_pc, (uint32_t)address, regs, cpsr);
     ext_post_cfn_r9_audit_on_mem_fault(uc, f->fault_pc, (uint32_t)address, regs, cpsr);

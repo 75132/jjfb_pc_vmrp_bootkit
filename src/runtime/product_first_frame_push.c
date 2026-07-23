@@ -1,5 +1,6 @@
 #include "gwy_launcher/product_first_frame_push.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
+#include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -158,6 +159,7 @@ void product_ffp_set_run_id(const char *run_id) {
     snprintf(g_run_id, sizeof(g_run_id), "%s", run_id);
     platform_event_service_set_run_id(run_id);
     product_eqb_set_run_id(run_id);
+    product_na_set_run_id(run_id);
 }
 
 const char *product_ffp_run_id(void) { return g_run_id[0] ? g_run_id : "unknown"; }
@@ -181,6 +183,7 @@ void product_ffp_reset(void) {
 #endif
     platform_event_service_reset();
     product_eqb_reset();
+    product_na_reset();
     memset(g_samples, 0, sizeof(g_samples));
     memset(g_mem, 0, sizeof(g_mem));
     g_sample_n = 0;
@@ -342,6 +345,11 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
                 fflush(stdout);
             }
         }
+    }
+    if (product_na_enabled()) {
+        product_na_bind_uc(uc);
+        product_na_note_er_rw(er_rw);
+        product_na_arm_code_hooks(uc);
     }
 
     accept = platform_event_service_on_guest_request(
@@ -847,6 +855,7 @@ void product_ffp_finalize(void) {
     g_finalized = 1;
     platform_event_service_finalize();
     product_eqb_finalize();
+    product_na_finalize();
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();

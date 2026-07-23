@@ -1,4 +1,5 @@
 #include "gwy_launcher/guest_call_observer.h"
+#include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_entry_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
@@ -432,6 +433,7 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[GUEST_INDIRECT_CALL] module_id=%llu pc=0x%X target=0x%X arg0=0x%X arg1=0x%X\n",
                    (unsigned long long)w->module_id, pc, target, regs[0], regs[1]);
             fflush(stdout);
+            product_na_on_indirect_call(uc, pc, target, regs[0], regs[1]);
             ext_entry_observe_helper_abi(HELPER_ABI_STAGE_CALL_SITE_BEFORE, w->module_id, pc,
                                          tgt->map.helper_address, target, regs, cpsr, "GUEST_CALL",
                                          uc);

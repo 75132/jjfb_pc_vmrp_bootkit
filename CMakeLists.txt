@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.20)
 project(gwy_launcher C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -86,6 +86,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_p5_event_advance.c
     src/runtime/product_first_frame_push.c
     src/runtime/product_event_queue_bootstrap.c
+    src/runtime/product_event_node_alloc.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES

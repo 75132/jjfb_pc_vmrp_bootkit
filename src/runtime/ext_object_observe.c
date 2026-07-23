@@ -1,4 +1,5 @@
 #include "gwy_launcher/ext_object_observe.h"
+#include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/ext_chunk_observe.h"
 #include "gwy_launcher/ext_entry_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
@@ -722,6 +723,7 @@ void ext_object_note_cross_module_call_ex(uint64_t from_mid,
            tid, ext_transfer_hop_kind_name(hop), from_name, (unsigned long long)from_mid, from_pc,
            to_name, (unsigned long long)to_mid, tnorm, to_off, r0, r1, lr);
     fflush(stdout);
+    product_na_on_cross_module(uc, from_pc, tnorm, r0, r1, lr);
     ext_cfunction_publication_audit_on_cross_module(from_pc, tnorm, r0, r1, lr, from_name, to_name);
 
     /* A9: nested EXT returning into DSM after module-entry call. */

@@ -1,4 +1,4 @@
-﻿#include "gwy_launcher/ext_loader.h"
+#include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/ext_entry_observe.h"
 #include "gwy_launcher/ext_chunk_observe.h"
 #include "gwy_launcher/ext_helper_handoff.h"
@@ -47,6 +47,7 @@
 #include "gwy_launcher/product_p5_event_advance.h"
 #include "gwy_launcher/product_first_frame_push.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
+#include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_timer_cadence.h"
@@ -1578,15 +1579,36 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                              r1, 0, 0, 0, 0, "blob_sync");
         }
     } else if (result.kind == GWY_PLAT_KIND_ALLOC) {
-        if (g_guest_alloc && g_guest_to_ptr && result.alloc_size) {
-            void *host = g_guest_alloc(result.alloc_size);
-            if (host) {
-                memset(host, 0, result.alloc_size);
-                if (result.alloc_u16_at0) {
-                    uint16_t tag = result.alloc_u16_at0;
-                    memcpy(host, &tag, sizeof(tag));
+        if (g_guest_alloc && g_guest_to_ptr) {
+            uint32_t need = result.alloc_size;
+            uint8_t src[256];
+            uint32_t src_len = 0;
+            /* 0x10132 strdup: size from guest C-string at fill_buf. */
+            if (r0 == 0x10132u && result.fill_buf && uc) {
+                memset(src, 0, sizeof(src));
+                if (guest_memory_uc_peek((struct uc_struct *)uc, result.fill_buf, src,
+                                         (uint32_t)sizeof(src) - 1u)) {
+                    while (src_len < sizeof(src) - 1u && src[src_len]) src_len++;
+                    need = src_len + 1u;
+                } else {
+                    need = 0;
+                    printf("[PLATFORM_10132] strdup_src_unmapped ptr=0x%X evidence=OBSERVED\n",
+                           result.fill_buf);
+                    fflush(stdout);
                 }
-                ret = g_guest_to_ptr(host);
+            }
+            if (need) {
+                void *host = g_guest_alloc(need);
+                if (host) {
+                    memset(host, 0, need);
+                    if (r0 == 0x10132u && result.fill_buf && src_len)
+                        memcpy(host, src, src_len);
+                    else if (result.alloc_u16_at0) {
+                        uint16_t tag = result.alloc_u16_at0;
+                        memcpy(host, &tag, sizeof(tag));
+                    }
+                    ret = g_guest_to_ptr(host);
+                }
             }
         }
         /* 0x10165/10162: alloc size in R1 + optional enqueue handler in R2. */
@@ -1637,6 +1659,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                                  caller_pc, lr);
             product_eqb_on_platform(r0, r1, r2);
         }
+        if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X size=0x%X ret=0x%X kind=ALLOC name=%s "
                    "handler=0x%X evidence=%s\n",
@@ -1645,17 +1668,32 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         fflush(stdout);
     } else if (result.kind == GWY_PLAT_KIND_BUFFER_FILL) {
-        static int g_101ab_with_rec = 1;
+        /*
+         * Path-A fill: default empty body (u16 code + BE 0xFFFFFFFF end-marker).
+         * TraceNodeAlloc: a length-prefixed "downVersion" record made guest BE-read
+         * name ASCII (e.g. 0x646F776C) as heap sizes / fake pointers, then
+         * 0x10132(0x646F7770) failed to map → null → DSM mem fault @0x94E40.
+         * Empty body keeps length readers on real BE fields; node push completes.
+         * Opt-in one-shot record: JJFB_101AB_WITH_RECORD=1 (requires mapped name ptrs).
+         */
+        static int g_101ab_with_rec = -1;
         uint8_t tmp[192];
         uint32_t n = 0;
         ret = result.status_ret;
+        if (g_101ab_with_rec < 0) {
+            if (env_flag("JJFB_101AB_WITH_RECORD"))
+                g_101ab_with_rec = 1;
+            else
+                g_101ab_with_rec = 0; /* product default: empty Path-A body */
+        }
         if (uc && result.fill_buf) {
             n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), g_101ab_with_rec);
             if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
+                int delivered_rec = g_101ab_with_rec;
                 if (g_101ab_with_rec) g_101ab_with_rec = 0;
                 printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X type=%u bytes=%u "
                        "with_rec=%d name=%s evidence=%s\n",
-                       result.fill_buf, result.fill_type, n, g_101ab_with_rec ? 0 : 1,
+                       result.fill_buf, result.fill_type, n, delivered_rec,
                        result.name ? result.name : "?", result.evidence ? result.evidence : "?");
                 fflush(stdout);
             } else {
@@ -1671,6 +1709,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    result.evidence ? result.evidence : "?");
             fflush(stdout);
         }
+        if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     } else if (result.kind == GWY_PLAT_KIND_TIMER_START) {
         platform_timer_start(result.timer_period_ms);
         g_armed_timer_chunk = result.timer_chunk;
@@ -1740,6 +1779,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
          * returning STATUS alone never delivered the registered handler. */
         if (platform_handler_registry_find_family_event(r0))
             (void)gwy_ext_obs_note_family_event(r0, r1);
+        if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     } else {
         ret = 0;
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
@@ -1751,6 +1791,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         if (platform_handler_registry_find_family_event(r0))
             (void)gwy_ext_obs_note_family_event(r0, r1);
+        if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     }
 
     ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);

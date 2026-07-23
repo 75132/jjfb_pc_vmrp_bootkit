@@ -1,0 +1,2 @@
+run_id,found,producer_pc,producing_insn,output_observed,source_subsystem,next_consumer,class,why
+ffp_validate_20260724_033705_36171,1,0x2E4EAE,indirect_absurd_size,0x0,EVENT_PAYLOAD,0x94E40,NODE_ALLOC_REQUEST_INVALID,first_zero_propagated_to_dsm_mem_primitive

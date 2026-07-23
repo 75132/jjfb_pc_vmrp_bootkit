@@ -17,6 +17,10 @@ static void be16(uint8_t *p, uint16_t v) {
  * Path-A payload for 0x101AB (TARGET_OBSERVED from robotol 0x30D24C → 0x2E4D6C).
  * Layout: char type + BE len + payload[ hdr_u32 | body_size | BE u16 code | body ].
  * body ends with BE 0xFFFFFFFF marker required by 0x2F68E4.
+ *
+ * Product default uses with_record=0 (empty: u16 + BE(-1) only). Embedding a
+ * length-prefixed "downVersion" name made guest BE-read name ASCII as alloc
+ * sizes / fake pointers after list-node push (TraceNodeAlloc → 0x94E40 fault).
  */
 uint32_t platform_101ab_fill_path_a(uint8_t *dst, uint32_t dst_cap, int with_record) {
     uint8_t payload[160];
@@ -338,13 +342,28 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
      * 0x10133: free companion to 0x10132/0x10134 (docs/06 + CROSS_TARGET).
      * Guest may pass user ptr or user-4. Product returns MR_SUCCESS; host freelist
      * free is best-effort only when the block is a known guest alloc (handled by
-     * caller). Case-9 passes event_code-4 (non-heap) → intentional no-op success.
+     * caller). Case-9 passes event-code-4 (non-heap) → intentional no-op success.
      */
     if (call->code == 0x10133u) {
         out->kind = GWY_PLAT_KIND_STATUS;
         out->status_ret = 0u;
         out->name = "plat_10133_free";
         out->evidence = "DOCUMENTED+CROSS_TARGET";
+        return;
+    }
+
+    /*
+     * 0x10132: string/buffer publish (TARGET_OBSERVED Path-A after list push).
+     * Live: sendAppEvent(0x10132, guest_cstr) must return a heap pointer, not
+     * status 0 — a zero return was forwarded into DSM mem @0x94E34 (r0=0 fault).
+     * When R1 looks like a guest C-string pointer, executor strdup's it.
+     */
+    if (call->code == 0x10132u && call->app >= 0x1000u) {
+        out->kind = GWY_PLAT_KIND_ALLOC;
+        out->alloc_size = 0; /* executor: strlen(app)+1 then copy */
+        out->fill_buf = call->app; /* source C-string in guest memory */
+        out->name = "plat_10132_strdup";
+        out->evidence = "TARGET_OBSERVED+TraceNodeAlloc";
         return;
     }
 
