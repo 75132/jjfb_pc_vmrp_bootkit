@@ -1,4 +1,6 @@
 #include "gwy_launcher/product_event_queue_consumer.h"
+#include "gwy_launcher/product_event_object_trace.h"
+#include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include <stdio.h>
@@ -376,6 +378,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             note_acc(pc, r0, 8, w2, 0, "consumer_read_item");
             add_live(pc, list, product_eqc_peek_head(uc, list), product_eqc_peek_count(uc, list), w2,
                      "GET_ITEM");
+            product_eot_on_get_item(uc, r0, w2);
         }
     } else if (tag == 5) { /* 0x312C0C pop/remove */
         list = r4 ? r4 : g_first_list;
@@ -387,6 +390,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             printf("[EVENT_NODE_CONSUMED] list=0x%X count_before=%u evidence=OBSERVED\n", list,
                    before);
             fflush(stdout);
+            product_runtime_progress_emit("event_node_consumed", "eqc", "pop_312C0C");
         }
     } else if (tag == 6) { /* push return sites — count should already be updated */
         list = g_first_list ? g_first_list : r4;
@@ -411,6 +415,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         printf("[EVENT_DRAIN_ITEM] item=0x%X item_w0=0x%X C76=%u evidence=OBSERVED\n", r0,
                g_drain_item_w0, g_gate_c76);
         fflush(stdout);
+        product_eot_on_drain_item(uc, r0);
     } else if (tag == 9) { /* 0x2DC848 alternate/dispatch branch */
         g_item_alt_path = 1;
         sample_gates(uc);
@@ -498,6 +503,7 @@ void product_eqc_on_path_a_begin(void *uc, uint32_t list, uint32_t entry, uint32
     if (!product_eqc_enabled()) return;
     if (!g_first_list) g_first_list = list;
     add_tl(uc, "before_path_a_push", list, 0, "PATH_A_BEGIN");
+    product_eot_on_path_a_begin(uc, list, entry, count);
     (void)entry;
     (void)count;
 }
@@ -528,6 +534,7 @@ void product_eqc_on_path_a_linked(void *uc, uint32_t list, uint32_t head, uint32
            "empty_body=%d evidence=OBSERVED\n",
            list, head, node, entry, count, g_empty_body);
     fflush(stdout);
+    product_eot_on_path_a_linked(uc, list, head, node, entry, count);
 }
 
 void product_eqc_on_path_a_return(void *uc, uint32_t list) {

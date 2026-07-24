@@ -1,4 +1,5 @@
 #include "gwy_launcher/product_post_drain_gate_trace.h"
+#include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -500,6 +501,7 @@ static DispCall *begin_dispatch_call(uc_engine *uc, uint32_t pc, uint32_t lr, ui
                    c->call_id, r0, w0, w1, w2, w3, lr);
         }
         fflush(stdout);
+        product_eot_on_dispatch_enter(uc, c->call_id, r0, lr, sp, r1, r2, r3, r9);
     }
     return c;
 }

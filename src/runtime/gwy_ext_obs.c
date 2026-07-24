@@ -49,6 +49,7 @@
 #include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
+#include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_timer_cadence.h"
@@ -720,6 +721,8 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
                            erw, flag15c, enq_h, p65, p62);
                     fflush(stdout);
                     product_eqb_on_path_a_blocked(uc, erw, b54, store, p65, p62);
+                    product_runtime_progress_emit("event_path_a_blocked", "gwy_ext_obs",
+                                                 "B54_null");
                 } else if (g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
                 GwyFamilyEvent *es = &g_family_eq[g_family_eq_n++];
                 memset(es, 0, sizeof(*es));

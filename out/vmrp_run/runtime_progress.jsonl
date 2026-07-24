@@ -1,0 +1,7 @@
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902588,"pid":14772,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902608,"pid":14772,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902608,"pid":14772,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902619,"pid":14772,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902619,"pid":14772,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902619,"pid":14772,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_221626_27265","timestamp":1784902619,"pid":14772,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}

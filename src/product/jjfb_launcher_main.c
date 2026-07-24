@@ -21,6 +21,7 @@
 #define IDC_PATH 1001
 #define IDC_STAGE 1002
 #define IDC_HINT 1003
+#define IDC_MILESTONE 1004
 
 typedef enum JjfbStage {
     STAGE_INIT = 0,
@@ -39,18 +40,25 @@ typedef struct JjfbLauncherState {
     HWND path_label;
     HWND stage_label;
     HWND hint_label;
+    HWND milestone_label;
     HANDLE child;
     unsigned long child_pid;
     JjfbStage stage;
     int debug;
+    int diagnostic;
     int test_pattern;
     int closing;
+    long progress_off;
     char repo_root[MAX_PATH];
     char profile_path[MAX_PATH];
     char resource_root[MAX_PATH];
     char mrp_host[MAX_PATH];
     char vmrp_exe[MAX_PATH];
     char vmrp_cwd[MAX_PATH];
+    char progress_path[MAX_PATH];
+    char run_id[64];
+    char reports_dir[MAX_PATH];
+    char milestone[96];
     char error_msg[512];
 } JjfbLauncherState;
 
@@ -132,6 +140,16 @@ static void set_path_label(JjfbLauncherState *st) {
     SetWindowTextA(st->path_label, line);
 }
 
+static void set_milestone_label(JjfbLauncherState *st, const char *ms) {
+    char line[160];
+    if (!ms || !ms[0]) return;
+    snprintf(st->milestone, sizeof(st->milestone), "%s", ms);
+    snprintf(line, sizeof(line), "Runtime milestone: %s", ms);
+    if (st->milestone_label) SetWindowTextA(st->milestone_label, line);
+    printf("[JJFB_LAUNCHER] runtime_milestone=%s\n", ms);
+    fflush(stdout);
+}
+
 static void stop_child(JjfbLauncherState *st) {
     if (!st->child) return;
     if (WaitForSingleObject(st->child, 0) == WAIT_TIMEOUT) {
@@ -157,10 +175,62 @@ static void apply_product_env(JjfbLauncherState *st) {
     SetEnvironmentVariableA("GWY_CALLBACK_FRAME", "1");
     SetEnvironmentVariableA("JJFB_E5_SCHEDULER_MODE", "1");
     SetEnvironmentVariableA("JJFB_GAME_SELF_PATCH", "0");
+    /* Never hide HWND in product launcher path — window must stay visible. */
+    SetEnvironmentVariableA("JJFB_HWND_UNTIL_DISPUP", NULL);
+    SetEnvironmentVariableA("JJFB_PRODUCT_P5_MODE", NULL);
+
     if (st->test_pattern)
         SetEnvironmentVariableA("GWY_HOST_TEST_PATTERN", "1");
     else
         SetEnvironmentVariableA("GWY_HOST_TEST_PATTERN", NULL);
+
+    /* Product Path-A observe stack (needed for natural consume). Quiet unless --debug. */
+    SetEnvironmentVariableA("JJFB_PRODUCT_FFP_MODE", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_FFP_PHASE", "event");
+    SetEnvironmentVariableA("JJFB_PRODUCT_EVENT_CONTRACT", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_305E09", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_NODE_ALLOC", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_CONSUMER", "1");
+    /*
+     * Platform list-head recovery (ER_RW+B54) — same gate as FFP Event runner when
+     * TraceQueueConsumer is on. Publishes proven 8-byte list control via
+     * PlatformEventQueue; does NOT write B71/15D/UI_MODE.
+     */
+    SetEnvironmentVariableA("JJFB_PRODUCT_FFP_APPLY_ABI", "1");
+
+    /* Always emit runtime_progress.jsonl for status-window milestones. */
+    {
+        SYSTEMTIME stime;
+        GetLocalTime(&stime);
+        if (!st->run_id[0]) {
+            snprintf(st->run_id, sizeof(st->run_id), "launcher_%04u%02u%02u_%02u%02u%02u_%lu",
+                     (unsigned)stime.wYear, (unsigned)stime.wMonth, (unsigned)stime.wDay,
+                     (unsigned)stime.wHour, (unsigned)stime.wMinute, (unsigned)stime.wSecond,
+                     GetTickCount() % 100000u);
+        }
+        path_join(st->reports_dir, sizeof(st->reports_dir), st->repo_root, "reports");
+        CreateDirectoryA(st->reports_dir, NULL);
+        path_join(st->progress_path, sizeof(st->progress_path), st->vmrp_cwd,
+                  "runtime_progress.jsonl");
+        DeleteFileA(st->progress_path);
+        st->progress_off = 0;
+        SetEnvironmentVariableA("GWY_PRODUCT_RUN_ID", st->run_id);
+        SetEnvironmentVariableA("GWY_PRODUCT_REPORTS_DIR", st->reports_dir);
+        SetEnvironmentVariableA("GWY_RUNTIME_PROGRESS_PATH", st->progress_path);
+        SetEnvironmentVariableA("JJFB_RUNTIME_PROGRESS", "1");
+    }
+
+    if (st->diagnostic) {
+        /* User-requested observe-only diagnostic traces (not default double-click). */
+        SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", "1");
+    } else {
+        SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", NULL);
+        SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", NULL);
+        SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", NULL);
+    }
 }
 
 static int resolve_paths(JjfbLauncherState *st) {
@@ -239,23 +309,62 @@ static int start_runtime(JjfbLauncherState *st) {
     st->child_pid = pid;
     set_stage(st, STAGE_WAITING_FIRST_FRAME);
     if (st->hint_label) {
-        SetWindowTextA(st->hint_label,
-                       "Game window should appear. Close this window to stop the runtime.");
+        char tip[256];
+        snprintf(tip, sizeof(tip),
+                 "pid=%lu cfg=36 target=gwy/jjfb.mrp%s Close this window to stop.",
+                 st->child_pid, st->diagnostic ? " [diagnostic]" : "");
+        SetWindowTextA(st->hint_label, tip);
     }
     return 1;
 }
 
+static void poll_progress(JjfbLauncherState *st) {
+    FILE *fp;
+    char line[512];
+    char last_ms[96];
+    long pos;
+    if (!st || !st->progress_path[0]) return;
+    fp = fopen(st->progress_path, "rb");
+    if (!fp) return;
+    if (fseek(fp, st->progress_off, SEEK_SET) != 0) {
+        fclose(fp);
+        return;
+    }
+    last_ms[0] = 0;
+    while (fgets(line, sizeof(line), fp)) {
+        const char *p = strstr(line, "\"milestone\":\"");
+        if (!p) continue;
+        p += 13;
+        {
+            size_t n = 0;
+            while (p[n] && p[n] != '"' && n + 1 < sizeof(last_ms)) {
+                last_ms[n] = p[n];
+                n++;
+            }
+            last_ms[n] = 0;
+        }
+    }
+    pos = ftell(fp);
+    if (pos >= 0) st->progress_off = pos;
+    fclose(fp);
+    if (last_ms[0] && strcmp(last_ms, st->milestone) != 0)
+        set_milestone_label(st, last_ms);
+}
+
 static void poll_child(JjfbLauncherState *st) {
     DWORD code = 0;
-    if (!st->child || st->closing) return;
+    if (!st || st->closing) return;
+    poll_progress(st);
+    if (!st->child) return;
     if (WaitForSingleObject(st->child, 0) != WAIT_OBJECT_0) {
-        /* After a few seconds without exit, treat as steady running. */
-        if (st->stage == STAGE_WAITING_FIRST_FRAME) {
-            static int ticks;
-            ticks++;
-            if (ticks > 40) { /* ~2s at 50ms */
-                set_stage(st, STAGE_RUNNING);
-            }
+        if (st->stage == STAGE_WAITING_FIRST_FRAME &&
+            (strcmp(st->milestone, "event_node_consumed") == 0 ||
+             strcmp(st->milestone, "runtime_spawned") == 0 ||
+             strcmp(st->milestone, "guest_entry_called") == 0 ||
+             strcmp(st->milestone, "waiting_for_first_frame") == 0 ||
+             strcmp(st->milestone, "event_path_a_seen") == 0 ||
+             strcmp(st->milestone, "event_node_linked") == 0)) {
+            /* Keep waiting_for_first_frame stage; milestone shows real evidence. */
         }
         return;
     }
@@ -264,6 +373,7 @@ static void poll_child(JjfbLauncherState *st) {
     st->child = NULL;
     st->child_pid = 0;
     set_stage(st, STAGE_EXITED);
+    set_milestone_label(st, "runtime_exited");
     if (st->hint_label) {
         char tip[128];
         snprintf(tip, sizeof(tip), "Runtime exited (code=%lu). Close this window.",
@@ -286,9 +396,13 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
         st->stage_label = CreateWindowA("STATIC", "Stage: Initializing",
                                         WS_CHILD | WS_VISIBLE | SS_LEFT,
                                         16, 64, 520, 24, hwnd, (HMENU)IDC_STAGE, cs->hInstance, NULL);
+        st->milestone_label = CreateWindowA("STATIC", "Runtime milestone: (waiting)",
+                                            WS_CHILD | WS_VISIBLE | SS_LEFT,
+                                            16, 92, 520, 24, hwnd, (HMENU)IDC_MILESTONE,
+                                            cs->hInstance, NULL);
         st->hint_label = CreateWindowA("STATIC", "Preparing JJFB launch…",
                                        WS_CHILD | WS_VISIBLE | SS_LEFT,
-                                       16, 100, 520, 48, hwnd, (HMENU)IDC_HINT, cs->hInstance, NULL);
+                                       16, 124, 520, 48, hwnd, (HMENU)IDC_HINT, cs->hInstance, NULL);
         SetTimer(hwnd, JJFB_TIMER_ID, 50, NULL);
         PostMessageA(hwnd, WM_USER + 1, 0, 0); /* kick async start */
         return 0;
@@ -333,12 +447,15 @@ static int parse_args(JjfbLauncherState *st, int argc, char **argv) {
     for (i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--debug") == 0 || strcmp(argv[i], "-d") == 0)
             st->debug = 1;
+        else if (strcmp(argv[i], "--diagnostic") == 0)
+            st->diagnostic = 1;
         else if (strcmp(argv[i], "--test-pattern") == 0)
             st->test_pattern = 1;
         else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
-            puts("JJFB_Launcher [--debug] [--test-pattern]");
+            puts("JJFB_Launcher [--debug] [--diagnostic] [--test-pattern]");
             puts("  Default: load profiles/jjfb.json and start gwy/jjfb.mrp");
             puts("  --debug         attach console log");
+            puts("  --diagnostic    observe-only PDGT/B71/event-object traces");
             puts("  --test-pattern  host framebuffer test pattern (not JJFB first frame)");
             return 1;
         }
@@ -372,7 +489,7 @@ int main(int argc, char **argv) {
 
     hwnd = CreateWindowExA(0, "JjfbLauncherStatus", "JJFB Launcher",
                            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-                           CW_USEDEFAULT, CW_USEDEFAULT, 560, 200,
+                           CW_USEDEFAULT, CW_USEDEFAULT, 560, 230,
                            NULL, NULL, hi, &st);
     if (!hwnd) {
         MessageBoxA(NULL, "CreateWindow failed", "JJFB Launcher", MB_ICONERROR);

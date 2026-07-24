@@ -13,6 +13,7 @@
 #include "./header/debug.h"
 #include "./header/gwy_vm_file_abi.h"
 #include "./header/gwy_ext_obs_abi.h"
+#include "gwy_launcher/product_runtime_progress.h"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -163,9 +164,16 @@ int startVmrp() {
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
 
+    {
+        const char *rid = getenv("GWY_PRODUCT_RUN_ID");
+        if (rid && rid[0]) product_runtime_progress_set_run_id(rid);
+        product_runtime_progress_emit("runtime_spawned", "vmrp", "startVmrp");
+    }
+
     uc = initVmrp();
     if (uc == NULL) {
         printf("initVmrp() fail.\n");
+        product_runtime_progress_emit("runtime_error", "vmrp", "initVmrp_fail");
         return MR_FAILED;
     }
     gwy_ext_obs_bind_uc(uc);
@@ -246,6 +254,12 @@ int startVmrp() {
 
         uint32_t ret = bridge_dsm_mr_start_dsm(uc, filename, extName, startParam);
         printf("bridge_dsm_mr_start_dsm('%s','%s','%s'): 0x%X\n", filename, extName, startParam, ret);
+        {
+            char det[192];
+            snprintf(det, sizeof(det), "target=%s ret=0x%X", filename, ret);
+            product_runtime_progress_emit("guest_entry_called", "vmrp", det);
+            product_runtime_progress_emit("waiting_for_first_frame", "vmrp", "post_start_dsm");
+        }
     }
     return MR_SUCCESS;
 }

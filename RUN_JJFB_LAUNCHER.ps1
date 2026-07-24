@@ -1,10 +1,12 @@
-# Double-click / one-shot JJFB product launcher (Task 1–2).
+# Double-click / one-shot JJFB product launcher.
 # Builds JJFB_Launcher.exe if needed, ensures Gwy main.exe exists, then starts the status window.
 param(
   [switch]$SkipBuild,
   [switch]$SkipVmrpBuild,
   [switch]$Debug,
-  [switch]$TestPattern
+  [switch]$Diagnostic,
+  [switch]$TestPattern,
+  [int]$HoldSeconds = 0
 )
 
 $ErrorActionPreference = 'Stop'
@@ -27,7 +29,7 @@ if (-not $SkipBuild) {
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_BUILD.ps1') -BuildDir build-i686
   if ($LASTEXITCODE -ne 0) { throw 'launcher build failed' }
 }
-if (-not $SkipVmrpBuild -and -not (Test-Path $MainExe)) {
+if (-not $SkipVmrpBuild) {
   Write-Host '== build Gwy runtime =='
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_BUILD_VMRP.ps1') -Mode Gwy
   if ($LASTEXITCODE -ne 0) { throw 'vmrp build failed' }
@@ -39,11 +41,38 @@ if (-not (Test-Path $MainExe)) { throw "missing $MainExe — run RUN_BUILD_VMRP.
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_VMRP_VISUAL.ps1') -SkipBuild -NoLaunch
 if ($LASTEXITCODE -ne 0) { throw 'resource prepare failed' }
 
-$args = @()
-if ($Debug) { $args += '--debug' }
-if ($TestPattern) { $args += '--test-pattern' }
+$launchArgs = @()
+if ($Debug) { $launchArgs += '--debug' }
+if ($Diagnostic) { $launchArgs += '--diagnostic' }
+if ($TestPattern) { $launchArgs += '--test-pattern' }
 
 Write-Host '== start JJFB Launcher =='
 Write-Host "exe=$Launcher"
+Write-Host "args=$($launchArgs -join ' ')"
 Write-Host 'Close the JJFB Launcher status window to stop the runtime.'
-Start-Process -FilePath $Launcher -ArgumentList $args -WorkingDirectory $Root
+
+if ($HoldSeconds -gt 0) {
+  if ($launchArgs.Count -gt 0) {
+    $p = Start-Process -FilePath $Launcher -ArgumentList $launchArgs -WorkingDirectory $Root -PassThru
+  } else {
+    $p = Start-Process -FilePath $Launcher -WorkingDirectory $Root -PassThru
+  }
+  Write-Host "launcher_pid=$($p.Id) hold=${HoldSeconds}s"
+  Start-Sleep -Seconds $HoldSeconds
+  $main = Get-Process -Name main -ErrorAction SilentlyContinue
+  $progress = Join-Path $RunDir 'runtime_progress.jsonl'
+  Write-Host "main_alive=$([bool]$main)"
+  if (Test-Path $progress) {
+    Write-Host '--- runtime_progress.jsonl ---'
+    Get-Content $progress
+  }
+  if ($main) { Stop-Process -Id $main.Id -Force -ErrorAction SilentlyContinue }
+  if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
+  Write-Host 'hold_done'
+} else {
+  if ($launchArgs.Count -gt 0) {
+    Start-Process -FilePath $Launcher -ArgumentList $launchArgs -WorkingDirectory $Root
+  } else {
+    Start-Process -FilePath $Launcher -WorkingDirectory $Root
+  }
+}

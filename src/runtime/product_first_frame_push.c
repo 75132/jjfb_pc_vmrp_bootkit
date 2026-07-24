@@ -3,6 +3,8 @@
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_post_drain_gate_trace.h"
+#include "gwy_launcher/product_event_object_trace.h"
+#include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -164,6 +166,8 @@ void product_ffp_set_run_id(const char *run_id) {
     product_na_set_run_id(run_id);
     product_eqc_set_run_id(run_id);
     product_pdgt_set_run_id(run_id);
+    product_eot_set_run_id(run_id);
+    product_runtime_progress_set_run_id(run_id);
 }
 
 const char *product_ffp_run_id(void) { return g_run_id[0] ? g_run_id : "unknown"; }
@@ -190,6 +194,8 @@ void product_ffp_reset(void) {
     product_na_reset();
     product_eqc_reset();
     product_pdgt_reset();
+    product_eot_reset();
+    product_runtime_progress_reset();
     memset(g_samples, 0, sizeof(g_samples));
     memset(g_mem, 0, sizeof(g_mem));
     g_sample_n = 0;
@@ -366,6 +372,10 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
         product_pdgt_bind_uc(uc);
         product_pdgt_note_er_rw(er_rw);
         product_pdgt_arm_hooks(uc);
+    }
+    if (product_eot_enabled()) {
+        product_eot_bind_uc(uc);
+        product_eot_arm_hooks(uc);
     }
 
     accept = platform_event_service_on_guest_request(
@@ -875,6 +885,7 @@ void product_ffp_finalize(void) {
     product_na_finalize();
     product_eqc_finalize();
     product_pdgt_finalize();
+    product_eot_finalize();
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();
