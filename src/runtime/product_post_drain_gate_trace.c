@@ -482,23 +482,36 @@ static DispCall *begin_dispatch_call(uc_engine *uc, uint32_t pc, uint32_t lr, ui
         add_read(c->call_id, pc, 0, 4, r0 + 4u, w1, "entry_obj+4");
         add_read(c->call_id, pc, 0, 8, r0 + 8u, w2, "entry_obj+8");
         add_read(c->call_id, pc, 0, 12, r0 + 12u, w3, "entry_obj+12");
-        printf("[PDGT_DISP_ENTER] call=%u r0=0x%X obj=[0]=0x%X [4]=0x%X [8]=0x%X [12]=0x%X "
-               "lr=0x%X evidence=OBSERVED\n",
-               c->call_id, r0, w0, w1, w2, w3, lr);
+        /* If +4 looks like an inner pointer, snapshot its first words too. */
+        if (w1 > 0x1000u && w1 != r0) {
+            uint32_t i0 = peek_u32(uc, w1);
+            uint32_t i1 = peek_u32(uc, w1 + 4u);
+            uint32_t i2 = peek_u32(uc, w1 + 8u);
+            add_read(c->call_id, pc, 0, 4, w1, i0, "inner_via_+4[+0]");
+            add_read(c->call_id, pc, 0, 4, w1 + 4u, i1, "inner_via_+4[+4]");
+            add_read(c->call_id, pc, 0, 4, w1 + 8u, i2, "inner_via_+4[+8]");
+            printf("[PDGT_DISP_ENTER] call=%u r0=0x%X obj=[0]=0x%X [4]=0x%X [8]=0x%X [12]=0x%X "
+                   "inner@0x%X=[0]=0x%X [4]=0x%X [8]=0x%X lr=0x%X evidence=OBSERVED\n",
+                   c->call_id, r0, w0, w1, w2, w3, w1, i0, i1, i2, lr);
+        } else {
+            printf("[PDGT_DISP_ENTER] call=%u r0=0x%X obj=[0]=0x%X [4]=0x%X [8]=0x%X [12]=0x%X "
+                   "lr=0x%X evidence=OBSERVED\n",
+                   c->call_id, r0, w0, w1, w2, w3, lr);
+        }
         fflush(stdout);
     }
     return c;
 }
 
 static int is_true_2e2520_enter(uint32_t pc, uint32_t lr, uint32_t sp) {
-    /* Hook span covers 0x2E2520..+3; only exact entry is a call. Dedup same frame. */
-    if (pc != PC_2E2520) return 0;
-    if (pc == g_last_enter_pc_2e2520 && lr == g_last_enter_lr_2e2520 && sp == g_last_enter_sp_2e2520)
-        return 0;
-    g_last_enter_pc_2e2520 = pc;
-    g_last_enter_lr_2e2520 = lr;
-    g_last_enter_sp_2e2520 = sp;
-    return 1;
+    /*
+     * Hook span covers 0x2E2520..+3; Unicorn may also deliver 0x2E2522.
+     * Only the exact function entry is a call — do NOT dedup on LR/SP:
+     * drain re-enters with the same LR/SP and different R0.
+     */
+    (void)lr;
+    (void)sp;
+    return pc == PC_2E2520;
 }
 
 static void note_blocking(DispCall *c, uint32_t pc, const char *pred, const char *detail) {
