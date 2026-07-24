@@ -445,7 +445,8 @@ static DispCall *begin_dispatch_call(uc_engine *uc, uint32_t pc, uint32_t lr, ui
     if (g_dc_cur && g_dc_cur->active) finish_dispatch_call(g_dc_cur, "nested_enter");
     c = &g_dc[g_dc_n++];
     memset(c, 0, sizeof(*c));
-    c->call_id = ++g_enter_serial_2e2520;
+    /* call_id assigned by caller after g_enter_serial_2e2520++ (exact-entry path). */
+    c->call_id = g_enter_serial_2e2520 ? g_enter_serial_2e2520 : 1;
     c->epoch = (uint32_t)g_watch_step;
     c->entry_pc = pc;
     c->entry_lr = lr;
@@ -880,11 +881,11 @@ static void on_code(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
         read_regs(uc, &pc, &lr, &sp, &r0, &r1, &r2, &r3, &r9);
         if (!is_true_2e2520_enter(pc, lr, sp)) return;
         g_enter_2e2520 = 1;
+        g_enter_serial_2e2520++;
         if (product_pdgt_dispatch_trace_enabled()) {
             DispCall *c = begin_dispatch_call(uc, pc, lr, sp, r0, r1, r2, r3, r9);
             if (c) {
                 add_watch(uc, "CODE_ENTER", "b71_upstream_2E2520", pc, 0, 0, 0, 0);
-                /* patch dispatch_call_id on last watch */
                 if (g_w_n > 0) g_w[g_w_n - 1].dispatch_call_id = c->call_id;
                 printf("[PDGT_ENTER] site=0x2E2520 role=b71_upstream_dispatcher "
                        "dispatch_call_id=%u r0=0x%X r1=0x%X r2=0x%X r3=0x%X lr=0x%X sp=0x%X "
