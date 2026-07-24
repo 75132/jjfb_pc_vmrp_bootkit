@@ -1733,7 +1733,36 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         if (uc && result.fill_buf) {
             /* Arm hdr-preconsume gate so first publish matches Call3 framing (word0=code). */
-            if (r9) (void)platform_event_queue_ensure_path_a_framing(uc, r9);
+            if (r9) {
+                ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+                const GwyLoadedModule *owner = NULL;
+                ExtChunkOwnerInfo oi;
+                uint64_t mid = 0, gen = 0;
+                const char *oname = NULL;
+                size_t i;
+                memset(&oi, 0, sizeof(oi));
+                if (reg) {
+                    for (i = 0; i < reg->count; i++) {
+                        if (reg->modules[i].data.start_of_er_rw == r9) {
+                            owner = &reg->modules[i];
+                            break;
+                        }
+                    }
+                    if (!owner)
+                        owner = module_registry_find_by_code_addr(reg, caller_pc & ~1u);
+                    if (!owner && lr)
+                        owner = module_registry_find_by_code_addr(reg, lr & ~1u);
+                }
+                if (owner) {
+                    mid = owner->module_id;
+                    oname = owner->resolved_name[0] ? owner->resolved_name : owner->requested_name;
+                    if (owner->map.helper_address &&
+                        ext_chunk_provider_owner_for_helper(owner->map.helper_address, &oi))
+                        gen = oi.module_generation;
+                    if (!gen) gen = owner->module_id;
+                }
+                (void)platform_event_queue_ensure_path_a_framing(uc, r9, mid, gen, oname);
+            }
             n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), g_101ab_with_rec);
             if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
                 int delivered_rec = g_101ab_with_rec;

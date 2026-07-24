@@ -54,7 +54,7 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
                                          uint64_t owner_generation);
 
 /*
- * Path-A framing contract (robotol 0x2E4D6C).
+ * Path-A framing contract (robotol 0x2E4D6C / JJFB+Robotol profile only).
  *
  * Payload from platform_101ab_fill_path_a is:
  *   BE u32 hdr(=5) | BE u32 body_size | BE u16 event_code | body...
@@ -64,10 +64,17 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
  * writes entry+0=0 / entry+8=hdr-2 (Call1 proven).
  *
  * Env JJFB_PATH_A_EVENT_CONTRACT=0 disables; unset/1 enables (product default).
+ * Arms once per (module_id, module_generation) before the first 0x101AB Path-A
+ * fill; subsequent fills in the same generation are idempotent ALREADY and do
+ * not re-poke 0x15C/A94 after Guest has started the Path-A stream.
  * Touches only ER_RW+0x15C (byte) and ER_RW+0xA90+4 — never 0x15D/B71/UI_MODE.
+ * Non-robotol / non-JJFB modules are skipped (no unconditional MRP poke).
  */
 int platform_path_a_event_contract_enabled(void);
-int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw);
+int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw,
+                                              uint64_t module_id,
+                                              uint64_t module_generation,
+                                              const char *module_name);
 
 int platform_event_queue_is_ready(void);
 GwyEventQueueState platform_event_queue_state(void);

@@ -229,10 +229,14 @@ static void apply_product_env(JjfbLauncherState *st) {
         SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", "1");
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", "1");
         SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", "1");
     } else {
         SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", NULL);
+        /* Handler trace stays off unless explicitly set by the user/env. */
+        if (!getenv("JJFB_PATH_A_HANDLER_TRACE"))
+            SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", NULL);
     }
 }
 
@@ -366,7 +370,12 @@ static void poll_child(JjfbLauncherState *st) {
              strcmp(st->milestone, "guest_entry_called") == 0 ||
              strcmp(st->milestone, "waiting_for_first_frame") == 0 ||
              strcmp(st->milestone, "event_path_a_seen") == 0 ||
-             strcmp(st->milestone, "event_node_linked") == 0)) {
+             strcmp(st->milestone, "event_node_linked") == 0 ||
+             strcmp(st->milestone, "path_a_valid_dispatch") == 0 ||
+             strcmp(st->milestone, "path_a_handler_entered") == 0 ||
+             strcmp(st->milestone, "path_a_handler_returned") == 0 ||
+             strcmp(st->milestone, "post_dispatch_event_seen") == 0 ||
+             strcmp(st->milestone, "resource_request_seen") == 0)) {
             /* Keep waiting_for_first_frame stage; milestone shows real evidence. */
         }
         return;

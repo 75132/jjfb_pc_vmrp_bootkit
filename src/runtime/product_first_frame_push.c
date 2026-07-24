@@ -3,8 +3,11 @@
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_post_drain_gate_trace.h"
+#include "gwy_launcher/product_path_a_handler_trace.h"
 #include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
+#include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -166,6 +169,7 @@ void product_ffp_set_run_id(const char *run_id) {
     product_na_set_run_id(run_id);
     product_eqc_set_run_id(run_id);
     product_pdgt_set_run_id(run_id);
+    product_pah_set_run_id(run_id);
     product_eot_set_run_id(run_id);
     product_runtime_progress_set_run_id(run_id);
 }
@@ -194,6 +198,7 @@ void product_ffp_reset(void) {
     product_na_reset();
     product_eqc_reset();
     product_pdgt_reset();
+    product_pah_reset();
     product_eot_reset();
     product_runtime_progress_reset();
     memset(g_samples, 0, sizeof(g_samples));
@@ -372,6 +377,15 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
         product_pdgt_bind_uc(uc);
         product_pdgt_note_er_rw(er_rw);
         product_pdgt_arm_hooks(uc);
+    }
+    if (product_pah_enabled()) {
+        ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+        const GwyLoadedModule *rob = reg ? module_registry_find(reg, "robotol.ext") : NULL;
+        product_pah_bind_uc(uc);
+        product_pah_note_er_rw(er_rw);
+        if (rob && rob->map.guest_code_base && rob->map.guest_code_size)
+            product_pah_note_module_range(rob->map.guest_code_base, rob->map.guest_code_size);
+        product_pah_arm_hooks(uc);
     }
     if (product_eot_enabled()) {
         product_eot_bind_uc(uc);
@@ -640,10 +654,12 @@ void product_ffp_on_next_timer(void *uc, uint32_t er_rw) {
     if (!product_ffp_enabled()) return;
     platform_event_service_on_next_timer(uc, er_rw);
     product_eqc_on_timer_decision(uc, er_rw, 0);
+    product_pah_on_10140_tick(uc, er_rw);
 }
 
 void product_ffp_note_resource_open(const char *path) {
     GwyFfpPhase ph = product_ffp_phase();
+    if (product_pah_enabled()) product_pah_note_resource_request(path);
     if (!product_ffp_enabled()) return;
     /* Only emit after Event→Resource transition (or Resource/Validate modes). */
     if (ph != GWY_FFP_PHASE_RESOURCE && ph != GWY_FFP_PHASE_VALIDATE &&
@@ -684,6 +700,7 @@ void product_ffp_note_disp_up_ex(void) {
     printf("[FIRST_NATURAL_REFRESH] api=_DispUpEx run_id=%s evidence=OBSERVED\n",
            product_ffp_run_id());
     fflush(stdout);
+    product_pah_note_disp_up();
 }
 
 static void write_abi_manifest(void) {
@@ -885,6 +902,7 @@ void product_ffp_finalize(void) {
     product_na_finalize();
     product_eqc_finalize();
     product_pdgt_finalize();
+    product_pah_finalize();
     product_eot_finalize();
     write_samples_csv();
     write_mem_csv();

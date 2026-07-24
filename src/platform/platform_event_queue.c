@@ -25,10 +25,20 @@ static GwyPlatformEventQueue g_q;
 static int g_drain_sched;
 static int g_drain_done;
 
+/* Path-A framing arm state — one poke per module generation. */
+static int g_path_a_armed;
+static uint64_t g_path_a_arm_module_id;
+static uint64_t g_path_a_arm_generation;
+static uint32_t g_path_a_arm_er_rw;
+
 void platform_event_queue_reset(void) {
     memset(&g_q, 0, sizeof(g_q));
     g_drain_sched = 0;
     g_drain_done = 0;
+    g_path_a_armed = 0;
+    g_path_a_arm_module_id = 0;
+    g_path_a_arm_generation = 0;
+    g_path_a_arm_er_rw = 0;
 }
 
 uint32_t platform_event_queue_drain_trigger(void) { return GWY_EVENT_LIST_DRAIN_TRIGGER; }
@@ -135,24 +145,56 @@ int platform_path_a_event_contract_enabled(void) {
     return 1;
 }
 
-int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw) {
+static int path_a_module_is_jjfb_robotol(const char *module_name) {
+    if (!module_name || !module_name[0]) return 0;
+    if (strstr(module_name, "robotol")) return 1;
+    if (strstr(module_name, "mmochat")) return 1; /* JJFB alias in some packs */
+    return 0;
+}
+
+int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw, uint64_t module_id,
+                                              uint64_t module_generation,
+                                              const char *module_name) {
     uint8_t flag = 1;
     uint8_t old_flag = 0;
     uint32_t old_hdr = 0;
     uint32_t zero = 0;
+    int same_generation;
 
+    /* contract=0 → full restore of cold-start framing (no poke). */
     if (!platform_path_a_event_contract_enabled()) return 0;
     if (!uc || !er_rw) return 0;
+
+    /* Fixed ER_RW offsets are proven only for JJFB/Robotol — never all MRPs. */
+    if (!path_a_module_is_jjfb_robotol(module_name)) {
+        printf("[PATH_A_EVENT_CONTRACT] op=SKIP_NON_ROBOTOL er_rw=0x%X module=%s "
+               "module_id=%llu evidence=OBSERVED\n",
+               er_rw, module_name ? module_name : "?", (unsigned long long)module_id);
+        fflush(stdout);
+        return 0;
+    }
+
+    same_generation =
+        g_path_a_armed && g_path_a_arm_er_rw == er_rw &&
+        g_path_a_arm_module_id == module_id &&
+        g_path_a_arm_generation == module_generation && module_generation != 0;
 
     (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_FLAG_OFF, &old_flag,
                                1);
     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_SLOT_OFF,
                                    &old_hdr);
 
-    if (old_flag == 1u && old_hdr == 0u) {
-        printf("[PATH_A_EVENT_CONTRACT] op=ALREADY er_rw=0x%X flag15c=1 a90_4=0 "
+    /*
+     * Idempotent ALREADY for the same module generation: do not re-poke 0x15C/A94
+     * after Guest has begun consuming the Path-A stream.
+     */
+    if (same_generation || (g_path_a_armed && g_path_a_arm_er_rw == er_rw && old_flag == 1u &&
+                            old_hdr == 0u && module_generation == g_path_a_arm_generation)) {
+        printf("[PATH_A_CONTRACT_ARM] module_id=%llu module_generation=%llu er_rw=0x%X "
+               "reason=ALREADY old_15C=%u old_A94=0x%X new_15C=%u new_A94=0x%X "
                "evidence=OBSERVED\n",
-               er_rw);
+               (unsigned long long)module_id, (unsigned long long)module_generation, er_rw,
+               (unsigned)old_flag, old_hdr, (unsigned)old_flag, old_hdr);
         fflush(stdout);
         return 1;
     }
@@ -171,10 +213,16 @@ int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw) {
         return 0;
     }
 
-    printf("[PATH_A_EVENT_CONTRACT] op=ARMED er_rw=0x%X old_flag15c=%u old_a90_4=0x%X "
-           "new_flag15c=1 new_a90_4=0 note=hdr_preconsume_before_framing_loop "
+    g_path_a_armed = 1;
+    g_path_a_arm_module_id = module_id;
+    g_path_a_arm_generation = module_generation ? module_generation : 1ull;
+    g_path_a_arm_er_rw = er_rw;
+
+    printf("[PATH_A_CONTRACT_ARM] module_id=%llu module_generation=%llu er_rw=0x%X "
+           "reason=FIRST_PATH_A_FILL old_15C=%u old_A94=0x%X new_15C=1 new_A94=0 "
            "evidence=OBSERVED\n",
-           er_rw, (unsigned)old_flag, old_hdr);
+           (unsigned long long)module_id, (unsigned long long)g_path_a_arm_generation, er_rw,
+           (unsigned)old_flag, old_hdr);
     fflush(stdout);
     return 1;
 }

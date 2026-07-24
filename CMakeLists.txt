@@ -89,6 +89,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_event_node_alloc.c
     src/runtime/product_event_queue_consumer.c
     src/runtime/product_post_drain_gate_trace.c
+    src/runtime/product_path_a_handler_trace.c
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c
 )
