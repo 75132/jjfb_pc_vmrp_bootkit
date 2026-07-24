@@ -2,6 +2,7 @@
 #include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include <stdio.h>
@@ -29,6 +30,7 @@
 #define OFF_C76 0xC76u
 #define PC_2DC82E 0x2DC82Eu /* after get_item: r0=item */
 #define PC_2DC848 0x2DC848u /* alternate/dispatch branch */
+#define PC_2DC8D4 0x2DC8D4u /* consumer return / dispatch tail */
 #define PC_30BC40 0x30BC40u /* item destructor (free path) */
 #define PC_305EC2 0x305EC2u /* post-drain gate sample */
 #define PC_305EF4 0x305EF4u /* BL 2DADC4 when gates pass */
@@ -334,6 +336,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         count = product_eqc_peek_count(uc, list);
         add_live(pc, list, head, count, 0, "DRAIN_TRIGGER_ENTER");
         add_tl(uc, "drain_trigger_305EB8", list, head, "EVENT_QUEUE_CONSUMER_TRIGGER");
+        product_fp_note_drain_trigger(count);
         printf("[EVENT_QUEUE_CONSUMER_TRIGGER_ENTER] pc=0x305EB8 list=0x%X head=0x%X count=%u "
                "evidence=OBSERVED\n",
                list, head, count);
@@ -355,6 +358,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                list, head, count);
         fflush(stdout);
         product_h2_note_consumer_enter(count);
+        product_fp_note_consumer_enter(count);
         if (count == 0) {
             printf("[EVENT_NODE_NOT_VISIBLE_TO_CONSUMER] list=0x%X head=0x%X count=0 "
                    "evidence=OBSERVED\n",
@@ -393,7 +397,15 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                    before);
             fflush(stdout);
             product_runtime_progress_emit("event_node_consumed", "eqc", "pop_312C0C");
+            product_h2_note_nested_consume(0, before);
+            product_fp_note_nested_consume(before);
         }
+    } else if (tag == 15) { /* 0x2DC8D4 consumer leave / dispatch tail */
+        list = g_first_list;
+        if (g_er_rw)
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, g_er_rw + OFF_B54, &list);
+        count = product_eqc_peek_count(uc, list);
+        product_fp_note_consumer_exit(count);
     } else if (tag == 6) { /* push return sites — count should already be updated */
         list = g_first_list ? g_first_list : r4;
         head = product_eqc_peek_head(uc, list);
@@ -461,7 +473,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
 void product_eqc_arm_code_hooks(void *uc) {
 #ifdef GWY_HAVE_UNICORN
     uc_hook h1 = 0, h2 = 0, h3 = 0, h4 = 0, h5 = 0, h6 = 0, h7 = 0;
-    uc_hook h8 = 0, h9 = 0, h10 = 0, h11 = 0, h12 = 0, h13 = 0, h14 = 0;
+    uc_hook h8 = 0, h9 = 0, h10 = 0, h11 = 0, h12 = 0, h13 = 0, h14 = 0, h15 = 0;
     if (!product_eqc_enabled() || !uc || g_hook_ok) return;
     g_uc = uc;
     (void)uc_hook_add((uc_engine *)uc, &h1, UC_HOOK_CODE, on_eqc_code, (void *)(intptr_t)1,
@@ -492,9 +504,11 @@ void product_eqc_arm_code_hooks(void *uc) {
                       (uint64_t)PC_2DADC4, (uint64_t)PC_2DADC4 + 1ull);
     (void)uc_hook_add((uc_engine *)uc, &h14, UC_HOOK_CODE, on_eqc_code, (void *)(intptr_t)14,
                       (uint64_t)PC_2FC418, (uint64_t)PC_2FC418 + 1ull);
+    (void)uc_hook_add((uc_engine *)uc, &h15, UC_HOOK_CODE, on_eqc_code, (void *)(intptr_t)15,
+                      (uint64_t)PC_2DC8D4, (uint64_t)PC_2DC8D4 + 1ull);
     g_hook_ok = 1;
     printf("[EQC_CODE_HOOKS] armed sites=305EB8,2DC80C,312AC4,312AB4,312C0C,312A84,312AA0,"
-           "2DC82E,2DC848,30BC40,305EC2,305EF4,2DADC4,2FC418 evidence=OBSERVED\n");
+           "2DC82E,2DC848,30BC40,305EC2,305EF4,2DADC4,2FC418,2DC8D4 evidence=OBSERVED\n");
     fflush(stdout);
 #else
     (void)uc;

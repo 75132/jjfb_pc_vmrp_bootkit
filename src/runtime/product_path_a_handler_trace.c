@@ -4,6 +4,7 @@
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -685,6 +686,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
             product_runtime_progress_emit("nested_path_a_published", "pah", "push_312A60");
             product_runtime_progress_emit("post_dispatch_event_seen", "pah", "push_312A60");
             product_h2_note_nested_publish(g_handler_call_id, pah_peek_queue_count(uc));
+            product_fp_note_nested_publish(pah_peek_queue_count(uc));
             printf("[PAH_QUEUE] op=PUSH pc=0x312A60 during=%d evidence=OBSERVED\n",
                    g_handler_active);
             fflush(stdout);
@@ -695,6 +697,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
             g_freed_entry = 1;
             product_runtime_progress_emit("nested_path_a_consumed", "pah", "pop_312C0C");
             product_h2_note_nested_consume(g_handler_call_id, pah_peek_queue_count(uc));
+            product_fp_note_nested_consume(pah_peek_queue_count(uc));
             printf("[PAH_QUEUE] op=POP_OR_FREE pc=0x312C0C evidence=OBSERVED\n");
             fflush(stdout);
         }

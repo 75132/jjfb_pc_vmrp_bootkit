@@ -1,4 +1,5 @@
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_runtime_progress.h"
@@ -710,6 +711,7 @@ void product_h2_on_handler_enter(void *uc, uint32_t lr, uint32_t r0, uint32_t r1
     touch_block(PC_HELPER_LO);
     if (r9 && !g_er_rw) g_er_rw = r9;
     arm_helper_hook(uc);
+    product_fp_note_helper_active(1);
     product_runtime_progress_emit("path_a_helper_running", "h2", "0x2F68E4");
     printf("[H2_ENTER] call_id=%u lr=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X r9=0x%X evidence=OBSERVED\n",
            g_handler_call_id, lr, r0, r1, r2, r3, r9);
@@ -720,6 +722,7 @@ void product_h2_on_handler_leave(void *uc, const char *reason) {
     if (!g_helper_active) return;
     g_helper_active = 0;
     g_helper_returned = 1;
+    product_fp_note_helper_active(0);
     disarm_helper_hook(uc);
     snprintf(g_stop_reason, sizeof(g_stop_reason), "%s", reason ? reason : "return");
     product_runtime_progress_emit("path_a_helper_returned", "h2", g_stop_reason);

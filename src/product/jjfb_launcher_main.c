@@ -247,6 +247,7 @@ static void apply_product_env(JjfbLauncherState *st) {
         SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", "1");
         SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", "1");
         SetEnvironmentVariableA("JJFB_HELPER_2F68E4_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_FIELD_PARSER_TRACE", "1");
     } else {
         SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", NULL);
@@ -258,6 +259,8 @@ static void apply_product_env(JjfbLauncherState *st) {
             SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", NULL);
         if (!getenv("JJFB_HELPER_2F68E4_TRACE"))
             SetEnvironmentVariableA("JJFB_HELPER_2F68E4_TRACE", NULL);
+        if (!getenv("JJFB_FIELD_PARSER_TRACE"))
+            SetEnvironmentVariableA("JJFB_FIELD_PARSER_TRACE", NULL);
     }
 }
 

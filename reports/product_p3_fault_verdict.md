@@ -1,6 +1,6 @@
 # Product P3 Fault Verdict
 
-- **run_id:** h2_B_20260725_012349
+- **run_id:** fp8_B_20260725_013726
 - **primary_class:** CALLBACK_RETURN_SENTINEL_OK
 - **halted:** no
 - **ok_returns:** 3

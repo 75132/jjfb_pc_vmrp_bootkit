@@ -52,6 +52,7 @@
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/product_path_a_handler_trace.h"
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
@@ -2011,6 +2012,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         product_h2_note_platform_api(r0, 28u, caller_pc, lr, r0, r1, r2, r3, ret,
                                      result.name ? result.name : "sendAppEvent");
         product_h2_note_callback_depth(module_r9_switch_depth());
+        product_fp_note_callback_depth(module_r9_switch_depth());
     }
     /* Poll after every plat call — SDL timers do not run during nested emu. */
     gwy_ext_obs_timer_poll(uc);

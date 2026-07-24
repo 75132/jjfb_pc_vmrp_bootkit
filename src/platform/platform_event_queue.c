@@ -1,6 +1,7 @@
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,6 +65,7 @@ void platform_event_queue_note_drain_scheduled(uint32_t handler) {
     g_drain_sched = 1;
     g_drain_done = 0;
     product_eqc_note_drain_scheduled(handler);
+    product_fp_note_drain_scheduled(handler);
     printf("[EVENT_QUEUE_NONEMPTY_VISIBLE] drain_trigger=0x%X source=platform_event_queue "
            "evidence=OBSERVED\n",
            handler);
@@ -74,6 +76,7 @@ void platform_event_queue_note_drain_delivered(uint32_t handler, int ok) {
     g_drain_done = 1;
     g_drain_sched = 0; /* clear so a later nonempty push can re-arm */
     product_eqc_note_drain_delivered(handler, ok);
+    product_fp_note_drain_delivered(ok);
 }
 
 GwyPlatformEventQueue *platform_event_queue_get(void) { return &g_q; }

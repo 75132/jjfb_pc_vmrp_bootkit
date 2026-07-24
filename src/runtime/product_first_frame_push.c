@@ -6,6 +6,7 @@
 #include "gwy_launcher/product_path_a_handler_trace.h"
 #include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/module_registry.h"
@@ -174,6 +175,7 @@ void product_ffp_set_run_id(const char *run_id) {
     product_pah_set_run_id(run_id);
     product_p10138_set_run_id(run_id);
     product_h2_set_run_id(run_id);
+    product_fp_set_run_id(run_id);
     product_eot_set_run_id(run_id);
     product_runtime_progress_set_run_id(run_id);
 }
@@ -205,6 +207,7 @@ void product_ffp_reset(void) {
     product_pah_reset();
     product_p10138_reset();
     product_h2_reset();
+    product_fp_reset();
     product_eot_reset();
     product_runtime_progress_reset();
     memset(g_samples, 0, sizeof(g_samples));
@@ -384,18 +387,22 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
         product_pdgt_note_er_rw(er_rw);
         product_pdgt_arm_hooks(uc);
     }
-    if (product_pah_enabled() || product_h2_enabled()) {
+    if (product_pah_enabled() || product_h2_enabled() || product_fp_enabled()) {
         ModuleRegistry *reg = gwy_ext_loader_bound_registry();
         const GwyLoadedModule *rob = reg ? module_registry_find(reg, "robotol.ext") : NULL;
         product_pah_bind_uc(uc);
         product_h2_bind_uc(uc);
+        product_fp_bind_uc(uc);
         product_pah_note_er_rw(er_rw);
         product_h2_note_er_rw(er_rw);
+        product_fp_note_er_rw(er_rw);
         if (rob && rob->map.guest_code_base && rob->map.guest_code_size) {
             product_pah_note_module_range(rob->map.guest_code_base, rob->map.guest_code_size);
             product_h2_note_module_range(rob->map.guest_code_base, rob->map.guest_code_size);
+            product_fp_note_module_range(rob->map.guest_code_base, rob->map.guest_code_size);
         }
         product_pah_arm_hooks(uc);
+        product_fp_arm_hooks(uc);
     }
     if (product_eot_enabled()) {
         product_eot_bind_uc(uc);
@@ -915,6 +922,7 @@ void product_ffp_finalize(void) {
     product_pah_finalize();
     product_p10138_finalize();
     product_h2_finalize();
+    product_fp_finalize();
     product_eot_finalize();
     write_samples_csv();
     write_mem_csv();
