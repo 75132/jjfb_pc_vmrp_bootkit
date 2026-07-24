@@ -1,0 +1,11 @@
+{
+  "node_size": 12,
+  "fields": [
+    {"offset": 0, "producer": "0x3D3D6152", "consumer_pc": "0x312AB4", "role": "PREV_OR_LINK", "class": "pointer"},
+    {"offset": 4, "producer": "0x0", "consumer_pc": "0x312C0C", "role": "NEXT_OR_LINK", "class": "pointer"},
+    {"offset": 8, "producer": "0x2A8474", "consumer_pc": "0x312AB4", "role": "ITEM", "class": "pointer", "nullability": "non_null_observed"}
+  ],
+  "empty_body": "EVENT_RECORD_OPTIONAL",
+  "verdict": "EVENT_NODE_SCHEMA_CONSUMER_CONFIRMED",
+  "run_id": "ffp_validate_20260724_040748_40125"
+}

@@ -1,6 +1,6 @@
 # Product P4 Stall Verdict
 
-- **run_id:** ffp_validate_20260724_033705_36171
+- **run_id:** ffp_event_20260724_042300_25225
 - **verdict:** PREDICATE_INCONCLUSIVE
 - **source_class:** UNKNOWN
 - **callback_class:** CALLBACK_STABLE_POLL_LOOP
@@ -11,7 +11,7 @@
 - **early_change_then_stall:** no
 - **first_sig_change_seq:** 0
 - **stable_from_seq:** 1
-- **callbacks_captured:** 8
+- **callbacks_captured:** 3
 
 ## Required question
 

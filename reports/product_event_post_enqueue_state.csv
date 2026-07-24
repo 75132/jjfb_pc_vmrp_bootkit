@@ -1,0 +1,8 @@
+run_id,metric,value
+ffp_validate_20260724_040748_40125,EVENT_NODE_LINKED,1
+ffp_validate_20260724_040748_40125,list,0x2829D4
+ffp_validate_20260724_040748_40125,head_at_link,0x2A840C
+ffp_validate_20260724_040748_40125,count_at_link,2
+ffp_validate_20260724_040748_40125,post_head,0x2A838C
+ffp_validate_20260724_040748_40125,post_count,2
+ffp_validate_20260724_040748_40125,verdict,EVENT_NODE_CONSUMED_NO_ACK

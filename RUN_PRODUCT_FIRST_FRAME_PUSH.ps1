@@ -11,7 +11,8 @@ param(
   [switch]$ApplyAbi,
   [switch]$Trace305E09,
   [switch]$TraceQueueBootstrap,
-  [switch]$TraceNodeAlloc
+  [switch]$TraceNodeAlloc,
+  [switch]$TraceQueueConsumer
 )
 
 $ErrorActionPreference = 'Stop'
@@ -48,6 +49,7 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE',
   'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT',
   'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP', 'JJFB_PRODUCT_TRACE_NODE_ALLOC',
+  'JJFB_PRODUCT_TRACE_QUEUE_CONSUMER',
   'JJFB_101AB_EMPTY', 'JJFB_101AB_WITH_RECORD'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
@@ -142,7 +144,8 @@ $env:GWY_CALLBACK_FRAME = '1'
 $env:JJFB_E5_SCHEDULER_MODE = '1'
 
 # Round B opt-in: apply recovered context/stack into family delivery ABI.
-if ($ApplyAbi -or $Mode -eq 'Validate') {
+# TraceQueueConsumer also needs Path-A + B54 ready to observe drain.
+if ($ApplyAbi -or $Mode -eq 'Validate' -or $TraceQueueConsumer) {
   $env:JJFB_PRODUCT_FFP_APPLY_ABI = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_FFP_APPLY_ABI -ErrorAction SilentlyContinue
@@ -159,7 +162,7 @@ if ($Trace305E09 -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
 }
 
 # Event Queue Bootstrap Closure: normalize B54/owner-store + write history.
-if ($TraceQueueBootstrap -or $Mode -eq 'Validate') {
+if ($TraceQueueBootstrap -or $Mode -eq 'Validate' -or $TraceQueueConsumer) {
   $env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP -ErrorAction SilentlyContinue
@@ -170,6 +173,14 @@ if ($TraceNodeAlloc -or $Mode -eq 'Validate') {
   $env:JJFB_PRODUCT_TRACE_NODE_ALLOC = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_TRACE_NODE_ALLOC -ErrorAction SilentlyContinue
+}
+
+# Event Queue Consumption Closure: enqueue timeline + natural drain trigger.
+if ($TraceQueueConsumer -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
+  $env:JJFB_PRODUCT_TRACE_QUEUE_CONSUMER = '1'
+  $env:JJFB_PRODUCT_TRACE_NODE_ALLOC = '1'
+} else {
+  Remove-Item Env:JJFB_PRODUCT_TRACE_QUEUE_CONSUMER -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.
@@ -363,6 +374,12 @@ $pathAComplete = [bool]($all -match '\[EVENT_PATH_A_ENQUEUE_COMPLETE\]')
 $fault94 = [bool]($all -match '\[EXT_FAULT\].*fault_pc=0x94E40|\[NA_FAULT_94E40\]|memory_access_pc=0x94E40')
 $nodeCtorOk = [bool]($all -match '\[EVENT_NODE_CONSTRUCTION_COMPLETE\]')
 $uiModeNz = [bool]($all -match 'ui_mode=0x[1-9A-Fa-f]|UI_MODE.*nonzero|ui_mode=[1-9]')
+$consumerEnter = [bool]($all -match '\[EVENT_QUEUE_CONSUMER_ENTER\]')
+$consumerTrig = [bool]($all -match '\[EVENT_QUEUE_CONSUMER_TRIGGER|DRAIN_TRIGGER')
+$nodeConsumed = [bool]($all -match '\[EVENT_NODE_CONSUMED\]')
+$queueAck = [bool]($all -match '\[EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED\]|EVENT_COMPLETION_GUEST_VISIBLE')
+$countChanged = [bool]($all -match '\[EVENT_LIST_COUNT_CHANGED\]')
+$nonemptyVis = [bool]($all -match '\[EVENT_QUEUE_NONEMPTY_VISIBLE\]')
 
 $farthest = 'timer_stable_poll'
 if ($captureHit -and $fbHit -and $hwndHit) { $farthest = 'first_natural_frame' }
@@ -400,7 +417,11 @@ elseif ($fault94 -and -not $stateAdv) {
   $firstGap = 'list-node/path-A DSM mem primitive fault @0x94E40 (UI_MODE still 0)'
 }
 elseif ($pathAComplete -and -not $uiModeNz -and -not $stateAdv) {
-  $firstGap = 'Path A node construction complete; UI_MODE still 0 / state not advanced'
+  if ($nodeLinked -and -not $consumerEnter) {
+    $firstGap = 'node linked but queue consumer/drain trigger not reached (UI_MODE still 0)'
+  } else {
+    $firstGap = 'Path A node construction complete; UI_MODE still 0 / state not advanced'
+  }
 }
 elseif ($pathARecovered -and $pathAOk -and -not $stateAdv -and -not $pathAComplete) {
   $firstGap = 'Path A enqueued after B54 recover; node construction incomplete'
@@ -421,6 +442,12 @@ if ($forbidHit) {
   } else {
     $verdict = 'FORBIDDEN_OR_FAULT'
   }
+} elseif ($queueAck -and $stateAdv) {
+  $verdict = 'EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED'
+} elseif ($nodeConsumed -and $consumerEnter) {
+  $verdict = 'EVENT_QUEUE_CONSUMER_REACHED'
+} elseif ($consumerTrig -and $nonemptyVis -and -not $consumerEnter) {
+  $verdict = 'EVENT_QUEUE_CONSUMER_NOT_SCHEDULED'
 } elseif ($nodeCtorOk -and $pathAComplete -and $stateAdv) {
   $verdict = 'EVENT_NODE_CONSTRUCTION_COMPLETE'
 } elseif ($pathAComplete -and -not $fault94 -and $stateAdv) {
@@ -428,7 +455,9 @@ if ($forbidHit) {
 } elseif ($nodeCtorOk -and $pathAComplete -and -not $fault94 -and $resReq) {
   $verdict = 'EVENT_NODE_CONSTRUCTION_COMPLETE'
 } elseif ($nodeCtorOk -and $pathAComplete -and -not $fault94) {
-  $verdict = 'EVENT_PATH_A_ENQUEUE_OK'
+  if ($consumerEnter) { $verdict = 'EVENT_QUEUE_CONSUMER_REACHED' }
+  elseif ($nonemptyVis) { $verdict = 'EVENT_QUEUE_NONEMPTY_VISIBLE' }
+  else { $verdict = 'EVENT_PATH_A_ENQUEUE_OK' }
 } elseif ($Mode -eq 'Event') {
   if ($stateAdv -or $sigChanged) {
     $verdict = 'P6_ROBOTOL_STATE_CHANGED'
@@ -502,6 +531,11 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 - **NODE_94E40_FUNCTION_IDENTIFIED:** $(if ($node94Id) { 'yes' } else { 'no' })
 - **NODE_FIRST_CAUSAL_ZERO_FOUND:** $(if ($nodeFirstZero) { 'yes' } else { 'no' })
 - **EVENT_LIST_NODE_LINKED:** $(if ($nodeLinked) { 'yes' } else { 'no' })
+- **EVENT_LIST_COUNT_CHANGED:** $(if ($countChanged) { 'yes' } else { 'no' })
+- **EVENT_QUEUE_NONEMPTY_VISIBLE:** $(if ($nonemptyVis) { 'yes' } else { 'no' })
+- **EVENT_QUEUE_CONSUMER_TRIGGER:** $(if ($consumerTrig) { 'yes' } else { 'no' })
+- **EVENT_QUEUE_CONSUMER_ENTER:** $(if ($consumerEnter) { 'yes' } else { 'no' })
+- **EVENT_NODE_CONSUMED:** $(if ($nodeConsumed) { 'yes' } else { 'no' })
 - **NODE_ALLOCATION_RETURN_VALID:** $(if ($nodeAllocOk) { 'yes' } else { 'no' })
 - **EVENT_PATH_A_ENQUEUE_COMPLETE:** $(if ($pathAComplete) { 'yes' } else { 'no' })
 - **fault_at_0x94E40:** $(if ($fault94) { 'yes' } else { 'no' })
@@ -565,6 +599,10 @@ $okModes = @(
   'EVENT_NODE_ALLOC_PROVENANCE_MAPPED',
   'EVENT_NODE_CONSTRUCTION_COMPLETE',
   'EVENT_PATH_A_ENQUEUE_OK',
+  'EVENT_QUEUE_NONEMPTY_VISIBLE',
+  'EVENT_QUEUE_CONSUMER_REACHED',
+  'EVENT_QUEUE_CONSUMER_NOT_SCHEDULED',
+  'EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED',
   'P7_RESOURCE_REQUEST_SEEN',
   'P7_RESOURCE_TRANSACTION_COMPLETE',
   'P7_WAITING_RESOURCE_AFTER_STATE',

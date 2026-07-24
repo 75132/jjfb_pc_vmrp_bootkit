@@ -56,6 +56,16 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
 int platform_event_queue_is_ready(void);
 GwyEventQueueState platform_event_queue_state(void);
 
+/*
+ * After Path-A links a node, schedule the proven natural drain *trigger*
+ * (periodic entry that BLs the B54 consumer). Does not call the consumer
+ * directly. Returns 1 if a family/completion slot should deliver `*out_handler`.
+ */
+int platform_event_queue_need_drain_trigger(void *uc, uint32_t er_rw, uint32_t *out_handler);
+void platform_event_queue_note_drain_scheduled(uint32_t handler);
+void platform_event_queue_note_drain_delivered(uint32_t handler, int ok);
+uint32_t platform_event_queue_drain_trigger(void);
+
 #ifdef __cplusplus
 }
 #endif

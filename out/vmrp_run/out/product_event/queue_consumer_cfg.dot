@@ -1,0 +1,16 @@
+digraph queue_consumer {
+  rankdir=LR;
+  PathA_312A60 [label="list_push\n0x312A60"];
+  B54 [label="list_control\nER_RW+B54"];
+  Trigger_305EB8 [label="periodic\n0x305EB8"];
+  Drain_2DC80C [label="drain\n0x2DC80C"];
+  Count_312AC4 [label="count\n0x312AC4"];
+  Get_312AB4 [label="get_item\n0x312AB4"];
+  Pop_312C0C [label="pop\n0x312C0C"];
+  PathA_312A60 -> B54 [label="head+count++"];
+  Trigger_305EB8 -> Drain_2DC80C;
+  Drain_2DC80C -> Count_312AC4;
+  Drain_2DC80C -> Get_312AB4;
+  Drain_2DC80C -> Pop_312C0C;
+  Count_312AC4 -> B54 [label="read +4"];
+}

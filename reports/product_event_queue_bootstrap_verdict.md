@@ -1,6 +1,6 @@
 # Product Event Queue Bootstrap Verdict
 
-- run_id: `ffp_validate_20260724_033705_36171`
+- run_id: `ffp_validate_20260724_040748_40125`
 - A1 identity: owner_store vs B54 **differ** (ER_RW+owner_store offset vs ER_RW+0xB54)
 - A2 B54 history (pre-fix): `B54_IS_INTERNAL_LIST_HEAD`
 - A3: 10162/10165 sized alloc + optional handler; returns are guest pointers; queue list is **not** the 10165 buffer

@@ -1,6 +1,7 @@
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
+#include "gwy_launcher/product_event_queue_consumer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -318,6 +319,7 @@ static void on_na_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
                "evidence=OBSERVED\n",
                r0, r1, count);
         fflush(stdout);
+        product_eqc_on_path_a_begin(uc, r0, r1, count);
     } else if (tag == 4) { /* 0x312A68 BL — r0 is node size after MOVS #0xC */
         g_node_size_seen = r0;
         capture_boundary(uc, "312A60_NODE_ALLOC_SIZE", pc, PC_2D99AC, r0);
@@ -364,6 +366,7 @@ static void on_na_code(uc_engine *uc, uint64_t address, uint32_t size, void *use
                    "evidence=OBSERVED\n",
                    g_push_list, head, r0, g_push_entry);
             fflush(stdout);
+            product_eqc_on_path_a_linked(uc, g_push_list, head, r0, g_push_entry, count);
         }
         capture_boundary(uc, "312A60_AFTER_NODE", pc, r0, g_node_size_seen);
     } else if (tag == 6) { /* 0x2D99AC heap helper entry */

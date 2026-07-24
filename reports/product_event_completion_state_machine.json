@@ -1,0 +1,18 @@
+{
+  "request": "0x1E209/app=9",
+  "path_a": "30D2F9 -> 101AB -> 2E4D6C -> 312A60",
+  "list": "ER_RW+B54",
+  "after_enqueue": "UI_MODE remains 0; same request reissued by 10140",
+  "consumer_trigger": "0x305EB8 (Thumb deliver 0x305EB9)",
+  "consumer": "0x2DC80C",
+  "item_free": "0x30BC40",
+  "post_drain_gates": "15D==1 && B71!=0 && 134D==0 -> 0x2DADC4",
+  "ui_writer": "0x2FC418 stores 0x45 at ER_RW+0x8D0",
+  "trigger_class": "TIMER_POLL",
+  "gate_sample": {"15D": 0, "B71": 0, "134D": 0, "C76": 0},
+  "item_path": {"alt_2DC848": 1, "free_30BC40": 1},
+  "ack_blocker": "POST_DRAIN_GATE_15D_B71_134D",
+  "verdict": "EVENT_ACK_BLOCKER_IDENTIFIED",
+  "run_id": "ffp_event_20260724_042300_25225",
+  "notes": "Live: after drain 15D=0 and B71=0 so BL 2DADC4 never taken; C76=0 takes alt path then still frees via 30BC40"
+}

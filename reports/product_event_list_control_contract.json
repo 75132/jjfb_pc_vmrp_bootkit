@@ -1,0 +1,14 @@
+{
+  "size": 8,
+  "fields": [
+    {"offset": "0x0", "role": "HEAD", "empty": "0", "nonempty": "node_ptr", "readers": ["0x312A86", "0x2DC812"], "writers": ["0x312A7E", "0x312C2C"]},
+    {"offset": "0x4", "role": "COUNT", "empty": "0", "nonempty": ">=1", "readers": ["0x312A78", "0x312AC4", "0x2DC814"], "writers": ["0x312A82", "0x312A9E", "0x312C36"], "nonempty_predicate": "count!=0 via 0x312AC4"}
+  ],
+  "second_field_class": "COUNT",
+  "verdicts": [
+    "EVENT_LIST_HEAD_CONTRACT_CONFIRMED",
+    "EVENT_LIST_SECOND_FIELD_IDENTIFIED",
+    "EVENT_LIST_NONEMPTY_STATE_CONFIRMED"
+  ],
+  "run_id": "ffp_validate_20260724_040748_40125"
+}

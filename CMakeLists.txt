@@ -87,6 +87,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_first_frame_push.c
     src/runtime/product_event_queue_bootstrap.c
     src/runtime/product_event_node_alloc.c
+    src/runtime/product_event_queue_consumer.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES

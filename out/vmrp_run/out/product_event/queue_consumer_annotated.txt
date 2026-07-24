@@ -1,0 +1,30 @@
+# Event queue consumer (Path-A B54 list)
+#
+# list_control { head@0, count@4 } size=8 ctor=0x312AA4 push=0x312A60
+# nonempty predicate: BL 0x312AC4 → LDR r0,[list,#4]; CMP r0,#0
+# get item:          BL 0x312AB4 → node = f(list); LDR r0,[node,#8]
+# pop/remove:        BL 0x312C0C → unlink; count--; free via 0x305E08
+#
+# Natural consumer of B54 (Path A):
+===== drain_entry @ 0x2DC80C =====
+0x2DC80C: PUSH {lr}
+0x2DC80E: LDR r4,[pc] ; =0xB54
+0x2DC810: ADD r4,r9
+0x2DC812: LDR r0,[r4]
+0x2DC814: BL 0x312AC4          ; count
+0x2DC81E: CMP r0,#0
+0x2DC820: BLE empty_return
+0x2DC82A: BL 0x312AB4          ; get item
+0x2DC83A: BL 0x312C0C          ; pop
+0x2DC844: STRB #1 → R9+B7D
+#
+# Natural trigger (sole BL → 0x2DC80C):
+===== periodic @ 0x305EB8 =====
+0x305EB8: PUSH {lr}
+0x305EBA: BL 0x2DC984
+0x305EBE: BL 0x2DC80C          ; *** B54 drain ***
+0x305EC2: gates 15D/B71/134D → optional 0x2DADC4
+#
+# Upstream of trigger: mrc_event path 0x2F5732 → BL 0x305EB8
+# 10140 handler 0x30630D drains R9+0x11B0 (different list), not B54.
+# Path A after push also STRB B7D=1 @ 0x2E4F2C (flag only; not a scheduler).

@@ -1,25 +1,31 @@
 ﻿# Product First-Frame Push Verdict
 
-- **run_id:** ffp_validate_20260724_033705_36171
-- **mode:** Validate
-- **verdict:** EVENT_NODE_CONSTRUCTION_COMPLETE
+- **run_id:** ffp_event_20260724_042300_25225
+- **mode:** Event
+- **verdict:** EVENT_QUEUE_CONSUMER_REACHED
 - **runtime:** Gwy+stubs
-- **seconds:** 150
+- **seconds:** 90
 - **process_exit:** killed
 - **apply_abi:** yes
-- **ok_callback_returns:** 8
+- **ok_callback_returns:** 3
 
 ## Farthest natural milestone
 
-- **farthest:** resource_request
-- **last_successful_transaction:** EVENT_PATH_A_ENQUEUE_OK
-- **first_unmet_platform_contract:** Path A node construction complete; UI_MODE still 0 / state not advanced
+- **farthest:** event_list_node_linked
+- **last_successful_transaction:** EVENT_PATH_A_ENQUEUE_OK / EVENT_NODE_CONSUMED
+- **first_unmet_platform_contract:** post-drain gates 15D=0 and B71=0 block 2DADC4→2FC418 (POST_DRAIN_GATE_15D_B71_134D)
+
+## Ack path (live)
+
+- Drain runs; `C76=0` → alt `0x2DC848` → still frees via `0x30BC40` (destructor, not ack)
+- Gate sample at `0x305EC2`: **15D=0 B71=0 134D=0** → no `2DADC4` / `2FC418`
+- Next: natural writers for 15D (`0x30CBBC`) and B71 (`0x2DC4D8`/`0x2E2520`) — no flag/UI poke
 
 ## Event / ABI
 
-- **guest request samples:** 8
-- **EVENT_TXN ACCEPT:** 8
-- **FAMILY DELIVER:** 16
+- **guest request samples:** 3
+- **EVENT_TXN ACCEPT:** 3
+- **FAMILY DELIVER:** 9
 - **SUPPRESS:** 0
 - **identity_class:** SAME_UNFINISHED_REQUEST
 - **EVENT_LIST_HEAD_INITIALIZED:** yes
@@ -27,8 +33,13 @@
 - **NODE_94E40_FUNCTION_IDENTIFIED:** yes
 - **NODE_FIRST_CAUSAL_ZERO_FOUND:** yes
 - **EVENT_LIST_NODE_LINKED:** yes
+- **EVENT_LIST_COUNT_CHANGED:** yes
+- **EVENT_QUEUE_NONEMPTY_VISIBLE:** yes
+- **EVENT_QUEUE_CONSUMER_TRIGGER:** yes
+- **EVENT_QUEUE_CONSUMER_ENTER:** yes
+- **EVENT_NODE_CONSUMED:** yes
 - **NODE_ALLOCATION_RETURN_VALID:** yes
-- **EVENT_PATH_A_ENQUEUE_COMPLETE:** yes
+- **EVENT_PATH_A_ENQUEUE_COMPLETE:** no
 - **fault_at_0x94E40:** no
 - **EVENT_TRANSACTION_IDENTITY_CONFIRMED:** yes
 - **EVENT_CONTEXT_OBJECT_IDENTIFIED:** yes
@@ -41,7 +52,7 @@
 
 ## Resource / display
 
-- **resource request:** yes
+- **resource request:** no
 - **resource read:** no
 - **framebuffer modified:** no
 - **_DispUpEx called:** no
@@ -63,12 +74,12 @@
 
 ## Artifacts
 
-- **manifest:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_manifest_ffp_validate_20260724_033705_36171.txt
-- **csv_requests:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_event_requests.csv
-- **csv_10165:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_10165_objects.csv
-- **csv_samples:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_guest_request_samples.csv
-- **csv_mem:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_handler_mem.csv
-- **abi_manifest:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_family_abi_manifest.json
+- **manifest:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_manifest_ffp_event_20260724_042300_25225.txt
+- **csv_requests:** missing
+- **csv_10165:** missing
+- **csv_samples:** missing
+- **csv_mem:** missing
+- **abi_manifest:** missing
 - **forbidden_hits:** none
 
 ## Discipline

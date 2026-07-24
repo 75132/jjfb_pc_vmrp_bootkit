@@ -48,6 +48,7 @@
 #include "gwy_launcher/product_first_frame_push.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/product_event_node_alloc.h"
+#include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_timer_cadence.h"
@@ -127,6 +128,8 @@ typedef struct GwyFamilyEvent {
     int del_apply_stack;
     /* 1 = 10165 Path-A enqueue ABI: R0=buf10165 R1=buf10162 (not family app/event). */
     int enqueue_mode;
+    /* 1 = deliver proven B54 drain trigger (periodic); R0=R1=0. */
+    int drain_trigger_mode;
     uint32_t enq_r0;
     uint32_t enq_r1;
     uint64_t owner_module_id;
@@ -855,6 +858,18 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                    "request_id=%llu evidence=OBSERVED\n",
                    ev->handler, abi.r0, abi.r1, (unsigned long long)ev->request_id);
             fflush(stdout);
+        } else if (ev->drain_trigger_mode) {
+            /* Periodic drain trigger: no args; R9 already restored to owner ER_RW. */
+            abi.r0 = 0;
+            abi.r1 = 0;
+            printf("[PLATFORM_FAMILY_EVENT] op=DRAIN_TRIGGER handler=0x%X "
+                   "note=periodic_after_path_a_nonempty request_id=%llu evidence=OBSERVED\n",
+                   ev->handler, (unsigned long long)ev->request_id);
+            fflush(stdout);
+            printf("[EVENT_QUEUE_CONSUMER_TRIGGER_IDENTIFIED] trigger=0x%X class=TIMER_POLL "
+                   "consumer=0x2DC80C evidence=OBSERVED\n",
+                   ev->handler);
+            fflush(stdout);
         } else {
             /* Family switch ABI: subcode in R0 (sendAppEvent app), event id in R1. */
             abi.r0 = ev->app;
@@ -870,7 +885,7 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         }
 
         /* Round B: place recovered stack args at entry SP[0]/SP[4] (AAPCS). */
-        if (ev->del_apply_stack && !ev->enqueue_mode) {
+        if (ev->del_apply_stack && !ev->enqueue_mode && !ev->drain_trigger_mode) {
 #ifdef GWY_HAVE_UNICORN
             uint32_t sp = 0;
             if (guest_memory_uc_read_sp((struct uc_struct *)uc, &sp) && sp >= 8u) {
@@ -929,6 +944,32 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", ev->handler);
         fflush(stdout);
 
+        if (ev->drain_trigger_mode)
+            platform_event_queue_note_drain_delivered(ev->handler, ok);
+
+        /* Case 2: after Path-A enqueue makes B54 nonempty, schedule the proven
+         * periodic drain trigger once (not a direct 0x2DC80C call). */
+        if (ev->enqueue_mode && ok && product_ffp_enabled() &&
+            env_flag("JJFB_PRODUCT_EVENT_CONTRACT") && g_family_eq_n < GWY_P4_FAMILY_EVENT_Q) {
+            uint32_t dtrig = 0;
+            uint32_t erw = r9_run;
+            if (platform_event_queue_need_drain_trigger(uc, erw, &dtrig) && dtrig) {
+                GwyFamilyEvent *ds = &g_family_eq[g_family_eq_n++];
+                memset(ds, 0, sizeof(*ds));
+                ds->used = 1;
+                ds->handler = dtrig;
+                ds->drain_trigger_mode = 1;
+                ds->event_code = ev->event_code;
+                ds->app = ev->app;
+                ds->owner_module_id = ev->owner_module_id;
+                ds->owner_generation = ev->owner_generation;
+                ds->request_id = ev->request_id;
+                snprintf(ds->owner_module, sizeof(ds->owner_module), "%s", ev->owner_module);
+                platform_event_queue_note_drain_scheduled(dtrig);
+                product_eqc_on_path_a_return(uc, platform_event_queue_get()->list_object);
+            }
+        }
+
         if (product_p4_enabled()) {
             product_p4_note_work("event_completion_delivered", 0x10102u, ev->event_code, ev->handler,
                                  ev->owner_module_id, ev->owner_generation, ev->owner_module, 1, 1,
@@ -937,7 +978,8 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         {
             GwyScheduledWork delivered;
             memset(&delivered, 0, sizeof(delivered));
-            delivered.source = GWY_SCHED_SRC_PLATFORM_EVENT;
+            delivered.source = ev->drain_trigger_mode ? GWY_SCHED_SRC_PLATFORM_COMPLETION
+                                                     : GWY_SCHED_SRC_PLATFORM_EVENT;
             delivered.handler_or_helper = ev->handler;
             delivered.method_or_event = ev->event_code;
             delivered.forced = 0;
