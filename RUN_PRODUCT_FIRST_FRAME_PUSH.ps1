@@ -13,7 +13,8 @@ param(
   [switch]$TraceQueueBootstrap,
   [switch]$TraceNodeAlloc,
   [switch]$TraceQueueConsumer,
-  [switch]$TracePostDrainGate
+  [switch]$TracePostDrainGate,
+  [switch]$TraceB71Dispatch
 )
 
 $ErrorActionPreference = 'Stop'
@@ -51,6 +52,7 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT',
   'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP', 'JJFB_PRODUCT_TRACE_NODE_ALLOC',
   'JJFB_PRODUCT_TRACE_QUEUE_CONSUMER', 'JJFB_POST_DRAIN_GATE_TRACE',
+  'JJFB_B71_DISPATCH_TRACE',
   'JJFB_101AB_EMPTY', 'JJFB_101AB_WITH_RECORD'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
@@ -189,6 +191,15 @@ if ($TracePostDrainGate -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
   $env:JJFB_POST_DRAIN_GATE_TRACE = '1'
 } else {
   Remove-Item Env:JJFB_POST_DRAIN_GATE_TRACE -ErrorAction SilentlyContinue
+}
+
+# B71 dispatch predicate: bounded CFG/read trace inside 0x2E2520 (observe-only).
+# Requires POST_DRAIN_GATE_TRACE hooks; TraceB71Dispatch alone also enables PDGT.
+if ($TraceB71Dispatch) {
+  $env:JJFB_POST_DRAIN_GATE_TRACE = '1'
+  $env:JJFB_B71_DISPATCH_TRACE = '1'
+} else {
+  Remove-Item Env:JJFB_B71_DISPATCH_TRACE -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.
@@ -555,6 +566,10 @@ $csvMem = Join-Path $reportDir 'product_ffp_handler_mem.csv'
 $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 $pdgtCsv = Join-Path $reportDir 'product_post_drain_gate_watch.csv'
 $pdgtTl = Join-Path $reportDir 'product_post_drain_gate_timeline.md'
+$dispTl = Join-Path $reportDir 'product_b71_dispatch_timeline.md'
+$dispCalls = Join-Path $reportDir 'product_b71_dispatch_calls.csv'
+$dispBr = Join-Path $reportDir 'product_b71_dispatch_branches.csv'
+$dispRd = Join-Path $reportDir 'product_b71_dispatch_reads.csv'
 $hashesPath = Join-Path $reportDir "product_ffp_hashes_$runId.txt"
 
 function Get-Sha256OrMissing([string]$path) {
@@ -587,6 +602,10 @@ $csvMemSha = Get-Sha256OrMissing $csvMem
 $abiSha = Get-Sha256OrMissing $abiJson
 $pdgtCsvSha = Get-Sha256OrMissing $pdgtCsv
 $pdgtTlSha = Get-Sha256OrMissing $pdgtTl
+$dispTlSha = Get-Sha256OrMissing $dispTl
+$dispCallsSha = Get-Sha256OrMissing $dispCalls
+$dispBrSha = Get-Sha256OrMissing $dispBr
+$dispRdSha = Get-Sha256OrMissing $dispRd
 
 $gateSampleLine = if ($null -ne $gate15d) {
   "15D=$gate15d B71=$gateB71 134D=$gate134d C76=$(if ($null -ne $gateC76) { $gateC76 } else { '?' })"
@@ -642,6 +661,11 @@ $successorStatus = if ($successorReached) { 'POST_DRAIN_SUCCESSOR_REACHED' } els
 - **PDGT enter 2DC4D8:** $(if ($pdgtEnter2dc) { 'yes' } else { 'no' })
 - **PDGT store 15D:** $(if ($pdgtStore15d) { 'yes' } else { 'no' })
 - **PDGT store B71:** $(if ($pdgtStoreB71) { 'yes' } else { 'no' })
+- **B71_dispatch_trace:** $(if ($env:JJFB_B71_DISPATCH_TRACE -eq '1') { 'yes' } else { 'no' })
+- **b71_dispatch_timeline:** $(if (Test-Path $dispTl) { "$dispTl sha256=$dispTlSha" } else { 'missing' })
+- **b71_dispatch_calls:** $(if (Test-Path $dispCalls) { "$dispCalls sha256=$dispCallsSha" } else { 'missing' })
+- **b71_dispatch_branches:** $(if (Test-Path $dispBr) { "$dispBr sha256=$dispBrSha" } else { 'missing' })
+- **b71_dispatch_reads:** $(if (Test-Path $dispRd) { "$dispRd sha256=$dispRdSha" } else { 'missing' })
 
 ## Event / ABI
 
@@ -704,6 +728,7 @@ $successorStatus = if ($successorReached) { 'POST_DRAIN_SUCCESSOR_REACHED' } els
 - **abi_manifest:** $(if (Test-Path $abiJson) { "$abiJson sha256=$abiSha" } else { 'missing' })
 - **pdgt_watch_csv:** $(if (Test-Path $pdgtCsv) { "$pdgtCsv sha256=$pdgtCsvSha" } else { 'missing' })
 - **pdgt_timeline:** $(if (Test-Path $pdgtTl) { "$pdgtTl sha256=$pdgtTlSha" } else { 'missing' })
+- **b71_dispatch_timeline:** $(if (Test-Path $dispTl) { "$dispTl sha256=$dispTlSha" } else { 'missing' })
 - **forbidden_hits:** $(if ($forbidHit) { ($forbidHit -join ', ') } else { 'none' })
 
 ## Discipline
@@ -733,6 +758,10 @@ csv_mem_sha256=$csvMemSha
 abi_manifest_sha256=$abiSha
 pdgt_watch_sha256=$pdgtCsvSha
 pdgt_timeline_sha256=$pdgtTlSha
+b71_dispatch_timeline_sha256=$dispTlSha
+b71_dispatch_calls_sha256=$dispCallsSha
+b71_dispatch_branches_sha256=$dispBrSha
+b71_dispatch_reads_sha256=$dispRdSha
 verdict_sha256=$verdictSha
 verdict_path=$verdictPath
 "@ | Set-Content -Path $hashesPath -Encoding utf8
