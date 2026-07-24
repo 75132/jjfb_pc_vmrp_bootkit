@@ -19,6 +19,7 @@
 #ifdef GWY_USE_VM_FILE_SERVICE
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/jjfb_plat_11f00.h"
+#include "gwy_launcher/platform_memory_ops.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31d_provenance.h"
@@ -562,12 +563,15 @@ static void br_mr_free(BridgeMap *o, uc_engine *uc) {
 
 static void br_memcpy(BridgeMap *o, uc_engine *uc) {
     //  void* (*T_memcpy)(void* dst, const void* src, int n);
-    uint32_t dst, src, n;
+    uint32_t dst, src, n, ret;
+    (void)o;
     uc_reg_read(uc, UC_ARM_REG_R0, &dst);
     uc_reg_read(uc, UC_ARM_REG_R1, &src);
     uc_reg_read(uc, UC_ARM_REG_R2, &n);
     gwy_ext_obs_block_copy(dst, src, n);
-    SET_RET_V((uint32_t)memcpy(getMrpMemPtr(dst), getMrpMemPtr(src), n));
+    /* Formal platform contract (Task 10): validated Guest binary copy. */
+    ret = platform_guest_memcpy(uc, dst, src, n);
+    SET_RET_V(ret);
 }
 
 static void br_memset(BridgeMap *o, uc_engine *uc) {

@@ -695,8 +695,13 @@ int product_fp_enabled(void) {
 
 int product_fsc_enabled(void) {
     if (!g_fsc_known) {
-        /* Default ON (unset); explicit 0 disables for A/B baseline. */
-        g_fsc_en = env0("JJFB_FIELD_STREAM_CONTRACT") ? 0 : 1;
+        /*
+         * Task 10: Scheme C fixed-PC pre-copy is calibration-only.
+         * Default OFF; formal copy is JJFB_PLATFORM_MEMCPY_IMPORT @ 0x804A8.
+         * Explicit 1 re-enables Scheme C for A/B/D matrix. No silent fallback
+         * when the formal import fails.
+         */
+        g_fsc_en = env1("JJFB_FIELD_STREAM_CONTRACT");
         g_fsc_known = 1;
     }
     return g_fsc_en;

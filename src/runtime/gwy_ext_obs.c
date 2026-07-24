@@ -56,6 +56,7 @@
 #include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
+#include "gwy_launcher/platform_memory_ops.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -203,6 +204,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_timer_reset();
     platform_scheduler_reset();
     platform_timer_cadence_reset();
+    platform_memcpy_import_reset();
+    platform_memcpy_import_bind_uc(uc);
+    platform_memcpy_import_arm(uc);
     product_callback_trace_reset();
     product_p4_reset();
     product_p5_reset();
@@ -2243,6 +2247,9 @@ void gwy_ext_obs_code_image(uint32_t guest_addr, uint32_t size) {
     ExtLoader *L = gwy_ext_loader_ensure();
     ModuleRegistry *reg;
     const GwyLoadedModule *m;
+    /* DSM image covers misbound copy import slot 0x804A8 — arm if not yet. */
+    platform_memcpy_import_bind_uc(g_bound_uc);
+    platform_memcpy_import_arm(g_bound_uc);
     ext_loader_on_code_image(L, guest_addr, size);
     ext_entry_observe_bootstrap_event("CODE_IMAGE");
     ext_module_entry_abi_on_code_image(guest_addr, size);

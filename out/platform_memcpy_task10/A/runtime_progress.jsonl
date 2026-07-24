@@ -1,0 +1,12 @@
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919149,"pid":23212,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919182,"pid":23212,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919182,"pid":23212,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919186,"pid":23212,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919186,"pid":23212,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919191,"pid":23212,"milestone":"path_a_valid_dispatch","source":"pah","details":"code5->2E4040"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919191,"pid":23212,"milestone":"path_a_handler_entered","source":"pah","details":"0x2E4040"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919191,"pid":23212,"milestone":"path_a_helper_running","source":"h2","details":"0x2F68E4"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919211,"pid":23212,"milestone":"nested_path_a_published","source":"pah","details":"push_312A60"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919211,"pid":23212,"milestone":"post_dispatch_event_seen","source":"pah","details":"push_312A60"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919211,"pid":23212,"milestone":"nested_event_pending","source":"h2","details":"push_312A60"}
+{"run_id":"pm10_A_20260725_025227","timestamp":1784919213,"pid":23212,"milestone":"path_a_valid_dispatch","source":"pah","details":"code5->2E4040"}

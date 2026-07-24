@@ -8,16 +8,19 @@ extern "C" {
 #endif
 
 /*
- * Field parser provenance (0x30A0CC) + Path-A inner binary-copy contract.
+ * Field parser provenance (0x30A0CC) + Path-A Scheme C calibration copy.
  *
  * Env:
  *   JJFB_FIELD_PARSER_TRACE=1     — observe-only traces (diagnostic)
- *   JJFB_FIELD_STREAM_CONTRACT=0  — disable inner memcpy repair (baseline)
- *   JJFB_FIELD_STREAM_CONTRACT=1  — enable repair (product default when unset)
+ *   JJFB_FIELD_STREAM_CONTRACT=1  — enable fixed-PC pre-copy @0x2E4ECA (calibration)
+ *   JJFB_FIELD_STREAM_CONTRACT=0  — disable (default after Task 10)
  *
- * Repair site: robotol 0x2E4ECA BLX — guest import resolves to DSM 0x804A8 which
- * is NOT memcpy; host performs binary copy of (dest,src,n) before the BLX.
- * Does not skip BLX (R9 restore must complete), force r5, or fabricate markers.
+ * Formal product copy is JJFB_PLATFORM_MEMCPY_IMPORT (platform_guest_memcpy bound
+ * to the misresolved DSM import identity 0x804A8). Scheme C must not silently
+ * fall back when that import fails.
+ *
+ * Calibration site: robotol 0x2E4ECA BLX — host binary copy before BLX; never
+ * skips BLX (R9 restore must complete).
  */
 
 int product_fp_enabled(void);
