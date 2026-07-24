@@ -3,6 +3,8 @@
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/product_platform_10138_trace.h"
+#include "gwy_launcher/product_helper_2f68e4_trace.h"
+#include "gwy_launcher/product_event_queue_consumer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -296,13 +298,13 @@ static void arm_dense_for_handler(uc_engine *uc) {
     e = uc_hook_add(uc, &g_dense_hook, UC_HOOK_CODE, (void *)on_dense, NULL, (uint64_t)dens_lo,
                     (uint64_t)dens_hi);
     if (e == UC_ERR_OK) g_dense_armed = 1;
-    if (g_er_rw && !g_mem_armed) {
+    if (g_er_rw && !g_mem_armed && !product_h2_enabled()) {
         e = uc_hook_add(uc, &g_mem_hook, UC_HOOK_MEM_WRITE, (void *)on_mem_write, NULL,
                         (uint64_t)g_er_rw, (uint64_t)(g_er_rw + 0x1FFFu));
         if (e == UC_ERR_OK) g_mem_armed = 1;
     }
-    printf("[PAH_DENSE] armed lo=0x%X hi=0x%X mem=%d evidence=OBSERVED\n", dens_lo, dens_hi,
-           g_mem_armed);
+    printf("[PAH_DENSE] armed lo=0x%X hi=0x%X mem=%d h2=%d evidence=OBSERVED\n", dens_lo, dens_hi,
+           g_mem_armed, product_h2_enabled());
     fflush(stdout);
 }
 
@@ -345,7 +347,15 @@ static void begin_handler(uc_engine *uc, uint32_t pc, uint32_t lr, uint32_t sp, 
                           uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3, uint32_t r9) {
     uint32_t r4 = 0;
     uint32_t entry;
-    if (g_handler_active) finish_handler(uc, "reenter");
+    if (g_handler_active) {
+        if (product_h2_helper_active()) {
+            printf("[PAH_REENTER] nested 2E4040 while 0x2F68E4 active call_id=%u evidence=OBSERVED\n",
+                   g_handler_call_id);
+            fflush(stdout);
+            return;
+        }
+        finish_handler(uc, "reenter");
+    }
     uc_reg_read(uc, UC_ARM_REG_R4, &r4);
     /*
      * 0x2E2520 switch head overwrites R0 with event_code/index before ADD PC.
@@ -381,7 +391,11 @@ static void begin_handler(uc_engine *uc, uint32_t pc, uint32_t lr, uint32_t sp, 
             g_inner_n = (int)sizeof(g_inner_bytes);
     }
     if (!g_er_rw && r9) g_er_rw = r9;
+    product_h2_note_handler_call_id(g_handler_call_id);
+    product_h2_note_er_rw(g_er_rw);
     arm_dense_for_handler(uc);
+    if (product_h2_enabled())
+        printf("[PAH_DENSE] lite boundary mode (JJFB_HELPER_2F68E4_TRACE=1) evidence=OBSERVED\n");
     sample_gate(uc, "handler_enter", pc);
     product_runtime_progress_emit("path_a_handler_entered", "pah", "0x2E4040");
     printf("[PAH_ENTER] handler_call_id=%u PC=0x%X LR=0x%X SP=0x%X CPSR=0x%X R0=0x%X R1=0x%X "
@@ -442,6 +456,14 @@ static int decode_bl_thumb(uc_engine *uc, uint32_t pc, uint32_t *out_tgt, int *o
     return 0;
 }
 
+static uint32_t pah_peek_queue_count(uc_engine *uc) {
+    uint32_t list = 0;
+    if (!uc || !g_er_rw) return 0;
+    if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, g_er_rw + OFF_B54, &list) || !list)
+        return 0;
+    return product_eqc_peek_count(uc, list);
+}
+
 static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
     uint32_t pc = (uint32_t)address;
     uint32_t lr = 0, sp = 0, cpsr = 0;
@@ -463,8 +485,53 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
     uc_reg_read(uc, UC_ARM_REG_R3, &r3);
     uc_reg_read(uc, UC_ARM_REG_R9, &r9);
 
+    /* Sparse helper trace replaces dense logging; keep milestone/return boundary watch. */
+    if (product_h2_enabled()) {
+        if (pc == (g_entry_lr & ~1u) || pc == g_entry_lr) {
+            product_h2_on_outside_pc(uc, pc, "ret_lr");
+            finish_handler(uc, "ret_lr");
+            return;
+        }
+        product_h2_on_outside_pc(uc, pc, NULL);
+        if (pc == PC_2E4066 && !g_seen_2e4066) {
+            g_seen_2e4066 = 1;
+            sample_gate(uc, "inside_2E4066", pc);
+            product_runtime_progress_emit("path_a_helper_returned", "pah", "0x2E4066");
+            product_p10138_note_helper_leave();
+        }
+        if (pc == PC_2F68E4 && !g_seen_2f68e4) {
+            g_seen_2f68e4 = 1;
+            product_p10138_note_helper_enter();
+            product_h2_on_handler_enter(uc, lr, r0, r1, r2, r3, r9);
+        }
+        if (pc == PC_2DADC4 && !g_seen_2dadc4) {
+            g_seen_2dadc4 = 1;
+            sample_gate(uc, "inside_2DADC4", pc);
+            product_runtime_progress_emit("lifecycle_successor_entered", "pah", "0x2DADC4");
+            product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
+            g_post_event_seen = 1;
+        }
+        if (decode_bl_thumb(uc, pc, &tgt, &is_blx)) {
+            if (tgt == PC_2F68E4 && !g_seen_2f68e4) {
+                g_seen_2f68e4 = 1;
+                product_p10138_note_helper_enter();
+                product_h2_on_handler_enter(uc, (pc + 4u) | 1u, r0, r1, r2, r3, r9);
+            }
+            if (tgt == PC_2DADC4 && !g_seen_2dadc4) {
+                g_seen_2dadc4 = 1;
+                g_post_event_seen = 1;
+                sample_gate(uc, "bl_2DADC4", pc);
+                product_runtime_progress_emit("lifecycle_successor_entered", "pah", "0x2DADC4");
+                product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
+            }
+            if (tgt == PC_2E4066) g_seen_2e4066 = 1;
+        }
+        return;
+    }
+
     /* Return to caller of 0x2E4040 (Thumb LR may have LSB). */
     if (pc == (g_entry_lr & ~1u) || pc == g_entry_lr) {
+        product_h2_on_outside_pc(uc, pc, "ret_lr");
         finish_handler(uc, "ret_lr");
         return;
     }
@@ -488,6 +555,7 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
         g_insn_count++;
     }
 
+    product_h2_on_outside_pc(uc, pc, NULL);
     if (pc == PC_2E4066) {
         if (!g_seen_2e4066) {
             g_seen_2e4066 = 1;
@@ -500,6 +568,7 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
         if (!g_seen_2f68e4) {
             g_seen_2f68e4 = 1;
             product_p10138_note_helper_enter();
+            product_h2_on_handler_enter(uc, lr, r0, r1, r2, r3, r9);
         }
     }
     if (pc == PC_2DADC4) {
@@ -534,6 +603,7 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
             if (!g_seen_2f68e4) {
                 g_seen_2f68e4 = 1;
                 product_p10138_note_helper_enter();
+                product_h2_on_handler_enter(uc, (pc + 4u) | 1u, r0, r1, r2, r3, r9);
             }
         }
         return;
@@ -614,6 +684,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
             g_post_event_seen = 1;
             product_runtime_progress_emit("nested_path_a_published", "pah", "push_312A60");
             product_runtime_progress_emit("post_dispatch_event_seen", "pah", "push_312A60");
+            product_h2_note_nested_publish(g_handler_call_id, pah_peek_queue_count(uc));
             printf("[PAH_QUEUE] op=PUSH pc=0x312A60 during=%d evidence=OBSERVED\n",
                    g_handler_active);
             fflush(stdout);
@@ -623,6 +694,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
         if (g_handler_active) {
             g_freed_entry = 1;
             product_runtime_progress_emit("nested_path_a_consumed", "pah", "pop_312C0C");
+            product_h2_note_nested_consume(g_handler_call_id, pah_peek_queue_count(uc));
             printf("[PAH_QUEUE] op=POP_OR_FREE pc=0x312C0C evidence=OBSERVED\n");
             fflush(stdout);
         }

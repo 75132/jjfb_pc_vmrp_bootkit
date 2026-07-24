@@ -146,6 +146,14 @@ static void set_milestone_label(JjfbLauncherState *st, const char *ms) {
     if (!ms || !ms[0]) return;
     if (strcmp(ms, "platform_10138_entered") == 0)
         disp = "Completing platform 0x10138";
+    else if (strcmp(ms, "path_a_helper_running") == 0)
+        disp = "Processing startup event";
+    else if (strcmp(ms, "nested_event_pending") == 0)
+        disp = "Waiting for nested event";
+    else if (strcmp(ms, "nested_event_consumed") == 0)
+        disp = "Continuing game initialization";
+    else if (strcmp(ms, "path_a_helper_stable_loop") == 0)
+        disp = "Diagnosing helper loop";
     else if (strcmp(ms, "path_a_helper_returned") == 0)
         disp = "Path-A helper returned";
     else if (strcmp(ms, "lifecycle_successor_entered") == 0)
@@ -238,6 +246,7 @@ static void apply_product_env(JjfbLauncherState *st) {
         SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", "1");
         SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", "1");
         SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_HELPER_2F68E4_TRACE", "1");
     } else {
         SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", NULL);
@@ -247,6 +256,8 @@ static void apply_product_env(JjfbLauncherState *st) {
             SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", NULL);
         if (!getenv("JJFB_PLATFORM_10138_TRACE"))
             SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", NULL);
+        if (!getenv("JJFB_HELPER_2F68E4_TRACE"))
+            SetEnvironmentVariableA("JJFB_HELPER_2F68E4_TRACE", NULL);
     }
 }
 
@@ -388,6 +399,10 @@ static void poll_child(JjfbLauncherState *st) {
              strcmp(st->milestone, "platform_10138_completed") == 0 ||
              strcmp(st->milestone, "nested_path_a_published") == 0 ||
              strcmp(st->milestone, "nested_path_a_consumed") == 0 ||
+             strcmp(st->milestone, "path_a_helper_running") == 0 ||
+             strcmp(st->milestone, "nested_event_pending") == 0 ||
+             strcmp(st->milestone, "nested_event_consumed") == 0 ||
+             strcmp(st->milestone, "path_a_helper_stable_loop") == 0 ||
              strcmp(st->milestone, "path_a_helper_returned") == 0 ||
              strcmp(st->milestone, "lifecycle_successor_entered") == 0 ||
              strcmp(st->milestone, "post_dispatch_event_seen") == 0 ||

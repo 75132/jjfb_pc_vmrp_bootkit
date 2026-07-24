@@ -1,6 +1,7 @@
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
+#include "gwy_launcher/product_helper_2f68e4_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include <stdio.h>
@@ -353,6 +354,7 @@ static void on_eqc_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
                "evidence=OBSERVED\n",
                list, head, count);
         fflush(stdout);
+        product_h2_note_consumer_enter(count);
         if (count == 0) {
             printf("[EVENT_NODE_NOT_VISIBLE_TO_CONSUMER] list=0x%X head=0x%X count=0 "
                    "evidence=OBSERVED\n",

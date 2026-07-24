@@ -1,0 +1,9 @@
+﻿variant=B
+run_id=h2_B_20260725_012349
+h2_trace=1
+plat_10138_contract=1
+hold=65
+saw_helper_running=True
+saw_stable_loop=False
+saw_helper_return=False
+saw_successor=False
