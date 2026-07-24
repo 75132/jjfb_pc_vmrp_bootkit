@@ -14,17 +14,22 @@
 0x2DC814: BL 0x312AC4          ; count
 0x2DC81E: CMP r0,#0
 0x2DC820: BLE empty_return
-0x2DC82A: BL 0x312AB4          ; get item
-0x2DC83A: BL 0x312C0C          ; pop
-0x2DC844: STRB #1 → R9+B7D
+0x2DC82A: BL 0x312AB4          ; get item → r0
+0x2DC830: BNE 0x2DC848         ; nonzero item → branch
+0x2DC848: if C76==1 && item[0]!=80 → BL 0x30BC40 (FREE item)
+         else alternate → may BL 0x2E2520 (can set B71)
+0x2DC83A/868: BL 0x312C0C     ; pop node; STRB B7D=1
 #
 # Natural trigger (sole BL → 0x2DC80C):
 ===== periodic @ 0x305EB8 =====
 0x305EB8: PUSH {lr}
 0x305EBA: BL 0x2DC984
 0x305EBE: BL 0x2DC80C          ; *** B54 drain ***
-0x305EC2: gates 15D/B71/134D → optional 0x2DADC4
+0x305EC2: gates: 15D==1 && B71!=0 && 134D==0
+0x305EF4: BL 0x2DADC4          ; gate_init → … → 0x2FC418 UI_MODE=0x45
 #
+# Ack note: 0x30BC40 is destructor NOT ack. B71 first writers:
+#   0x2DC572 via 0x2DC4D8 (from 0x2E2520 table); 0x30ED7A via 2DADC4 (after gate).
 # Upstream of trigger: mrc_event path 0x2F5732 → BL 0x305EB8
 # 10140 handler 0x30630D drains R9+0x11B0 (different list), not B54.
 # Path A after push also STRB B7D=1 @ 0x2E4F2C (flag only; not a scheduler).

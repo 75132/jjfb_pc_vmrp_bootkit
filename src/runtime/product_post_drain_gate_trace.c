@@ -472,6 +472,21 @@ static DispCall *begin_dispatch_call(uc_engine *uc, uint32_t pc, uint32_t lr, ui
     c->first_blocking_pred[0] = 0;
     g_dc_cur = c;
     g_bb_cur_start = pc;
+    /* Snapshot first words of object at R0 (candidate event / node). */
+    if (r0) {
+        uint32_t w0 = peek_u32(uc, r0);
+        uint32_t w1 = peek_u32(uc, r0 + 4u);
+        uint32_t w2 = peek_u32(uc, r0 + 8u);
+        uint32_t w3 = peek_u32(uc, r0 + 12u);
+        add_read(c->call_id, pc, 0, 0, r0, w0, "entry_obj+0");
+        add_read(c->call_id, pc, 0, 4, r0 + 4u, w1, "entry_obj+4");
+        add_read(c->call_id, pc, 0, 8, r0 + 8u, w2, "entry_obj+8");
+        add_read(c->call_id, pc, 0, 12, r0 + 12u, w3, "entry_obj+12");
+        printf("[PDGT_DISP_ENTER] call=%u r0=0x%X obj=[0]=0x%X [4]=0x%X [8]=0x%X [12]=0x%X "
+               "lr=0x%X evidence=OBSERVED\n",
+               c->call_id, r0, w0, w1, w2, w3, lr);
+        fflush(stdout);
+    }
     return c;
 }
 
@@ -637,7 +652,7 @@ static void on_dispatch_code(uc_engine *uc, uint64_t address, uint32_t size, voi
             char detail[96];
             snprintf(detail, sizeof(detail), "index=0x%X max=0x%X -> default", g_pending_cmp_a,
                      g_pending_cmp_b);
-            note_blocking(c, pc, "BHI_index_out_of_range", detail);
+            note_blocking(c, pc, "BCS_index_out_of_range", detail);
             c->dispatch_target = PC_2E4194;
         }
         g_pending_cmp_valid = 0;

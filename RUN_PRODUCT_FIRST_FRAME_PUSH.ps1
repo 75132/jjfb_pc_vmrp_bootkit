@@ -102,6 +102,13 @@ $pngPath = Join-Path $evidenceDir 'product_ffp_first_natural_frame.png'
   (Join-Path $reportDir 'product_ffp_guest_request_samples.csv'),
   (Join-Path $reportDir 'product_ffp_handler_mem.csv'),
   (Join-Path $reportDir 'product_ffp_family_abi_manifest.json'),
+  (Join-Path $reportDir 'product_post_drain_gate_watch.csv'),
+  (Join-Path $reportDir 'product_post_drain_gate_timeline.md'),
+  (Join-Path $reportDir 'product_post_drain_gate_summary.csv'),
+  (Join-Path $reportDir 'product_b71_dispatch_timeline.md'),
+  (Join-Path $reportDir 'product_b71_dispatch_calls.csv'),
+  (Join-Path $reportDir 'product_b71_dispatch_branches.csv'),
+  (Join-Path $reportDir 'product_b71_dispatch_reads.csv'),
   $bmpPath, $pngPath
 ) | ForEach-Object { Remove-Item -Force $_ -ErrorAction SilentlyContinue }
 
