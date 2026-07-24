@@ -1,36 +1,36 @@
 ﻿# Product First-Frame Push Verdict
 
-- **run_id:** ffp_event_20260724_155025_4016
+- **run_id:** ffp_event_20260724_200514_39822
 - **mode:** Event
 - **verdict:** EVENT_QUEUE_CONSUMER_REACHED
 - **runtime:** Gwy+stubs
-- **seconds:** 90
+- **seconds:** 50
 - **process_exit:** killed
 - **apply_abi:** yes
-- **ok_callback_returns:** 3
+- **ok_callback_returns:** 2
 
 ## Provenance
 
-- **git_commit:** d3c99d3225c64384f213ac17524d0d6722825070
-- **git_tree:** f1f2b117fc6820313637ede984839e1e089557dd
+- **git_commit:** 4e020b3249b3cd8d25004988b81e1414c2145a99
+- **git_tree:** 670edcb4750d2d0fa310b17a3bce9699a35c1143
 - **git_dirty:** yes
 - **runner_path:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\RUN_PRODUCT_FIRST_FRAME_PUSH.ps1
-- **runner_sha256:** aac32efa1e4277d69d467f97e8ccfd92c558003922b74dc4e7630f589965245e
+- **runner_sha256:** 6a22e3c409752ab94f4269d75e907d1baa95e3752fef08d360feecdb2e442021
 - **main_exe:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\main.exe
-- **main_exe_sha256:** fdf964de2a580230cb01e58d5b463313ae766e7f412882cd1b19fa197946011a
-- **gwy_launcher_sha256:** bbbe41e0354e399849d6b8672410beff9b0ece27352a50e9b0bf2ca3fb16f6ce
+- **main_exe_sha256:** 3406cf4a8d2eeededb24427c7372186befde714a2ef319266cd96c5ef83d3915
+- **gwy_launcher_sha256:** 450d04e2f1a821698c971fc6aac52e6b607ce49ca87983eacd37dc07f91c7d99
 - **stdout:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\product_ffp_stdout.txt
-- **stdout_sha256:** b174e5ff877947b7d4000db56e5f57e10b6755dd9f335b9a3357214e01d749b5
+- **stdout_sha256:** 758c90caee0758cdd11165c807697f6df9044e62433916b00db35e741d4e26d1
 - **stderr:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\product_ffp_stderr.txt
-- **stderr_sha256:** c209a4d83d6bb94fa4cb3a0d9786f3f1cd25cc9296f7209e9f1adc1cf4f2ba19
-- **hashes_sidecar:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_hashes_ffp_event_20260724_155025_4016.txt
-- **verdict_sha256:** d49939730f8de34e585803b8281e69c40452fc92e4b3695922040659a41c8bc3
+- **stderr_sha256:** 85d874072e2bc7387eb1fe9690f1d42eb98b6717a1f7518d7e473cb112d7738c
+- **hashes_sidecar:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_hashes_ffp_event_20260724_200514_39822.txt
+- **verdict_sha256:** d8d1d282cc807b3e59169ba26a597571b95ee67462f2cc8c74659e21fc94cecc
 
 ## Farthest natural milestone
 
 - **farthest:** event_node_consumed
 - **last_successful_transaction:** EVENT_NODE_CONSUMED
-- **first_unmet_platform_contract:** post-drain gates 15D=0 B71=0 134D=0 block 2DADC4->2FC418 (POST_DRAIN_GATE_15D_B71_134D)
+- **first_unmet_platform_contract:** request identity not classified across samples
 - **note:** `EVENT_PATH_A_ENQUEUE_COMPLETE` is an independent marker; if node linked/consumed, prefer consumer milestones over that marker.
 
 ## Post-Drain Gate (successor, not protocol ACK)
@@ -46,14 +46,19 @@
 - **PDGT enter 2DC4D8:** no
 - **PDGT store 15D:** no
 - **PDGT store B71:** no
+- **B71_dispatch_trace:** no
+- **b71_dispatch_timeline:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_b71_dispatch_timeline.md sha256=32e03694878843168c1f819cc416187772f026f1f638fbcf78c228f55cb7c890
+- **b71_dispatch_calls:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_b71_dispatch_calls.csv sha256=514817fc8c33c6371691a570eed0159da2bbc1d0f8e8fa0c6c5b3b52b7a463a6
+- **b71_dispatch_branches:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_b71_dispatch_branches.csv sha256=a689ef3748e18a6597dd826776bce6fd72e0b03d4dee6f4981b6956c1217be0c
+- **b71_dispatch_reads:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_b71_dispatch_reads.csv sha256=3af75a2233d48287b4c31efc8a7f12518114c60a9483c873a335fb7bbe1e2059
 
 ## Event / ABI
 
-- **guest request samples:** 3
-- **EVENT_TXN ACCEPT:** 3
-- **FAMILY DELIVER:** 9
+- **guest request samples:** 2
+- **EVENT_TXN ACCEPT:** 2
+- **FAMILY DELIVER:** 3
 - **SUPPRESS:** 0
-- **identity_class:** SAME_UNFINISHED_REQUEST
+- **identity_class:** UNKNOWN
 - **EVENT_LIST_HEAD_INITIALIZED:** yes
 - **EVENT_PATH_A_ENQUEUE_OK:** yes
 - **NODE_94E40_FUNCTION_IDENTIFIED:** yes
@@ -67,7 +72,7 @@
 - **NODE_ALLOCATION_RETURN_VALID:** yes
 - **EVENT_PATH_A_ENQUEUE_COMPLETE:** no
 - **fault_at_0x94E40:** no
-- **EVENT_TRANSACTION_IDENTITY_CONFIRMED:** yes
+- **EVENT_TRANSACTION_IDENTITY_CONFIRMED:** no
 - **EVENT_CONTEXT_OBJECT_IDENTIFIED:** yes
 - **EVENT_CONTEXT_OWNER_CONFIRMED:** yes
 - **EVENT_CONTEXT_LIFETIME_CONFIRMED:** yes
@@ -100,14 +105,15 @@
 
 ## Artifacts
 
-- **manifest:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_manifest_ffp_event_20260724_155025_4016.txt
+- **manifest:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_ffp_manifest_ffp_event_20260724_200514_39822.txt
 - **csv_requests:** missing
 - **csv_10165:** missing
 - **csv_samples:** missing
 - **csv_mem:** missing
 - **abi_manifest:** missing
-- **pdgt_watch_csv:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_post_drain_gate_watch.csv sha256=350ce3d5fe94546a9d74907b871245548cf0c9d65a1d059b3ab90eedbb3cc9ac
-- **pdgt_timeline:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_post_drain_gate_timeline.md sha256=2a287a12907954aadee2a51426cbdd1c613d4af33692d4a3e82bf4d8db20da62
+- **pdgt_watch_csv:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_post_drain_gate_watch.csv sha256=c70bedf4d5ffa9becd4de8cba29b2363637b20535ff318f0398274acff3944bc
+- **pdgt_timeline:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_post_drain_gate_timeline.md sha256=683b75c6cc52b8a141e62467dfa5966cded61d0e8cb0135e08ace4b315301dc5
+- **b71_dispatch_timeline:** C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\reports\product_b71_dispatch_timeline.md sha256=32e03694878843168c1f819cc416187772f026f1f638fbcf78c228f55cb7c890
 - **forbidden_hits:** none
 
 ## Discipline

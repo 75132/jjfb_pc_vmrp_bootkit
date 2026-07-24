@@ -7,29 +7,20 @@
     "size": 4,
     "condition": "ui_mode == 0",
     "current": "0",
-    "completed": "nonzero (natural writer 0x2FC418 stores 0x45)"
+    "completed": "nonzero (Path A / natural writer e.g. 0x45)"
   },
-  "consume_vs_ack": {
-    "drain": "0x2DC80C pops B54; with C76==0 enters 0x2DC848 alt then may still free via 0x30BC40",
-    "30BC40": "destructor only — does NOT write UI_MODE or B71",
-    "post_drain_gates": "0x305EC2: 15D==1 && B71!=0 && 134D==0 then BL 0x2DADC4",
-    "ui_writer": "0x2FC418"
+  "writer": {
+    "kind": "platform",
+    "api": "0x101AB via 10165 enqueue 0x30D24C -> 0x2E4D6C B54",
+    "evidence": "STATIC+OBSERVED: case9/0x305E08 only issues 0x10133 free; timer reissues while ER_RW+(0x800+0xD0)==0"
   },
-  "live_gate_sample": {
-    "run_id": "ffp_event_20260724_042300_25225",
-    "15D": 0,
-    "B71": 0,
-    "134D": 0,
-    "C76": 0,
-    "2DADC4": 0,
-    "2FC418": 0
+  "305e09_contract": {
+    "role": "platform_free_wrapper",
+    "nested": "sendAppEvent(0x10133, r0-4)",
+    "case9_r0": "event_code 0x1E209 (not heap ptr)"
   },
-  "flag_writers": {
-    "15D": "0x30CCF4 in 0x30CBBC (v62 observed strb_15D=1; this run never sticky-1 at gate)",
-    "B71_first": "0x2DC572 via 0x2DC4D8 from 0x2E2520 table",
-    "B71_after_gate": "0x30ED7A via 0x30ED2C (cannot seed first entry into 2DADC4)"
-  },
-  "ack_blocker": "POST_DRAIN_GATE_15D_B71_134D",
+  "completion_objs": {"10165": "0x6AD11C", "10162": "0x69EF14", "enq_handler": "0x30D2F9", "owner_store": "0x2B215C"},
+  "request_id": 1,
   "state_advanced": false,
-  "run_id": "ffp_event_20260724_042300_25225"
+  "run_id": "ffp_event_20260724_185427_35943"
 }
