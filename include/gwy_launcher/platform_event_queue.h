@@ -54,6 +54,20 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
                                          uint64_t owner_generation);
 
 /*
+ * Empty lifecycle-record list at ER_RW+B58 (same 8-byte {head,count} as B54).
+ *
+ * Proven: 0x2E4040 LDR r0,[R9+B58] → BL 0x2F68E4; helper pushes records via
+ * 0x312A60(list, record). Guest natural ctor: 0x2FE970 (BL 0x312AA4 → STR B58),
+ * not reached before cold-start Path-A with a body record.
+ *
+ * Publishes an empty list control object only — never fabricates records,
+ * never writes B71/15D/B70/UI_MODE, never host-enqueues a second code=5.
+ */
+int platform_event_queue_ensure_lifecycle_list(void *uc, uint32_t er_rw, uint64_t module_id,
+                                               uint64_t module_generation,
+                                               const char *module_name);
+
+/*
  * Path-A framing contract (robotol 0x2E4D6C / JJFB+Robotol profile only).
  *
  * Payload from platform_101ab_fill_path_a is:

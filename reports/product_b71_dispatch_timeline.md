@@ -1,7 +1,7 @@
 # B71 Dispatch Predicate Timeline
 
-- **run_id:** pm10_D_20260725_025450
-- **true_0x2E2520_calls:** 3
+- **run_id:** pa11_C_20260725_032805
+- **true_0x2E2520_calls:** 1
 - **B71_writer_grade:** candidate_entered_no_dispatch
 - **15D_writer_grade:** candidate_unproven
 

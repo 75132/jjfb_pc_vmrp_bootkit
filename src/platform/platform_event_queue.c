@@ -1,5 +1,6 @@
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/platform_path_a_response.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_field_parser_trace.h"
 #include <stdio.h>
@@ -9,6 +10,8 @@
 /* Proven list control object size from robotol 0x312AA4 (MOVS r0,#8). */
 #define GWY_EVENT_LIST_CTRL_SIZE 8u
 #define GWY_EVENT_LIST_HEAD_OFF 0xB54u
+/* Lifecycle record list slot: 0x2E4040 loads *B58 as r0 into 0x2F68E4. */
+#define GWY_LIFECYCLE_LIST_HEAD_OFF 0xB58u
 /* Path-A hdr-consume gate byte (LDRSB [R9+0x15C,#0] at 0x2E4D88) — not 0x15D. */
 #define GWY_PATH_A_HDR_FLAG_OFF 0x15Cu
 /* A90+4 receives BE hdr when gate is armed (STR at 0x2E4DA8). */
@@ -32,6 +35,8 @@ static uint64_t g_path_a_arm_module_id;
 static uint64_t g_path_a_arm_generation;
 static uint32_t g_path_a_arm_er_rw;
 
+static int path_a_module_is_jjfb_robotol(const char *module_name);
+
 void platform_event_queue_reset(void) {
     memset(&g_q, 0, sizeof(g_q));
     g_drain_sched = 0;
@@ -40,6 +45,7 @@ void platform_event_queue_reset(void) {
     g_path_a_arm_module_id = 0;
     g_path_a_arm_generation = 0;
     g_path_a_arm_er_rw = 0;
+    platform_path_a_response_reset();
 }
 
 uint32_t platform_event_queue_drain_trigger(void) { return GWY_EVENT_LIST_DRAIN_TRIGGER; }
@@ -136,6 +142,64 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
            "owner_module_id=%llu owner_generation=%llu evidence=OBSERVED\n",
            er_rw, slot, list, (unsigned long long)owner_module_id,
            (unsigned long long)owner_generation);
+    fflush(stdout);
+    return 1;
+}
+
+/*
+ * Empty lifecycle-record list at ER_RW+B58 (same 8-byte {head,count} as B54).
+ *
+ * Proven: 0x2E4040 does LDR r0,[R9+B58] then BL 0x2F68E4; helper pushes each
+ * parsed record via 0x312A60(list, record). Guest's natural ctor is at
+ * 0x2FE970 (BL 0x312AA4 → STR to B58) but that init is not reached before the
+ * first cold-start Path-A with a body record.
+ *
+ * This only publishes an empty list control object — never fabricates records,
+ * never writes B71/15D/B70/UI_MODE, never host-enqueues.
+ */
+int platform_event_queue_ensure_lifecycle_list(void *uc, uint32_t er_rw, uint64_t module_id,
+                                               uint64_t module_generation,
+                                               const char *module_name) {
+    uint32_t slot;
+    uint32_t cur = 0;
+    uint32_t list = 0;
+
+    if (!uc || !er_rw) return 0;
+    if (!path_a_module_is_jjfb_robotol(module_name)) {
+        printf("[LIFECYCLE_LIST] op=SKIP_NON_ROBOTOL er_rw=0x%X module=%s evidence=OBSERVED\n",
+               er_rw, module_name ? module_name : "?");
+        fflush(stdout);
+        return 0;
+    }
+
+    slot = er_rw + GWY_LIFECYCLE_LIST_HEAD_OFF;
+    if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, slot, &cur)) return 0;
+    if (cur) {
+        printf("[LIFECYCLE_LIST] op=ALREADY er_rw=0x%X slot=0x%X list=0x%X "
+               "module_id=%llu generation=%llu evidence=OBSERVED\n",
+               er_rw, slot, cur, (unsigned long long)module_id,
+               (unsigned long long)module_generation);
+        fflush(stdout);
+        return 1;
+    }
+
+    list = gwy_ext_obs_guest_malloc0(GWY_EVENT_LIST_CTRL_SIZE);
+    if (!list) {
+        printf("[LIFECYCLE_LIST] op=ALLOC_FAIL size=8 slot=0x%X evidence=OBSERVED\n", slot);
+        fflush(stdout);
+        return 0;
+    }
+    if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, slot, list)) {
+        printf("[LIFECYCLE_LIST] op=PUBLISH_FAIL list=0x%X slot=0x%X evidence=OBSERVED\n", list,
+               slot);
+        fflush(stdout);
+        return 0;
+    }
+    printf("[LIFECYCLE_LIST_INITIALIZED] er_rw=0x%X slot=0x%X list=0x%X size=8 "
+           "ctor=0x312AA4_contract site=0x2FE970_equiv module_id=%llu generation=%llu "
+           "evidence=OBSERVED\n",
+           er_rw, slot, list, (unsigned long long)module_id,
+           (unsigned long long)module_generation);
     fflush(stdout);
     return 1;
 }

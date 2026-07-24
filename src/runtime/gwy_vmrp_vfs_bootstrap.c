@@ -8,6 +8,7 @@
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/mrp_member_view.h"
 #include "gwy_launcher/package_scope.h"
+#include "gwy_launcher/platform_path_a_response.h"
 #include "gwy_launcher/sha256.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -92,6 +93,20 @@ int gwy_vmrp_prepare_guest_vfs(void) {
         fprintf(stderr, "[EXT_RESOLVE] profile load failed: %s path=%s\n", err.message, profile_path);
     } else {
         g_profile_loaded = 1;
+        if (g_profile.path_a_initial_record.declared) {
+            GwyPathAInitialRecord rec;
+            memset(&rec, 0, sizeof(rec));
+            rec.enabled = g_profile.path_a_initial_record.enabled;
+            rec.tag = g_profile.path_a_initial_record.tag;
+            snprintf(rec.name, sizeof(rec.name), "%s", g_profile.path_a_initial_record.name);
+            snprintf(rec.secondary, sizeof(rec.secondary), "%s",
+                     g_profile.path_a_initial_record.secondary);
+            rec.field_c = g_profile.path_a_initial_record.field_c;
+            rec.field_d = g_profile.path_a_initial_record.field_d;
+            rec.deliver_once_per_generation =
+                g_profile.path_a_initial_record.deliver_once_per_generation;
+            platform_path_a_response_set_initial_record(&rec);
+        }
         if (g_profile.target_mrp[0] && compatibility_profile_has_member_aliases(&g_profile)) {
             if (guest_vfs_resolve(&g_vfs, g_profile.target_mrp, VFS_OPEN_READ, &res, &err) != L_OK ||
                 !res.exists) {

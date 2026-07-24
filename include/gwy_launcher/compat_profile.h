@@ -9,6 +9,18 @@
 #define GWY_PROFILE_ALIAS_MAX 32
 #define GWY_PROFILE_NAME_MAX 128
 #define GWY_PROFILE_SCHEMA_VERSION 1
+#define GWY_PROFILE_PATH_A_NAME_MAX 64
+
+typedef struct CompatibilityPathAInitialRecord {
+    int declared; /* 1 if path_a_response.initial_record object was present */
+    int enabled;
+    uint32_t tag;
+    char name[GWY_PROFILE_PATH_A_NAME_MAX];
+    char secondary[GWY_PROFILE_PATH_A_NAME_MAX];
+    uint32_t field_c;
+    uint32_t field_d;
+    int deliver_once_per_generation;
+} CompatibilityPathAInitialRecord;
 
 typedef struct CompatibilityProfile {
     int schema_version;
@@ -23,6 +35,7 @@ typedef struct CompatibilityProfile {
     char alias_from[GWY_PROFILE_ALIAS_MAX][GWY_PROFILE_NAME_MAX];
     char alias_to[GWY_PROFILE_ALIAS_MAX][GWY_PROFILE_NAME_MAX];
     size_t alias_count;
+    CompatibilityPathAInitialRecord path_a_initial_record;
 } CompatibilityProfile;
 
 LauncherStatus compatibility_profile_load_json_file(const char *path,

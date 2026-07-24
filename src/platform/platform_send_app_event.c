@@ -1,4 +1,5 @@
 #include "gwy_launcher/platform_send_app_event.h"
+#include "gwy_launcher/platform_path_a_response.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,25 +23,33 @@ static void be16(uint8_t *p, uint16_t v) {
  * Framing @0x2E4D6C (when ER_RW+0x15C==1 && A90+4==0):
  *   308D98 consumes hdr → A90+4; loop then 308D98(body_size)+308D28(code)→entry+0,
  *   size=body_size-2 → entry+8, malloc(0xC) entry, malloc(size) inner.
- * Cold start without that gate leaves hdr in-stream → entry+0=0, entry+8=hdr-2.
  * Platform arms the gate via platform_event_queue_ensure_path_a_framing.
  *
- * Product default uses with_record=0 (empty: u16 + BE(-1) only). Embedding a
- * length-prefixed "downVersion" name made guest BE-read name ASCII as alloc
- * sizes / fake pointers after list-node push (TraceNodeAlloc → 0x94E40 fault).
+ * with_record=1 embeds one lifecycle record from the profile/response config
+ * (default name "downVersion", field_d=0x3EE). with_record=0 is empty body
+ * (u16 code + BE(-1)). Callers decide with_record via generation-scoped state;
+ * this function only serializes.
  */
 uint32_t platform_101ab_fill_path_a(uint8_t *dst, uint32_t dst_cap, int with_record) {
     uint8_t payload[160];
     uint32_t body_size;
     uint32_t payload_len;
     uint32_t o = 0;
-    const char *rec = "downVersion";
+    const GwyPathAInitialRecord *cfg = platform_path_a_response_initial_record();
+    const char *rec = (cfg && cfg->name[0]) ? cfg->name : "downVersion";
+    const char *sec = (cfg && cfg->secondary[0]) ? cfg->secondary : "";
     uint32_t name_len = (uint32_t)strlen(rec);
+    uint32_t sec_len = (uint32_t)strlen(sec);
+    uint32_t tag = (cfg && cfg->tag) ? cfg->tag : 1u;
+    uint32_t field_c = cfg ? cfg->field_c : 0u;
+    uint32_t field_d = cfg ? cfg->field_d : 0x3EEu;
     uint32_t total;
 
     if (!dst || dst_cap < 16u) return 0;
+    if (name_len > 48u) name_len = 48u;
+    if (sec_len > 48u) sec_len = 48u;
     if (with_record)
-        body_size = 2u + (4u + 2u + name_len + 2u + 0u + 4u + 4u + 4u);
+        body_size = 2u + (4u + 2u + name_len + 2u + sec_len + 4u + 4u + 4u);
     else
         body_size = 6u; /* u16 + BE(-1) */
     payload_len = 4u + 4u + 2u + (body_size - 2u);
@@ -53,17 +62,21 @@ uint32_t platform_101ab_fill_path_a(uint8_t *dst, uint32_t dst_cap, int with_rec
     be16(payload + o, 5u); /* node[0] → Path A */
     o += 2;
     if (with_record) {
-        be32(payload + o, 1u); /* tag */
+        be32(payload + o, tag);
         o += 4;
         be16(payload + o, (uint16_t)name_len);
         o += 2;
         memcpy(payload + o, rec, name_len);
         o += name_len;
-        be16(payload + o, 0); /* str2 empty */
+        be16(payload + o, (uint16_t)sec_len);
         o += 2;
-        be32(payload + o, 0);
+        if (sec_len) {
+            memcpy(payload + o, sec, sec_len);
+            o += sec_len;
+        }
+        be32(payload + o, field_c);
         o += 4;
-        be32(payload + o, 0x3EEu); /* local downVersion.v */
+        be32(payload + o, field_d);
         o += 4;
         be32(payload + o, 0xFFFFFFFFu);
         o += 4;

@@ -100,6 +100,80 @@ static int extract_u32_field(const char *json, const char *key, uint32_t *out) {
     return 1;
 }
 
+static int extract_bool_field(const char *json, const char *key, int *out) {
+    char pattern[128];
+    const char *p;
+    snprintf(pattern, sizeof(pattern), "\"%s\"", key);
+    p = strstr(json, pattern);
+    if (!p) return 0;
+    p += strlen(pattern);
+    p = skip_ws(p);
+    if (*p != ':') return 0;
+    p = skip_ws(p + 1);
+    if (strncmp(p, "true", 4) == 0) {
+        *out = 1;
+        return 1;
+    }
+    if (strncmp(p, "false", 5) == 0) {
+        *out = 0;
+        return 1;
+    }
+    if (*p == '1' && (p[1] == ',' || p[1] == '}' || isspace((unsigned char)p[1]) || !p[1])) {
+        *out = 1;
+        return 1;
+    }
+    if (*p == '0' && (p[1] == ',' || p[1] == '}' || isspace((unsigned char)p[1]) || !p[1])) {
+        *out = 0;
+        return 1;
+    }
+    return 0;
+}
+
+static void parse_path_a_response(const char *json_text, CompatibilityProfile *out) {
+    const char *pa_begin = NULL, *pa_end = NULL;
+    const char *ir_begin = NULL, *ir_end = NULL;
+    char pa_slice[2048];
+    char ir_slice[1024];
+    size_t n;
+    uint32_t v = 0;
+    int b = 0;
+
+    out->path_a_initial_record.declared = 0;
+    out->path_a_initial_record.enabled = 0;
+    out->path_a_initial_record.tag = 1u;
+    out->path_a_initial_record.name[0] = '\0';
+    out->path_a_initial_record.secondary[0] = '\0';
+    out->path_a_initial_record.field_c = 0;
+    out->path_a_initial_record.field_d = 0x3EEu;
+    out->path_a_initial_record.deliver_once_per_generation = 1;
+
+    if (!find_key_object(json_text, "path_a_response", &pa_begin, &pa_end)) return;
+    n = (size_t)(pa_end - pa_begin);
+    if (n >= sizeof(pa_slice)) n = sizeof(pa_slice) - 1;
+    memcpy(pa_slice, pa_begin, n);
+    pa_slice[n] = '\0';
+    if (!find_key_object(pa_slice, "initial_record", &ir_begin, &ir_end)) return;
+    n = (size_t)(ir_end - ir_begin);
+    if (n >= sizeof(ir_slice)) n = sizeof(ir_slice) - 1;
+    memcpy(ir_slice, ir_begin, n);
+    ir_slice[n] = '\0';
+
+    out->path_a_initial_record.declared = 1;
+    if (extract_bool_field(ir_slice, "enabled", &b)) out->path_a_initial_record.enabled = b;
+    if (extract_u32_field(ir_slice, "tag", &v)) out->path_a_initial_record.tag = v;
+    (void)extract_string_field(ir_slice, "name", out->path_a_initial_record.name,
+                               sizeof(out->path_a_initial_record.name));
+    (void)extract_string_field(ir_slice, "secondary", out->path_a_initial_record.secondary,
+                               sizeof(out->path_a_initial_record.secondary));
+    if (extract_u32_field(ir_slice, "field_c", &v)) out->path_a_initial_record.field_c = v;
+    if (extract_u32_field(ir_slice, "field_d", &v)) out->path_a_initial_record.field_d = v;
+    if (extract_bool_field(ir_slice, "deliver_once_per_generation", &b))
+        out->path_a_initial_record.deliver_once_per_generation = b;
+    if (!out->path_a_initial_record.name[0])
+        snprintf(out->path_a_initial_record.name, sizeof(out->path_a_initial_record.name), "%s",
+                 "downVersion");
+}
+
 static int is_hex64(const char *s) {
     size_t i;
     if (!s || strlen(s) != 64) return 0;
@@ -372,6 +446,8 @@ LauncherStatus compatibility_profile_load_json_text(const char *json_text,
             return L_ERR_FORMAT;
         }
     }
+
+    parse_path_a_response(json_text, out);
     return L_OK;
 }
 

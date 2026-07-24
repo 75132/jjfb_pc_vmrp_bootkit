@@ -35,6 +35,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/platform_send_app_event.h"
+#include "gwy_launcher/platform_path_a_response.h"
 #include "gwy_launcher/platform_timer.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/platform_call_census.h"
@@ -1726,33 +1727,25 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         fflush(stdout);
     } else if (result.kind == GWY_PLAT_KIND_BUFFER_FILL) {
         /*
-         * Path-A fill: default empty body (u16 code + BE 0xFFFFFFFF end-marker).
-         * TraceNodeAlloc: a length-prefixed "downVersion" record made guest BE-read
-         * name ASCII (e.g. 0x646F776C) as heap sizes / fake pointers, then
-         * 0x10132(0x646F7770) failed to map → null → DSM mem fault @0x94E40.
-         * Empty body keeps length readers on real BE fields; node push completes.
-         * Opt-in one-shot record: JJFB_101AB_WITH_RECORD=1 (requires mapped name ptrs).
+         * Path-A fill: generation-scoped response via platform_path_a_response.
+         * Profile path_a_response.initial_record decides product default.
+         * JJFB_101AB_WITH_RECORD=0/1 is A/B override only.
          */
-        static int g_101ab_with_rec = -1;
         uint8_t tmp[192];
         uint32_t n = 0;
+        int with_rec = 0;
         ret = result.status_ret;
-        if (g_101ab_with_rec < 0) {
-            if (env_flag("JJFB_101AB_WITH_RECORD"))
-                g_101ab_with_rec = 1;
-            else
-                g_101ab_with_rec = 0; /* product default: empty Path-A body */
-        }
         if (uc && result.fill_buf) {
+            ModuleRegistry *reg = NULL;
+            const GwyLoadedModule *owner = NULL;
+            ExtChunkOwnerInfo oi;
+            uint64_t mid = 0, gen = 0;
+            const char *oname = NULL;
             /* Arm hdr-preconsume gate so first publish matches Call3 framing (word0=code). */
             if (r9) {
-                ModuleRegistry *reg = gwy_ext_loader_bound_registry();
-                const GwyLoadedModule *owner = NULL;
-                ExtChunkOwnerInfo oi;
-                uint64_t mid = 0, gen = 0;
-                const char *oname = NULL;
                 size_t i;
                 memset(&oi, 0, sizeof(oi));
+                reg = gwy_ext_loader_bound_registry();
                 if (reg) {
                     for (i = 0; i < reg->count; i++) {
                         if (reg->modules[i].data.start_of_er_rw == r9) {
@@ -1773,16 +1766,43 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                         gen = oi.module_generation;
                     if (!gen) gen = owner->module_id;
                 }
+                platform_path_a_response_bind(mid, gen, r9);
                 (void)platform_event_queue_ensure_path_a_framing(uc, r9, mid, gen, oname);
             }
-            n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), g_101ab_with_rec);
+            with_rec = platform_path_a_response_decide_with_record();
+            /* One-record Path-A needs empty B58 list (*B58 → 0x2F68E4 r0). */
+            if (with_rec && r9)
+                (void)platform_event_queue_ensure_lifecycle_list(uc, r9, mid, gen, oname);
+            n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), with_rec);
             if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
-                int delivered_rec = g_101ab_with_rec;
-                if (g_101ab_with_rec) g_101ab_with_rec = 0;
+                uint32_t payload_len = 0;
+                uint32_t body_size = 0;
+                const uint8_t *inner = NULL;
+                uint32_t inner_n = 0;
+                if (n >= 5u) {
+                    payload_len = ((uint32_t)tmp[1] << 24) | ((uint32_t)tmp[2] << 16) |
+                                  ((uint32_t)tmp[3] << 8) | (uint32_t)tmp[4];
+                    if (n >= 13u) {
+                        body_size = ((uint32_t)tmp[9] << 24) | ((uint32_t)tmp[10] << 16) |
+                                    ((uint32_t)tmp[11] << 8) | (uint32_t)tmp[12];
+                    }
+                    if (n > 15u) {
+                        inner = tmp + 15;
+                        inner_n = n - 15u;
+                    }
+                }
+                platform_path_a_response_note_delivered(with_rec);
                 printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X type=%u bytes=%u "
-                       "with_rec=%d name=%s evidence=%s\n",
-                       result.fill_buf, result.fill_type, n, delivered_rec,
+                       "with_rec=%d body_size=%u payload_len=%u name=%s evidence=%s\n",
+                       result.fill_buf, result.fill_type, n, with_rec, body_size, payload_len,
                        result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+                if (with_rec && inner && inner_n) {
+                    uint32_t dump_n = inner_n > 32u ? 32u : inner_n;
+                    uint32_t di;
+                    printf("[PLATFORM_BUFFER_FILL_INNER] n=%u bytes=", dump_n);
+                    for (di = 0; di < dump_n; di++) printf("%02X", inner[di]);
+                    printf(" evidence=OBSERVED\n");
+                }
                 fflush(stdout);
             } else {
                 printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X FAILED n=%u evidence=OBSERVED\n",

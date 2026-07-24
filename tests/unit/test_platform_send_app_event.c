@@ -134,7 +134,25 @@ int main(void) {
         uint8_t buf[128];
         uint32_t n = platform_101ab_fill_path_a(buf, sizeof(buf), 0);
         if (n < 16u || buf[0] != 2) {
-            fprintf(stderr, "101AB fill_path_a failed n=%u\n", n);
+            fprintf(stderr, "101AB fill_path_a empty failed n=%u\n", n);
+            return 1;
+        }
+        n = platform_101ab_fill_path_a(buf, sizeof(buf), 1);
+        if (n < 30u || buf[0] != 2) {
+            fprintf(stderr, "101AB fill_path_a with_record failed n=%u\n", n);
+            return 1;
+        }
+        /* Inner after type+BE(len)+hdr+body_size+code: tag BE32(1) then BE16(11) "downVersion" */
+        if (buf[15] != 0 || buf[16] != 0 || buf[17] != 0 || buf[18] != 1) {
+            fprintf(stderr, "101AB with_record tag mismatch\n");
+            return 1;
+        }
+        if (buf[19] != 0 || buf[20] != 11) {
+            fprintf(stderr, "101AB with_record name_len mismatch\n");
+            return 1;
+        }
+        if (memcmp(buf + 21, "downVersion", 11) != 0) {
+            fprintf(stderr, "101AB with_record name mismatch\n");
             return 1;
         }
     }

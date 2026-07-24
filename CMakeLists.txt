@@ -81,6 +81,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_call_census.c
     src/platform/platform_event_service.c
     src/platform/platform_event_queue.c
+    src/platform/platform_path_a_response.c
     src/platform/platform_memory_ops.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
@@ -93,6 +94,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_path_a_handler_trace.c
     src/runtime/product_helper_2f68e4_trace.c
     src/runtime/product_field_parser_trace.c
+    src/runtime/product_lifecycle_record_trace.c
     src/runtime/product_platform_10138_trace.c
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c

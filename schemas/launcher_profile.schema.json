@@ -87,6 +87,25 @@
       },
       "additionalProperties": false
     },
+    "path_a_response": {
+      "type": "object",
+      "properties": {
+        "initial_record": {
+          "type": "object",
+          "properties": {
+            "enabled": {"type": "boolean"},
+            "tag": {"type": "integer", "minimum": 0},
+            "name": {"type": "string", "maxLength": 63},
+            "secondary": {"type": "string", "maxLength": 63},
+            "field_c": {"type": "integer", "minimum": 0},
+            "field_d": {"type": "integer", "minimum": 0},
+            "deliver_once_per_generation": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "mrp_member_aliases": {"type": "object", "additionalProperties": {"type": "string"}}
   },
   "additionalProperties": false
