@@ -41,6 +41,23 @@ $info = Join-Path $Root "$BuildDir\build-info.json"
 if (-not (Test-Path $info)) { throw "missing build-info.json" }
 Write-Host "[OK] build-info.json written"
 
+# Runtime DLLs beside product EXEs so Explorer double-click works without PATH.
+$JjfbLauncher = Join-Path $Root "$BuildDir\JJFB_Launcher.exe"
+if (Test-Path $JjfbLauncher) {
+  $dump2 = & objdump.exe -f $JjfbLauncher 2>&1 | Out-String
+  if ($dump2 -notmatch 'pei-i386|elf32-i386|i386') {
+    throw "JJFB_Launcher.exe is not PE32/i386"
+  }
+  Write-Host "[OK] JJFB_Launcher.exe is PE32/i386"
+  foreach ($dll in @('libgcc_s_dw2-1.dll', 'libwinpthread-1.dll', 'zlib1.dll')) {
+    $src = Join-Path $MingwBin $dll
+    if (Test-Path $src) {
+      Copy-Item -Force $src (Join-Path $Root "$BuildDir\$dll")
+    }
+  }
+  Write-Host "[OK] MinGW runtime DLLs copied beside JJFB_Launcher.exe"
+}
+
 if ($UpstreamBaseline) {
   Write-Host '== upstream plain baseline (weak unbound) =='
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_BUILD_VMRP.ps1') -Mode Plain -LauncherBuildDir $BuildDir

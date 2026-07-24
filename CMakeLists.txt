@@ -190,6 +190,18 @@ target_compile_options(gwy_launcher PRIVATE -Wall -Wextra -Wpedantic)
 gwy_write_build_info(gwy_launcher)
 gwy_copy_unicorn_dll(gwy_launcher)
 
+# Product double-click entry: status window + auto-load jjfb.mrp.
+add_executable(JJFB_Launcher WIN32
+    src/product/jjfb_launcher_main.c
+)
+gwy_link_product_runtime(JJFB_Launcher)
+if(WIN32)
+  target_link_libraries(JJFB_Launcher PRIVATE user32 gdi32)
+endif()
+target_compile_options(JJFB_Launcher PRIVATE -Wall -Wextra -Wpedantic)
+gwy_write_build_info(JJFB_Launcher)
+gwy_copy_unicorn_dll(JJFB_Launcher)
+
 enable_testing()
 
 add_executable(test_smoke tests/unit/test_smoke.c)

@@ -61,16 +61,21 @@ static LauncherStatus install_sdk_key_via_vfs(GuestVfs *vfs,
     return L_OK;
 }
 
-LauncherStatus gwy_launch_spawn_vmrp(const LaunchDescriptor *desc,
-                                     const char *vmrp_exe,
-                                     const char *vmrp_cwd,
-                                     const char *manifest_path,
-                                     LauncherError *err) {
+LauncherStatus gwy_launch_spawn_vmrp_ex(const LaunchDescriptor *desc,
+                                        const char *vmrp_exe,
+                                        const char *vmrp_cwd,
+                                        const char *manifest_path,
+                                        void **out_process,
+                                        unsigned long *out_pid,
+                                        LauncherError *err) {
     GuestVfs vfs;
     VfsResolution res;
     LauncherStatus st;
     char overlay[VFS_PATH_MAX];
     char forbidden_key[VFS_PATH_MAX];
+
+    if (out_process) *out_process = NULL;
+    if (out_pid) *out_pid = 0;
 
     launcher_error_clear(err);
     if (!desc || !vmrp_exe || !vmrp_cwd) {
@@ -162,14 +167,29 @@ LauncherStatus gwy_launch_spawn_vmrp(const LaunchDescriptor *desc,
             return L_ERR_IO;
         }
         CloseHandle(pi.hThread);
-        CloseHandle(pi.hProcess);
+        if (out_process) {
+            *out_process = (void *)pi.hProcess;
+        } else {
+            CloseHandle(pi.hProcess);
+        }
+        if (out_pid) *out_pid = (unsigned long)pi.dwProcessId;
         printf("[JJFB_RUNAPP] source=descriptor_launcher target=%s spawned=ok "
-               "evidence=DOCUMENTED\n",
-               desc->target_mrp);
+               "pid=%lu evidence=DOCUMENTED\n",
+               desc->target_mrp, (unsigned long)pi.dwProcessId);
         return L_OK;
     }
 #else
+    (void)out_process;
+    (void)out_pid;
     launcher_error_set(err, L_ERR_UNSUPPORTED, "launch_runtime", "spawn only implemented on Windows", NULL);
     return L_ERR_UNSUPPORTED;
 #endif
+}
+
+LauncherStatus gwy_launch_spawn_vmrp(const LaunchDescriptor *desc,
+                                     const char *vmrp_exe,
+                                     const char *vmrp_cwd,
+                                     const char *manifest_path,
+                                     LauncherError *err) {
+    return gwy_launch_spawn_vmrp_ex(desc, vmrp_exe, vmrp_cwd, manifest_path, NULL, NULL, err);
 }

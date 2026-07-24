@@ -886,6 +886,11 @@ int main(int argc, char *args[]) {
         int ww = SCREEN_WIDTH * g_window_zoom;
         int hh = SCREEN_HEIGHT * g_window_zoom;
         Uint32 flags = 0;
+        const char *title = getenv("GWY_WINDOW_TITLE");
+        if (!title || !title[0]) {
+            /* Product GWY_LAUNCH defaults to branded title; plain shell keeps vmrp. */
+            title = env1("GWY_LAUNCH") ? "JJFB Launcher" : "vmrp";
+        }
         /* Product: keep HWND hidden until first guest _DispUpEx with nonempty FB. */
         g_hwnd_defer_until_dispup = env1("JJFB_PRODUCT_P5_MODE") || env1("JJFB_HWND_UNTIL_DISPUP");
         if (g_hwnd_defer_until_dispup) {
@@ -894,18 +899,42 @@ int main(int argc, char *args[]) {
                    "evidence=OBSERVED\n");
             fflush(stdout);
         }
-        window = SDL_CreateWindow("vmrp", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww,
+        window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww,
                                   hh, flags);
     }
     if (window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
-    printf("[JJFB_WINDOW] kind=SDL_software flags=0 zoom=%d size=%dx%d "
+    printf("[JJFB_WINDOW] kind=SDL_software flags=0 zoom=%d size=%dx%d title=%s "
            "note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED\n",
-           g_window_zoom, SCREEN_WIDTH * g_window_zoom, SCREEN_HEIGHT * g_window_zoom);
+           g_window_zoom, SCREEN_WIDTH * g_window_zoom, SCREEN_HEIGHT * g_window_zoom,
+           SDL_GetWindowTitle(window));
     fflush(stdout);
     guiPumpEvents();
+
+    /* Host-only test pattern: proves framebuffer refresh without claiming JJFB first frame. */
+    if (env1("GWY_HOST_TEST_PATTERN")) {
+        SDL_Surface *surface = SDL_GetWindowSurface(window);
+        if (surface) {
+            int x, y;
+            Uint32 dark = SDL_MapRGB(surface->format, 32, 40, 56);
+            Uint32 light = SDL_MapRGB(surface->format, 72, 96, 128);
+            if (SDL_MUSTLOCK(surface)) SDL_LockSurface(surface);
+            for (y = 0; y < surface->h; y++) {
+                for (x = 0; x < surface->w; x++) {
+                    int cell = ((x / 16) ^ (y / 16)) & 1;
+                    Uint32 *p = (Uint32 *)(((Uint8 *)surface->pixels) + surface->pitch * y) + x;
+                    *p = cell ? light : dark;
+                }
+            }
+            if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
+            SDL_UpdateWindowSurface(window);
+            printf("[JJFB_HOST_TEST_PATTERN] applied=1 note=host_only_not_jjfb_first_frame "
+                   "evidence=OBSERVED\n");
+            fflush(stdout);
+        }
+    }
 
     startVmrp();
 
