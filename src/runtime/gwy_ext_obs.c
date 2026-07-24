@@ -1732,6 +1732,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                 g_101ab_with_rec = 0; /* product default: empty Path-A body */
         }
         if (uc && result.fill_buf) {
+            /* Arm hdr-preconsume gate so first publish matches Call3 framing (word0=code). */
+            if (r9) (void)platform_event_queue_ensure_path_a_framing(uc, r9);
             n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), g_101ab_with_rec);
             if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
                 int delivered_rec = g_101ab_with_rec;

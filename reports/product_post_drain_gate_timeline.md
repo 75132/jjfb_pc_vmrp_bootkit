@@ -1,16 +1,16 @@
 # Post-Drain Gate Timeline
 
-- **run_id:** launcher_20260724_221234_95515
+- **run_id:** launcher_20260724_224902_82890
 - **er_rw:** 0x2B1854
 - **enter_30CBBC:** 0
-- **true_enter_2E2520:** 3
+- **true_enter_2E2520:** 2
 - **enter_2DC4D8:** 0
 - **store_15D:** 0 actual_store_pc=0x0
 - **store_B71:** 0 actual_store_pc=0x0
 - **15D_writer_grade:** candidate_unproven
 - **B71_writer_grade:** candidate_entered_no_dispatch
 - **successor_status:** POST_DRAIN_SUCCESSOR_BLOCKED
-- **disp_trace:** 1 calls=3 branches=6 reads=27
+- **disp_trace:** 1 calls=2 branches=6 reads=20
 
 ## Dispatch calls
 
@@ -18,7 +18,6 @@
 |----|----|------------|--------|------------|
 | 1 | 0x2A8374 | 0 | 0x2E4194 | BCS_index_out_of_range |
 | 2 | 0x2A83C4 | 0 | 0x2E4194 | BCS_index_out_of_range |
-| 3 | 0x2A83F4 | 0 | 0x0 | - |
 
 ## Discipline
 

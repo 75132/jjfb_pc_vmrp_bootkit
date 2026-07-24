@@ -53,6 +53,22 @@ void platform_event_queue_note_enqueue_handler(uint32_t handler);
 int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t owner_module_id,
                                          uint64_t owner_generation);
 
+/*
+ * Path-A framing contract (robotol 0x2E4D6C).
+ *
+ * Payload from platform_101ab_fill_path_a is:
+ *   BE u32 hdr(=5) | BE u32 body_size | BE u16 event_code | body...
+ * When ER_RW+0x15C==1 and A90+4==0, publish consumes hdr into A90+4 before the
+ * framing loop; the loop then stores event_code at entry+0 (Call3 proven).
+ * Cold start (0x15C==0) leaves hdr in-stream → loop treats hdr as length and
+ * writes entry+0=0 / entry+8=hdr-2 (Call1 proven).
+ *
+ * Env JJFB_PATH_A_EVENT_CONTRACT=0 disables; unset/1 enables (product default).
+ * Touches only ER_RW+0x15C (byte) and ER_RW+0xA90+4 — never 0x15D/B71/UI_MODE.
+ */
+int platform_path_a_event_contract_enabled(void);
+int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw);
+
 int platform_event_queue_is_ready(void);
 GwyEventQueueState platform_event_queue_state(void);
 

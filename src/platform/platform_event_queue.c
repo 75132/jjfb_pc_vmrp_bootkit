@@ -2,11 +2,16 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* Proven list control object size from robotol 0x312AA4 (MOVS r0,#8). */
 #define GWY_EVENT_LIST_CTRL_SIZE 8u
 #define GWY_EVENT_LIST_HEAD_OFF 0xB54u
+/* Path-A hdr-consume gate byte (LDRSB [R9+0x15C,#0] at 0x2E4D88) — not 0x15D. */
+#define GWY_PATH_A_HDR_FLAG_OFF 0x15Cu
+/* A90+4 receives BE hdr when gate is armed (STR at 0x2E4DA8). */
+#define GWY_PATH_A_HDR_SLOT_OFF (0xA90u + 4u)
 /*
  * Proven natural drain trigger: periodic 0x305EB8 is the sole BL site to the
  * B54 consumer 0x2DC80C. Deliver Thumb entry (LSB=1) — Unicorn selects ISA
@@ -118,6 +123,58 @@ int platform_event_queue_ensure_list_head(void *uc, uint32_t er_rw, uint64_t own
            "owner_module_id=%llu owner_generation=%llu evidence=OBSERVED\n",
            er_rw, slot, list, (unsigned long long)owner_module_id,
            (unsigned long long)owner_generation);
+    fflush(stdout);
+    return 1;
+}
+
+int platform_path_a_event_contract_enabled(void) {
+    const char *e = getenv("JJFB_PATH_A_EVENT_CONTRACT");
+    /* Default ON: cold-start framing must match the proven warm (Call3) path. */
+    if (!e || !e[0]) return 1;
+    if (e[0] == '0' && e[1] == '\0') return 0;
+    return 1;
+}
+
+int platform_event_queue_ensure_path_a_framing(void *uc, uint32_t er_rw) {
+    uint8_t flag = 1;
+    uint8_t old_flag = 0;
+    uint32_t old_hdr = 0;
+    uint32_t zero = 0;
+
+    if (!platform_path_a_event_contract_enabled()) return 0;
+    if (!uc || !er_rw) return 0;
+
+    (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_FLAG_OFF, &old_flag,
+                               1);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_SLOT_OFF,
+                                   &old_hdr);
+
+    if (old_flag == 1u && old_hdr == 0u) {
+        printf("[PATH_A_EVENT_CONTRACT] op=ALREADY er_rw=0x%X flag15c=1 a90_4=0 "
+               "evidence=OBSERVED\n",
+               er_rw);
+        fflush(stdout);
+        return 1;
+    }
+
+    if (!guest_memory_uc_poke((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_FLAG_OFF, &flag, 1)) {
+        printf("[PATH_A_EVENT_CONTRACT] op=FLAG_POKE_FAIL er_rw=0x%X off=0x15C evidence=OBSERVED\n",
+               er_rw);
+        fflush(stdout);
+        return 0;
+    }
+    if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, er_rw + GWY_PATH_A_HDR_SLOT_OFF, zero)) {
+        printf("[PATH_A_EVENT_CONTRACT] op=HDR_SLOT_POKE_FAIL er_rw=0x%X off=0xA94 "
+               "evidence=OBSERVED\n",
+               er_rw);
+        fflush(stdout);
+        return 0;
+    }
+
+    printf("[PATH_A_EVENT_CONTRACT] op=ARMED er_rw=0x%X old_flag15c=%u old_a90_4=0x%X "
+           "new_flag15c=1 new_a90_4=0 note=hdr_preconsume_before_framing_loop "
+           "evidence=OBSERVED\n",
+           er_rw, (unsigned)old_flag, old_hdr);
     fflush(stdout);
     return 1;
 }

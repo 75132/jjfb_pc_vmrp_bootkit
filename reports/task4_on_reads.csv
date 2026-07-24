@@ -1,0 +1,8 @@
+run_id,dispatch_call_id,pc,base_reg,offset,effective_addr,value,feeds
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x0,0x2A8374,0x5,"entry_obj+0"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x4,0x2A8378,0x2A8364,"entry_obj+4"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x8,0x2A837C,0x4,"entry_obj+8"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0xC,0x2A8380,0x12,"entry_obj+12"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x4,0x2A8364,0x627857,"inner_via_+4[+0]"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x4,0x2A8368,0x4,"inner_via_+4[+4]"
+launcher_20260724_224801_22593,1,0x2E2520,r0,0x4,0x2A836C,0x10,"inner_via_+4[+8]"

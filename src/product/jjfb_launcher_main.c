@@ -198,6 +198,9 @@ static void apply_product_env(JjfbLauncherState *st) {
      * PlatformEventQueue; does NOT write B71/15D/UI_MODE.
      */
     SetEnvironmentVariableA("JJFB_PRODUCT_FFP_APPLY_ABI", "1");
+    /* Path-A hdr-preconsume framing (entry+0=event_code). Override with =0 for A/B. */
+    if (!getenv("JJFB_PATH_A_EVENT_CONTRACT"))
+        SetEnvironmentVariableA("JJFB_PATH_A_EVENT_CONTRACT", "1");
 
     /* Always emit runtime_progress.jsonl for status-window milestones. */
     {

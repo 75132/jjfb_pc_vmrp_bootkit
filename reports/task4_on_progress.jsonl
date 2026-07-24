@@ -1,0 +1,8 @@
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904482,"pid":25448,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904503,"pid":25448,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904503,"pid":25448,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904508,"pid":25448,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904508,"pid":25448,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904511,"pid":25448,"milestone":"event_dispatch_2e2520","source":"eot","details":"call_id=1 r0=0x2A8374 word0=0x5 word8=0x4"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904515,"pid":25448,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224801_22593","timestamp":1784904515,"pid":25448,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}

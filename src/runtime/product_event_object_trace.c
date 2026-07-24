@@ -85,7 +85,7 @@ static EotCall g_call[EOT_CALL_CAP];
 static int g_call_n;
 static char g_cur_stage[48] = "init";
 #ifdef GWY_HAVE_UNICORN
-static uc_hook g_code_hooks[8];
+static uc_hook g_code_hooks[12];
 static int g_hook_ok;
 #endif
 
@@ -378,6 +378,24 @@ static void on_code(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
     } else if (tag == 6) { /* 0x2DC8D4 — BL site toward 0x2E2520 family */
         set_stage_name("0x2E2520_caller");
         add_stage(uc, "0x2E2520_caller", 0, r0, 0, 0, r0);
+    } else if (tag == 7) { /* 0x2E4EAE — heap helper arg0 = framing size (r6-2) */
+        set_stage_name("framing_heap_size");
+        printf("[EOT_FRAMING] pc=0x2E4EAE heap_arg0=0x%X (size=r6-2) evidence=OBSERVED\n", r0);
+        fflush(stdout);
+        add_stage(uc, "framing_heap_size", 0, 0, 0, 0, 0);
+    } else if (tag == 8) { /* 0x2E4EBA — entry = malloc(0xC) return in r0 before ADDS r5,r0 */
+        set_stage_name("framing_entry_alloc");
+        if (r0) track_obj(uc, r0, pc, "framing_entry");
+        add_stage(uc, "framing_entry_alloc", r0, r0, 0, 0, r0);
+    } else if (tag == 9) { /* 0x2E4ED8 — STR r1,[r5] writes entry+0 (event_code) */
+        uint32_t r5 = 0;
+        set_stage_name("framing_store_plus0");
+        uc_reg_read(uc, UC_ARM_REG_R5, &r5);
+        if (r5) track_obj(uc, r5, pc, "framing_entry");
+        add_stage(uc, "framing_store_plus0", r1, r5, 0, 0, r5);
+        printf("[EOT_FRAMING] pc=0x2E4ED8 STR [r5=0x%X,#0] r1=0x%X evidence=OBSERVED\n", r5,
+               r1);
+        fflush(stdout);
     }
 }
 #endif
@@ -398,6 +416,12 @@ void product_eot_arm_hooks(void *uc) {
                       0x2DC82Eull, 0x2DC82Full);
     (void)uc_hook_add((uc_engine *)uc, &g_code_hooks[5], UC_HOOK_CODE, on_code, (void *)(intptr_t)6,
                       0x2DC8D4ull, 0x2DC8D7ull);
+    (void)uc_hook_add((uc_engine *)uc, &g_code_hooks[6], UC_HOOK_CODE, on_code, (void *)(intptr_t)7,
+                      0x2E4EAEull, 0x2E4EAFull);
+    (void)uc_hook_add((uc_engine *)uc, &g_code_hooks[7], UC_HOOK_CODE, on_code, (void *)(intptr_t)8,
+                      0x2E4EBAull, 0x2E4EBBull);
+    (void)uc_hook_add((uc_engine *)uc, &g_code_hooks[8], UC_HOOK_CODE, on_code, (void *)(intptr_t)9,
+                      0x2E4ED8ull, 0x2E4ED9ull);
     g_hook_ok = 1;
     atexit(product_eot_finalize);
     printf("[EOT_HOOKS] armed mem_write+code sites evidence=OBSERVED\n");

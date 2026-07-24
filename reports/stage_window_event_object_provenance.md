@@ -127,3 +127,5 @@ Traces are observe-only for dispatch/object fields; list-head recovery is requir
 1. Disassemble `0x2E4EAE..0x2E4EEE` and name the STR that writes entry+8.
 2. Decide correct platform boundary: Path-A payload encode vs node content vs consumer unwrap.
 3. Implement observe-proven fix; verify `word0` becomes valid and `0x2E379E`/`0x2DC4D8` can occur naturally with trace off.
+
+**Task 4 done:** see `reports/stage_valid_event_comparator.md` — `EVENT_CONTRACT_REPAIRED` via `platform_event_queue_ensure_path_a_framing` (hdr gate). Call1 `word0=5` → jump `0x2E4040`.

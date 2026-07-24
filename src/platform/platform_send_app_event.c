@@ -18,6 +18,12 @@ static void be16(uint8_t *p, uint16_t v) {
  * Layout: char type + BE len + payload[ hdr_u32 | body_size | BE u16 code | body ].
  * body ends with BE 0xFFFFFFFF marker required by 0x2F68E4.
  *
+ * Framing @0x2E4D6C (when ER_RW+0x15C==1 && A90+4==0):
+ *   308D98 consumes hdr → A90+4; loop then 308D98(body_size)+308D28(code)→entry+0,
+ *   size=body_size-2 → entry+8, malloc(0xC) entry, malloc(size) inner.
+ * Cold start without that gate leaves hdr in-stream → entry+0=0, entry+8=hdr-2.
+ * Platform arms the gate via platform_event_queue_ensure_path_a_framing.
+ *
  * Product default uses with_record=0 (empty: u16 + BE(-1) only). Embedding a
  * length-prefixed "downVersion" name made guest BE-read name ASCII as alloc
  * sizes / fake pointers after list-node push (TraceNodeAlloc → 0x94E40 fault).

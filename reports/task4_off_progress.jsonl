@@ -1,0 +1,15 @@
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904543,"pid":31060,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904564,"pid":31060,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904564,"pid":31060,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904571,"pid":31060,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904571,"pid":31060,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904576,"pid":31060,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904576,"pid":31060,"milestone":"event_path_a_seen","source":"eot","details":"path_a_begin"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904578,"pid":31060,"milestone":"event_node_linked","source":"eot","details":"node_linked"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904578,"pid":31060,"milestone":"event_node_linked","source":"eot","details":"node_linked"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904581,"pid":31060,"milestone":"event_dispatch_2e2520","source":"eot","details":"call_id=1 r0=0x2A8374 word0=0x0 word8=0x3"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904581,"pid":31060,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904581,"pid":31060,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904583,"pid":31060,"milestone":"event_dispatch_2e2520","source":"eot","details":"call_id=2 r0=0x2A83C4 word0=0x0 word8=0xFFFFFFFD"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904584,"pid":31060,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
+{"run_id":"launcher_20260724_224902_82890","timestamp":1784904584,"pid":31060,"milestone":"event_node_consumed","source":"eqc","details":"pop_312C0C"}
