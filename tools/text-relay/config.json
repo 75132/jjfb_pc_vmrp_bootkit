@@ -1,0 +1,6 @@
+{
+  "base_url": "https://jjfbol.cn/text-relay",
+  "data_dir": "data",
+  "poll_interval_sec": 2,
+  "default_recent_n": 10
+}
