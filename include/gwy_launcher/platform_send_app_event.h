@@ -26,7 +26,13 @@ typedef enum GwyPlatCallKind {
     /* DOCUMENTED/CROSS_TARGET: write graphics fp to *out_guest; status_ret=0. */
     GWY_PLAT_KIND_GRAPHICS_FP = 7,
     /* TARGET_OBSERVED: fill guest buffer in-place (0x101AB Path A). */
-    GWY_PLAT_KIND_BUFFER_FILL = 8
+    GWY_PLAT_KIND_BUFFER_FILL = 8,
+    /*
+     * TARGET_OBSERVED+legacy: multi-out query (0x10138).
+     * R0=MR_SUCCESS(0); six guest *outs (R1/R2/R3/SP[0]/SP[4]/SP[8]).
+     * Not an alloc — ret=0 is success; outs carry heap free / screen metrics.
+     */
+    GWY_PLAT_KIND_MULTI_OUT = 9
 } GwyPlatCallKind;
 
 typedef struct GwyPlatCall {

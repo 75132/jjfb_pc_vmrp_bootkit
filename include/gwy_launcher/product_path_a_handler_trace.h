@@ -33,6 +33,10 @@ void product_pah_note_resource_request(const char *path);
 void product_pah_note_disp_up(void);
 void product_pah_note_platform_api(const char *api, uint32_t a0, uint32_t a1);
 
+/* 1 while dense-following 0x2E4040 tree (for 0x10138 scope). */
+int product_pah_in_handler(void);
+uint32_t product_pah_handler_call_id(void);
+
 void product_pah_finalize(void);
 
 #ifdef __cplusplus

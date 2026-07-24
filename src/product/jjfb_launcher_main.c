@@ -142,9 +142,16 @@ static void set_path_label(JjfbLauncherState *st) {
 
 static void set_milestone_label(JjfbLauncherState *st, const char *ms) {
     char line[160];
+    const char *disp = ms;
     if (!ms || !ms[0]) return;
+    if (strcmp(ms, "platform_10138_entered") == 0)
+        disp = "Completing platform 0x10138";
+    else if (strcmp(ms, "path_a_helper_returned") == 0)
+        disp = "Path-A helper returned";
+    else if (strcmp(ms, "lifecycle_successor_entered") == 0)
+        disp = "Lifecycle successor entered";
     snprintf(st->milestone, sizeof(st->milestone), "%s", ms);
-    snprintf(line, sizeof(line), "Runtime milestone: %s", ms);
+    snprintf(line, sizeof(line), "Runtime milestone: %s", disp);
     if (st->milestone_label) SetWindowTextA(st->milestone_label, line);
     printf("[JJFB_LAUNCHER] runtime_milestone=%s\n", ms);
     fflush(stdout);
@@ -230,13 +237,16 @@ static void apply_product_env(JjfbLauncherState *st) {
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", "1");
         SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", "1");
         SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", "1");
+        SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", "1");
     } else {
         SetEnvironmentVariableA("JJFB_POST_DRAIN_GATE_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_B71_DISPATCH_TRACE", NULL);
         SetEnvironmentVariableA("JJFB_EVENT_OBJECT_TRACE", NULL);
-        /* Handler trace stays off unless explicitly set by the user/env. */
+        /* Handler / 10138 traces stay off unless explicitly set by the user/env. */
         if (!getenv("JJFB_PATH_A_HANDLER_TRACE"))
             SetEnvironmentVariableA("JJFB_PATH_A_HANDLER_TRACE", NULL);
+        if (!getenv("JJFB_PLATFORM_10138_TRACE"))
+            SetEnvironmentVariableA("JJFB_PLATFORM_10138_TRACE", NULL);
     }
 }
 
@@ -374,6 +384,12 @@ static void poll_child(JjfbLauncherState *st) {
              strcmp(st->milestone, "path_a_valid_dispatch") == 0 ||
              strcmp(st->milestone, "path_a_handler_entered") == 0 ||
              strcmp(st->milestone, "path_a_handler_returned") == 0 ||
+             strcmp(st->milestone, "platform_10138_entered") == 0 ||
+             strcmp(st->milestone, "platform_10138_completed") == 0 ||
+             strcmp(st->milestone, "nested_path_a_published") == 0 ||
+             strcmp(st->milestone, "nested_path_a_consumed") == 0 ||
+             strcmp(st->milestone, "path_a_helper_returned") == 0 ||
+             strcmp(st->milestone, "lifecycle_successor_entered") == 0 ||
              strcmp(st->milestone, "post_dispatch_event_seen") == 0 ||
              strcmp(st->milestone, "resource_request_seen") == 0)) {
             /* Keep waiting_for_first_frame stage; milestone shows real evidence. */

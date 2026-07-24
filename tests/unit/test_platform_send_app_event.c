@@ -103,9 +103,20 @@ int main(void) {
     call.code = 0x10132u;
     call.app = 0x6AD120u;
     platform_send_app_event_classify(&call, &out);
-    if (!expect_kind("10132", out.kind, GWY_PLAT_KIND_ALLOC) || out.fill_buf != 0x6AD120u ||
+    if (!expect_kind("10132_strdup", out.kind, GWY_PLAT_KIND_ALLOC) || out.fill_buf != 0x6AD120u ||
         out.alloc_size != 0u) {
         fprintf(stderr, "10132 strdup classify mismatch\n");
+        return 1;
+    }
+
+    memset(&call, 0, sizeof(call));
+    call.code = 0x10132u;
+    call.app = 0x8u;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10132_malloc", out.kind, GWY_PLAT_KIND_ALLOC) || out.alloc_size != 0x8u ||
+        out.fill_buf != 0u) {
+        fprintf(stderr, "10132 size-malloc classify mismatch size=%u fill=0x%X\n", out.alloc_size,
+                out.fill_buf);
         return 1;
     }
 
@@ -126,6 +137,18 @@ int main(void) {
             fprintf(stderr, "101AB fill_path_a failed n=%u\n", n);
             return 1;
         }
+    }
+
+    memset(&call, 0, sizeof(call));
+    call.code = 0x10138u;
+    call.app = 0x27FF68u;
+    call.arg2 = 0x27FF64u;
+    call.arg3 = 0x27FF60u;
+    call.arg4 = 0x27FF5Cu;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10138", out.kind, GWY_PLAT_KIND_MULTI_OUT) || out.status_ret != 0u) {
+        fprintf(stderr, "10138 multi-out mismatch kind=%d ret=%u\n", (int)out.kind, out.status_ret);
+        return 1;
     }
 
     printf("ok\n");

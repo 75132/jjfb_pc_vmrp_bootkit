@@ -2,6 +2,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/product_runtime_progress.h"
+#include "gwy_launcher/product_platform_10138_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -328,6 +329,7 @@ static void finish_handler(uc_engine *uc, const char *why) {
     g_return_pc = pc;
     g_handler_active = 0;
     g_handler_returned = 1;
+    product_p10138_note_helper_leave();
     disarm_dense_for_handler(uc);
     sample_gate(uc, "handler_return", pc);
     product_runtime_progress_emit("path_a_handler_returned", "pah", why ? why : "ret");
@@ -487,15 +489,27 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
     }
 
     if (pc == PC_2E4066) {
-        g_seen_2e4066 = 1;
-        sample_gate(uc, "inside_2E4066", pc);
+        if (!g_seen_2e4066) {
+            g_seen_2e4066 = 1;
+            sample_gate(uc, "inside_2E4066", pc);
+            product_runtime_progress_emit("path_a_helper_returned", "pah", "0x2E4066");
+            product_p10138_note_helper_leave();
+        }
     }
-    if (pc == PC_2F68E4) g_seen_2f68e4 = 1;
+    if (pc == PC_2F68E4) {
+        if (!g_seen_2f68e4) {
+            g_seen_2f68e4 = 1;
+            product_p10138_note_helper_enter();
+        }
+    }
     if (pc == PC_2DADC4) {
-        g_seen_2dadc4 = 1;
-        sample_gate(uc, "inside_2DADC4", pc);
-        product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
-        g_post_event_seen = 1;
+        if (!g_seen_2dadc4) {
+            g_seen_2dadc4 = 1;
+            sample_gate(uc, "inside_2DADC4", pc);
+            product_runtime_progress_emit("lifecycle_successor_entered", "pah", "0x2DADC4");
+            product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
+            g_post_event_seen = 1;
+        }
     }
     if (pc == PC_2E4194) g_seen_2e4194 = 1;
 
@@ -507,13 +521,21 @@ static void on_dense(uc_engine *uc, uint64_t address, uint32_t size, void *user_
         }
         g_call_depth++;
         if (tgt == PC_2DADC4) {
-            g_seen_2dadc4 = 1;
-            g_post_event_seen = 1;
-            sample_gate(uc, "bl_2DADC4", pc);
-            product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
+            if (!g_seen_2dadc4) {
+                g_seen_2dadc4 = 1;
+                g_post_event_seen = 1;
+                sample_gate(uc, "bl_2DADC4", pc);
+                product_runtime_progress_emit("lifecycle_successor_entered", "pah", "0x2DADC4");
+                product_runtime_progress_emit("post_dispatch_event_seen", "pah", "2DADC4");
+            }
         }
         if (tgt == PC_2E4066) g_seen_2e4066 = 1;
-        if (tgt == PC_2F68E4) g_seen_2f68e4 = 1;
+        if (tgt == PC_2F68E4) {
+            if (!g_seen_2f68e4) {
+                g_seen_2f68e4 = 1;
+                product_p10138_note_helper_enter();
+            }
+        }
         return;
     }
 
@@ -590,6 +612,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
             g_new_event = 1;
             g_requeue = 1;
             g_post_event_seen = 1;
+            product_runtime_progress_emit("nested_path_a_published", "pah", "push_312A60");
             product_runtime_progress_emit("post_dispatch_event_seen", "pah", "push_312A60");
             printf("[PAH_QUEUE] op=PUSH pc=0x312A60 during=%d evidence=OBSERVED\n",
                    g_handler_active);
@@ -599,6 +622,7 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
         if (pc != PC_312C0C) return;
         if (g_handler_active) {
             g_freed_entry = 1;
+            product_runtime_progress_emit("nested_path_a_consumed", "pah", "pop_312C0C");
             printf("[PAH_QUEUE] op=POP_OR_FREE pc=0x312C0C evidence=OBSERVED\n");
             fflush(stdout);
         }
@@ -749,6 +773,10 @@ void product_pah_note_disp_up(void) {
     printf("[PAH_API] api=DispUpEx during_handler=%d evidence=OBSERVED\n", g_handler_active);
     fflush(stdout);
 }
+
+int product_pah_in_handler(void) { return g_handler_active; }
+
+uint32_t product_pah_handler_call_id(void) { return g_handler_call_id; }
 
 void product_pah_note_platform_api(const char *api, uint32_t a0, uint32_t a1) {
     if (!product_pah_enabled() || !api) return;

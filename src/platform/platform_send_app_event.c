@@ -1,4 +1,5 @@
 #include "gwy_launcher/platform_send_app_event.h"
+#include <stdlib.h>
 #include <string.h>
 
 static void be32(uint8_t *p, uint32_t v) {
@@ -359,18 +360,28 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
     }
 
     /*
-     * 0x10132: string/buffer publish (TARGET_OBSERVED Path-A after list push).
-     * Live: sendAppEvent(0x10132, guest_cstr) must return a heap pointer, not
-     * status 0 — a zero return was forwarded into DSM mem @0x94E34 (r0=0 fault).
-     * When R1 looks like a guest C-string pointer, executor strdup's it.
+     * 0x10132: dual ABI (TARGET_OBSERVED + legacy):
+     *   (a) size alloc — R1=size in [4, 0x200000); return block base; caller uses +4.
+     *       Header word stores payload size (sz-4). Heap helper 0x2D99AC uses this.
+     *   (b) strdup — R1=guest C-string ptr (>=0x200000 heap). Path-A name publish.
+     * Missing (a) left ret=0 → DSM memcpy @0x94E40 after a successful 0x10138.
      */
-    if (call->code == 0x10132u && call->app >= 0x1000u) {
-        out->kind = GWY_PLAT_KIND_ALLOC;
-        out->alloc_size = 0; /* executor: strlen(app)+1 then copy */
-        out->fill_buf = call->app; /* source C-string in guest memory */
-        out->name = "plat_10132_strdup";
-        out->evidence = "TARGET_OBSERVED+TraceNodeAlloc";
-        return;
+    if (call->code == 0x10132u) {
+        if (call->app >= 4u && call->app < 0x200000u) {
+            out->kind = GWY_PLAT_KIND_ALLOC;
+            out->alloc_size = call->app;
+            out->name = "plat_10132_malloc";
+            out->evidence = "TARGET_OBSERVED+legacy_bridge+robotol_2D99AC";
+            return;
+        }
+        if (call->app >= 0x200000u) {
+            out->kind = GWY_PLAT_KIND_ALLOC;
+            out->alloc_size = 0; /* executor: strlen(app)+1 then copy */
+            out->fill_buf = call->app; /* source C-string in guest memory */
+            out->name = "plat_10132_strdup";
+            out->evidence = "TARGET_OBSERVED+TraceNodeAlloc";
+            return;
+        }
     }
 
     /*
@@ -386,6 +397,30 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
         out->fill_type = call->arg3 ? call->arg3 : 2u;
         out->name = "plat_101ab_path_a_fill";
         out->evidence = "TARGET_OBSERVED+robotol_30D24C";
+        return;
+    }
+
+    /*
+     * 0x10138: multi-out platform query (TARGET_OBSERVED + legacy bridge).
+     * Call sites via 0x304558 → slot28:
+     *   site LR≈0x2D9A6A — heap free into out5; clear ER_RW+0xED8; set gate bytes
+     *   site LR≈0x30D010 — screen width/height into out0/out5
+     * R0=MR_SUCCESS(0) is correct; default_status alone left outs stale → helper stall.
+     * Opt-out: JJFB_PLATFORM_10138_CONTRACT=0 (A/B baseline).
+     */
+    if (call->code == 0x10138u) {
+        const char *off = getenv("JJFB_PLATFORM_10138_CONTRACT");
+        if (off && off[0] == '0') {
+            out->kind = GWY_PLAT_KIND_STATUS;
+            out->status_ret = 0u;
+            out->name = "plat_10138_contract_off";
+            out->evidence = "BASELINE_OFF";
+            return;
+        }
+        out->kind = GWY_PLAT_KIND_MULTI_OUT;
+        out->status_ret = 0u;
+        out->name = "plat_10138_multi_out";
+        out->evidence = "TARGET_OBSERVED+legacy_bridge";
         return;
     }
 }

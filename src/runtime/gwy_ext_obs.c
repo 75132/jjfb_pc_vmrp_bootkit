@@ -50,6 +50,8 @@
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_runtime_progress.h"
+#include "gwy_launcher/product_path_a_handler_trace.h"
+#include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_timer_cadence.h"
@@ -1648,7 +1650,11 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                     memset(host, 0, need);
                     if (r0 == 0x10132u && result.fill_buf && src_len)
                         memcpy(host, src, src_len);
-                    else if (result.alloc_u16_at0) {
+                    else if (r0 == 0x10132u && !result.fill_buf && need >= 4u) {
+                        /* Legacy malloc header: payload size in first word. */
+                        uint32_t payload = need - 4u;
+                        memcpy(host, &payload, sizeof(payload));
+                    } else if (result.alloc_u16_at0) {
                         uint16_t tag = result.alloc_u16_at0;
                         memcpy(host, &tag, sizeof(tag));
                     }
@@ -1786,6 +1792,106 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             fflush(stdout);
         }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
+    } else if (result.kind == GWY_PLAT_KIND_MULTI_OUT) {
+        /*
+         * 0x10138 multi-out query (legacy bridge ABI).
+         * At slot28 entry (after 0x304558 frame): R1/R2/R3 + SP[0]/SP[4]/SP[8]
+         * are guest *out pointers; site LR of the plat wrapper caller is at SP+0x24.
+         * Ret MR_SUCCESS(0). Heap site writes free-bytes to *out5 and clears ED8.
+         */
+        static uint32_t g_10138_n;
+        uint32_t outs[6];
+        uint32_t vals[6];
+        uint32_t site_lr = 0, out4 = 0, out5 = 0, sp4 = 0, sp8 = 0;
+        uint32_t er_rw = 0, ed8 = 0;
+        uint8_t f7dc = 0, f7dd = 0, one = 1;
+        int mode_metrics = 0;
+        int wrote_gates = 0;
+        uint32_t api_id = ++g_10138_n;
+        uint32_t handler_id = product_pah_handler_call_id();
+        uint32_t cpsr = 0;
+        int i;
+
+        memset(outs, 0, sizeof(outs));
+        memset(vals, 0, sizeof(vals));
+        outs[0] = r1;
+        outs[1] = r2;
+        outs[2] = r3;
+        outs[3] = arg4;
+        if (uc && sp) {
+            if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 4u, &out4)) out4 = 0;
+            if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 8u, &out5)) out5 = 0;
+            if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 0x24u, &site_lr))
+                site_lr = 0;
+            sp4 = out4;
+            sp8 = out5;
+        }
+        outs[4] = sp4;
+        outs[5] = sp8;
+#ifdef GWY_HAVE_UNICORN
+        if (uc) uc_reg_read((uc_engine *)uc, UC_ARM_REG_CPSR, &cpsr);
+#endif
+        if ((site_lr & ~1u) == 0x30D010u) {
+            mode_metrics = 1;
+            vals[0] = 240u; /* SCREEN_WIDTH — product surface */
+            vals[5] = 320u; /* SCREEN_HEIGHT */
+        } else {
+            vals[5] = 0x200000u; /* large free heap — matches legacy */
+        }
+
+        product_p10138_on_enter(uc, api_id, handler_id, caller_pc, lr, sp, cpsr, r0, r1, r2, r3,
+                                r9, site_lr, pc, outs);
+
+        if (uc) {
+            for (i = 0; i < 6; i++) {
+                if (outs[i])
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, outs[i], vals[i]);
+            }
+            /* Heap site: clear capacity + arm alternate gates on robotol ER_RW (R9). */
+            if (!mode_metrics && r9) {
+                ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+                const GwyLoadedModule *owner = NULL;
+                size_t mi;
+                if (reg) {
+                    for (mi = 0; mi < reg->count; mi++) {
+                        if (reg->modules[mi].data.start_of_er_rw == r9) {
+                            owner = &reg->modules[mi];
+                            break;
+                        }
+                    }
+                }
+                if (owner) {
+                    const char *oname =
+                        owner->resolved_name[0] ? owner->resolved_name : owner->requested_name;
+                    if (oname && strstr(oname, "robotol")) {
+                        er_rw = r9;
+                        (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, er_rw + 0xED8u, 0u);
+                        (void)guest_memory_uc_poke((struct uc_struct *)uc, er_rw + 0x7DCu, &one, 1);
+                        (void)guest_memory_uc_poke((struct uc_struct *)uc, er_rw + 0x7DDu, &one, 1);
+                        (void)guest_memory_uc_poke((struct uc_struct *)uc, er_rw + 0x7D9u, &one, 1);
+                        (void)guest_memory_uc_poke((struct uc_struct *)uc, er_rw + 0x11u, &one, 1);
+                        wrote_gates = 1;
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + 0xED8u, &ed8);
+                        (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + 0x7DCu, &f7dc, 1);
+                        (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + 0x7DDu, &f7dd, 1);
+                    }
+                }
+            }
+        }
+
+        ret = result.status_ret; /* MR_SUCCESS */
+        product_p10138_on_complete(uc, api_id, ret, mode_metrics, site_lr, outs, vals, er_rw, ed8,
+                                   f7dc, f7dd, wrote_gates);
+        if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE") ||
+            product_p10138_enabled()) {
+            printf("[PLATFORM_10138] mode=%s site_lr=0x%X free/out5=0x%X erw=0x%X gates=%d "
+                   "ret=%u name=%s evidence=%s\n",
+                   mode_metrics ? "metrics" : "heap", site_lr, vals[5], er_rw, wrote_gates, ret,
+                   result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+            fflush(stdout);
+        }
+        if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
+        product_pah_note_platform_api("0x10138", site_lr, vals[5]);
     } else if (result.kind == GWY_PLAT_KIND_TIMER_START) {
         platform_timer_start(result.timer_period_ms);
         g_armed_timer_chunk = result.timer_chunk;

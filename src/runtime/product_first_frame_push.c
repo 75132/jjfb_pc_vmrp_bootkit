@@ -4,6 +4,7 @@
 #include "gwy_launcher/product_event_queue_consumer.h"
 #include "gwy_launcher/product_post_drain_gate_trace.h"
 #include "gwy_launcher/product_path_a_handler_trace.h"
+#include "gwy_launcher/product_platform_10138_trace.h"
 #include "gwy_launcher/product_event_object_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/module_registry.h"
@@ -170,6 +171,7 @@ void product_ffp_set_run_id(const char *run_id) {
     product_eqc_set_run_id(run_id);
     product_pdgt_set_run_id(run_id);
     product_pah_set_run_id(run_id);
+    product_p10138_set_run_id(run_id);
     product_eot_set_run_id(run_id);
     product_runtime_progress_set_run_id(run_id);
 }
@@ -199,6 +201,7 @@ void product_ffp_reset(void) {
     product_eqc_reset();
     product_pdgt_reset();
     product_pah_reset();
+    product_p10138_reset();
     product_eot_reset();
     product_runtime_progress_reset();
     memset(g_samples, 0, sizeof(g_samples));
@@ -903,6 +906,7 @@ void product_ffp_finalize(void) {
     product_eqc_finalize();
     product_pdgt_finalize();
     product_pah_finalize();
+    product_p10138_finalize();
     product_eot_finalize();
     write_samples_csv();
     write_mem_csv();
