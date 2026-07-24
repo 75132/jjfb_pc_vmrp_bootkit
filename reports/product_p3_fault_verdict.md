@@ -1,6 +1,6 @@
 # Product P3 Fault Verdict
 
-- **run_id:** ffp_event_20260724_042300_25225
+- **run_id:** ffp_event_20260724_155025_4016
 - **primary_class:** CALLBACK_RETURN_SENTINEL_OK
 - **halted:** no
 - **ok_returns:** 3

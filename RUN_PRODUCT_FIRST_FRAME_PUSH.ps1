@@ -12,7 +12,8 @@ param(
   [switch]$Trace305E09,
   [switch]$TraceQueueBootstrap,
   [switch]$TraceNodeAlloc,
-  [switch]$TraceQueueConsumer
+  [switch]$TraceQueueConsumer,
+  [switch]$TracePostDrainGate
 )
 
 $ErrorActionPreference = 'Stop'
@@ -49,7 +50,7 @@ $runId = ('ffp_{0}_{1:yyyyMMdd_HHmmss}_{2}' -f $modeKey, (Get-Date), (Get-Random
   'JJFB_PRODUCT_P5_ONE_SHOT', 'JJFB_PRODUCT_FFP_APPLY_ABI', 'JJFB_PRODUCT_P5_MODE',
   'JJFB_PRODUCT_TRACE_305E09', 'JJFB_PRODUCT_EVENT_CONTRACT',
   'JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP', 'JJFB_PRODUCT_TRACE_NODE_ALLOC',
-  'JJFB_PRODUCT_TRACE_QUEUE_CONSUMER',
+  'JJFB_PRODUCT_TRACE_QUEUE_CONSUMER', 'JJFB_POST_DRAIN_GATE_TRACE',
   'JJFB_101AB_EMPTY', 'JJFB_101AB_WITH_RECORD'
 ) | ForEach-Object { Remove-Item -Path "Env:$_" -ErrorAction SilentlyContinue }
 
@@ -181,6 +182,13 @@ if ($TraceQueueConsumer -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
   $env:JJFB_PRODUCT_TRACE_NODE_ALLOC = '1'
 } else {
   Remove-Item Env:JJFB_PRODUCT_TRACE_QUEUE_CONSUMER -ErrorAction SilentlyContinue
+}
+
+# Post-Drain Gate Contract Closure: candidate writers + ER_RW+15D/B71 watch (observe-only).
+if ($TracePostDrainGate -or $Mode -eq 'Validate' -or $Mode -eq 'Event') {
+  $env:JJFB_POST_DRAIN_GATE_TRACE = '1'
+} else {
+  Remove-Item Env:JJFB_POST_DRAIN_GATE_TRACE -ErrorAction SilentlyContinue
 }
 
 # One-shot remains diagnostic-only — never default for FFP Event Round A.
@@ -377,9 +385,34 @@ $uiModeNz = [bool]($all -match 'ui_mode=0x[1-9A-Fa-f]|UI_MODE.*nonzero|ui_mode=[
 $consumerEnter = [bool]($all -match '\[EVENT_QUEUE_CONSUMER_ENTER\]')
 $consumerTrig = [bool]($all -match '\[EVENT_QUEUE_CONSUMER_TRIGGER|DRAIN_TRIGGER')
 $nodeConsumed = [bool]($all -match '\[EVENT_NODE_CONSUMED\]')
-$queueAck = [bool]($all -match '\[EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED\]|EVENT_COMPLETION_GUEST_VISIBLE')
+$queueAck = [bool]($all -match '\[EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED\]|EVENT_COMPLETION_GUEST_VISIBLE|\[POST_DRAIN_SUCCESSOR_REACHED\]')
 $countChanged = [bool]($all -match '\[EVENT_LIST_COUNT_CHANGED\]')
 $nonemptyVis = [bool]($all -match '\[EVENT_QUEUE_NONEMPTY_VISIBLE\]')
+$postDrainGateOk = [bool]($all -match '\[EVENT_POST_DRAIN_GATE_OK\]')
+$uiWriterEnter = [bool]($all -match '\[EVENT_UI_MODE_WRITER_ENTER\]|\[EVENT_UI_WRITER_ENTER\]|pc=0x2FC418')
+$gateSampled = [bool]($all -match '\[EVENT_POST_DRAIN_GATE\]')
+$gate15d = $null; $gateB71 = $null; $gate134d = $null; $gateC76 = $null
+if ($all -match '\[EVENT_POST_DRAIN_GATE\]\s+15D=(\d+)\s+B71=(\d+)\s+134D=(\d+)\s+C76=(\d+)') {
+  $gate15d = [int]$Matches[1]; $gateB71 = [int]$Matches[2]; $gate134d = [int]$Matches[3]; $gateC76 = [int]$Matches[4]
+} elseif ($all -match '\[EVENT_POST_DRAIN_GATE\]\s+15D=(\d+)\s+B71=(\d+)\s+134D=(\d+)') {
+  $gate15d = [int]$Matches[1]; $gateB71 = [int]$Matches[2]; $gate134d = [int]$Matches[3]
+}
+$successorReached = $postDrainGateOk -or $uiWriterEnter -or $queueAck
+$successorBlocker = 'none'
+if ($nodeConsumed -and -not $successorReached) {
+  if ($gateSampled -and $null -ne $gate15d -and -not ($gate15d -eq 1 -and $gateB71 -ne 0 -and $gate134d -eq 0)) {
+    $successorBlocker = 'POST_DRAIN_GATE_15D_B71_134D'
+  } elseif ($gateSampled -and $gateB71 -eq 0) {
+    $successorBlocker = 'POST_DRAIN_GATE_B71'
+  } else {
+    $successorBlocker = 'POST_DRAIN_GATE_NOT_PASSED'
+  }
+}
+$pdgtEnter30 = [bool]($all -match '\[PDGT_ENTER\].*0x30CBBC')
+$pdgtEnter2e = [bool]($all -match '\[PDGT_ENTER\].*0x2E2520')
+$pdgtEnter2dc = [bool]($all -match '\[PDGT_ENTER\].*0x2DC4D8')
+$pdgtStore15d = [bool]($all -match '\[PDGT_ER_RW_WRITE\].*off=15D')
+$pdgtStoreB71 = [bool]($all -match '\[PDGT_ER_RW_WRITE\].*off=B71')
 
 $farthest = 'timer_stable_poll'
 if ($captureHit -and $fbHit -and $hwndHit) { $farthest = 'first_natural_frame' }
@@ -388,6 +421,11 @@ elseif ($fbHit -or $dispPred) { $farthest = 'framebuffer_mutation' }
 elseif ($resRead) { $farthest = 'resource_bytes_consumed' }
 elseif ($resReq) { $farthest = 'resource_request' }
 elseif ($stateAdv -or $sigChanged) { $farthest = 'robotol_state_changed' }
+elseif ($uiWriterEnter) { $farthest = 'post_drain_ui_writer_enter' }
+elseif ($postDrainGateOk) { $farthest = 'post_drain_successor_reached' }
+elseif ($nodeConsumed) { $farthest = 'event_node_consumed' }
+elseif ($consumerEnter) { $farthest = 'event_queue_consumer_enter' }
+elseif ($consumerTrig) { $farthest = 'event_queue_consumer_trigger' }
 elseif ($pathAComplete -or $nodeCtorOk) { $farthest = 'event_path_a_enqueue_complete' }
 elseif ($nodeLinked) { $farthest = 'event_list_node_linked' }
 elseif ($pathAOk) { $farthest = 'event_path_a_enqueue_ok' }
@@ -400,6 +438,10 @@ elseif ($ctxIdent) { $farthest = '10165_object_identified' }
 
 $lastOk = 'none'
 if ($stateAdv) { $lastOk = 'ROBOTOL_STATE_DIGEST_CHANGED' }
+elseif ($uiWriterEnter) { $lastOk = 'EVENT_UI_WRITER_ENTER' }
+elseif ($postDrainGateOk) { $lastOk = 'EVENT_POST_DRAIN_GATE_OK' }
+elseif ($nodeConsumed) { $lastOk = 'EVENT_NODE_CONSUMED' }
+elseif ($consumerEnter) { $lastOk = 'EVENT_QUEUE_CONSUMER_ENTER' }
 elseif ($pathAOk) { $lastOk = 'EVENT_PATH_A_ENQUEUE_OK' }
 elseif ($listHeadOk) { $lastOk = 'EVENT_LIST_HEAD_INITIALIZED' }
 elseif ($outWrites) { $lastOk = 'FAMILY_HANDLER_OUTPUT_WRITES_OBSERVED' }
@@ -416,12 +458,19 @@ elseif (-not $abiOk) { $firstGap = 'family handler ABI / context not proven in d
 elseif ($fault94 -and -not $stateAdv) {
   $firstGap = 'list-node/path-A DSM mem primitive fault @0x94E40 (UI_MODE still 0)'
 }
-elseif ($pathAComplete -and -not $uiModeNz -and -not $stateAdv) {
-  if ($nodeLinked -and -not $consumerEnter) {
-    $firstGap = 'node linked but queue consumer/drain trigger not reached (UI_MODE still 0)'
+elseif ($nodeConsumed -and -not $successorReached) {
+  if ($successorBlocker -ne 'none') {
+    $gateTxt = if ($null -ne $gate15d) { "15D=$gate15d B71=$gateB71 134D=$gate134d" } else { 'gate sampled without parse' }
+    $firstGap = "post-drain gates $gateTxt block 2DADC4->2FC418 ($successorBlocker)"
   } else {
-    $firstGap = 'Path A node construction complete; UI_MODE still 0 / state not advanced'
+    $firstGap = 'node consumed; post-drain successor not reached'
   }
+}
+elseif ($nodeLinked -and -not $consumerEnter -and -not $stateAdv) {
+  $firstGap = 'node linked but queue consumer/drain trigger not reached (UI_MODE still 0)'
+}
+elseif ($pathAComplete -and -not $uiModeNz -and -not $stateAdv) {
+  $firstGap = 'Path A node construction complete; UI_MODE still 0 / state not advanced'
 }
 elseif ($pathARecovered -and $pathAOk -and -not $stateAdv -and -not $pathAComplete) {
   $firstGap = 'Path A enqueued after B54 recover; node construction incomplete'
@@ -442,8 +491,12 @@ if ($forbidHit) {
   } else {
     $verdict = 'FORBIDDEN_OR_FAULT'
   }
+} elseif ($successorReached -and $stateAdv) {
+  $verdict = 'POST_DRAIN_SUCCESSOR_REACHED'
 } elseif ($queueAck -and $stateAdv) {
-  $verdict = 'EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED'
+  $verdict = 'POST_DRAIN_SUCCESSOR_REACHED' # legacy alias EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED
+} elseif ($nodeConsumed -and $consumerEnter -and -not $successorReached) {
+  $verdict = 'EVENT_QUEUE_CONSUMER_REACHED'
 } elseif ($nodeConsumed -and $consumerEnter) {
   $verdict = 'EVENT_QUEUE_CONSUMER_REACHED'
 } elseif ($consumerTrig -and $nonemptyVis -and -not $consumerEnter) {
@@ -500,6 +553,46 @@ $csv65 = Join-Path $reportDir 'product_ffp_10165_objects.csv'
 $csvSamp = Join-Path $reportDir 'product_ffp_guest_request_samples.csv'
 $csvMem = Join-Path $reportDir 'product_ffp_handler_mem.csv'
 $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
+$pdgtCsv = Join-Path $reportDir 'product_post_drain_gate_watch.csv'
+$pdgtTl = Join-Path $reportDir 'product_post_drain_gate_timeline.md'
+$hashesPath = Join-Path $reportDir "product_ffp_hashes_$runId.txt"
+
+function Get-Sha256OrMissing([string]$path) {
+  if (-not (Test-Path $path)) { return 'missing' }
+  return (Get-FileHash -Algorithm SHA256 -Path $path).Hash.ToLowerInvariant()
+}
+
+$runnerPath = $MyInvocation.MyCommand.Path
+$runnerSha = Get-Sha256OrMissing $runnerPath
+$gitCommit = 'unknown'
+$gitTree = 'unknown'
+$gitDirty = 'unknown'
+try {
+  Push-Location $Root
+  $gitCommit = (git rev-parse HEAD 2>$null).Trim()
+  $gitTree = (git rev-parse 'HEAD^{tree}' 2>$null).Trim()
+  $dirtyOut = git status --porcelain 2>$null
+  $gitDirty = if ($dirtyOut) { 'yes' } else { 'no' }
+  Pop-Location
+} catch {
+  Pop-Location -ErrorAction SilentlyContinue
+}
+
+$stdoutSha = Get-Sha256OrMissing $stdout
+$stderrSha = Get-Sha256OrMissing $stderr
+$csvReqSha = Get-Sha256OrMissing $csvReq
+$csv65Sha = Get-Sha256OrMissing $csv65
+$csvSampSha = Get-Sha256OrMissing $csvSamp
+$csvMemSha = Get-Sha256OrMissing $csvMem
+$abiSha = Get-Sha256OrMissing $abiJson
+$pdgtCsvSha = Get-Sha256OrMissing $pdgtCsv
+$pdgtTlSha = Get-Sha256OrMissing $pdgtTl
+
+$gateSampleLine = if ($null -ne $gate15d) {
+  "15D=$gate15d B71=$gateB71 134D=$gate134d C76=$(if ($null -ne $gateC76) { $gateC76 } else { '?' })"
+} else { 'not_sampled_in_log' }
+
+$successorStatus = if ($successorReached) { 'POST_DRAIN_SUCCESSOR_REACHED' } else { 'POST_DRAIN_SUCCESSOR_BLOCKED' }
 
 @"
 # Product First-Frame Push Verdict
@@ -513,11 +606,42 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 - **apply_abi:** $(if ($env:JJFB_PRODUCT_FFP_APPLY_ABI -eq '1') { 'yes' } else { 'no' })
 - **ok_callback_returns:** $okLeave
 
+## Provenance
+
+- **git_commit:** $gitCommit
+- **git_tree:** $gitTree
+- **git_dirty:** $gitDirty
+- **runner_path:** $runnerPath
+- **runner_sha256:** $runnerSha
+- **main_exe:** $exe
+- **main_exe_sha256:** $exeHash
+- **gwy_launcher_sha256:** $launcherHash
+- **stdout:** $stdout
+- **stdout_sha256:** $stdoutSha
+- **stderr:** $stderr
+- **stderr_sha256:** $stderrSha
+- **hashes_sidecar:** $hashesPath
+
 ## Farthest natural milestone
 
 - **farthest:** $farthest
 - **last_successful_transaction:** $lastOk
 - **first_unmet_platform_contract:** $firstGap
+- **note:** ``EVENT_PATH_A_ENQUEUE_COMPLETE`` is an independent marker; if node linked/consumed, prefer consumer milestones over that marker.
+
+## Post-Drain Gate (successor, not protocol ACK)
+
+- **successor_status:** $successorStatus
+- **successor_blocker:** $successorBlocker
+- **gate_sample:** $gateSampleLine
+- **EVENT_POST_DRAIN_GATE_OK:** $(if ($postDrainGateOk) { 'yes' } else { 'no' })
+- **UI_writer_2FC418:** $(if ($uiWriterEnter) { 'yes' } else { 'no' })
+- **legacy_alias:** former ``Ack path`` / ``ack_done`` == post-drain successor reachability
+- **PDGT enter 30CBBC:** $(if ($pdgtEnter30) { 'yes' } else { 'no' })
+- **PDGT enter 2E2520:** $(if ($pdgtEnter2e) { 'yes' } else { 'no' })
+- **PDGT enter 2DC4D8:** $(if ($pdgtEnter2dc) { 'yes' } else { 'no' })
+- **PDGT store 15D:** $(if ($pdgtStore15d) { 'yes' } else { 'no' })
+- **PDGT store B71:** $(if ($pdgtStoreB71) { 'yes' } else { 'no' })
 
 ## Event / ABI
 
@@ -573,11 +697,13 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 ## Artifacts
 
 - **manifest:** $manifest
-- **csv_requests:** $(if (Test-Path $csvReq) { $csvReq } else { 'missing' })
-- **csv_10165:** $(if (Test-Path $csv65) { $csv65 } else { 'missing' })
-- **csv_samples:** $(if (Test-Path $csvSamp) { $csvSamp } else { 'missing' })
-- **csv_mem:** $(if (Test-Path $csvMem) { $csvMem } else { 'missing' })
-- **abi_manifest:** $(if (Test-Path $abiJson) { $abiJson } else { 'missing' })
+- **csv_requests:** $(if (Test-Path $csvReq) { "$csvReq sha256=$csvReqSha" } else { 'missing' })
+- **csv_10165:** $(if (Test-Path $csv65) { "$csv65 sha256=$csv65Sha" } else { 'missing' })
+- **csv_samples:** $(if (Test-Path $csvSamp) { "$csvSamp sha256=$csvSampSha" } else { 'missing' })
+- **csv_mem:** $(if (Test-Path $csvMem) { "$csvMem sha256=$csvMemSha" } else { 'missing' })
+- **abi_manifest:** $(if (Test-Path $abiJson) { "$abiJson sha256=$abiSha" } else { 'missing' })
+- **pdgt_watch_csv:** $(if (Test-Path $pdgtCsv) { "$pdgtCsv sha256=$pdgtCsvSha" } else { 'missing' })
+- **pdgt_timeline:** $(if (Test-Path $pdgtTl) { "$pdgtTl sha256=$pdgtTlSha" } else { 'missing' })
 - **forbidden_hits:** $(if ($forbidHit) { ($forbidHit -join ', ') } else { 'none' })
 
 ## Discipline
@@ -585,11 +711,58 @@ $abiJson = Join-Path $reportDir 'product_ffp_family_abi_manifest.json'
 - Event Round A: collect identity + 10165 object + handler ABI (no one-shot default)
 - Event Round B: ``-ApplyAbi`` once after provenance
 - Resource/Validate auto-continue when state advances / display predecessor reached
-- Forbidden: fixed PC, Robotol flag writes, fabricated 10165, forced DispUpEx, E9/E10A
+- Forbidden: fixed PC patches, Robotol flag writes, fabricated 10165, forced DispUpEx, E9/E10A
+- Post-drain gate: observe-only writers/watchpoints; no forced 15D/B71/UI_MODE
 "@ | Set-Content -Path $verdictPath -Encoding utf8
 
-Write-Host "verdict=$verdict farthest=$farthest identity=$idClass state_adv=$stateAdv"
+$verdictSha = Get-Sha256OrMissing $verdictPath
+@"
+run_id=$runId
+git_commit=$gitCommit
+git_tree=$gitTree
+git_dirty=$gitDirty
+runner_sha256=$runnerSha
+main_exe_sha256=$exeHash
+gwy_launcher_sha256=$launcherHash
+stdout_sha256=$stdoutSha
+stderr_sha256=$stderrSha
+csv_requests_sha256=$csvReqSha
+csv_10165_sha256=$csv65Sha
+csv_samples_sha256=$csvSampSha
+csv_mem_sha256=$csvMemSha
+abi_manifest_sha256=$abiSha
+pdgt_watch_sha256=$pdgtCsvSha
+pdgt_timeline_sha256=$pdgtTlSha
+verdict_sha256=$verdictSha
+verdict_path=$verdictPath
+"@ | Set-Content -Path $hashesPath -Encoding utf8
+
+# Append verdict hash into verdict Provenance section for one-file binding.
+$verdictBody = Get-Content $verdictPath -Raw
+$verdictBody = $verdictBody -replace '(?m)^- \*\*hashes_sidecar:\*\*.*$', ("- **hashes_sidecar:** $hashesPath`r`n- **verdict_sha256:** $verdictSha")
+Set-Content -Path $verdictPath -Value $verdictBody -Encoding utf8
+$verdictSha = Get-Sha256OrMissing $verdictPath
+(Get-Content $hashesPath) -replace '^verdict_sha256=.*', "verdict_sha256=$verdictSha" | Set-Content $hashesPath -Encoding utf8
+
+@"
+run_id=$runId
+mode=$Mode
+runtime=$runtimeKind
+main_exe_sha256=$exeHash
+gwy_launcher_sha256=$launcherHash
+jjfb_mrp_sha256=$ExpectedHash
+apply_abi=$(if ($ApplyAbi) { '1' } else { '0' })
+git_commit=$gitCommit
+git_tree=$gitTree
+git_dirty=$gitDirty
+runner_sha256=$runnerSha
+stdout_sha256=$stdoutSha
+verdict_sha256=$verdictSha
+"@ | Set-Content -Path $manifest -Encoding utf8
+
+Write-Host "verdict=$verdict farthest=$farthest identity=$idClass state_adv=$stateAdv successor=$successorStatus"
 Write-Host "report=$verdictPath"
+Write-Host "hashes=$hashesPath"
 
 $okModes = @(
   'P6_EVENT_PROVENANCE_MAPPED',
@@ -603,6 +776,7 @@ $okModes = @(
   'EVENT_QUEUE_CONSUMER_REACHED',
   'EVENT_QUEUE_CONSUMER_NOT_SCHEDULED',
   'EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED',
+  'POST_DRAIN_SUCCESSOR_REACHED',
   'P7_RESOURCE_REQUEST_SEEN',
   'P7_RESOURCE_TRANSACTION_COMPLETE',
   'P7_WAITING_RESOURCE_AFTER_STATE',

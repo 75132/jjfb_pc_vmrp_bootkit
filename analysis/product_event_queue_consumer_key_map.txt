@@ -1,0 +1,46 @@
+# product_event_queue_consumer.c — fixed PC / ER_RW offset key map
+# Rebuilt 2026-07-24 from local src (not sandbox partial clone).
+# Role: Unicorn observe-only hooks in default launcher_core (research debt).
+
+## Code sites (PC)
+0x305EB8  DRAIN_TRIGGER          periodic trigger (sole BL → 0x2DC80C)
+0x2DC80C  DRAIN_CONSUMER_ENTER   B54 list drain entry
+0x312AC4  LIST_COUNT             nonempty predicate (+4 count)
+0x312AB4  LIST_GET_ITEM          returns node+8 item
+0x312C0C  LIST_POP               unlink / dec count / free
+0x312A84  EMPTY_PUSH_RETURN      after count=1
+0x312AA0  NONEMPTY_PUSH_RETURN   after count++
+0x2DC82E  AFTER_GET_ITEM         r0=item
+0x2DC848  ALT_DISPATCH           C76 branch alternate
+0x30BC40  ITEM_DESTRUCTOR        free path
+0x305EC2  POST_DRAIN_GATE_SAMPLE 15D/B71/134D gate
+0x305EF4  POST_DRAIN_GATE_OK     BL 0x2DADC4 when gates pass
+0x2DADC4  GATE_INIT              post-drain successor
+0x2FC418  UI_WRITER              natural UI_MODE=0x45 store
+
+## Candidate / alternate (documented in consumer static notes; not all hooked)
+0x30CBBC  candidate 15D writer entry (family app=2 path)
+0x30CCF4  strb 15D=1 inside 30CBBC (legacy observe)
+0x2E2520  B71 upstream dispatcher (alternate after drain)
+0x2DC4D8  B71 writer chain
+0x2DC572  strb B71=1 in 2DC4D8 (legacy observe)
+
+## ER_RW offsets
+ER_RW+0xB54   event list control (HEAD/COUNT)
+ER_RW+0xB7D   digest / state byte
+ER_RW+0x8D0   UI_MODE
+ER_RW+0x15D   gate: need == 1
+ER_RW+0xB71   gate: need != 0
+ER_RW+0x134D  gate: need == 0
+ER_RW+0xC76   item branch selector
+
+## Natural chain (confirmed)
+Path-A push → ER_RW+B54 list → 0x305EB8 → 0x2DC80C → 0x312AB4 → 0x312C0C
+  → node consumed → 0x305EC2 gate → (if pass) 0x305EF4 → 0x2DADC4 → 0x2FC418
+
+## Gate condition
+15D == 1 AND B71 != 0 AND 134D == 0
+
+## Naming (2026-07-24 contract)
+POST_DRAIN_SUCCESSOR_REACHED  == former ack_done / EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED
+POST_DRAIN_SUCCESSOR_BLOCKED  == former ack blocked (see blocker enum)

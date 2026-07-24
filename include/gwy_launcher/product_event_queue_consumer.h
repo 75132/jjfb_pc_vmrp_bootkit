@@ -13,6 +13,9 @@ extern "C" {
  * (periodic drain trigger → B54 pop), node schema from consumer reads, and
  * whether empty body is accepted. Enabled by JJFB_PRODUCT_TRACE_QUEUE_CONSUMER=1.
  *
+ * Post-drain successor (former "ack"): reaching 0x2DADC4 / 0x2FC418 after gate.
+ * Reports use POST_DRAIN_SUCCESSOR_* names; ack_* fields remain as aliases.
+ *
  * Proven (static+live):
  *   nonempty predicate = list_control.count @ +4 (via 0x312AC4)
  *   B54 drain entry     = 0x2DC80C

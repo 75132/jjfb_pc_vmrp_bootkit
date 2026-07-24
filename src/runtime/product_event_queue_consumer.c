@@ -667,21 +667,24 @@ static void write_reports(void) {
     const char *empty_cls = "EVENT_RECORD_OPTIONAL";
     const char *second = "COUNT";
 
-    const char *ack_blocker = "EVENT_QUEUE_CONSUMER_NOT_SCHEDULED";
-    int ack_done = 0;
+    /* successor_reached := post-drain successor (2DADC4 / UI writer), NOT a protocol ACK. */
+    const char *successor_blocker = "EVENT_QUEUE_CONSUMER_NOT_SCHEDULED";
+    int successor_reached = 0;
+    int ack_done = 0; /* alias for successor_reached (legacy reports) */
 
     if (g_ui_writer_enter || (g_gate_init_enter && g_post_drain_gate_ok))
-        ack_done = 1;
+        successor_reached = 1;
+    ack_done = successor_reached;
 
-    if (g_node_consumed && !ack_done)
-        tl_verdict = "EVENT_NODE_CONSUMED_NO_ACK";
+    if (g_node_consumed && !successor_reached)
+        tl_verdict = "EVENT_NODE_CONSUMED_POST_DRAIN_SUCCESSOR_BLOCKED";
     else if (g_consumer_enter && product_eqc_peek_count(g_uc, g_first_list) == 0 && g_node_linked &&
              !g_node_consumed)
         tl_verdict = "EVENT_NODE_NOT_VISIBLE_TO_CONSUMER";
-    else if (g_node_consumed && ack_done)
-        tl_verdict = "EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED";
+    else if (g_node_consumed && successor_reached)
+        tl_verdict = "POST_DRAIN_SUCCESSOR_REACHED";
     else if (g_node_consumed)
-        tl_verdict = "EVENT_NODE_CONSUMED_NO_ACK";
+        tl_verdict = "EVENT_NODE_CONSUMED_POST_DRAIN_SUCCESSOR_BLOCKED";
 
     if (g_consumer_enter)
         cons_verdict = "EVENT_QUEUE_CONSUMER_REACHED";
@@ -696,19 +699,19 @@ static void write_reports(void) {
         empty_cls = "EVENT_RECORD_OPTIONAL";
 
     if (!g_consumer_enter)
-        ack_blocker = "EVENT_QUEUE_CONSUMER_NOT_SCHEDULED";
+        successor_blocker = "EVENT_QUEUE_CONSUMER_NOT_SCHEDULED";
     else if (g_item_free_path && !g_item_alt_path && g_gate_sampled && g_gate_b71 == 0)
-        ack_blocker = "POST_DRAIN_GATE_B71";
+        successor_blocker = "POST_DRAIN_GATE_B71";
     else if (g_gate_sampled && !(g_gate_15d == 1 && g_gate_b71 != 0 && g_gate_134d == 0))
-        ack_blocker = "POST_DRAIN_GATE_15D_B71_134D";
+        successor_blocker = "POST_DRAIN_GATE_15D_B71_134D";
     else if (g_node_consumed && !g_post_drain_gate_ok)
-        ack_blocker = "POST_DRAIN_GATE_NOT_PASSED";
+        successor_blocker = "POST_DRAIN_GATE_NOT_PASSED";
     else if (g_post_drain_gate_ok && !g_ui_writer_enter)
-        ack_blocker = "GATE_INIT_NO_UI_WRITER";
-    else if (!ack_done)
-        ack_blocker = "DISPATCH_OR_ACK_AFTER_CONSUME";
+        successor_blocker = "GATE_INIT_NO_UI_WRITER";
+    else if (!successor_reached)
+        successor_blocker = "POST_DRAIN_SUCCESSOR_BLOCKED";
     else
-        ack_blocker = "NONE";
+        successor_blocker = "NONE";
 
     report_path("product_event_enqueue_timeline.csv", path, sizeof(path));
     f = fopen(path, "wb");
@@ -883,7 +886,8 @@ static void write_reports(void) {
                 g_post_drain_gate_ok);
         fprintf(f, "%s,gate_init_enter,%d,2DADC4\n", product_eqc_run_id(), g_gate_init_enter);
         fprintf(f, "%s,ui_writer_enter,%d,2FC418\n", product_eqc_run_id(), g_ui_writer_enter);
-        fprintf(f, "%s,ack_blocker,%s\n", product_eqc_run_id(), ack_blocker);
+        fprintf(f, "%s,successor_blocker,%s\n", product_eqc_run_id(), successor_blocker);
+        fprintf(f, "%s,ack_blocker,%s\n", product_eqc_run_id(), successor_blocker); /* alias */
         fclose(f);
     }
 
@@ -902,15 +906,18 @@ static void write_reports(void) {
                 "  \"post_drain_gates\": \"15D==1 && B71!=0 && 134D==0 -> 0x2DADC4\",\n"
                 "  \"ui_writer\": \"0x2FC418 stores 0x45 at ER_RW+0x8D0\",\n"
                 "  \"trigger_class\": \"%s\",\n"
+                "  \"successor_blocker\": \"%s\",\n"
                 "  \"ack_blocker\": \"%s\",\n"
+                "  \"note\": \"ack_blocker is alias; means POST_DRAIN_SUCCESSOR not protocol ACK\",\n"
                 "  \"gate_sample\": {\"15D\": %u, \"B71\": %u, \"134D\": %u, \"C76\": %u},\n"
                 "  \"item_path\": {\"free_30BC40\": %d, \"alt_2DC848\": %d, \"item\": \"0x%X\", "
                 "\"item_w0\": \"0x%X\"},\n"
-                "  \"verdict\": \"EVENT_ACK_BLOCKER_IDENTIFIED\",\n"
+                "  \"verdict\": \"POST_DRAIN_SUCCESSOR_BLOCKER_IDENTIFIED\",\n"
+                "  \"legacy_verdict_alias\": \"EVENT_ACK_BLOCKER_IDENTIFIED\",\n"
                 "  \"run_id\": \"%s\"\n"
                 "}\n",
-                trig, ack_blocker, g_gate_15d, g_gate_b71, g_gate_134d, g_gate_c76,
-                g_item_free_path, g_item_alt_path, g_drain_item, g_drain_item_w0,
+                trig, successor_blocker, successor_blocker, g_gate_15d, g_gate_b71, g_gate_134d,
+                g_gate_c76, g_item_free_path, g_item_alt_path, g_drain_item, g_drain_item_w0,
                 product_eqc_run_id());
         fclose(f);
     }
@@ -927,14 +934,18 @@ static void write_reports(void) {
         fprintf(f, "%s,EVENT_QUEUE_CONSUMER_TRIGGER_IDENTIFIED,1\n", product_eqc_run_id());
         fprintf(f, "%s,%s,1\n", product_eqc_run_id(), cons_verdict);
         fprintf(f, "%s,EVENT_NODE_SCHEMA_CONSUMER_CONFIRMED,1\n", product_eqc_run_id());
-        fprintf(f, "%s,EVENT_ACK_BLOCKER_IDENTIFIED,1\n", product_eqc_run_id());
+        fprintf(f, "%s,POST_DRAIN_SUCCESSOR_BLOCKER_IDENTIFIED,1\n", product_eqc_run_id());
+        fprintf(f, "%s,EVENT_ACK_BLOCKER_IDENTIFIED,1\n", product_eqc_run_id()); /* alias */
+        fprintf(f, "%s,POST_DRAIN_SUCCESSOR_REACHED,%d\n", product_eqc_run_id(),
+                successor_reached ? 1 : 0);
         fprintf(f, "%s,EVENT_QUEUE_CONSUMED_AND_ACKNOWLEDGED,%d\n", product_eqc_run_id(),
-                ack_done ? 1 : 0);
+                ack_done ? 1 : 0); /* alias */
         fprintf(f, "%s,drain_scheduled,%d\n", product_eqc_run_id(), g_drain_scheduled);
         fprintf(f, "%s,drain_delivered,%d\n", product_eqc_run_id(), g_drain_delivered);
         fprintf(f, "%s,item_free_path,%d\n", product_eqc_run_id(), g_item_free_path);
         fprintf(f, "%s,post_drain_gate_ok,%d\n", product_eqc_run_id(), g_post_drain_gate_ok);
-        fprintf(f, "%s,ack_blocker,%s\n", product_eqc_run_id(), ack_blocker);
+        fprintf(f, "%s,successor_blocker,%s\n", product_eqc_run_id(), successor_blocker);
+        fprintf(f, "%s,ack_blocker,%s\n", product_eqc_run_id(), successor_blocker); /* alias */
         fprintf(f, "%s,timeline_verdict,%s\n", product_eqc_run_id(), tl_verdict);
         fprintf(f, "%s,empty_body_class,%s\n", product_eqc_run_id(), empty_cls);
         fclose(f);
