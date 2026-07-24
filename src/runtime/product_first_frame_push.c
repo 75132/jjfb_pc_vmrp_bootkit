@@ -387,7 +387,8 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
         product_pdgt_note_er_rw(er_rw);
         product_pdgt_arm_hooks(uc);
     }
-    if (product_pah_enabled() || product_h2_enabled() || product_fp_enabled()) {
+    if (product_pah_enabled() || product_h2_enabled() || product_fp_enabled() ||
+        product_fsc_enabled()) {
         ModuleRegistry *reg = gwy_ext_loader_bound_registry();
         const GwyLoadedModule *rob = reg ? module_registry_find(reg, "robotol.ext") : NULL;
         product_pah_bind_uc(uc);

@@ -8,14 +8,20 @@ extern "C" {
 #endif
 
 /*
- * Observe-only trace for 0x30A0CC field parser and 0x30A100 inner loop.
+ * Field parser provenance (0x30A0CC) + Path-A inner binary-copy contract.
  *
- * Env: JJFB_FIELD_PARSER_TRACE=1
+ * Env:
+ *   JJFB_FIELD_PARSER_TRACE=1     — observe-only traces (diagnostic)
+ *   JJFB_FIELD_STREAM_CONTRACT=0  — disable inner memcpy repair (baseline)
+ *   JJFB_FIELD_STREAM_CONTRACT=1  — enable repair (product default when unset)
  *
- * Does not mutate guest state, force loop exit, pop queue, or fabricate stream bytes.
+ * Repair site: robotol 0x2E4ECA BLX — guest import resolves to DSM 0x804A8 which
+ * is NOT memcpy; host performs binary copy of (dest,src,n) before the BLX.
+ * Does not skip BLX (R9 restore must complete), force r5, or fabricate markers.
  */
 
 int product_fp_enabled(void);
+int product_fsc_enabled(void);
 void product_fp_reset(void);
 void product_fp_set_run_id(const char *run_id);
 const char *product_fp_run_id(void);

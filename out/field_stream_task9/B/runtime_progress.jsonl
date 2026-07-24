@@ -1,0 +1,25 @@
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916210,"pid":30484,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916238,"pid":30484,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916238,"pid":30484,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916241,"pid":30484,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916241,"pid":30484,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916243,"pid":30484,"milestone":"field_stream_copy_repaired","source":"fsc","details":"0x2E4ECA"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_valid_dispatch","source":"pah","details":"code5->2E4040"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_handler_entered","source":"pah","details":"0x2E4040"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_helper_running","source":"h2","details":"0x2F68E4"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"helper_2f68e4_returned","source":"fp","details":"0x2F6952"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_helper_returned","source":"h2","details":"ret_caller"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_after_helper","source":"fp","details":"0x2E4066"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"lifecycle_successor_entered","source":"h2","details":"0x2E4066"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_helper_returned","source":"pah","details":"0x2E4066"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"lifecycle_successor_entered","source":"pah","details":"0x2DADC4"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"post_dispatch_event_seen","source":"pah","details":"2DADC4"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"path_a_lifecycle","source":"fp","details":"0x2DADC4"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916246,"pid":30484,"milestone":"lifecycle_successor_entered","source":"h2","details":"0x2DADC4"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916252,"pid":30484,"milestone":"field_stream_copy_repaired","source":"fsc","details":"0x2E4ECA"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916252,"pid":30484,"milestone":"nested_path_a_published","source":"pah","details":"push_312A60"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916252,"pid":30484,"milestone":"post_dispatch_event_seen","source":"pah","details":"push_312A60"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916254,"pid":30484,"milestone":"path_a_valid_dispatch","source":"pah","details":"code5->2E4040"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916254,"pid":30484,"milestone":"path_a_handler_returned","source":"pah","details":"reenter"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916254,"pid":30484,"milestone":"path_a_handler_entered","source":"pah","details":"0x2E4040"}
+{"run_id":"fs9_B_20260725_020327","timestamp":1784916256,"pid":30484,"milestone":"path_a_handler_returned","source":"pah","details":"finalize"}

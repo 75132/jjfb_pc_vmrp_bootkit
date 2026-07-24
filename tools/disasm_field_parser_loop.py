@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 ROB = ROOT / "out/JJFB_E8A_delivery/02_mrp_extracted/jjfb/robotol.ext"
 OUT = ROOT / "reports/field_parser_loop_disasm.md"
 CODE_BASE = 0x2D8DF4
-START = 0x30A0E0
+# Include BE u16 length decode (0x30A0CC..0x30A0F6) + copy loop.
+START = 0x30A0CC
 END = 0x30A134
 
 
@@ -81,15 +82,17 @@ def decode_half(h: int, pc: int) -> tuple[str, str, list[str], int]:
         rn, rm = (h >> 3) & 0xF, h & 0xF
         ann.append("cmp")
         return "CMP", f"{reg(rn)}, {reg(rm)}", ann, 2
-    # LDR/STR word imm5*4
-    if (h & 0xE000) == 0x6000:
+    # LDR/STR word imm5*4 (bit11: 0=STR 1=LDR)
+    if (h & 0xF800) == 0x6800:
         rt, rn = h & 7, (h >> 3) & 7
         imm = ((h >> 6) & 0x1F) * 4
-        if h & 0x1000:
-            ann.append("store")
-            return "STR", f"{reg(rt)}, [{reg(rn)}, #0x{imm:X}]", ann, 2
         ann.append("load")
         return "LDR", f"{reg(rt)}, [{reg(rn)}, #0x{imm:X}]", ann, 2
+    if (h & 0xF800) == 0x6000:
+        rt, rn = h & 7, (h >> 3) & 7
+        imm = ((h >> 6) & 0x1F) * 4
+        ann.append("store")
+        return "STR", f"{reg(rt)}, [{reg(rn)}, #0x{imm:X}]", ann, 2
     # LDR/STR reg offset
     if (h & 0xFE00) == 0x5800:
         rt, rn, rm = h & 7, (h >> 3) & 7, (h >> 6) & 7
@@ -98,12 +101,13 @@ def decode_half(h: int, pc: int) -> tuple[str, str, list[str], int]:
             return "LDR", f"{reg(rt)}, [{reg(rn)}, {reg(rm)}]", ann, 2
         ann.append("store")
         return "STR", f"{reg(rt)}, [{reg(rn)}, {reg(rm)}]", ann, 2
-    # LDRB/STRB reg offset (Thumb1)
-    if (h & 0xF500) == 0x5400:
-        rt, rn, rm = (h >> 6) & 7, (h >> 3) & 7, h & 7
-        if h & 0x0800:
-            ann.append("load")
-            return "LDRB", f"{reg(rt)}, [{reg(rn)}, {reg(rm)}]", ann, 2
+    # LDRB/STRB reg offset (Thumb1): Rt=bits[2:0] Rn=bits[5:3] Rm=bits[8:6]
+    if (h & 0xFE00) == 0x5C00:
+        rt, rn, rm = h & 7, (h >> 3) & 7, (h >> 6) & 7
+        ann.append("load")
+        return "LDRB", f"{reg(rt)}, [{reg(rn)}, {reg(rm)}]", ann, 2
+    if (h & 0xFE00) == 0x5400:
+        rt, rn, rm = h & 7, (h >> 3) & 7, (h >> 6) & 7
         ann.append("store")
         return "STRB", f"{reg(rt)}, [{reg(rn)}, {reg(rm)}]", ann, 2
     # LDRB/STRB imm5
@@ -183,7 +187,7 @@ def main() -> None:
     body = disasm_range(blob, CODE_BASE, START, END)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     md = [
-        "# Field parser loop disasm (0x30A0E0..0x30A130)",
+        "# Field parser disasm (0x30A0CC..0x30A130)",
         "",
         f"- **module:** robotol.ext @ `0x{CODE_BASE:X}`",
         f"- **range:** `0x{START:X}` .. `0x{END:X}`",
@@ -192,10 +196,24 @@ def main() -> None:
         "",
         "| role | PC |",
         "|---|---|",
+        "| entry / args | **0x30A0CC** `r0=stream_base` `r1=state` |",
+        "| BE u16 length write | **0x30A0E8** `ADDS r5, r1, #0` |",
+        "| CMP r5,#0 | **0x30A0EA** (not the length write) |",
+        "| malloc field | **0x30A0F6** `BL 0x2D99AC` |",
         "| loop head | **0x30A100** |",
         "| loop back-edge | **0x30A110** `BLT → 0x30A100` |",
-        "| normal exit (fall-through) | **0x30A112** |",
-        "| exit predicate | **`CMP r1, r5` then `BLT`** → exit when **`r1 >= r5`** (unsigned) |",
+        "| normal exit | **0x30A112** |",
+        "",
+        "## Length provenance (0x30A0D8..0x30A0EA)",
+        "",
+        "```text",
+        "LDR  r0, [r4,#0]      ; cursor index",
+        "LDRB r1, [r6, r0]    ; lo = stream[cursor]",
+        "cursor++ ; STR [r4]",
+        "LDRB r2, [r6, r0]    ; hi = stream[cursor]",
+        "r5 = (lo << 8) | hi  ; BE u16 field length",
+        "CMP  r5, #0          ; @0x30A0EA",
+        "```",
         "",
         "## Instructions",
         "",
@@ -206,12 +224,10 @@ def main() -> None:
         "## Loop body (0x30A100..0x30A110)",
         "",
         "Carrying variables per iteration:",
-        "- **`r1`**: incremented (`ADDS r1, #1`) — field/record byte index",
-        "- **`r2`**: loaded/stored via **`[r4]`** scratch — stream byte or cursor cell",
-        "- **`r4`**: parser state object (cursor cell at +0, aux at +4)",
-        "- **`r5`**: compare bound — loop continues while **`r1 < r5`**",
-        "",
-        "No queue/nested/ER_RW loads in the inner loop; pure stream/index spin.",
+        "- **`r1`**: incremented (`ADDS r1, #1`) — field byte index",
+        "- **`r4`**: parser state (cursor index at `[r4,#0]`)",
+        "- **`r5`**: BE u16 length — loop while **`r1 < r5`**",
+        "- **`r6`**: stream base",
         "",
     ]
     OUT.write_text("\n".join(md), encoding="utf-8")
