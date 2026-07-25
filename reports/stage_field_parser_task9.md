@@ -1,6 +1,6 @@
 # Task 9: Field Length / Cursor Provenance and Contract Repair
 
-- **run_id:** task13_C2_211334
+- **run_id:** task14_C4_221233
 - **verdict:** `FIELD_PARSER_CONTRACT_REPAIRED`
 - **FIELD_STREAM_CONTRACT:** 0
 - **copy repairs:** 0

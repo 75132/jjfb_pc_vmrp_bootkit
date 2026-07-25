@@ -20,6 +20,7 @@
 #include "gwy_launcher/jjfb_bmp_meta.h"
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/platform_display.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31d_provenance.h"
@@ -605,6 +606,29 @@ static uint32_t getArg(uc_engine *uc, uint32_t n) {
     uc_mem_read(uc, addr, &v, 4);
     return v;
 }
+
+#ifdef GWY_USE_VM_FILE_SERVICE
+/* Task 14: present into existing SDL game window (no third window). */
+static void platform_display_present_to_sdl(const uint16_t *rgb565, int32_t x, int32_t y,
+                                           int32_t w, int32_t h, uint16_t key, int key_en) {
+    if (!rgb565 || w <= 0 || h <= 0) return;
+    if (key_en)
+        guiDrawBitmapSpriteKey((uint16_t *)rgb565, x, y, w, h, key);
+    else
+        guiDrawBitmapSprite((uint16_t *)rgb565, x, y, w, h);
+}
+
+/*
+ * Formal mr_table+0x1E0 _DrawBitmap — Robotol wrapper/classic via platform_display.
+ * Always returns R0=1 so 2FC26C continues (never skip-BLX / never DSM trap).
+ */
+static void br__DrawBitmap(BridgeMap *o, uc_engine *uc) {
+    uint32_t ret = 1u;
+    (void)o;
+    ret = platform_guest_draw_bitmap(uc);
+    uc_reg_write(uc, UC_ARM_REG_R0, &ret);
+}
+#endif
 
 // 实际上mrc_refreshScreen()是调用的这个方法
 /* E9C: present a larger original MRP UI member through the same guiDrawBitmapSprite
@@ -2529,7 +2553,11 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x1D4, MAP_FUNC, _mr_save_sms_cfg, NULL, br_mr_save_sms_cfg, 0),
     BRIDGE_FUNC_MAP(0x1D8, MAP_FUNC, _DispUpEx, NULL, br_observe_disp_up, 0),
     BRIDGE_FUNC_MAP(0x1DC, MAP_FUNC, _DrawPoint, NULL, NULL, 0),
+#ifdef GWY_USE_VM_FILE_SERVICE
+    BRIDGE_FUNC_MAP(0x1E0, MAP_FUNC, _DrawBitmap, NULL, br__DrawBitmap, 0),
+#else
     BRIDGE_FUNC_MAP(0x1E0, MAP_FUNC, _DrawBitmap, NULL, br_mr_drawBitmap, 0),
+#endif
     BRIDGE_FUNC_MAP(0x1E4, MAP_FUNC, _DrawBitmapEx, NULL, br_mr_drawBitmap, 0),
     BRIDGE_FUNC_MAP(0x1E8, MAP_FUNC, DrawRect, NULL, br_observe_draw_rect, 0),
     BRIDGE_FUNC_MAP(0x1EC, MAP_FUNC, _DrawText, NULL, br_observe_draw_text, 0),
@@ -2967,6 +2995,15 @@ uc_err bridge_init(uc_engine *uc) {
     /* Phase 6N: publish sendAppEvent stub guest address (+0x54 in mr_table). */
     gwy_ext_obs_extchunk_set_mr_table(toMrpMemAddr(mr_table));
     gwy_ext_obs_extchunk_set_sendappevent(toMrpMemAddr(mr_table) + 0x54u);
+#ifdef GWY_USE_VM_FILE_SERVICE
+    /* Task 14: bind present into existing SDL window; ER_RW+0x150C published later. */
+    platform_display_reset();
+    platform_display_set_present_fn(platform_display_present_to_sdl);
+    gwy_runtime_bind_display_surface(SCREEN_WIDTH, SCREEN_HEIGHT, NULL, NULL, NULL, NULL);
+    printf("[DRAW_FP_TABLE_SLOT] mt=0x%X off=0x1E0 trampoline=0x%X evidence=OBSERVED\n",
+           toMrpMemAddr(mr_table), toMrpMemAddr(mr_table) + 0x1E0u);
+    fflush(stdout);
+#endif
 
     dsm_require_funcs = hooks_init(uc, dsm_require_funcs_funcMap, countof(dsm_require_funcs_funcMap), sizeof(DSM_REQUIRE_FUNCS));
 #ifdef __EMSCRIPTEN__

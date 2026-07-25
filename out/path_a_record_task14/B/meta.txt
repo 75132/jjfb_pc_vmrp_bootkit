@@ -1,0 +1,6 @@
+﻿run_id=task14_B2_220319
+variant=B
+secs=100
+DRAWFP_BINDING=
+EMPTY_FIRST=1
+TRACE=1

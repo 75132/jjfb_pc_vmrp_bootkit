@@ -34,7 +34,9 @@ extern "C" {
  *   +0x3C strlen  → platform_guest_strlen (br_strlen)
  *
  * Robotol libc FP cache (module registration, not PC heal):
- *   ER_RW+0x144C = memset, ER_RW+0x1450 = strlen
+ *   ER_RW+0x1420 = memcpy, ER_RW+0x144C = memset, ER_RW+0x1450 = strlen
+ *   0x2FDD5C (inside 2FC26C) BLX's +0x1420; a DSM memcpy body (0x94E94)
+ *   is intercepted as nested cfunction and returns without copy → hang.
  *   downVersion compare (0x2D9648) BLX's +0x1450; a mis-filled memset VA
  *   (DSM 0x94F04) turns strlen into a multi-megabyte fill loop.
  *
@@ -44,12 +46,14 @@ extern "C" {
  */
 
 #define PLATFORM_MEMCPY_IMPORT_SLOT_VA 0x804A8u
+#define PLATFORM_MEMCPY_DSM_BODY_VA 0x94E94u /* real DSM memcpy; 0x804A8 is a misbound alias */
 #define PLATFORM_STRLEN_DSM_BODY_VA 0xAC374u
 #define PLATFORM_STRCPY_DSM_BODY_VA 0xAC300u
 #define PLATFORM_MEMCPY_MR_TABLE_OFF 0xCu
 #define PLATFORM_STRCPY_MR_TABLE_OFF 0x14u
 #define PLATFORM_MEMSET_MR_TABLE_OFF 0x38u
 #define PLATFORM_STRLEN_MR_TABLE_OFF 0x3Cu
+#define PLATFORM_ROBOTOL_ERW_MEMCPY_OFF 0x1420u
 #define PLATFORM_ROBOTOL_ERW_MEMSET_OFF 0x144Cu
 #define PLATFORM_ROBOTOL_ERW_STRLEN_OFF 0x1450u
 
@@ -62,7 +66,7 @@ void platform_memcpy_import_reset(void);
 void platform_memcpy_import_bind_uc(void *uc);
 void platform_memcpy_import_arm(void *uc);
 
-/* Publish mr_table memset/strlen into Robotol ER_RW libc cache once per ER_RW. */
+/* Publish mr_table memcpy/memset/strlen into Robotol ER_RW libc cache once per ER_RW. */
 int platform_libc_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table);
 
 uint32_t platform_memcpy_import_call_count(void);

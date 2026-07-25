@@ -83,6 +83,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_event_queue.c
     src/platform/platform_path_a_response.c
     src/platform/platform_memory_ops.c
+    src/platform/platform_display.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c

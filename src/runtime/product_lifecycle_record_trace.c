@@ -2,6 +2,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/platform_display.h"
 #include "gwy_launcher/ext_chunk_provider.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,7 +110,10 @@ void product_lrt_note_er_rw(uint32_t er_rw) {
     /* Module-registration libc cache: Robotol ER_RW+0x1450 must be strlen. */
     if (g_uc && er_rw) {
         uint32_t mt = ext_chunk_provider_mr_table_guest();
-        if (mt) (void)platform_libc_cache_publish(g_uc, er_rw, mt);
+        if (mt) {
+            (void)platform_libc_cache_publish(g_uc, er_rw, mt);
+            (void)platform_drawfp_cache_publish(g_uc, er_rw, mt);
+        }
     }
 #endif
 }
@@ -254,9 +258,15 @@ static void on_lrt_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         product_runtime_progress_emit("lifecycle_match_fail", "lrt", "0x30ED82");
     } else if (tag == 7) { /* 0x2FC26C */
         uint32_t e6c = 0;
+        uint32_t mt = ext_chunk_provider_mr_table_guest();
         g_saw_2fc26c = 1;
         sample_er_gates(uc, er, &b58, NULL, &b70, &b71, NULL, &ui);
         if (er) (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er + OFF_E6C, &e6c);
+        /* Re-bind libc/drawFP before 2FDD5C / 2EC71A use the ER_RW caches. */
+        if (er && mt) {
+            (void)platform_libc_cache_publish(uc, er, mt);
+            (void)platform_drawfp_cache_publish(uc, er, mt);
+        }
         printf("[LRT_2FC26C_ALT] pc=0x2FC26C lr=0x%X r0=0x%X B58=0x%X B70=%u B71=%u "
                "UI_MODE=0x%X E6C=0x%X evidence=OBSERVED\n",
                lr, r0, b58, (unsigned)b70, (unsigned)b71, ui, e6c);

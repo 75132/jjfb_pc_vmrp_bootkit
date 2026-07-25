@@ -78,17 +78,23 @@ void platform_path_a_response_bind(uint64_t module_id, uint64_t module_generatio
         (g_state.module_id != 0 && g_state.module_id != module_id) ||
         (module_generation != 0 && g_state.module_generation != 0 &&
          g_state.module_generation != module_generation);
+    /* Task 14 A/B: JJFB_PATH_A_EMPTY_FIRST=1 → PRIMING_EMPTY (not product default). */
+    GwyPathAResponsePhase start_phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
+    {
+        const char *e = getenv("JJFB_PATH_A_EMPTY_FIRST");
+        if (e && e[0] == '1' && e[1] == '\0') start_phase = GWY_PATH_A_RESPONSE_PRIMING_EMPTY;
+    }
 
     if (!g_state.module_id && !g_state.module_generation) {
         g_state.module_id = module_id;
         g_state.module_generation = module_generation ? module_generation : 1ull;
         g_state.er_rw = er_rw;
-        g_state.phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
+        g_state.phase = start_phase;
         g_state.initial_record_delivered = 0;
         printf("[PATH_A_RESPONSE_BIND] module_id=%llu generation=%llu er_rw=0x%X "
-               "phase=INITIAL_RECORD reason=FIRST evidence=OBSERVED\n",
+               "phase=%s reason=FIRST evidence=OBSERVED\n",
                (unsigned long long)g_state.module_id,
-               (unsigned long long)g_state.module_generation, er_rw);
+               (unsigned long long)g_state.module_generation, er_rw, phase_name(start_phase));
         fflush(stdout);
         return;
     }
@@ -97,12 +103,12 @@ void platform_path_a_response_bind(uint64_t module_id, uint64_t module_generatio
         g_state.module_id = module_id;
         g_state.module_generation = module_generation ? module_generation : 1ull;
         g_state.er_rw = er_rw;
-        g_state.phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
+        g_state.phase = start_phase;
         g_state.initial_record_delivered = 0;
         printf("[PATH_A_RESPONSE_BIND] module_id=%llu generation=%llu er_rw=0x%X "
-               "phase=INITIAL_RECORD reason=GENERATION_CHANGE evidence=OBSERVED\n",
+               "phase=%s reason=GENERATION_CHANGE evidence=OBSERVED\n",
                (unsigned long long)g_state.module_id,
-               (unsigned long long)g_state.module_generation, er_rw);
+               (unsigned long long)g_state.module_generation, er_rw, phase_name(start_phase));
         fflush(stdout);
         return;
     }

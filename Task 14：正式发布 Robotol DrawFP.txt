@@ -1,0 +1,535 @@
+Task 14：正式发布 Robotol DrawFP，解开 2FC26C，并闭环 E6C 生产链
+一、任务目标
+当前已证明：
+record-first
+→ downVersion compare
+→ B71 natural store
+→ POST_DRAIN_GATE_OK
+→ family C0
+→ 0x30DC44
+→ 0x2FEBBC
+→ 0x2FEC3C 因 ER_RW+E6C == 0 失败
+empty-first 实验已证明：
+empty Path-A
+→ 0x2FC26C entered
+→ 卡在 0x2FDD5C 附近 DSM/cfunction 循环
+→ 0x2FC3E6 leave 未到达
+→ event 15 未出现
+→ ER_RW+E6C 仍为 0
+旧 V67 已知同类根因：
+ER_RW+0x150C 的 drawFP 为 0 / 0x270F / CODE_ADDRESS / 非法 Guest 地址
+→ 进入绘图 wrapper 后 BLX 到坏地址
+→ Guest execution 停在 2FC26C 中途
+→ 事件 drain 无法返回
+本任务目标不是复制旧版“跳过 BLX”补丁，而是：
+正式发布 _DrawBitmap 平台 callback
+→ ER_RW+0x150C 获得有效 Guest-callable trampoline
+→ 2FC26C 内绘图调用可以正常返回
+→ 自然到达 0x2FC3E6
+→ 继续嵌套 1E201 / event dispatch
+→ 验证 event 15 是否自然产生
+→ 验证 0x2E4020 → 0x2E5E60 是否自然写 ER_RW+E6C
+
+二、旧版资料，Cursor 不需要再找
+旧参考提交：
+4bdb4b5
+旧文件：
+legacy_lab/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+旧版关键事实：
+1. DrawFP 字段
+Robotol 使用：
+ER_RW + 0x150C
+作为 _DrawBitmap 平台函数指针。
+实际调用 wrapper：
+0x2EC6B8
+...
+0x2EC714：从 ER_RW+0x150C 加载函数指针
+0x2EC71A：BLX drawFP
+旧版识别为坏指针的值：
+0
+0x270F
+< 0x1000
+CODE_ADDRESS
+未映射 Guest 地址
+2. 旧 V67 的临时做法
+旧版在坏指针时：
+恢复 0x2EC6B8 的栈
+设置 R0=1
+PC=LR
+从而绕过 BLX，让 2FC26C 能继续返回。
+这个做法只能作为 A/B 证明，不能进入正式产品。
+3. _DrawBitmap 的两种 ABI
+Classic ABI
+R0 = pixels
+R1 = dst_x
+R2 = dst_y
+R3 = copy_width
+
+SP+0x00 = copy_height
+SP+0x04 = rop
+SP+0x08 = transparent/key
+SP+0x0C = source_x
+SP+0x10 = source_y
+SP+0x14 = source_pitch/image_width
+Robotol wrapper ABI
+识别特征：
+(SP+0x00 & 0xFFFF) == (R3 & 0xFFFF)
+且值非 0
+参数语义：
+R0 = pixels
+R1 = dst_x
+R2 = dst_y
+R3 = source_pitch/image_width
+
+SP+0x00 = copy_width
+SP+0x04 = copy_height
+SP+0x08 = rop
+SP+0x0C = flags
+SP+0x10 = source_x
+SP+0x14 = transparent/key
+source_y = 0
+本轮主要会遇到 Robotol wrapper ABI。
+
+三、当前代码结构判断
+当前产品核心已有：
+platform_memory_ops
+platform_event_queue
+platform_path_a_response
+platform_send_app_event
+platform_scheduler
+platform_timer
+但是没有正式：
+platform_display
+platform_draw_bitmap
+platform_disp_up_ex
+当前以下模块仍属于 research：
+src/runtime/jjfb_bmp_meta.c
+src/runtime/jjfb_plat_11f00.c
+src/runtime/ext_gwy_shell_native_exec.c
+默认产品不能通过开启整个：
+GWY_LINK_RESEARCH_GWY_SHELL
+解决问题。
+必须把旧 bridge 中通用的 bitmap/display 能力拆成 product platform 模块。
+
+四、正式新增 platform_display
+新增：
+include/gwy_launcher/platform_display.h
+src/platform/platform_display.c
+建议结构：
+typedef struct GwyDisplaySurface {
+    uint32_t width;
+    uint32_t height;
+
+    uint16_t *rgb565;
+
+    int dirty;
+    int dirty_x0;
+    int dirty_y0;
+    int dirty_x1;
+    int dirty_y1;
+
+    void *window;
+    void *renderer;
+    void *texture;
+} GwyDisplaySurface;
+
+typedef struct GwyDrawBitmapArgs {
+    uint32_t guest_pixels;
+
+    int32_t dst_x;
+    int32_t dst_y;
+
+    int32_t copy_w;
+    int32_t copy_h;
+
+    int32_t src_x;
+    int32_t src_y;
+    int32_t src_pitch;
+
+    uint32_t rop;
+    uint16_t transparent_key;
+    int transparent_enabled;
+
+    int wrapper_abi;
+} GwyDrawBitmapArgs;
+接口：
+void platform_display_bind_surface(GwyDisplaySurface *surface);
+
+int platform_display_decode_drawbitmap_args(
+    void *uc,
+    GwyDrawBitmapArgs *out);
+
+int platform_display_draw_bitmap(
+    void *uc,
+    const GwyDrawBitmapArgs *args);
+
+int platform_display_disp_up_ex(
+    int32_t x,
+    int32_t y,
+    int32_t w,
+    int32_t h);
+
+五、实现 Guest-callable _DrawBitmap callback
+新增正式 host callback，例如：
+uint32_t platform_guest_draw_bitmap(void *uc);
+流程：
+读取 R0-R3
+读取 SP+0x00..0x14
+判断 classic / Robotol wrapper ABI
+校验 Guest pixels
+校验宽、高、pitch
+执行安全 RGB565 blit
+设置 dirty rect
+按平台 ABI 返回
+通过原 LR 返回 Guest
+安全要求
+必须校验：
+guest_pixels != 0
+copy_w > 0
+copy_h > 0
+src_pitch > 0
+copy_w <= src_pitch
+copy_w/copy_h 不超过合理范围
+Guest pixel range 已映射
+所有乘加无 32 位溢出
+目标裁剪在 240×320 内
+遇到非法对象或当前尚未有可用 pixels 时：
+不得 UC_FAULT
+不得跳入 cfunction/DSM
+不得 host 造像素
+不得构造假 bitmap
+应安全返回失败/未绘制状态。
+返回值先按旧 V67 已证明可继续的：
+R0 = 1
+同时跟踪 0x2EC71A 返回后的 Guest 指令是否读取 R0：
+若 R0 未使用，保留 1；
+若明确用于条件判断，按实际平台语义调整；
+不可凭猜测改成 MR_SUCCESS=0。
+
+六、RGB565 绘制语义
+Robotol wrapper 使用：
+src_pitch = R3
+copy_w    = SP+0
+copy_h    = SP+4
+src_x     = SP+0x10
+src_y     = 0
+key       = SP+0x14
+实现：
+for (int y = clip_y0; y < clip_y1; ++y) {
+    int sy = args->src_y + (y - args->dst_y);
+
+    const uint16_t *src =
+        guest_pixels
+        + sy * args->src_pitch
+        + args->src_x
+        + (clip_x0 - args->dst_x);
+
+    uint16_t *dst =
+        framebuffer
+        + y * screen_width
+        + clip_x0;
+
+    for (int x = clip_x0; x < clip_x1; ++x) {
+        uint16_t pixel = *src++;
+
+        if (args->transparent_enabled &&
+            pixel == args->transparent_key) {
+            dst++;
+            continue;
+        }
+
+        *dst++ = pixel;
+    }
+}
+透明色：
+0xF81F 为明确有效 RGB565 key
+小于 0x100 的值默认视为 flag/rop，不直接当透明色
+本轮即使还没有有效 bitmap pixels，也要确保 callback 正常返回，使 2FC26C 不再被坏 FP 截断。
+
+七、正式发布 drawFP，而不是运行时 PC hook
+1. 找到现有 mr_table 发布链
+复用当前已经发布以下平台能力的同一机制：
+memcpy import
+mr_table
+extChunk
+platform callbacks
+定位：
+ext_chunk_provider
+ext_module_data_init
+ext_er_rw_producer
+gwy_ext_obs_extchunk_set_mr_table
+mr_table builder / callback registry
+2. 注册 _DrawBitmap
+旧平台 table offset：
+_DrawBitmap = mr_table + 0x1E0
+不得把 C host 地址直接写进 Guest。
+必须通过现有 Guest-callable host callback/trampoline 注册机制得到：
+draw_bitmap_trampoline_guest
+然后在构建正式 mr_table 时：
+*(mr_table_guest + 0x1E0) = draw_bitmap_trampoline_guest
+3. 发布到 Robotol ER_RW+0x150C
+Robotol 初始化或平台表绑定完成后：
+*(robotol_er_rw + 0x150C) =
+    *(mr_table_guest + 0x1E0)
+要求：
+按 module identity
+按 module generation
+按当前 Robotol ER_RW
+不得根据：
+PC == 0x2EC6B8
+PC == 0x2EC71A
+PC == 0x2FDD5C
+临时写入。
+不得使用旧：
+jjfb_heal_shadow_gfx
+的运行中 fixed-offset heal 模式。
+正确位置应是：
+mr_table 创建/发布
+或 Robotol platform table 初始化
+
+八、必须加入产品构建
+修改 CMakeLists.txt，把：
+src/platform/platform_display.c
+加入：
+GWY_LAUNCHER_CORE_SOURCES
+不能加入：
+GWY_RESEARCH_GWY_SHELL_SOURCES
+默认：
+JJFB_Launcher
+Gwy + product stubs
+必须真正链接该模块。
+构建后验证符号：
+platform_guest_draw_bitmap
+platform_display_draw_bitmap
+platform_display_disp_up_ex
+
+九、绑定现有 Launcher 游戏窗口
+不要创建新的第三个窗口。
+platform_display 必须绑定当前 Launcher 已创建的：
+240×320 游戏窗口
+framebuffer / texture / renderer
+如果当前 Launcher 尚未向 core 暴露 surface，新增正式接口，例如：
+void gwy_runtime_bind_display_surface(
+    uint32_t width,
+    uint32_t height,
+    uint16_t *rgb565,
+    void *window,
+    void *renderer,
+    void *texture);
+状态窗口不能作为 framebuffer。
+
+十、增加精确观测
+新增开关：
+JJFB_DRAWFP_CONTRACT_TRACE=1
+标记：
+DRAW_FP_TABLE_SLOT
+DRAW_FP_ERW_SLOT_WRITE
+DRAW_FP_CALL_ENTER
+DRAW_FP_ARGS
+DRAW_FP_PIXELS_VALID
+DRAW_FP_DRAWN
+DRAW_FP_REJECTED_SAFE
+DRAW_FP_CALL_RETURN
+每次记录：
+module_id
+module_generation
+R9
+ER_RW
+mr_table
+mr_table+0x1E0
+ER_RW+0x150C
+callback trampoline
+caller PC
+LR
+SP
+R0-R3
+stack args 0..5
+ABI classic/wrapper
+pixels
+x/y
+w/h
+pitch
+return R0
+在以下点继续观察：
+0x2FC26C enter
+0x2FDD5C
+0x2EC6B8
+0x2EC714
+0x2EC71A
+0x2FC3E6 leave
+这些地址只能用于 trace，不能作为产品行为条件。
+
+十一、A/B/C 校准
+Variant A：当前 baseline
+platform drawFP binding OFF
+empty-first experiment ON
+预期复现：
+ER_RW+150C = 0/0x270F/invalid
+2FC26C entered
+2FDD5C/cfunction loop
+2FC3E6 not reached
+E6C=0
+Variant B：正式 drawFP binding ON
+platform drawFP binding ON
+旧 skip BLX OFF
+empty-first experiment ON
+预期：
+ER_RW+150C = valid trampoline
+2EC71A BLX enters platform_guest_draw_bitmap
+callback safe return
+2FC26C continues
+2FC3E6 leave reached
+这里即使 bitmap 参数暂时无效，也必须是：
+DRAW_FP_REJECTED_SAFE
++
+DRAW_FP_CALL_RETURN
+而不是 UC_FAULT 或 DSM loop。
+Variant C：产品默认
+record-first 默认保持
+drawFP binding 默认 ON
+empty-first OFF
+必须保持：
+B71 natural store
+POST_DRAIN_GATE_OK
+C0 baseline
+不得因 drawFP 发布破坏当前成功链。
+
+十二、离开 2FC26C 后继续追 E6C
+达到：
+leave_2FC26C @ 0x2FC3E6
+后不要结束任务。
+继续观察至少：
+2E2520 return
+2DC8D8 dequeue
+nested 1E201
+event dispatch
+event code 15
+0x2E4020
+0x2E5E60
+ER_RW+E6C store
+记录 event 15：
+producer PC/LR
+enqueue API
+event object
+event code
+payload
+consumer
+dispatch target
+情况 1：event 15 自然出现
+验证：
+event15
+→ 0x2E4020
+→ 0x2E5E60
+→ calloc
+→ object init
+→ STR [R9+0xE6C]
+标记：
+EVENT15_NATURAL
+E6C_NATURAL_STORE
+随后恢复 record-first/C0，验证：
+0x2FEC3C succeeds
+0x2FEC9A natural B70
+0x2FC418 natural UI_MODE=0x45
+情况 2：2FC26C 已离开，但 event 15 仍未出现
+这时才能切入路线 2：
+追踪 event 15 的自然 producer
+不得 host 直接 enqueue 15。
+必须找：
+谁调用 event publish/send API
+它依赖哪个 stream/timer/family callback
+哪个平台 API 返回导致该分支未发生
+最终输出唯一 producer 缺口。
+情况 3：event 15 出现但 2E5E60 不执行
+检查：
+event framing
+dispatch index
+event object word0
+event consumer ABI
+不得直接调用 0x2E5E60。
+情况 4：2E5E60 执行但 E6C 仍为 0
+检查：
+calloc import
+allocation size
+returned Guest pointer
+zero-init
+STR base R9
+module generation
+只修真实 allocator/out ABI。
+
+十三、严格禁止
+本轮禁止：
+旧 V67 PC hook 跳过 BLX
+直接 PC=LR
+手动 SP += 0x30
+硬写 R0=1 后跳走
+硬写 ER_RW+0x150C
+硬写 ER_RW+E6C
+host enqueue event 15
+直接调用 0x2E5E60
+固定创建 E6C 对象
+JJFB_FAST_*
+FAST_F6C_OBJECT_ASSIST
+FAST_F74_DESCRIPTOR_ASSIST
+host 假图片
+test-pattern
+打开整个 research_gwy_shell 作为产品方案
+唯一允许的 R0=1 是：
+正式 platform_guest_draw_bitmap callback 的正常 ABI 返回
+而不是跳过 Guest BLX。
+
+十四、回归保护
+必须继续成立：
+Path-A initial record
+platform memcpy import
+downVersion compare 0x3EE
+B71 natural store
+POST_DRAIN_GATE_OK
+C0 top-level dispatch
+DSM strcpy@0xAC300
+record-first 产品默认
+不得把 empty-first 设为产品默认。
+
+十五、本轮成功标准
+最低成功：
+DRAW_FP_SLOT_PUBLISHED
+ER_RW+150C = valid trampoline
+DRAW_FP_CALL_ENTER
+DRAW_FP_CALL_RETURN
+LEAVE_2FC26C
+完整成功：
+LEAVE_2FC26C
++
+EVENT15_NATURAL
++
+E6C_NATURAL_STORE
++
+0x2FEC3C succeeds
++
+B70_NATURAL_STORE
++
+UI_MODE_NATURAL_45
+不要只以“白屏还在”作为结论。
+
+十六、最终必须回答
+1. ER_RW+0x150C 原值是什么？
+2. 该值为何是 0/0x270F/非法地址？
+3. mr_table+0x1E0 原本是否为空？
+4. 正式 trampoline 的 Guest 地址是什么？
+5. 是在哪个初始化阶段发布的？
+6. 2EC71A 是否自然 BLX 到 callback？
+7. 实际使用 classic 还是 wrapper ABI？
+8. draw 参数是什么？
+9. pixels 当前有效还是被安全拒绝？
+10. 2FC26C 是否自然到达 2FC3E6？
+11. 离开后是否发生 nested 1E201？
+12. event 15 是否自然出现？
+13. event 15 的 producer 是谁？
+14. 2E5E60 是否执行？
+15. E6C 是否由 Guest 自然写入？
+16. C0 的 2FEC3C 是否通过？
+17. B70/UI_MODE 是否自然推进？
+18. 是否完全没有使用旧 skip/FAST assist？
+报告：
+reports/stage_drawfp_contract_task14.md
+reports/drawfp_slot_and_call_timeline.md
+reports/event15_e6c_provenance.md

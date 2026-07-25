@@ -36,6 +36,7 @@
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/platform_send_app_event.h"
 #include "gwy_launcher/platform_path_a_response.h"
+#include "gwy_launcher/platform_display.h"
 #include "gwy_launcher/platform_timer.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/platform_call_census.h"
@@ -289,7 +290,10 @@ static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const ch
     product_c0_sot_on_c0_enter(uc, erw, why);
     {
         uint32_t mt = ext_chunk_provider_mr_table_guest();
-        if (mt) (void)platform_libc_cache_publish(uc, erw, mt);
+        if (mt) {
+            (void)platform_libc_cache_publish(uc, erw, mt);
+            (void)platform_drawfp_cache_publish(uc, erw, mt);
+        }
     }
     g_suppress_timer_poll = 1;
     g_in_30cbbc_call = 1;
@@ -1007,7 +1011,10 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
                         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
                         {
                             uint32_t mt = ext_chunk_provider_mr_table_guest();
-                            if (mt) (void)platform_libc_cache_publish(uc, erw, mt);
+                            if (mt) {
+            (void)platform_libc_cache_publish(uc, erw, mt);
+            (void)platform_drawfp_cache_publish(uc, erw, mt);
+        }
                         }
                         g_suppress_timer_poll = 1;
                         g_in_30cbbc_call = 1;
@@ -1234,7 +1241,10 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
         {
             uint32_t mt = ext_chunk_provider_mr_table_guest();
-            if (r9_run && mt) (void)platform_libc_cache_publish(uc, r9_run, mt);
+            if (r9_run && mt) {
+                (void)platform_libc_cache_publish(uc, r9_run, mt);
+                (void)platform_drawfp_cache_publish(uc, r9_run, mt);
+            }
         }
 
         memset(&abi, 0, sizeof(abi));
@@ -1487,7 +1497,10 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
     {
         uint32_t mt = ext_chunk_provider_mr_table_guest();
-        if (r9_run && mt) (void)platform_libc_cache_publish(uc, r9_run, mt);
+        if (r9_run && mt) {
+            (void)platform_libc_cache_publish(uc, r9_run, mt);
+            (void)platform_drawfp_cache_publish(uc, r9_run, mt);
+        }
     }
 
     g_lifecycle_ticks++;
