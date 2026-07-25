@@ -16,6 +16,19 @@ static int env_override(void) {
     return -1;
 }
 
+static const char *phase_name(GwyPathAResponsePhase p) {
+    switch (p) {
+    case GWY_PATH_A_RESPONSE_PRIMING_EMPTY:
+        return "PRIMING_EMPTY";
+    case GWY_PATH_A_RESPONSE_INITIAL_RECORD:
+        return "INITIAL_RECORD";
+    case GWY_PATH_A_RESPONSE_EMPTY:
+        return "EMPTY";
+    default:
+        return "?";
+    }
+}
+
 static void apply_builtin_defaults(GwyPathAInitialRecord *r) {
     memset(r, 0, sizeof(*r));
     r->enabled = 0;
@@ -29,8 +42,9 @@ static void apply_builtin_defaults(GwyPathAInitialRecord *r) {
 
 void platform_path_a_response_reset(void) {
     memset(&g_state, 0, sizeof(g_state));
+    /* Product default remains record-first (Task 11 B71). PRIMING_EMPTY is opt-in
+     * via empty-first experiments; V75 empty→2FC26C currently hangs in drawFP DSM. */
     g_state.phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
-    /* Keep profile-declared record across queue resets within the same process. */
 }
 
 void platform_path_a_response_set_initial_record(const GwyPathAInitialRecord *rec) {
@@ -97,6 +111,14 @@ void platform_path_a_response_bind(uint64_t module_id, uint64_t module_generatio
     if (er_rw && !g_state.er_rw) g_state.er_rw = er_rw;
 }
 
+int platform_path_a_response_ready_for_record(void) {
+    const GwyPathAInitialRecord *rec = platform_path_a_response_initial_record();
+    if (!rec->enabled) return 0;
+    if (g_state.initial_record_delivered) return 0;
+    return g_state.phase == GWY_PATH_A_RESPONSE_INITIAL_RECORD ||
+           g_state.phase == GWY_PATH_A_RESPONSE_PRIMING_EMPTY;
+}
+
 int platform_path_a_response_decide_with_record(void) {
     int ov = env_override();
     const GwyPathAInitialRecord *rec = platform_path_a_response_initial_record();
@@ -125,6 +147,14 @@ int platform_path_a_response_decide_with_record(void) {
         fflush(stdout);
         return 0;
     }
+    /* Opt-in empty-first: only when explicitly in PRIMING_EMPTY (not product default). */
+    if (g_state.phase == GWY_PATH_A_RESPONSE_PRIMING_EMPTY) {
+        printf("[PATH_A_RESPONSE_DECIDE] with_rec=0 reason=PRIMING_EMPTY phase=%s "
+               "generation=%llu evidence=OBSERVED+V75\n",
+               phase_name(g_state.phase), (unsigned long long)g_state.module_generation);
+        fflush(stdout);
+        return 0;
+    }
     if (g_state.phase == GWY_PATH_A_RESPONSE_EMPTY || g_state.initial_record_delivered) {
         printf("[PATH_A_RESPONSE_DECIDE] with_rec=0 reason=PHASE_EMPTY delivered=%d "
                "evidence=GENERATION\n",
@@ -132,19 +162,29 @@ int platform_path_a_response_decide_with_record(void) {
         fflush(stdout);
         return 0;
     }
-    printf("[PATH_A_RESPONSE_DECIDE] with_rec=1 reason=INITIAL_RECORD phase=%d "
+    printf("[PATH_A_RESPONSE_DECIDE] with_rec=1 reason=INITIAL_RECORD phase=%s "
            "generation=%llu evidence=PROFILE\n",
-           (int)g_state.phase, (unsigned long long)g_state.module_generation);
+           phase_name(g_state.phase), (unsigned long long)g_state.module_generation);
     fflush(stdout);
     return 1;
 }
 
 void platform_path_a_response_note_delivered(int with_record) {
-    if (!with_record) return;
-    g_state.initial_record_delivered = 1;
-    g_state.phase = GWY_PATH_A_RESPONSE_EMPTY;
-    printf("[PATH_A_RESPONSE_DELIVERED] phase=EMPTY generation=%llu er_rw=0x%X "
-           "evidence=OBSERVED\n",
-           (unsigned long long)g_state.module_generation, g_state.er_rw);
-    fflush(stdout);
+    if (with_record) {
+        g_state.initial_record_delivered = 1;
+        g_state.phase = GWY_PATH_A_RESPONSE_EMPTY;
+        printf("[PATH_A_RESPONSE_DELIVERED] phase=EMPTY generation=%llu er_rw=0x%X "
+               "evidence=OBSERVED\n",
+               (unsigned long long)g_state.module_generation, g_state.er_rw);
+        fflush(stdout);
+        return;
+    }
+    /* Empty priming fill (opt-in): advance so post-2FC26C second enqueue can embed record. */
+    if (g_state.phase == GWY_PATH_A_RESPONSE_PRIMING_EMPTY) {
+        g_state.phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
+        printf("[PATH_A_RESPONSE_DELIVERED] phase=INITIAL_RECORD generation=%llu er_rw=0x%X "
+               "note=after_priming_empty evidence=OBSERVED+V75\n",
+               (unsigned long long)g_state.module_generation, g_state.er_rw);
+        fflush(stdout);
+    }
 }

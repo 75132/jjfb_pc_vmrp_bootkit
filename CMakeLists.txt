@@ -95,6 +95,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_helper_2f68e4_trace.c
     src/runtime/product_field_parser_trace.c
     src/runtime/product_lifecycle_record_trace.c
+    src/runtime/product_c0_start_object_trace.c
     src/runtime/product_platform_10138_trace.c
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c

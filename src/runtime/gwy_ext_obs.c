@@ -55,6 +55,7 @@
 #include "gwy_launcher/product_helper_2f68e4_trace.h"
 #include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_platform_10138_trace.h"
+#include "gwy_launcher/product_c0_start_object_trace.h"
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_memory_ops.h"
@@ -180,6 +181,35 @@ static int g_family_app2_init_once;
 static int g_family_c0_2febbc_once;
 /* Armed by B71 write hook: flush 0x2FEBBC after current emu returns (V75). */
 static int g_pending_2febbc_after_b71;
+/* One-shot: second 10165 Path-A after leave_2FC26C (V74/V75 empty→record order). */
+static int g_path_a_record_after_2fc26c_once;
+void gwy_ext_obs_arm_path_a_record_after_2fc26c(void *uc, uint32_t er_rw);
+#ifdef GWY_HAVE_UNICORN
+static int g_leave_2fc26c_hook_ok;
+static void on_leave_2fc26c(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    uint32_t r9 = 0, er = 0;
+    (void)address;
+    (void)size;
+    (void)user;
+    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    er = r9;
+    if (!er) {
+        const GwyPathAResponseState *st = platform_path_a_response_state();
+        if (st) er = st->er_rw;
+    }
+    gwy_ext_obs_arm_path_a_record_after_2fc26c(uc, er);
+}
+static void gwy_ext_obs_arm_leave_2fc26c_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_leave_2fc26c_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_leave_2fc26c, NULL,
+                    0x2FC3E6ull, 0x2FC3E6ull + 1ull) == UC_ERR_OK) {
+        g_leave_2fc26c_hook_ok = 1;
+        printf("[PATH_A_SECOND] hooks_armed leave_2FC26C@0x2FC3E6 evidence=OBSERVED+V74\n");
+        fflush(stdout);
+    }
+}
+#endif
 /* While set, emu_slice timer poll must not nest FIRE into 0x30CBBC/0x2FEBBC. */
 static int g_suppress_timer_poll;
 /* While set, sendAppEvent must not drain (nested inside 0x30CBBC/0x2FEBBC uc_emu_start). */
@@ -222,32 +252,30 @@ static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const ch
         save_store62 = pq0->owner_store_10162;
     }
     memset(&wabi, 0, sizeof(wabi));
-    /* emu_stop mid-Path-A leaves r4..r11 holding half-freed list objs; 2FEBBC
-     * then LDRSH's garbage (observed: fault @0x2FEC3C). Mirror-clear GPRs.
-     * V75 jjfb_run_guest_thumb4 also pushes 8 zero stack args for family disp. */
-    wabi.mirror_full = 1;
-    memset(wabi.mirror_r, 0, sizeof(wabi.mirror_r));
-    wabi.mirror_r[0] = 0xC0u;
-    wabi.mirror_r[9] = erw;
+    /* V75 jjfb_flush_1e200 / jjfb_run_guest_thumb4: app=C0 code=0 p0=0 p1=0,
+     * R9=ER_RW, two zero stack words for family dispatcher. No full-GPR wipe,
+     * no invented object pointer (Task 13 C0 contract). */
     {
-        uint32_t sp = 0, cpsr = 0;
+        uint32_t sp = 0;
         uint32_t z = 0;
 #ifdef GWY_HAVE_UNICORN
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
-        uc_reg_read((uc_engine *)uc, UC_ARM_REG_CPSR, &cpsr);
 #endif
         if (sp >= 8u) {
             sp -= 8u;
             (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp, z);
             (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp + 4u, z);
+            (void)guest_memory_uc_write_sp((struct uc_struct *)uc, sp);
         }
-        wabi.mirror_sp = sp;
-        wabi.mirror_cpsr = cpsr ? cpsr : 0x1Fu;
     }
     wabi.set_r0 = 1;
     wabi.r0 = 0xC0u; /* family app C0 → 30DC44 → 2FEBBC */
     wabi.set_r1 = 1;
     wabi.r1 = 0;
+    wabi.set_r2 = 1;
+    wabi.r2 = 0;
+    wabi.set_r3 = 1;
+    wabi.r3 = 0;
     wabi.set_lr = 1;
     wabi.lr = stop;
     wlim = gwy_lifecycle_insn_limit();
@@ -256,6 +284,9 @@ static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const ch
            fam_h, erw, (unsigned long long)wlim, why ? why : "?");
     fflush(stdout);
     (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
+    product_c0_sot_bind_uc(uc);
+    product_c0_sot_note_er_rw(erw);
+    product_c0_sot_on_c0_enter(uc, erw, why);
     {
         uint32_t mt = ext_chunk_provider_mr_table_guest();
         if (mt) (void)platform_libc_cache_publish(uc, erw, mt);
@@ -319,6 +350,68 @@ void gwy_ext_obs_on_b71_natural_for_b70(void *uc, uint32_t er_rw) {
 #else
     (void)uc;
 #endif
+}
+
+/* One-shot per generation: second 10165 after leave_2FC26C (V74/V75 Path-A order). */
+void gwy_ext_obs_arm_path_a_record_after_2fc26c(void *uc, uint32_t er_rw) {
+    uint32_t p65 = 0, p62 = 0, enq_h = 0, store = 0, b54 = 0;
+    uint32_t e6c = 0;
+    GwyFamilyEvent *es;
+    const GwyPathAResponseState *st;
+    const GwyPlatformHandlerRecord *enq;
+    uint8_t b71 = 0;
+
+    if (!uc || g_path_a_record_after_2fc26c_once) return;
+    if (!platform_path_a_response_ready_for_record()) return;
+    if (g_family_eq_n >= GWY_P4_FAMILY_EVENT_Q) return;
+
+    st = platform_path_a_response_state();
+    if (er_rw) {
+        (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + 0xB71u, &b71, 1);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + 0xE6Cu, &e6c);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + 0xB54u, &b54);
+    }
+    if (b71 != 0) return; /* record Path-A already produced B71 */
+
+    if (!platform_event_service_resolve_completion_objs(&p65, &p62, &enq_h, &store) || !enq_h) {
+        enq = platform_handler_registry_enqueue_handler();
+        if (enq) enq_h = enq->handler;
+        if (!p65 && st) {
+            /* Fall back to last Path-A contexts from the event queue. */
+            GwyPlatformEventQueue *pq = platform_event_queue_get();
+            if (pq) {
+                p65 = pq->context_10165;
+                p62 = pq->context_10162;
+                if (!store) store = pq->owner_store_10165;
+            }
+        }
+    }
+    if (!enq_h || !p65) {
+        printf("[PATH_A_SECOND] skip leave_2FC26C enq=0x%X ctx=0x%X note=missing_10165 "
+               "E6C=0x%X evidence=OBSERVED\n",
+               enq_h, p65, e6c);
+        fflush(stdout);
+        return;
+    }
+
+    es = &g_family_eq[g_family_eq_n++];
+    memset(es, 0, sizeof(*es));
+    es->used = 1;
+    es->event_code = 0x1E209u;
+    es->app = 9u;
+    es->handler = enq_h;
+    es->enqueue_mode = 1;
+    es->enq_r0 = p65;
+    es->enq_r1 = p62 ? p62 : p65;
+    es->owner_module_id = st ? st->module_id : 0;
+    es->owner_generation = st ? st->module_generation : 0;
+    snprintf(es->owner_module, sizeof(es->owner_module), "%s", "robotol.ext");
+    g_path_a_record_after_2fc26c_once = 1;
+
+    printf("[PATH_A_SECOND] arm leave_2FC26C enq=0x%X r0=0x%X r1=0x%X B54=0x%X E6C=0x%X "
+           "phase=INITIAL_RECORD note=101AB_one_record_after_chrome evidence=OBSERVED+V74\n",
+           enq_h, p65, es->enq_r1, b54, e6c);
+    fflush(stdout);
 }
 
 static int env_flag(const char *name) {
@@ -422,6 +515,10 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_family_app2_init_once = 0;
     g_family_c0_2febbc_once = 0;
     g_pending_2febbc_after_b71 = 0;
+    g_path_a_record_after_2fc26c_once = 0;
+#ifdef GWY_HAVE_UNICORN
+    g_leave_2fc26c_hook_ok = 0;
+#endif
     g_suppress_timer_poll = 0;
     g_in_30cbbc_call = 0;
     g_in_family_entry = 0;
@@ -430,6 +527,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
     robotol_idle_watch_bind_uc(uc);
     robotol_flag_writer_trace_reset();
     robotol_flag_writer_trace_bind_uc(uc);
+#ifdef GWY_HAVE_UNICORN
+    gwy_ext_obs_arm_leave_2fc26c_hook(uc);
+#endif
 }
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
@@ -1116,6 +1216,21 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         reg = gwy_ext_loader_bound_registry();
         owner = reg ? module_registry_find_by_code_addr(reg, ev->handler & ~1u) : NULL;
         if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
+        /* Prefer live P ER_RW when registry lags (off-by-4 header vs payload). */
+        if (owner) {
+            uint32_t p = ext_chunk_provider_last_p_guest();
+            uint32_t live = 0;
+            if (p && guest_memory_uc_peek_u32((struct uc_struct *)uc, p, &live) && live &&
+                live != r9_run) {
+                printf("[FAMILY_ER_RW_LIVE] handler=0x%X registry=0x%X live=0x%X p=0x%X "
+                       "note=prefer_guest_P evidence=OBSERVED\n",
+                       ev->handler, r9_run, live, p);
+                fflush(stdout);
+                ext_er_rw_bind_restore_bind_uc(uc);
+                ext_er_rw_bind_restore_peek_and_bind(p, "family_deliver_live_p");
+                r9_run = live;
+            }
+        }
         if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
         {
             uint32_t mt = ext_chunk_provider_mr_table_guest();
@@ -1359,6 +1474,16 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     reg = gwy_ext_loader_bound_registry();
     owner = reg ? module_registry_find_by_code_addr(reg, handler & ~1u) : NULL;
     if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
+    if (owner) {
+        uint32_t p = ext_chunk_provider_last_p_guest();
+        uint32_t live = 0;
+        if (p && guest_memory_uc_peek_u32((struct uc_struct *)uc, p, &live) && live &&
+            live != r9_run) {
+            ext_er_rw_bind_restore_bind_uc(uc);
+            ext_er_rw_bind_restore_peek_and_bind(p, "lifecycle_live_p");
+            r9_run = live;
+        }
+    }
     if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
     {
         uint32_t mt = ext_chunk_provider_mr_table_guest();

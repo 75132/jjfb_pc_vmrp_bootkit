@@ -1,14 +1,14 @@
 # Task 9: Field Length / Cursor Provenance and Contract Repair
 
-- **run_id:** pa11_C_20260725_173227
-- **verdict:** `STREAM_FRAMING_CONTRACT_MISSING`
+- **run_id:** task13_C2_211334
+- **verdict:** `FIELD_PARSER_CONTRACT_REPAIRED`
 - **FIELD_STREAM_CONTRACT:** 0
 - **copy repairs:** 0
-- **parser calls:** 1
+- **parser calls:** 2
 - **bad r5=0x7374 seen:** no
-- **0x2F68E4 return:** no
-- **0x2E4066 entered:** no
-- **0x2DADC4 entered:** no
+- **0x2F68E4 return:** yes
+- **0x2E4066 entered:** yes
+- **0x2DADC4 entered:** yes
 
 ## Length decode at 0x30A0CC
 
@@ -38,7 +38,7 @@ Adjacent OOB at inner+4 showed ASCII `"stat"` → BE length `0x7374`.
 
 | item | GOOD | BAD |
 |---|---:|---:|
-| call_id | (none / empty-body exit) | n/a |
+| call_id | 1 | n/a |
 
 ## Copy contract @0x2E4ECA
 
@@ -49,7 +49,7 @@ Adjacent OOB at inner+4 showed ASCII `"stat"` → BE length `0x7374`.
 ## Classification
 
 ```text
-STREAM_FRAMING_CONTRACT_MISSING
+FIELD_PARSER_CONTRACT_REPAIRED
 ```
 
 ## Required answers
@@ -63,5 +63,5 @@ STREAM_FRAMING_CONTRACT_MISSING
 | first diverge insn? | Missing write at intended memcpy `@0x2E4ECA`; first wrong read `@0x30A0DA` with cursor=4 |
 | 0x10132 wrong? | **No** — size-malloc OK; zero-fill expected before copy |
 | repair domain? | **copy** (Scheme C) at Path-A framing |
-| helper returned? | no |
-| 0x2E4066 / 0x2DADC4? | no / no |
+| helper returned? | yes |
+| 0x2E4066 / 0x2DADC4? | yes / yes |

@@ -12,8 +12,9 @@ extern "C" {
  *
  * Env: JJFB_LIFECYCLE_RECORD_TRACE=1
  *
- * Does not write B71/15D/B70/UI_MODE, does not call 0x30ED2C, and does not
- * host-enqueue a second code=5.
+ * Does not write B71/15D/B70/UI_MODE and does not call 0x30ED2C.
+ * After leave_2FC26C, product may arm a second 10165 Path-A enqueue so the
+ * profile initial_record can land (V74/V75 order; not a FAST assist).
  */
 
 int product_lrt_enabled(void);
@@ -29,6 +30,12 @@ void product_lrt_finalize(void);
  * call runs at top-level (not nested mid-Path-A / mid-drain).
  */
 void gwy_ext_obs_on_b71_natural_for_b70(void *uc, uint32_t er_rw);
+
+/*
+ * After leave_2FC26C (empty Path-A priming): enqueue second 10165 so 101AB can
+ * embed the generation-scoped initial_record → 30ED2C → natural B71.
+ */
+void gwy_ext_obs_arm_path_a_record_after_2fc26c(void *uc, uint32_t er_rw);
 
 #ifdef __cplusplus
 }

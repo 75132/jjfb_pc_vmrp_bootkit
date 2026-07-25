@@ -1,10 +1,13 @@
 #include "gwy_launcher/ext_abi_adapter.h"
 #include "gwy_launcher/ext_chunk_provider.h"
+#include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_lifecycle.h"
 #include "gwy_launcher/ext_loader.h"
+#include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/package_scope.h"
+#include "gwy_launcher/ext_post_cont_audit.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -181,6 +184,27 @@ GwyExtAbiContextVerdict ext_abi_adapter_build_context(GwyExtAbiContext *out) {
         out->ext_chunk_guest = ext_chunk_provider_last_chunk_guest();
         if (ext_chunk_provider_owner_for_p(out->p_guest, &owner))
             out->module_generation = owner.module_generation;
+    }
+
+    /* Prefer live P->start_of_ER_RW over stale registry (off-by-4 header vs payload). */
+    if (out->p_guest) {
+        void *uc = ext_post_cont_audit_last_uc();
+        uint32_t live = 0, live_len = 0;
+        if (uc)
+            ext_er_rw_bind_restore_bind_uc(uc);
+        if (uc &&
+            guest_memory_uc_peek_u32((struct uc_struct *)uc, out->p_guest, &live) && live) {
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, out->p_guest + 4u, &live_len);
+            if (live != out->er_rw_guest) {
+                printf("[EXT_ABI_ER_RW_LIVE] module=%s p=0x%X registry=0x%X live=0x%X "
+                       "note=prefer_guest_P evidence=OBSERVED\n",
+                       out->module_name, out->p_guest, out->er_rw_guest, live);
+                fflush(stdout);
+                out->er_rw_guest = live;
+                if (live_len) out->er_rw_size = live_len;
+                ext_er_rw_bind_restore_peek_and_bind(out->p_guest, "ext_abi_live_p");
+            }
+        }
     }
 
     if (g_pending_generation && out->module_generation &&

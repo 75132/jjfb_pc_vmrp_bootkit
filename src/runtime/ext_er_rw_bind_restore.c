@@ -5,6 +5,11 @@
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/e10a31b_publication.h"
+#include "gwy_launcher/product_lifecycle_record_trace.h"
+#include "gwy_launcher/product_post_drain_gate_trace.h"
+#include "gwy_launcher/product_event_queue_consumer.h"
+#include "gwy_launcher/product_path_a_handler_trace.h"
+#include "gwy_launcher/product_helper_2f68e4_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -120,8 +125,59 @@ static int module_gated(const char *module) {
 }
 
 static int peek_p_fields(uint32_t p_guest, uint32_t *base, uint32_t *len) {
-    /* Host pointer only (audit: no uc_mem_read outside guest_memory.c). */
+    uint32_t live_base = 0, live_len = 0;
+    void *p_host = NULL;
+    /*
+     * Prefer live guest P+0/+4. Host p_host can lag one store behind mr_c_function_load
+     * (observed: host/registry stuck at malloc-header 0x..54 while guest P holds payload
+     * 0x..58). Reading only the host mirror permanently mis-publishes R9 by 4.
+     */
+    if (g_bind.uc &&
+        guest_memory_uc_peek_u32((struct uc_struct *)g_bind.uc, p_guest, &live_base) &&
+        live_base) {
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)g_bind.uc, p_guest + 4u, &live_len);
+        if (!live_len && len && *len) live_len = *len;
+        if (!live_len && g_bind.last_len) live_len = g_bind.last_len;
+        if (live_len) {
+            if (base) *base = live_base;
+            if (len) *len = live_len;
+            if (ext_chunk_provider_lookup_p(p_guest, &p_host, NULL, NULL) && p_host) {
+                uint32_t *words = (uint32_t *)p_host;
+                words[0] = live_base;
+                words[1] = live_len;
+            }
+            return 1;
+        }
+    }
     return ext_chunk_provider_peek_p_er_rw(p_guest, base, len);
+}
+
+/* If guest already sits on robotol with a stale R9 (off-by-4 vs published ER_RW), fix in place. */
+static void correct_live_r9_if_drifted(const GwyLoadedModule *gm) {
+    uint32_t cur = 0;
+    GwyR9WriteAudit audit;
+    if (!gm || !g_bind.uc || !gm->data.start_of_er_rw) return;
+    if (!guest_memory_uc_read_r9((struct uc_struct *)g_bind.uc, &cur) || !cur) return;
+    if (cur == gm->data.start_of_er_rw) return;
+    /* Typical drift: R9 = mrc_malloc header, P->start_of_ER_RW = header+4 payload. */
+    if (!(cur + 4u == gm->data.start_of_er_rw || gm->data.start_of_er_rw + 4u == cur)) return;
+    memset(&audit, 0, sizeof(audit));
+    audit.reason = GWY_R9_WRITE_MODULE_R9_SWITCH_ENTER;
+    audit.host_callsite = "er_rw_off_by_4_repair";
+    audit.guest_module = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
+    if (!guest_memory_uc_write_r9_ex((struct uc_struct *)g_bind.uc, gm->data.start_of_er_rw,
+                                     &audit))
+        return;
+    printf("[ER_RW_R9_CORRECT] module=%s old_r9=0x%X new_r9=0x%X note=off_by_4_vs_P "
+           "evidence=OBSERVED+V75\n",
+           audit.guest_module, cur, gm->data.start_of_er_rw);
+    fflush(stdout);
+    /* Keep B71/PDGT watches on the corrected payload base. */
+    product_lrt_note_er_rw(gm->data.start_of_er_rw);
+    product_pdgt_note_er_rw(gm->data.start_of_er_rw);
+    product_eqc_note_er_rw(gm->data.start_of_er_rw);
+    product_pah_note_er_rw(gm->data.start_of_er_rw);
+    product_h2_note_er_rw(gm->data.start_of_er_rw);
 }
 
 static const GwyLoadedModule *find_shell_by_hint(ModuleRegistry *reg, const char *hint) {
@@ -411,6 +467,7 @@ static int do_bind(uint32_t p_guest, const char *module_hint, const char *reason
         snprintf(g_bind.last_module, sizeof(g_bind.last_module), "%.47s", mn);
         emit_game_p_timeline(pkg_of(gm), mn, "BIND_REFRESH", p_guest, base, len, base, len, 0, 0,
                              r);
+        correct_live_r9_if_drifted(gm);
         try_deferred_r9(gm);
         return 0;
     }
@@ -448,6 +505,11 @@ static int do_bind(uint32_t p_guest, const char *module_hint, const char *reason
     fflush(stdout);
     emit_game_p_timeline(gm ? pkg_of(gm) : "?", mn, "ER_RW_BOUND", p_guest, base, len, base, len,
                          0, 0, r);
+    product_lrt_note_er_rw(base);
+    product_pdgt_note_er_rw(base);
+    product_eqc_note_er_rw(base);
+    product_pah_note_er_rw(base);
+    product_h2_note_er_rw(base);
     if (mn && strstr(mn, "gamelist")) {
         printf("[JJFB_E10A31B] milestone=GAMELIST_ERW_PUBLISHED module=%s P=0x%X erw=0x%X "
                "len=0x%X note=%s evidence=OBSERVED\n",
@@ -457,7 +519,10 @@ static int do_bind(uint32_t p_guest, const char *module_hint, const char *reason
                          isolated ? "host_isolated" : "bind");
     }
 
-    if (gm) try_deferred_r9(gm);
+    if (gm) {
+        correct_live_r9_if_drifted(gm);
+        try_deferred_r9(gm);
+    }
     return 1;
 }
 

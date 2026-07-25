@@ -19,9 +19,12 @@
 #define PC_30ED7C 0x30ED7Cu /* success leave */
 #define PC_30ED82 0x30ED82u /* failure leave */
 #define PC_2FC26C 0x2FC26Cu
+#define PC_2FC26C_LEAVE 0x2FC3E6u /* pop {r4-r7,pc} */
 #define PC_2FC418 0x2FC418u
 #define PC_2D96BC 0x2D96BCu
 #define PC_2F6C44 0x2F6C44u
+#define PC_2E5E60 0x2E5E60u /* E6C int16 table allocator (event 15) */
+#define PC_2E4020 0x2E4020u /* event 15 → BL 0x2E5E60 */
 
 #define OFF_B58 0xB58u
 #define OFF_B5C 0xB5Cu
@@ -29,6 +32,7 @@
 #define OFF_B71 0xB71u
 #define OFF_15D 0x15Du
 #define OFF_UI 0x8D0u
+#define OFF_E6C 0xE6Cu
 
 static int g_en;
 static int g_en_known;
@@ -49,6 +53,7 @@ static uint32_t g_b71_store_pc;
 static uint8_t g_b71_old;
 static uint8_t g_b71_new;
 static int g_finalized;
+static uint32_t g_b71_hook_base;
 
 #ifdef GWY_HAVE_UNICORN
 static void on_lrt_mem_write(uc_engine *uc, uc_mem_type type, uint64_t address, int size,
@@ -79,6 +84,7 @@ void product_lrt_reset(void) {
     g_b71_natural = 0;
     g_b71_store_pc = 0;
     g_b71_old = g_b71_new = 0;
+    g_b71_hook_base = 0;
     g_en_known = 0;
 }
 
@@ -89,12 +95,16 @@ void product_lrt_bind_uc(void *uc) {
 void product_lrt_note_er_rw(uint32_t er_rw) {
     if (er_rw) g_er_rw = er_rw;
 #ifdef GWY_HAVE_UNICORN
-    if (product_lrt_enabled() && g_uc && g_er_rw && g_hook_ok && !g_mem_hook_ok) {
+    /* Re-arm B71 watch when ER_RW base drifts (off-by-4 header vs payload). */
+    if (product_lrt_enabled() && g_uc && g_er_rw && g_hook_ok &&
+        (!g_mem_hook_ok || g_b71_hook_base != g_er_rw)) {
         uc_hook hm = 0;
         uint64_t a = (uint64_t)g_er_rw + (uint64_t)OFF_B71;
         if (uc_hook_add((uc_engine *)g_uc, &hm, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, a, a) ==
-            UC_ERR_OK)
+            UC_ERR_OK) {
             g_mem_hook_ok = 1;
+            g_b71_hook_base = g_er_rw;
+        }
     }
     /* Module-registration libc cache: Robotol ER_RW+0x1450 must be strlen. */
     if (g_uc && er_rw) {
@@ -243,11 +253,34 @@ static void on_lrt_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         fflush(stdout);
         product_runtime_progress_emit("lifecycle_match_fail", "lrt", "0x30ED82");
     } else if (tag == 7) { /* 0x2FC26C */
+        uint32_t e6c = 0;
         g_saw_2fc26c = 1;
         sample_er_gates(uc, er, &b58, NULL, &b70, &b71, NULL, &ui);
+        if (er) (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er + OFF_E6C, &e6c);
         printf("[LRT_2FC26C_ALT] pc=0x2FC26C lr=0x%X r0=0x%X B58=0x%X B70=%u B71=%u "
-               "UI_MODE=0x%X evidence=OBSERVED\n",
-               lr, r0, b58, (unsigned)b70, (unsigned)b71, ui);
+               "UI_MODE=0x%X E6C=0x%X evidence=OBSERVED\n",
+               lr, r0, b58, (unsigned)b70, (unsigned)b71, ui, e6c);
+        fflush(stdout);
+    } else if (tag == 12) { /* leave_2FC26C */
+        uint32_t e6c = 0;
+        sample_er_gates(uc, er, &b58, NULL, &b70, &b71, NULL, &ui);
+        if (er) (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er + OFF_E6C, &e6c);
+        printf("[LRT_2FC26C_LEAVE] pc=0x2FC3E6 lr=0x%X B58=0x%X B70=%u B71=%u UI_MODE=0x%X "
+               "E6C=0x%X evidence=OBSERVED+V75\n",
+               lr, b58, (unsigned)b70, (unsigned)b71, ui, e6c);
+        fflush(stdout);
+        gwy_ext_obs_arm_path_a_record_after_2fc26c(uc, er);
+    } else if (tag == 13) { /* 0x2E5E60 E6C allocator */
+        uint32_t e6c = 0;
+        if (er) (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er + OFF_E6C, &e6c);
+        printf("[LRT_E6C_ALLOC] pc=0x2E5E60 lr=0x%X r0=0x%X r9_er=0x%X E6C_before=0x%X "
+               "evidence=OBSERVED\n",
+               lr, r0, er, e6c);
+        fflush(stdout);
+    } else if (tag == 14) { /* 0x2E4020 event 15 */
+        uint32_t r4 = 0;
+        uc_reg_read(uc, UC_ARM_REG_R4, &r4);
+        printf("[LRT_EVENT15] pc=0x2E4020 lr=0x%X r4_event=0x%X evidence=OBSERVED\n", lr, r4);
         fflush(stdout);
     } else if (tag == 8) { /* 0x2FC418 */
         g_saw_2fc418 = 1;
@@ -320,6 +353,15 @@ void product_lrt_arm_hooks(void *uc) {
                       (uint64_t)PC_30ED82, (uint64_t)PC_30ED82 + 1ull);
     (void)uc_hook_add((uc_engine *)uc, &h7, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)7,
                       (uint64_t)PC_2FC26C, (uint64_t)PC_2FC26C + 1ull);
+    {
+        uc_hook h12 = 0, h13 = 0, h14 = 0;
+        (void)uc_hook_add((uc_engine *)uc, &h12, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)12,
+                          (uint64_t)PC_2FC26C_LEAVE, (uint64_t)PC_2FC26C_LEAVE + 1ull);
+        (void)uc_hook_add((uc_engine *)uc, &h13, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)13,
+                          (uint64_t)PC_2E5E60, (uint64_t)PC_2E5E60 + 1ull);
+        (void)uc_hook_add((uc_engine *)uc, &h14, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)14,
+                          (uint64_t)PC_2E4020, (uint64_t)PC_2E4020 + 1ull);
+    }
     (void)uc_hook_add((uc_engine *)uc, &h8, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)8,
                       (uint64_t)PC_2FC418, (uint64_t)PC_2FC418 + 1ull);
     (void)uc_hook_add((uc_engine *)uc, &h9, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)9,

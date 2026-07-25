@@ -1,0 +1,445 @@
+Task 13：C0 Reset/Start Context Object Contract Closure
+任务目标
+修复当前：
+B71 natural store
+→ POST_DRAIN_GATE_OK
+→ deferred top-level family C0
+→ 0x30D301(app=0xC0)
+→ 0x30DC44
+→ 0x2FEBBC
+→ 0x2FEC3C fault
+使其自然推进到：
+0x2FEC9A
+→ Guest STRB B70
+→ 0x2FECAA 返回
+→ 0x2FC03C
+→ 0x2FC418
+→ Guest 自然写 UI_MODE=0x45
+本任务只闭环 C0 reset/start 对象合同。
+不要提前实现 MRP 资源服务或显示服务。
+
+一、不可回退基线
+当前已经完成：
+Path-A initial downVersion record
+platform memcpy import
+0x10138 multi-out query
+0x10132 malloc/strdup
+0x2F68E4 clean return
+0x2DADC4
+0x30ED2C
+downVersion HIT
+compare 0x3EE success
+B71 natural write
+POST_DRAIN_GATE_OK
+DSM strcpy@0xAC300 正式绑定
+以上能力必须全部保留。
+当前：
+B71 = nonzero
+B70 = 0
+UI_MODE 未到 0x45
+窗口白屏
+
+二、旧 V75 的已知正确 C0 合同
+旧版提交：
+4bdb4b5
+旧 bridge 位置：
+legacy_lab/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+旧 V75 的真实调用方式：
+jjfb_pend_app  = 0xC0
+jjfb_pend_code = 0
+jjfb_pend_p0   = 0
+jjfb_pend_p1   = 0
+jjfb_pending_1e200 = 1
+
+uc_emu_stop(current guest)
+
+回到 top level 后：
+flush registered 1E200 handler
+→ 0x30D300/0x30D301
+→ 0x30DC44
+→ 0x2FEBBC
+因此本轮必须恢复为这一种规范调用。
+删除或禁用所有试验性的：
+清空全部 GPR 后调用
+人为压 8 字节 stack args
+给 C0 添加 object pointer
+修改 code/p0/p1
+嵌套 uc_emu_start
+C0 正式输入保持：
+app  = 0xC0
+code = 0
+p0   = 0
+p1   = 0
+
+三、当前核心判断
+多种寄存器和 stack 变体都在同一个：
+0x2FEC3C
+失败，说明 fault 对象不是 C0 入参直接传入的。
+当前对象：
+root object = 0x6BBBB8
+应视为：
+reset/start context
+或
+runtime descriptor
+或
+该对象引用的 nested context
+它由 2FEBBC 内部从 Guest 全局状态、ER_RW、模块表或对象 registry 中加载。
+不要继续调整 C0 参数。
+
+四、先精确解码 0x2FEC3C
+新增：
+tools/disasm_c0_reset_start.py
+静态反汇编范围：
+0x2FEBBC .. 0x2FECAA
+重点完整输出：
+0x2FEC20 .. 0x2FEC50
+必须确定 0x2FEC3C 的真实指令，例如：
+LDRSH rX, [rY, #offset]
+输出：
+raw bytes
+Thumb/ARM mode
+mnemonic
+destination register
+base register
+offset
+运行时记录：
+PC
+LR
+SP
+CPSR
+R0-R12
+R9
+base register value
+effective address
+effective address 是否 mapped
+读取宽度
+读取前内存
+必须区分：
+情况 A
+base register == 0
+说明上一层 nested pointer 为 NULL。
+情况 B
+base register != 0
+effective address unmapped
+说明 pointer 损坏、对象失效或 generation 错误。
+情况 C
+地址 mapped，但目标字段为 0
+后续把 0 当 pointer 使用
+说明字段初始化缺失。
+不能继续只写“LDRSH 读到 NULL”。
+
+五、还原完整 pointer chain
+从 0x2FEBBC 入口开始，逐条记录形成 fault 地址的 load chain。
+目标格式：
+global/table/ER_RW slot
+→ root pointer 0x6BBBB8
+→ root+offset1
+→ nested pointer
+→ nested+offset2
+→ LDRSH @0x2FEC3C
+每层记录：
+load PC
+base register
+offset
+effective address
+loaded value
+该 value 写入哪个寄存器
+最终必须给出类似：
+PC 0xXXXX:
+  r4 = [ER_RW + offset]
+
+PC 0xYYYY:
+  r5 = [r4 + 0xNN]
+
+PC 0x2FEC3C:
+  value = LDRSH [r5 + 0xMM]
+
+fault 原因：
+  r5 == 0
+或真实等价链。
+
+六、追踪 0x6BBBB8 的来源
+0x6BBBB8 只能作为诊断现场地址，不能成为产品常量。
+必须找出：
+1.它何时首次出现；
+2.谁分配；
+3.分配大小；
+4.是否清零；
+5.谁将它写入 Guest 全局/ER_RW/table；
+6.是否调用过 constructor；
+7.当前属于哪个 module generation；
+8.C0 到来前哪些字段被写入；
+9.哪个字段始终为零；
+10.是否在此前被释放或复用。
+新增：
+JJFB_C0_START_OBJECT_TRACE=1
+当 root pointer 首次确定后，仅 watch：
+root + 0x00 .. root + 0x7F
+如果发现 nested object，再只 watch对应 nested 对象的必要范围。
+每次写入记录：
+object_id
+object_base
+field_offset
+store_pc
+store_size
+old_value
+new_value
+source register
+LR
+module_generation
+runtime phase
+禁止扫描整个 Guest heap。
+
+七、检查旧版列出的 2FEBBC 调用来源
+旧 bridge 已经列出 2FEBBC 的自然调用点：
+0x2DCC60
+0x2DCCC4
+0x2DCD4E
+0x2DCDEE
+0x2DCF4C
+0x2DD626
+0x2DDA82
+0x2E02E0
+0x2E351A
+0x2E7528
+0x2E77B4
+0x2E799E
+0x2FBED6
+0x30DC44
+这些地址只用于 observe-only 对照。
+记录当前运行中：
+哪些调用点自然进入过
+进入顺序
+每次入口 R0-R3/R9
+每次是否成功返回
+每次 root object 是什么
+重点判断：
+在 family C0 之前，是否本应有一次初始化型 2FEBBC 调用，但当前链没有执行？
+如果某个前置调用在旧流程存在、当前流程缺失，应追其自然调度来源，不得直接调用该固定地址。
+
+八、优先检查 callback frame 与 R9
+2FEBBC 内部对象通常依赖当前 Robotol ER_RW/global context。
+在：
+top-level 1E200 entry
+0x30D301
+0x30DC44
+0x2FEBBC
+分别记录：
+R9
+ER_RW
+module_id
+module_generation
+SP
+LR
+callback depth
+必须确认：
+R9 始终指向当前 Robotol generation
+如果进入 C0 后 R9 或 module generation 错误：
+0x6BBBB8
+可能是从错误模块/旧 generation 的全局区读出的垃圾对象。
+这种情况下修复：
+module_r9_switch
+callback frame restore
+top-level deferred event owner binding
+不得初始化假对象。
+
+九、判断对象是否来自 B58/list
+B58 的职责已经完成：
+downVersion record
+→ 0x30ED2C
+→ B71 natural store
+因此默认判断：
+C0 fault object 并不是 B58 record 本身。
+但仍需动态确认。
+检查：
+B58 list node
+record object
+record payload
+0x6BBBB8
+是否有指针关系。
+若无关系
+停止继续修改 B58/list。
+若有关系且对象已释放
+说明存在 ownership/lifetime 问题：
+record 生命周期结束
+→ C0 仍持有内部 pointer
+→ use-after-free / cleared field
+修复对象所有权或引用生命周期，不复制固定数据。
+
+十、修复决策树
+完成 pointer provenance 后，必须在同一任务中实施对应修复，不要停在“已定位”。
+Case 1：R9 / generation 错误
+现象：
+C0 entry R9 不是当前 Robotol R9
+或 root object 来自旧 generation
+修复：
+deferred family event 保存 owner module_id/generation
+top-level flush 前执行 module_r9_switch
+callback frame 绑定 generation
+generation 不匹配则拒绝执行并重新调度正确 owner
+不得硬写 root pointer。
+
+Case 2：平台 query/out 没写出 nested object
+现象：
+Guest constructor 调用了平台 API
+API ret=MR_SUCCESS
+但 out pointer 保持 0
+修复该真实 API：
+按已证明 ABI 分配 Guest object
+写出 guest *out
+初始化必要通用字段
+注册 ownership
+不得根据：
+PC=0x2FEC3C
+触发。
+
+Case 3：对象已分配但 constructor 被跳过
+现象：
+root allocation 成功
+constructor 入口未到达
+或平台 callback 提前 return
+修复：
+缺失的 callback 返回 ABI
+缺失的 lifecycle scheduling
+缺失的 constructor platform dependency
+让 Guest 自然执行 constructor。
+不得由 host 直接填整张结构体。
+
+Case 4：对象字段是显示/runtime descriptor
+只有动态证明 LDRSH 读取的是：
+screen width
+screen height
+x/y geometry
+pitch
+时，才允许迁移旧版 descriptor 语义。
+正式新增：
+include/gwy_launcher/platform_runtime_descriptor.h
+src/platform/platform_runtime_descriptor.c
+通过 profile/Launcher 初始化：
+screen_width  = 240
+screen_height = 320
+pixel_format  = RGB565
+绑定：
+module_id
+module_generation
+Guest descriptor object
+不得复制旧：
+FAST_F74_DESCRIPTOR_ASSIST
+那种直接写固定 ER_RW offset 的方式。
+
+Case 5：nested pointer/child object 未分配
+修复真实 child-object allocator/constructor。
+要求：
+Guest address
+正确 allocation size
+正确 alignment
+零初始化规则
+generation ownership
+对应 free
+不得使用固定地址 0x6BBBB8 或任意 scratch object。
+
+Case 6：对象 stale / use-after-free
+修复：
+owner reference
+queue/callback lifetime
+generation invalidation
+destructor timing
+不得简单禁止 free。
+
+十一、不要迁移这些旧辅助
+本轮明确禁止：
+JJFB_FAST_STATE
+JJFB_FAST_F6C_OBJECT_ASSIST
+JJFB_FAST_F74_DESCRIPTOR_ASSIST
+JJFB_FAST_UNLOCK_CALL
+JJFB_BYPASS_C9D_GATE
+JJFB_V80_HOLD_44
+JJFB_V79_CLEAR_B70
+尤其不能因为旧版开过：
+FAST_F6C_OBJECT_ASSIST
+FAST_F74_DESCRIPTOR_ASSIST
+就直接创建一个宿主对象。
+它们属于旧 E9E 后续资源/绘图实验，只有当前动态 provenance 证明字段语义完全一致，才能提取其中的通用平台参数。
+
+十二、修复后的自然验收
+使用：
+.\RUN_JJFB_LAUNCHER.ps1 -Debug -Diagnostic
+必须观察：
+B71 natural store
+POST_DRAIN_GATE_OK
+family C0 top-level enter
+0x30DC44
+0x2FEBBC
+0x2FEC3C read succeeds
+无 UC_FAULT
+0x2FEC9A entered
+B70 old=0 new=1
+然后继续自然观察：
+0x2FECAA return
+0x2FC03C
+0x2FC418
+UI_MODE old → 0x45
+只允许将以下标记为成功：
+C0_START_OBJECT_CONTRACT_REPAIRED
+B70_NATURAL_STORE
+UI_MODE_NATURAL_45
+
+十三、A/B/C 回归
+A：当前 baseline
+复现：
+0x2FEC3C fault
+B70=0
+B：正式对象合同修复 + Diagnostic
+预期：
+2FEC3C succeeds
+2FEC9A natural B70 store
+2FC418 natural UI_MODE=0x45
+C：默认 Launcher
+.\JJFB_Launcher.bat
+无密集 trace 时必须得到相同生命周期结果。
+不得要求用户设置研究环境变量。
+
+十四、进入 UI_MODE=0x45 后
+到达：
+UI_MODE=0x45
+后只观察第一个自然行为：
+file/resource request
+MRP member lookup
+timer/callback
+draw
+DispUpEx
+new platform API
+本任务不要提前接：
+host MRP member 注入
+固定 BMP
+display assist
+FAST handle
+最终报告下一唯一缺口即可。
+
+十五、最终必须回答
+1. 0x2FEC3C 的准确指令是什么？
+2. base register 和 offset 是什么？
+3. NULL 是 root pointer 还是 nested field？
+4. 0x6BBBB8 从哪里产生？
+5. 它由哪个 module generation 所有？
+6. 缺失字段原本应该由谁写入？
+7. 根因属于：
+   - R9/generation
+   - platform out
+   - constructor skipped
+   - descriptor init
+   - lifetime
+   - allocator
+8. 修改了哪个正式平台模块？
+9. 是否完全未使用 FAST assist？
+10. 0x2FEC9A 是否自然执行？
+11. B70 是否自然变成 1？
+12. 0x2FC418 是否自然进入？
+13. UI_MODE 是否自然成为 0x45？
+14. 用户窗口是否出现变化？
+15. UI_MODE 后第一个自然请求是什么？
+唯一完成标准
+B70_NATURAL_STORE
++
+UI_MODE_NATURAL_45
+在达到这两个标记前，不允许转去做资源和显示。

@@ -339,9 +339,22 @@ static void peek_p_fields(void *uc) {
 
 static void maybe_emit_ready(void) {
     refresh_registry_er_rw();
-    if (g_pc.runtime_ready) return;
-    if (!g_pc.helper || !g_pc.p_guest) return;
     peek_p_fields(g_pc.uc);
+    /* After READY: re-bind when guest P drifts from registry (off-by-4 header vs payload). */
+    if (g_pc.runtime_ready) {
+        if (g_pc.uc && g_pc.p_guest && g_pc.p_er_rw && g_pc.registry_er_rw &&
+            g_pc.p_er_rw != g_pc.registry_er_rw) {
+            ext_er_rw_bind_restore_bind_uc(g_pc.uc);
+            printf("[ER_RW_DRIFT_REBIND] p=0x%X live=0x%X registry=0x%X note=off_by_4_repair "
+                   "evidence=OBSERVED\n",
+                   g_pc.p_guest, g_pc.p_er_rw, g_pc.registry_er_rw);
+            fflush(stdout);
+            ext_er_rw_bind_restore_peek_and_bind(g_pc.p_guest, "post_cont_er_rw_drift");
+            refresh_registry_er_rw();
+        }
+        return;
+    }
+    if (!g_pc.helper || !g_pc.p_guest) return;
     /* Require P->start_of_ER_RW filled by guest load (DOCUMENTED). */
     if (!g_pc.p_er_rw) return;
     /* At resume instant, P may still hold caller/DSM SB — wait for guest progress. */
@@ -354,8 +367,10 @@ static void maybe_emit_ready(void) {
            g_pc.p_guest, g_pc.p_er_rw, g_pc.p_er_len ? g_pc.p_er_len : g_pc.registry_er_size,
            g_pc.helper, g_pc.registry_er_rw ? "published" : "pending", PC_GATE_ARGS);
     /* Stage E2: bind as soon as guest P ER_RW is observed (write-watch may miss). */
-    if (g_pc.p_guest && g_pc.p_er_rw && g_pc.p_er_len)
+    if (g_pc.p_guest && g_pc.p_er_rw && g_pc.p_er_len) {
+        ext_er_rw_bind_restore_bind_uc(g_pc.uc);
         ext_er_rw_bind_restore_peek_and_bind(g_pc.p_guest, "mr_c_function_st_metadata_bind");
+    }
     printf("[POST_CONT] seq=%u event_type=RUNTIME_READY guest_pc=0x%X module=%s "
            "module_offset=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X r9=0x%X scope_depth=%u "
            "lr=0x%X sp=0x%X instr=%llu " PC_GATE_LINE " evidence=OBSERVED\n",
@@ -420,6 +435,18 @@ static void classify_and_emit_summary(const char *stop_reason) {
 
     refresh_registry_er_rw();
     peek_p_fields(g_pc.uc);
+    /* Last chance: publish live P ER_RW before summary freezes the gates. */
+    if (g_pc.uc && g_pc.p_guest && g_pc.p_er_rw && g_pc.registry_er_rw &&
+        g_pc.p_er_rw != g_pc.registry_er_rw) {
+        ext_er_rw_bind_restore_bind_uc(g_pc.uc);
+        printf("[ER_RW_DRIFT_REBIND] p=0x%X live=0x%X registry=0x%X note=summary_repair "
+               "evidence=OBSERVED\n",
+               g_pc.p_guest, g_pc.p_er_rw, g_pc.registry_er_rw);
+        fflush(stdout);
+        ext_er_rw_bind_restore_peek_and_bind(g_pc.p_guest, "post_cont_summary_drift");
+        refresh_registry_er_rw();
+        peek_p_fields(g_pc.uc);
+    }
 
     if (g_pc.fault_seen) {
         c = PC_CLASS_NEW_ABI_FAULT;

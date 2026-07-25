@@ -10,8 +10,14 @@ extern "C" {
 /*
  * Generation-scoped Path-A (0x101AB) response contract.
  *
- * New Robotol generation → phase=INITIAL_RECORD → first successful fill may
- * embed one lifecycle record → phase=EMPTY thereafter.
+ * Product default (Task 11 B71):
+ *   New Robotol generation → phase=INITIAL_RECORD → first fill embeds lifecycle record
+ *   → phase=EMPTY thereafter.
+ *
+ * V75 empty-first (PRIMING_EMPTY → 0x2FC26C → second record) is retained as an enum /
+ * note_delivered path for experiments, but is NOT the product default: current guest
+ * hangs inside 0x2FC26C (drawFP/DSM loop) before leave, so E6C init via that path is
+ * not yet proven.
  *
  * JJFB_101AB_WITH_RECORD=0/1 remains an A/B override only; product default
  * comes from the compatibility profile path_a_response.initial_record.
@@ -21,8 +27,9 @@ extern "C" {
 #define GWY_PATH_A_REC_NAME_MAX 64
 
 typedef enum GwyPathAResponsePhase {
-    GWY_PATH_A_RESPONSE_INITIAL_RECORD = 0,
-    GWY_PATH_A_RESPONSE_EMPTY = 1
+    GWY_PATH_A_RESPONSE_PRIMING_EMPTY = 0,
+    GWY_PATH_A_RESPONSE_INITIAL_RECORD = 1,
+    GWY_PATH_A_RESPONSE_EMPTY = 2
 } GwyPathAResponsePhase;
 
 typedef struct GwyPathAInitialRecord {
@@ -58,8 +65,15 @@ void platform_path_a_response_bind(uint64_t module_id, uint64_t module_generatio
  */
 int platform_path_a_response_decide_with_record(void);
 
-/* Call only after a successful guest buffer poke of a with_record fill. */
+/*
+ * Advance phase after a successful guest buffer poke.
+ * with_record=0 during PRIMING_EMPTY → INITIAL_RECORD.
+ * with_record=1 during INITIAL_RECORD → EMPTY.
+ */
 void platform_path_a_response_note_delivered(int with_record);
+
+/* 1 when product should deliver the downVersion record on the next 101AB fill. */
+int platform_path_a_response_ready_for_record(void);
 
 #ifdef __cplusplus
 }
