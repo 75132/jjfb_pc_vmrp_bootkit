@@ -16,16 +16,27 @@ void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *
 #endif
 
 #define COPY_CHUNK 4096u
+#define STRLEN_MAX 0x100000u
+/* DSM guest memset body; Robotol has been observed to park this in ER_RW+0x1450. */
+#define DSM_MEMSET_BODY_VA 0x94F04u
 
 static int g_import_known;
 static int g_import_en;
 static void *g_uc;
 static int g_hook_armed;
+static int g_strlen_hook_armed;
+static int g_strcpy_hook_armed;
 #ifdef GWY_HAVE_UNICORN
 static uc_hook g_import_hook;
+static uc_hook g_strlen_hook;
+static uc_hook g_strcpy_hook;
 #endif
 static uint32_t g_import_calls;
 static uint32_t g_import_fails;
+static uint32_t g_strlen_calls;
+static uint32_t g_strcpy_calls;
+static uint32_t g_libc_cache_erw;
+static int g_libc_cache_published;
 
 static int env_explicit_zero(const char *name) {
     const char *e = getenv(name);
@@ -55,9 +66,115 @@ void platform_memcpy_import_reset(void) {
     g_import_known = 0;
     g_import_en = 0;
     g_uc = NULL;
-    /* Keep g_hook_armed: Unicorn CODE hook is process-lifetime once installed. */
+    /* Keep g_hook_armed / g_strlen_hook_armed: Unicorn CODE hooks are process-lifetime. */
     g_import_calls = 0;
     g_import_fails = 0;
+    g_strlen_calls = 0;
+    g_strcpy_calls = 0;
+    g_libc_cache_erw = 0;
+    g_libc_cache_published = 0;
+}
+
+uint32_t platform_guest_strlen(void *uc, uint32_t str_guest) {
+    uint32_t n = 0;
+    uint8_t b = 0;
+
+    if (!uc || !str_guest) return 0;
+    /* Cursor indices / status codes (e.g. 0x16) must not enter DSM strlen body. */
+    if (str_guest < 0x1000u) {
+        printf("[PLATFORM_STRLEN] reject low_ptr=0x%X evidence=OBSERVED\n", str_guest);
+        fflush(stdout);
+        return 0;
+    }
+    while (n < STRLEN_MAX) {
+        if (!guest_memory_uc_peek((struct uc_struct *)uc, str_guest + n, &b, 1)) {
+            printf("[PLATFORM_STRLEN] fail reason=unmapped str=0x%X off=0x%X evidence=OBSERVED\n",
+                   str_guest, n);
+            fflush(stdout);
+            return n;
+        }
+        if (b == 0) return n;
+        n++;
+    }
+    printf("[PLATFORM_STRLEN] fail reason=too_long str=0x%X cap=0x%X evidence=OBSERVED\n",
+           str_guest, STRLEN_MAX);
+    fflush(stdout);
+    return STRLEN_MAX;
+}
+
+uint32_t platform_guest_strcpy(void *uc, uint32_t dst_guest, uint32_t src_guest) {
+    uint32_t n;
+    uint8_t z = 0;
+    if (!uc || !dst_guest) return 0;
+    if (!src_guest || src_guest < 0x1000u) {
+        printf("[PLATFORM_STRCPY] reject low_src=0x%X dst=0x%X evidence=OBSERVED\n", src_guest,
+               dst_guest);
+        fflush(stdout);
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, dst_guest, &z, 1);
+        return dst_guest;
+    }
+    n = platform_guest_strlen(uc, src_guest);
+    if (n >= STRLEN_MAX) return 0;
+    if (!platform_guest_memcpy(uc, dst_guest, src_guest, n + 1u)) return 0;
+    return dst_guest;
+}
+
+int platform_libc_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table) {
+    uint32_t memset_fp = 0, strlen_fp = 0;
+    uint32_t cur_memset = 0, cur_strlen = 0;
+    int wrote = 0;
+
+    if (!uc || !er_rw || !mr_table) return 0;
+    if (g_libc_cache_published && g_libc_cache_erw == er_rw) return 1;
+
+    if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, mr_table + PLATFORM_MEMSET_MR_TABLE_OFF,
+                                 &memset_fp) ||
+        !guest_memory_uc_peek_u32((struct uc_struct *)uc, mr_table + PLATFORM_STRLEN_MR_TABLE_OFF,
+                                 &strlen_fp)) {
+        printf("[PLATFORM_LIBC_CACHE] fail reason=mr_table_unmapped mt=0x%X evidence=OBSERVED\n",
+               mr_table);
+        fflush(stdout);
+        return 0;
+    }
+    if (!memset_fp || !strlen_fp) {
+        printf("[PLATFORM_LIBC_CACHE] fail reason=empty_fps memset=0x%X strlen=0x%X evidence=OBSERVED\n",
+               memset_fp, strlen_fp);
+        fflush(stdout);
+        return 0;
+    }
+
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + PLATFORM_ROBOTOL_ERW_MEMSET_OFF,
+                                   &cur_memset);
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er_rw + PLATFORM_ROBOTOL_ERW_STRLEN_OFF,
+                                   &cur_strlen);
+
+    /*
+     * Always install platform mr_table stubs into the documented Robotol cache.
+     * Mis-fill of +0x1450 with DSM memset (0x94F04) makes 0x2D9648 treat strlen
+     * as memset(dst, fn_ptr, huge_r2) and burn the nested emu budget.
+     */
+    if (cur_memset != memset_fp) {
+        if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, er_rw + PLATFORM_ROBOTOL_ERW_MEMSET_OFF,
+                                      memset_fp))
+            return 0;
+        wrote = 1;
+    }
+    if (cur_strlen != strlen_fp) {
+        if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, er_rw + PLATFORM_ROBOTOL_ERW_STRLEN_OFF,
+                                      strlen_fp))
+            return 0;
+        wrote = 1;
+    }
+
+    g_libc_cache_erw = er_rw;
+    g_libc_cache_published = 1;
+    printf("[PLATFORM_LIBC_CACHE] erw=0x%X mt=0x%X memset=0x%X->0x%X strlen=0x%X->0x%X "
+           "wrote=%d dsm_memset_misbind=%s evidence=OBSERVED\n",
+           er_rw, mr_table, cur_memset, memset_fp, cur_strlen, strlen_fp, wrote,
+           (cur_strlen == DSM_MEMSET_BODY_VA || cur_strlen == cur_memset) ? "yes" : "no");
+    fflush(stdout);
+    product_runtime_progress_emit("platform_libc_cache", "strlen", "0x1450");
+    return 1;
 }
 
 uint32_t platform_memcpy_import_call_count(void) { return g_import_calls; }
@@ -155,6 +272,61 @@ static void on_memcpy_import_slot(uc_engine *uc, uint64_t address, uint32_t size
     uc_reg_write(uc, UC_ARM_REG_PC, &lr);
     gwy_ext_obs_host_callback_resume(uc, PLATFORM_MEMCPY_IMPORT_SLOT_VA, "platform_guest_memcpy");
 }
+
+/* DSM strlen @0xAC374 — post-gate 0x2FD886 calls this body with R0=C-string. */
+static void on_strlen_dsm_body(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+    uint32_t str = 0, lr = 0, ret = 0;
+    (void)address;
+    (void)size;
+    (void)user_data;
+
+    if (!platform_memcpy_import_enabled()) return;
+
+    uc_reg_read(uc, UC_ARM_REG_R0, &str);
+    g_strlen_calls++;
+    gwy_ext_obs_host_callback_enter(uc, PLATFORM_STRLEN_DSM_BODY_VA, "platform_guest_strlen");
+    ret = platform_guest_strlen(uc, str);
+    printf("[PLATFORM_STRLEN] import_ok slot=0x%X str=0x%X ret=0x%X evidence=OBSERVED\n",
+           PLATFORM_STRLEN_DSM_BODY_VA, str, ret);
+    fflush(stdout);
+    product_runtime_progress_emit("platform_strlen_import", "strlen", "0xAC374");
+    {
+        uint32_t r0 = ret;
+        uc_reg_write(uc, UC_ARM_REG_R0, &r0);
+    }
+    gwy_ext_obs_host_callback_leave(uc, PLATFORM_STRLEN_DSM_BODY_VA, "platform_guest_strlen");
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+    gwy_ext_obs_host_callback_resume(uc, PLATFORM_STRLEN_DSM_BODY_VA, "platform_guest_strlen");
+}
+
+/* DSM strcpy @0xAC300 — post-gate 0x310740: R0=dst R1=src. */
+static void on_strcpy_dsm_body(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+    uint32_t dst = 0, src = 0, lr = 0, ret = 0;
+    (void)address;
+    (void)size;
+    (void)user_data;
+
+    if (!platform_memcpy_import_enabled()) return;
+
+    uc_reg_read(uc, UC_ARM_REG_R0, &dst);
+    uc_reg_read(uc, UC_ARM_REG_R1, &src);
+    g_strcpy_calls++;
+    gwy_ext_obs_host_callback_enter(uc, PLATFORM_STRCPY_DSM_BODY_VA, "platform_guest_strcpy");
+    ret = platform_guest_strcpy(uc, dst, src);
+    printf("[PLATFORM_STRCPY] import_ok slot=0x%X dst=0x%X src=0x%X ret=0x%X evidence=OBSERVED\n",
+           PLATFORM_STRCPY_DSM_BODY_VA, dst, src, ret);
+    fflush(stdout);
+    product_runtime_progress_emit("platform_strcpy_import", "strcpy", "0xAC300");
+    {
+        uint32_t r0 = ret;
+        uc_reg_write(uc, UC_ARM_REG_R0, &r0);
+    }
+    gwy_ext_obs_host_callback_leave(uc, PLATFORM_STRCPY_DSM_BODY_VA, "platform_guest_strcpy");
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+    gwy_ext_obs_host_callback_resume(uc, PLATFORM_STRCPY_DSM_BODY_VA, "platform_guest_strcpy");
+}
 #endif
 
 void platform_memcpy_import_bind_uc(void *uc) { g_uc = uc; }
@@ -163,28 +335,62 @@ void platform_memcpy_import_arm(void *uc) {
 #ifdef GWY_HAVE_UNICORN
     uc_err e;
     uint32_t slot = PLATFORM_MEMCPY_IMPORT_SLOT_VA;
+    uint32_t strlen_va = PLATFORM_STRLEN_DSM_BODY_VA;
+    uint32_t strcpy_va = PLATFORM_STRCPY_DSM_BODY_VA;
     if (!uc) uc = g_uc;
-    if (!uc || g_hook_armed) return;
+    if (!uc) return;
     if (!platform_memcpy_import_enabled()) {
         printf("[PLATFORM_MEMCPY] import_arm skipped enabled=0 slot=0x%X evidence=OBSERVED\n",
                slot);
         fflush(stdout);
         return;
     }
-    e = uc_hook_add((uc_engine *)uc, &g_import_hook, UC_HOOK_CODE, (void *)on_memcpy_import_slot,
-                    NULL, (uint64_t)slot, (uint64_t)slot);
-    if (e != UC_ERR_OK) {
-        printf("[PLATFORM_MEMCPY] import_arm_fail slot=0x%X uc_err=%u evidence=OBSERVED\n", slot,
-               (unsigned)e);
-        fflush(stdout);
-        return;
+    if (!g_hook_armed) {
+        e = uc_hook_add((uc_engine *)uc, &g_import_hook, UC_HOOK_CODE, (void *)on_memcpy_import_slot,
+                        NULL, (uint64_t)slot, (uint64_t)slot);
+        if (e != UC_ERR_OK) {
+            printf("[PLATFORM_MEMCPY] import_arm_fail slot=0x%X uc_err=%u evidence=OBSERVED\n", slot,
+                   (unsigned)e);
+            fflush(stdout);
+        } else {
+            g_hook_armed = 1;
+            printf("[PLATFORM_MEMCPY] import_armed slot=0x%X identity=dsm_misbound_copy "
+                   "mr_table_off=0x%X evidence=DOCUMENTED\n",
+                   slot, PLATFORM_MEMCPY_MR_TABLE_OFF);
+            fflush(stdout);
+        }
     }
-    g_hook_armed = 1;
+    if (!g_strlen_hook_armed) {
+        e = uc_hook_add((uc_engine *)uc, &g_strlen_hook, UC_HOOK_CODE, (void *)on_strlen_dsm_body,
+                        NULL, (uint64_t)strlen_va, (uint64_t)strlen_va);
+        if (e != UC_ERR_OK) {
+            printf("[PLATFORM_STRLEN] import_arm_fail slot=0x%X uc_err=%u evidence=OBSERVED\n",
+                   strlen_va, (unsigned)e);
+            fflush(stdout);
+        } else {
+            g_strlen_hook_armed = 1;
+            printf("[PLATFORM_STRLEN] import_armed slot=0x%X identity=dsm_strlen_body "
+                   "evidence=DOCUMENTED+E10A\n",
+                   strlen_va);
+            fflush(stdout);
+        }
+    }
+    if (!g_strcpy_hook_armed) {
+        e = uc_hook_add((uc_engine *)uc, &g_strcpy_hook, UC_HOOK_CODE, (void *)on_strcpy_dsm_body,
+                        NULL, (uint64_t)strcpy_va, (uint64_t)strcpy_va);
+        if (e != UC_ERR_OK) {
+            printf("[PLATFORM_STRCPY] import_arm_fail slot=0x%X uc_err=%u evidence=OBSERVED\n",
+                   strcpy_va, (unsigned)e);
+            fflush(stdout);
+        } else {
+            g_strcpy_hook_armed = 1;
+            printf("[PLATFORM_STRCPY] import_armed slot=0x%X identity=dsm_strcpy_body "
+                   "evidence=DOCUMENTED\n",
+                   strcpy_va);
+            fflush(stdout);
+        }
+    }
     g_uc = uc;
-    printf("[PLATFORM_MEMCPY] import_armed slot=0x%X identity=dsm_misbound_copy "
-           "mr_table_off=0x%X evidence=DOCUMENTED\n",
-           slot, PLATFORM_MEMCPY_MR_TABLE_OFF);
-    fflush(stdout);
 #else
     (void)uc;
 #endif

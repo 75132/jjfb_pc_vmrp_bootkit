@@ -115,7 +115,32 @@ static int g_lifecycle_delivering;
 static uint32_t g_lifecycle_ticks;
 static void *g_bound_uc;
 static const uint32_t GWY_LIFECYCLE_PERIOD_MS = 50u;
-static const uint64_t GWY_LIFECYCLE_INSN_LIMIT = 200000ull;
+/* Product nested family/drain previously capped at 200k and aborted inside
+ * 0x2F6C44 (downVersion compare) with insn_limit_or_yield + full register
+ * rollback. 500k reaches the second DSM blx inside 0x2D9648 but still yields;
+ * 5M is enough for the natural compare→B71 path on clean JJFB. Override via
+ * GWY_LIFECYCLE_INSN_LIMIT when diagnosing. */
+static const uint64_t GWY_LIFECYCLE_INSN_LIMIT_DEFAULT = 5000000ull;
+
+static uint64_t gwy_lifecycle_insn_limit(void) {
+    static int inited;
+    static uint64_t lim;
+    if (!inited) {
+        const char *e = getenv("GWY_LIFECYCLE_INSN_LIMIT");
+        char *end = NULL;
+        unsigned long long v;
+        lim = GWY_LIFECYCLE_INSN_LIMIT_DEFAULT;
+        if (e && e[0]) {
+            v = strtoull(e, &end, 0);
+            if (end != e && v > 0ull) lim = (uint64_t)v;
+        }
+        printf("[LIFECYCLE_INSN_LIMIT] lim=%llu env=%s evidence=OBSERVED\n",
+               (unsigned long long)lim, (e && e[0]) ? e : "(default)");
+        fflush(stdout);
+        inited = 1;
+    }
+    return lim;
+}
 
 static void gwy_ext_obs_timer_poll(void *uc);
 static void gwy_ext_obs_deferred_timer_pump(void *uc);
@@ -149,6 +174,152 @@ static GwyFamilyEvent g_family_eq[GWY_P4_FAMILY_EVENT_Q];
 static int g_family_eq_n;
 static int g_family_contract_fixed;
 static int g_family_draining;
+/* One-shot: call real 0x30CBBC so guest strb 15D=1 (not host poke). */
+static int g_family_app2_init_once;
+/* One-shot success: guest strb B70 via 0x2FEBBC completed. */
+static int g_family_c0_2febbc_once;
+/* Armed by B71 write hook: flush 0x2FEBBC after current emu returns (V75). */
+static int g_pending_2febbc_after_b71;
+/* While set, emu_slice timer poll must not nest FIRE into 0x30CBBC/0x2FEBBC. */
+static int g_suppress_timer_poll;
+/* While set, sendAppEvent must not drain (nested inside 0x30CBBC/0x2FEBBC uc_emu_start). */
+static int g_in_30cbbc_call;
+/* While set, family handler uc_emu_start is active — do not nest 2FEBBC. */
+static int g_in_family_entry;
+
+/* After natural B71=1, deliver family app=0xC0 via registered 0x1E200 handler
+ * (0x30D301 → 0x30DC44 → 0x2FEBBC → strb B70 @ 0x2FEC9A). Same V75 contract as
+ * jjfb_flush_1e200(app=0xC0) — not a host B70 poke, not a bare mid-fn jump.
+ * Default ON; set JJFB_FAMILY_C0_AFTER_B71=0 to disable.
+ * Only call from top-level after emu_stop (never nested mid-guest). */
+static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const char *why) {
+    const char *env;
+    uint8_t b71 = 0, b70 = 0, a70 = 0;
+    GwyUcEntryAbi wabi;
+    GwyUcEntryRunOut wout;
+    uint64_t wlim;
+    uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+    uint32_t fam_h = 0x30D301u; /* registered plat 0x10102 / 0x1E200 family switch */
+    int wok;
+    GwyPlatformEventQueue *pq0;
+    uint32_t save_p65 = 0, save_p62 = 0, save_store = 0, save_store62 = 0;
+
+    if (!uc || !erw || g_family_c0_2febbc_once || g_in_30cbbc_call) return;
+    if (g_in_family_entry) return; /* never nest under an active family handler emu */
+    env = getenv("JJFB_FAMILY_C0_AFTER_B71");
+    if (env && env[0] == '0') return;
+    (void)guest_memory_uc_peek((struct uc_struct *)uc, erw + 0xB71u, &b71, 1);
+    (void)guest_memory_uc_peek((struct uc_struct *)uc, erw + 0xB70u, &b70, 1);
+    if (b70 != 0) return;
+    /* Post-drain 2DADC4 clears B71 before deliver returns; pending arm is enough. */
+    if (b71 == 0 && !g_pending_2febbc_after_b71) return;
+
+    pq0 = platform_event_queue_get();
+    if (pq0) {
+        save_p65 = pq0->context_10165;
+        save_p62 = pq0->context_10162;
+        save_store = pq0->owner_store_10165;
+        save_store62 = pq0->owner_store_10162;
+    }
+    memset(&wabi, 0, sizeof(wabi));
+    /* emu_stop mid-Path-A leaves r4..r11 holding half-freed list objs; 2FEBBC
+     * then LDRSH's garbage (observed: fault @0x2FEC3C). Mirror-clear GPRs.
+     * V75 jjfb_run_guest_thumb4 also pushes 8 zero stack args for family disp. */
+    wabi.mirror_full = 1;
+    memset(wabi.mirror_r, 0, sizeof(wabi.mirror_r));
+    wabi.mirror_r[0] = 0xC0u;
+    wabi.mirror_r[9] = erw;
+    {
+        uint32_t sp = 0, cpsr = 0;
+        uint32_t z = 0;
+#ifdef GWY_HAVE_UNICORN
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_CPSR, &cpsr);
+#endif
+        if (sp >= 8u) {
+            sp -= 8u;
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp, z);
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp + 4u, z);
+        }
+        wabi.mirror_sp = sp;
+        wabi.mirror_cpsr = cpsr ? cpsr : 0x1Fu;
+    }
+    wabi.set_r0 = 1;
+    wabi.r0 = 0xC0u; /* family app C0 → 30DC44 → 2FEBBC */
+    wabi.set_r1 = 1;
+    wabi.r1 = 0;
+    wabi.set_lr = 1;
+    wabi.lr = stop;
+    wlim = gwy_lifecycle_insn_limit();
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_FAMILY_C0_FOR_B70 entry=0x%X app=0xC0 r9=0x%X "
+           "lim=%llu why=%s note=1E200_to_30DC44_2FEBBC evidence=OBSERVED+V75\n",
+           fam_h, erw, (unsigned long long)wlim, why ? why : "?");
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
+    {
+        uint32_t mt = ext_chunk_provider_mr_table_guest();
+        if (mt) (void)platform_libc_cache_publish(uc, erw, mt);
+    }
+    g_suppress_timer_poll = 1;
+    g_in_30cbbc_call = 1;
+    wok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, fam_h, stop, wlim, &wabi, &wout);
+    g_in_30cbbc_call = 0;
+    g_suppress_timer_poll = 0;
+    (void)guest_memory_uc_peek((struct uc_struct *)uc, erw + 0xB70u, &a70, 1);
+    if (save_store && save_p65) {
+        uint32_t cur = 0;
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, save_store, &cur);
+        if (cur != save_p65) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, save_store, save_p65);
+            printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE plat=10165 addr=0x%X "
+                   "old=0x%X new=0x%X note=after_family_C0 evidence=OBSERVED\n",
+                   save_store, cur, save_p65);
+            fflush(stdout);
+        }
+    }
+    if (save_store62 && save_p62) {
+        uint32_t cur = 0;
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, save_store62, &cur);
+        if (cur != save_p62) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, save_store62, save_p62);
+            printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE plat=10162 addr=0x%X "
+                   "old=0x%X new=0x%X note=after_family_C0 evidence=OBSERVED\n",
+                   save_store62, cur, save_p62);
+            fflush(stdout);
+        }
+    }
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_FAMILY_C0_DONE ok=%d B70=%u end=%s pc_after=0x%X "
+           "evidence=OBSERVED\n",
+           wok, (unsigned)a70, wout.end_reason[0] ? wout.end_reason : "?", wout.pc_after);
+    fflush(stdout);
+    /* Only lock out retries after guest actually wrote B70 (failed nest must retry). */
+    if (a70) {
+        g_family_c0_2febbc_once = 1;
+        g_pending_2febbc_after_b71 = 0;
+        product_runtime_progress_emit("b70_naturally_written", "family_c0", "guest_strb");
+    }
+}
+
+void gwy_ext_obs_on_b71_natural_for_b70(void *uc, uint32_t er_rw) {
+    const char *env;
+    uint8_t b70 = 0;
+    if (!uc || !er_rw || g_family_c0_2febbc_once || g_pending_2febbc_after_b71) return;
+    env = getenv("JJFB_FAMILY_C0_AFTER_B71");
+    if (env && env[0] == '0') return;
+    (void)guest_memory_uc_peek((struct uc_struct *)uc, er_rw + 0xB70u, &b70, 1);
+    if (b70 != 0) return;
+    /* V75: stop before empty-B58 → 2FC26C (cursor-0x16 trap); flush C0 at top-level. */
+    g_pending_2febbc_after_b71 = 1;
+    printf("[PLATFORM_FAMILY_EVENT] op=ARM_FAMILY_C0_AFTER_B71 er_rw=0x%X "
+           "note=emu_stop_then_top_level_C0 evidence=OBSERVED+V75\n",
+           er_rw);
+    fflush(stdout);
+#ifdef GWY_HAVE_UNICORN
+    uc_emu_stop((uc_engine *)uc);
+#else
+    (void)uc;
+#endif
+}
 
 static int env_flag(const char *name) {
     const char *e = getenv(name);
@@ -248,6 +419,12 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_family_eq_n = 0;
     g_family_contract_fixed = 0;
     g_family_draining = 0;
+    g_family_app2_init_once = 0;
+    g_family_c0_2febbc_once = 0;
+    g_pending_2febbc_after_b71 = 0;
+    g_suppress_timer_poll = 0;
+    g_in_30cbbc_call = 0;
+    g_in_family_entry = 0;
     platform_call_census_reset();
     robotol_idle_watch_reset();
     robotol_idle_watch_bind_uc(uc);
@@ -699,9 +876,93 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
             if (platform_event_service_resolve_completion_objs(&p65, &p62, &enq_h, &store) &&
                 enq_h && g_family_eq_n + 1 < GWY_P4_FAMILY_EVENT_Q) {
                 /* Path A list insert @0x312A60 requires a non-null queue head (ER_RW+0xB54).
-                 * Invoking 30D24C while B54==0 → UC_FAULT @ LDR [r4,#4] (ENTRY_ARGUMENT).
-                 * Case E: if guest never ran 0x30CBBC→0x2FE82C→0x312AA4, publish the proven
-                 * 8-byte list control via PlatformEventQueue into the live B54 slot. */
+                 * Proven init: 0x30CBBC → 0x2FE82C → 0x312AA4 → STR B54, and guest strb 15D
+                 * at 0x30CCF4. Call it once BEFORE Path-A push (full run wipes/rebuilds B54;
+                 * calling after Path-A lost the queued node). Timer poll suppressed so the
+                 * call can return to stop_at_base. Not a host poke of 15D. */
+                if (uc && erw && !g_family_app2_init_once) {
+                    uint8_t o15d = 0;
+                    (void)guest_memory_uc_peek((struct uc_struct *)uc, erw + 0x15Du, &o15d, 1);
+                    if (!o15d) {
+                        GwyUcEntryAbi wabi;
+                        GwyUcEntryRunOut wout;
+                        uint64_t wlim = gwy_lifecycle_insn_limit();
+                        uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+                        int wok;
+                        uint8_t a15d = 0;
+                        GwyPlatformEventQueue *pq0 = platform_event_queue_get();
+                        uint32_t save_p65 = p65, save_p62 = p62, save_store = store;
+                        uint32_t save_enq = enq_h;
+                        uint32_t save_store62 =
+                            (pq0 && pq0->owner_store_10162) ? pq0->owner_store_10162 : 0;
+                        g_family_app2_init_once = 1;
+                        memset(&wabi, 0, sizeof(wabi));
+                        wabi.set_lr = 1;
+                        wabi.lr = stop;
+                        printf("[PLATFORM_FAMILY_EVENT] op=CALL_30CBBC_FOR_15D entry=0x30CBBD "
+                               "r9=0x%X lim=%llu note=before_path_a_timer_suppressed "
+                               "evidence=OBSERVED\n",
+                               erw, (unsigned long long)wlim);
+                        fflush(stdout);
+                        (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
+                        {
+                            uint32_t mt = ext_chunk_provider_mr_table_guest();
+                            if (mt) (void)platform_libc_cache_publish(uc, erw, mt);
+                        }
+                        g_suppress_timer_poll = 1;
+                        g_in_30cbbc_call = 1;
+                        wok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x30CBBDu,
+                                                           stop, wlim, &wabi, &wout);
+                        g_in_30cbbc_call = 0;
+                        g_suppress_timer_poll = 0;
+                        (void)guest_memory_uc_peek((struct uc_struct *)uc, erw + 0x15Du, &a15d,
+                                                   1);
+                        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB54u,
+                                                       &b54);
+                        /* Full 0x30CBBC rewrites ER_RW owner slots (observed: "vmrp"
+                         * ASCII at 10165 store). Restore Path-A ctx pointers so
+                         * 0x30D2F9/101AB still see the registered 10165/10162 objs. */
+                        {
+                            uint32_t cur = 0;
+                            p65 = save_p65;
+                            p62 = save_p62;
+                            store = save_store;
+                            enq_h = save_enq;
+                            if (save_store && save_p65) {
+                                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, save_store,
+                                                               &cur);
+                                if (cur != save_p65) {
+                                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc,
+                                                                   save_store, save_p65);
+                                    printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE "
+                                           "plat=10165 addr=0x%X old=0x%X new=0x%X "
+                                           "note=after_30CBBC evidence=OBSERVED\n",
+                                           save_store, cur, save_p65);
+                                    fflush(stdout);
+                                }
+                            }
+                            if (save_store62 && save_p62) {
+                                (void)guest_memory_uc_peek_u32((struct uc_struct *)uc,
+                                                               save_store62, &cur);
+                                if (cur != save_p62) {
+                                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc,
+                                                                   save_store62, save_p62);
+                                    printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE "
+                                           "plat=10162 addr=0x%X old=0x%X new=0x%X "
+                                           "note=after_30CBBC evidence=OBSERVED\n",
+                                           save_store62, cur, save_p62);
+                                    fflush(stdout);
+                                }
+                            }
+                        }
+                        printf("[PLATFORM_FAMILY_EVENT] op=CALL_30CBBC_DONE ok=%d 15D=%u "
+                               "b54=0x%X end=%s pc_after=0x%X evidence=OBSERVED\n",
+                               wok, (unsigned)a15d, b54,
+                               wout.end_reason[0] ? wout.end_reason : "?", wout.pc_after);
+                        fflush(stdout);
+                    }
+                }
+                /* Case E: if guest still has no B54, publish the proven 8-byte list control. */
                 if (uc && erw) {
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB54u, &b54);
                     (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0x15Cu, &flag15c);
@@ -856,6 +1117,10 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         owner = reg ? module_registry_find_by_code_addr(reg, ev->handler & ~1u) : NULL;
         if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
         if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+        {
+            uint32_t mt = ext_chunk_provider_mr_table_guest();
+            if (r9_run && mt) (void)platform_libc_cache_publish(uc, r9_run, mt);
+        }
 
         memset(&abi, 0, sizeof(abi));
         abi.set_r0 = 1;
@@ -936,8 +1201,17 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                                         abi.r3, r9_run);
         }
 
+        /* Path-A 0x30D2F9 must finish list insert; nested timer FIRE aborts that
+         * (observed: PATH_A_ENQUEUE_BEGIN then POLL_WAIT/FIRE, no DELIVER_DONE, head=0). */
+        if (ev->enqueue_mode) g_suppress_timer_poll = 1;
+        /* Also suppress timer for drain/handler delivers that write B71 — otherwise
+         * emu_slice timer nests CALL_2FEBBC mid-guest (UC_FAULT @ 0x2FEC3C). */
+        else g_suppress_timer_poll = 1;
+        g_in_family_entry = 1;
         ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, ev->handler, stop,
-                                          GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+                                          gwy_lifecycle_insn_limit(), &abi, &out);
+        g_in_family_entry = 0;
+        g_suppress_timer_poll = 0;
         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 
         if (product_ffp_enabled()) {
@@ -952,9 +1226,15 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         }
 
         printf("[PLATFORM_FAMILY_EVENT] op=DELIVER_DONE ok=%d ret=%d end=%s handler=0x%X "
-               "evidence=OBSERVED\n",
-               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", ev->handler);
+               "pc_after=0x%X lr_after=0x%X lim=%llu evidence=OBSERVED\n",
+               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", ev->handler,
+               out.pc_after, out.lr_after, (unsigned long long)gwy_lifecycle_insn_limit());
         fflush(stdout);
+
+        /* V75: after Path-A/drain guest wrote B71 and the deliver fully returns
+         * (list consume finished), deliver family app=0xC0 → 2FEBBC → B70. */
+        if (ok || g_pending_2febbc_after_b71)
+            gwy_ext_obs_try_call_2febbc_for_b70(uc, r9_run, "after_family_deliver");
 
         if (ev->drain_trigger_mode)
             platform_event_queue_note_drain_delivered(ev->handler, ok);
@@ -1004,6 +1284,12 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
     }
     g_family_eq_n = 0;
     g_family_draining = 0;
+    /* Safety: B71 may land on the last deliver; flush 2FEBBC once drain is fully idle. */
+    if (uc) {
+        uint32_t erw = 0;
+        if (guest_memory_uc_read_r9((struct uc_struct *)uc, &erw) && erw >= 0x1000u)
+            gwy_ext_obs_try_call_2febbc_for_b70(uc, erw, "after_family_drain");
+    }
 }
 
 static void gwy_ext_obs_lifecycle_deliver(void *uc) {
@@ -1074,6 +1360,10 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
     owner = reg ? module_registry_find_by_code_addr(reg, handler & ~1u) : NULL;
     if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
     if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+    {
+        uint32_t mt = ext_chunk_provider_mr_table_guest();
+        if (r9_run && mt) (void)platform_libc_cache_publish(uc, r9_run, mt);
+    }
 
     g_lifecycle_ticks++;
     platform_call_census_set_tick(g_lifecycle_ticks);
@@ -1162,7 +1452,7 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
         }
 
         ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, handler, stop,
-                                          GWY_LIFECYCLE_INSN_LIMIT, &abi, &out);
+                                          gwy_lifecycle_insn_limit(), &abi, &out);
 
         if (product_p4_enabled() && seq)
             product_p4_callback_end(uc, seq, ok, out.uc_err,
@@ -1381,6 +1671,7 @@ static void gwy_ext_obs_deferred_timer_pump(void *uc) {
 static void gwy_ext_obs_timer_poll(void *uc) {
     static uint32_t wait_hb;
     int due;
+    if (g_suppress_timer_poll) return;
     if (g_timer_flushing) return;
     if (g_lifecycle_pending && !g_lifecycle_delivering) {
         (void)gwy_ext_obs_lifecycle_on_timer_due(uc);
@@ -1985,8 +2276,11 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         /* Proven P4 gap: guest posts family ops (e.g. 0x1E209) after 10102 register;
          * returning STATUS alone never delivered the registered handler. */
-        if (platform_handler_registry_find_family_event(r0))
+        if (platform_handler_registry_find_family_event(r0)) {
             (void)gwy_ext_obs_note_family_event(r0, r1);
+            /* Deliver after note — but never while nested inside 0x30CBBC emu. */
+            if (!g_in_30cbbc_call) gwy_ext_obs_drain_family_events(uc);
+        }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     } else {
         ret = 0;
@@ -1997,8 +2291,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    result.evidence ? result.evidence : "?");
             fflush(stdout);
         }
-        if (platform_handler_registry_find_family_event(r0))
+        if (platform_handler_registry_find_family_event(r0)) {
             (void)gwy_ext_obs_note_family_event(r0, r1);
+            if (!g_in_30cbbc_call) gwy_ext_obs_drain_family_events(uc);
+        }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     }
 

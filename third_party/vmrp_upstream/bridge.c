@@ -583,6 +583,13 @@ static void br_memset(BridgeMap *o, uc_engine *uc) {
     SET_RET_V((uint32_t)memset(getMrpMemPtr(dst), value, n));
 }
 
+static void br_strlen(BridgeMap *o, uc_engine *uc) {
+    uint32_t s;
+    (void)o;
+    uc_reg_read(uc, UC_ARM_REG_R0, &s);
+    SET_RET_V(platform_guest_strlen(uc, s));
+}
+
 // 获取参数的工具方法，第一个参数n=0
 static uint32_t getArg(uc_engine *uc, uint32_t n) {
     uint32_t v;
@@ -2415,7 +2422,7 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x30, MAP_FUNC, strcoll, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x34, MAP_FUNC, memchr, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x38, MAP_FUNC, memset, NULL, br_memset, 0),
-    BRIDGE_FUNC_MAP(0x3C, MAP_FUNC, strlen, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x3C, MAP_FUNC, strlen, NULL, br_strlen, 0),
     BRIDGE_FUNC_MAP(0x40, MAP_FUNC, strstr, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x44, MAP_FUNC, sprintf, NULL, br_sprintf, 0),
     BRIDGE_FUNC_MAP(0x48, MAP_FUNC, atoi, NULL, NULL, 0),

@@ -34,6 +34,29 @@ static int host_exists(const char *path) {
 #endif
 }
 
+/* Empty overlay stubs (e.g. truncated write of downVersion.v) must not shadow
+ * canonical mythroad assets on read — that broke BE 0x3EE version compare. */
+static int host_exists_nonzero(const char *path) {
+#ifdef _WIN32
+    HANDLE h;
+    LARGE_INTEGER sz;
+    if (!host_exists(path)) return 0;
+    h = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+                    FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h == INVALID_HANDLE_VALUE) return 0;
+    if (!GetFileSizeEx(h, &sz)) {
+        CloseHandle(h);
+        return 0;
+    }
+    CloseHandle(h);
+    return sz.QuadPart > 0;
+#else
+    struct stat st;
+    if (stat(path, &st) != 0 || !S_ISREG(st.st_mode)) return 0;
+    return st.st_size > 0;
+#endif
+}
+
 static void ensure_dir_one(const char *dir) {
 #ifdef _WIN32
     CreateDirectoryA(dir, NULL);
@@ -460,7 +483,7 @@ LauncherStatus guest_vfs_resolve(GuestVfs *vfs,
             out->exists = host_exists(out->host_path);
             return L_OK;
         }
-        if (host_exists(out->host_path)) {
+        if (host_exists_nonzero(out->host_path)) {
             out->backend = VFS_OVERLAY_WRITABLE;
             snprintf(out->rule, sizeof(out->rule), "%s", "overlay");
             out->exists = 1;
@@ -694,7 +717,23 @@ LauncherStatus guest_vfs_close(GuestVfs *vfs, VfsHandle handle, LauncherError *e
     launcher_error_clear(err);
     f = file_from_handle(vfs, handle, err);
     if (!f) return L_ERR_INVALID_ARGUMENT;
-    if (f->fp) fclose(f->fp);
+    /* Drop empty overlay stubs so the next read falls through to canonical. */
+    if (f->fp && f->mode == VFS_OPEN_WRITE && f->backend == VFS_OVERLAY_WRITABLE &&
+        f->host_path[0]) {
+        long sz = -1;
+        if (fseek(f->fp, 0, SEEK_END) == 0) sz = ftell(f->fp);
+        fclose(f->fp);
+        f->fp = NULL;
+        if (sz == 0) {
+            (void)remove(f->host_path);
+            printf("[JJFB_VFS] removed_empty_overlay path=\"%s\" evidence=OBSERVED\n",
+                   f->host_path);
+            fflush(stdout);
+        }
+    } else if (f->fp) {
+        fclose(f->fp);
+        f->fp = NULL;
+    }
     memset(f, 0, sizeof(*f));
     return L_OK;
 }

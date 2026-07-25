@@ -87,6 +87,68 @@ static void ensure_dir(const char *dir) {
 #endif
 }
 
+static void mkdir_p_parent(const char *file_path);
+
+static int host_size_gt0(const char *path) {
+    FILE *fp;
+    long sz;
+    if (!path || !path[0]) return 0;
+    fp = fopen(path, "rb");
+    if (!fp) return 0;
+    if (fseek(fp, 0, SEEK_END) != 0) {
+        fclose(fp);
+        return 0;
+    }
+    sz = ftell(fp);
+    fclose(fp);
+    return sz > 0;
+}
+
+/* RDWR/CREATE to overlay must not start from an empty stub when canonical has
+ * content — guest compare (0x2F6C44) opens downVersion.v with mode=4 and reads. */
+static int seed_overlay_from_canonical(VmFileService *svc, const char *guest_path,
+                                       const char *overlay_host) {
+    VfsResolution cread;
+    LauncherError err;
+    FILE *in = NULL, *out = NULL;
+    uint8_t buf[4096];
+    size_t n;
+    long copied = 0;
+    if (!svc || !svc->vfs || !guest_path || !overlay_host || !overlay_host[0]) return 0;
+    if (host_size_gt0(overlay_host)) return 0;
+    memset(&cread, 0, sizeof(cread));
+    if (guest_vfs_resolve(svc->vfs, guest_path, VFS_OPEN_READ, &cread, &err) != L_OK ||
+        !cread.exists || !cread.host_path[0])
+        return 0;
+    if (cread.backend != VFS_CANONICAL_READONLY) return 0;
+    if (strcmp(cread.host_path, overlay_host) == 0) return 0;
+    if (!host_size_gt0(cread.host_path)) return 0;
+    mkdir_p_parent(overlay_host);
+    in = fopen(cread.host_path, "rb");
+    if (!in) return 0;
+    out = fopen(overlay_host, "wb");
+    if (!out) {
+        fclose(in);
+        return 0;
+    }
+    while ((n = fread(buf, 1, sizeof(buf), in)) > 0) {
+        if (fwrite(buf, 1, n, out) != n) {
+            fclose(in);
+            fclose(out);
+            (void)remove(overlay_host);
+            return 0;
+        }
+        copied += (long)n;
+    }
+    fclose(in);
+    fclose(out);
+    printf("[JJFB_VFS] seeded_overlay_from_canonical guest=\"%s\" src=\"%s\" dst=\"%s\" "
+           "bytes=%ld evidence=OBSERVED\n",
+           guest_path, cread.host_path, overlay_host, copied);
+    fflush(stdout);
+    return copied > 0;
+}
+
 static void mkdir_p_parent(const char *file_path) {
     char dir[VFS_PATH_MAX];
     size_t n = strlen(file_path);
@@ -217,6 +279,11 @@ int32_t vm_file_service_open(VmFileService *svc, const char *guest_path, uint32_
             return 0;
         }
         mkdir_p_parent(res.host_path);
+        /* mr_open mode=4 (RDWR) without CREATE: seed overlay from canonical so
+         * a subsequent read sees real version bytes (not an empty w+b stub). */
+        if ((flags & GWY_MR_FILE_RDWR) != 0 && !want_create) {
+            (void)seed_overlay_from_canonical(svc, guest_path, res.host_path);
+        }
         if ((flags & GWY_MR_FILE_RDWR) || (want_read && want_write)) {
             fmode = want_create ? "w+b" : "r+b";
         } else {
@@ -224,7 +291,8 @@ int32_t vm_file_service_open(VmFileService *svc, const char *guest_path, uint32_
         }
         fp = fopen(res.host_path, fmode);
         if (!fp && !want_create && (flags & GWY_MR_FILE_RDWR)) {
-            fp = fopen(res.host_path, "w+b");
+            (void)seed_overlay_from_canonical(svc, guest_path, res.host_path);
+            fp = fopen(res.host_path, host_size_gt0(res.host_path) ? "r+b" : "w+b");
         }
     } else {
         if (!res.exists) {
@@ -272,7 +340,23 @@ int32_t vm_file_service_open(VmFileService *svc, const char *guest_path, uint32_
 int32_t vm_file_service_close(VmFileService *svc, int32_t handle) {
     VmFileHandleEntry *e = entry_from_handle(svc, handle);
     if (!e) return GWY_MR_FAILED;
-    if (e->fp) fclose(e->fp);
+    /* Drop empty overlay stubs so the next read falls through to canonical. */
+    if (e->fp && e->backend == VFS_OVERLAY_WRITABLE && e->host_path[0] &&
+        (e->flags & (GWY_MR_FILE_WRONLY | GWY_MR_FILE_RDWR | GWY_MR_FILE_CREATE))) {
+        long sz = -1;
+        if (fseek(e->fp, 0, SEEK_END) == 0) sz = ftell(e->fp);
+        fclose(e->fp);
+        e->fp = NULL;
+        if (sz == 0) {
+            (void)remove(e->host_path);
+            printf("[JJFB_VFS] removed_empty_overlay path=\"%s\" evidence=OBSERVED\n",
+                   e->host_path);
+            fflush(stdout);
+        }
+    } else if (e->fp) {
+        fclose(e->fp);
+        e->fp = NULL;
+    }
     memset(e, 0, sizeof(*e));
     {
         char buf[128];

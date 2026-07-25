@@ -1,14 +1,14 @@
 # Post-Drain Gate Timeline
 
-- **run_id:** pa11_C_20260725_032805
+- **run_id:** pa11_C_20260725_200021
 - **er_rw:** 0x2B1854
-- **enter_30CBBC:** 0
+- **enter_30CBBC:** 1
 - **true_enter_2E2520:** 1
 - **enter_2DC4D8:** 0
-- **store_15D:** 0 actual_store_pc=0x0
-- **store_B71:** 0 actual_store_pc=0x0
-- **15D_writer_grade:** candidate_unproven
-- **B71_writer_grade:** candidate_entered_no_dispatch
+- **store_15D:** 1 actual_store_pc=0x30CCF4
+- **store_B71:** 1 actual_store_pc=0x30ED7A
+- **15D_writer_grade:** proven_natural_writer
+- **B71_writer_grade:** store_from_unrelated_pc
 - **successor_status:** POST_DRAIN_SUCCESSOR_BLOCKED
 - **disp_trace:** 0 calls=0 branches=0 reads=0
 

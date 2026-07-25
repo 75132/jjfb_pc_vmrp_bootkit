@@ -1,0 +1,852 @@
+Task 12：以旧版 E9E 可显示实现为母本，迁移 JJFB 资源与显示链
+0. 任务性质
+本任务不是重新猜测如何显示，也不是让你自行寻找旧版本差异。
+旧版可显示链路、关键文件、运行参数、资源样本、ABI 和禁止迁移项已经在本指令中给全。
+正式目标：
+保留当前 clean Launcher 已自然打通的生命周期链
++
+从旧版 4bdb4b5 精准迁移通用资源与显示能力
+=
+当前 JJFB_Launcher 自然显示 JJFB 画面
+不允许重新设计一套与旧实现无关的大框架。
+
+1. 当前主线不可回退基线
+当前 main 已经自然完成：
+JJFB_Launcher
+→ profiles/jjfb.json
+→ gwy/jjfb.mrp（cfg36）
+→ Path-A 首次 downVersion record
+→ event_code=5
+→ 0x2E2520
+→ 0x2E4040
+→ 0x10138 multi-out query
+→ 0x10132 size-malloc / strdup
+→ 正式 platform memcpy import
+→ nested Path-A
+→ 0x2F68E4 clean return
+→ 0x2E4066
+→ 0x2DADC4
+→ 0x30ED2C
+→ downVersion 本地文件 HIT
+→ 0x2F6C44 compare
+已有平台合同不得回退：
+JJFB_PATH_A_EVENT_CONTRACT
+platform_path_a_response
+platform_guest_memcpy
+platform_10138
+platform_10132
+B54 queue/list
+event_node_consumed
+窗口模式 runtime_progress
+当前不得再恢复固定 PC Scheme C memcpy。
+
+2. 旧版真实可显示版本
+旧版参考提交：
+4bdb4b5
+主要运行脚本：
+RUN_E9E_NATURAL_MEMBER_FIRSTFRAME.ps1
+旧版报告：
+reports/stage_e9e_postmatch_verdict.md
+旧 bridge：
+legacy_lab/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+如本地仓库历史完整，直接查看：
+git show 4bdb4b5:RUN_E9E_NATURAL_MEMBER_FIRSTFRAME.ps1
+git show 4bdb4b5:reports/stage_e9e_postmatch_verdict.md
+git show 4bdb4b5:legacy_lab/runtime/vmrp_src_build_v27/vmrp-master/bridge.c
+若本地没有该 commit：
+git fetch origin 4bdb4b5
+不得切换、重置或覆盖当前 main。
+
+3. 旧版已经证明的可显示链
+旧 E9E 的真实流程是：
+0x304BF0
+自然扫描 jjfb.mrp index
+
+→ 0x304F92
+host strcmp shim 返回相等
+
+→ 命中 entry #20
+资源名：
+wy_jiao1!11!11.bmp
+
+→ E9E post-match host shim
+从原始 jjfb.mrp 读取 matched member
+
+→ 解码原始 member bytes
+offset      = 8414
+stored      = 90 bytes
+decoded     = 242 bytes
+width       = 11
+height      = 11
+decoded sha256 =
+edfe428dfb2daa8deea599915b7c5d4db75b6bfbfe78671cecd33e4ca4662a13
+
+→ 写入 Guest caller object
+
+→ 恢复 entry ABI
+SP
+R4-R11
+R9
+R0=0
+
+→ 返回到 0x2D93D0 附近
+
+→ 0x2D92E4 返回 bitmap handle
+handle = 0x2A83C4
+
+→ 0x310BBC
+
+→ mr_drawBitmap
+bmp/pixels = 0x3920000
+
+→ RGB565 framebuffer
+
+→ SDL/HWND present
+
+→ 非白/非黑像素数 = 440
+旧报告 verdict：
+NATURAL_POSTMATCH_FIRST_FRAME
+但报告同时明确：
+NOT product success
+原因是资源匹配后的 I/O、ABI 恢复和多个状态步骤由 host assist 完成。
+
+4. 旧 E9E 启用过的辅助
+旧脚本启用了以下关键环境变量：
+JJFB_E9E_MODE=1
+JJFB_E9E_POSTMATCH_SHIMS=1
+
+JJFB_E9D_MODE=1
+JJFB_E9D_STRCMP_SHIM=1
+
+JJFB_E9A_MODE=1
+JJFB_E8Z_MODE=1
+JJFB_E8Y_MODE=1
+JJFB_E8X_MODE=1
+JJFB_E8W_MODE=1
+
+JJFB_DISPLAY_FIRST=1
+JJFB_BYPASS_C9D_GATE=1
+
+JJFB_FAST_ASSIST=1
+JJFB_FAST_SVC_AB=return0
+JJFB_FAST_STATE=38
+JJFB_FAST_CASE156_R1=20
+JJFB_FAST_SEQUENCE=case156
+JJFB_FAST_C6C22=1
+JJFB_FAST_DEC30=1
+JJFB_FAST_INSN_LIMIT=500000
+JJFB_FAST_UNLOCK_CALL=1
+JJFB_FAST_UNLOCK_WHEN=before
+JJFB_FAST_F6C_OBJECT_ASSIST=1
+JJFB_FAST_F74_DESCRIPTOR_ASSIST=1
+JJFB_E8W_REENTER_E88CC=1
+JJFB_E8Y_INSN_LIMIT=3000
+旧版 natural/debug 模式没有启用：
+JJFB_REAL_MRP_MEMBER_BRIDGE
+所以 MRP 索引扫描仍由 Guest 自然执行。
+但是它仍启用了：
+host strcmp shim
+post-match member I/O shim
+FAST 状态辅助
+gate bypass
+unlock assist
+对象/descriptor assist
+因此不能整体复制旧 runner。
+
+5. 旧版能力分类
+5.1 必须迁移的通用平台能力
+以下能力可以迁入正式产品，但必须重写为通用模块：
+A. Guest binary memory operations
+   memcpy
+   memset
+   strlen 等必要标准函数
+
+B. MRP member lookup/read/decode
+   按资源名查询
+   读取 stored bytes
+   解压/解码
+   返回 decoded bytes
+
+C. callback / return ABI
+   SP
+   R4-R11
+   R9
+   LR
+   R0
+   out 参数
+   嵌套 frame
+
+D. bitmap draw
+   mr_drawBitmap
+   _DrawBitmap 两种 ABI
+   RGB565
+   pitch
+   source crop
+   clip
+   transparency key
+
+E. display present
+   _DispUpEx
+   dirty rect
+   SDL texture/surface update
+   SDL present
+5.2 只能作为诊断参考
+固定 PC trace：
+0x304BF0
+0x304F92
+0x2D92E4
+0x310BBC
+
+资源请求 CSV
+name compare CSV
+HWND screenshot
+framebuffer hash
+这些可以留在 research trace，不能成为产品行为触发条件。
+5.3 永久禁止迁移
+JJFB_FAST_STATE
+JJFB_DISPLAY_FIRST
+JJFB_BYPASS_C9D_GATE
+JJFB_FAST_UNLOCK_CALL
+JJFB_FAST_F6C_OBJECT_ASSIST
+JJFB_FAST_F74_DESCRIPTOR_ASSIST
+JJFB_FAST_A64_RESOURCE_ASSIST
+JJFB_E8W_REENTER_E88CC
+
+host strcmp 强制返回相等
+固定 entry #20
+固定资源名 wy_jiao1!11!11.bmp
+固定 offset=8414
+固定 handle=0x2A83C4
+固定 pixels=0x3920000
+
+FAST_REAL_BMP_HANDLE
+host 直接构造 bitmap handle
+host 直接把资源像素画到 SDL
+强写 B71
+强写 15D
+强写 B70
+强写 UI_MODE
+固定 PC 跳过 Guest 逻辑
+
+6. 旧 bridge 的内存实现
+旧版 br_memcpy 语义：
+R0 = dst guest address
+R1 = src guest address
+R2 = byte count
+
+memcpy(getMrpMemPtr(dst), getMrpMemPtr(src), n)
+
+return R0 = dst
+当前 main 已经用：
+platform_guest_memcpy
+正式迁移完成。
+本任务不得重复修改 memcpy，除非资源解码 A/B 明确证明当前 binary copy 又有新的通用 ABI 问题。
+
+7. 旧 bridge 的 mr_drawBitmap 实现
+旧版 ABI：
+mr_drawBitmap(
+    uint16_t *bmp,   // R0
+    int16_t x,       // R1
+    int16_t y,       // R2
+    uint16_t w,      // R3
+    uint16_t h       // [SP]
+)
+旧实现行为：
+1.从 R0-R3 和 SP 读取参数；
+2.验证 bmp、w、h；
+3.Guest LCD buffer 按 SCREEN_WIDTH pitch；
+4.只复制 dirty rect；
+5.写入 host RGB565 framebuffer；
+6.标记 dirty；
+7.不在每次 draw 后立即无条件 present；
+8.由 _DispUpEx 或 timer flush 合并显示。
+旧版等价逻辑：
+for (j = 0; j < h; ++j) {
+    yy = y + j;
+    if (yy < 0 || yy >= screen_h) continue;
+
+    for (i = 0; i < w; ++i) {
+        xx = x + i;
+        if (xx < 0 || xx >= screen_w) continue;
+
+        host_fb[yy * screen_w + xx] =
+            guest_lcd[yy * screen_w + xx];
+    }
+}
+
+mark_dirty(x, y, x + w, y + h);
+注意：
+mr_drawBitmap 的 R0 可能是完整 Guest LCD buffer，
+不是一张 w×h 的紧凑 bitmap。
+所以 pitch 必须根据该 API 的真实语义使用屏幕宽度。
+
+8. 旧 bridge 的 _DrawBitmap 实现
+旧 bridge 观察到两种 ABI。
+8.1 Classic ABI
+R0 = pixels
+R1 = x
+R2 = y
+R3 = w
+
+SP+0  = h
+SP+4  = rop
+SP+8  = transparent color / flags
+SP+12 = source x
+SP+16 = source y
+SP+20 = source pitch / image width
+8.2 Robotol wrapper ABI
+旧版识别条件：
+stack arg0 == R3
+语义：
+R0 = pixels
+R1 = x
+R2 = y
+R3 = source pitch / image width
+
+SP+0  = w
+SP+4  = h
+SP+8  = rop
+SP+12 = flags
+SP+16 = source x
+SP+20 = transparent color
+旧版选择逻辑：
+wrapper_abi =
+    ((stack_arg0 & 0xFFFF) == (R3 & 0xFFFF))
+    && stack_arg0 != 0;
+如果是 wrapper ABI：
+pitch = R3
+w     = SP+0
+h     = SP+4
+rop   = SP+8
+src_x = SP+16
+src_y = 0
+trans = SP+20
+如果是 classic ABI：
+w     = R3
+h     = SP+0
+rop   = SP+4
+trans = SP+8
+src_x = SP+12
+src_y = SP+16
+pitch = SP+20
+必须使用：
+pitch = source image width
+不能用裁剪后的 w 作为 pitch，否则画面会扭曲。
+
+9. 旧 bridge 的透明色规则
+旧版主要使用 RGB565。
+明确有效的透明色：
+0xF81F
+旧版判断：
+trans == 0xF81F
+或 trans >= 0x100
+小整数可能只是 rop/flag，不能都当颜色。
+旧实现还会在角落像素包含 0xF81F 时把它作为后备透明色。
+正式产品建议：
+优先使用 Guest 参数传来的 trans
+其次使用资源对象中已证明的透明色字段
+最后才能使用角落探测作为兼容策略
+不得根据资源文件名：
+wy_
+slogo
+bar
+jiantou
+直接决定透明色。旧版这种文件名启发式只能留作诊断对照。
+
+10. 旧 bridge 的 _DispUpEx 实现
+旧 ABI：
+R0 = x
+R1 = y
+R2 = w
+R3 = h
+如果 w/h 非法或不大于 0：
+刷新整个屏幕
+旧版行为：
+present_flush("DispUpEx");
+return MR_SUCCESS;
+关键原则：
+Draw 只修改 host framebuffer 和 dirty rect；
+DispUpEx 才执行正式 SDL present。
+旧版还使用 timer-end 作为 backup flush，因为 Guest 不一定频繁调用 _DispUpEx。
+当前正式产品：
+优先以 Guest _DispUpEx 为 present 边界；
+如果证明旧平台语义需要 timer-end flush，可以加入通用的 frame coalescing flush；
+不得每次 _DrawBitmap 都强制全屏 present。
+
+11. 旧版资源返回链的真实意义
+旧版 E9E 中：
+自然部分：
+Guest 自己扫描 MRP index
+Guest 自己产生资源名
+Guest 自己调用 strcmp 位置
+Guest 后续自然返回 bitmap handle
+Guest 自己调用 mr_drawBitmap
+
+host assist 部分：
+strcmp 强制命中
+匹配后直接读取/解码 member
+写 caller object
+恢复 callback ABI
+因此当前应迁移的是：
+MRP member read/decode
++
+正确 callback 返回 ABI
+而不是：
+host strcmp shim
+正式目标是让当前：
+MrpArchive / ExtResolver
+完成自然 exact name lookup。
+
+12. 当前应该新增的正式模块
+12.1 platform_mrp_resource
+新增：
+include/gwy_launcher/platform_mrp_resource.h
+src/platform/platform_mrp_resource.c
+建议接口：
+typedef struct GwyMrpResourceRequest {
+    uint64_t module_id;
+    uint64_t module_generation;
+
+    uint32_t guest_name_ptr;
+    char name[256];
+
+    uint32_t caller_pc;
+    uint32_t caller_lr;
+
+    uint32_t package_id;
+} GwyMrpResourceRequest;
+
+typedef struct GwyMrpResourceResult {
+    int status;
+
+    uint32_t guest_data;
+    uint32_t decoded_size;
+
+    uint32_t stored_size;
+    uint32_t member_offset;
+
+    uint32_t ownership_id;
+} GwyMrpResourceResult;
+
+int platform_mrp_resource_load(
+    GwyRuntime *runtime,
+    const GwyMrpResourceRequest *request,
+    GwyMrpResourceResult *result);
+实现流程：
+Guest name pointer
+→ 安全读取 C string
+→ 当前 package identity
+→ MrpArchive exact lookup
+→ profile alias fallback（仅 exact miss 后）
+→ 读取 stored bytes
+→ 根据 member flags 解码
+→ Guest allocator 分配 decoded_size
+→ platform_guest_memcpy
+→ 写 result
+→ 注册 ownership
+必须复用当前已有：
+MrpArchive
+ExtResolver
+MrpMemberView
+GuestMemory
+Guest allocator
+不得另写一套 MRP parser。
+
+13. 资源匹配规则
+正式匹配优先级：
+1. exact byte-for-byte name
+2. package/profile 声明的 alias
+3. case-fold（只有当前平台原语明确需要时）
+不得：
+固定 entry #20
+strcmp 一律返回 0
+固定请求名
+固定 offset
+固定 decoded size
+诊断时可以特别验证旧样本：
+wy_jiao1!11!11.bmp
+但该名称只能作为回归样本，不能写进产品分支条件。
+
+14. MRP 解码验收样本
+旧版已知样本：
+name:
+wy_jiao1!11!11.bmp
+
+member offset:
+8414
+
+stored size:
+90
+
+decoded size:
+242
+
+width:
+11
+
+height:
+11
+
+decoded sha256:
+edfe428dfb2daa8deea599915b7c5d4db75b6bfbfe78671cecd33e4ca4662a13
+在相同原始 jjfb.mrp 哈希下，当前正式资源服务读取该 member 时，decoded SHA-256 应一致。
+如果不一致：
+先修 MRP member decode
+不得继续构造 bitmap handle
+不得继续接 display
+
+15. callback / return ABI 迁移
+旧 E9E 证明资源读取完成后必须恢复：
+SP
+R4-R11
+R9
+并正确设置：
+R0=0 / MR_SUCCESS
+以及 caller object / out 参数
+但正式实现不得按旧固定返回 PC：
+0x2D93D0
+恢复。
+使用当前已有：
+callback frame
+module R9 switch
+module id
+module generation
+要求：
+callback enter
+→ push frame
+→ 保存 R0-R12/SP/LR/CPSR/R9
+→ host resource service
+→ 只修改 ABI 允许的 R0/out 参数
+→ pop frame
+→ 恢复 callee-saved registers
+→ 保持当前 generation R9
+→ 自然从 LR 返回
+嵌套 resource callback 必须使用 frame stack。
+禁止单个全局：
+saved_sp
+saved_r9
+saved_lr
+
+16. caller object 写入
+旧版写入了 Guest caller object，随后 Guest 自然返回 bitmap handle。
+当前不能照抄旧固定 object offset。
+做法：
+1.在当前自然资源请求调用处记录 R0-R3/SP；
+2.观察调用者返回后读取哪些字段；
+3.以实际 load/store 指令确定 out object ABI；
+4.实现对应字段；
+5.不构造最终 bitmap handle；
+6.让 Guest 继续解析 decoded bytes。
+只有证明调用 ABI 与旧 E9E 完全一致时，才复用旧字段布局。
+
+17. platform_display
+新增：
+include/gwy_launcher/platform_display.h
+src/platform/platform_display.c
+核心状态：
+typedef struct GwyDisplaySurface {
+    uint32_t width;
+    uint32_t height;
+
+    uint16_t *rgb565;
+
+    int dirty;
+    int dirty_x0;
+    int dirty_y0;
+    int dirty_x1;
+    int dirty_y1;
+
+    void *sdl_window;
+    void *sdl_renderer;
+    void *sdl_texture;
+} GwyDisplaySurface;
+接口至少包括：
+int platform_mr_draw_bitmap(
+    GwyDisplaySurface *display,
+    GwyGuestMemory *memory,
+    uint32_t pixels,
+    int16_t x,
+    int16_t y,
+    uint16_t w,
+    uint16_t h);
+
+int platform_draw_bitmap(
+    GwyDisplaySurface *display,
+    GwyGuestMemory *memory,
+    const GwyDrawBitmapArgs *args);
+
+int platform_disp_up_ex(
+    GwyDisplaySurface *display,
+    int32_t x,
+    int32_t y,
+    int32_t w,
+    int32_t h);
+
+18. RGB565 blit
+实现 binary-safe RGB565 copy。
+基本逻辑：
+for (int yy = clip_y0; yy < clip_y1; ++yy) {
+    const uint16_t *src_row =
+        src
+        + (yy - dst_y + src_y) * src_pitch
+        + src_x
+        + (clip_x0 - dst_x);
+
+    uint16_t *dst_row =
+        framebuffer
+        + yy * screen_width
+        + clip_x0;
+
+    for (int xx = clip_x0; xx < clip_x1; ++xx) {
+        uint16_t p = *src_row++;
+
+        if (key_enabled && p == transparent_key) {
+            ++dst_row;
+            continue;
+        }
+
+        *dst_row++ = p;
+    }
+}
+必须验证：
+pixels guest range mapped
+src_pitch > 0
+src_x/src_y 非负或正确裁剪
+copy 范围不超过 Guest allocation
+目标范围不超过 240×320
+乘法和加法不溢出
+
+19. SDL present
+Launcher 当前已创建 240×320 SDL 游戏窗。
+不得再创建第二个独立游戏窗口。
+正式 display 模块必须绑定现有窗口/renderer/texture。
+推荐：
+RGB565 Guest/host framebuffer
+→ 转换或直接上传 SDL_PIXELFORMAT_RGB565
+→ SDL_UpdateTexture（dirty rect）
+→ SDL_RenderClear
+→ SDL_RenderCopy
+→ SDL_RenderPresent
+状态窗不能参与绘图。
+
+20. 正确迁移顺序
+必须严格按以下顺序执行。
+Phase A：完成当前 downVersion 比较
+当前仍停在：
+0x2F6C44
+先让现有 family/drain 调用自然跑完。
+注意：
+不要先发明新的 continuation 框架。
+先检查现有 runner 是否只是人为设置了过低：
+insn_limit
+旧 E9E 明确设置过：
+JJFB_FAST_INSN_LIMIT=500000
+当前已知比较调用只是尚未到：
+0x30ED62
+0x30ED7A
+所以第一步只做：
+将该 callback 的诊断预算提高到足够完成，
+并确认是否自然返回。
+如果提高合理预算后自然返回：
+不新增 continuation 模块。
+只有证明默认产品运行会永久丢弃 budget-yield callback，才修 continuation。
+必须观察：
+0x2F6C44 return
+0x30ED62 compare
+0x30ED7A B71 natural store
+Phase B：观察第一个自然资源请求
+B71/lifecycle 继续后，持续运行。
+记录：
+资源请求名字
+调用 API/slot
+caller PC/LR
+普通文件还是 MRP member
+不要在没有自然请求前主动加载 wy_jiao1!11!11.bmp。
+Phase C：接 platform_mrp_resource
+只有出现自然 MRP member 请求时：
+将该实际 API/slot
+绑定到 platform_mrp_resource
+不要根据旧固定 PC 触发。
+先验证旧样本 SHA-256，再返回 Guest。
+Phase D：观察 Guest handle
+资源 bytes 返回后：
+让 Guest 自然创建 handle
+目标参考：
+旧版 0x2D92E4 曾返回 handle
+但当前地址可能不同，按实际调用链确认。
+不得构造固定 handle。
+Phase E：绑定 display slot
+当 Guest 自然调用对应 platform slot 时：
+mr_drawBitmap
+_DrawBitmap
+_DispUpEx
+绑定到正式 platform_display。
+不得根据：
+PC=0x310BBC
+直接画图。
+
+21. CMake 集成
+将正式模块加入当前产品核心：
+src/platform/platform_mrp_resource.c
+src/platform/platform_display.c
+以及相应头文件。
+确认：
+JJFB_Launcher.exe
+和
+out/vmrp_run/main.exe
+实际链接了这些对象。
+构建后输出符号/对象验证：
+platform_mrp_resource_load
+platform_mr_draw_bitmap
+platform_draw_bitmap
+platform_disp_up_ex
+不能只在 Task runner 的临时目标中编入。
+
+22. Import/slot 绑定原则
+所有能力按正式平台身份绑定：
+API ID
+slot index
+mr_table offset
+module import identity
+禁止按调用 PC 绑定。
+旧 bridge 已知 mr_table 图形偏移参考：
+mr_drawBitmap = mr_table + 0x74
+_DispUpEx     = mr_table + 0x1D8
+_DrawPoint    = mr_table + 0x1DC
+_DrawBitmap   = mr_table + 0x1E0
+_DrawBitmapEx = mr_table + 0x1E4
+_DrawText     = mr_table + 0x1EC
+_DrawTextEx   = mr_table + 0x200
+这些 offset 只能用于验证当前 table identity，不得在 Guest 任意地址写补丁。
+若当前 shadow table 对应 slot 为空或错误：
+修复 table 构建/注册逻辑
+不得像旧 bridge 一样通过运行期 heal shadow gfx 扫固定 offset 偷写。
+
+23. 禁止复制旧 shadow-heal
+旧 bridge 中存在：
+jjfb_heal_shadow_gfx()
+会检查 shadow table 并把 host gfx function pointer 写进去。
+当前产品禁止照搬该运行时 heal。
+正确修改位置：
+创建平台 mr_table 时
+或
+模块 import table 注册时
+一次性填入正式 display callbacks。
+要求：
+module identity 正确
+generation 正确
+table ownership 正确
+卸载后失效
+
+24. A/B 回归矩阵
+A：当前 clean baseline
+正式 memcpy ON
+旧 Scheme C OFF
+资源/display 新模块 OFF
+记录当前最后里程碑。
+B：比较预算完成
+只增加足够的自然 callback budget。
+确认：
+B71 是否自然写入
+是否出现资源请求
+C：正式资源服务 ON
+确认：
+自然 name
+自然 exact lookup
+原始 jjfb.mrp member
+decoded SHA-256
+Guest buffer/out ABI
+D：正式 display ON
+确认：
+Guest natural draw
+framebuffer hash change
+Guest natural DispUpEx
+SDL present
+E：默认 Launcher
+无 Diagnostic、无旧 FAST 环境变量：
+.\JJFB_Launcher.bat
+必须同样出现画面。
+
+25. 严格首帧标准
+只有全部满足才允许写：
+FIRST_NATURAL_JJFB_FRAME
+条件：
+1. 原始 gwy/jjfb.mrp 未修改
+2. Guest 自然发出资源请求
+3. 资源名非 host 固定注入
+4. 当前 MrpArchive 自然 exact lookup
+5. 从原始 jjfb.mrp 读取 member
+6. decoded bytes 正确
+7. Guest 自然获得/创建资源 handle
+8. Guest 自然调用 draw API
+9. 正式 display callback 执行
+10. framebuffer hash 变化
+11. Guest 自然调用 refresh/DispUpEx
+12. SDL 游戏窗口显示非空画面
+13. 默认 Launcher 也成立
+14. 没有 test-pattern
+15. 没有 FAST assist
+16. 没有 host direct resource-to-window blit
+17. 没有强写 B71/15D/UI_MODE
+18. 没有固定 PC 跳转
+
+26. 不要每一步停下来询问
+本任务中：
+B71 自然写入后继续
+资源请求出现后继续
+member decode 成功后继续
+Guest handle 出现后继续
+draw 出现后继续
+一直推进到：
+FIRST_NATURAL_JJFB_FRAME
+或只剩一个证据完整、无法继续的唯一缺口。
+允许停止的失败格式：
+最后成功阶段：
+具体失败 API/slot：
+调用参数：
+当前平台实现：
+旧版对应实现：
+为什么旧版能过：
+当前缺失的唯一合同：
+需要修改的具体文件和函数：
+不允许以：
+仍然白屏
+需要更多观察
+候选未证明
+下一轮再看
+结束。
+
+27. 最终交付
+必须提交：
+platform_mrp_resource.h/.c
+platform_display.h/.c
+正式 slot/table 绑定
+callback ABI 修复（若动态证明需要）
+CMake 产品集成
+Launcher 默认集成
+回归 runner
+最终报告
+最终报告：
+reports/stage_e9e_capability_migration.md
+reports/jjfb_natural_first_frame.md
+必须回答：
+1. 旧 E9E 哪些能力已迁移？
+2. 哪些 FAST assist 被明确禁止？
+3. downVersion compare 是否自然完成？
+4. B71 是否自然写入？
+5. 第一个自然资源请求是什么？
+6. 请求通过哪个 API/slot？
+7. 命中了哪个 MRP member？
+8. decoded SHA-256 是否匹配原包？
+9. Guest 如何获得 bitmap handle？
+10. 第一个自然 draw API 是什么？
+11. 使用 classic 还是 wrapper _DrawBitmap ABI？
+12. framebuffer 是否变化？
+13. DispUpEx 是否自然发生？
+14. 默认 Launcher 显示了什么？
+15. 是否达到 FIRST_NATURAL_JJFB_FRAME？
+主线只允许：
+JJFB_Launcher
+→ profiles/jjfb.json
+→ gwy/jjfb.mrp
+其他 MRP 本任务不测试。

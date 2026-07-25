@@ -1,6 +1,8 @@
 #include "gwy_launcher/product_lifecycle_record_trace.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/product_runtime_progress.h"
+#include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/ext_chunk_provider.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,6 +95,11 @@ void product_lrt_note_er_rw(uint32_t er_rw) {
         if (uc_hook_add((uc_engine *)g_uc, &hm, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, a, a) ==
             UC_ERR_OK)
             g_mem_hook_ok = 1;
+    }
+    /* Module-registration libc cache: Robotol ER_RW+0x1450 must be strlen. */
+    if (g_uc && er_rw) {
+        uint32_t mt = ext_chunk_provider_mr_table_guest();
+        if (mt) (void)platform_libc_cache_publish(g_uc, er_rw, mt);
     }
 #endif
 }
@@ -268,6 +275,8 @@ static void on_lrt_mem_write(uc_engine *uc, uc_mem_type type, uint64_t address, 
     if (!product_lrt_enabled() || !g_er_rw) return;
     if ((uint32_t)address != g_er_rw + OFF_B71) return;
     if (size < 1) return;
+    /* 0x2FE854 inside 0x30CBBC clears B71; only treat nonzero stores as success. */
+    if ((uint8_t)(value & 0xff) == 0) return;
     uc_reg_read(uc, UC_ARM_REG_PC, &pc);
     (void)peek_bytes(uc, (uint32_t)address, &old_b, 1);
     g_b71_old = old_b;
@@ -279,6 +288,8 @@ static void on_lrt_mem_write(uc_engine *uc, uc_mem_type type, uint64_t address, 
            pc, (uint32_t)address, (unsigned)g_b71_old, (unsigned)g_b71_new, size);
     fflush(stdout);
     product_runtime_progress_emit("b71_naturally_written", "lrt", "guest_store");
+    /* V75: exit current guest before empty-B58 → 2FC26C; top-level runs 0x2FEBBC → B70. */
+    gwy_ext_obs_on_b71_natural_for_b70(uc, g_er_rw);
 }
 #endif
 
