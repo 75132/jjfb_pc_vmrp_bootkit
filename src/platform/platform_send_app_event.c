@@ -1,4 +1,5 @@
 #include "gwy_launcher/platform_send_app_event.h"
+#include "gwy_launcher/platform_mrp_resource.h"
 #include "gwy_launcher/platform_path_a_response.h"
 #include <stdlib.h>
 #include <string.h>
@@ -359,6 +360,33 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
     }
 
     /*
+     * 0x12340: glyph/text measure notify (TARGET_OBSERVED + legacy bridge).
+     * R1=app, R2=code/obj, R3=param0, SP[0]=&glyph_h. Executor writes height
+     * into arg4 when 0 / pointer-like. Avoids BAD_SIZE alloc storms.
+     */
+    if (call->code == 0x12340u) {
+        out->kind = GWY_PLAT_KIND_STATUS;
+        out->status_ret = 0u;
+        out->fill_buf = call->arg4; /* guest *glyph_h (optional) */
+        out->fill_type = 16u;       /* default glyph height */
+        out->name = "plat_12340_glyph_metric";
+        out->evidence = "TARGET_OBSERVED+legacy_bridge";
+        return;
+    }
+
+    /*
+     * 0x11F00: drawText/present companion (TARGET_OBSERVED + legacy).
+     * Side-effect glyph blit is optional; MR_SUCCESS keeps the 0x2F2358 path alive.
+     */
+    if (call->code == 0x11F00u) {
+        out->kind = GWY_PLAT_KIND_STATUS;
+        out->status_ret = 0u;
+        out->name = "plat_11f00_draw_text_ack";
+        out->evidence = "TARGET_OBSERVED+legacy_bridge";
+        return;
+    }
+
+    /*
      * 0x10133: free companion to 0x10132/0x10134 (docs/06 + CROSS_TARGET).
      * Guest may pass user ptr or user-4. Product returns MR_SUCCESS; host freelist
      * free is best-effort only when the block is a known guest alloc (handled by
@@ -369,6 +397,41 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
         out->status_ret = 0u;
         out->name = "plat_10133_free";
         out->evidence = "DOCUMENTED+CROSS_TARGET";
+        return;
+    }
+
+    /*
+     * 0x10134: RGB565 bitmap buffer construct (TARGET_OBSERVED + legacy bridge).
+     * ABI: R1/app = W*H*2. Return mallocExt-style USER pointer (header at -4).
+     * Prefer copy from platform_mrp_resource cache (natural postmatch decode).
+     * Size-only fallback: zeroed mallocExt buffer (legacy bridge).
+     * Never return the raw pixel-map VA — guest @0x3045E4 reads *(ret-4).
+     * Opt-out: JJFB_PLATFORM_10134_CONTRACT=0.
+     */
+    if (call->code == 0x10134u) {
+        const char *off = getenv("JJFB_PLATFORM_10134_CONTRACT");
+        uint32_t px;
+        if (off && off[0] == '0') {
+            out->kind = GWY_PLAT_KIND_STATUS;
+            out->status_ret = 0u;
+            out->name = "plat_10134_contract_off";
+            out->evidence = "BASELINE_OFF";
+            return;
+        }
+        if (call->app < 16u || call->app >= 0x100000u) {
+            out->kind = GWY_PLAT_KIND_STATUS;
+            out->status_ret = 0u;
+            out->name = "plat_10134_size_reject";
+            out->evidence = "TARGET_OBSERVED";
+            return;
+        }
+        px = platform_mrp_resource_pixels_by_bytes(call->app);
+        out->kind = GWY_PLAT_KIND_ALLOC;
+        out->alloc_size = call->app;
+        out->fill_buf = px; /* 0 → zero fill; else copy from guest VA */
+        out->name = px ? "plat_10134_rgb565_copy" : "plat_10134_rgb565_alloc";
+        out->evidence = px ? "TARGET_OBSERVED+legacy_bridge+mrp_resource_cache"
+                           : "TARGET_OBSERVED+legacy_bridge_size_fallback";
         return;
     }
 

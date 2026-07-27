@@ -1,8 +1,0 @@
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916300,"pid":23976,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916334,"pid":23976,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916334,"pid":23976,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916339,"pid":23976,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916339,"pid":23976,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916346,"pid":23976,"milestone":"path_a_valid_dispatch","source":"pah","details":"code5->2E4040"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916346,"pid":23976,"milestone":"path_a_handler_entered","source":"pah","details":"0x2E4040"}
-{"run_id":"fs9_A_20260725_020457","timestamp":1784916346,"pid":23976,"milestone":"path_a_helper_running","source":"h2","details":"0x2F68E4"}

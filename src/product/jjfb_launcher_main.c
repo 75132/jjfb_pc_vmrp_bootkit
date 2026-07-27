@@ -193,6 +193,25 @@ static void apply_product_env(JjfbLauncherState *st) {
     /* Never hide HWND in product launcher path — window must stay visible. */
     SetEnvironmentVariableA("JJFB_HWND_UNTIL_DISPUP", NULL);
     SetEnvironmentVariableA("JJFB_PRODUCT_P5_MODE", NULL);
+    /* Never use dummy video for product launch — first frame must be visible. */
+    SetEnvironmentVariableA("SDL_VIDEODRIVER", NULL);
+    /* Frame-then-leave: unset = auto (skip chrome only after first DrawFP). */
+    SetEnvironmentVariableA("JJFB_CHROME_SKIP_DRAW", NULL);
+    /* Display stack (defaults ON in modules; pin explicitly for launcher). */
+    if (!getenv("JJFB_DRAWFP_BINDING"))
+        SetEnvironmentVariableA("JJFB_DRAWFP_BINDING", "1");
+    if (!getenv("JJFB_PLATFORM_MRP_RESOURCE"))
+        SetEnvironmentVariableA("JJFB_PLATFORM_MRP_RESOURCE", "1");
+    if (!getenv("JJFB_PLATFORM_10134_CONTRACT"))
+        SetEnvironmentVariableA("JJFB_PLATFORM_10134_CONTRACT", "1");
+    {
+        char shot_dir[MAX_PATH];
+        char shot[MAX_PATH];
+        path_join(shot_dir, sizeof(shot_dir), st->vmrp_cwd, "screenshots");
+        CreateDirectoryA(shot_dir, NULL);
+        path_join(shot, sizeof(shot), shot_dir, "launcher_first_frame.bmp");
+        SetEnvironmentVariableA("JJFB_E8Z_SCREENSHOT", shot);
+    }
 
     if (st->test_pattern)
         SetEnvironmentVariableA("GWY_HOST_TEST_PATTERN", "1");

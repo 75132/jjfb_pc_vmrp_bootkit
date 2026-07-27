@@ -1,0 +1,24 @@
+﻿# Hide bulk / historical trees from Cursor indexing & @-file search.
+# On-disk trees remain; see docs/REPO_LAYOUT.md.
+
+legacy_lab/
+out/
+logs/
+build-i686/
+reports/archive/
+packages/archive/
+evidence/screenshots/
+
+third_party/vmrp_upstream/**/doc/
+third_party/vmrp_upstream/**/bin/
+third_party/vmrp_upstream/**/wasm/
+third_party/vmrp_upstream/**/*.o
+third_party/vmrp_upstream/**/*.exe
+
+game_files/**/*.mrp
+game_files/**/*.bmp
+game_files/**/*.gif
+game_files/**/*.png
+game_files/**/*.mp3
+game_files/**/*.wav
+game_files/**/*.idx*

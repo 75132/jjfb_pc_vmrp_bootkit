@@ -1,3 +1,0 @@
-run_id,seq,watch_step,kind,tag,pc,lr,sp,r0,r1,r2,r3,r9,addr,before,after,size,c76,134d,b71,15d,item,list,cb_depth,dispatch_call_id,actual_store_pc,after_2dc80c,after_312c0c,after_305ec2
-pah_A_20260724_234631,2,1,ANCHOR,drain_2DC80C,0x2DC80C,0x305EC3,0x27FFF0,0x0,0x1,0x24B8,0x0,0x2B1854,0x2DC80C,0,0,0,0,0,0,0,0x0,0x2829D4,0,0,0x0,1,0,0
-pah_A_20260724_234631,3,3,CODE_ENTER,b71_upstream_2E2520,0x2E2520,0x2DC8D9,0x27FFD8,0x2A8374,0x1,0x0,0x0,0x2B1854,0x2E2520,0,0,0,0,0,0,0,0x0,0x2829D4,0,1,0x0,1,0,0

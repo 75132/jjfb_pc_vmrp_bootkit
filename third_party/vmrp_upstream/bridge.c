@@ -616,6 +616,8 @@ static void platform_display_present_to_sdl(const uint16_t *rgb565, int32_t x, i
         guiDrawBitmapSpriteKey((uint16_t *)rgb565, x, y, w, h, key);
     else
         guiDrawBitmapSprite((uint16_t *)rgb565, x, y, w, h);
+    /* First-frame gate: reveal HWND if it was deferred until nonempty present. */
+    guiProductShowWindowIfReady(1);
 }
 
 /*

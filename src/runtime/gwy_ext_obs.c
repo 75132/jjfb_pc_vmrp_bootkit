@@ -60,6 +60,7 @@
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/platform_mrp_resource.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -180,18 +181,44 @@ static int g_family_draining;
 static int g_family_app2_init_once;
 /* One-shot success: guest strb B70 via 0x2FEBBC completed. */
 static int g_family_c0_2febbc_once;
+/* One-shot: family app=0x4F → 30E120 → 30F45C → event15 → E6C (before C0). */
+static int g_family_4f_for_e6c_once;
+/* One-shot: top-level 0x2E2520 on guest B50 code-15 entry (after family 4F). */
+static int g_code15_2e2520_once;
 /* Armed by B71 write hook: flush 0x2FEBBC after current emu returns (V75). */
 static int g_pending_2febbc_after_b71;
 /* One-shot: second 10165 Path-A after leave_2FC26C (V74/V75 empty→record order). */
 static int g_path_a_record_after_2fc26c_once;
 void gwy_ext_obs_arm_path_a_record_after_2fc26c(void *uc, uint32_t er_rw);
+static int env_flag(const char *name);
 #ifdef GWY_HAVE_UNICORN
 static int g_leave_2fc26c_hook_ok;
+static int g_enter_2fc26c_hook_ok;
+static int g_chrome_2f449c_hook_ok;
+static int g_chrome_30630c_hook_ok;
+static int g_chrome_30a2fc_hook_ok;
+static int g_chrome_311fd4_tail_hook_ok;
+static int g_chrome_2fc3be_hook_ok;
+static uint32_t g_chrome_2f449c_n;
+static uint32_t g_chrome_30630c_skip_n;
+static uint32_t g_chrome_30a2fc_skip_n;
+static uint32_t g_chrome_311fd4_early_n;
+static uint32_t g_chrome_2fc3be_skip_n;
+static int g_in_2fc26c_depth;
+static void on_enter_2fc26c(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    (void)uc;
+    (void)address;
+    (void)size;
+    (void)user;
+    g_in_2fc26c_depth++;
+}
 static void on_leave_2fc26c(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
     uint32_t r9 = 0, er = 0;
     (void)address;
     (void)size;
     (void)user;
+    if (g_in_2fc26c_depth > 0)
+        g_in_2fc26c_depth--;
     uc_reg_read(uc, UC_ARM_REG_R9, &r9);
     er = r9;
     if (!er) {
@@ -199,6 +226,169 @@ static void on_leave_2fc26c(uc_engine *uc, uint64_t address, uint32_t size, void
         if (st) er = st->er_rw;
     }
     gwy_ext_obs_arm_path_a_record_after_2fc26c(uc, er);
+}
+/*
+ * V68/V75 Path-A lifecycle: 0x2F449C under 0x2FC26C re-draws chrome and can
+ * block leave_2FC26C. Only nop while nested in 2FC26C — global nop also kills
+ * upstream UI init (0x2DA3C8→0x311890→0x30F45C→event15→0x2E5E60→E6C).
+ * Opt-in full chrome even under 2FC26C: JJFB_ALLOW_CHROME=1.
+ */
+static void on_chrome_2f449c(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    uint32_t lr = 0, r1 = 0, r2 = 0, sp = 0, mode = 0;
+    (void)address;
+    (void)size;
+    (void)user;
+    g_chrome_2f449c_n++;
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+    uc_reg_read(uc, UC_ARM_REG_SP, &sp);
+    if (sp)
+        (void)uc_mem_read(uc, sp, &mode, 4);
+    if (g_chrome_2f449c_n <= 12u || (g_chrome_2f449c_n % 40u) == 0u) {
+        printf("[JJFB_V68_CHROME] enter 0x2f449c #%u lr=0x%X y=%d w=%d mode=%u "
+               "in_2FC26C=%d evidence=OBSERVED+V68+V75+Task13\n",
+               g_chrome_2f449c_n, lr, (int32_t)r1, (int32_t)r2, mode, g_in_2fc26c_depth);
+        fflush(stdout);
+    }
+    if (env_flag("JJFB_ALLOW_CHROME"))
+        return;
+    /* Outside Path-A chrome: let guest run (may reach 30F45C / event15 / E6C). */
+    if (g_in_2fc26c_depth <= 0)
+        return;
+    if (lr)
+        uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+}
+/*
+ * Frame-then-leave chrome policy:
+ * - Before first successful DrawFP: do NOT skip (need loadingbar blit).
+ * - After first DrawFP: skip 30630C/30A2FC/early 311FD4 so Path-A can leave.
+ * Force-on:  JJFB_CHROME_SKIP_DRAW=1
+ * Force-off: JJFB_CHROME_SKIP_DRAW=0
+ */
+static int chrome_skip_draw_enabled(void) {
+    const char *e = getenv("JJFB_CHROME_SKIP_DRAW");
+    static int armed_logged;
+    if (e && e[0] == '0' && e[1] == '\0')
+        return 0;
+    if (e && e[0] == '1' && e[1] == '\0')
+        return 1;
+    if (platform_drawfp_drawn_count() == 0u)
+        return 0;
+    if (!armed_logged) {
+        armed_logged = 1;
+        printf("[JJFB_V68_CHROME] frame_then_leave=1 drawn=%u "
+               "note=arm_leave_fast_after_first_DrawFP evidence=OBSERVED+Task13\n",
+               platform_drawfp_drawn_count());
+        fflush(stdout);
+    }
+    return 1;
+}
+static void on_chrome_30630c(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    uint32_t lr = 0;
+    (void)address;
+    (void)size;
+    (void)user;
+    if (g_in_2fc26c_depth <= 0)
+        return;
+    if (env_flag("JJFB_ALLOW_CHROME"))
+        return;
+    if (!chrome_skip_draw_enabled())
+        return;
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    g_chrome_30630c_skip_n++;
+    if (g_chrome_30630c_skip_n <= 8u || (g_chrome_30630c_skip_n % 40u) == 0u) {
+        printf("[JJFB_V68_CHROME] skip 0x30630C #%u under_2FC26C lr=0x%X "
+               "(frame_then_leave) evidence=OBSERVED+Task13+V68\n",
+               g_chrome_30630c_skip_n, lr);
+        fflush(stdout);
+    }
+    if (lr)
+        uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+}
+static void on_chrome_30a2fc(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    uint32_t lr = 0;
+    (void)address;
+    (void)size;
+    (void)user;
+    if (g_in_2fc26c_depth <= 0)
+        return;
+    if (env_flag("JJFB_ALLOW_CHROME"))
+        return;
+    if (!chrome_skip_draw_enabled())
+        return;
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    g_chrome_30a2fc_skip_n++;
+    if (g_chrome_30a2fc_skip_n <= 8u || (g_chrome_30a2fc_skip_n % 40u) == 0u) {
+        printf("[JJFB_V68_CHROME] skip 0x30A2FC #%u under_2FC26C lr=0x%X "
+               "(frame_then_leave) evidence=OBSERVED+Task13+V68\n",
+               g_chrome_30a2fc_skip_n, lr);
+        fflush(stdout);
+    }
+    if (lr)
+        uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+}
+/*
+ * After UI_MODE store, 0x311FD4 still BL 0x30A2FC then BL 0x30A370 (more chrome).
+ * Epilogue is simply POP {r4,pc} @ 0x312010 (no locals). Jump there under
+ * 2FC26C so Path-A can finish leave — only when JJFB_CHROME_SKIP_DRAW=1.
+ * Product default runs full 311FD4 so DrawFP can fire (first-frame gate).
+ */
+static void on_chrome_311fd4_tail(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    uint32_t r9 = 0, ui = 0;
+    uint32_t epilogue = 0x312011u; /* Thumb POP {r4,pc} */
+    (void)address;
+    (void)size;
+    (void)user;
+    if (g_in_2fc26c_depth <= 0)
+        return;
+    if (env_flag("JJFB_ALLOW_CHROME"))
+        return;
+    if (env_flag("JJFB_NO_EARLY_311FD4"))
+        return;
+    if (!chrome_skip_draw_enabled())
+        return;
+    uc_reg_read(uc, UC_ARM_REG_R9, &r9);
+    if (!r9)
+        return;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, r9 + 0x8D0u, &ui);
+    if (ui == 0)
+        return;
+    g_chrome_311fd4_early_n++;
+    if (g_chrome_311fd4_early_n <= 12u || (g_chrome_311fd4_early_n % 40u) == 0u) {
+        printf("[JJFB_V68_CHROME] early_ret 0x311FD4 #%u under_2FC26C via_POP@0x312010 "
+               "UI_MODE=0x%X (frame_then_leave) evidence=OBSERVED+Task13+V68\n",
+               g_chrome_311fd4_early_n, ui);
+        fflush(stdout);
+    }
+    uc_reg_write(uc, UC_ARM_REG_PC, &epilogue);
+}
+/*
+ * Epilogue of 0x2FC26C: BL 0x2D92E4 twice (topleft/topright from default2) then leave.
+ *
+ * B15: with platform_mrp sibling default2 + 304BF0 entry_complete, natural epilogue
+ * finishes (V75-like). Default: run it. Opt-out skip: JJFB_SKIP_2FC3BE=1.
+ */
+static void on_chrome_2fc3be(uc_engine *uc, uint64_t address, uint32_t size, void *user) {
+    /* Must run ADD SP,#0xC (0x2FC3E4) before POP leave — skipping it faults PC=0. */
+    uint32_t leave_pc = 0x2FC3E5u; /* Thumb: add sp,#0xc ; pop {r4-r7,pc} */
+    (void)address;
+    (void)size;
+    (void)user;
+    if (g_in_2fc26c_depth <= 0)
+        return;
+    if (env_flag("JJFB_ALLOW_CHROME"))
+        return;
+    if (!env_flag("JJFB_SKIP_2FC3BE"))
+        return;
+    g_chrome_2fc3be_skip_n++;
+    if (g_chrome_2fc3be_skip_n <= 4u) {
+        printf("[JJFB_V68_CHROME] skip 0x2FC3BE epilogue #%u -> leave_epilogue@0x2FC3E4 "
+               "(JJFB_SKIP_2FC3BE=1) evidence=OBSERVED+Task13\n",
+               g_chrome_2fc3be_skip_n);
+        fflush(stdout);
+    }
+    uc_reg_write(uc, UC_ARM_REG_PC, &leave_pc);
 }
 static void gwy_ext_obs_arm_leave_2fc26c_hook(void *uc) {
     uc_hook h = 0;
@@ -210,6 +400,62 @@ static void gwy_ext_obs_arm_leave_2fc26c_hook(void *uc) {
         fflush(stdout);
     }
 }
+static void gwy_ext_obs_arm_enter_2fc26c_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_enter_2fc26c_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_enter_2fc26c, NULL,
+                    0x2FC26Cull, 0x2FC26Cull + 1ull) == UC_ERR_OK) {
+        g_enter_2fc26c_hook_ok = 1;
+    }
+}
+static void gwy_ext_obs_arm_chrome_2f449c_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_chrome_2f449c_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_2f449c, NULL,
+                    0x2F449Cull, 0x2F449Cull + 1ull) == UC_ERR_OK) {
+        g_chrome_2f449c_hook_ok = 1;
+        printf("[JJFB_V68_CHROME] contract=nop_2F449C_only_under_2FC26C+frame_then_leave "
+               "force_skip_draw=%s skip_2FC3BE=%d allow=%d "
+               "note=after_first_DrawFP_arm_leave_fast evidence=OBSERVED+V68+V75+F1\n",
+               getenv("JJFB_CHROME_SKIP_DRAW") ? getenv("JJFB_CHROME_SKIP_DRAW") : "auto",
+               env_flag("JJFB_SKIP_2FC3BE") ? 1 : 0,
+               env_flag("JJFB_ALLOW_CHROME") ? 1 : 0);
+        fflush(stdout);
+    }
+}
+static void gwy_ext_obs_arm_chrome_30630c_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_chrome_30630c_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_30630c, NULL,
+                    0x30630Cull, 0x30630Cull + 1ull) == UC_ERR_OK) {
+        g_chrome_30630c_hook_ok = 1;
+    }
+}
+static void gwy_ext_obs_arm_chrome_30a2fc_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_chrome_30a2fc_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_30a2fc, NULL,
+                    0x30A2FCull, 0x30A2FCull + 1ull) == UC_ERR_OK) {
+        g_chrome_30a2fc_hook_ok = 1;
+    }
+}
+static void gwy_ext_obs_arm_chrome_311fd4_tail_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_chrome_311fd4_tail_hook_ok) return;
+    /* First chrome BL after UI_MODE store inside 0x311FD4. */
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_311fd4_tail, NULL,
+                    0x312008ull, 0x312008ull + 1ull) == UC_ERR_OK) {
+        g_chrome_311fd4_tail_hook_ok = 1;
+    }
+}
+static void gwy_ext_obs_arm_chrome_2fc3be_hook(void *uc) {
+    uc_hook h = 0;
+    if (!uc || g_chrome_2fc3be_hook_ok) return;
+    if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_2fc3be, NULL,
+                    0x2FC3BEull, 0x2FC3BEull + 1ull) == UC_ERR_OK) {
+        g_chrome_2fc3be_hook_ok = 1;
+    }
+}
 #endif
 /* While set, emu_slice timer poll must not nest FIRE into 0x30CBBC/0x2FEBBC. */
 static int g_suppress_timer_poll;
@@ -217,6 +463,203 @@ static int g_suppress_timer_poll;
 static int g_in_30cbbc_call;
 /* While set, family handler uc_emu_start is active — do not nest 2FEBBC. */
 static int g_in_family_entry;
+
+/*
+ * Family 4F / 30EE50 pushes event_code=15 onto ER_RW+B50 only (lit 0xB50).
+ * Natural consumer is 0x2DC985 → 0x2D9F50 (ingest into B5C/B64) — never 0x2E2520.
+ * E6C calloc+STR is only via 0x2E2520 case15 → 0x2E4020 → 0x2E5E60, and that
+ * path requires a B54 event (0x2DC80C drain / 0x2E4D6C Path-A framing).
+ * G5: forcing 0x2E2521 on the B50/30EE50 entry entered 2E5E60 then looped in
+ * 0x2F68E4 (payload is UI/"prmv" stream, not E6C field stream) — no store.
+ * Observe-only: do not dispatch B50→2E2520. Optional JJFB_B50_2E2520=1 re-arms
+ * the harmful call for forensic replay only.
+ */
+static void gwy_ext_obs_try_dispatch_b50_code15(void *uc, uint32_t erw, const char *why) {
+    const char *env;
+    uint32_t b50 = 0, head = 0, entry = 0, code = 0, e6c = 0, e6c_after = 0;
+    GwyUcEntryAbi wabi;
+    GwyUcEntryRunOut wout;
+    uint64_t wlim;
+    uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+    int wok;
+
+    if (!uc || !erw || g_code15_2e2520_once || g_in_30cbbc_call || g_in_family_entry) return;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c);
+    if (e6c != 0) return;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xB50u, &b50);
+    if (!b50 || !product_eqc_list_nonempty(uc, b50)) return;
+    head = product_eqc_peek_head(uc, b50);
+    if (!head) return;
+    if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, head + 8u, &entry) || !entry) return;
+    if (!guest_memory_uc_peek_u32((struct uc_struct *)uc, entry, &code)) return;
+    if (code != 15u) return;
+
+    env = getenv("JJFB_B50_2E2520");
+    if (!env || env[0] != '1' || env[1] != '\0') {
+        g_code15_2e2520_once = 1;
+        printf("[PLATFORM_FAMILY_EVENT] op=SKIP_B50_2E2520 er_rw=0x%X B50=0x%X entry=0x%X "
+               "code=15 count=%u why=%s note=B50_is_2D9F50_not_E6C_use_B54_2E4D6C "
+               "evidence=OBSERVED+G5\n",
+               erw, b50, entry, product_eqc_peek_count(uc, b50), why ? why : "?");
+        fflush(stdout);
+        return;
+    }
+
+    memset(&wabi, 0, sizeof(wabi));
+    {
+        uint32_t sp = 0;
+        uint32_t z = 0;
+#ifdef GWY_HAVE_UNICORN
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+#endif
+        if (sp >= 8u) {
+            sp -= 8u;
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp, z);
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp + 4u, z);
+            (void)guest_memory_uc_write_sp((struct uc_struct *)uc, sp);
+        }
+    }
+    wabi.set_r0 = 1;
+    wabi.r0 = entry;
+    wabi.set_r1 = 1;
+    wabi.r1 = 0;
+    wabi.set_r2 = 1;
+    wabi.r2 = 0;
+    wabi.set_r3 = 1;
+    wabi.r3 = 0;
+    wabi.set_lr = 1;
+    wabi.lr = stop;
+    wlim = gwy_lifecycle_insn_limit();
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_2E2520_CODE15 entry=0x%X event=0x%X r9=0x%X "
+           "B50=0x%X lim=%llu why=%s note=JJFB_B50_2E2520=1_forensic evidence=OBSERVED+G5\n",
+           0x2E2521u, entry, erw, b50, (unsigned long long)wlim, why ? why : "?");
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
+    g_code15_2e2520_once = 1;
+    g_suppress_timer_poll = 1;
+    g_in_30cbbc_call = 1;
+    wok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, 0x2E2521u, stop, wlim, &wabi, &wout);
+    g_in_30cbbc_call = 0;
+    g_suppress_timer_poll = 0;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c_after);
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_2E2520_CODE15_DONE ok=%d E6C=0x%X end=%s "
+           "pc_after=0x%X evidence=OBSERVED\n",
+           wok, e6c_after, wout.end_reason[0] ? wout.end_reason : "?", wout.pc_after);
+    fflush(stdout);
+}
+
+/*
+ * Optional research flush: family app=0x4F → 0x30E120 → 0x30F45C → 0x30EE50
+ * posts code=15 onto B50 (UI/"prmv" stream). That does NOT allocate E6C
+ * (B50 → 2D9F50). It can write UI_MODE=0x45 at 0x2FC448 without B70/E6C —
+ * do not treat that as lifecycle success.
+ * Default OFF; set JJFB_FAMILY_4F_FOR_E6C=1 to re-enable G2/G5 forensics.
+ */
+static void gwy_ext_obs_try_call_family_4f_for_e6c(void *uc, uint32_t erw, const char *why) {
+    const char *env;
+    uint32_t e6c = 0, e6c_after = 0;
+    GwyUcEntryAbi wabi;
+    GwyUcEntryRunOut wout;
+    uint64_t wlim;
+    uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+    uint32_t fam_h = 0x30D301u;
+    int wok;
+    GwyPlatformEventQueue *pq0;
+    uint32_t save_p65 = 0, save_p62 = 0, save_store = 0, save_store62 = 0;
+
+    if (!uc || !erw || g_family_4f_for_e6c_once || g_in_30cbbc_call) return;
+    if (g_in_family_entry) return;
+    env = getenv("JJFB_FAMILY_4F_FOR_E6C");
+    if (!env || env[0] != '1' || env[1] != '\0') return;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c);
+    if (e6c != 0) return;
+
+    pq0 = platform_event_queue_get();
+    if (pq0) {
+        save_p65 = pq0->context_10165;
+        save_p62 = pq0->context_10162;
+        save_store = pq0->owner_store_10165;
+        save_store62 = pq0->owner_store_10162;
+    }
+    memset(&wabi, 0, sizeof(wabi));
+    {
+        uint32_t sp = 0;
+        uint32_t z = 0;
+#ifdef GWY_HAVE_UNICORN
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+#endif
+        if (sp >= 8u) {
+            sp -= 8u;
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp, z);
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, sp + 4u, z);
+            (void)guest_memory_uc_write_sp((struct uc_struct *)uc, sp);
+        }
+    }
+    wabi.set_r0 = 1;
+    wabi.r0 = 0x4Fu; /* family app 0x4F → 30E120 → 30F45C → event15 */
+    wabi.set_r1 = 1;
+    wabi.r1 = 0;
+    wabi.set_r2 = 1;
+    wabi.r2 = 0;
+    wabi.set_r3 = 1;
+    wabi.r3 = 0;
+    wabi.set_lr = 1;
+    wabi.lr = stop;
+    wlim = gwy_lifecycle_insn_limit();
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_FAMILY_4F_FOR_E6C entry=0x%X app=0x4F r9=0x%X "
+           "lim=%llu why=%s note=1E200_to_30E120_30F45C_event15 evidence=OBSERVED+Task13\n",
+           fam_h, erw, (unsigned long long)wlim, why ? why : "?");
+    fflush(stdout);
+    (void)guest_memory_uc_write_r9((struct uc_struct *)uc, erw);
+    {
+        uint32_t mt = ext_chunk_provider_mr_table_guest();
+        if (mt) {
+            (void)platform_libc_cache_publish(uc, erw, mt);
+            (void)platform_drawfp_cache_publish(uc, erw, mt);
+        }
+    }
+    g_family_4f_for_e6c_once = 1;
+    g_suppress_timer_poll = 1;
+    g_in_30cbbc_call = 1;
+    g_in_family_entry = 1;
+    wok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, fam_h, stop, wlim, &wabi, &wout);
+    g_in_family_entry = 0;
+    g_in_30cbbc_call = 0;
+    g_suppress_timer_poll = 0;
+    (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c_after);
+    if (save_store && save_p65) {
+        uint32_t cur = 0;
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, save_store, &cur);
+        if (cur != save_p65) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, save_store, save_p65);
+            printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE plat=10165 addr=0x%X "
+                   "old=0x%X new=0x%X note=after_family_4F evidence=OBSERVED\n",
+                   save_store, cur, save_p65);
+            fflush(stdout);
+        }
+    }
+    if (save_store62 && save_p62) {
+        uint32_t cur = 0;
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, save_store62, &cur);
+        if (cur != save_p62) {
+            (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, save_store62, save_p62);
+            printf("[PLATFORM_FAMILY_EVENT] op=RESTORE_OWNER_STORE plat=10162 addr=0x%X "
+                   "old=0x%X new=0x%X note=after_family_4F evidence=OBSERVED\n",
+                   save_store62, cur, save_p62);
+            fflush(stdout);
+        }
+    }
+    printf("[PLATFORM_FAMILY_EVENT] op=CALL_FAMILY_4F_DONE ok=%d E6C=0x%X end=%s "
+           "pc_after=0x%X evidence=OBSERVED\n",
+           wok, e6c_after, wout.end_reason[0] ? wout.end_reason : "?", wout.pc_after);
+    fflush(stdout);
+    if (e6c_after) {
+        product_runtime_progress_emit("e6c_via_family_4f", "family_4f", "guest_event15");
+    } else {
+        /* Log B50 code15 presence; do not 2E2520 it (see try_dispatch_b50_code15). */
+        gwy_ext_obs_try_dispatch_b50_code15(uc, erw, why);
+    }
+}
 
 /* After natural B71=1, deliver family app=0xC0 via registered 0x1E200 handler
  * (0x30D301 → 0x30DC44 → 0x2FEBBC → strb B70 @ 0x2FEC9A). Same V75 contract as
@@ -244,6 +687,32 @@ static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const ch
     if (b70 != 0) return;
     /* Post-drain 2DADC4 clears B71 before deliver returns; pending arm is enough. */
     if (b71 == 0 && !g_pending_2febbc_after_b71) return;
+    /*
+     * Task 13 Case 5: 0x2FEC3C is LDRSH r1,[r1,r0] after r1=*(R9+0xE6C).
+     * Flushing family C0 while E6C==0 is a guaranteed UC_FAULT (Case A nested NULL).
+     * E6C requires B54 code15 → 0x2E2520 → 0x2E4020 → 0x2E5E60 (not B50/30EE50).
+     * Optional JJFB_FAMILY_4F_FOR_E6C=1 only probes B50; it does not fill E6C.
+     * Do not hardwrite E6C / FAST_F74 / host-enqueue code-15 / invent objects.
+     */
+    {
+        uint32_t e6c = 0;
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c);
+        if (e6c == 0) {
+            gwy_ext_obs_try_call_family_4f_for_e6c(uc, erw, why);
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c);
+        }
+        if (e6c == 0) {
+            gwy_ext_obs_try_dispatch_b50_code15(uc, erw, why);
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, erw + 0xE6Cu, &e6c);
+        }
+        if (e6c == 0) {
+            printf("[PLATFORM_FAMILY_EVENT] op=DEFER_FAMILY_C0_E6C_NULL er_rw=0x%X B71=%u "
+                   "note=wait_B54_code15_2E5E60 case=5_nested_table evidence=OBSERVED+Task13+G5\n",
+                   erw, (unsigned)b71);
+            fflush(stdout);
+            return;
+        }
+    }
 
     pq0 = platform_event_queue_get();
     if (pq0) {
@@ -332,6 +801,9 @@ static void gwy_ext_obs_try_call_2febbc_for_b70(void *uc, uint32_t erw, const ch
         g_family_c0_2febbc_once = 1;
         g_pending_2febbc_after_b71 = 0;
         product_runtime_progress_emit("b70_naturally_written", "family_c0", "guest_strb");
+        printf("[B70_NATURAL_STORE] er_rw=0x%X B70=1 why=%s evidence=OBSERVED+Task13\n",
+               erw, why ? why : "?");
+        fflush(stdout);
     }
 }
 
@@ -476,6 +948,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_memcpy_import_reset();
     platform_memcpy_import_bind_uc(uc);
     platform_memcpy_import_arm(uc);
+    platform_mrp_resource_reset();
+    platform_mrp_resource_bind_uc(uc);
+    platform_mrp_resource_arm(uc);
     product_callback_trace_reset();
     product_p4_reset();
     product_p5_reset();
@@ -518,10 +993,24 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_family_draining = 0;
     g_family_app2_init_once = 0;
     g_family_c0_2febbc_once = 0;
+    g_family_4f_for_e6c_once = 0;
+    g_code15_2e2520_once = 0;
     g_pending_2febbc_after_b71 = 0;
     g_path_a_record_after_2fc26c_once = 0;
 #ifdef GWY_HAVE_UNICORN
     g_leave_2fc26c_hook_ok = 0;
+    g_enter_2fc26c_hook_ok = 0;
+    g_chrome_2f449c_hook_ok = 0;
+    g_chrome_30630c_hook_ok = 0;
+    g_chrome_30a2fc_hook_ok = 0;
+    g_chrome_311fd4_tail_hook_ok = 0;
+    g_chrome_2fc3be_hook_ok = 0;
+    g_chrome_2f449c_n = 0;
+    g_chrome_30630c_skip_n = 0;
+    g_chrome_30a2fc_skip_n = 0;
+    g_chrome_311fd4_early_n = 0;
+    g_chrome_2fc3be_skip_n = 0;
+    g_in_2fc26c_depth = 0;
 #endif
     g_suppress_timer_poll = 0;
     g_in_30cbbc_call = 0;
@@ -532,7 +1021,13 @@ void gwy_ext_obs_bind_uc(void *uc) {
     robotol_flag_writer_trace_reset();
     robotol_flag_writer_trace_bind_uc(uc);
 #ifdef GWY_HAVE_UNICORN
+    gwy_ext_obs_arm_enter_2fc26c_hook(uc);
     gwy_ext_obs_arm_leave_2fc26c_hook(uc);
+    gwy_ext_obs_arm_chrome_2f449c_hook(uc);
+    gwy_ext_obs_arm_chrome_30630c_hook(uc);
+    gwy_ext_obs_arm_chrome_30a2fc_hook(uc);
+    gwy_ext_obs_arm_chrome_311fd4_tail_hook(uc);
+    gwy_ext_obs_arm_chrome_2fc3be_hook(uc);
 #endif
 }
 
@@ -1858,6 +2353,13 @@ static void gwy_ext_obs_timer_poll(void *uc) {
     }
     printf("[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED\n");
     fflush(stdout);
+    /* After B71 arm: retry family 4F/C0 once top-level is idle (E6C may land late). */
+    if (g_pending_2febbc_after_b71 && !g_family_c0_2febbc_once && !g_in_family_entry &&
+        !g_in_30cbbc_call) {
+        uint32_t erw = 0;
+        if (guest_memory_uc_read_r9((struct uc_struct *)uc, &erw) && erw >= 0x1000u)
+            gwy_ext_obs_try_call_2febbc_for_b70(uc, erw, "after_timer_poll");
+    }
 }
 
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
@@ -2081,20 +2583,44 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                 }
             }
             if (need) {
-                void *host = g_guest_alloc(need);
-                if (host) {
-                    memset(host, 0, need);
-                    if (r0 == 0x10132u && result.fill_buf && src_len)
-                        memcpy(host, src, src_len);
-                    else if (r0 == 0x10132u && !result.fill_buf && need >= 4u) {
-                        /* Legacy malloc header: payload size in first word. */
-                        uint32_t payload = need - 4u;
-                        memcpy(host, &payload, sizeof(payload));
-                    } else if (result.alloc_u16_at0) {
-                        uint16_t tag = result.alloc_u16_at0;
-                        memcpy(host, &tag, sizeof(tag));
+                /* 0x10134: g_guest_alloc is my_mallocExt → already USER ptr with header at -4. */
+                if (r0 == 0x10134u) {
+                    void *host = g_guest_alloc(need);
+                    if (host) {
+                        memset(host, 0, need);
+                        if (result.fill_buf && uc) {
+                            if (!guest_memory_uc_peek((struct uc_struct *)uc, result.fill_buf, host,
+                                                      need)) {
+                                printf("[PLATFORM_10134] copy_src_unmapped src=0x%X size=0x%X "
+                                       "evidence=OBSERVED\n",
+                                       result.fill_buf, need);
+                                fflush(stdout);
+                            }
+                        }
+                        ret = g_guest_to_ptr(host);
+                        /*
+                         * Do NOT poke handle.pixels here: guest @0x2D9590 still
+                         * treats handle.pixels as OLD and calls 3045E5(free).
+                         * Binding early makes old==new → frees the fresh buffer.
+                         * Guest stores new into the object after free returns.
+                         */
                     }
-                    ret = g_guest_to_ptr(host);
+                } else {
+                    void *host = g_guest_alloc(need);
+                    if (host) {
+                        memset(host, 0, need);
+                        if (r0 == 0x10132u && result.fill_buf && src_len)
+                            memcpy(host, src, src_len);
+                        else if (r0 == 0x10132u && !result.fill_buf && need >= 4u) {
+                            /* Legacy malloc header: payload size in first word. */
+                            uint32_t payload = need - 4u;
+                            memcpy(host, &payload, sizeof(payload));
+                        } else if (result.alloc_u16_at0) {
+                            uint16_t tag = result.alloc_u16_at0;
+                            memcpy(host, &tag, sizeof(tag));
+                        }
+                        ret = g_guest_to_ptr(host);
+                    }
                 }
             }
         }
@@ -2147,6 +2673,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             product_eqb_on_platform(r0, r1, r2);
         }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
+        if (r0 == 0x10134u) {
+            printf("[PLATFORM_10134] size=0x%X ret=0x%X name=%s evidence=%s\n", r1, ret,
+                   result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+        }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X size=0x%X ret=0x%X kind=ALLOC name=%s "
                    "handler=0x%X evidence=%s\n",
@@ -2404,6 +2934,31 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         fflush(stdout);
     } else if (result.kind == GWY_PLAT_KIND_STATUS) {
         ret = result.status_ret;
+        /* 0x12340: write glyph height into *SP[0] when empty/pointer-like. */
+        if (r0 == 0x12340u && result.fill_buf && uc) {
+            uint32_t before = 0;
+            if (guest_memory_uc_peek((struct uc_struct *)uc, result.fill_buf, (uint8_t *)&before,
+                                     4)) {
+                if (before == 0u || before > 0x10000u) {
+                    uint32_t h = result.fill_type ? result.fill_type : 16u;
+                    (void)guest_memory_uc_poke_u32((struct uc_struct *)uc, result.fill_buf, h);
+                    printf("[PLATFORM_12340] write_h=%u out=0x%X before=0x%X app=0x%X "
+                           "evidence=OBSERVED\n",
+                           h, result.fill_buf, before, r1);
+                    fflush(stdout);
+                }
+            }
+        }
+        if (r0 == 0x11F00u) {
+            printf("[PLATFORM_11F00] app=0x%X code=0x%X p0=0x%X ret=0 evidence=OBSERVED\n", r1, r2,
+                   r3);
+            fflush(stdout);
+        }
+        if (r0 == 0x10134u) {
+            printf("[PLATFORM_10134] size=0x%X ret=0x%X name=%s evidence=%s\n", r1, ret,
+                   result.name ? result.name : "?", result.evidence ? result.evidence : "?");
+            fflush(stdout);
+        }
         if ((env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) &&
             (r0 == 0x10102u || r0 == 0x10113u || r0 == 0x10120u || r0 == 0x10800u || r0 == 1u)) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X arg2=0x%X arg3=0x%X ret=%d kind=STATUS "
@@ -2704,6 +3259,8 @@ void gwy_ext_obs_code_image(uint32_t guest_addr, uint32_t size) {
     /* DSM image covers misbound copy import slot 0x804A8 — arm if not yet. */
     platform_memcpy_import_bind_uc(g_bound_uc);
     platform_memcpy_import_arm(g_bound_uc);
+    platform_mrp_resource_bind_uc(g_bound_uc);
+    platform_mrp_resource_arm(g_bound_uc);
     ext_loader_on_code_image(L, guest_addr, size);
     ext_entry_observe_bootstrap_event("CODE_IMAGE");
     ext_module_entry_abi_on_code_image(guest_addr, size);

@@ -1,4 +1,0 @@
-run_id,block_start,block_end,hit_count,first_step,last_step,helper_call_id
-task14_C4_221233,0x2F68E4,0x2F6950,49,0,539,1
-task14_C4_221233,0x2F68F0,0x2F6900,8,540,589,1
-task14_C4_221233,0x2F6952,0x2F6952,1,590,590,1

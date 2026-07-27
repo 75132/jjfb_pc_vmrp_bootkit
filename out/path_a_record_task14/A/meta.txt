@@ -1,6 +1,0 @@
-﻿run_id=task14_A_215550
-variant=A
-secs=75
-DRAWFP_BINDING=0
-EMPTY_FIRST=1
-TRACE=1

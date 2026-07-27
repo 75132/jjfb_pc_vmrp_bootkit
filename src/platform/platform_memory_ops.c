@@ -1,6 +1,7 @@
 #include "gwy_launcher/platform_memory_ops.h"
 
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/platform_mrp_resource.h"
 #include "gwy_launcher/product_runtime_progress.h"
 
 #include <stdio.h>
@@ -27,19 +28,23 @@ static int g_hook_armed;
 static int g_memcpy_dsm_hook_armed;
 static int g_strlen_hook_armed;
 static int g_strcpy_hook_armed;
+static int g_strcmp_hook_armed;
 #ifdef GWY_HAVE_UNICORN
 static uc_hook g_import_hook;
 static uc_hook g_memcpy_dsm_hook;
 static uc_hook g_strlen_hook;
 static uc_hook g_strcpy_hook;
+static uc_hook g_strcmp_hook;
 #endif
 static uint32_t g_import_calls;
 static uint32_t g_import_fails;
 static uint32_t g_memcpy_dsm_calls;
 static uint32_t g_strlen_calls;
 static uint32_t g_strcpy_calls;
+static uint32_t g_strcmp_calls;
 static uint32_t g_libc_cache_erw;
 static int g_libc_cache_published;
+static PlatformStrcmpMatchFn g_strcmp_match_fn;
 
 static int env_explicit_zero(const char *name) {
     const char *e = getenv(name);
@@ -75,9 +80,13 @@ void platform_memcpy_import_reset(void) {
     g_memcpy_dsm_calls = 0;
     g_strlen_calls = 0;
     g_strcpy_calls = 0;
+    g_strcmp_calls = 0;
     g_libc_cache_erw = 0;
     g_libc_cache_published = 0;
+    /* Keep g_strcmp_match_fn — registered by platform_mrp_resource for process life. */
 }
+
+void platform_strcmp_set_match_hook(PlatformStrcmpMatchFn fn) { g_strcmp_match_fn = fn; }
 
 uint32_t platform_guest_strlen(void *uc, uint32_t str_guest) {
     uint32_t n = 0;
@@ -121,6 +130,42 @@ uint32_t platform_guest_strcpy(void *uc, uint32_t dst_guest, uint32_t src_guest)
     if (n >= STRLEN_MAX) return 0;
     if (!platform_guest_memcpy(uc, dst_guest, src_guest, n + 1u)) return 0;
     return dst_guest;
+}
+
+int32_t platform_guest_strcmp(void *uc, uint32_t a_guest, uint32_t b_guest) {
+    uint32_t i = 0;
+    uint8_t ca = 0, cb = 0;
+    if (!uc) return 0;
+    if (!a_guest && !b_guest) return 0;
+    if (!a_guest) return -1;
+    if (!b_guest) return 1;
+    if (a_guest < 0x1000u || b_guest < 0x1000u) {
+        printf("[PLATFORM_STRCMP] reject low_ptr a=0x%X b=0x%X evidence=OBSERVED\n", a_guest,
+               b_guest);
+        fflush(stdout);
+        return (int32_t)a_guest - (int32_t)b_guest;
+    }
+    while (i < STRLEN_MAX) {
+        if (!guest_memory_uc_peek((struct uc_struct *)uc, a_guest + i, &ca, 1)) {
+            printf("[PLATFORM_STRCMP] fail reason=a_unmapped a=0x%X off=0x%X evidence=OBSERVED\n",
+                   a_guest, i);
+            fflush(stdout);
+            return 1;
+        }
+        if (!guest_memory_uc_peek((struct uc_struct *)uc, b_guest + i, &cb, 1)) {
+            printf("[PLATFORM_STRCMP] fail reason=b_unmapped b=0x%X off=0x%X evidence=OBSERVED\n",
+                   b_guest, i);
+            fflush(stdout);
+            return -1;
+        }
+        if (ca != cb) return (int32_t)ca - (int32_t)cb;
+        if (ca == 0) return 0;
+        i++;
+    }
+    printf("[PLATFORM_STRCMP] fail reason=too_long a=0x%X b=0x%X evidence=OBSERVED\n", a_guest,
+           b_guest);
+    fflush(stdout);
+    return 0;
 }
 
 int platform_libc_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table) {
@@ -211,6 +256,19 @@ uint32_t platform_guest_memcpy(void *uc, uint32_t dst_guest, uint32_t src_guest,
         return 0;
     }
     if (size == 0u) return dst_guest;
+    /*
+     * After platform_mrp_resource defers handle.pixels (keeps 0 so DSM mr_free is
+     * not fed a non-heap map VA), guest still does memcpy(10134_buf, old=0, n).
+     * 0x10134 already filled dst from the size→cache; treat null-src as success.
+     */
+    if (!src_guest && dst_guest && size >= 16u &&
+        platform_mrp_resource_pixels_by_bytes(size) != 0u) {
+        printf("[PLATFORM_MEMCPY] noop_null_src dst=0x%X n=0x%X note=10134_prefilled "
+               "evidence=OBSERVED\n",
+               dst_guest, size);
+        fflush(stdout);
+        return dst_guest;
+    }
     if (!dst_guest || !src_guest) {
         printf("[PLATFORM_MEMCPY] fail reason=null_guest_addr dst=0x%X src=0x%X n=0x%X "
                "evidence=OBSERVED\n",
@@ -388,6 +446,45 @@ static void on_strcpy_dsm_body(uc_engine *uc, uint64_t address, uint32_t size, v
     uc_reg_write(uc, UC_ARM_REG_PC, &lr);
     gwy_ext_obs_host_callback_resume(uc, PLATFORM_STRCPY_DSM_BODY_VA, "platform_guest_strcpy");
 }
+
+/* DSM strcmp @0xAC2D0 — robotol 0x304F92: R0=a R1=b. True compare only. */
+static void on_strcmp_dsm_body(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
+    uint32_t a = 0, b = 0, lr = 0;
+    int32_t cmp = 0;
+    int consumed = 0;
+    (void)address;
+    (void)size;
+    (void)user_data;
+
+    if (!platform_memcpy_import_enabled()) return;
+
+    uc_reg_read(uc, UC_ARM_REG_R0, &a);
+    uc_reg_read(uc, UC_ARM_REG_R1, &b);
+    g_strcmp_calls++;
+    gwy_ext_obs_host_callback_enter(uc, PLATFORM_STRCMP_DSM_BODY_VA, "platform_guest_strcmp");
+    cmp = platform_guest_strcmp(uc, a, b);
+    if (g_strcmp_calls <= 8u || (g_strcmp_calls % 64u) == 0u || cmp == 0) {
+        printf("[PLATFORM_STRCMP] import_ok n_calls=%u slot=0x%X a=0x%X b=0x%X ret=%d "
+               "evidence=OBSERVED\n",
+               g_strcmp_calls, PLATFORM_STRCMP_DSM_BODY_VA, a, b, (int)cmp);
+        fflush(stdout);
+    }
+    if (g_strcmp_calls == 1u)
+        product_runtime_progress_emit("platform_strcmp_import", "strcmp", "0xAC2D0");
+    if (g_strcmp_match_fn)
+        consumed = g_strcmp_match_fn(uc, a, b, cmp);
+    if (!consumed) {
+        uint32_t r0 = (uint32_t)cmp;
+        uc_reg_write(uc, UC_ARM_REG_R0, &r0);
+        gwy_ext_obs_host_callback_leave(uc, PLATFORM_STRCMP_DSM_BODY_VA, "platform_guest_strcmp");
+        uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+        uc_reg_write(uc, UC_ARM_REG_PC, &lr);
+        gwy_ext_obs_host_callback_resume(uc, PLATFORM_STRCMP_DSM_BODY_VA, "platform_guest_strcmp");
+    } else {
+        gwy_ext_obs_host_callback_leave(uc, PLATFORM_STRCMP_DSM_BODY_VA, "platform_guest_strcmp");
+        gwy_ext_obs_host_callback_resume(uc, PLATFORM_STRCMP_DSM_BODY_VA, "platform_guest_strcmp");
+    }
+}
 #endif
 
 void platform_memcpy_import_bind_uc(void *uc) { g_uc = uc; }
@@ -399,6 +496,7 @@ void platform_memcpy_import_arm(void *uc) {
     uint32_t memcpy_dsm = PLATFORM_MEMCPY_DSM_BODY_VA;
     uint32_t strlen_va = PLATFORM_STRLEN_DSM_BODY_VA;
     uint32_t strcpy_va = PLATFORM_STRCPY_DSM_BODY_VA;
+    uint32_t strcmp_va = PLATFORM_STRCMP_DSM_BODY_VA;
     if (!uc) uc = g_uc;
     if (!uc) return;
     if (!platform_memcpy_import_enabled()) {
@@ -464,6 +562,21 @@ void platform_memcpy_import_arm(void *uc) {
             printf("[PLATFORM_STRCPY] import_armed slot=0x%X identity=dsm_strcpy_body "
                    "evidence=DOCUMENTED\n",
                    strcpy_va);
+            fflush(stdout);
+        }
+    }
+    if (!g_strcmp_hook_armed) {
+        e = uc_hook_add((uc_engine *)uc, &g_strcmp_hook, UC_HOOK_CODE, (void *)on_strcmp_dsm_body,
+                        NULL, (uint64_t)strcmp_va, (uint64_t)strcmp_va);
+        if (e != UC_ERR_OK) {
+            printf("[PLATFORM_STRCMP] import_arm_fail slot=0x%X uc_err=%u evidence=OBSERVED\n",
+                   strcmp_va, (unsigned)e);
+            fflush(stdout);
+        } else {
+            g_strcmp_hook_armed = 1;
+            printf("[PLATFORM_STRCMP] import_armed slot=0x%X identity=dsm_strcmp_body "
+                   "mr_table_off=0x%X evidence=DOCUMENTED+E10A\n",
+                   strcmp_va, PLATFORM_STRCMP_MR_TABLE_OFF);
             fflush(stdout);
         }
     }

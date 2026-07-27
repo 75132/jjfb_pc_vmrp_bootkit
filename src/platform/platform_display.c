@@ -334,13 +334,16 @@ int platform_display_draw_bitmap(void *uc, const GwyDrawBitmapArgs *args) {
 
     mark_dirty(clip_x0, clip_y0, clip_x1, clip_y1);
     g_drawn_n++;
-    if (platform_display_trace_enabled()) {
-        printf("[DRAW_FP_DRAWN] dst=%d,%d clip=%d,%d-%d,%d pitch=%d key=0x%X key_en=%d "
+    /* Always emit first successful draw (product first-frame gate). */
+    if (g_drawn_n == 1u || platform_display_trace_enabled()) {
+        printf("[DRAW_FP_DRAWN] n=%u dst=%d,%d clip=%d,%d-%d,%d pitch=%d key=0x%X key_en=%d "
                "abi=%s evidence=OBSERVED\n",
-               args->dst_x, args->dst_y, clip_x0, clip_y0, clip_x1, clip_y1, args->src_pitch,
-               args->transparent_key, args->transparent_enabled,
+               g_drawn_n, args->dst_x, args->dst_y, clip_x0, clip_y0, clip_x1, clip_y1,
+               args->src_pitch, args->transparent_key, args->transparent_enabled,
                args->wrapper_abi ? "wrapper" : "classic");
         fflush(stdout);
+        if (g_drawn_n == 1u)
+            product_runtime_progress_emit("drawfp_first_drawn", "loadingbar_or_sprite", "frame");
     }
     if (g_present) {
         /* Present the clipped sprite rows from fb (already key-applied). */
@@ -409,7 +412,7 @@ uint32_t platform_guest_draw_bitmap(void *uc) {
     mt = ext_chunk_provider_mr_table_guest();
     slot = mt ? (mt + PLATFORM_DRAWBITMAP_MR_TABLE_OFF) : 0;
     erw = r9;
-    if (platform_display_trace_enabled()) {
+    if (g_call_n == 1u || platform_display_trace_enabled()) {
         printf("[DRAW_FP_CALL_ENTER] n=%u pc=0x%X lr=0x%X sp=0x%X r9=0x%X mt=0x%X "
                "slot=0x%X erw150C_off=0x%X evidence=OBSERVED\n",
                g_call_n, pc, lr, sp, r9, mt, slot, PLATFORM_ROBOTOL_ERW_DRAWFP_OFF);
@@ -499,3 +502,4 @@ int platform_drawfp_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table) {
 
 uint32_t platform_drawfp_call_count(void) { return g_call_n; }
 uint32_t platform_drawfp_reject_count(void) { return g_reject_n; }
+uint32_t platform_drawfp_drawn_count(void) { return g_drawn_n; }

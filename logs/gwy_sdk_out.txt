@@ -1,3 +1,0 @@
-key_len=48
-key_sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436
-vmver=1968 imei=864086040622841 manufacturer=vmrp model=vmrp

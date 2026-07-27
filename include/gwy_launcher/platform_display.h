@@ -84,6 +84,8 @@ int platform_drawfp_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table);
 uint32_t platform_drawfp_trampoline_guest(void *uc);
 uint32_t platform_drawfp_call_count(void);
 uint32_t platform_drawfp_reject_count(void);
+/* Successful blits (frame-then-leave chrome arms after first drawn). */
+uint32_t platform_drawfp_drawn_count(void);
 
 #ifdef __cplusplus
 }

@@ -1,9 +1,0 @@
-﻿variant=B
-run_id=fp8_B_20260725_013726
-fp_trace=1
-h2_trace=1
-hold=75
-saw_helper_running=True
-saw_fp_entry=True
-saw_fp_loop=True
-saw_stable_loop=False

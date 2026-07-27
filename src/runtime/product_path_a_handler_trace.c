@@ -667,6 +667,16 @@ static void on_site(uc_engine *uc, uint64_t address, uint32_t size, void *user_d
                    "evidence=OBSERVED\n",
                    g_dispatch_call_serial, code, r0, code >= 3u ? code - 3u : 0u);
             fflush(stdout);
+        } else if (code == 15u) {
+            printf("[PAH_DISPATCH] call=%u event_code=15 entry=0x%X index=12 target=0x2E4020 "
+                   "note=E6C_allocator_case evidence=OBSERVED+Task13\n",
+                   g_dispatch_call_serial, r0);
+            fflush(stdout);
+            product_runtime_progress_emit("event15_natural_dispatch", "pah", "code15->2E4020");
+        } else if (g_dispatch_call_serial <= 12u || code == 0u || code > 200u) {
+            printf("[PAH_DISPATCH] call=%u event_code=%u entry=0x%X evidence=OBSERVED\n",
+                   g_dispatch_call_serial, code, r0);
+            fflush(stdout);
         }
     } else if (tag == 2) { /* 2E4040 */
         if (pc != PC_2E4040) return;

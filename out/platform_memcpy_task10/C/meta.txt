@@ -1,6 +1,0 @@
-﻿run_id=pm10_C_20260725_025034
-variant=C
-import=1
-fsc=0
-fp_trace=1
-hold=75

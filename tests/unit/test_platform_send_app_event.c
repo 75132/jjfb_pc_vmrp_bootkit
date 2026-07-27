@@ -1,4 +1,5 @@
 #include "gwy_launcher/platform_send_app_event.h"
+#include "gwy_launcher/platform_mrp_resource.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -119,6 +120,33 @@ int main(void) {
                 out.fill_buf);
         return 1;
     }
+
+    /* 0x10134: size-only ALLOC fallback when no mrp_resource cache hit. */
+    platform_mrp_resource_reset();
+    memset(&call, 0, sizeof(call));
+    call.code = 0x10134u;
+    call.app = 0x2D8Au; /* loadingbar!201!29.bmp = 201*29*2 */
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10134_alloc", out.kind, GWY_PLAT_KIND_ALLOC) || out.alloc_size != 0x2D8Au ||
+        out.fill_buf != 0u) {
+        fprintf(stderr, "10134 size-alloc mismatch kind=%d size=%u fill=0x%X\n", (int)out.kind,
+                out.alloc_size, out.fill_buf);
+        return 1;
+    }
+
+    /* 0x10134: ALLOC+copy when postmatch seeded the size map (mallocExt user ptr). */
+    platform_mrp_resource_note_pixels(0x2D8Au, 0x3920000u, 201, 29);
+    memset(&call, 0, sizeof(call));
+    call.code = 0x10134u;
+    call.app = 0x2D8Au;
+    platform_send_app_event_classify(&call, &out);
+    if (!expect_kind("10134_copy", out.kind, GWY_PLAT_KIND_ALLOC) || out.alloc_size != 0x2D8Au ||
+        out.fill_buf != 0x3920000u) {
+        fprintf(stderr, "10134 copy classify mismatch kind=%d size=%u fill=0x%X\n", (int)out.kind,
+                out.alloc_size, out.fill_buf);
+        return 1;
+    }
+    platform_mrp_resource_reset();
 
     memset(&call, 0, sizeof(call));
     call.code = 0x101ABu;

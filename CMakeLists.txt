@@ -84,6 +84,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_path_a_response.c
     src/platform/platform_memory_ops.c
     src/platform/platform_display.c
+    src/platform/platform_mrp_resource.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c
@@ -373,6 +374,10 @@ add_test(NAME ext_gwy_startgame_audit COMMAND test_ext_gwy_startgame_audit)
 add_executable(test_ext_gwy_shell_shim tests/unit/test_ext_gwy_shell_shim.c)
 gwy_link_research_runtime(test_ext_gwy_shell_shim)
 add_test(NAME ext_gwy_shell_shim COMMAND test_ext_gwy_shell_shim)
+
+add_executable(test_platform_mrp_resource tests/unit/test_platform_mrp_resource.c)
+gwy_link_product_runtime(test_platform_mrp_resource)
+add_test(NAME platform_mrp_resource COMMAND test_platform_mrp_resource)
 
 add_executable(test_platform_identity tests/unit/test_platform_identity.c)
 gwy_link_product_runtime(test_platform_identity)
