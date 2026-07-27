@@ -10,7 +10,7 @@ $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $Root
 
 if (-not $ResourceRoot) {
-  $ResourceRoot = Join-Path $Root 'game_files\mythroad\320x480'
+  $ResourceRoot = Join-Path $Root 'game_files\mythroad\240x320'
 }
 
 # Ensure vmrp binary + mythroad tree are ready

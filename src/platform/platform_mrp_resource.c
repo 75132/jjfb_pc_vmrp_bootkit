@@ -2,6 +2,8 @@
 
 #include "gwy_launcher/byte_buffer.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/jjfbol_catalog.h"
+#include "gwy_launcher/jjfbol_scope.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/package_metadata.h"
@@ -11,24 +13,41 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
 #endif
 
-#define POSTMATCH_MAX 8u
+#define POSTMATCH_MAX 256u
 #define NAME_MAX 255u
-#define PIXEL_CACHE_MAX 16u
+#define PENDING_MAX 128u
 
 typedef struct {
-    uint32_t bytes;
-    uint32_t guest_pixels;
-    uint32_t handle_guest;
-    uint16_t w;
-    uint16_t h;
-    int valid;
-} PixelByBytes;
+    uint32_t package_id;
+    uint64_t package_generation;
+    char member_name[NAME_MAX + 1];
+} CompletedResourceKey;
+
+typedef enum {
+    PENDING_FREE = 0,
+    PENDING_READY = 1,
+    PENDING_RESERVED = 2
+} PendingState;
+
+typedef struct {
+    uint64_t sequence;
+    PendingState state;
+    char package_name[128];
+    char member_name[256];
+    uint32_t decoded_pixels;
+    uint32_t decoded_bytes;
+    uint16_t width;
+    uint16_t height;
+    uint32_t guest_handle;
+    uint32_t lookup_lr;
+} PendingBitmapConstruct;
 
 static int g_en_known;
 static int g_en;
@@ -37,9 +56,12 @@ static int g_entry_hook_armed;
 static int g_maps_ok;
 static uint32_t g_pixel_slot;
 static uint32_t g_postmatch_n;
-static char g_done_names[POSTMATCH_MAX][NAME_MAX + 1];
-static PixelByBytes g_pixel_cache[PIXEL_CACHE_MAX];
-static uint32_t g_pixel_cache_n;
+static CompletedResourceKey g_done_keys[POSTMATCH_MAX];
+static PendingBitmapConstruct g_pending[PENDING_MAX];
+static uint32_t g_pending_n;
+static uint64_t g_pending_seq;
+static uint32_t g_last_hit_package_id;
+static char g_last_package_name[128];
 
 /* 0x304BF0 entry ABI snapshot (frame capture only). */
 static int g_entry_valid;
@@ -77,6 +99,108 @@ int platform_mrp_resource_enabled(void) {
     return g_en;
 }
 
+void platform_mrp_resource_pending_enqueue(const char *package_name, const char *member_name,
+                                          uint32_t decoded_pixels, uint32_t decoded_bytes,
+                                          uint16_t w, uint16_t h, uint32_t guest_handle,
+                                          uint32_t lookup_lr) {
+    uint32_t i;
+    PendingBitmapConstruct *slot = NULL;
+    if (decoded_bytes < 16u || !decoded_pixels) return;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].state == PENDING_FREE) {
+            slot = &g_pending[i];
+            break;
+        }
+    }
+    if (!slot) {
+        /* Drop oldest READY (not RESERVED). */
+        uint64_t oldest = UINT64_MAX;
+        int victim = -1;
+        for (i = 0; i < PENDING_MAX; i++) {
+            if (g_pending[i].state == PENDING_READY && g_pending[i].sequence < oldest) {
+                oldest = g_pending[i].sequence;
+                victim = (int)i;
+            }
+        }
+        if (victim < 0) return;
+        slot = &g_pending[victim];
+        memset(slot, 0, sizeof(*slot));
+    }
+    g_pending_seq++;
+    slot->sequence = g_pending_seq;
+    slot->state = PENDING_READY;
+    snprintf(slot->package_name, sizeof(slot->package_name), "%s",
+             package_name ? package_name : "");
+    snprintf(slot->member_name, sizeof(slot->member_name), "%s", member_name ? member_name : "");
+    slot->decoded_pixels = decoded_pixels;
+    slot->decoded_bytes = decoded_bytes;
+    slot->width = w;
+    slot->height = h;
+    slot->guest_handle = guest_handle;
+    slot->lookup_lr = lookup_lr;
+    g_pending_n++;
+    {
+        char det[192];
+        snprintf(det, sizeof(det), "seq=%llu bytes=0x%X member=%s depth=%u",
+                 (unsigned long long)slot->sequence, decoded_bytes,
+                 member_name ? member_name : "?", platform_mrp_resource_pending_depth());
+        product_runtime_progress_emit("pending_bitmap_enqueue", "fifo", det);
+    }
+}
+
+uint64_t platform_mrp_resource_pending_reserve(uint32_t bytes, uint32_t *out_guest_pixels) {
+    uint32_t i;
+    int best = -1;
+    uint64_t best_seq = UINT64_MAX;
+    if (out_guest_pixels) *out_guest_pixels = 0;
+    if (bytes < 16u) return 0;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].state == PENDING_READY && g_pending[i].decoded_bytes == bytes &&
+            g_pending[i].sequence < best_seq) {
+            best_seq = g_pending[i].sequence;
+            best = (int)i;
+        }
+    }
+    if (best < 0) return 0;
+    g_pending[best].state = PENDING_RESERVED;
+    if (out_guest_pixels) *out_guest_pixels = g_pending[best].decoded_pixels;
+    return g_pending[best].sequence;
+}
+
+int platform_mrp_resource_pending_commit(uint64_t pending_id) {
+    uint32_t i;
+    if (!pending_id) return 0;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].sequence == pending_id && g_pending[i].state == PENDING_RESERVED) {
+            memset(&g_pending[i], 0, sizeof(g_pending[i]));
+            product_runtime_progress_emit("pending_bitmap_commit", "fifo", "ok");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int platform_mrp_resource_pending_release(uint64_t pending_id) {
+    uint32_t i;
+    if (!pending_id) return 0;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].sequence == pending_id && g_pending[i].state == PENDING_RESERVED) {
+            g_pending[i].state = PENDING_READY; /* allow retry */
+            product_runtime_progress_emit("pending_bitmap_release", "fifo", "retry");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+uint32_t platform_mrp_resource_pending_depth(void) {
+    uint32_t i, n = 0;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].state != PENDING_FREE) n++;
+    }
+    return n;
+}
+
 void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, uint16_t w,
                                       uint16_t h) {
     platform_mrp_resource_note_pixels_ex(bytes, guest_pixels, 0, w, h);
@@ -84,68 +208,33 @@ void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, ui
 
 void platform_mrp_resource_note_pixels_ex(uint32_t bytes, uint32_t guest_pixels,
                                          uint32_t handle_guest, uint16_t w, uint16_t h) {
-    uint32_t i;
-    if (bytes < 16u || !guest_pixels) return;
-    for (i = 0; i < g_pixel_cache_n && i < PIXEL_CACHE_MAX; i++) {
-        if (g_pixel_cache[i].valid && g_pixel_cache[i].bytes == bytes) {
-            g_pixel_cache[i].guest_pixels = guest_pixels;
-            if (handle_guest) g_pixel_cache[i].handle_guest = handle_guest;
-            g_pixel_cache[i].w = w;
-            g_pixel_cache[i].h = h;
-            return;
-        }
-    }
-    if (g_pixel_cache_n >= PIXEL_CACHE_MAX) {
-        i = g_pixel_cache_n % PIXEL_CACHE_MAX;
-        g_pixel_cache[i].bytes = bytes;
-        g_pixel_cache[i].guest_pixels = guest_pixels;
-        g_pixel_cache[i].handle_guest = handle_guest;
-        g_pixel_cache[i].w = w;
-        g_pixel_cache[i].h = h;
-        g_pixel_cache[i].valid = 1;
-        g_pixel_cache_n++;
-        return;
-    }
-    g_pixel_cache[g_pixel_cache_n].bytes = bytes;
-    g_pixel_cache[g_pixel_cache_n].guest_pixels = guest_pixels;
-    g_pixel_cache[g_pixel_cache_n].handle_guest = handle_guest;
-    g_pixel_cache[g_pixel_cache_n].w = w;
-    g_pixel_cache[g_pixel_cache_n].h = h;
-    g_pixel_cache[g_pixel_cache_n].valid = 1;
-    g_pixel_cache_n++;
+    platform_mrp_resource_pending_enqueue(g_last_package_name, "", guest_pixels, bytes, w, h,
+                                          handle_guest, 0);
 }
 
 uint32_t platform_mrp_resource_pixels_by_bytes(uint32_t bytes) {
     uint32_t i;
+    uint64_t best_seq = UINT64_MAX;
+    uint32_t px = 0;
     if (bytes < 16u) return 0;
-    for (i = 0; i < PIXEL_CACHE_MAX; i++) {
-        if (g_pixel_cache[i].valid && g_pixel_cache[i].bytes == bytes)
-            return g_pixel_cache[i].guest_pixels;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if ((g_pending[i].state == PENDING_READY || g_pending[i].state == PENDING_RESERVED) &&
+            g_pending[i].decoded_bytes == bytes && g_pending[i].sequence < best_seq) {
+            best_seq = g_pending[i].sequence;
+            px = g_pending[i].decoded_pixels;
+        }
     }
-    return 0;
+    return px;
 }
 
 int platform_mrp_resource_bind_10134_pixels(void *uc, uint32_t bytes, uint32_t user_pixels) {
-    uint32_t i, handle = 0;
-    if (!uc || bytes < 16u || !user_pixels) return 0;
-    for (i = 0; i < PIXEL_CACHE_MAX; i++) {
-        if (g_pixel_cache[i].valid && g_pixel_cache[i].bytes == bytes) {
-            handle = g_pixel_cache[i].handle_guest;
-            g_pixel_cache[i].guest_pixels = user_pixels; /* prefer mallocExt USER */
-            break;
-        }
-    }
-    if (!handle) return 0;
-#ifdef GWY_HAVE_UNICORN
-    if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, handle + 4u, user_pixels)) return 0;
-    printf("[PLATFORM_MRP_RES] bind_10134 handle=0x%X pixels=0x%X bytes=0x%X evidence=OBSERVED\n",
-           handle, user_pixels, bytes);
+    (void)uc;
+    (void)bytes;
+    (void)user_pixels;
+    printf("[PLATFORM_MRP_RES] bind_10134 FORBIDDEN note=guest_owns_handle_pixels "
+           "evidence=TASK16\n");
     fflush(stdout);
-    return 1;
-#else
-    (void)handle;
     return 0;
-#endif
 }
 
 void platform_mrp_resource_reset(void) {
@@ -155,9 +244,13 @@ void platform_mrp_resource_reset(void) {
     g_entry_valid = 0;
     g_pixel_slot = 0;
     g_postmatch_n = 0;
-    g_pixel_cache_n = 0;
-    memset(g_done_names, 0, sizeof(g_done_names));
-    memset(g_pixel_cache, 0, sizeof(g_pixel_cache));
+    g_pending_n = 0;
+    g_pending_seq = 0;
+    g_last_hit_package_id = 0;
+    g_last_package_name[0] = 0;
+    memset(g_done_keys, 0, sizeof(g_done_keys));
+    memset(g_pending, 0, sizeof(g_pending));
+    jjfbol_scope_bump_generation();
     /* Keep unicorn hooks / maps for process lifetime. */
 }
 
@@ -167,18 +260,25 @@ void platform_mrp_resource_bind_uc(void *uc) {
 
 uint32_t platform_mrp_resource_postmatch_count(void) { return g_postmatch_n; }
 
-static int name_already_done(const char *name) {
+static int name_already_done(const char *name, uint32_t package_id) {
     uint32_t i;
+    uint64_t gen = jjfbol_scope_generation();
     if (!name || !name[0]) return 1;
     for (i = 0; i < g_postmatch_n && i < POSTMATCH_MAX; i++) {
-        if (strcmp(g_done_names[i], name) == 0) return 1;
+        if (g_done_keys[i].package_id == package_id &&
+            g_done_keys[i].package_generation == gen &&
+            strcmp(g_done_keys[i].member_name, name) == 0)
+            return 1;
     }
     return 0;
 }
 
-static void mark_done(const char *name) {
+static void mark_done(const char *name, uint32_t package_id) {
     if (!name || !name[0] || g_postmatch_n >= POSTMATCH_MAX) return;
-    snprintf(g_done_names[g_postmatch_n], sizeof(g_done_names[0]), "%s", name);
+    g_done_keys[g_postmatch_n].package_id = package_id;
+    g_done_keys[g_postmatch_n].package_generation = jjfbol_scope_generation();
+    snprintf(g_done_keys[g_postmatch_n].member_name, sizeof(g_done_keys[0].member_name), "%s",
+             name);
     g_postmatch_n++;
 }
 
@@ -240,59 +340,116 @@ static const char *resolve_package_host_path(char *buf, size_t buf_sz) {
         snprintf(buf, buf_sz, "%s", meta->archive_path);
         return buf;
     }
-    snprintf(buf, buf_sz, "game_files/mythroad/320x480/gwy/jjfb.mrp");
+    {
+        const char *rr = getenv("GWY_RESOURCE_ROOT");
+        if (rr && rr[0]) {
+            snprintf(buf, buf_sz, "%s/gwy/jjfb.mrp", rr);
+            return buf;
+        }
+    }
+    snprintf(buf, buf_sz, "game_files/mythroad/240x320/gwy/jjfb.mrp");
     return buf;
 }
 
 /*
- * V75: topleft!15!5.bmp misses in jjfb.mrp → guest opens jjfbol/default2.mrp.
- * Product chrome skips often never open default2, so 304BF0 scans the wrong
- * pack forever. Try primary then sibling default2 (same layout as V75).
+ * Lookup order (Phase 3):
+ * 1. active jjfbol package exact
+ * 2. main jjfb.mrp exact
+ * 3. catalog unique exact
+ * 4. catalog unique case-fold
+ * 5/6. multi-hit / miss → do not complete (return 0 paths)
  */
 #define MRP_PATH_CANDIDATES 4
-static int fill_package_candidates(char paths[MRP_PATH_CANDIDATES][1024]) {
-    int n = 0;
+static int resolve_member_package(const char *member_name, char *out_path, size_t out_cap,
+                                  uint32_t *out_package_id) {
     char primary[1024];
-    const char *rr;
-    const char *hit;
-    int i;
+    const char *active;
+    JjfbolLookupResult lr;
+    uint32_t pkg_idx = 0;
+    const JjfbolPackageIndex *pi;
 
+    if (out_package_id) *out_package_id = 0;
+    if (!member_name || !out_path || out_cap == 0) return 0;
+    out_path[0] = 0;
     resolve_package_host_path(primary, sizeof(primary));
-    snprintf(paths[n++], 1024, "%s", primary);
 
-    hit = strstr(primary, "gwy/jjfb.mrp");
-    if (!hit) hit = strstr(primary, "gwy\\jjfb.mrp");
-    if (!hit) hit = strstr(primary, "gwy/jjfb.MRP");
-    if (hit) {
-        size_t prefix = (size_t)(hit - primary);
-        snprintf(paths[n], 1024, "%.*sgwy/jjfbol/default2.mrp", (int)prefix, primary);
-        n++;
-    }
-
-    rr = getenv("GWY_RESOURCE_ROOT");
-    if (rr && rr[0]) {
-        snprintf(paths[n], 1024, "%s/gwy/jjfbol/default2.mrp", rr);
-        n++;
-    }
-
-    /* Dedupe (RESOURCE_ROOT may equal primary's parent). */
-    {
-        int w = 0;
-        for (i = 0; i < n; i++) {
-            int j, dup = 0;
-            for (j = 0; j < w; j++) {
-                if (strcmp(paths[i], paths[j]) == 0) {
-                    dup = 1;
-                    break;
+    /* 1. active package exact */
+    active = jjfbol_scope_active_package();
+    if (active && jjfbol_catalog_ready() &&
+        jjfbol_catalog_find_package_stem(active, &pkg_idx)) {
+        pi = jjfbol_catalog_package(pkg_idx);
+        if (pi) {
+            MrpArchive *a = NULL;
+            const MrpMember *m = NULL;
+            LauncherError e;
+            if (mrp_archive_open(pi->path, &a, &e) == L_OK && a) {
+                if (mrp_archive_find_exact(a, member_name, &m, &e) == L_OK && m) {
+                    snprintf(out_path, out_cap, "%s", pi->path);
+                    if (out_package_id) *out_package_id = pkg_idx + 1u;
+                    mrp_archive_close(a);
+                    return 1;
                 }
-            }
-            if (!dup) {
-                if (w != i) snprintf(paths[w], 1024, "%s", paths[i]);
-                w++;
+                mrp_archive_close(a);
             }
         }
-        return w;
     }
+
+    /* 2. main jjfb.mrp exact */
+    {
+        MrpArchive *a = NULL;
+        const MrpMember *m = NULL;
+        LauncherError e;
+        if (mrp_archive_open(primary, &a, &e) == L_OK && a) {
+            if (mrp_archive_find_exact(a, member_name, &m, &e) == L_OK && m) {
+                snprintf(out_path, out_cap, "%s", primary);
+                if (out_package_id) *out_package_id = 0; /* main pack id 0 */
+                mrp_archive_close(a);
+                return 1;
+            }
+            mrp_archive_close(a);
+        }
+    }
+
+    if (!jjfbol_catalog_ready()) return 0;
+
+    /* 3. catalog unique exact */
+    if (jjfbol_catalog_lookup_exact(member_name, &lr) == JJFBOL_LOOKUP_UNIQUE) {
+        pi = jjfbol_catalog_package(lr.package_index);
+        if (pi) {
+            snprintf(out_path, out_cap, "%s", pi->path);
+            if (out_package_id) *out_package_id = lr.package_index + 1u;
+            return 1;
+        }
+    } else if (lr.kind == JJFBOL_LOOKUP_MULTI) {
+        uint16_t i;
+        printf("[PLATFORM_MRP_RES] multi_hit name=\"%s\" packs=%u", member_name, lr.hit_count);
+        for (i = 0; i < lr.hit_count && i < 16; i++) {
+            pi = jjfbol_catalog_package(lr.hit_packages[i]);
+            printf(" %s", pi ? pi->stem : "?");
+        }
+        printf(" note=no_complete evidence=OBSERVED\n");
+        fflush(stdout);
+        return 0;
+    }
+
+    /* 4. catalog unique case-fold (only after exact unique failed) */
+    if (jjfbol_catalog_lookup_casefold(member_name, &lr) == JJFBOL_LOOKUP_UNIQUE) {
+        pi = jjfbol_catalog_package(lr.package_index);
+        if (pi) {
+            snprintf(out_path, out_cap, "%s", pi->path);
+            if (out_package_id) *out_package_id = lr.package_index + 1u;
+            return 1;
+        }
+    } else if (lr.kind == JJFBOL_LOOKUP_MULTI) {
+        printf("[PLATFORM_MRP_RES] multi_hit_casefold name=\"%s\" hits=%u note=no_complete "
+               "evidence=OBSERVED\n",
+               member_name, lr.hit_count);
+        fflush(stdout);
+        return 0;
+    }
+
+    /* 6. miss */
+    return 0;
 }
 
 #ifdef GWY_HAVE_UNICORN
@@ -445,43 +602,45 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
     else if (request->guest_name_ptr)
         (void)read_guest_cstr(uc, request->guest_name_ptr, name, sizeof(name));
     if (!name[0] || !looks_like_member_name(name)) return 0;
-    if (name_already_done(name)) return 0;
 
     {
-        char cands[MRP_PATH_CANDIDATES][1024];
-        int nc = fill_package_candidates(cands);
-        int i;
-        int hit_i = -1;
+        char path_resolved[1024];
+        uint32_t pkg_id = 0;
+        LauncherError e2;
+        if (!resolve_member_package(name, path_resolved, sizeof(path_resolved), &pkg_id)) {
+            return 0;
+        }
+        if (name_already_done(name, pkg_id)) return 0;
+        g_last_hit_package_id = pkg_id;
+        {
+            const char *slash = path_resolved;
+            const char *base = path_resolved;
+            while (*slash) {
+                if (*slash == '/' || *slash == '\\') base = slash + 1;
+                slash++;
+            }
+            snprintf(g_last_package_name, sizeof(g_last_package_name), "%s", base);
+        }
         arch = NULL;
         mem = NULL;
         path = path_buf;
-        path_buf[0] = 0;
-        for (i = 0; i < nc; i++) {
-            LauncherError e2;
-            MrpArchive *a2 = NULL;
-            const MrpMember *m2 = NULL;
-            memset(&e2, 0, sizeof(e2));
-            st = mrp_archive_open(cands[i], &a2, &e2);
-            if (st != L_OK || !a2) continue;
-            st = mrp_archive_find_exact(a2, name, &m2, &e2);
-            if (st == L_OK && m2) {
-                arch = a2;
-                mem = m2;
-                snprintf(path_buf, sizeof(path_buf), "%s", cands[i]);
-                path = path_buf;
-                hit_i = i;
-                break;
+        snprintf(path_buf, sizeof(path_buf), "%s", path_resolved);
+        memset(&e2, 0, sizeof(e2));
+        st = mrp_archive_open(path_buf, &arch, &e2);
+        if (st != L_OK || !arch) return 0;
+        st = mrp_archive_find_exact(arch, name, &mem, &e2);
+        if (st != L_OK || !mem) {
+            /* Try casefold find on same pack for catalog casefold hits. */
+            st = mrp_archive_find_casefold(arch, name, &mem, &e2);
+            if (st != L_OK || !mem) {
+                mrp_archive_close(arch);
+                return 0;
             }
-            mrp_archive_close(a2);
         }
-        if (!arch || !mem) {
-            /* Not in primary or default2 — leave guest natural scan alone. */
-            return 0;
-        }
-        if (hit_i > 0) {
-            printf("[PLATFORM_MRP_RES] sibling_pack name=\"%s\" path=%s "
-                   "note=V75_default2_after_jjfb_miss evidence=OBSERVED\n",
-                   name, path);
+        if (pkg_id != 0) {
+            printf("[PLATFORM_MRP_RES] catalog_or_active name=\"%s\" path=%s pkg_id=%u "
+                   "evidence=OBSERVED\n",
+                   name, path, pkg_id);
             fflush(stdout);
         }
     }
@@ -566,8 +725,10 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
         gwy_sha256_hex(digest, result->sha256_hex);
     }
 
-    mark_done(name);
-    platform_mrp_resource_note_pixels_ex(sz, px, handle_va, (uint16_t)w, (uint16_t)h);
+    mark_done(name, g_last_hit_package_id);
+    platform_mrp_resource_pending_enqueue(g_last_package_name, name, px, sz, (uint16_t)w,
+                                         (uint16_t)h, handle_va,
+                                         g_entry_valid ? g_entry_lr : 0);
     printf("[PLATFORM_MRP_RES] loaded name=\"%s\" offset=%u stored=%u decoded=%u w=%d h=%d "
            "sha256=%s handle=0x%X cache_pixels=0x%X note=handle_pixels_deferred_to_10134 "
            "evidence=OBSERVED\n",
@@ -674,6 +835,19 @@ void platform_mrp_resource_arm(void *uc) {
         printf("[PLATFORM_MRP_RES] arm skipped enabled=0 evidence=OBSERVED\n");
         fflush(stdout);
         return;
+    }
+
+    /* Phase 2: catalog index only — does not change 304BF0 lookup yet. */
+    if (!jjfbol_catalog_ready()) {
+        const char *rr = getenv("GWY_RESOURCE_ROOT");
+        if (rr && rr[0]) {
+            LauncherError cerr;
+            if (jjfbol_catalog_init(rr, &cerr) != L_OK) {
+                printf("[JJFBOL_CATALOG] init_fail msg=%s detail=%s evidence=OBSERVED\n",
+                       cerr.message, cerr.detail);
+                fflush(stdout);
+            }
+        }
     }
 
     (void)ensure_guest_maps((uc_engine *)uc);

@@ -1,0 +1,3 @@
+run_id,pc,base,offset,value,is_write,role
+launcher_20260728_030118_61500,0x312A60,0x2A83C4,0x4,0x0,0,list_push_entry_r0
+launcher_20260728_030118_61500,0x312A62,0x2A83C4,0x4,0x0,0,list_push_entry_r0

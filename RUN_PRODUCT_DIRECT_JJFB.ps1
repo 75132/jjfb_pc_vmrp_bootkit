@@ -13,7 +13,7 @@ Set-Location $Root
 $MingwBin = if ($env:MSYS2_MINGW32) { Join-Path $env:MSYS2_MINGW32 'bin' } else { 'C:\msys64\mingw32\bin' }
 $env:Path = "$MingwBin;C:\msys64\usr\bin;" + $env:Path
 
-$ResourceRoot = Join-Path $Root 'game_files\mythroad\320x480'
+$ResourceRoot = Join-Path $Root 'game_files\mythroad\240x320'
 $ExpectedHash = '52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036'
 $mrpHost = Join-Path $ResourceRoot 'gwy\jjfb.mrp'
 $Profile = Join-Path $Root 'profiles\jjfb.json'
@@ -55,7 +55,7 @@ if ($stringsHit) { throw 'main.exe looks like GwyResearch (research probe string
 $exeHash = (Get-FileHash -Algorithm SHA256 -Path $exe).Hash.ToLowerInvariant()
 $launcherHash = (Get-FileHash -Algorithm SHA256 -Path $Launcher).Hash.ToLowerInvariant()
 
-& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_VMRP_VISUAL.ps1') -SkipBuild -NoLaunch
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'RUN_VMRP_VISUAL.ps1') -SkipBuild -NoLaunch -ResourceRoot $ResourceRoot
 if ($LASTEXITCODE -ne 0) { throw 'RUN_VMRP_VISUAL -NoLaunch failed' }
 
 $logDir = Join-Path $Root 'logs'

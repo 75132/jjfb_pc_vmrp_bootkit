@@ -772,6 +772,13 @@ static void e9c_present_meaningful_ui(void) {
     free(buf);
 }
 
+/* Product default: present only. Heavy FB hash/CSV/per-frame logs need JJFB_FB_HASH_TRACE=1
+ * or JJFB_REFRESH_TRACE=1 (research / P3 evidence). */
+static int bridge_env_one(const char *name) {
+    const char *e = getenv(name);
+    return e && e[0] == '1' && e[1] == '\0';
+}
+
 static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     // typedef void (*T_mr_drawBitmap)(uint16* bmp, int16 x, int16 y, uint16 w, uint16 h);
     uint32_t bmp, x, y, w, h;
@@ -790,20 +797,28 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     uc_mem_read(uc, sp, &h, 4);
 
     LOG("ext call %s(0x%X, %d, %d, %u, %u)\n", o->name, bmp, x, y, w, h);
-    printf("[JJFB_DRAW] api=mr_drawBitmap bmp=0x%X x=%d y=%d w=%u h=%u "
-           "evidence=DOCUMENTED\n",
-           bmp, (int)x, (int)y, w, h);
-    gwy_ext_obs_note_product_draw("mr_drawBitmap");
     {
-        uint32_t pc = 0, lr = 0;
-        uc_reg_read(uc, UC_ARM_REG_PC, &pc);
-        uc_reg_read(uc, UC_ARM_REG_LR, &lr);
-        printf("[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x%X lr=0x%X r0=0x%X r1=%d r2=%d r3=%u "
-               "h=%u sp=0x%X surface=0x%X note=real_platform_draw evidence=OBSERVED\n",
-               pc, lr, bmp, (int)x, (int)y, w, h, sp, bmp);
-        printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x%X lr=0x%X "
-               "r0=0x%X r1=%d r2=%d r3=%u h=%u note=real_platform_draw evidence=OBSERVED\n",
-               pc, lr, bmp, (int)x, (int)y, w, h);
+        int verbose = bridge_env_one("JJFB_REFRESH_TRACE");
+        static int s_first_draw_log = 0;
+        if (verbose || !s_first_draw_log) {
+            s_first_draw_log = 1;
+            printf("[JJFB_DRAW] api=mr_drawBitmap bmp=0x%X x=%d y=%d w=%u h=%u "
+                   "evidence=DOCUMENTED\n",
+                   bmp, (int)x, (int)y, w, h);
+        }
+        gwy_ext_obs_note_product_draw("mr_drawBitmap");
+        if (verbose) {
+            uint32_t pc = 0, lr = 0;
+            uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+            uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+            printf("[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x%X lr=0x%X r0=0x%X r1=%d r2=%d r3=%u "
+                   "h=%u sp=0x%X surface=0x%X note=real_platform_draw evidence=OBSERVED\n",
+                   pc, lr, bmp, (int)x, (int)y, w, h, sp, bmp);
+            printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x%X lr=0x%X "
+                   "r0=0x%X r1=%d r2=%d r3=%u h=%u note=real_platform_draw evidence=OBSERVED\n",
+                   pc, lr, bmp, (int)x, (int)y, w, h);
+            fflush(stdout);
+        }
     }
     if (!bmp) {
         printf("[JJFB_E8Z_CLASS] class=DRAW_API_WITH_NULL_BMP evidence=OBSERVED\n");
@@ -819,12 +834,14 @@ static void br_mr_drawBitmap(BridgeMap *o, uc_engine *uc) {
     if (((e8z && e8z[0] == '1') || (real && real[0] == '1')) &&
         bmp >= 0x3920000u && bmp < 0x3960000u && w > 0 && w <= 240 && h > 0 && h <= 320)
         sprite_blit = 1;
-    if (bmp)
-        printf("[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x%X x=%d y=%d w=%u h=%u "
-               "sprite_blit=%d evidence=OBSERVED\n",
-               bmp, (int)x, (int)y, w, h, sprite_blit);
-    printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
-    fflush(stdout);
+    if (bridge_env_one("JJFB_REFRESH_TRACE")) {
+        if (bmp)
+            printf("[JJFB_FIRST_REAL_FRAME_CANDIDATE] bmp=0x%X x=%d y=%d w=%u h=%u "
+                   "sprite_blit=%d evidence=OBSERVED\n",
+                   bmp, (int)x, (int)y, w, h, sprite_blit);
+        printf("[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED\n");
+        fflush(stdout);
+    }
     if (sprite_blit) {
         /* Full LCD RGB565 headroom for E9F UI members (loadingbar/slogo/…). */
         uint16_t host_pix[240 * 320];
@@ -1055,6 +1072,8 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
     char sha_hex[65];
     const char *run_id;
     int captured = 0;
+    int verbose = bridge_env_one("JJFB_REFRESH_TRACE");
+    int hash_trace = bridge_env_one("JJFB_FB_HASH_TRACE");
 
     uc_reg_read(uc, UC_ARM_REG_R0, &r0);
     uc_reg_read(uc, UC_ARM_REG_R1, &r1);
@@ -1067,12 +1086,14 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
     w = (uint16_t)r2;
     h = (uint16_t)r3;
 
-    printf("[JJFB_REFRESH] api=%s r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
-           o && o->name ? o->name : "_DispUpEx", r0, r1, r2, r3);
-    printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
-           "r2=0x%X r3=0x%X note=real_refresh evidence=OBSERVED\n",
-           o && o->name ? o->name : "_DispUpEx", pc, lr, r0, r1, r2, r3);
-    fflush(stdout);
+    if (verbose) {
+        printf("[JJFB_REFRESH] api=%s r0=0x%X r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
+               o && o->name ? o->name : "_DispUpEx", r0, r1, r2, r3);
+        printf("[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=%s pc=0x%X lr=0x%X r0=0x%X r1=0x%X "
+               "r2=0x%X r3=0x%X note=real_refresh evidence=OBSERVED\n",
+               o && o->name ? o->name : "_DispUpEx", pc, lr, r0, r1, r2, r3);
+        fflush(stdout);
+    }
 
     gwy_ext_obs_note_product_refresh(o && o->name ? o->name : "_DispUpEx");
 
@@ -1136,16 +1157,18 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
     }
     nonempty = (other > 0) || (black > 0 && white > 0);
 
+    sha_hex[0] = '\0';
+    if (hash_trace) {
 #ifdef GWY_USE_VM_FILE_SERVICE
-    {
-        uint8_t dig[32];
-        gwy_sha256(host_fb, nbytes, dig);
-        gwy_sha256_hex(dig, sha_hex);
-    }
+        {
+            uint8_t dig[32];
+            gwy_sha256(host_fb, nbytes, dig);
+            gwy_sha256_hex(dig, sha_hex);
+        }
 #else
-    memset(sha_hex, 0, sizeof(sha_hex));
-    snprintf(sha_hex, sizeof(sha_hex), "nogwy");
+        snprintf(sha_hex, sizeof(sha_hex), "nogwy");
 #endif
+    }
 
     /* Generic product present: guest mr_screenBuf → SDL via existing guiDrawBitmap. */
     guiDrawBitmap(host_fb, (int32_t)x, (int32_t)y, (int32_t)w, (int32_t)h);
@@ -1157,6 +1180,7 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
                "run_id=%s evidence=OBSERVED\n",
                (int)x, (int)y, (unsigned)w, (unsigned)h, screen_g,
                run_id && run_id[0] ? run_id : "unknown");
+        fflush(stdout);
     }
     if (!s_first_refresh) {
         s_first_refresh = 1;
@@ -1164,21 +1188,26 @@ static void br_observe_disp_up(BridgeMap *o, uc_engine *uc) {
                "evidence=OBSERVED\n",
                (int)x, (int)y, (unsigned)w, (unsigned)h,
                run_id && run_id[0] ? run_id : "unknown");
+        fflush(stdout);
     }
     if (nonempty && !s_first_captured) {
         s_first_captured = 1;
         captured = 1;
     }
-    fflush(stdout);
 
-    gwy_ext_obs_note_product_framebuffer("_DispUpEx", sha_hex, (int32_t)x, (int32_t)y, (int32_t)w,
-                                         (int32_t)h, nbytes, nonempty, nonempty ? 1 : 0, captured);
+    /* CSV / hash rows only when research hash trace is on, or on first nonempty frame. */
+    if (hash_trace || captured) {
+        gwy_ext_obs_note_product_framebuffer("_DispUpEx", sha_hex, (int32_t)x, (int32_t)y,
+                                             (int32_t)w, (int32_t)h, nbytes, nonempty,
+                                             nonempty ? 1 : 0, captured);
+    }
     if (nonempty)
         guiProductShowWindowIfReady(1);
-    if (nonempty)
+    if (nonempty && (verbose || captured)) {
         printf("[JJFB_FB_STATS] black=%u white=%u other=%u evidence=OBSERVED\n", black, white,
                other);
-    fflush(stdout);
+        fflush(stdout);
+    }
     SET_RET_V(0);
 }
 

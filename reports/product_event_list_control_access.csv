@@ -1,0 +1,15 @@
+run_id,pc,base,offset,value,is_write,role
+launcher_20260728_030118_61500,0x312A84,0x2A83C4,0x0,0x6BBAE0,1,list_head_after_push_return
+launcher_20260728_030118_61500,0x312A84,0x2A83C4,0x4,0x1,1,list_count_after_push_return
+launcher_20260728_030118_61500,0x312AC4,0x6BB920,0x4,0x0,0,list_count_read_312AC4
+launcher_20260728_030118_61500,0x312AC6,0x6BB920,0x4,0x0,0,list_count_read_312AC4
+launcher_20260728_030118_61500,0x2DC80C,0x2A83C4,0x0,0x6BBAE0,0,consumer_load_head_slot
+launcher_20260728_030118_61500,0x2DC80C,0x2A83C4,0x4,0x1,0,consumer_nonempty_via_count
+launcher_20260728_030118_61500,0x2DC80E,0x2A83C4,0x0,0x6BBAE0,0,consumer_load_head_slot
+launcher_20260728_030118_61500,0x2DC80E,0x2A83C4,0x4,0x1,0,consumer_nonempty_via_count
+launcher_20260728_030118_61500,0x312AC4,0x2A83C4,0x4,0x1,0,list_count_read_312AC4
+launcher_20260728_030118_61500,0x312AC6,0x2A83C4,0x4,0x1,0,list_count_read_312AC4
+launcher_20260728_030118_61500,0x312AB4,0x2A83C4,0x8,0xC,0,consumer_read_item
+launcher_20260728_030118_61500,0x312AB6,0x2A83C4,0x8,0xC,0,consumer_read_item
+launcher_20260728_030118_61500,0x312AC4,0x6BB960,0x4,0x0,0,list_count_read_312AC4
+launcher_20260728_030118_61500,0x312AC6,0x6BB960,0x4,0x0,0,list_count_read_312AC4

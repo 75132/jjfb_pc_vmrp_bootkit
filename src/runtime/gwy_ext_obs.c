@@ -2595,7 +2595,13 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                                        "evidence=OBSERVED\n",
                                        result.fill_buf, need);
                                 fflush(stdout);
+                                if (result.resource_pending_id)
+                                    platform_mrp_resource_pending_release(result.resource_pending_id);
+                            } else if (result.resource_pending_id) {
+                                platform_mrp_resource_pending_commit(result.resource_pending_id);
                             }
+                        } else if (result.resource_pending_id) {
+                            platform_mrp_resource_pending_release(result.resource_pending_id);
                         }
                         ret = g_guest_to_ptr(host);
                         /*
@@ -2604,6 +2610,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                          * Binding early makes old==new → frees the fresh buffer.
                          * Guest stores new into the object after free returns.
                          */
+                    } else if (result.resource_pending_id) {
+                        platform_mrp_resource_pending_release(result.resource_pending_id);
                     }
                 } else {
                     void *host = g_guest_alloc(need);
@@ -3379,20 +3387,37 @@ void gwy_ext_obs_note_product_refresh(const char *api) {
 void gwy_ext_obs_note_product_framebuffer(const char *api, const char *sha256_hex, int32_t x,
                                           int32_t y, int32_t w, int32_t h, uint32_t nbytes,
                                           int nonempty, int hwnd_visible, int captured) {
+    static int s_logged_nonempty = 0;
+    static int s_logged_hwnd = 0;
+    static int s_logged_captured = 0;
+    int hash_every = env_flag("JJFB_FB_HASH_TRACE");
+
     if (sha256_hex && sha256_hex[0]) product_callback_trace_set_fb_sha256(sha256_hex);
-    product_callback_trace_note_visual_row(api, x, y, w, h, sha256_hex, nonempty, hwnd_visible,
-                                           captured);
-    if (sha256_hex && sha256_hex[0])
-        product_callback_trace_append_fb_hash(api, sha256_hex, nbytes);
-    if (nonempty)
+    /* Default: CSV only on first capture (or every frame when JJFB_FB_HASH_TRACE=1). */
+    if (hash_every || captured) {
+        product_callback_trace_note_visual_row(api, x, y, w, h, sha256_hex, nonempty, hwnd_visible,
+                                               captured);
+        if (sha256_hex && sha256_hex[0])
+            product_callback_trace_append_fb_hash(api, sha256_hex, nbytes);
+    }
+    if (nonempty && !s_logged_nonempty) {
+        s_logged_nonempty = 1;
         printf("[FRAMEBUFFER_NONEMPTY] run_id=%s sha256=%s evidence=OBSERVED\n",
-               product_callback_trace_run_id(), sha256_hex);
-    if (hwnd_visible)
+               product_callback_trace_run_id(),
+               (sha256_hex && sha256_hex[0]) ? sha256_hex : "-");
+        fflush(stdout);
+    }
+    if (hwnd_visible && !s_logged_hwnd) {
+        s_logged_hwnd = 1;
         printf("[HWND_VISIBLE] run_id=%s evidence=OBSERVED\n", product_callback_trace_run_id());
-    if (captured)
+        fflush(stdout);
+    }
+    if (captured && !s_logged_captured) {
+        s_logged_captured = 1;
         printf("[FIRST_NATURAL_FRAME_CAPTURED] run_id=%s evidence=OBSERVED\n",
                product_callback_trace_run_id());
-    fflush(stdout);
+        fflush(stdout);
+    }
 }
 
 void gwy_ext_obs_mem_fault(void *uc,

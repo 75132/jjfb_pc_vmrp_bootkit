@@ -18,7 +18,7 @@ $Upstream = Join-Path $Root 'third_party\vmrp_upstream'
 $RunDir = Join-Path $Root 'out\vmrp_run'
 $Mythroad = Join-Path $RunDir 'mythroad'
 if (-not $ResourceRoot) {
-  $ResourceRoot = Join-Path $Root 'game_files\mythroad\320x480'
+  $ResourceRoot = Join-Path $Root 'game_files\mythroad\240x320'
 }
 
 $jjfb = Join-Path $ResourceRoot 'gwy\jjfb.mrp'

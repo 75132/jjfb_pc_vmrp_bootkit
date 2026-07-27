@@ -1,0 +1,2 @@
+run_id,slot_or_helper,arg_order,size,alignment,return_convention,returned_ptr,zero_init,verdict
+launcher_20260728_030118_61500,robotol_2D99AC_then_dsm_mr_malloc,r0=size,0xC,4,r0=pointer,0x6BBAE0,via_memset_fp,NODE_ALLOCATOR_CONTRACT_VALID

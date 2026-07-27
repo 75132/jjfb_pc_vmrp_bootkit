@@ -71,21 +71,36 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
 uint32_t platform_mrp_resource_postmatch_count(void);
 
 /*
- * 0x10134 RGB565 construct: look up a recently loaded member by decoded size
- * (W*H*2). Returns guest pixel VA, or 0 if no cache hit.
- * Seeded by platform_mrp_resource_load / note_pixels (tests).
+ * Pending bitmap construct FIFO (Phase 4).
+ * classify: reserve oldest size-matching entry (does not delete)
+ * executor: commit after successful alloc+copy, or release on failure
+ * Never write handle.pixels from host (guest owns store).
+ */
+uint64_t platform_mrp_resource_pending_reserve(uint32_t bytes, uint32_t *out_guest_pixels);
+int platform_mrp_resource_pending_commit(uint64_t pending_id);
+int platform_mrp_resource_pending_release(uint64_t pending_id);
+uint32_t platform_mrp_resource_pending_depth(void);
+
+/* Enqueue after MRP decode (also used by tests via note_pixels). */
+void platform_mrp_resource_pending_enqueue(const char *package_name, const char *member_name,
+                                          uint32_t decoded_pixels, uint32_t decoded_bytes,
+                                          uint16_t w, uint16_t h, uint32_t guest_handle,
+                                          uint32_t lookup_lr);
+
+/*
+ * Compatibility: peek source pixels by size without reserving (memcpy null-src guard).
+ * Prefer pending_reserve for 0x10134 classify.
  */
 uint32_t platform_mrp_resource_pixels_by_bytes(uint32_t bytes);
 
-/* Host/test helper: register size→pixels without guest poke. */
 void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, uint16_t w,
                                       uint16_t h);
 void platform_mrp_resource_note_pixels_ex(uint32_t bytes, uint32_t guest_pixels,
                                          uint32_t handle_guest, uint16_t w, uint16_t h);
 
 /*
- * After 0x10134 returns a mallocExt USER ptr, write it into the matching
- * handle.pixels (+4) so DrawFP/_DrawBitmap see a complete object.
+ * FORBIDDEN on product path (Task 16): early handle.pixels bind causes mr_free invalid.
+ * Always returns 0 and logs; kept only so accidental callers fail closed.
  */
 int platform_mrp_resource_bind_10134_pixels(void *uc, uint32_t bytes, uint32_t user_pixels);
 

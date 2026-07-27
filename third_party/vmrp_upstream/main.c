@@ -620,11 +620,21 @@ static void host_timer_poll(void) {
         return;
     }
     if (!gwy_ext_obs_timer_take_due()) return;
-    printf("[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED\n");
-    fflush(stdout);
+    {
+        const char *t = getenv("JJFB_TIMER_TRACE");
+        if (t && t[0] == '1') {
+            printf("[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED\n");
+            fflush(stdout);
+        }
+    }
     (void)timer();
-    printf("[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED\n");
-    fflush(stdout);
+    {
+        const char *t = getenv("JJFB_TIMER_TRACE");
+        if (t && t[0] == '1') {
+            printf("[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED\n");
+            fflush(stdout);
+        }
+    }
 }
 
 uint32_t timerCb(uint32_t interval, void *param) {
@@ -632,8 +642,14 @@ uint32_t timerCb(uint32_t interval, void *param) {
     (void)param;
     SDL_RemoveTimer(timeId);
     timeId = 0;
-    printf("[PLATFORM_TIMER] op=FIRE_CB interval=%u evidence=DOCUMENTED\n", (unsigned)interval);
-    fflush(stdout);
+    {
+        const char *t = getenv("JJFB_TIMER_TRACE");
+        if (t && t[0] == '1') {
+            printf("[PLATFORM_TIMER] op=FIRE_CB interval=%u evidence=DOCUMENTED\n",
+                   (unsigned)interval);
+            fflush(stdout);
+        }
+    }
     /* Do NOT call timer()/mutex here — may race nested start_dsm.
      * Mark due + wake main loop (WaitEventTimeout / USEREVENT). */
     gwy_ext_obs_timer_signal_due();

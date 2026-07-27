@@ -1,0 +1,2 @@
+run_id,found,producer_pc,producing_insn,output_observed,source_subsystem,next_consumer,class,why
+launcher_20260728_030118_61500,1,0x2D99AC,heap_helper_size0,0x0,PLATFORM_ALLOCATOR,0x94E40,NODE_ALLOCATOR_SIZE_ZERO,first_zero_propagated_to_dsm_mem_primitive

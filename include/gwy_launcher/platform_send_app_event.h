@@ -60,6 +60,7 @@ typedef struct GwyPlatCallResult {
     uint32_t graphics_out;    /* GRAPHICS_FP: guest *out for fp write */
     uint32_t fill_buf;        /* BUFFER_FILL: guest buffer (R1/app) */
     uint32_t fill_type;       /* BUFFER_FILL: type (R3; Path A uses 2) */
+    uint64_t resource_pending_id; /* 0x10134: reserved PendingBitmap id (0=none) */
     const char *name;
     const char *evidence;
     PlatformUserInfoBlob userinfo; /* valid when kind == USERINFO_BLOB */

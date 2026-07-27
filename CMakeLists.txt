@@ -25,6 +25,9 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/launcher/launch_runtime.c
     src/launcher/utf.c
     src/launcher/game_catalog.c
+    src/launcher/resource_root.c
+    src/resources/jjfbol_catalog.c
+    src/resources/jjfbol_scope.c
     src/vfs/guest_vfs.c
     src/formats/sha256.c
     src/formats/mrp_archive.c
@@ -231,6 +234,14 @@ add_test(NAME cfg36 COMMAND test_cfg36)
 add_executable(test_game_catalog tests/unit/test_game_catalog.c)
 gwy_link_product_runtime(test_game_catalog)
 add_test(NAME game_catalog COMMAND test_game_catalog)
+
+add_executable(test_resource_root tests/unit/test_resource_root.c)
+gwy_link_product_runtime(test_resource_root)
+add_test(NAME resource_root COMMAND test_resource_root)
+
+add_executable(test_jjfbol_catalog tests/unit/test_jjfbol_catalog.c)
+gwy_link_product_runtime(test_jjfbol_catalog)
+add_test(NAME jjfbol_catalog COMMAND test_jjfbol_catalog)
 
 add_executable(test_guest_vfs tests/unit/test_guest_vfs.c)
 gwy_link_product_runtime(test_guest_vfs)

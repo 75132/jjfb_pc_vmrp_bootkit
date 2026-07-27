@@ -425,12 +425,16 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
             out->evidence = "TARGET_OBSERVED";
             return;
         }
-        px = platform_mrp_resource_pixels_by_bytes(call->app);
+        px = 0;
+        {
+            uint64_t pid = platform_mrp_resource_pending_reserve(call->app, &px);
+            out->resource_pending_id = pid;
+        }
         out->kind = GWY_PLAT_KIND_ALLOC;
         out->alloc_size = call->app;
         out->fill_buf = px; /* 0 → zero fill; else copy from guest VA */
         out->name = px ? "plat_10134_rgb565_copy" : "plat_10134_rgb565_alloc";
-        out->evidence = px ? "TARGET_OBSERVED+legacy_bridge+mrp_resource_cache"
+        out->evidence = px ? "TARGET_OBSERVED+pending_fifo_reserve"
                            : "TARGET_OBSERVED+legacy_bridge_size_fallback";
         return;
     }
