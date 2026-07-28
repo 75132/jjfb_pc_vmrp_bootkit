@@ -1,6 +1,7 @@
 #include "gwy_launcher/platform_send_app_event.h"
 #include "gwy_launcher/platform_mrp_resource.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static int expect_kind(const char *tag, GwyPlatCallKind got, GwyPlatCallKind want) {
@@ -134,8 +135,18 @@ int main(void) {
         return 1;
     }
 
-    /* 0x10134: ALLOC+copy when pending has host_pixels (pending_id != 0). */
-    platform_mrp_resource_note_pixels(0x2D8Au, 0x3920000u, 201, 29);
+    /* 0x10134: ALLOC+copy when pending has real host_pixels. */
+    {
+        uint8_t *pixels = (uint8_t *)malloc(0x2D8Au);
+        if (!pixels) {
+            fprintf(stderr, "malloc failed\n");
+            return 1;
+        }
+        memset(pixels, 0xAB, 0x2D8Au);
+        platform_mrp_resource_pending_enqueue("jjfb.mrp", "loadingbar!201!29.bmp", pixels, 0x2D8Au,
+                                              201, 29, 0, 0);
+        free(pixels);
+    }
     memset(&call, 0, sizeof(call));
     call.code = 0x10134u;
     call.app = 0x2D8Au;

@@ -1,41 +1,41 @@
-# RAW_BLOB Object Contract (P3-3)
+# RAW_BLOB Object Contract (P3-3 / P6 status)
 
-Closed from bitmap handle ABI (Task 15/16) plus 0x304BF0 entry observe for
-`target!65!25.bmp`, `target.ani`, and `.txt` requests.
+## Status (authoritative)
 
-## Call ABI (`0x304BF0`)
+```text
+RAW_BLOB_CONTRACT = HOST_PROBE_CANDIDATE
+RAW_BLOB_NATURAL_FLOW_VALIDATED = NO
+```
 
-| Reg | Role |
-|-----|------|
-| r0 | package path (guest C-string) |
-| r1 | member name (guest C-string) |
-| r2 | optional size/pixels slot |
-| r3 | **caller-owned out-object** |
-| return r0 | `0` = ok, non-zero = fail |
+Natural product census (70s Layer-1) showed:
 
-## Out-object layout (poke 0x14)
+```text
+ani_candidate = 0
+text_candidate = 0
+first_ani = false
+first_txt = false
+```
 
-Shared between BITMAP and RAW_BLOB:
+Host can allocate guest memory and fill the candidate layout below, but this has
+**not** been validated through a natural ANI/TXT request → guest read → free lifecycle.
 
-| Offset | Type | BITMAP | RAW_BLOB |
-|--------|------|--------|----------|
-| +0x00 | u32 | decoded RGB565 byte count | decoded raw byte count |
-| +0x04 | u32 | pixels VA (**0 until 0x10134**) | data VA (**prefilled guest mallocExt USER ptr**) |
-| +0x08 | u16 | width | **0** |
-| +0x0A | u16 | height | **0** |
-| +0x10 | u8 | flag = 1 | flag = 1 |
+Do not treat RAW_BLOB as a closed product acceptance item until a natural
+`0x304BF0` request for `.ani` / `.txt` appears (Successor Gate).
 
-## Ownership
+## Candidate layout (host probe)
 
-- **BITMAP:** host pending owns `host_pixels` until 0x10134 commit; guest then owns mallocExt buffer and writes `handle+4`.
-- **RAW_BLOB:** host allocates via `gwy_ext_obs_guest_malloc0`, copies bytes, stores VA at `out+4`. Guest may `mr_free` that USER ptr. **RAW must not enter PendingBitmap / 0x10134 FIFO.**
+| Offset | Type | BITMAP | RAW_BLOB candidate |
+|--------|------|--------|--------------------|
+| +0x00 | u32 | decoded RGB565 bytes | decoded raw bytes |
+| +0x04 | u32 | pixels VA (0 until 0x10134) | guest mallocExt USER ptr |
+| +0x08 | u16 | width | 0 |
+| +0x0A | u16 | height | 0 |
+| +0x10 | u8 | flag=1 | flag=1 |
 
-## Return status
+RAW must not enter PendingBitmap / 0x10134 FIFO.
 
-`r0 = 0` after restore of entry SP/R4–R11/R9 and PC=`lr|1`.
+## Next gate
 
-## Evidence
-
-- Bitmap fields: product stub + Task 15/16 reports.
-- RAW differentiation: size at +0, data at +4, zero w/h, no 10134 enqueue; `ANI_RAW_LOADED` / `ANI_MAGIC_CHECK` for JCANI011.
-- Atlas alias rules (P3-5) apply only to exact ANI-referenced names.
+Only after `unique resource count >= 6` with a natural 6th `0x304BF0` request
+(preferably `caller_lr != 0x2D93D1` or non-empty active jjfbol package) should
+ANI_RAW_LOADED / 0x11F00 / animation frame changes be acceptance-weighted.

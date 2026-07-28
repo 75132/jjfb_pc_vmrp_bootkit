@@ -92,6 +92,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/jjfb_bitmap_geometry.c
     src/platform/jjfb_uc2_font.c
     src/platform/platform_text_api.c
+    src/runtime/boot_successor_trace.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c

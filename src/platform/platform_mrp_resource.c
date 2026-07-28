@@ -12,6 +12,7 @@
 #include "gwy_launcher/platform_mrp_resource_census.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/sha256.h"
+#include "gwy_launcher/boot_successor_trace.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -303,14 +304,16 @@ void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, ui
 
 void platform_mrp_resource_note_pixels_ex(uint32_t bytes, uint32_t guest_pixels,
                                          uint32_t handle_guest, uint16_t w, uint16_t h) {
-    uint8_t *tmp;
+    /* P6-2: never enqueue zeroed host_pixels on product path. */
+    (void)bytes;
     (void)guest_pixels;
-    if (bytes < 16u) return;
-    tmp = (uint8_t *)calloc(1, bytes);
-    if (!tmp) return;
-    platform_mrp_resource_pending_enqueue(g_last_package_name, "note_pixels", tmp, bytes, w, h,
-                                          handle_guest, 0);
-    free(tmp); /* enqueue copies */
+    (void)handle_guest;
+    (void)w;
+    (void)h;
+    boot_successor_note_pixels_legacy_call();
+    printf("[PLATFORM_MRP_RES] note_pixels DEPRECATED note=no_zero_enqueue "
+           "NOTE_PIXELS_LEGACY_CALLS evidence=P6-2\n");
+    fflush(stdout);
 }
 
 uint32_t platform_mrp_resource_pixels_by_bytes(uint32_t bytes) {
@@ -952,8 +955,20 @@ static int restore_304bf0_ok(uc_engine *uc, const char *name, const GwyMrpResour
            res ? res->handle_guest : 0, g_entry_lr);
     fflush(stdout);
     product_runtime_progress_emit("platform_mrp_resource", via ? via : "complete", name);
+    boot_successor_on_resource_complete(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr,
+                                        jjfbol_scope_active_package(), jjfbol_scope_generation(),
+                                        via);
+    boot_successor_on_304bf0_entry_complete(name, res ? res->handle_guest : 0, g_entry_lr, 1);
     return 1;
 }
+
+static int entry_complete_enabled(void) {
+    /* P6-1: JJFB_304BF0_ENTRY_COMPLETE=0 lets native body run (A/B). Default ON. */
+    if (env_explicit_zero("JJFB_304BF0_ENTRY_COMPLETE")) return 0;
+    return 1;
+}
+
+static int side_effect_audit_enabled(void) { return env_explicit_one("JJFB_304BF0_SIDE_EFFECT_AUDIT"); }
 
 static int try_304bf0_entry_complete(uc_engine *uc) {
     char name[NAME_MAX + 1];
@@ -969,6 +984,7 @@ static int try_304bf0_entry_complete(uc_engine *uc) {
 
     kind = platform_mrp_resource_classify(name);
     legacy_ok = looks_like_bitmap_legacy(name);
+    boot_successor_on_resource_request(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr);
     platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr, legacy_ok,
                                      may_complete_kind(kind) ? "load_attempt"
                                      : (kind == GWY_MRP_RESOURCE_RAW_BLOB ? "raw_deferred"
@@ -993,6 +1009,21 @@ static int try_304bf0_entry_complete(uc_engine *uc) {
         if (strcmp(name, "target!65!25.bmp") == 0) g_abi_trace_target_bmp = 1;
         if (strcmp(name, "target.ani") == 0) g_abi_trace_target_ani = 1;
         if (strstr(name, ".txt") || strstr(name, ".TXT")) g_abi_trace_txt = 1;
+    }
+
+    if (side_effect_audit_enabled()) {
+        printf("[NATIVE_304BF0_AUDIT] name=\"%s\" entry_complete=%d note=path_A_host_fill "
+               "path_B=set_JJFB_304BF0_ENTRY_COMPLETE=0_to_run_native evidence=OBSERVED\n",
+               name, entry_complete_enabled());
+        fflush(stdout);
+    }
+
+    if (!entry_complete_enabled()) {
+        printf("[NATIVE_304BF0_CONTINUE] name=\"%s\" note=host_skip_entry_complete "
+               "guest_body_runs evidence=P6-1\n",
+               name);
+        fflush(stdout);
+        return 0; /* let native 0x304BF0 execute */
     }
 
     if (!may_complete_kind(kind)) return 0;

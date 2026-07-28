@@ -42,6 +42,7 @@
 #include "gwy_launcher/platform_call_census.h"
 #include "gwy_launcher/platform_mrp_resource_census.h"
 #include "gwy_launcher/platform_text_api.h"
+#include "gwy_launcher/boot_successor_trace.h"
 #include "gwy_launcher/platform_scheduler.h"
 #include "gwy_launcher/ext_abi_adapter.h"
 #include "gwy_launcher/ext_lifecycle.h"
@@ -954,6 +955,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_mrp_resource_bind_uc(uc);
     platform_mrp_resource_arm(uc);
     platform_text_api_arm();
+    boot_successor_trace_reset();
+    boot_successor_trace_arm(uc);
     product_callback_trace_reset();
     product_p4_reset();
     product_p5_reset();
@@ -1807,6 +1810,17 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                ev->event_code, ev->app, ev->handler, r9_run, abi.r2, abi.r3,
                (unsigned long long)ev->request_id);
         fflush(stdout);
+        {
+            uint32_t sp_now = 0, lr_now = 0;
+#ifdef GWY_HAVE_UNICORN
+            if (uc) {
+                uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp_now);
+                uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr_now);
+            }
+#endif
+            boot_successor_on_family_handler_enter(uc, ev->event_code, ev->app, ev->handler, abi.r0,
+                                                   abi.r1, abi.r2, abi.r3, sp_now, lr_now, r9_run);
+        }
 
         if (product_ffp_enabled()) {
             GwyEventDeliveryAbi dabi;
@@ -2003,6 +2017,13 @@ static void gwy_ext_obs_lifecycle_deliver(void *uc) {
 
     g_lifecycle_ticks++;
     platform_call_census_set_tick(g_lifecycle_ticks);
+#ifdef GWY_HAVE_UNICORN
+    if (uc && boot_successor_resource_count() >= 5u) {
+        uint32_t cur_pc = 0;
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &cur_pc);
+        boot_successor_on_pc(uc, cur_pc);
+    }
+#endif
     memset(&abi, 0, sizeof(abi));
     abi.set_r0 = 1;
     abi.r0 = 0;
@@ -3012,6 +3033,16 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     platform_call_census_note(r0, r1, caller_pc, ret);
     e10a31a_note_platform_api(uc, result.name, caller_pc, 0, r0, ret);
     platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
+    {
+        uint32_t spv = 0, r9v = 0;
+#ifdef GWY_HAVE_UNICORN
+        if (uc) {
+            uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &spv);
+            (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9v);
+        }
+#endif
+        boot_successor_on_platform(r0, r1, r2, r3, caller_pc, lr, spv, r9v);
+    }
     if (result.kind == GWY_PLAT_KIND_GRAPHICS_FP)
         platform_call_census_note_refresh();
     if (product_p4_enabled()) {
@@ -3590,6 +3621,7 @@ void gwy_ext_obs_mr_exit(void *uc) {
     ext_gwy_shell_shim_finalize("mr_exit");
     platform_call_census_dump("mr_exit");
     platform_mrp_resource_census_flush("mr_exit");
+    boot_successor_trace_flush("mr_exit");
 }
 
 static char g_continue_target[160];
