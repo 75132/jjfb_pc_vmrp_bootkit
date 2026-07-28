@@ -2,12 +2,14 @@
 
 #include "gwy_launcher/byte_buffer.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/jjfb_bitmap_geometry.h"
 #include "gwy_launcher/jjfbol_catalog.h"
 #include "gwy_launcher/jjfbol_scope.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/platform_mrp_resource_census.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/sha256.h"
 
@@ -19,6 +21,9 @@
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
 #endif
+
+/* Guest mallocExt USER ptr (header at -4). Declared in gwy_ext_obs. */
+extern uint32_t gwy_ext_obs_guest_malloc0(uint32_t size);
 
 #define POSTMATCH_MAX 256u
 #define NAME_MAX 255u
@@ -41,20 +46,22 @@ typedef struct {
     PendingState state;
     char package_name[128];
     char member_name[256];
-    uint32_t decoded_pixels;
+    uint32_t decoded_pixels; /* legacy diagnostic; durable source is host_pixels */
     uint32_t decoded_bytes;
     uint16_t width;
     uint16_t height;
     uint32_t guest_handle;
     uint32_t lookup_lr;
+    uint8_t *host_pixels;
 } PendingBitmapConstruct;
 
 static int g_en_known;
 static int g_en;
+static int g_raw_complete_en_known;
+static int g_raw_complete_en;
 static void *g_uc;
 static int g_entry_hook_armed;
 static int g_maps_ok;
-static uint32_t g_pixel_slot;
 static uint32_t g_postmatch_n;
 static CompletedResourceKey g_done_keys[POSTMATCH_MAX];
 static PendingBitmapConstruct g_pending[PENDING_MAX];
@@ -62,6 +69,9 @@ static uint32_t g_pending_n;
 static uint64_t g_pending_seq;
 static uint32_t g_last_hit_package_id;
 static char g_last_package_name[128];
+static int g_abi_trace_target_bmp;
+static int g_abi_trace_target_ani;
+static int g_abi_trace_txt;
 
 /* 0x304BF0 entry ABI snapshot (frame capture only). */
 static int g_entry_valid;
@@ -99,13 +109,80 @@ int platform_mrp_resource_enabled(void) {
     return g_en;
 }
 
+static void pending_free_slot(PendingBitmapConstruct *slot) {
+    if (!slot) return;
+    if (slot->host_pixels) {
+        free(slot->host_pixels);
+        slot->host_pixels = NULL;
+    }
+    memset(slot, 0, sizeof(*slot));
+}
+
+static int raw_blob_complete_enabled(void) {
+    if (!g_raw_complete_en_known) {
+        if (env_explicit_zero("JJFB_PLATFORM_MRP_RAW_BLOB"))
+            g_raw_complete_en = 0;
+        else
+            g_raw_complete_en = 1; /* P3-4+: default ON after contract */
+        g_raw_complete_en_known = 1;
+    }
+    return g_raw_complete_en;
+}
+
+GwyMrpResourceKind platform_mrp_resource_classify(const char *member_name) {
+    size_t n;
+    char ext[16];
+    size_t i;
+    if (!member_name || !member_name[0]) return GWY_MRP_RESOURCE_UNKNOWN;
+    n = strlen(member_name);
+    if (n > NAME_MAX) return GWY_MRP_RESOURCE_UNKNOWN;
+    ext[0] = 0;
+    {
+        const char *dot = strrchr(member_name, '.');
+        if (dot && dot[1]) {
+            size_t el = strlen(dot + 1);
+            if (el >= sizeof(ext)) el = sizeof(ext) - 1;
+            for (i = 0; i < el; i++) {
+                char c = dot[1 + i];
+                if (c >= 'A' && c <= 'Z') c = (char)(c - 'A' + 'a');
+                ext[i] = c;
+            }
+            ext[el] = 0;
+        }
+    }
+    if (strcmp(ext, "bmp") == 0 || strcmp(ext, "gif") == 0) return GWY_MRP_RESOURCE_BITMAP_RGB565;
+    if (strcmp(ext, "ani") == 0 || strcmp(ext, "txt") == 0) return GWY_MRP_RESOURCE_RAW_BLOB;
+    if (strcmp(ext, "ext") == 0 || strcmp(ext, "mr") == 0) return GWY_MRP_RESOURCE_MODULE;
+    if (!strchr(member_name, '.')) {
+        /* Extensionless: RAW candidate only if catalog knows it. */
+        if (jjfbol_catalog_ready()) {
+            JjfbolLookupResult lr;
+            if (jjfbol_catalog_lookup_exact(member_name, &lr) != JJFBOL_LOOKUP_MISS ||
+                jjfbol_catalog_lookup_casefold(member_name, &lr) != JJFBOL_LOOKUP_MISS)
+                return GWY_MRP_RESOURCE_RAW_BLOB;
+        }
+        return GWY_MRP_RESOURCE_UNKNOWN;
+    }
+    return GWY_MRP_RESOURCE_UNKNOWN;
+}
+
+static int may_complete_kind(GwyMrpResourceKind kind) {
+    if (kind == GWY_MRP_RESOURCE_BITMAP_RGB565) return 1;
+    if (kind == GWY_MRP_RESOURCE_RAW_BLOB) return raw_blob_complete_enabled();
+    return 0;
+}
+
 void platform_mrp_resource_pending_enqueue(const char *package_name, const char *member_name,
-                                          uint32_t decoded_pixels, uint32_t decoded_bytes,
+                                          const uint8_t *rgb565, uint32_t decoded_bytes,
                                           uint16_t w, uint16_t h, uint32_t guest_handle,
                                           uint32_t lookup_lr) {
     uint32_t i;
     PendingBitmapConstruct *slot = NULL;
-    if (decoded_bytes < 16u || !decoded_pixels) return;
+    uint8_t *owned = NULL;
+    if (decoded_bytes < 16u || !rgb565) return;
+    owned = (uint8_t *)malloc(decoded_bytes);
+    if (!owned) return;
+    memcpy(owned, rgb565, decoded_bytes);
     for (i = 0; i < PENDING_MAX; i++) {
         if (g_pending[i].state == PENDING_FREE) {
             slot = &g_pending[i];
@@ -113,7 +190,6 @@ void platform_mrp_resource_pending_enqueue(const char *package_name, const char 
         }
     }
     if (!slot) {
-        /* Drop oldest READY (not RESERVED). */
         uint64_t oldest = UINT64_MAX;
         int victim = -1;
         for (i = 0; i < PENDING_MAX; i++) {
@@ -122,9 +198,12 @@ void platform_mrp_resource_pending_enqueue(const char *package_name, const char 
                 victim = (int)i;
             }
         }
-        if (victim < 0) return;
+        if (victim < 0) {
+            free(owned);
+            return;
+        }
+        pending_free_slot(&g_pending[victim]);
         slot = &g_pending[victim];
-        memset(slot, 0, sizeof(*slot));
     }
     g_pending_seq++;
     slot->sequence = g_pending_seq;
@@ -132,16 +211,17 @@ void platform_mrp_resource_pending_enqueue(const char *package_name, const char 
     snprintf(slot->package_name, sizeof(slot->package_name), "%s",
              package_name ? package_name : "");
     snprintf(slot->member_name, sizeof(slot->member_name), "%s", member_name ? member_name : "");
-    slot->decoded_pixels = decoded_pixels;
+    slot->decoded_pixels = 0;
     slot->decoded_bytes = decoded_bytes;
     slot->width = w;
     slot->height = h;
     slot->guest_handle = guest_handle;
     slot->lookup_lr = lookup_lr;
+    slot->host_pixels = owned;
     g_pending_n++;
     {
         char det[192];
-        snprintf(det, sizeof(det), "seq=%llu bytes=0x%X member=%s depth=%u",
+        snprintf(det, sizeof(det), "seq=%llu bytes=0x%X member=%s depth=%u host_owned=1",
                  (unsigned long long)slot->sequence, decoded_bytes,
                  member_name ? member_name : "?", platform_mrp_resource_pending_depth());
         product_runtime_progress_emit("pending_bitmap_enqueue", "fifo", det);
@@ -156,15 +236,30 @@ uint64_t platform_mrp_resource_pending_reserve(uint32_t bytes, uint32_t *out_gue
     if (bytes < 16u) return 0;
     for (i = 0; i < PENDING_MAX; i++) {
         if (g_pending[i].state == PENDING_READY && g_pending[i].decoded_bytes == bytes &&
-            g_pending[i].sequence < best_seq) {
+            g_pending[i].host_pixels && g_pending[i].sequence < best_seq) {
             best_seq = g_pending[i].sequence;
             best = (int)i;
         }
     }
     if (best < 0) return 0;
     g_pending[best].state = PENDING_RESERVED;
-    if (out_guest_pixels) *out_guest_pixels = g_pending[best].decoded_pixels;
+    /* fill_buf no longer carries map VA; executor uses pending_id + host_pixels. */
+    if (out_guest_pixels) *out_guest_pixels = 0;
     return g_pending[best].sequence;
+}
+
+int platform_mrp_resource_pending_copy_pixels(uint64_t pending_id, void *dst_host,
+                                             uint32_t dst_bytes) {
+    uint32_t i;
+    if (!pending_id || !dst_host || dst_bytes < 16u) return 0;
+    for (i = 0; i < PENDING_MAX; i++) {
+        if (g_pending[i].sequence == pending_id && g_pending[i].state == PENDING_RESERVED &&
+            g_pending[i].host_pixels && g_pending[i].decoded_bytes == dst_bytes) {
+            memcpy(dst_host, g_pending[i].host_pixels, dst_bytes);
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int platform_mrp_resource_pending_commit(uint64_t pending_id) {
@@ -172,7 +267,7 @@ int platform_mrp_resource_pending_commit(uint64_t pending_id) {
     if (!pending_id) return 0;
     for (i = 0; i < PENDING_MAX; i++) {
         if (g_pending[i].sequence == pending_id && g_pending[i].state == PENDING_RESERVED) {
-            memset(&g_pending[i], 0, sizeof(g_pending[i]));
+            pending_free_slot(&g_pending[i]);
             product_runtime_progress_emit("pending_bitmap_commit", "fifo", "ok");
             return 1;
         }
@@ -185,7 +280,7 @@ int platform_mrp_resource_pending_release(uint64_t pending_id) {
     if (!pending_id) return 0;
     for (i = 0; i < PENDING_MAX; i++) {
         if (g_pending[i].sequence == pending_id && g_pending[i].state == PENDING_RESERVED) {
-            g_pending[i].state = PENDING_READY; /* allow retry */
+            g_pending[i].state = PENDING_READY; /* allow retry; keep host_pixels */
             product_runtime_progress_emit("pending_bitmap_release", "fifo", "retry");
             return 1;
         }
@@ -208,23 +303,57 @@ void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, ui
 
 void platform_mrp_resource_note_pixels_ex(uint32_t bytes, uint32_t guest_pixels,
                                          uint32_t handle_guest, uint16_t w, uint16_t h) {
-    platform_mrp_resource_pending_enqueue(g_last_package_name, "", guest_pixels, bytes, w, h,
+    uint8_t *tmp;
+    (void)guest_pixels;
+    if (bytes < 16u) return;
+    tmp = (uint8_t *)calloc(1, bytes);
+    if (!tmp) return;
+    platform_mrp_resource_pending_enqueue(g_last_package_name, "note_pixels", tmp, bytes, w, h,
                                           handle_guest, 0);
+    free(tmp); /* enqueue copies */
 }
 
 uint32_t platform_mrp_resource_pixels_by_bytes(uint32_t bytes) {
     uint32_t i;
-    uint64_t best_seq = UINT64_MAX;
-    uint32_t px = 0;
     if (bytes < 16u) return 0;
     for (i = 0; i < PENDING_MAX; i++) {
         if ((g_pending[i].state == PENDING_READY || g_pending[i].state == PENDING_RESERVED) &&
-            g_pending[i].decoded_bytes == bytes && g_pending[i].sequence < best_seq) {
-            best_seq = g_pending[i].sequence;
-            px = g_pending[i].decoded_pixels;
-        }
+            g_pending[i].decoded_bytes == bytes && g_pending[i].host_pixels)
+            return 1; /* non-zero = has pending source (not a guest VA) */
     }
-    return px;
+    return 0;
+}
+
+int platform_mrp_resource_apply_ani_atlas_alias(const char *ani_package, const char *requested,
+                                               char *out_name, size_t out_cap) {
+    if (!requested || !out_name || out_cap < 2) return 0;
+    out_name[0] = 0;
+    /* Prefer case-fold for first two; exact rule for png path typo. */
+    if (strcmp(requested, "monserModel!51!56.bmp") == 0) {
+        snprintf(out_name, out_cap, "%s", "monsermodel!51!56.bmp");
+        printf("[ANI_ATLAS_ALIAS] source=\"%s\" target=\"%s\" ani_package=\"%s\" "
+               "evidence=casefold_typo\n",
+               requested, out_name, ani_package ? ani_package : "");
+        fflush(stdout);
+        return 1;
+    }
+    if (strcmp(requested, "npcModel!17!30.bmp") == 0) {
+        snprintf(out_name, out_cap, "%s", "npcmodel!17!30.bmp");
+        printf("[ANI_ATLAS_ALIAS] source=\"%s\" target=\"%s\" ani_package=\"%s\" "
+               "evidence=casefold_typo\n",
+               requested, out_name, ani_package ? ani_package : "");
+        fflush(stdout);
+        return 1;
+    }
+    if (strcmp(requested, "/238_1!57!56@monster8.png") == 0) {
+        snprintf(out_name, out_cap, "%s", "238_1!57!56@monster8.bmp");
+        printf("[ANI_ATLAS_ALIAS] source=\"%s\" target=\"%s\" ani_package=\"%s\" "
+               "evidence=audited_historical_exact\n",
+               requested, out_name, ani_package ? ani_package : "");
+        fflush(stdout);
+        return 1;
+    }
+    return 0;
 }
 
 int platform_mrp_resource_bind_10134_pixels(void *uc, uint32_t bytes, uint32_t user_pixels) {
@@ -238,18 +367,24 @@ int platform_mrp_resource_bind_10134_pixels(void *uc, uint32_t bytes, uint32_t u
 }
 
 void platform_mrp_resource_reset(void) {
+    uint32_t i;
     g_en_known = 0;
     g_en = 0;
+    g_raw_complete_en_known = 0;
+    g_raw_complete_en = 0;
     g_uc = NULL;
     g_entry_valid = 0;
-    g_pixel_slot = 0;
     g_postmatch_n = 0;
     g_pending_n = 0;
     g_pending_seq = 0;
     g_last_hit_package_id = 0;
     g_last_package_name[0] = 0;
+    g_abi_trace_target_bmp = 0;
+    g_abi_trace_target_ani = 0;
+    g_abi_trace_txt = 0;
     memset(g_done_keys, 0, sizeof(g_done_keys));
-    memset(g_pending, 0, sizeof(g_pending));
+    for (i = 0; i < PENDING_MAX; i++) pending_free_slot(&g_pending[i]);
+    platform_mrp_resource_census_reset();
     jjfbol_scope_bump_generation();
     /* Keep unicorn hooks / maps for process lifetime. */
 }
@@ -282,7 +417,8 @@ static void mark_done(const char *name, uint32_t package_id) {
     g_postmatch_n++;
 }
 
-static int looks_like_member_name(const char *s) {
+/* Legacy bitmap-only filter kept for census pass/fail comparison. */
+static int looks_like_bitmap_legacy(const char *s) {
     size_t n;
     if (!s || !s[0]) return 0;
     n = strlen(s);
@@ -292,22 +428,6 @@ static int looks_like_member_name(const char *s) {
                    strcmp(s + n - 4, ".gif") == 0 || strcmp(s + n - 4, ".GIF") == 0))
         return 1;
     return 0;
-}
-
-static int parse_name_wh(const char *name, int *out_w, int *out_h) {
-    const char *p;
-    int w = 0, h = 0;
-    if (!name || !out_w || !out_h) return 0;
-    p = strchr(name, '!');
-    if (!p) return 0;
-    w = atoi(p + 1);
-    p = strchr(p + 1, '!');
-    if (!p) return 0;
-    h = atoi(p + 1);
-    if (w <= 0 || h <= 0 || w > 240 || h > 320) return 0;
-    *out_w = w;
-    *out_h = h;
-    return 1;
 }
 
 static int read_guest_cstr(void *uc, uint32_t va, char *out, size_t cap) {
@@ -526,13 +646,17 @@ int platform_mrp_resource_load_host(const char *package_host_path, const char *m
     LauncherError err;
     LauncherStatus st;
     uint8_t digest[32];
-    int w = 0, h = 0;
+    uint16_t w = 0, h = 0;
+    const char *evidence = NULL;
     char path_buf[512];
+    GwyMrpResourceKind kind;
 
     if (out) memset(out, 0, sizeof(*out));
     if (decoded_out) *decoded_out = NULL;
     if (decoded_len_out) *decoded_len_out = 0;
     if (!member_name || !member_name[0]) return 0;
+    kind = platform_mrp_resource_classify(member_name);
+    if (kind != GWY_MRP_RESOURCE_BITMAP_RGB565 && kind != GWY_MRP_RESOURCE_RAW_BLOB) return 0;
 
     if (!package_host_path || !package_host_path[0])
         package_host_path = resolve_package_host_path(path_buf, sizeof(path_buf));
@@ -546,15 +670,23 @@ int platform_mrp_resource_load_host(const char *package_host_path, const char *m
     }
     byte_buffer_init(&bb);
     st = mrp_archive_decode_member(arch, mem, 1024u * 1024u, &bb, &err);
-    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > (240u * 320u * 2u)) {
+    if (st != L_OK || !bb.data || bb.size == 0) {
         byte_buffer_free(&bb);
         mrp_archive_close(arch);
         return 0;
     }
-    (void)parse_name_wh(member_name, &w, &h);
-    if (w <= 0 || h <= 0) {
-        w = 11;
-        h = 11;
+    if (kind == GWY_MRP_RESOURCE_BITMAP_RGB565) {
+        if (bb.size > (240u * 320u * 2u)) {
+            byte_buffer_free(&bb);
+            mrp_archive_close(arch);
+            return 0;
+        }
+        if (!jjfb_resolve_bitmap_geometry(package_host_path, member_name, (uint32_t)bb.size, &w, &h,
+                                          &evidence)) {
+            byte_buffer_free(&bb);
+            mrp_archive_close(arch);
+            return 0;
+        }
     }
     gwy_sha256(bb.data, bb.size, digest);
     if (out) {
@@ -562,8 +694,9 @@ int platform_mrp_resource_load_host(const char *package_host_path, const char *m
         out->decoded_size = (uint32_t)bb.size;
         out->stored_size = mem->stored_size;
         out->member_offset = mem->offset;
-        out->width = (uint16_t)w;
-        out->height = (uint16_t)h;
+        out->width = w;
+        out->height = h;
+        out->kind = kind;
         gwy_sha256_hex(digest, out->sha256_hex);
     }
     if (decoded_out && decoded_len_out) {
@@ -590,8 +723,11 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
     LauncherStatus st;
     uint8_t digest[32];
     uint8_t stub[0x20];
-    int w = 0, h = 0;
-    uint32_t slot_va, handle_va, sz, px;
+    uint16_t w = 0, h = 0;
+    const char *geom_ev = NULL;
+    uint32_t handle_va, sz;
+    GwyMrpResourceKind kind;
+    char lookup_name[NAME_MAX + 1];
 
     if (result) memset(result, 0, sizeof(*result));
     if (!uc || !request) return 0;
@@ -601,13 +737,24 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
         snprintf(name, sizeof(name), "%s", request->name);
     else if (request->guest_name_ptr)
         (void)read_guest_cstr(uc, request->guest_name_ptr, name, sizeof(name));
-    if (!name[0] || !looks_like_member_name(name)) return 0;
+    if (!name[0]) return 0;
+
+    kind = platform_mrp_resource_classify(name);
+    if (!may_complete_kind(kind)) return 0;
+
+    snprintf(lookup_name, sizeof(lookup_name), "%s", name);
+    if (kind == GWY_MRP_RESOURCE_BITMAP_RGB565) {
+        char alias[NAME_MAX + 1];
+        if (platform_mrp_resource_apply_ani_atlas_alias(g_last_package_name, name, alias,
+                                                       sizeof(alias)))
+            snprintf(lookup_name, sizeof(lookup_name), "%s", alias);
+    }
 
     {
         char path_resolved[1024];
         uint32_t pkg_id = 0;
         LauncherError e2;
-        if (!resolve_member_package(name, path_resolved, sizeof(path_resolved), &pkg_id)) {
+        if (!resolve_member_package(lookup_name, path_resolved, sizeof(path_resolved), &pkg_id)) {
             return 0;
         }
         if (name_already_done(name, pkg_id)) return 0;
@@ -628,10 +775,9 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
         memset(&e2, 0, sizeof(e2));
         st = mrp_archive_open(path_buf, &arch, &e2);
         if (st != L_OK || !arch) return 0;
-        st = mrp_archive_find_exact(arch, name, &mem, &e2);
+        st = mrp_archive_find_exact(arch, lookup_name, &mem, &e2);
         if (st != L_OK || !mem) {
-            /* Try casefold find on same pack for catalog casefold hits. */
-            st = mrp_archive_find_casefold(arch, name, &mem, &e2);
+            st = mrp_archive_find_casefold(arch, lookup_name, &mem, &e2);
             if (st != L_OK || !mem) {
                 mrp_archive_close(arch);
                 return 0;
@@ -656,7 +802,7 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
 
     byte_buffer_init(&bb);
     st = mrp_archive_decode_member(arch, mem, 1024u * 1024u, &bb, &err);
-    if (st != L_OK || !bb.data || bb.size == 0 || bb.size > (240u * 320u * 2u)) {
+    if (st != L_OK || !bb.data || bb.size == 0) {
         printf("[PLATFORM_MRP_RES] decode_fail name=\"%s\" status=%d size=%u evidence=OBSERVED\n",
                name, (int)st, (unsigned)bb.size);
         fflush(stdout);
@@ -664,77 +810,116 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
         mrp_archive_close(arch);
         return 0;
     }
-    (void)parse_name_wh(name, &w, &h);
-    if (w <= 0 || h <= 0) {
-        w = 11;
-        h = 11;
-    }
-    gwy_sha256(bb.data, bb.size, digest);
 
-    /* Decode into size→pixels cache for 0x10134. Do NOT install a freeable pixel
-     * pointer into the handle: guest @0x3045E4 calls DSM mr_free(old) before
-     * adopting the 10134 buffer; a host-synthesized ptr trips mr_free invalid.
-     * Handle keeps size/wh/flag; pixels stay 0 until 10134 returns. */
-    sz = (uint32_t)bb.size;
-    px = 0;
-    {
-        uint32_t need =
-            (((uint32_t)bb.size + 0x1FFu) & ~0x1FFu);
-        if (need < 0x200u) need = 0x200u;
-        slot_va = PLATFORM_MRP_PIXEL_BASE + g_pixel_slot;
-        if (slot_va + need > PLATFORM_MRP_PIXEL_BASE + PLATFORM_MRP_PIXEL_MAP_SIZE) {
-            slot_va = PLATFORM_MRP_PIXEL_BASE;
-            g_pixel_slot = 0;
+    if (kind == GWY_MRP_RESOURCE_BITMAP_RGB565) {
+        if (bb.size > (240u * 320u * 2u)) {
+            byte_buffer_free(&bb);
+            mrp_archive_close(arch);
+            return 0;
         }
-        g_pixel_slot += need;
-        if (!guest_memory_uc_poke((struct uc_struct *)uc, slot_va, bb.data, (int)bb.size)) {
-            printf("[PLATFORM_MRP_RES] poke_fail pixels slot=0x%X size=%u evidence=OBSERVED\n",
-                   slot_va, (unsigned)bb.size);
+        if (!jjfb_resolve_bitmap_geometry(g_last_package_name, lookup_name, (uint32_t)bb.size, &w,
+                                          &h, &geom_ev)) {
+            byte_buffer_free(&bb);
+            mrp_archive_close(arch);
+            return 0;
+        }
+    }
+
+    gwy_sha256(bb.data, bb.size, digest);
+    sz = (uint32_t)bb.size;
+
+    handle_va = PLATFORM_MRP_HANDLE_BASE + 0x40u + (g_postmatch_n % 6u) * 0x40u;
+    if (g_entry_valid && g_entry_r3 >= 0x1000u) handle_va = g_entry_r3;
+
+    if (kind == GWY_MRP_RESOURCE_BITMAP_RGB565) {
+        /*
+         * BITMAP: size/w/h/flag; pixels stay 0 until 0x10134.
+         * Pending owns host_pixels copy — no wrapping guest pixel map.
+         */
+        memset(stub, 0, sizeof(stub));
+        memcpy(stub + 0, &sz, 4);
+        stub[8] = (uint8_t)(w & 0xFF);
+        stub[9] = (uint8_t)((w >> 8) & 0xFF);
+        stub[10] = (uint8_t)(h & 0xFF);
+        stub[11] = (uint8_t)((h >> 8) & 0xFF);
+        stub[16] = 1;
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
+        platform_mrp_resource_pending_enqueue(g_last_package_name, name, bb.data, sz, w, h,
+                                              handle_va, g_entry_valid ? g_entry_lr : 0);
+        if (result) {
+            result->status = 0;
+            result->guest_data = 0;
+            result->decoded_size = sz;
+            result->stored_size = mem->stored_size;
+            result->member_offset = mem->offset;
+            result->handle_guest = handle_va;
+            result->width = w;
+            result->height = h;
+            result->kind = kind;
+            gwy_sha256_hex(digest, result->sha256_hex);
+        }
+        printf("[PLATFORM_MRP_RES] loaded name=\"%s\" kind=BITMAP offset=%u stored=%u decoded=%u "
+               "w=%u h=%u geom=%s sha256=%s handle=0x%X note=host_pixels_pending "
+               "evidence=OBSERVED\n",
+               name, mem->offset, mem->stored_size, sz, w, h, geom_ev ? geom_ev : "?",
+               result ? result->sha256_hex : "?", handle_va);
+    } else {
+        /*
+         * RAW_BLOB contract (P3-3/P4 closed):
+         *   out+0x00 = u32 size (decoded bytes)
+         *   out+0x04 = u32 data VA (guest-owned mallocExt USER ptr, prefilled)
+         *   out+0x08 = u16 0 (no width)
+         *   out+0x0A = u16 0 (no height)
+         *   out+0x10 = u8  1 (present flag)
+         * Ownership: guest frees via mr_free(data); host does not enqueue 0x10134.
+         * Return status r0=0.
+         */
+        uint32_t data_va = gwy_ext_obs_guest_malloc0(sz);
+        if (!data_va ||
+            !guest_memory_uc_poke((struct uc_struct *)uc, data_va, bb.data, (int)bb.size)) {
+            printf("[PLATFORM_MRP_RES] raw_blob_alloc_or_poke_fail name=\"%s\" size=%u "
+                   "evidence=OBSERVED\n",
+                   name, sz);
             fflush(stdout);
             byte_buffer_free(&bb);
             mrp_archive_close(arch);
             return 0;
         }
-        px = slot_va; /* cache source only — not a mallocExt user ptr */
+        memset(stub, 0, sizeof(stub));
+        memcpy(stub + 0, &sz, 4);
+        memcpy(stub + 4, &data_va, 4);
+        stub[16] = 1;
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
+        if (result) {
+            result->status = 0;
+            result->guest_data = data_va;
+            result->decoded_size = sz;
+            result->stored_size = mem->stored_size;
+            result->member_offset = mem->offset;
+            result->handle_guest = handle_va;
+            result->width = 0;
+            result->height = 0;
+            result->kind = kind;
+            gwy_sha256_hex(digest, result->sha256_hex);
+        }
+        if (strstr(name, ".ani") || strstr(name, ".ANI")) {
+            printf("[ANI_RAW_LOADED] name=\"%s\" size=%u data=0x%X handle=0x%X evidence=OBSERVED\n",
+                   name, sz, data_va, handle_va);
+            if (bb.size >= 8 && memcmp(bb.data, "JCANI011", 8) == 0)
+                printf("[ANI_MAGIC_CHECK] name=\"%s\" ok=1 evidence=OBSERVED\n", name);
+            else
+                printf("[ANI_MAGIC_CHECK] name=\"%s\" ok=0 evidence=OBSERVED\n", name);
+            fflush(stdout);
+            product_runtime_progress_emit("ani_raw_loaded", "raw_blob", name);
+        }
+        printf("[PLATFORM_MRP_RES] loaded name=\"%s\" kind=RAW_BLOB offset=%u stored=%u "
+               "decoded=%u data=0x%X handle=0x%X note=no_10134 evidence=OBSERVED\n",
+               name, mem->offset, mem->stored_size, sz, data_va, handle_va);
     }
-
-    handle_va = PLATFORM_MRP_HANDLE_BASE + 0x40u + (g_postmatch_n % 6u) * 0x40u;
-    /* Prefer caller object when entry captured r3 as out-object. */
-    if (g_entry_valid && g_entry_r3 >= 0x1000u) handle_va = g_entry_r3;
-
-    memset(stub, 0, sizeof(stub));
-    memcpy(stub + 0, &sz, 4);
-    /* pixels field intentionally 0 — 10134 supplies mallocExt buffer. */
-    stub[8] = (uint8_t)(w & 0xFF);
-    stub[9] = (uint8_t)((w >> 8) & 0xFF);
-    stub[10] = (uint8_t)(h & 0xFF);
-    stub[11] = (uint8_t)((h >> 8) & 0xFF);
-    stub[16] = 1;
-    (void)guest_memory_uc_poke((struct uc_struct *)uc, handle_va, stub, 0x14);
-    /* Do not poke entry_r2 with map VA (not freeable). */
-
-    if (result) {
-        result->status = 0;
-        result->guest_data = px;
-        result->decoded_size = sz;
-        result->stored_size = mem->stored_size;
-        result->member_offset = mem->offset;
-        result->handle_guest = handle_va;
-        result->width = (uint16_t)w;
-        result->height = (uint16_t)h;
-        gwy_sha256_hex(digest, result->sha256_hex);
-    }
+    fflush(stdout);
 
     mark_done(name, g_last_hit_package_id);
-    platform_mrp_resource_pending_enqueue(g_last_package_name, name, px, sz, (uint16_t)w,
-                                         (uint16_t)h, handle_va,
-                                         g_entry_valid ? g_entry_lr : 0);
-    printf("[PLATFORM_MRP_RES] loaded name=\"%s\" offset=%u stored=%u decoded=%u w=%d h=%d "
-           "sha256=%s handle=0x%X cache_pixels=0x%X note=handle_pixels_deferred_to_10134 "
-           "evidence=OBSERVED\n",
-           name, mem->offset, mem->stored_size, sz, w, h, result ? result->sha256_hex : "?",
-           handle_va, px);
-    fflush(stdout);
+    platform_mrp_resource_census_note_complete(name);
     product_runtime_progress_emit("platform_mrp_resource", "member_loaded", name);
 
     byte_buffer_free(&bb);
@@ -774,11 +959,43 @@ static int try_304bf0_entry_complete(uc_engine *uc) {
     char name[NAME_MAX + 1];
     GwyMrpResourceRequest req;
     GwyMrpResourceResult res;
+    GwyMrpResourceKind kind;
+    int legacy_ok;
+    uint8_t pre_obj[0x40];
 
     if (!uc || !g_entry_valid || !g_entry_r1) return 0;
     memset(name, 0, sizeof(name));
     if (!read_guest_cstr(uc, g_entry_r1, name, sizeof(name))) return 0;
-    if (!looks_like_member_name(name)) return 0;
+
+    kind = platform_mrp_resource_classify(name);
+    legacy_ok = looks_like_bitmap_legacy(name);
+    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr, legacy_ok,
+                                     may_complete_kind(kind) ? "load_attempt"
+                                     : (kind == GWY_MRP_RESOURCE_RAW_BLOB ? "raw_deferred"
+                                                                         : "reject_filter"));
+
+    /* P3-3 ABI observe for key names (entry regs + out-object). */
+    if ((!g_abi_trace_target_bmp && strcmp(name, "target!65!25.bmp") == 0) ||
+        (!g_abi_trace_target_ani && strcmp(name, "target.ani") == 0) ||
+        (!g_abi_trace_txt && (strstr(name, ".txt") || strstr(name, ".TXT")))) {
+        memset(pre_obj, 0, sizeof(pre_obj));
+        if (g_entry_r3 >= 0x1000u)
+            (void)guest_memory_uc_peek((struct uc_struct *)uc, g_entry_r3, pre_obj, 0x40);
+        printf("[RAW_BLOB_ABI_ENTRY] name=\"%s\" r0=0x%X r1=0x%X r2=0x%X r3=0x%X sp=0x%X lr=0x%X "
+               "out40=",
+               name, g_entry_r0, g_entry_r1, g_entry_r2, g_entry_r3, g_entry_sp, g_entry_lr);
+        {
+            int bi;
+            for (bi = 0; bi < 0x40; bi++) printf("%02X", pre_obj[bi]);
+        }
+        printf(" evidence=OBSERVED\n");
+        fflush(stdout);
+        if (strcmp(name, "target!65!25.bmp") == 0) g_abi_trace_target_bmp = 1;
+        if (strcmp(name, "target.ani") == 0) g_abi_trace_target_ani = 1;
+        if (strstr(name, ".txt") || strstr(name, ".TXT")) g_abi_trace_txt = 1;
+    }
+
+    if (!may_complete_kind(kind)) return 0;
 
     memset(&req, 0, sizeof(req));
     snprintf(req.name, sizeof(req.name), "%s", name);
@@ -795,6 +1012,7 @@ static int on_strcmp_match(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t
     const char *name = NULL;
     GwyMrpResourceRequest req;
     GwyMrpResourceResult res;
+    GwyMrpResourceKind kind;
 
     if (!platform_mrp_resource_enabled()) return 0;
     if (cmp != 0) return 0; /* true miss — never force equal */
@@ -804,12 +1022,17 @@ static int on_strcmp_match(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t
     memset(b, 0, sizeof(b));
     (void)read_guest_cstr(uc, a_guest, a, sizeof(a));
     (void)read_guest_cstr(uc, b_guest, b, sizeof(b));
-    if (looks_like_member_name(a))
-        name = a;
-    else if (looks_like_member_name(b))
+    if (a[0]) name = a;
+    else if (b[0])
         name = b;
     else
         return 0;
+
+    kind = platform_mrp_resource_classify(name);
+    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr,
+                                     looks_like_bitmap_legacy(name),
+                                     may_complete_kind(kind) ? "load_attempt" : "reject_filter");
+    if (!may_complete_kind(kind)) return 0;
 
     memset(&req, 0, sizeof(req));
     snprintf(req.name, sizeof(req.name), "%s", name);
@@ -830,6 +1053,7 @@ void platform_mrp_resource_arm(void *uc) {
     g_uc = uc;
 
     platform_strcmp_set_match_hook(on_strcmp_match);
+    platform_mrp_resource_census_arm();
 
     if (!platform_mrp_resource_enabled()) {
         printf("[PLATFORM_MRP_RES] arm skipped enabled=0 evidence=OBSERVED\n");
@@ -837,7 +1061,6 @@ void platform_mrp_resource_arm(void *uc) {
         return;
     }
 
-    /* Phase 2: catalog index only — does not change 304BF0 lookup yet. */
     if (!jjfbol_catalog_ready()) {
         const char *rr = getenv("GWY_RESOURCE_ROOT");
         if (rr && rr[0]) {
@@ -862,8 +1085,8 @@ void platform_mrp_resource_arm(void *uc) {
         } else {
             g_entry_hook_armed = 1;
             printf("[PLATFORM_MRP_RES] armed entry_frame_capture=0x%X strcmp_match_hook=1 "
-                   "entry_complete=1 sibling=default2 note=no_force_equal evidence=OBSERVED\n",
-                   entry);
+                   "entry_complete=1 raw_blob=%d census=1 note=no_force_equal evidence=OBSERVED\n",
+                   entry, raw_blob_complete_enabled());
             fflush(stdout);
         }
     }

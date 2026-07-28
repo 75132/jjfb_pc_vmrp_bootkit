@@ -88,6 +88,10 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_memory_ops.c
     src/platform/platform_display.c
     src/platform/platform_mrp_resource.c
+    src/platform/platform_mrp_resource_census.c
+    src/platform/jjfb_bitmap_geometry.c
+    src/platform/jjfb_uc2_font.c
+    src/platform/platform_text_api.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c
@@ -389,6 +393,10 @@ add_test(NAME ext_gwy_shell_shim COMMAND test_ext_gwy_shell_shim)
 add_executable(test_platform_mrp_resource tests/unit/test_platform_mrp_resource.c)
 gwy_link_product_runtime(test_platform_mrp_resource)
 add_test(NAME platform_mrp_resource COMMAND test_platform_mrp_resource)
+
+add_executable(test_jjfb_bitmap_geometry tests/unit/test_jjfb_bitmap_geometry.c)
+gwy_link_product_runtime(test_jjfb_bitmap_geometry)
+add_test(NAME jjfb_bitmap_geometry COMMAND test_jjfb_bitmap_geometry)
 
 add_executable(test_platform_identity tests/unit/test_platform_identity.c)
 gwy_link_product_runtime(test_platform_identity)

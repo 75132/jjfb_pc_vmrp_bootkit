@@ -134,16 +134,17 @@ int main(void) {
         return 1;
     }
 
-    /* 0x10134: ALLOC+copy when postmatch seeded the size map (mallocExt user ptr). */
+    /* 0x10134: ALLOC+copy when pending has host_pixels (pending_id != 0). */
     platform_mrp_resource_note_pixels(0x2D8Au, 0x3920000u, 201, 29);
     memset(&call, 0, sizeof(call));
     call.code = 0x10134u;
     call.app = 0x2D8Au;
     platform_send_app_event_classify(&call, &out);
     if (!expect_kind("10134_copy", out.kind, GWY_PLAT_KIND_ALLOC) || out.alloc_size != 0x2D8Au ||
-        out.fill_buf != 0x3920000u) {
-        fprintf(stderr, "10134 copy classify mismatch kind=%d size=%u fill=0x%X\n", (int)out.kind,
-                out.alloc_size, out.fill_buf);
+        out.resource_pending_id == 0) {
+        fprintf(stderr, "10134 copy classify mismatch kind=%d size=%u pending=%llu fill=0x%X\n",
+                (int)out.kind, out.alloc_size, (unsigned long long)out.resource_pending_id,
+                out.fill_buf);
         return 1;
     }
     platform_mrp_resource_reset();

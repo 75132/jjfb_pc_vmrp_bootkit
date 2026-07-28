@@ -503,3 +503,11 @@ int platform_drawfp_cache_publish(void *uc, uint32_t er_rw, uint32_t mr_table) {
 uint32_t platform_drawfp_call_count(void) { return g_call_n; }
 uint32_t platform_drawfp_reject_count(void) { return g_reject_n; }
 uint32_t platform_drawfp_drawn_count(void) { return g_drawn_n; }
+
+uint16_t *platform_display_framebuffer(uint32_t *out_w, uint32_t *out_h) {
+    return surface_fb(out_w, out_h);
+}
+
+int platform_display_present_rect(int32_t x, int32_t y, int32_t w, int32_t h) {
+    return platform_display_disp_up_ex(x, y, w, h);
+}

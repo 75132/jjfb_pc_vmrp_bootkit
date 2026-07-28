@@ -40,6 +40,8 @@
 #include "gwy_launcher/platform_timer.h"
 #include "gwy_launcher/platform_handler_registry.h"
 #include "gwy_launcher/platform_call_census.h"
+#include "gwy_launcher/platform_mrp_resource_census.h"
+#include "gwy_launcher/platform_text_api.h"
 #include "gwy_launcher/platform_scheduler.h"
 #include "gwy_launcher/ext_abi_adapter.h"
 #include "gwy_launcher/ext_lifecycle.h"
@@ -951,6 +953,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_mrp_resource_reset();
     platform_mrp_resource_bind_uc(uc);
     platform_mrp_resource_arm(uc);
+    platform_text_api_arm();
     product_callback_trace_reset();
     product_p4_reset();
     product_p5_reset();
@@ -2408,9 +2411,13 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     robotol_idle_watch_helper_fx_begin(r0, r1);
     robotol_idle_watch_try_arm(uc);
 
-    /* E9O: formal platform drawText 0x11F00 (via 2F2360 → 304558 → slot+0x28).
-     * Prefer JJFB_PLATFORM_TEXT_API_11F00 over E9N diagnostic textshim. */
+    /* Product UC2 text (P4) before research stubs. */
     if (r0 == 0x11F00u) {
+        if (platform_text_api_handle_11f00(uc, r1, r2, r3, pc, lr)) {
+            ret = 0;
+            ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+            return ret;
+        }
         if (jjfb_plat_11f00_handle(uc, r1, r2, r3, pc, lr)) {
             ret = 0; /* MR_SUCCESS */
             ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
@@ -2433,6 +2440,11 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
 
     /* E9Q: formal platform text-measure 0x12340. Outs flushed @ 0x305EA0 via R4/R7. */
     if (r0 == 0x12340u) {
+        if (platform_text_api_handle_12340(uc, r1, r2, r3, pc, lr, sp)) {
+            ret = 0;
+            ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+            return ret;
+        }
         if (jjfb_plat_12340_handle(uc, r1, r2, r3, pc, lr, sp)) {
             ret = 0; /* MR_SUCCESS */
             ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
@@ -2588,20 +2600,17 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                     void *host = g_guest_alloc(need);
                     if (host) {
                         memset(host, 0, need);
-                        if (result.fill_buf && uc) {
-                            if (!guest_memory_uc_peek((struct uc_struct *)uc, result.fill_buf, host,
-                                                      need)) {
-                                printf("[PLATFORM_10134] copy_src_unmapped src=0x%X size=0x%X "
+                        if (result.resource_pending_id) {
+                            if (!platform_mrp_resource_pending_copy_pixels(result.resource_pending_id,
+                                                                          host, need)) {
+                                printf("[PLATFORM_10134] pending_copy_fail id=%llu size=0x%X "
                                        "evidence=OBSERVED\n",
-                                       result.fill_buf, need);
+                                       (unsigned long long)result.resource_pending_id, need);
                                 fflush(stdout);
-                                if (result.resource_pending_id)
-                                    platform_mrp_resource_pending_release(result.resource_pending_id);
-                            } else if (result.resource_pending_id) {
+                                platform_mrp_resource_pending_release(result.resource_pending_id);
+                            } else {
                                 platform_mrp_resource_pending_commit(result.resource_pending_id);
                             }
-                        } else if (result.resource_pending_id) {
-                            platform_mrp_resource_pending_release(result.resource_pending_id);
                         }
                         ret = g_guest_to_ptr(host);
                         /*
@@ -3269,6 +3278,7 @@ void gwy_ext_obs_code_image(uint32_t guest_addr, uint32_t size) {
     platform_memcpy_import_arm(g_bound_uc);
     platform_mrp_resource_bind_uc(g_bound_uc);
     platform_mrp_resource_arm(g_bound_uc);
+    platform_text_api_arm();
     ext_loader_on_code_image(L, guest_addr, size);
     ext_entry_observe_bootstrap_event("CODE_IMAGE");
     ext_module_entry_abi_on_code_image(guest_addr, size);
@@ -3579,6 +3589,7 @@ void gwy_ext_obs_mr_exit(void *uc) {
     ext_gwy_shell_native_exec_finalize("mr_exit");
     ext_gwy_shell_shim_finalize("mr_exit");
     platform_call_census_dump("mr_exit");
+    platform_mrp_resource_census_flush("mr_exit");
 }
 
 static char g_continue_target[160];

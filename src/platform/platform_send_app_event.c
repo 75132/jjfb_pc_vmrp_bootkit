@@ -432,10 +432,10 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
         }
         out->kind = GWY_PLAT_KIND_ALLOC;
         out->alloc_size = call->app;
-        out->fill_buf = px; /* 0 → zero fill; else copy from guest VA */
-        out->name = px ? "plat_10134_rgb565_copy" : "plat_10134_rgb565_alloc";
-        out->evidence = px ? "TARGET_OBSERVED+pending_fifo_reserve"
-                           : "TARGET_OBSERVED+legacy_bridge_size_fallback";
+        out->fill_buf = 0; /* host_pixels via pending_id; no guest map VA */
+        out->name = out->resource_pending_id ? "plat_10134_rgb565_copy" : "plat_10134_rgb565_alloc";
+        out->evidence = out->resource_pending_id ? "TARGET_OBSERVED+pending_host_pixels"
+                                                 : "TARGET_OBSERVED+legacy_bridge_size_fallback";
         return;
     }
 

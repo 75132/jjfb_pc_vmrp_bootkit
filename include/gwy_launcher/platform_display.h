@@ -87,6 +87,10 @@ uint32_t platform_drawfp_reject_count(void);
 /* Successful blits (frame-then-leave chrome arms after first drawn). */
 uint32_t platform_drawfp_drawn_count(void);
 
+/* Product text blit helper: host RGB565 framebuffer + present dirty rect. */
+uint16_t *platform_display_framebuffer(uint32_t *out_w, uint32_t *out_h);
+int platform_display_present_rect(int32_t x, int32_t y, int32_t w, int32_t h);
+
 #ifdef __cplusplus
 }
 #endif
