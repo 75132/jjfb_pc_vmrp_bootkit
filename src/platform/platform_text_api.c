@@ -98,11 +98,11 @@ static uint32_t resolve_str_va(void *uc, uint32_t code_obj, uint8_t *buf, int ca
     int tn = 0;
     static const uint32_t k_inline_off[] = {0u, 4u, 8u, 0xCu, 0x10u, 0x14u};
 
-    if (g_last_str_va && peek_cstr(uc, g_last_str_va, buf, cap, out_n) &&
+    if (g_last_str_va && code_obj >= 0x10000u && peek_cstr(uc, g_last_str_va, buf, cap, out_n) &&
         score_cstr(buf, *out_n) >= 4)
         return g_last_str_va;
 
-    if (!code_obj) return 0;
+    if (!code_obj || code_obj < 0x10000u) return 0;
 
     /* 1) code_obj itself (or short header + inline payload) as cstr. */
     for (i = 0; i < (int)(sizeof(k_inline_off) / sizeof(k_inline_off[0])); i++) {
@@ -231,6 +231,17 @@ int platform_text_api_handle_11f00(void *uc, uint32_t app, uint32_t code_obj, ui
     if (!g_armed) platform_text_api_arm();
     if (!jjfb_uc2_font_ready(&g_font)) {
         printf("[PLATFORM_11F00] handled=0 font_ready=0 note=no_fallback evidence=OBSERVED\n");
+        fflush(stdout);
+        return 0;
+    }
+
+    /*
+     * Proven non-draw companion: 0x30CF92 sendAppEvent(0x11F00, app=0x10, code=0x3E8).
+     * code is an immediate (1000), not a text object — never reuse last_str_va.
+     */
+    if (app == 0x10u && code_obj < 0x10000u) {
+        printf("[PLATFORM_11F00] handled=0 note=app10_immediate_not_text code=0x%X evidence=OBSERVED\n",
+               code_obj);
         fflush(stdout);
         return 0;
     }

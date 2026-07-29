@@ -1,144 +1,60 @@
 {
-  "phase": "P11",
+  "phase": "P11-P14",
+  "date": "2026-07-30",
+  "primary_target": "game_files/mythroad/240x320/gwy/jjfb.mrp",
+  "resume_mode_product": "direct_lr",
+  "layer1_first_frame_sha256": "c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda",
+  "resource_baseline": 5,
+  "resource_caller_lr": "0x2D93D1",
   "blob": "out/research_p9_extract/robotol.ext",
   "code_base": "0x2D8DF4",
   "family_switch": "0x30D301",
-  "case9": "0x30E1A0",
-  "free_wrapper": "0x305E08",
-  "fault_pc": "0x2D960E",
-  "fault_addr_observed": "0x1E205",
-  "classification": "CASE9_CONTRACT_E",
-  "reasons": [
-    "case9 arm is BL 0x305E08; MOVS r0,#0; B join — no LDR of r2/r3/[sp,#imm] in arm",
-    "switch prologue loads stack args early: [{'pc': '0x30D310', 'text': 'LDR r2,[sp,#0x24]', 'kind': 'LDR_SP', 'rt': 2, 'imm': 36, 'raw': '0x9A09'}, {'pc': '0x30D312', 'text': 'LDR r6,[sp,#0x20]', 'kind': 'LDR_SP', 'rt': 6, 'imm': 32, 'raw': '0x9E08'}]",
-    "common path loads registered context from stack — need 10102 context, not event payload",
-    "runtime: case9 returned ok then late P3_FAULT outside handler — scheduler/continuation"
-  ],
-  "action": {
-    "do": "stop_family_arg_mutation",
-    "then": "trace_scheduler_continuation_and_1E205_producer"
+  "jump_table": {
+    "case5": {"pc": "0x30E186", "bl": "0x2D9600", "note": "passes event code as object ptr"},
+    "case8": {"pc": "0x30E19E", "bl": "0x305E08", "note": "free wrapper"},
+    "case9": {"pc": "0x30E1A8", "bl": "0x305E30", "note": "MULS path; not late fault site"}
   },
-  "case9_arm": {
-    "arm": [
-      {
-        "pc": "0x30E1A0",
-        "text": "BL 0x305E08",
-        "raw2": "0xFE32",
-        "target": 3169800,
-        "kind": "BL",
-        "raw": "0xF7F7"
-      },
-      {
-        "pc": "0x30E1A4",
-        "text": "MOVS r0,#0x0",
-        "kind": "MOVS",
-        "rt": 0
-      },
-      {
-        "pc": "0x30E1A6",
-        "text": "B 0x30D9B6",
-        "kind": "B",
-        "target": 3201462,
-        "raw": "0xE406"
-      },
-      {
-        "pc": "0x30E1A8",
-        "text": "ADDS r1,r5,#0",
-        "kind": "ADDS"
-      },
-      {
-        "pc": "0x30E1AA",
-        "text": "ADDS r0,r4,#0",
-        "kind": "ADDS"
-      },
-      {
-        "pc": "0x30E1AC",
-        "text": "BL 0x305E30",
-        "raw2": "0xFE40",
-        "target": 3169840,
-        "kind": "BL",
-        "raw": "0xF7F7"
-      },
-      {
-        "pc": "0x30E1B0",
-        "text": "B 0x30D9BE",
-        "kind": "B",
-        "target": 3201470,
-        "raw": "0xE405"
-      },
-      {
-        "pc": "0x30E1B2",
-        "text": "ADDS r2,r1,#0",
-        "kind": "ADDS"
-      }
-    ],
-    "uses_r2": false,
-    "uses_r3": false,
-    "uses_sp_relative": false,
-    "bl_targets": [
-      "0x305E08"
-    ]
+  "classification": {
+    "case9": "CASE9_CONTRACT_E",
+    "late_fault_sub": "CASE5_EVENT_CODE_AS_OBJECT_POINTER",
+    "detail": "Late P3 was LDR [r4,#4] @0x2D960E with r4=0x1E201 after family case5; not case9 body"
   },
-  "free_wrapper_analysis": {
-    "fn_start": "0x305E08",
-    "plat_codes": [
-      {
-        "pc": "0x305E20",
-        "lit": "0x10133"
-      }
-    ],
-    "sp_loads": [],
-    "r0_source": null
-  },
-  "fault_insn": {
-    "text": "LDR r3,[r4,#0x4]",
-    "raw": "0x6863",
-    "kind": "LDR",
-    "rt": 3,
-    "rn": 4,
-    "imm": 4,
-    "size": 2
-  },
-  "switch_early_sp_loads": [
+  "fixes_landed": [
     {
-      "pc": "0x30D310",
-      "text": "LDR r2,[sp,#0x24]",
-      "kind": "LDR_SP",
-      "rt": 2,
-      "imm": 36,
-      "raw": "0x9A09"
+      "id": "P12_LOW_MEM_MAP",
+      "commit": "7b90776",
+      "contract": "Map guest [0, CODE_ADDRESS) RW zero-fill so plat code-as-ptr loads do not UC_FAULT",
+      "env": "JJFB_MAP_LOW_GUEST_MEM default ON; =0 disables",
+      "also": "Stop stuffing family delivery r2 with guest_context under APPLY_ABI"
     },
     {
-      "pc": "0x30D312",
-      "text": "LDR r6,[sp,#0x20]",
-      "kind": "LDR_SP",
-      "rt": 6,
-      "imm": 32,
-      "raw": "0x9E08"
+      "id": "P14_11F00_TEXT_RESOLVE",
+      "files": ["src/platform/platform_text_api.c"],
+      "contract": "0x11F00 app=7: r2=text object/cstr, r3=local {y,x} on SP; resolve inline/length-prefixed/pointer-scan; reject app=0x10 immediate code (e.g. 0x3E8) without reusing last_str_va",
+      "evidence": "handled=1 app=0x7 str_va=0x2A83F4 @219,114 hex=8F7D51654E2D draw_n>=1; Layer-1 SHA unchanged"
     }
   ],
-  "runtime_hints": {
-    "host_entry": "0x30D301",
-    "case9_ret_ok": true,
-    "fault_after_handler": true,
-    "source": "reports_inference",
-    "p7_present": true
+  "dispatch_0x2E2520": {
+    "bcs_status": "PASSED_with_PATH_A_EVENT_CONTRACT",
+    "live_calls": [
+      {"word0_event_code": 5, "index": 2, "cmp": "2 vs 0x1B0", "target": "0x2E4040", "not": "0x2E4194_BCS_default"}
+    ],
+    "old_blocker_obsolete": "word0=0 BCS_index_out_of_range — fixed by hdr-preconsume (15C/A94)",
+    "current_case5_path": "0x2E4040 -> 0x2F68E4 -> 0x2DADC4 -> 0x2FC26C"
   },
-  "sp_relative_contract": {
-    "note": "For each [sp,#imm] convert using entry_sp from runtime dump when present",
-    "static_early_loads": [
-      {
-        "pc": "0x30D310",
-        "imm": 36,
-        "rt": 2,
-        "text": "LDR r2,[sp,#0x24]"
-      },
-      {
-        "pc": "0x30D312",
-        "imm": 32,
-        "rt": 6,
-        "text": "LDR r6,[sp,#0x20]"
-      }
-    ]
+  "e6c": {
+    "status": "E6C_NATURAL_STORE_OPEN",
+    "requires": "B54 event_code=15 -> 0x2E4020 -> 0x2E5E60",
+    "path_a_posts": "event_code=5 (downVersion) only",
+    "forbidden": ["hardwrite E6C", "host enqueue code15", "B50->2E2520"]
+  },
+  "visible_win": {
+    "criterion": "B",
+    "detail": "Natural 0x11F00 app=7 UC2 glyph blit of guest string; first-frame Layer-1 preserved"
+  },
+  "still_blocked": {
+    "sixth_resource": true,
+    "unique_blocker": "No natural B54 event_code=15 / E6C store; post-res5 idle at sendAppEvent 0x304558 after code5 lifecycle path",
+    "next_one_action": "Capture/producer-trace the first guest Path-A or B54 poster that should emit event_code=15 with E6C-shaped body (7x BE u32); extend platform_101ab only if producer/consumer evidence proves code15 belongs in the 101AB stream — never invent Event15"
   }
 }
