@@ -21,5 +21,5 @@
   "ack_contract": {"acknowledged": true, "identity_class": "NEW_REQUEST_EACH_CALL"},
   "apply_abi_round_b": true,
   "abi_confirmed": true,
-  "run_id": "p10_B_r2_20260729_233318"
+  "run_id": "p12_r2_20260730_010830"
 }
