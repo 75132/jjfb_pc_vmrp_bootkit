@@ -3,6 +3,7 @@
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -198,8 +199,10 @@ int ext_gwy_shell_native_exec_enabled(void) {
     if (g_ne.enabled_known) return g_ne.enabled;
     path = getenv("JJFB_LAUNCH_PATH");
     if (env_is_1("JJFB_SHELL_NATIVE_EXEC_TRACE")) g_ne.enabled = 1;
+    if (original_gwy_bootstrap_enabled()) g_ne.enabled = 1;
     if (path && (strcmp(path, "gwy_guest_native_runapp") == 0 ||
-                 strcmp(path, "gwy_shell_core_continue") == 0))
+                 strcmp(path, "gwy_shell_core_continue") == 0 ||
+                 strcmp(path, "gwy_original_headless") == 0))
         g_ne.enabled = 1;
     g_ne.enabled_known = 1;
     return g_ne.enabled;
@@ -261,6 +264,8 @@ static void emit_export_table(ShellMod *m) {
         {"lib.getClientInfo", GBRWCORE_OFF_LIB_GETCLIENTINFO},
         {"lib.startGame", GBRWCORE_OFF_LIB_STARTGAME},
         {"lib.runapp", GBRWCORE_OFF_LIB_RUNAPP},
+        {"lib.runflashmrp", 0x222E4u},
+        {"lib.getmrpver", 0},
     };
     size_t si;
     if (!m || !m->mapped || m->export_reg) return;
@@ -268,7 +273,7 @@ static void emit_export_table(ShellMod *m) {
     m->export_reg = 1;
     g_ne.export_registered = 1;
     for (si = 0; si < sizeof(k_svcs) / sizeof(k_svcs[0]); si++) {
-        uint32_t va = m->base + k_svcs[si].off;
+        uint32_t va = k_svcs[si].off ? (m->base + k_svcs[si].off) : 0;
         printf("[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=%s registered=yes "
                "addr=0x%X kind=string_va_not_entry evidence=TARGET_OBSERVED\n",
                k_svcs[si].name, va);
@@ -279,6 +284,9 @@ static void emit_export_table(ShellMod *m) {
                                     "gbrwcore.ext", 1, "static_string_table");
         e10a3_note_named_service("register", k_svcs[si].name, "gbrwcore.ext", "gbrwcore.ext",
                                  va, "string_va", 0, 0, "string_table_only");
+        /* Catalog string VA only — function_pointer stays 0 until runtime bind. */
+        original_gwy_api_register(k_svcs[si].name, 0, 0, va, 0, "gbrwcore.ext", 0, 0,
+                                  "string_va_not_entry");
     }
     fflush(stdout);
     recompute_gate();
@@ -326,12 +334,14 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
         robotol_flag_writer_e10a_shell_phase("jjfb_mr_start");
         e10a_shell_phase("SHELL_PHASE_JJFB_MR_START", "jjfb.mrp", 0, 0, 0, 0, 0, 0, 0, 0,
                          entry ? entry : "start.mr");
-        if (g_ne.mrp_started_gbrwcore || g_ne.mrp_started_gamelist || g_ne.guest_pc_hit) {
+        if (g_ne.mrp_started_gbrwcore || g_ne.mrp_started_gamelist || g_ne.guest_pc_hit ||
+            original_gwy_bootstrap_enabled()) {
             printf("[JJFB_SHELL_EXPORT_CALL] name=lib.runapp_or_startGame via=nested_start_dsm "
                    "target=gwy/jjfb.mrp pc=nested evidence=HYPOTHESIS_pending_export_pc\n");
             g_ne.export_called = 1;
             printf("[JJFB_RUNAPP] source=native_shell target=gwy/jjfb.mrp "
                    "via=guest_native_nested_start_dsm evidence=TARGET_OBSERVED\n");
+            original_gwy_bootstrap_on_nested_jjfb("gwy/jjfb.mrp", entry ? entry : "", 0);
         }
     }
     fflush(stdout);
@@ -482,6 +492,40 @@ void ext_gwy_shell_native_exec_on_slot28(uint32_t pc, uint32_t r0, uint32_t r1, 
     }
 }
 
+static uint32_t guess_code_ptr(void *uc, const uint32_t regs[16], ShellMod *m) {
+    int i;
+    (void)uc;
+    if (!regs) return 0;
+    for (i = 0; i < 8; i++) {
+        uint32_t a = regs[i];
+        uint32_t base = a & ~1u;
+        if (!base) continue;
+        if (m && m->mapped && base >= m->base && base < m->base + m->size) return a | 1u;
+        /* Typical shell EXT load windows seen in prior E10A runs. */
+        if (base >= 0x2C0000u && base < 0x360000u) return a | 1u;
+    }
+    return 0;
+}
+
+static void note_api_lookup(const char *name, void *uc, uint32_t pc, const uint32_t regs[16],
+                            const char *module_name, int name_reg) {
+    ShellMod *m = NULL;
+    uint32_t entry = 0;
+    uint32_t r9 = 0;
+    int i;
+    for (i = 0; i < g_ne.mod_count; i++) {
+        if (strstr(g_ne.mods[i].name, "gbrwcore")) {
+            m = &g_ne.mods[i];
+            break;
+        }
+    }
+    entry = guess_code_ptr(uc, regs, m);
+    if (uc) (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9);
+    original_gwy_api_register(name, entry, 0, regs ? regs[name_reg] : 0, pc,
+                              module_name ? module_name : "?", r9, 0,
+                              entry ? "lookup_with_code_ptr" : "lookup");
+}
+
 static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t regs[16],
                                         const char *module_name) {
     int i;
@@ -503,6 +547,15 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                              regs[i], 0, 0, 0, 0, 0, buf);
             e10a_shell_phase("SHELL_PHASE_RUNAPP_CALLED", module_name ? module_name : "?", pc, 0, 0,
                              0, 0, 0, 0, 0, buf);
+            note_api_lookup("lib.runapp", uc, pc, regs, module_name, i);
+            fflush(stdout);
+        }
+        if (strstr(buf, "lib.runflashmrp") || strcmp(buf, "runflashmrp") == 0) {
+            g_ne.export_called = 1;
+            printf("[JJFB_SHELL_EXPORT_CALL] name=lib.runflashmrp pc=0x%X args=r%d=\"%s\" "
+                   "module=%s evidence=OBSERVED\n",
+                   pc, i, buf, module_name ? module_name : "?");
+            note_api_lookup("lib.runflashmrp", uc, pc, regs, module_name, i);
             fflush(stdout);
         }
         if (strstr(buf, "lib.startGame") || strcmp(buf, "startGame") == 0) {
@@ -517,12 +570,14 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                                      "reg_string_observe");
             e10a_shell_phase("SHELL_PHASE_STARTGAME_LOOKUP", module_name ? module_name : "?", pc,
                              0, regs[i], 0, 0, 0, 0, 0, buf);
+            note_api_lookup("lib.startGame", uc, pc, regs, module_name, i);
             fflush(stdout);
         }
         if (strstr(buf, "lib.getuserinfo") || strcmp(buf, "getuserinfo") == 0) {
             e10a3_note_named_service("lookup", "lib.getuserinfo",
                                      module_name ? module_name : "?", "?", regs[i], buf, 0, 0,
                                      "reg_string_observe");
+            note_api_lookup("lib.getuserinfo", uc, pc, regs, module_name, i);
             fflush(stdout);
         }
         if (strstr(buf, "lib.checkmrpver") || strcmp(buf, "checkmrpver") == 0) {
@@ -531,6 +586,11 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                                      "reg_string_observe");
             e10a_shell_phase("SHELL_PHASE_VERSION_CHECK_REQUEST",
                              module_name ? module_name : "?", pc, 0, regs[i], 0, 0, 0, 0, 0, buf);
+            note_api_lookup("lib.checkmrpver", uc, pc, regs, module_name, i);
+            fflush(stdout);
+        }
+        if (strstr(buf, "lib.getmrpver") || strcmp(buf, "getmrpver") == 0) {
+            note_api_lookup("lib.getmrpver", uc, pc, regs, module_name, i);
             fflush(stdout);
         }
         if (strstr(buf, "napptype=") && strstr(buf, "gwyblink")) {

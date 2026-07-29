@@ -7,6 +7,7 @@
 #include "gwy_launcher/guest_vfs.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/mrp_member_view.h"
+#include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/platform_path_a_response.h"
 #include "gwy_launcher/sha256.h"
@@ -139,13 +140,19 @@ int gwy_vmrp_prepare_guest_vfs(void) {
         static const char *game_pkgs[] = {"gwy/jjfb.mrp", "gwy/wxjwq.mrp"};
         const char *mvp = getenv("JJFB_MEMBER_VIEW_PRIMARY");
         int shell_mode =
-            ext_gwy_shell_shim_enabled() || ext_gwy_shell_shim_guest_native_mode();
+            ext_gwy_shell_shim_enabled() || ext_gwy_shell_shim_guest_native_mode() ||
+            original_gwy_bootstrap_enabled();
         int game_package =
             mvp && (strcmp(mvp, "game_package") == 0 || strcmp(mvp, "game") == 0);
         int all_shell_and_game =
             (mvp && (strcmp(mvp, "all_shell_and_game") == 0 || strcmp(mvp, "1") == 0)) ||
             (getenv("JJFB_NATIVE_BOOT_FULL") && getenv("JJFB_NATIVE_BOOT_FULL")[0] == '1');
         size_t si;
+        /* Headless original bootstrap needs shell + game member views together. */
+        if (original_gwy_bootstrap_enabled()) {
+            game_package = 0;
+            all_shell_and_game = 1;
+        }
 
         if (shell_mode && !game_package) {
             for (si = 0; si < sizeof(shell_pkgs) / sizeof(shell_pkgs[0]); si++) {

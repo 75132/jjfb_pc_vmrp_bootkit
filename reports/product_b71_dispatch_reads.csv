@@ -1,11 +1,1 @@
 run_id,dispatch_call_id,pc,base_reg,offset,effective_addr,value,feeds
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x0,0x6BBAC8,0x5,"entry_obj+0"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x4,0x6BBACC,0x6BBAB8,"entry_obj+4"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x8,0x6BBAD0,0x4,"entry_obj+8"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0xC,0x6BBAD4,0x0,"entry_obj+12"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x4,0x6BBAB8,0xFFFFFFFF,"inner_via_+4[+0]"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x4,0x6BBABC,0x0,"inner_via_+4[+4]"
-p15_provider_synth_r1_20260730_023930,1,0x2E2520,r0,0x4,0x6BBAC0,0x10,"inner_via_+4[+8]"
-p15_provider_synth_r1_20260730_023930,1,0x2E2524,r0,0x0,0x6BBAC8,0x5,"event_code->index=code-3"
-p15_provider_synth_r1_20260730_023930,1,0x2E252A,r0,0x3,0x0,0x2,"index=event_code-3"
-p15_provider_synth_r1_20260730_023930,1,0x2E252E,r0,0x0,0x0,0x2,"CMP_index_vs_max"

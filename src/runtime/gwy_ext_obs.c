@@ -30,6 +30,7 @@
 #include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
+#include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/guest_call_observer.h"
 #include "gwy_launcher/guest_memory.h"
@@ -3630,6 +3631,7 @@ void gwy_ext_obs_emu_exit(int reason) {
     ext_gwy_shell_native_exec_finalize("emu_exit");
     ext_gwy_shell_shim_finalize("emu_exit");
     ext_gwy_startgame_audit_finalize("emu_exit");
+    original_gwy_bootstrap_finalize("emu_exit");
 }
 
 void gwy_ext_obs_mr_exit(void *uc) {
@@ -3643,6 +3645,7 @@ void gwy_ext_obs_mr_exit(void *uc) {
     ext_er_rw_bind_restore_finalize("mr_exit");
     ext_gwy_shell_native_exec_finalize("mr_exit");
     ext_gwy_shell_shim_finalize("mr_exit");
+    original_gwy_bootstrap_finalize("mr_exit");
     platform_call_census_dump("mr_exit");
     platform_mrp_resource_census_flush("mr_exit");
     boot_successor_trace_flush("mr_exit");
@@ -3706,7 +3709,10 @@ void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *nam
 }
 
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry) {
+    uint32_t r9 = 0;
+    if (g_bound_uc) (void)guest_memory_uc_read_r9((struct uc_struct *)g_bound_uc, &r9);
     ext_gwy_startgame_audit_on_start_dsm(filename, ext, entry);
+    original_gwy_bootstrap_on_start_dsm(filename, ext, entry, r9);
     ext_gwy_shell_shim_on_start_dsm(filename, ext, entry);
     ext_gwy_shell_native_exec_on_start_dsm(filename, ext, entry);
 }
@@ -3751,6 +3757,7 @@ const char *gwy_shell_shim_jjfb_param(void) { return ext_gwy_shell_shim_jjfb_par
 void gwy_shell_shim_emit_runapp_chain(void) { ext_gwy_shell_shim_emit_runapp_chain(); }
 
 void gwy_shell_shim_finalize(const char *stop_reason) {
+    original_gwy_bootstrap_finalize(stop_reason);
     ext_gwy_shell_native_exec_finalize(stop_reason);
     ext_gwy_shell_shim_finalize(stop_reason);
 }

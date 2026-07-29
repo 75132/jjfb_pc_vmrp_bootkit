@@ -66,6 +66,8 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/ext_chunk_provider.c
     src/runtime/ext_er_rw_bind_restore.c
     src/runtime/ext_gwy_startgame_audit.c
+    src/runtime/mrp_runtime_stack.c
+    src/runtime/original_gwy_bootstrap.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c
@@ -389,6 +391,10 @@ add_executable(test_ext_gwy_startgame_audit tests/unit/test_ext_gwy_startgame_au
 gwy_link_product_runtime(test_ext_gwy_startgame_audit)
 gwy_copy_unicorn_dll(test_ext_gwy_startgame_audit)
 add_test(NAME ext_gwy_startgame_audit COMMAND test_ext_gwy_startgame_audit)
+
+add_executable(test_original_gwy_bootstrap tests/unit/test_original_gwy_bootstrap.c)
+gwy_link_product_runtime(test_original_gwy_bootstrap)
+add_test(NAME original_gwy_bootstrap COMMAND test_original_gwy_bootstrap)
 
 add_executable(test_ext_gwy_shell_shim tests/unit/test_ext_gwy_shell_shim.c)
 gwy_link_research_runtime(test_ext_gwy_shell_shim)

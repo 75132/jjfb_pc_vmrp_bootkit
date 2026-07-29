@@ -1,0 +1,11 @@
+{
+  "depth": 2,
+  "nested_jjfb_intercepted": true,
+  "last_nested_target": "gwy/jjfb.mrp",
+  "last_nested_param": "napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink",
+  "frames": [
+    {"index":0,"role":"parent_gbrwcore","package":"gwy/gbrwcore.mrp","primary_ext":"gbrwcore.ext","r9":"0x1111","erw":"0x0","module_generation":1,"callback_registry":"0x0","transport_provider":"0x0","provider_101ab":"0x0","timer_owner":"0x0","active":true},
+    {"index":1,"role":"child_jjfb","package":"gwy/jjfb.mrp","primary_ext":"robotol.ext","r9":"0x2222","erw":"0x0","module_generation":2,"callback_registry":"0x0","transport_provider":"0x0","provider_101ab":"0x0","timer_owner":"0x0","active":true}
+  ],
+  "note": "Parent frame must survive child jjfb start; do not destroy bootstrap VM."
+}
