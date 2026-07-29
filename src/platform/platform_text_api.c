@@ -82,32 +82,117 @@ static int score_cstr(const uint8_t *b, int n) {
     return score;
 }
 
+/*
+ * Resolve guest text for 0x11F00 / 0x12340.
+ *
+ * Proven caller 0x2F2360 (app=7): r2 = original wrapper r0 (text object),
+ * r3 = local {y,x,...} on SP — not a full draw-context blob.
+ * Object may be: direct cstr, length-prefixed, or a small object whose first
+ * words are pointers into heap strings. Try those before giving up.
+ */
 static uint32_t resolve_str_va(void *uc, uint32_t code_obj, uint8_t *buf, int cap, int *out_n) {
-    uint32_t words[32];
+    uint32_t words[48];
     int i, best_score = -1;
     uint32_t best = 0;
     uint8_t tmp[64];
     int tn = 0;
+    static const uint32_t k_inline_off[] = {0u, 4u, 8u, 0xCu, 0x10u, 0x14u};
 
     if (g_last_str_va && peek_cstr(uc, g_last_str_va, buf, cap, out_n) &&
         score_cstr(buf, *out_n) >= 4)
         return g_last_str_va;
 
     if (!code_obj) return 0;
+
+    /* 1) code_obj itself (or short header + inline payload) as cstr. */
+    for (i = 0; i < (int)(sizeof(k_inline_off) / sizeof(k_inline_off[0])); i++) {
+        uint32_t va = code_obj + k_inline_off[i];
+        int sc;
+        if (!peek_cstr(uc, va, tmp, (int)sizeof(tmp), &tn)) continue;
+        sc = score_cstr(tmp, tn);
+        if (sc > best_score) {
+            best_score = sc;
+            best = va;
+            memcpy(buf, tmp, (size_t)((cap < (int)sizeof(tmp)) ? (size_t)cap : sizeof(tmp)));
+            if (out_n) *out_n = tn;
+        }
+    }
+    if (best_score >= 4) {
+        g_last_str_va = best;
+        return best;
+    }
+
+    /* 2) Length-prefixed: BE/LE u16/u32 length then bytes (common Mythroad). */
+    {
+        uint16_t be16 = 0, le16 = 0;
+        uint32_t be32 = 0, le32 = 0;
+        if (guest_memory_uc_peek((struct uc_struct *)uc, code_obj, (uint8_t *)&le16, 2)) {
+            be16 = (uint16_t)(((le16 & 0xFFu) << 8) | ((le16 >> 8) & 0xFFu));
+            if (le16 >= 1u && le16 <= 64u &&
+                peek_cstr(uc, code_obj + 2u, tmp, (int)sizeof(tmp), &tn) && tn >= (int)le16) {
+                /* prefer exact length slice */
+                if (tn > (int)le16) tn = (int)le16;
+                if (score_cstr(tmp, tn) >= 4) {
+                    memcpy(buf, tmp, (size_t)((cap < tn) ? (size_t)cap : (size_t)tn));
+                    if (out_n) *out_n = tn;
+                    g_last_str_va = code_obj + 2u;
+                    return g_last_str_va;
+                }
+            }
+            if (be16 >= 1u && be16 <= 64u &&
+                peek_cstr(uc, code_obj + 2u, tmp, (int)sizeof(tmp), &tn) && tn >= 1) {
+                if (tn > (int)be16) tn = (int)be16;
+                if (score_cstr(tmp, tn) >= 4) {
+                    memcpy(buf, tmp, (size_t)((cap < tn) ? (size_t)cap : (size_t)tn));
+                    if (out_n) *out_n = tn;
+                    g_last_str_va = code_obj + 2u;
+                    return g_last_str_va;
+                }
+            }
+        }
+        if (guest_memory_uc_peek_u32((struct uc_struct *)uc, code_obj, &le32)) {
+            be32 = ((le32 & 0xFFu) << 24) | ((le32 & 0xFF00u) << 8) | ((le32 & 0xFF0000u) >> 8) |
+                   ((le32 >> 24) & 0xFFu);
+            if (le32 >= 1u && le32 <= 64u &&
+                peek_cstr(uc, code_obj + 4u, tmp, (int)sizeof(tmp), &tn) && tn >= 1) {
+                if (tn > (int)le32) tn = (int)le32;
+                if (score_cstr(tmp, tn) >= 4) {
+                    memcpy(buf, tmp, (size_t)((cap < tn) ? (size_t)cap : (size_t)tn));
+                    if (out_n) *out_n = tn;
+                    g_last_str_va = code_obj + 4u;
+                    return g_last_str_va;
+                }
+            }
+            if (be32 >= 1u && be32 <= 64u &&
+                peek_cstr(uc, code_obj + 4u, tmp, (int)sizeof(tmp), &tn) && tn >= 1) {
+                if (tn > (int)be32) tn = (int)be32;
+                if (score_cstr(tmp, tn) >= 4) {
+                    memcpy(buf, tmp, (size_t)((cap < tn) ? (size_t)cap : (size_t)tn));
+                    if (out_n) *out_n = tn;
+                    g_last_str_va = code_obj + 4u;
+                    return g_last_str_va;
+                }
+            }
+        }
+        (void)be32;
+    }
+
+    /* 3) Pointer scan inside object (legacy). */
+    best_score = -1;
+    best = 0;
     memset(words, 0, sizeof(words));
     if (!guest_memory_uc_peek((struct uc_struct *)uc, code_obj, (uint8_t *)words, sizeof(words)))
         return 0;
     for (i = 0; i < (int)(sizeof(words) / sizeof(words[0])); i++) {
         uint32_t cand = words[i];
         int sc;
-        if (cand < 0x1000u || cand > 0x1000000u) continue;
+        if (cand < 0x1000u || cand > 0x04000000u) continue;
         if (!peek_cstr(uc, cand, tmp, (int)sizeof(tmp), &tn)) continue;
         sc = score_cstr(tmp, tn);
         if (sc > best_score) {
             best_score = sc;
             best = cand;
-            if (cap > (int)sizeof(tmp)) cap = (int)sizeof(tmp);
-            memcpy(buf, tmp, (size_t)cap);
+            memcpy(buf, tmp, (size_t)((cap < (int)sizeof(tmp)) ? (size_t)cap : sizeof(tmp)));
             if (out_n) *out_n = tn;
         }
     }
@@ -154,23 +239,31 @@ int platform_text_api_handle_11f00(void *uc, uint32_t app, uint32_t code_obj, ui
         (void)guest_memory_uc_peek((struct uc_struct *)uc, param0, &y, 2);
         (void)guest_memory_uc_peek((struct uc_struct *)uc, param0 + 2u, &x, 2);
         memset(rgb, 0, sizeof(rgb));
-        if (guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x2Cu, rgb, 4))
-            fg = rgb888_to_565(((uint32_t)rgb[2] << 16) | ((uint32_t)rgb[1] << 8) | rgb[0]);
-        else
-            fg = 0xFFFFu;
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, param0 + 0x10u, &mode);
-        {
-            int16_t tcx = 0, tcy = 0, tcw = 0, tch = 0;
-            if (guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x08u, &tcx, 2) &&
-                guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Au, &tcy, 2) &&
-                guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Cu, &tcw, 2) &&
-                guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Eu, &tch, 2) && tcw > 0 &&
-                tch > 0) {
-                cx = tcx;
-                cy = tcy;
-                cw = tcw;
-                ch = tch;
+        /*
+         * app=7 (0x2F2360): param0 is a tiny local {y,x,...} on SP — only y/x
+         * are valid. Full draw-context offsets apply to heap objects only.
+         */
+        if (app != 7u && param0 >= 0x280000u) {
+            if (guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x2Cu, rgb, 4))
+                fg = rgb888_to_565(((uint32_t)rgb[2] << 16) | ((uint32_t)rgb[1] << 8) | rgb[0]);
+            else
+                fg = 0xFFFFu;
+            (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, param0 + 0x10u, &mode);
+            {
+                int16_t tcx = 0, tcy = 0, tcw = 0, tch = 0;
+                if (guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x08u, &tcx, 2) &&
+                    guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Au, &tcy, 2) &&
+                    guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Cu, &tcw, 2) &&
+                    guest_memory_uc_peek((struct uc_struct *)uc, param0 + 0x0Eu, &tch, 2) &&
+                    tcw > 0 && tch > 0 && tcw <= 480 && tch <= 640) {
+                    cx = tcx;
+                    cy = tcy;
+                    cw = tcw;
+                    ch = tch;
+                }
             }
+        } else {
+            fg = 0xFFFFu;
         }
     } else {
         fg = 0xFFFFu;
@@ -185,12 +278,33 @@ int platform_text_api_handle_11f00(void *uc, uint32_t app, uint32_t code_obj, ui
     }
 
     printf("[PLATFORM_11F00_TRACE] str_va=0x%X nbytes=%d x=%d y=%d clip=%d,%d,%d,%d mode=0x%X "
-           "pc=0x%X lr=0x%X hex=%s evidence=OBSERVED\n",
-           str_va, nbytes, (int)x, (int)y, (int)cx, (int)cy, (int)cw, (int)ch, mode, caller_pc,
-           caller_lr, hex);
+           "app=0x%X code_obj=0x%X pc=0x%X lr=0x%X hex=%s evidence=OBSERVED\n",
+           str_va, nbytes, (int)x, (int)y, (int)cx, (int)cy, (int)cw, (int)ch, mode, app,
+           code_obj, caller_pc, caller_lr, hex);
     fflush(stdout);
 
-    if (!str_va || nbytes <= 0) return 0;
+    if (!str_va || nbytes <= 0) {
+        /* Dump object head so next fix can close layout without guessing. */
+        uint8_t head[64];
+        char hhex[200];
+        int hi2, n = 0;
+        memset(head, 0, sizeof(head));
+        hhex[0] = 0;
+        if (code_obj >= 0x1000u &&
+            guest_memory_uc_peek((struct uc_struct *)uc, code_obj, head, (uint32_t)sizeof(head))) {
+            for (hi2 = 0; hi2 < 32; hi2++) {
+                char t[4];
+                snprintf(t, sizeof(t), "%02X", head[hi2]);
+                strncat(hhex, t, sizeof(hhex) - strlen(hhex) - 1);
+            }
+            n = 32;
+        }
+        printf("[PLATFORM_11F00_OBJDUMP] code_obj=0x%X app=0x%X param0=0x%X bytes=%d hex=%s "
+               "evidence=OBSERVED\n",
+               code_obj, app, param0, n, hhex);
+        fflush(stdout);
+        return 0;
+    }
 
     fb = platform_display_framebuffer(&fb_w, &fb_h);
     if (!fb) return 0;
