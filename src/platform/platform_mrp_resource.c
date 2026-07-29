@@ -940,14 +940,19 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
 #ifdef GWY_HAVE_UNICORN
 static int side_effect_audit_enabled(void) { return env_explicit_one("JJFB_304BF0_SIDE_EFFECT_AUDIT"); }
 
+/* P10: product default is the VERIFIED direct_lr contract. All three modes are
+ * recognized explicitly; unset/unknown env falls back to direct_lr.
+ *   - direct_lr : product default (verified: 5 BMP, first frame, SP delta 0 x5)
+ *   - epilogue  : research-only A/B (resume to real epilogue 0x304C4B)
+ *   - callsite  : research-only Situation-C failure reproduction; NEVER product
+ * Env-delivery problems must be fixed in the runner/process env, NOT by changing
+ * this default. */
 static const char *resume_mode(void) {
     const char *e = getenv("JJFB_304BF0_RESUME_MODE");
     if (e && strcmp(e, "callsite") == 0) return "callsite";
     if (e && strcmp(e, "epilogue") == 0) return "epilogue";
-    /* P10-A/B TEMP DEFAULT: flipped to "epilogue" to validate the new resume
-     * branch without env injection (sandbox strips custom env on child spawn).
-     * REVERT to "direct_lr" after A/B validation. */
-    return "epilogue";
+    if (e && strcmp(e, "direct_lr") == 0) return "direct_lr";
+    return "direct_lr";
 }
 
 /* P9 A/B: epilogue-mode R0 value written before the guest's real epilogue pops.
