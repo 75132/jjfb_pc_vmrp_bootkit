@@ -1,10 +1,10 @@
 # P8 callsite stack contract
 
-reason: atexit
+reason: incremental
 
 ## Resume mode
 
-JJFB_304BF0_RESUME_MODE = direct_lr
+JJFB_304BF0_RESUME_MODE = epilogue
 
 ## Hit counts
 
@@ -12,15 +12,17 @@ JJFB_304BF0_RESUME_MODE = direct_lr
 |--------|-------|
 | LOOKUP_CONTINUATION_HIT | 0 |
 | DISPATCH_EPILOGUE_HIT | 0 |
-| CALLER_CONTINUATION_HIT | 0 |
-| resources completed | 0 |
+| CALLER_CONTINUATION_HIT | 1 |
+| resources completed | 2 |
 | 6th natural resource | NO |
 
 ## SP invariant (DISPATCH_ENTER vs CALLER_CONTINUATION)
 
 | call_id | member | enter_sp | caller_delta | ok |
+| 1 | loadingbar!201!29.bmp | 0x27FE80 | 0 | YES |
+| 2 | bar!16!18.bmp | 0x27FE80 | 0 | pending |
 
-CALLER_SP_DELTA_OK=0 CALLER_SP_DELTA_BAD=0
+CALLER_SP_DELTA_OK=1 CALLER_SP_DELTA_BAD=0
 
 ## Acceptance (callsite mode)
 

@@ -1,0 +1,12 @@
+﻿git_commit=c2c207a408493271f672a6e38744e00d1ad9f3eb
+git_tree=DIRTY
+build_timestamp=2026-07-29 23:25:24
+main_exe=out/vmrp_run/main.exe
+main_exe_sha256=de9defaee5ec688c6de15d0c057f1bb04d88bccd3cec7cf8280d9111e4d0fd19
+JJFB_Launcher_exe=build-i686/JJFB_Launcher.exe
+JJFB_Launcher_sha256=452b68f8218d508c54233e0c98d7a4e429d0720e11779d2b8736713b8050a27b
+gwy_launcher_sha256=00cf4fef47d21c483af5cf4a2758460ef48120c0a630cdeef442a1e86951a852
+skip_build_on_matrix_runs=YES
+full_rebuild_before_matrix=YES (RUN_BUILD + RUN_BUILD_VMRP completed exit 0)
+RUN_TESTS_audit=FAIL (pre-existing 121 findings; unit tests run separately)
+product_default_resume_mode=direct_lr

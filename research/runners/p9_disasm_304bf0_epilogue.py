@@ -10,6 +10,12 @@ resume-to-epilogue mode can close the stack contract cleanly.
 This script is read-only research. It disassembles the function, derives the
 prologue frame (PUSH + SUB SP) and finds candidate epilogues (ADD SP + POP{pc})
 that balance the frame. It does NOT modify any core source.
+
+Stack-balance contract (required):
+    add_sp_imm + pop_bytes == push_bytes + sub_sp_imm
+
+Resume target (required):
+    PC = ADD SP address | 1  (Thumb)  == 0x304C4B for this binary
 """
 from __future__ import annotations
 from pathlib import Path
@@ -20,6 +26,7 @@ ROBOTOL = Path("out/research_p9_extract/robotol.ext")
 BASE = 0x2D8DF4  # guest load base of robotol.ext
 ENTRY = 0x304BF0  # target function entry
 WINDOW = 0x5000  # bytes to disassemble forward (function is large)
+EXPECTED_RESUME_PC = 0x304C4B  # ADD SP @ 0x304C4A with Thumb bit
 
 
 def reg_name_to_idx(name: str) -> int:
@@ -47,7 +54,7 @@ def parse_reglist(op_str: str) -> set[int]:
         if not part:
             continue
         if "-" in part:
-            lo, hi = part.split("-")
+            lo, hi = part.split("-", 1)
             a, b = reg_name_to_idx(lo), reg_name_to_idx(hi)
             if a >= 0 and b >= 0:
                 regs.update(range(a, b + 1))
@@ -56,6 +63,16 @@ def parse_reglist(op_str: str) -> set[int]:
             if idx >= 0:
                 regs.add(idx)
     return regs
+
+
+def parse_sp_imm(op_str: str) -> int:
+    """Extract immediate from 'sp, #imm' / 'sp, sp, #imm' / 'sp, #0xcc'."""
+    try:
+        if "#" not in op_str:
+            return 0
+        return int(op_str.split("#")[-1].split(",")[0].strip(), 0)
+    except Exception:
+        return 0
 
 
 def main() -> int:
@@ -69,8 +86,8 @@ def main() -> int:
 
     # Truncate at the next function boundary (a PUSH that saves lr/pc that is
     # not our entry prologue) so we only analyse the 0x304BF0 body.
-    for i, ins in enumerate(insns[1:], start=1):
-        if ins.mnemonic == "push" and 14 in parse_reglist(ins.op_str):
+    for i, insn in enumerate(insns[1:], start=1):
+        if insn.mnemonic == "push" and 14 in parse_reglist(insn.op_str):
             insns = insns[:i]
             break
     if insns:
@@ -86,82 +103,110 @@ def main() -> int:
         first = insns[0]
         if first.mnemonic == "push":
             prologue_push = parse_reglist(first.op_str)
-        # next SUB SP if present
-        for ins in insns[:6]:
-            if ins.mnemonic == "sub" and "sp" in ins.op_str.lower():
-                # format: sub sp, sp, #imm
-                try:
-                    imm = int(ins.op_str.split("#")[-1].split(",")[-1].strip(), 0)
-                except Exception:
-                    imm = 0
-                prologue_sub = imm
+        for insn in insns[:8]:
+            if insn.mnemonic == "sub" and "sp" in insn.op_str.lower():
+                prologue_sub = parse_sp_imm(insn.op_str)
                 break
 
-    push_bytes = sum(4 for r in prologue_push)
-    print(f"## Prologue")
+    push_bytes = len(prologue_push) * 4
+    prologue_total = push_bytes + prologue_sub
+    print("## Prologue")
     print(f"- PUSH regs: {sorted(prologue_push)} ({len(prologue_push)} regs, {push_bytes} bytes)")
     print(f"- SUB SP frame: {prologue_sub} bytes (0x{prologue_sub:X})")
-    print(f"- Expected epilogue SP restore: +{prologue_sub} (ADD SP) then +{push_bytes} (POP)\n")
+    print(f"- prologue_total = PUSH + SUB = {prologue_total}")
+    print(f"- Expected epilogue: ADD SP + POP must also total {prologue_total}\n")
 
     # --- find candidate epilogues: POP {..., pc} ---
+    # Balance equation (ONLY):
+    #     add_sp_imm + pop_bytes == push_bytes + sub_sp_imm
     print("## Candidate epilogues (ADD SP / POP {pc})")
     found = []
-    for i, ins in enumerate(insns):
-        is_pop_pc = ins.mnemonic == "pop" and 15 in parse_reglist(ins.op_str)
-        is_bx_lr = ins.mnemonic == "bx" and "lr" in ins.op_str.lower()
-        if is_pop_pc or is_bx_lr:
-            prev = insns[i - 1] if i > 0 else None
-            prev2 = insns[i - 2] if i > 1 else None
-            add_imm = 0
-            if prev and prev.mnemonic == "add" and "sp" in prev.op_str.lower():
-                try:
-                    add_imm = int(prev.op_str.split("#")[-1].split(",")[-1].strip(), 0)
-                except Exception:
-                    add_imm = 0
-            pop_regs = parse_reglist(ins.op_str) if is_pop_pc else set()
-            balanced = (len(pop_regs) * 4) == push_bytes and pop_regs.issuperset(
-                r for r in prologue_push if r != 14
-            ) and (15 in pop_regs)
-            tag = "BALANCED" if balanced else "partial"
-            print(f"- 0x{ins.address:X}: {ins.mnemonic} {ins.op_str}  [{tag}]")
-            if prev:
-                print(f"    prev: 0x{prev.address:X}: {prev.mnemonic} {prev.op_str}"
-                      f"{(' (ADD SP +'+str(add_imm)+')') if add_imm else ''}")
-            if prev2:
-                print(f"    prev2:0x{prev2.address:X}: {prev2.mnemonic} {prev2.op_str}")
-            found.append((ins.address, ins.mnemonic, ins.op_str, balanced, add_imm,
-                          sorted(pop_regs)))
+    for i, insn in enumerate(insns):
+        is_pop_pc = insn.mnemonic == "pop" and 15 in parse_reglist(insn.op_str)
+        is_bx_lr = insn.mnemonic == "bx" and "lr" in insn.op_str.lower()
+        if not (is_pop_pc or is_bx_lr):
+            continue
+        prev = insns[i - 1] if i > 0 else None
+        prev2 = insns[i - 2] if i > 1 else None
+        add_imm = 0
+        add_sp_addr = None
+        if prev and prev.mnemonic == "add" and "sp" in prev.op_str.lower():
+            add_imm = parse_sp_imm(prev.op_str)
+            add_sp_addr = prev.address
+        pop_regs = parse_reglist(insn.op_str) if is_pop_pc else set()
+        pop_bytes = len(pop_regs) * 4
+        epilogue_total = add_imm + pop_bytes
+        balanced = bool(
+            is_pop_pc
+            and (15 in pop_regs)
+            and add_sp_addr is not None
+            and (epilogue_total == prologue_total)
+        )
+        tag = "BALANCED" if balanced else "partial"
+        print(f"- 0x{insn.address:X}: {insn.mnemonic} {insn.op_str}  [{tag}]")
+        if prev:
+            extra = f" (ADD SP +{add_imm})" if add_imm else ""
+            print(f"    prev: 0x{prev.address:X}: {prev.mnemonic} {prev.op_str}{extra}")
+        if prev2:
+            print(f"    prev2:0x{prev2.address:X}: {prev2.mnemonic} {prev2.op_str}")
+        if is_pop_pc:
+            print(f"    balance: add({add_imm})+pop({pop_bytes})={epilogue_total} "
+                  f"vs push({push_bytes})+sub({prologue_sub})={prologue_total}")
+        found.append({
+            "pop_addr": insn.address,
+            "mnemonic": insn.mnemonic,
+            "op_str": insn.op_str,
+            "balanced": balanced,
+            "add_imm": add_imm,
+            "pop_bytes": pop_bytes,
+            "epilogue_total": epilogue_total,
+            "add_sp_addr": add_sp_addr,
+        })
 
     # --- recommend resume-to-epilogue target ---
+    # Host must jump to the ADD SP instruction (not the POP), so SP advances
+    # by +imm BEFORE the POP reads the saved registers from memory.
     print("\n## Recommendation")
-    balanced = [f for f in found if f[3]]
-    if balanced:
-        # prefer the one preceded by an ADD SP that matches the SUB frame
-        best = None
-        for f in balanced:
-            if f[4] == prologue_sub:
-                best = f
-                break
-        if best is None:
-            best = balanced[0]
-        tgt = best[0]
-        print(f"- Balanced epilogue at 0x{tgt:X}: POP {best[2]}")
-        print(f"- Resume-to-epilogue target PC = 0x{tgt|X} | 1 = 0x{tgt+1:X}")
-        print(f"- Required host setup before resume:")
-        print(f"    SP = entry_SP         (post-PUSH, i.e. entry_SP0 - {push_bytes})")
-        if prologue_sub:
-            print(f"    (ADD SP #{prologue_sub} inside epilogue cancels the SUB SP frame)")
-        print(f"    R0 = status/return (A/B: 0 vs handle_guest)")
-        print(f"    PC = 0x{tgt+1:X} (Thumb)")
-        print(f"    POP restores r0-r7,pc -> returns to LR (0x{g_entry_lr_note()})")
-    else:
+    balanced = [f for f in found if f["balanced"]]
+    if not balanced:
         print("- No balanced POP{pc} found in window; extend WINDOW or check module base.")
+        return 1
+
+    # Prefer the unique epilogue whose ADD cancels the SUB frame with compressed POP.
+    best = None
+    for f in balanced:
+        if f["add_sp_addr"] is not None:
+            best = f
+            break
+    if best is None:
+        best = balanced[0]
+
+    add_sp_addr = best["add_sp_addr"]
+    pop_addr = best["pop_addr"]
+    # Thumb bit set for emulator resume (0x304C4A | 1 == 0x304C4B).
+    resume_pc = add_sp_addr | 1
+    print(f"- Balanced epilogue: ADD SP at 0x{add_sp_addr:X} (+{best['add_imm']}), "
+          f"POP at 0x{pop_addr:X} ({best['mnemonic']} {best['op_str']}, "
+          f"{best['pop_bytes'] // 4} regs)")
+    print(f"- Resume-to-epilogue target PC = 0x{resume_pc:X} (Thumb; lands on ADD SP)")
+    print("- Required host setup before resume:")
+    print(f"    SP = entry_SP - {prologue_total}  (post-PUSH, post-SUB)")
+    print(f"    PUSH save area reconstructed at entry_SP - {push_bytes}")
+    print("    R0 = status (A/B: 0 vs handle_guest); POP does NOT restore r0")
+    print(f"    PC = 0x{resume_pc:X} (Thumb; emulator resumes at ADD SP)")
+
+    # P10 required machine-readable lines
+    print(f"prologue_total={prologue_total}")
+    print(f"epilogue_total={best['epilogue_total']}")
+    print(f"resume_pc=0x{resume_pc:X}")
+
+    if prologue_total != 224 or best["epilogue_total"] != 224:
+        print(f"[FAIL] expected totals 224/224, got {prologue_total}/{best['epilogue_total']}")
+        return 1
+    if resume_pc != EXPECTED_RESUME_PC:
+        print(f"[FAIL] expected resume_pc=0x{EXPECTED_RESUME_PC:X}, got 0x{resume_pc:X}")
+        return 1
     return 0
-
-
-def g_entry_lr_note() -> str:
-    # informational only; real LR is captured at runtime by on_lookup_entry
-    return "runtime LR (builder 0x2D93D1 per P8 direct_lr)"
 
 
 if __name__ == "__main__":
