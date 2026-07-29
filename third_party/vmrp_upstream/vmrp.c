@@ -20,7 +20,22 @@
 #endif
 
 static uint8_t *mrpMem;  // 模拟器的全部内存
+static uint8_t *g_lowGuestMem; /* [0, CODE_ADDRESS) zero page — plat-code-as-ptr safety */
 static uc_engine *uc = NULL;
+
+/*
+ * P12 evidence (JJFB family case 5 @ 0x30E186 → 0x2D9600):
+ * guest passes event_code (e.g. 0x1E201) where an object pointer is loaded
+ * via LDR [r0,#4] → UC_MEM_READ_UNMAPPED @ 0x1E205. Mapping [0,CODE_ADDRESS)
+ * as zeroed RW matches upstream vmrp's own noted workaround and lets the
+ * free-helper see a NULL secondary pointer then fall through to 0x305E08/10133.
+ * Env: JJFB_MAP_LOW_GUEST_MEM=0 disables for A/B; default ON.
+ */
+static int map_low_guest_mem_enabled(void) {
+    const char *e = getenv("JJFB_MAP_LOW_GUEST_MEM");
+    if (e && e[0] == '0' && e[1] == '\0') return 0;
+    return 1;
+}
 
 // 返回的内存禁止free
 #ifdef __EMSCRIPTEN__
@@ -65,6 +80,9 @@ static bool hook_mem_invalid(uc_engine *uc, uc_mem_type type, uint64_t address, 
 
 int freeVmrp(uc_engine *uc) {
     free(mrpMem);
+    mrpMem = NULL;
+    free(g_lowGuestMem);
+    g_lowGuestMem = NULL;
     uc_close(uc);
     return 0;
 }
@@ -95,17 +113,28 @@ uc_engine *initVmrp() {
         goto end;
     }
 
-#if 0 
-    // 一些游戏检测内存时会去读写0-CODE_ADDRESS地址的值, 不清楚为什么要这样做，如果这块内存没有映射到unicorn会因为无效的内存访问导致程序退出
-    // 映射一块内存后那些无法运行的游戏就能打开了，没有深入去研究，先记录在这里
-    char *ppp = malloc(CODE_ADDRESS);
-    // memset(ppp, 0xFF, CODE_ADDRESS);
-    memset(ppp, 0, CODE_ADDRESS);
-    uc_mem_map_ptr(uc, 0, CODE_ADDRESS, UC_PROT_ALL, ppp);
-
-    // uc_mem_map(uc, 0, CODE_ADDRESS, UC_PROT_ALL);
-    // uc_hook_add(uc, &trace, UC_HOOK_MEM_VALID, hook_mem_valid, NULL, 0, CODE_ADDRESS);
-#endif
+    if (map_low_guest_mem_enabled()) {
+        /* RW only — do not make low plat-code band executable. */
+        g_lowGuestMem = (uint8_t *)calloc(1, CODE_ADDRESS);
+        if (g_lowGuestMem) {
+            err = uc_mem_map_ptr(uc, 0, CODE_ADDRESS, UC_PROT_READ | UC_PROT_WRITE, g_lowGuestMem);
+            if (err) {
+                printf("[PLATFORM_LOW_MEM_MAP] op=FAIL err=%u size=0x%X evidence=OBSERVED\n", err,
+                       (unsigned)CODE_ADDRESS);
+                fflush(stdout);
+                free(g_lowGuestMem);
+                g_lowGuestMem = NULL;
+            } else {
+                printf("[PLATFORM_LOW_MEM_MAP] op=MAP base=0 size=0x%X prot=RW "
+                       "note=plat_code_as_ptr_safety evidence=OBSERVED\n",
+                       (unsigned)CODE_ADDRESS);
+                fflush(stdout);
+            }
+        }
+    } else {
+        printf("[PLATFORM_LOW_MEM_MAP] op=SKIP env=JJFB_MAP_LOW_GUEST_MEM=0 evidence=OBSERVED\n");
+        fflush(stdout);
+    }
 
 #ifdef DEBUG
     uc_hook_add(uc, &trace, UC_HOOK_BLOCK, hook_block, NULL, 1, 0);
