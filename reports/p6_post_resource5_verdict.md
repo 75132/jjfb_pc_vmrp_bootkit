@@ -1,16 +1,16 @@
 # P6 post-resource5 verdict
 
-reason: incremental
+reason: atexit
 
 ## Answers
 
 1. Initial UI builder return: UNKNOWN (marker UI_BUILDER_LEAVE absent)
 2. First stable loop PC: 0x0 (hits=0)
-3. Resources completed: 5; 6th natural: NO
+3. Resources completed: 0; 6th natural: NO
 4. FIRST_POST_UI_PC: 0x0
 5. NOTE_PIXELS_LEGACY_CALLS: 0
-6. entry_complete skips: 5
-7. family 0x1E209 notes: 5; 0x10102: 2; 0x10140: 2
+6. entry_complete skips: 0
+7. family 0x1E209 notes: 1; 0x10102: 2; 0x10140: 2
 
 ## RAW_BLOB status
 

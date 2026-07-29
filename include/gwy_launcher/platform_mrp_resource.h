@@ -15,9 +15,17 @@ extern "C" {
  *   JJFB_PLATFORM_MRP_RESOURCE=0  — disable (A/B baseline)
  *   JJFB_PLATFORM_MRP_RESOURCE=1  — enable (default when unset)
  *   JJFB_REAL_MRP_PATH=<path>     — override package host path
+ *   JJFB_304BF0_RESUME_MODE=direct_lr | callsite | epilogue — P8/P9 return contract (default direct_lr)
+ *   JJFB_304BF0_EPILOGUE_R0=0 | handle — P9 epilogue R0 value (default 0 = direct_lr-equivalent)
  */
 
-#define PLATFORM_MRP_LOOKUP_ENTRY_PC 0x304BF0u /* frame capture only, not behavior trigger */
+#define PLATFORM_MRP_DISPATCH_ENTRY_PC 0x30450Cu
+#define PLATFORM_MRP_LOOKUP_CALLSITE_PC 0x304BF0u /* hook site; not function entry */
+#define PLATFORM_MRP_LOOKUP_CONTINUATION_PC 0x304BF4u
+#define PLATFORM_MRP_LOOKUP_EPILOGUE_PC 0x304C4Au /* real 0x304BF0 epilogue: add sp,#0xcc ; pop{r4,r5,r6,r7,pc} */
+#define PLATFORM_MRP_DISPATCH_EPILOGUE_PC 0x3047E8u
+#define PLATFORM_MRP_CALLER_CONTINUATION_PC 0x2D93D2u
+#define PLATFORM_MRP_LOOKUP_ENTRY_PC PLATFORM_MRP_LOOKUP_CALLSITE_PC /* deprecated alias */
 #define PLATFORM_MRP_PIXEL_BASE 0x3920000u
 #define PLATFORM_MRP_PIXEL_MAP_SIZE 0x40000u
 #define PLATFORM_MRP_HANDLE_BASE 0x3910000u

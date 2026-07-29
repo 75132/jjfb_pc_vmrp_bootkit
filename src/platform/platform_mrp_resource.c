@@ -304,15 +304,16 @@ void platform_mrp_resource_note_pixels(uint32_t bytes, uint32_t guest_pixels, ui
 
 void platform_mrp_resource_note_pixels_ex(uint32_t bytes, uint32_t guest_pixels,
                                          uint32_t handle_guest, uint16_t w, uint16_t h) {
-    /* P6-2: never enqueue zeroed host_pixels on product path. */
+    /* P8: never calloc/enqueue zeroed host_pixels — Pending FIFO is decode-only. */
     (void)bytes;
     (void)guest_pixels;
     (void)handle_guest;
     (void)w;
     (void)h;
     boot_successor_note_pixels_legacy_call();
-    printf("[PLATFORM_MRP_RES] note_pixels DEPRECATED note=no_zero_enqueue "
-           "NOTE_PIXELS_LEGACY_CALLS evidence=P6-2\n");
+    printf("[NOTE_PIXELS_LEGACY] deprecated_no_enqueue bytes=%u guest=0x%X handle=0x%X "
+           "wh=%ux%u evidence=P8\n",
+           bytes, guest_pixels, handle_guest, (unsigned)w, (unsigned)h);
     fflush(stdout);
 }
 
@@ -631,6 +632,12 @@ static void on_lookup_entry(uc_engine *uc, uint64_t address, uint32_t size, void
     uc_reg_read(uc, UC_ARM_REG_R10, &g_entry_r10);
     uc_reg_read(uc, UC_ARM_REG_R11, &g_entry_r11);
     g_entry_valid = 1;
+    {
+        char name[NAME_MAX + 1];
+        memset(name, 0, sizeof(name));
+        if (g_entry_r1) read_guest_cstr(uc, g_entry_r1, name, sizeof(name));
+        boot_successor_on_mrp_lookup_callsite(uc, name);
+    }
     /*
      * V75: guest eventually opens default2 after jjfb miss. With chrome skips,
      * that open never happens and the wrong-pack scan + R9 storm stalls leave.
@@ -931,34 +938,98 @@ int platform_mrp_resource_load(void *uc, const GwyMrpResourceRequest *request,
 }
 
 #ifdef GWY_HAVE_UNICORN
+static int side_effect_audit_enabled(void) { return env_explicit_one("JJFB_304BF0_SIDE_EFFECT_AUDIT"); }
+
+static const char *resume_mode(void) {
+    const char *e = getenv("JJFB_304BF0_RESUME_MODE");
+    if (e && strcmp(e, "callsite") == 0) return "callsite";
+    if (e && strcmp(e, "epilogue") == 0) return "epilogue";
+    /* P10-A/B TEMP DEFAULT: flipped to "epilogue" to validate the new resume
+     * branch without env injection (sandbox strips custom env on child spawn).
+     * REVERT to "direct_lr" after A/B validation. */
+    return "epilogue";
+}
+
+/* P9 A/B: epilogue-mode R0 value written before the guest's real epilogue pops.
+ * default 0 (matches direct_lr baseline); =handle uses the decoded member handle. */
+static uint32_t epilogue_r0_status(const GwyMrpResourceResult *res) {
+    const char *e = getenv("JJFB_304BF0_EPILOGUE_R0");
+    if (e && strcmp(e, "handle") == 0 && res) return res->handle_guest;
+    return 0;
+}
+
 static int restore_304bf0_ok(uc_engine *uc, const char *name, const GwyMrpResourceResult *res,
                              const char *via) {
-    uint32_t status = 0, ret_pc;
+    const char *mode = resume_mode();
+    uint32_t status = 0;
+    uint32_t ret_pc;
     if (!uc || !g_entry_valid || !g_entry_lr || !g_entry_sp) return 0;
     module_r9_switch_clear_dsm_return_side_stack();
     (void)module_r9_switch_cancel_dsm_helper_blx(uc, PLATFORM_STRCMP_DSM_BODY_VA, 0);
-    uc_reg_write(uc, UC_ARM_REG_SP, &g_entry_sp);
-    uc_reg_write(uc, UC_ARM_REG_R4, &g_entry_r4);
-    uc_reg_write(uc, UC_ARM_REG_R5, &g_entry_r5);
-    uc_reg_write(uc, UC_ARM_REG_R6, &g_entry_r6);
-    uc_reg_write(uc, UC_ARM_REG_R7, &g_entry_r7);
-    uc_reg_write(uc, UC_ARM_REG_R8, &g_entry_r8);
-    if (g_entry_r9) uc_reg_write(uc, UC_ARM_REG_R9, &g_entry_r9);
-    uc_reg_write(uc, UC_ARM_REG_R10, &g_entry_r10);
-    uc_reg_write(uc, UC_ARM_REG_R11, &g_entry_r11);
-    uc_reg_write(uc, UC_ARM_REG_R0, &status);
-    ret_pc = g_entry_lr | 1u;
-    uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
-    printf("[PLATFORM_MRP_RES] %s name=\"%s\" sha256=%s handle=0x%X ret_lr=0x%X "
-           "note=archive_exact_then_decode evidence=OBSERVED\n",
-           via ? via : "complete", name, res ? res->sha256_hex : "?",
-           res ? res->handle_guest : 0, g_entry_lr);
+
+    if (strcmp(mode, "callsite") == 0) {
+        ret_pc = PLATFORM_MRP_LOOKUP_CONTINUATION_PC | 1u;
+        uc_reg_write(uc, UC_ARM_REG_R0, &status);
+        uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+        printf("[PLATFORM_MRP_RES] %s name=\"%s\" sha256=%s handle=0x%X resume=callsite "
+               "pc=0x%X note=continuation_natural_epilogue evidence=OBSERVED\n",
+               via ? via : "complete", name, res ? res->sha256_hex : "?",
+               res ? res->handle_guest : 0, PLATFORM_MRP_LOOKUP_CONTINUATION_PC);
+    } else if (strcmp(mode, "epilogue") == 0) {
+        /* P9 resume-to-epilogue: jump to the function's REAL return point
+         * (0x304C4A add sp,#0xcc ; 0x304C4C pop{r4,r5,r6,r7,pc}). The entry hook
+         * fires BEFORE the prologue PUSH, so g_entry_sp is the pre-PUSH SP; we
+         * reconstruct the PUSH save area on the stack and set SP to the
+         * post-prologue position. Stack contract: prologue 36+188=224 out;
+         * epilogue 204(add)+20(pop)=224 back -> SP returns to g_entry_sp (balanced).
+         * r0 is host-set (POP does not restore it); r4-r7 restored by the real POP. */
+        uint32_t new_sp = g_entry_sp - 224u;
+        uint32_t save_area = new_sp + 188u;   /* == g_entry_sp - 36, PUSH save region */
+        uint32_t saved[9];
+        saved[0] = g_entry_r0; saved[1] = g_entry_r1; saved[2] = g_entry_r2; saved[3] = g_entry_r3;
+        saved[4] = g_entry_r4; saved[5] = g_entry_r5; saved[6] = g_entry_r6; saved[7] = g_entry_r7;
+        saved[8] = g_entry_lr;                /* POP reads pc from here (= caller lr) */
+        if (guest_memory_uc_poke((struct uc_struct *)uc, save_area, saved, sizeof(saved))) {
+            status = epilogue_r0_status(res);
+            uc_reg_write(uc, UC_ARM_REG_R0, &status);
+            uc_reg_write(uc, UC_ARM_REG_SP, &new_sp);
+            ret_pc = PLATFORM_MRP_LOOKUP_EPILOGUE_PC | 1u;  /* 0x304C4B, Thumb */
+            uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+            printf("[PLATFORM_MRP_RES] %s name=\"%s\" sha256=%s handle=0x%X ret_lr=0x%X "
+                   "resume=epilogue note=resume_to_real_epilogue sp=0x%X pc=0x%X evidence=OBSERVED\n",
+                   via ? via : "complete", name, res ? res->sha256_hex : "?",
+                   res ? res->handle_guest : 0, g_entry_lr, new_sp, PLATFORM_MRP_LOOKUP_EPILOGUE_PC);
+        } else {
+            /* save-area poke failed: safest fallback to direct_lr contract */
+            goto direct_lr_restore;
+        }
+    } else {
+direct_lr_restore:
+        uc_reg_write(uc, UC_ARM_REG_SP, &g_entry_sp);
+        uc_reg_write(uc, UC_ARM_REG_R4, &g_entry_r4);
+        uc_reg_write(uc, UC_ARM_REG_R5, &g_entry_r5);
+        uc_reg_write(uc, UC_ARM_REG_R6, &g_entry_r6);
+        uc_reg_write(uc, UC_ARM_REG_R7, &g_entry_r7);
+        uc_reg_write(uc, UC_ARM_REG_R8, &g_entry_r8);
+        if (g_entry_r9) uc_reg_write(uc, UC_ARM_REG_R9, &g_entry_r9);
+        uc_reg_write(uc, UC_ARM_REG_R10, &g_entry_r10);
+        uc_reg_write(uc, UC_ARM_REG_R11, &g_entry_r11);
+        uc_reg_write(uc, UC_ARM_REG_R0, &status);
+        ret_pc = g_entry_lr | 1u;
+        uc_reg_write(uc, UC_ARM_REG_PC, &ret_pc);
+        printf("[PLATFORM_MRP_RES] %s name=\"%s\" sha256=%s handle=0x%X ret_lr=0x%X "
+               "resume=direct_lr note=archive_exact_then_decode evidence=OBSERVED\n",
+               via ? via : "complete", name, res ? res->sha256_hex : "?",
+               res ? res->handle_guest : 0, g_entry_lr);
+    }
     fflush(stdout);
     product_runtime_progress_emit("platform_mrp_resource", via ? via : "complete", name);
-    boot_successor_on_resource_complete(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr,
+    boot_successor_on_resource_complete(name, PLATFORM_MRP_LOOKUP_CALLSITE_PC, g_entry_lr,
                                         jjfbol_scope_active_package(), jjfbol_scope_generation(),
                                         via);
-    boot_successor_on_304bf0_entry_complete(name, res ? res->handle_guest : 0, g_entry_lr, 1);
+    boot_successor_on_mrp_resume(mode, via, name);
+    boot_successor_on_304bf0_entry_complete(name, res ? res->handle_guest : 0, g_entry_lr,
+                                            strcmp(mode, "callsite") != 0);
     return 1;
 }
 
@@ -967,8 +1038,6 @@ static int entry_complete_enabled(void) {
     if (env_explicit_zero("JJFB_304BF0_ENTRY_COMPLETE")) return 0;
     return 1;
 }
-
-static int side_effect_audit_enabled(void) { return env_explicit_one("JJFB_304BF0_SIDE_EFFECT_AUDIT"); }
 
 static int try_304bf0_entry_complete(uc_engine *uc) {
     char name[NAME_MAX + 1];
@@ -984,8 +1053,8 @@ static int try_304bf0_entry_complete(uc_engine *uc) {
 
     kind = platform_mrp_resource_classify(name);
     legacy_ok = looks_like_bitmap_legacy(name);
-    boot_successor_on_resource_request(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr);
-    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr, legacy_ok,
+    boot_successor_on_resource_request(name, PLATFORM_MRP_LOOKUP_CALLSITE_PC, g_entry_lr);
+    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_CALLSITE_PC, g_entry_lr, legacy_ok,
                                      may_complete_kind(kind) ? "load_attempt"
                                      : (kind == GWY_MRP_RESOURCE_RAW_BLOB ? "raw_deferred"
                                                                          : "reject_filter"));
@@ -1032,7 +1101,7 @@ static int try_304bf0_entry_complete(uc_engine *uc) {
     snprintf(req.name, sizeof(req.name), "%s", name);
     req.guest_name_ptr = g_entry_r1;
     req.caller_lr = g_entry_lr;
-    req.caller_pc = PLATFORM_MRP_LOOKUP_ENTRY_PC;
+    req.caller_pc = PLATFORM_MRP_LOOKUP_CALLSITE_PC;
     memset(&res, 0, sizeof(res));
     if (!platform_mrp_resource_load(uc, &req, &res)) return 0;
     return restore_304bf0_ok(uc, name, &res, "entry_complete");
@@ -1060,7 +1129,7 @@ static int on_strcmp_match(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t
         return 0;
 
     kind = platform_mrp_resource_classify(name);
-    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_ENTRY_PC, g_entry_lr,
+    platform_mrp_resource_census_note(name, PLATFORM_MRP_LOOKUP_CALLSITE_PC, g_entry_lr,
                                      looks_like_bitmap_legacy(name),
                                      may_complete_kind(kind) ? "load_attempt" : "reject_filter");
     if (!may_complete_kind(kind)) return 0;
@@ -1068,7 +1137,7 @@ static int on_strcmp_match(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t
     memset(&req, 0, sizeof(req));
     snprintf(req.name, sizeof(req.name), "%s", name);
     req.caller_lr = g_entry_lr;
-    req.caller_pc = PLATFORM_MRP_LOOKUP_ENTRY_PC;
+    req.caller_pc = PLATFORM_MRP_LOOKUP_CALLSITE_PC;
 
     if (!platform_mrp_resource_load(uc, &req, &res)) return 0;
     return restore_304bf0_ok((uc_engine *)uc, name, &res, "postmatch_complete");
@@ -1078,10 +1147,12 @@ static int on_strcmp_match(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t
 void platform_mrp_resource_arm(void *uc) {
 #ifdef GWY_HAVE_UNICORN
     uc_err e;
-    uint32_t entry = PLATFORM_MRP_LOOKUP_ENTRY_PC;
+    uint32_t entry = PLATFORM_MRP_LOOKUP_CALLSITE_PC;
     if (!uc) uc = g_uc;
     if (!uc) return;
     g_uc = uc;
+
+    boot_successor_trace_arm(uc);
 
     platform_strcmp_set_match_hook(on_strcmp_match);
     platform_mrp_resource_census_arm();
@@ -1115,9 +1186,10 @@ void platform_mrp_resource_arm(void *uc) {
             fflush(stdout);
         } else {
             g_entry_hook_armed = 1;
-            printf("[PLATFORM_MRP_RES] armed entry_frame_capture=0x%X strcmp_match_hook=1 "
-                   "entry_complete=1 raw_blob=%d census=1 note=no_force_equal evidence=OBSERVED\n",
-                   entry, raw_blob_complete_enabled());
+            printf("[PLATFORM_MRP_RES] armed callsite_hook=0x%X strcmp_match_hook=1 "
+                   "resume_mode=%s entry_complete=1 raw_blob=%d census=1 "
+                   "note=no_force_equal evidence=OBSERVED\n",
+                   entry, resume_mode(), raw_blob_complete_enabled());
             fflush(stdout);
         }
     }

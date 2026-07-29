@@ -40,6 +40,14 @@ void boot_successor_note_pixels_legacy_call(void);
 void boot_successor_on_304bf0_entry_complete(const char *member_name, uint32_t out_va,
                                             uint32_t lr, int skipped_native);
 
+/* P8: MRP dispatcher stack-contract observation (observe-only hooks). */
+void boot_successor_on_mrp_dispatch_enter(void *uc);
+void boot_successor_on_mrp_lookup_callsite(void *uc, const char *member_name);
+void boot_successor_on_mrp_lookup_continuation(void *uc);
+void boot_successor_on_mrp_dispatch_epilogue(void *uc);
+void boot_successor_on_mrp_caller_continuation(void *uc);
+void boot_successor_on_mrp_resume(const char *mode, const char *via, const char *member_name);
+
 #ifdef __cplusplus
 }
 #endif
