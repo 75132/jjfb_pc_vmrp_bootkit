@@ -1,12 +1,12 @@
 # Helper 0x2F68E4 CFG Timeline
 
-- **run_id:** launcher_20260728_030118_61500
-- **verdict:** `HELPER_COMPLETED`
-- **helper_call_id:** 1
-- **instructions:** 61
-- **blocks:** 2  **edges:** 4  **loops:** 0
-- **stop:** ret_caller
-- **seen:** 2E4066=1 2DADC4=1 returned=1
+- **run_id:** p14_r2_20260730_013052
+- **verdict:** `HELPER_WAITING_PLATFORM_RESULT`
+- **helper_call_id:** 0
+- **instructions:** 0
+- **blocks:** 0  **edges:** 0  **loops:** 0
+- **stop:** (none)
+- **seen:** 2E4066=0 2DADC4=0 returned=0
 
 ## CFG summary
 
@@ -19,10 +19,6 @@
 
 ## Top blocks (by hits)
 
-- 0x2F68E4..0x2F6900 hits=15 steps=0..57
-- 0x2F6952..0x2F6952 hits=1 steps=58..58
 
 ## Exit predicates (sample)
 
-- 0x2F68FA → 0x308D99 branch lhs=0x0 rhs=0x0 taken=0
-- 0x2F6900 → 0x2F6953 branch lhs=0x0 rhs=0x0 taken=1

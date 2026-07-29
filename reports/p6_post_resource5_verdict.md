@@ -5,12 +5,12 @@ reason: incremental
 ## Answers
 
 1. Initial UI builder return: YES/CANDIDATE (marker UI_BUILDER_LEAVE)
-2. First stable loop PC: 0x280010 (hits=469)
+2. First stable loop PC: 0x280058 (hits=66)
 3. Resources completed: 5; 6th natural: NO
 4. FIRST_POST_UI_PC: 0x2D93D0
 5. NOTE_PIXELS_LEGACY_CALLS: 0
 6. entry_complete skips: 5
-7. family 0x1E209 notes: 5; 0x10102: 2; 0x10140: 2
+7. family 0x1E209 notes: 4; 0x10102: 2; 0x10140: 2
 
 ## RAW_BLOB status
 

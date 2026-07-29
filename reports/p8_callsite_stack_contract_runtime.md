@@ -10,9 +10,9 @@ JJFB_304BF0_RESUME_MODE = direct_lr
 
 | marker | count |
 |--------|-------|
-| LOOKUP_CONTINUATION_HIT | 1 |
+| LOOKUP_CONTINUATION_HIT | 0 |
 | DISPATCH_EPILOGUE_HIT | 0 |
-| CALLER_CONTINUATION_HIT | 6 |
+| CALLER_CONTINUATION_HIT | 5 |
 | resources completed | 5 |
 | 6th natural resource | NO |
 
@@ -24,9 +24,8 @@ JJFB_304BF0_RESUME_MODE = direct_lr
 | 3 | textbar!120!30.bmp | 0x27FE80 | 0 | YES |
 | 4 | topleft!15!5.bmp | 0x27FEF8 | 0 | YES |
 | 5 | topright!12!4.bmp | 0x27FEF8 | 0 | YES |
-| 6 | loadingbar!201!29.bmp | 0x27FE38 | 0 | YES |
 
-CALLER_SP_DELTA_OK=6 CALLER_SP_DELTA_BAD=0
+CALLER_SP_DELTA_OK=5 CALLER_SP_DELTA_BAD=0
 
 ## Acceptance (callsite mode)
 
