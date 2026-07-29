@@ -35,6 +35,8 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/platform_send_app_event.h"
+#include "gwy_launcher/platform_101ab_provider.h"
+#include "gwy_launcher/product_101ab_trace.h"
 #include "gwy_launcher/platform_path_a_response.h"
 #include "gwy_launcher/platform_display.h"
 #include "gwy_launcher/platform_timer.h"
@@ -2770,41 +2772,63 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             /* One-record Path-A needs empty B58 list (*B58 → 0x2F68E4 r0). */
             if (with_rec && r9)
                 (void)platform_event_queue_ensure_lifecycle_list(uc, r9, mid, gen, oname);
-            n = platform_101ab_fill_path_a(tmp, (uint32_t)sizeof(tmp), with_rec);
-            if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
-                uint32_t payload_len = 0;
-                uint32_t body_size = 0;
-                const uint8_t *inner = NULL;
-                uint32_t inner_n = 0;
-                if (n >= 5u) {
-                    payload_len = ((uint32_t)tmp[1] << 24) | ((uint32_t)tmp[2] << 16) |
-                                  ((uint32_t)tmp[3] << 8) | (uint32_t)tmp[4];
-                    if (n >= 13u) {
-                        body_size = ((uint32_t)tmp[9] << 24) | ((uint32_t)tmp[10] << 16) |
-                                    ((uint32_t)tmp[11] << 8) | (uint32_t)tmp[12];
+            {
+                Gwy101AbProvideResult prov;
+                memset(&prov, 0, sizeof(prov));
+                n = platform_101ab_provider_fill(tmp, (uint32_t)sizeof(tmp), with_rec, &prov);
+                /*
+                 * Guest R0 @0x30D2B0 is the initial parse cursor into the buffer
+                 * (not status, not bytes-written). Full in-place fill → cursor 0.
+                 */
+                ret = prov.guest_r0_cursor;
+                if (n && guest_memory_uc_poke((struct uc_struct *)uc, result.fill_buf, tmp, n)) {
+                    uint32_t payload_len = 0;
+                    uint32_t body_size = 0;
+                    const uint8_t *inner = NULL;
+                    uint32_t inner_n = 0;
+                    if (n >= 5u) {
+                        payload_len = ((uint32_t)tmp[1] << 24) | ((uint32_t)tmp[2] << 16) |
+                                      ((uint32_t)tmp[3] << 8) | (uint32_t)tmp[4];
+                        if (n >= 13u) {
+                            body_size = ((uint32_t)tmp[9] << 24) | ((uint32_t)tmp[10] << 16) |
+                                        ((uint32_t)tmp[11] << 8) | (uint32_t)tmp[12];
+                        }
+                        if (n > 15u) {
+                            inner = tmp + 15;
+                            inner_n = n - 15u;
+                        }
                     }
-                    if (n > 15u) {
-                        inner = tmp + 15;
-                        inner_n = n - 15u;
+                    if (prov.mode == GWY_101AB_PROVIDER_SYNTHETIC_CODE5_COMPAT)
+                        platform_path_a_response_note_delivered(with_rec);
+                    product_101ab_trace_on_platform_fill(uc, result.fill_buf, (uint32_t)sizeof(tmp),
+                                                        tmp, n, prov.guest_r0_cursor, with_rec,
+                                                        prov.name);
+                    printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X type=%u bytes=%u "
+                           "with_rec=%d body_size=%u payload_len=%u provider=%s transport=%s "
+                           "cursor=%u name=%s evidence=%s\n",
+                           result.fill_buf, result.fill_type, n, with_rec, body_size, payload_len,
+                           prov.name ? prov.name : "?",
+                           platform_101ab_provider_transport_name(prov.transport_class),
+                           prov.guest_r0_cursor, result.name ? result.name : "?",
+                           prov.evidence ? prov.evidence : "?");
+                    if (with_rec && inner && inner_n) {
+                        uint32_t dump_n = inner_n > 32u ? 32u : inner_n;
+                        uint32_t di;
+                        printf("[PLATFORM_BUFFER_FILL_INNER] n=%u bytes=", dump_n);
+                        for (di = 0; di < dump_n; di++) printf("%02X", inner[di]);
+                        printf(" evidence=OBSERVED\n");
                     }
+                    fflush(stdout);
+                } else if (prov.empty_queue) {
+                    printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X EMPTY_QUEUE provider=%s "
+                           "evidence=OBSERVED\n",
+                           result.fill_buf, prov.name ? prov.name : "?");
+                    fflush(stdout);
+                } else {
+                    printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X FAILED n=%u evidence=OBSERVED\n",
+                           result.fill_buf, n);
+                    fflush(stdout);
                 }
-                platform_path_a_response_note_delivered(with_rec);
-                printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X type=%u bytes=%u "
-                       "with_rec=%d body_size=%u payload_len=%u name=%s evidence=%s\n",
-                       result.fill_buf, result.fill_type, n, with_rec, body_size, payload_len,
-                       result.name ? result.name : "?", result.evidence ? result.evidence : "?");
-                if (with_rec && inner && inner_n) {
-                    uint32_t dump_n = inner_n > 32u ? 32u : inner_n;
-                    uint32_t di;
-                    printf("[PLATFORM_BUFFER_FILL_INNER] n=%u bytes=", dump_n);
-                    for (di = 0; di < dump_n; di++) printf("%02X", inner[di]);
-                    printf(" evidence=OBSERVED\n");
-                }
-                fflush(stdout);
-            } else {
-                printf("[PLATFORM_BUFFER_FILL] code=0x101AB buf=0x%X FAILED n=%u evidence=OBSERVED\n",
-                       result.fill_buf, n);
-                fflush(stdout);
             }
         }
         if (env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) {

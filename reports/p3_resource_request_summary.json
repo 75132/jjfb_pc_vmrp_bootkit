@@ -1,9 +1,9 @@
 {
   "reason": "incremental",
-  "total_unique_rows": 5,
-  "total_sequences": 5,
+  "total_unique_rows": 3,
+  "total_sequences": 3,
   "kind_counts": {
-    "bitmap_candidate": 5,
+    "bitmap_candidate": 3,
     "ani_candidate": 0,
     "text_candidate": 0,
     "module_candidate": 0,
@@ -12,8 +12,8 @@
   },
   "host_action": {
     "reject_filter": 0,
-    "complete": 4,
-    "other": 5
+    "complete": 2,
+    "other": 3
   },
   "first_rejected": false,
   "first_ani": false,

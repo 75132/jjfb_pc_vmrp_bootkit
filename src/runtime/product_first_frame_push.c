@@ -9,6 +9,7 @@
 #include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_lifecycle_record_trace.h"
 #include "gwy_launcher/product_event_object_trace.h"
+#include "gwy_launcher/product_101ab_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/ext_loader.h"
@@ -413,6 +414,11 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
     if (product_eot_enabled()) {
         product_eot_bind_uc(uc);
         product_eot_arm_hooks(uc);
+    }
+    if (product_101ab_trace_enabled()) {
+        product_101ab_trace_bind_uc(uc);
+        product_101ab_trace_note_er_rw(er_rw);
+        product_101ab_trace_arm_hooks(uc);
     }
 
     accept = platform_event_service_on_guest_request(
@@ -943,6 +949,7 @@ void product_ffp_finalize(void) {
     product_fp_finalize();
     product_lrt_finalize();
     product_eot_finalize();
+    product_101ab_trace_finalize();
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();

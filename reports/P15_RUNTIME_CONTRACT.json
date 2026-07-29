@@ -1,0 +1,102 @@
+{
+  "task": "P15-P17_101AB_TRANSPORT_PROTOCOL_CLOSURE",
+  "date": "2026-07-30",
+  "primary_target": "game_files/mythroad/240x320/gwy/jjfb.mrp",
+  "frozen": {
+    "JJFB_304BF0_RESUME_MODE": "direct_lr",
+    "JJFB_MAP_LOW_GUEST_MEM": "1",
+    "path_a_product_default": "SYNTHETIC_CODE5_COMPAT",
+    "forbid_host_enqueue_event15": true,
+    "forbid_rewrite_code5_to_15": true,
+    "forbid_hardwrite_e6c_b71_ui_mode": true
+  },
+  "build_identity": {
+    "parent_commit": "293cabfff379fed04e6facc12b30644d71b4bcb4",
+    "main_exe_sha256": "7c39d8f032cd83d449834a8c89e7c8475b50a76d10c5fe596f6a3036768be2de",
+    "jjfb_launcher_sha256": "b1187b00acf80085d85ee7d1de5e181e7df1452c5caf202a6abe22bb19b4d604",
+    "jjfb_mrp_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+    "layer1_first_frame_sha256": "c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda"
+  },
+  "abi_101ab": {
+    "guest_entry": "0x30D24C",
+    "args": { "r0": "buffer", "r1": "capacity" },
+    "platform_call": {
+      "code": "0x101AB",
+      "r1": "buffer",
+      "r2": "out_slot_sp+0x10",
+      "r3": "type_default_2",
+      "sp0": 0
+    },
+    "r0_return_semantics": "initial_parse_cursor_into_buffer_not_status_not_bytes_written",
+    "inplace_fill_cursor": 0,
+    "frame_layout": "u8 type | BE32 payload_length | BE32 header | repeat(BE32 body_size | BE16 event_code | body[body_size-2])",
+    "sole_bl_to_30D24C": "0x30D2FA",
+    "10165_trampoline": "0x30D2F8",
+    "parser": "0x2E4D6C",
+    "event_code_read": "0x2E4EA4 via 0x308D28",
+    "b54_enqueue": "0x2E4EEE via 0x312A60",
+    "b54_consume": "0x2DC8D4",
+    "dispatch": "0x2E2520",
+    "code15_handler": "0x2E5E60"
+  },
+  "runtime_trace": {
+    "observed_event_codes": [5],
+    "natural_code15": false,
+    "e6c_natural_store": false,
+    "chain_closed": "30D24C->101AB->2E4D6C->2E4EA4(code=5)->2E4EEE->2DC8D4->2E2520",
+    "frame_dumps": [
+      "out/p15_101ab/frames/frame_2.bin",
+      "out/p15_101ab/frames/frame_3.bin"
+    ]
+  },
+  "transport_classification": {
+    "closed_product_class": "LOCAL_BOOTSTRAP_STREAM",
+    "abi_shape": "RECEIVE_INTO_BUFFER",
+    "target_after_producer_closure": "TRANSPORT_QUEUE",
+    "network_receive_stream": "NOT_PROVEN",
+    "callback_payload_copy": "REJECTED",
+    "confidence": 0.95
+  },
+  "provider_modes": [
+    "SYNTHETIC_CODE5_COMPAT",
+    "TRANSPORT_QUEUE",
+    "CAPTURE_REPLAY_RESEARCH"
+  ],
+  "matrix": {
+    "baseline_180s_x2": "PASS layer1; 5 resources; text app7 YES; codes=5 only",
+    "text_ab_70s": "inconclusive for app7 visibility flip; product default remains {y,x}",
+    "unique_bmp_resources": [
+      "loadingbar!201!29.bmp",
+      "bar!16!18.bmp",
+      "textbar!120!30.bmp",
+      "topleft!15!5.bmp",
+      "topright!12!4.bmp"
+    ]
+  },
+  "text_visibility_ab": {
+    "product_default": "param0={y,x}",
+    "param0_raw_le_halfwords": [114, 219],
+    "draw_xy_default": [219, 114],
+    "research_env": "JJFB_TEXT_PARAM0_XY=1",
+    "product_default_changed": false,
+    "note": "70s B cells did not reach app=7 draw; keep default until pixel proof"
+  },
+  "hard_stop": {
+    "missing_input": "original_0x101AB_frame_stream_containing_event_code_15",
+    "not_missing": "hidden_B54_producer",
+    "unique_next_action": "capture_or_implement_real_101AB_producer_frames_with_SHA_then_replay_via_TRANSPORT_QUEUE_or_CAPTURE_REPLAY",
+    "success_A_natural_code15_e6c": false,
+    "success_B_sixth_resource": false,
+    "success_C_new_ui": false,
+    "success_D_ani": false
+  },
+  "artifacts": {
+    "protocol_closure": "reports/P15_101AB_PROTOCOL_CLOSURE.md",
+    "trace_csv": "reports/P15_101AB_TRACE.csv",
+    "frame_matrix": "reports/P15_FRAME_MATRIX.csv",
+    "build_identity": "reports/P15_BUILD_IDENTITY.txt",
+    "frame_dumps": "out/p15_101ab/frames/"
+  },
+  "robotol_blob": "out/research_p9_extract/robotol.ext",
+  "code_base": "0x2D8DF4"
+}

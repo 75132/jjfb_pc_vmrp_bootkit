@@ -1,6 +1,6 @@
 # Helper 0x2F68E4 CFG Timeline
 
-- **run_id:** p14_r2_20260730_013052
+- **run_id:** p15_provider_synth_r1_20260730_023930
 - **verdict:** `HELPER_WAITING_PLATFORM_RESULT`
 - **helper_call_id:** 0
 - **instructions:** 0

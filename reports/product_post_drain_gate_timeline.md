@@ -1,24 +1,22 @@
 # Post-Drain Gate Timeline
 
-- **run_id:** p14_r2_20260730_013052
+- **run_id:** p15_provider_synth_r1_20260730_023930
 - **er_rw:** 0x2B1858
 - **enter_30CBBC:** 1
-- **true_enter_2E2520:** 3
+- **true_enter_2E2520:** 1
 - **enter_2DC4D8:** 0
 - **store_15D:** 1 actual_store_pc=0x30CCF4
-- **store_B71:** 1 actual_store_pc=0x30ED7A
+- **store_B71:** 1 actual_store_pc=0x2FE854
 - **15D_writer_grade:** proven_natural_writer
 - **B71_writer_grade:** store_from_unrelated_pc
-- **successor_status:** POST_DRAIN_SUCCESSOR_REACHED
-- **disp_trace:** 1 calls=3 branches=6 reads=30
+- **successor_status:** POST_DRAIN_SUCCESSOR_BLOCKED
+- **disp_trace:** 1 calls=1 branches=2 reads=10
 
 ## Dispatch calls
 
 | id | r0 | event_code | target | block_pred |
 |----|----|------------|--------|------------|
 | 1 | 0x6BBAC8 | 5 | 0x2E4040 | switch_case_not_MR_MOUSE_UP |
-| 2 | 0x6C1118 | 5 | 0x2E4040 | switch_case_not_MR_MOUSE_UP |
-| 3 | 0x6C1118 | 5 | 0x2E4040 | switch_case_not_MR_MOUSE_UP |
 
 ## Discipline
 

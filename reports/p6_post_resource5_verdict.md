@@ -4,13 +4,13 @@ reason: incremental
 
 ## Answers
 
-1. Initial UI builder return: YES/CANDIDATE (marker UI_BUILDER_LEAVE)
-2. First stable loop PC: 0x280058 (hits=66)
-3. Resources completed: 5; 6th natural: NO
-4. FIRST_POST_UI_PC: 0x2D93D0
+1. Initial UI builder return: UNKNOWN (marker UI_BUILDER_LEAVE absent)
+2. First stable loop PC: 0x0 (hits=0)
+3. Resources completed: 2; 6th natural: NO
+4. FIRST_POST_UI_PC: 0x0
 5. NOTE_PIXELS_LEGACY_CALLS: 0
-6. entry_complete skips: 5
-7. family 0x1E209 notes: 4; 0x10102: 2; 0x10140: 2
+6. entry_complete skips: 1
+7. family 0x1E209 notes: 1; 0x10102: 2; 0x10140: 2
 
 ## RAW_BLOB status
 

@@ -247,8 +247,31 @@ int platform_text_api_handle_11f00(void *uc, uint32_t app, uint32_t code_obj, ui
     }
 
     if (param0) {
-        (void)guest_memory_uc_peek((struct uc_struct *)uc, param0, &y, 2);
-        (void)guest_memory_uc_peek((struct uc_struct *)uc, param0 + 2u, &x, 2);
+        /*
+         * Product default (A): param0 = {y,x} halfwords — TARGET_OBSERVED @0x2F2360.
+         * Research B only: JJFB_TEXT_PARAM0_XY=1 interprets {x,y}.
+         * Do not flip product default without call-site asm + visible pixel proof.
+         */
+        {
+            const char *swap = getenv("JJFB_TEXT_PARAM0_XY");
+            int xy = swap && swap[0] == '1' && swap[1] == '\0';
+            uint8_t praw[0x20];
+            int pi;
+            if (xy) {
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, param0, &x, 2);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, param0 + 2u, &y, 2);
+            } else {
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, param0, &y, 2);
+                (void)guest_memory_uc_peek((struct uc_struct *)uc, param0 + 2u, &x, 2);
+            }
+            memset(praw, 0, sizeof(praw));
+            if (guest_memory_uc_peek((struct uc_struct *)uc, param0, praw, (uint32_t)sizeof(praw))) {
+                printf("[PLATFORM_11F00_PARAM0] va=0x%X xy_mode=%d raw=", param0, xy);
+                for (pi = 0; pi < 0x20; pi++) printf("%02X", praw[pi]);
+                printf(" evidence=OBSERVED\n");
+                fflush(stdout);
+            }
+        }
         memset(rgb, 0, sizeof(rgb));
         /*
          * app=7 (0x2F2360): param0 is a tiny local {y,x,...} on SP — only y/x
@@ -289,9 +312,10 @@ int platform_text_api_handle_11f00(void *uc, uint32_t app, uint32_t code_obj, ui
     }
 
     printf("[PLATFORM_11F00_TRACE] str_va=0x%X nbytes=%d x=%d y=%d clip=%d,%d,%d,%d mode=0x%X "
-           "app=0x%X code_obj=0x%X pc=0x%X lr=0x%X hex=%s evidence=OBSERVED\n",
+           "app=0x%X code_obj=0x%X pc=0x%X lr=0x%X hex=%s param0_xy=%d evidence=OBSERVED\n",
            str_va, nbytes, (int)x, (int)y, (int)cx, (int)cy, (int)cw, (int)ch, mode, app,
-           code_obj, caller_pc, caller_lr, hex);
+           code_obj, caller_pc, caller_lr, hex,
+           (getenv("JJFB_TEXT_PARAM0_XY") && getenv("JJFB_TEXT_PARAM0_XY")[0] == '1') ? 1 : 0);
     fflush(stdout);
 
     if (!str_va || nbytes <= 0) {

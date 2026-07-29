@@ -77,6 +77,8 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_identity.c
     src/platform/platform_userinfo.c
     src/platform/platform_send_app_event.c
+    src/platform/platform_101ab_frame.c
+    src/platform/platform_101ab_provider.c
     src/platform/platform_timer.c
     src/platform/platform_handler_registry.c
     src/platform/platform_scheduler.c
@@ -109,6 +111,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_platform_10138_trace.c
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c
+    src/runtime/product_101ab_trace.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES
@@ -414,6 +417,10 @@ add_test(NAME platform_timer COMMAND test_platform_timer)
 add_executable(test_platform_send_app_event tests/unit/test_platform_send_app_event.c)
 gwy_link_product_runtime(test_platform_send_app_event)
 add_test(NAME platform_send_app_event COMMAND test_platform_send_app_event)
+
+add_executable(test_platform_101ab_frame tests/unit/test_platform_101ab_frame.c)
+gwy_link_product_runtime(test_platform_101ab_frame)
+add_test(NAME platform_101ab_frame COMMAND test_platform_101ab_frame)
 
 add_executable(test_platform_handler_registry tests/unit/test_platform_handler_registry.c)
 gwy_link_product_runtime(test_platform_handler_registry)
