@@ -28,6 +28,7 @@
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/sms_cfg_compat_profile.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
+#include "gwy_launcher/p19_startgame_contract.h"
 
 int e10a31a_enabled(void) { return 0; }
 
@@ -617,3 +618,29 @@ const SmsCfgCompatProfile *sms_cfg_compat_select(const uint8_t cfunction_sha256[
     (void)cfg_length;
     return 0;
 }
+
+int p19_startgame_contract_enabled(void) { return 0; }
+void p19_startgame_contract_reset(void) {}
+void p19_startgame_contract_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+}
+void p19_startgame_contract_bind_uc(void *uc) { (void)uc; }
+void p19_startgame_contract_on_code(void *uc, uint64_t module_id, const char *module_name,
+                                    uint32_t pc, const uint32_t regs[16]) {
+    (void)uc;
+    (void)module_id;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+}
+int p19_startgame_contract_prefer_gamelist_continue(void) { return 0; }
+void p19_startgame_contract_finalize(const char *stop_reason) { (void)stop_reason; }
+int p19_gate_api_builder(void) { return 0; }
+int p19_gate_startgame_ptr(void) { return 0; }
+int p19_gate_startgame_entry(void) { return 0; }
+int p19_gate_three_args(void) { return 0; }
+int p19_gate_opcode300(void) { return 0; }
+int p19_gate_nested_jjfb(void) { return 0; }
+int p19_gate_child_robotol(void) { return 0; }

@@ -3,6 +3,7 @@
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
+#include "gwy_launcher/p19_startgame_contract.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -88,7 +89,7 @@ int ext_gwy_shell_shim_shell_core_continue_mode(void) {
 int ext_gwy_shell_shim_enabled(void) {
     if (g_sh.enabled_known) return g_sh.enabled;
     g_sh.enabled = env_is_1("JJFB_GWY_LAUNCHER_MODE") || env_is_1("JJFB_NATIVE_BOOT_FULL") ||
-                   original_gwy_bootstrap_enabled();
+                   original_gwy_bootstrap_enabled() || p19_startgame_contract_enabled();
     if (!g_sh.enabled) {
         const char *p = getenv("JJFB_LAUNCH_PATH");
         if (p && (strcmp(p, "gwy_shell_post_update") == 0 ||
@@ -359,7 +360,7 @@ void ext_gwy_shell_shim_prepare_native_shell(void) {
     warmup_open("mythroad/gwy/gbrwcore.mrp");
     warmup_open("mythroad/gwy/gbrwshell.mrp");
     warmup_open("mythroad/gwy/font.mrp");
-    if (!original_gwy_bootstrap_enabled() ||
+    if (!original_gwy_bootstrap_enabled() || p19_startgame_contract_prefer_gamelist_continue() ||
         (getenv("JJFB_ORIGINAL_LOAD_GAMELIST") &&
          getenv("JJFB_ORIGINAL_LOAD_GAMELIST")[0] == '1')) {
         warmup_open("mythroad/gwy/gamelist.mrp");
@@ -483,14 +484,21 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
 
     param = ext_gwy_shell_shim_jjfb_param();
     /*
-     * original_headless: prefer gbrwshell (MRP container) over gamelist UI.
-     * Optional JJFB_ORIGINAL_LOAD_GAMELIST=1 restores prior continue-to-gamelist.
-     * startgame_only: still continue into gbrwshell so shared libs stay alive;
-     * host observes API_REGISTER then uses runtime entry (never static addr).
+     * P19 / JJFB_ORIGINAL_LOAD_GAMELIST: continue into gamelist logic (UI may be
+     * suppressed) so cfg36 selection can naturally call lib.startGame.
+     * Otherwise original_headless prefers gbrwshell container warmup path.
      */
-    if (original_gwy_bootstrap_enabled() &&
-        !(getenv("JJFB_ORIGINAL_LOAD_GAMELIST") &&
-          getenv("JJFB_ORIGINAL_LOAD_GAMELIST")[0] == '1')) {
+    if (p19_startgame_contract_prefer_gamelist_continue()) {
+        printf("[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm "
+               "reason=p19_gamelist_logic_no_ui_required evidence=TARGET_OBSERVED\n");
+        printf("[GWY_CONTINUE_APPLY] target=gwy/gamelist.mrp evidence=OBSERVED\n");
+        fflush(stdout);
+        if (out_target && target_cap)
+            snprintf(out_target, target_cap, "%s", "gwy/gamelist.mrp");
+        if (out_param && param_cap) snprintf(out_param, param_cap, "%s", param ? param : "");
+        return 1;
+    }
+    if (original_gwy_bootstrap_enabled()) {
         printf("[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gbrwshell.mrp via=start_dsm "
                "reason=original_headless_skip_gamelist_ui evidence=TARGET_OBSERVED\n");
         printf("[GWY_CONTINUE_APPLY] target=gwy/gbrwshell.mrp evidence=OBSERVED\n");
@@ -515,6 +523,7 @@ int ext_gwy_shell_shim_try_continue_after_mr_exit(void *uc, char *out_target, si
 void ext_gwy_shell_shim_finalize(const char *stop_reason) {
     int shell_any;
     GwyShellLaunchClass c;
+    p19_startgame_contract_finalize(stop_reason);
     if (!ext_gwy_shell_shim_enabled() || g_sh.finalized) return;
     g_sh.finalized = 1;
     shell_any = g_sh.gbrwcore_opened || g_sh.gamelist_opened || g_sh.gbrwshell_opened ||

@@ -4,6 +4,7 @@
 #include "gwy_launcher/e10a31_gamelist_context.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
+#include "gwy_launcher/p19_startgame_contract.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -200,6 +201,7 @@ int ext_gwy_shell_native_exec_enabled(void) {
     path = getenv("JJFB_LAUNCH_PATH");
     if (env_is_1("JJFB_SHELL_NATIVE_EXEC_TRACE")) g_ne.enabled = 1;
     if (original_gwy_bootstrap_enabled()) g_ne.enabled = 1;
+    if (p19_startgame_contract_enabled()) g_ne.enabled = 1;
     if (path && (strcmp(path, "gwy_guest_native_runapp") == 0 ||
                  strcmp(path, "gwy_shell_core_continue") == 0 ||
                  strcmp(path, "gwy_original_headless") == 0))
@@ -210,7 +212,10 @@ int ext_gwy_shell_native_exec_enabled(void) {
 
 void ext_gwy_shell_native_exec_reset(void) { memset(&g_ne, 0, sizeof(g_ne)); }
 
-void ext_gwy_shell_native_exec_bind_uc(void *uc) { g_ne.uc = uc; }
+void ext_gwy_shell_native_exec_bind_uc(void *uc) {
+    g_ne.uc = uc;
+    p19_startgame_contract_bind_uc(uc);
+}
 
 const char *ext_gwy_shell_native_exec_class_name(GwyShellNativeExecClass c) {
     switch (c) {
@@ -426,6 +431,7 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
            "evidence=OBSERVED\n",
            label, label, guest_addr, size);
     fflush(stdout);
+    p19_startgame_contract_on_module_map(label, guest_addr, size);
     emit_export_table(m);
     if (strcmp(label, "gamelist.ext") == 0) {
         /* Format string mapped != live cfg36 select (E10A-3). */
@@ -625,6 +631,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
     (void)module_id;
     if (!ext_gwy_shell_native_exec_enabled()) return;
     if (uc) g_ne.uc = uc;
+    p19_startgame_contract_on_code(uc, module_id, module_name, pc, regs);
     e10a_vfs_note_guest_code(module_name ? module_name : "?", pc);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
@@ -918,4 +925,5 @@ void ext_gwy_shell_native_exec_finalize(const char *stop_reason) {
            g_ne.strcom_800 ? "yes" : "no", g_ne.strcom_801 ? "yes" : "no",
            g_ne.mrc_init ? "yes" : "no", g_ne.pxc_writes, stop_reason ? stop_reason : "?");
     fflush(stdout);
+    p19_startgame_contract_finalize(stop_reason);
 }

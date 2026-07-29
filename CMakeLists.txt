@@ -140,6 +140,7 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/e10a31n_post_range.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
+    src/runtime/p19_startgame_contract.c
 )
 
 add_library(launcher_core STATIC ${GWY_LAUNCHER_CORE_SOURCES})
