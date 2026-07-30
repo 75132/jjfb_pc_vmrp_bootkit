@@ -5,6 +5,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/p19_startgame_contract.h"
+#include "gwy_launcher/p20_gbrwcore_lifecycle.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -202,6 +203,7 @@ int ext_gwy_shell_native_exec_enabled(void) {
     if (env_is_1("JJFB_SHELL_NATIVE_EXEC_TRACE")) g_ne.enabled = 1;
     if (original_gwy_bootstrap_enabled()) g_ne.enabled = 1;
     if (p19_startgame_contract_enabled()) g_ne.enabled = 1;
+    if (p20_gbrwcore_lifecycle_enabled()) g_ne.enabled = 1;
     if (path && (strcmp(path, "gwy_guest_native_runapp") == 0 ||
                  strcmp(path, "gwy_shell_core_continue") == 0 ||
                  strcmp(path, "gwy_original_headless") == 0))
@@ -215,6 +217,7 @@ void ext_gwy_shell_native_exec_reset(void) { memset(&g_ne, 0, sizeof(g_ne)); }
 void ext_gwy_shell_native_exec_bind_uc(void *uc) {
     g_ne.uc = uc;
     p19_startgame_contract_bind_uc(uc);
+    p20_gbrwcore_lifecycle_bind_uc(uc);
 }
 
 const char *ext_gwy_shell_native_exec_class_name(GwyShellNativeExecClass c) {
@@ -432,6 +435,7 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
            label, label, guest_addr, size);
     fflush(stdout);
     p19_startgame_contract_on_module_map(label, guest_addr, size);
+    p20_gbrwcore_lifecycle_on_module_map(label, guest_addr, size);
     emit_export_table(m);
     if (strcmp(label, "gamelist.ext") == 0) {
         /* Format string mapped != live cfg36 select (E10A-3). */
@@ -493,8 +497,11 @@ void ext_gwy_shell_native_exec_on_slot28(uint32_t pc, uint32_t r0, uint32_t r1, 
     if (!ext_gwy_shell_native_exec_enabled()) return;
     /* TARGET_OBSERVED: 0x10102(event_code, handler) registration. */
     if (r0 == 0x10102u && r2) {
+        uint32_t r9 = 0;
         add_handler(r1, r2, 0);
         e10a_shell_event(r1, r2, pc, 0, "slot28_10102_register");
+        if (g_ne.uc) (void)guest_memory_uc_read_r9((struct uc_struct *)g_ne.uc, &r9);
+        p20_gbrwcore_lifecycle_on_plat_10102(r1, r2, r9, "gbrwcore.ext");
     }
 }
 
@@ -632,6 +639,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
     if (!ext_gwy_shell_native_exec_enabled()) return;
     if (uc) g_ne.uc = uc;
     p19_startgame_contract_on_code(uc, module_id, module_name, pc, regs);
+    p20_gbrwcore_lifecycle_on_code(uc, module_id, module_name, pc, regs);
     e10a_vfs_note_guest_code(module_name ? module_name : "?", pc);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
@@ -814,6 +822,8 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
 
 void ext_gwy_shell_native_exec_on_helper_call(uint32_t helper, uint32_t method, int32_t ret) {
     if (!ext_gwy_shell_native_exec_enabled()) return;
+    if (helper && (helper & ~1u) >= 0x2EB000u && (helper & ~1u) < 0x320000u)
+        p20_gbrwcore_lifecycle_on_helper_register(helper, 0);
     if (!g_ne.guest_pc_hit && (g_ne.mrp_started_gbrwcore || g_ne.ext_loaded)) {
         /* Helper activity after shell start is weak evidence of guest progress. */
         printf("[JJFB_SHELL_EXEC] package=active stage=helper_call helper=0x%X method=%u ret=%d "
@@ -926,4 +936,5 @@ void ext_gwy_shell_native_exec_finalize(const char *stop_reason) {
            g_ne.mrc_init ? "yes" : "no", g_ne.pxc_writes, stop_reason ? stop_reason : "?");
     fflush(stdout);
     p19_startgame_contract_finalize(stop_reason);
+    p20_gbrwcore_lifecycle_finalize(stop_reason);
 }

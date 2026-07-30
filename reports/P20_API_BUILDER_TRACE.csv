@@ -1,0 +1,13 @@
+﻿tag,pc,note
+mrpgcmap_helper,0x30CA80,observed
+MODULE_COMMAND_0_ENTER,0x30CFE8,observed
+cmd0_branch,0x30D018,observed
+plat_reg_wrap,0x30CCD0,observed
+cb_reg_call,0x30D024,observed
+reg_fn,0x30CED0,observed
+event_callback,0x30B7E0,observed
+lazy_init,0x30BC40,observed
+api_builder,0x306BFC,observed
+sg_fn_store,0x306CF6,observed
+sg_entry_live_armed,0x2AAD84,table_plus_0x78
+shell_continue_init_ok,gamelist.mrp,timer_fire_ext_init_ok

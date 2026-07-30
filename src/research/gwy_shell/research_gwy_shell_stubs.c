@@ -29,6 +29,7 @@
 #include "gwy_launcher/sms_cfg_compat_profile.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/p19_startgame_contract.h"
+#include "gwy_launcher/p20_gbrwcore_lifecycle.h"
 
 int e10a31a_enabled(void) { return 0; }
 
@@ -644,3 +645,44 @@ int p19_gate_three_args(void) { return 0; }
 int p19_gate_opcode300(void) { return 0; }
 int p19_gate_nested_jjfb(void) { return 0; }
 int p19_gate_child_robotol(void) { return 0; }
+
+int p20_gbrwcore_lifecycle_enabled(void) { return 0; }
+void p20_gbrwcore_lifecycle_reset(void) {}
+void p20_gbrwcore_lifecycle_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+}
+void p20_gbrwcore_lifecycle_on_helper_register(uint32_t helper, uint32_t p_guest) {
+    (void)helper;
+    (void)p_guest;
+}
+void p20_gbrwcore_lifecycle_bind_uc(void *uc) { (void)uc; }
+void p20_gbrwcore_lifecycle_on_code(void *uc, uint64_t module_id, const char *module_name,
+                                    uint32_t pc, const uint32_t regs[16]) {
+    (void)uc;
+    (void)module_id;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+}
+void p20_gbrwcore_lifecycle_on_plat_10102(uint32_t family, uint32_t callback, uint32_t r9,
+                                          const char *owner) {
+    (void)family;
+    (void)callback;
+    (void)r9;
+    (void)owner;
+}
+void p20_gbrwcore_lifecycle_finalize(const char *stop_reason) { (void)stop_reason; }
+int p20_gate_cmd0(void) { return 0; }
+int p20_gate_reg10102(void) { return 0; }
+int p20_gate_callback_enter(void) { return 0; }
+int p20_gate_lazy_init(void) { return 0; }
+int p20_gate_api_builder(void) { return 0; }
+int p20_gate_sg_ptr(void) { return 0; }
+int p20_gate_startgame(void) { return 0; }
+int p20_gate_opcode300(void) { return 0; }
+int p20_gate_nested_jjfb(void) { return 0; }
+uint32_t p20_image_base(void) { return 0; }
+uint32_t p20_live_r9(void) { return 0; }
+uint32_t p20_sg_fn_ptr(void) { return 0; }

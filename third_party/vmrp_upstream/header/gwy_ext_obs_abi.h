@@ -131,6 +131,8 @@ void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *nam
 void gwy_ext_obs_mr_exit(void *uc);
 /* Phase 6P: return 1 if first post-gbrwcore mr_exit was consumed (do not exit(0)). */
 int gwy_shell_shim_try_continue_after_mr_exit(void *uc);
+/* After gbrwcore API table publishes startGame (init_ok), continue without waiting for br_exit. */
+int gwy_shell_shim_try_continue_after_gbrwcore_init_ok(void *uc);
 
 /* Phase 6N: platform mrc_extChunk publication (gated by JJFB_EXTCHUNK_PROVIDER). */
 void gwy_ext_obs_extchunk_set_sendappevent(uint32_t guest_addr);

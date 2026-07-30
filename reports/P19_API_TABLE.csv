@@ -1,6 +1,2 @@
-﻿api_name,function_pointer,table_offset,owner_module,R9,table_object,generation,kind
-lib.startGame,0x0,0x78,gbrwcore.ext,0x0,0x0,0,not_observed_builder_not_hit
-lib.runflashmrp,0x0,,gbrwcore.ext,0x0,0x0,0,not_observed
-lib.runapp,0x0,,gbrwcore.ext,0x0,0x0,0,not_observed
-lib.checkmrpver,0x0,,gbrwcore.ext,0x0,0x0,0,not_observed
-lib.getmrpver,0x0,,gbrwcore.ext,0x0,0x0,0,not_observed
+api_name,function_pointer,table_offset,owner_module,R9,table_object,generation,kind
+lib.startGame,0x2AAD84,0x78,gbrwcore.ext,0x2B0D18,0x2ACFA0,1,api_table_entry

@@ -214,6 +214,11 @@ int gwy_shell_shim_try_continue_after_mr_exit(void *uc) {
     return 0;
 }
 
+int gwy_shell_shim_try_continue_after_gbrwcore_init_ok(void *uc) {
+    (void)uc;
+    return 0;
+}
+
 const char *gwy_shell_shim_continue_target(void) { return "gwy/gamelist.mrp"; }
 
 const char *gwy_shell_shim_continue_param(void) {

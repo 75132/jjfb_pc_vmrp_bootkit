@@ -1,37 +1,11 @@
-﻿{
-  "depth": 1,
+{
+  "depth": 2,
   "nested_jjfb_intercepted": false,
   "last_nested_target": "",
   "last_nested_param": "",
   "frames": [
-    {
-      "index": 0,
-      "role": "parent_gbrwcore",
-      "package": "gwy/gbrwcore.mrp",
-      "primary_ext": "gbrwcore.ext",
-      "r9": "0x0",
-      "erw": "0x0",
-      "module_generation": 0,
-      "callback_registry": "0x0",
-      "transport_provider": "0x0",
-      "provider_101ab": "0x0",
-      "timer_owner": "0x0",
-      "active": true
-    }
+    {"index":0,"role":"parent_gbrwcore","package":"gwy/gbrwcore.mrp","primary_ext":"gbrwcore.ext","r9":"0x2B0D18","erw":"0x0","module_generation":0,"callback_registry":"0x2ACFA0","transport_provider":"0x0","provider_101ab":"0x0","timer_owner":"0x0","active":true},
+    {"index":1,"role":"parent_gamelist","package":"gwy/gamelist.mrp","primary_ext":"gamelist.ext","r9":"0x280400","erw":"0x0","module_generation":0,"callback_registry":"0x0","transport_provider":"0x0","provider_101ab":"0x0","timer_owner":"0x0","active":true}
   ],
-  "observations": {
-    "mode": "original_headless",
-    "gbrwcore_guest_pc": "0x2EB804",
-    "shell_native_gate": "open",
-    "gbrwshell_warmup_open": true,
-    "gbrwshell_dsm_started": false,
-    "lib_startGame_entry_pc": null,
-    "lib_startGame_string_va": "0x30DBB4",
-    "lib_runflashmrp_string_va": "0x30DAC4",
-    "lib_runapp_string_va": "0x30DCA0",
-    "nested_jjfb": false,
-    "continue_after_gbrwcore": "not_observed_in_hold_window",
-    "source_cell": "out/p16_original_gwy/B_original_headless_r1_20260730_032737"
-  },
-  "note": "Parent frame must survive child jjfb start; do not destroy bootstrap VM. This Quick run stopped after gbrwcore guest PC + string-table API_REGISTER; no nested jjfb frame yet."
+  "note": "Parent frame must survive child jjfb start; do not destroy bootstrap VM."
 }

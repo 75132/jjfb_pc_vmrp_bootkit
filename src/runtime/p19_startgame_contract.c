@@ -1,5 +1,7 @@
 #include "gwy_launcher/p19_startgame_contract.h"
+#include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/mrp_runtime_stack.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
 #include <stdio.h>
@@ -127,7 +129,32 @@ int p19_gate_child_robotol(void) { return g_p19.child_robotol; }
 void p19_startgame_contract_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
     if (!p19_startgame_contract_enabled() || !module_name || !base) return;
     if (!strstr(module_name, "gbrwcore")) return;
-    g_p19.gbrw_base = base & ~1u;
+    /* Prefer pad-refined image_base (entries.image_base) over raw CODE_IMAGE pad. */
+    {
+        ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+        const GwyLoadedModule *m = NULL;
+        size_t i;
+        if (reg) {
+            for (i = 0; i < reg->count; i++) {
+                const char *n = reg->modules[i].resolved_name[0] ? reg->modules[i].resolved_name
+                                                                : reg->modules[i].requested_name;
+                if (n && strstr(n, "gbrwcore")) {
+                    m = &reg->modules[i];
+                    break;
+                }
+            }
+        }
+        if (m && m->entries.image_base)
+            g_p19.gbrw_base = m->entries.image_base & ~1u;
+        else if (m && m->map.helper_address) {
+            uint32_t hn = m->map.helper_address & ~1u;
+            /* Live helper is dispatcher at file+0x217EC. */
+            if (hn > 0x217ECu) g_p19.gbrw_base = hn - 0x217ECu;
+            else g_p19.gbrw_base = base & ~1u;
+        } else {
+            g_p19.gbrw_base = base & ~1u;
+        }
+    }
     g_p19.gbrw_size = size ? size : 147196u;
     g_p19.base_known = 1;
     printf("[P19_GBRWCORE_MAP] base=0x%X size=0x%X api_builder=0x%X sg_entry=0x%X "

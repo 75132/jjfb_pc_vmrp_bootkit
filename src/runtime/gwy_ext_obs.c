@@ -74,6 +74,8 @@
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/vm_runtime.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/p19_startgame_contract.h"
+#include "gwy_launcher/p20_gbrwcore_lifecycle.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -1777,9 +1779,28 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                    ev->handler);
             fflush(stdout);
         } else {
-            /* Family switch ABI: subcode in R0 (sendAppEvent app), event id in R1. */
-            abi.r0 = ev->app;
-            abi.r1 = ev->event_code;
+            /*
+             * ABI by registration owner (do not force robotol layout on all modules):
+             *   robotol / 0x1E200 band: R0=app, R1=event_code
+             *   gbrwcore / 0x11100 band: R0=event_code (callback treats R0 as event)
+             */
+            int event_in_r0 = 0;
+            uint32_t fam = platform_handler_registry_family(0x10102u);
+            if (ev->owner_module[0] && strstr(ev->owner_module, "gbrwcore"))
+                event_in_r0 = 1;
+            else if ((fam & 0xFFFFFF00u) == 0x11100u)
+                event_in_r0 = 1;
+            if (event_in_r0) {
+                abi.r0 = ev->event_code;
+                abi.r1 = ev->app;
+                printf("[PLATFORM_FAMILY_EVENT] op=ABI_SELECT layout=R0_EVENT owner=%s "
+                       "family=0x%X evidence=OBSERVED\n",
+                       ev->owner_module[0] ? ev->owner_module : "?", fam);
+                fflush(stdout);
+            } else {
+                abi.r0 = ev->app;
+                abi.r1 = ev->event_code;
+            }
             if (ev->del_r2 || product_ffp_apply_abi()) {
                 abi.set_r2 = 1;
                 abi.r2 = ev->del_r2;
@@ -2954,13 +2975,34 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         {
             GwyScheduledWork w;
             uint32_t depth = module_r9_switch_depth();
+            const GwyPlatformHandlerRecord *fam10102 =
+                platform_handler_registry_find_family_event(
+                    platform_handler_registry_family(0x10102u));
+            ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+            const GwyLoadedModule *owner = NULL;
+            uint32_t handler = platform_handler_registry_get(0x10140u);
             memset(&w, 0, sizeof(w));
             w.source = GWY_SCHED_SRC_PLATFORM_TIMER;
-            w.handler_or_helper = platform_handler_registry_get(0x10140u);
+            /* Prefer period handler; else accepted 0x10102 family callback. */
+            if (!handler && fam10102) handler = fam10102->handler;
+            w.handler_or_helper = handler;
             w.method_or_event = 2u;
             w.due_time = 0;
             w.forced = 0;
-            snprintf(w.owner_module, sizeof(w.owner_module), "robotol.ext");
+            if (handler && reg)
+                owner = module_registry_find_by_code_addr(reg, handler & ~1u);
+            if (owner) {
+                const char *on =
+                    owner->resolved_name[0] ? owner->resolved_name : owner->requested_name;
+                snprintf(w.owner_module, sizeof(w.owner_module), "%s", on ? on : "?");
+                w.owner_module_id = owner->module_id;
+            } else if (fam10102 && fam10102->owner_module[0]) {
+                snprintf(w.owner_module, sizeof(w.owner_module), "%s", fam10102->owner_module);
+                w.owner_module_id = fam10102->owner_module_id;
+                w.owner_generation = fam10102->owner_generation;
+            } else {
+                snprintf(w.owner_module, sizeof(w.owner_module), "%s", "robotol.ext");
+            }
             (void)platform_scheduler_enqueue(&w, depth);
         }
         if (g_timer_start && result.timer_period_ms) {
@@ -3670,6 +3712,22 @@ int gwy_shell_shim_try_continue_after_mr_exit(void *uc) {
     return 1;
 }
 
+int gwy_shell_shim_try_continue_after_gbrwcore_init_ok(void *uc) {
+    /*
+     * continue_after_gbrwcore_init: once startGame is published in the API table,
+     * shell may continue into gamelist without waiting for br_exit (timer loop may
+     * keep the module resident).
+     */
+    if (!p20_gate_sg_ptr() && !p19_gate_startgame_ptr()) return 0;
+    if (!p20_gbrwcore_lifecycle_enabled() && !p19_startgame_contract_prefer_gamelist_continue())
+        return 0;
+    printf("[JJFB_SHELL_CORE_CONTINUE] reason=gbrwcore_init_ok sg_ptr=0x%X via=after_timer_deliver "
+           "evidence=OBSERVED\n",
+           p20_sg_fn_ptr() ? p20_sg_fn_ptr() : 0u);
+    fflush(stdout);
+    return gwy_shell_shim_try_continue_after_mr_exit(uc);
+}
+
 void gwy_ext_obs_e10a31a_br_exit_enter(void *uc) { e10a31a_note_br_exit_enter(uc); }
 
 void gwy_ext_obs_e10a31a_br_exit_fallback(void *uc) {
@@ -3762,8 +3820,116 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
     ext_gwy_shell_shim_finalize(stop_reason);
 }
 
+/*
+ * Chunk-timer FIRE_EXT runs helper(P, code=2) and skips 0x10140 lifecycle_on_timer_due.
+ * TIMER_START still enqueues PLATFORM_TIMER work (prefer 0x10140, else accepted 0x10102
+ * family callback). Deliver that queued handler here when it is not the helper already
+ * entered by FIRE_EXT — generic scheduler completion, not a forged sendAppEvent.
+ */
+static int g_post_fire_ext_delivering;
+
+static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, int32_t fire_ret) {
+    void *uc = g_bound_uc;
+    int n = 0;
+    if (!uc || g_post_fire_ext_delivering || g_family_draining || g_in_family_entry) return;
+    if (module_r9_switch_depth() > 0) return;
+
+    g_post_fire_ext_delivering = 1;
+    /* Family events posted during FIRE_EXT (sendAppEvent in band) — drain first. */
+    gwy_ext_obs_drain_family_events(uc);
+
+    /* One due tick → one scheduled handler (re-arm during FIRE may enqueue the next). */
+    while (n < 1 && platform_scheduler_queue_depth() > 0) {
+        GwyScheduledWork w;
+        GwyUcEntryAbi abi;
+        GwyUcEntryRunOut out;
+        ModuleRegistry *reg;
+        const GwyLoadedModule *owner;
+        uint32_t stop = GWY_VM_DEFAULT_MEM_BASE;
+        uint32_t r9_save = 0, r9_run = 0;
+        uint32_t h;
+        int ok;
+        int event_in_r0 = 0;
+        uint32_t fam;
+
+        memset(&w, 0, sizeof(w));
+        if (!platform_scheduler_peek(&w)) break;
+        if (w.source != GWY_SCHED_SRC_PLATFORM_TIMER) break;
+        if (!platform_scheduler_try_dequeue(0, &w)) break;
+        n++;
+
+        h = w.handler_or_helper;
+        if (!h || w.forced) continue;
+
+        /* FIRE_EXT already entered this helper with method=2. */
+        if ((h & ~1u) == (fire_helper & ~1u)) {
+            platform_scheduler_note_natural_callback(&w, fire_ret, 1);
+            continue;
+        }
+
+        (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
+        r9_run = r9_save;
+        reg = gwy_ext_loader_bound_registry();
+        owner = reg ? module_registry_find_by_code_addr(reg, h & ~1u) : NULL;
+        if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
+        if (owner) {
+            uint32_t p = ext_chunk_provider_last_p_guest();
+            uint32_t live = 0;
+            if (p && guest_memory_uc_peek_u32((struct uc_struct *)uc, p, &live) && live)
+                r9_run = live;
+        }
+        if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+
+        fam = platform_handler_registry_family(0x10102u);
+        if (w.owner_module[0] && strstr(w.owner_module, "gbrwcore"))
+            event_in_r0 = 1;
+        else if ((fam & 0xFFFFFF00u) == 0x11100u &&
+                 (h & ~1u) == (platform_handler_registry_get(0x10102u) & ~1u))
+            event_in_r0 = 1;
+
+        memset(&abi, 0, sizeof(abi));
+        abi.set_r0 = 1;
+        abi.set_r1 = 1;
+        abi.set_lr = 1;
+        abi.lr = stop;
+        /*
+         * Period tick into registered callback: R0=0 is not 0x7D/0x7E (lazy-init gate).
+         * Family/gbrwcore layout keeps event in R0; robotol 0x10140 keeps R0=R1=0.
+         */
+        abi.r0 = 0;
+        abi.r1 = 0;
+        if (event_in_r0) {
+            printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED layout=R0_EVENT owner=%s "
+                   "handler=0x%X r9=0x%X after_fire_helper=0x%X evidence=OBSERVED\n",
+                   w.owner_module[0] ? w.owner_module : "?", h, r9_run, fire_helper);
+        } else {
+            printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED layout=R0_R1_ZERO owner=%s "
+                   "handler=0x%X r9=0x%X after_fire_helper=0x%X evidence=OBSERVED\n",
+                   w.owner_module[0] ? w.owner_module : "?", h, r9_run, fire_helper);
+        }
+        fflush(stdout);
+
+        ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, h, stop, gwy_lifecycle_insn_limit(),
+                                         &abi, &out);
+        (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+        platform_scheduler_note_natural_callback(&w, (int32_t)out.r0_after, ok ? 1 : 0);
+        printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED_DONE ok=%d ret=%d end=%s pc_after=0x%X "
+               "evidence=OBSERVED\n",
+               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", out.pc_after);
+        fflush(stdout);
+
+        /* Nested sendAppEvent during callback → family drain. */
+        gwy_ext_obs_drain_family_events(uc);
+    }
+
+    g_post_fire_ext_delivering = 0;
+}
+
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
     e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
+    (void)p_guest;
+    (void)erw;
+    gwy_ext_obs_deliver_scheduled_after_fire_ext(helper, ret);
 }
 
 static uint32_t g_timer_fire_pin_erw;

@@ -4,6 +4,7 @@
 #include "gwy_launcher/e10a31a_precont_diag.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/p19_startgame_contract.h"
+#include "gwy_launcher/p20_gbrwcore_lifecycle.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -89,7 +90,8 @@ int ext_gwy_shell_shim_shell_core_continue_mode(void) {
 int ext_gwy_shell_shim_enabled(void) {
     if (g_sh.enabled_known) return g_sh.enabled;
     g_sh.enabled = env_is_1("JJFB_GWY_LAUNCHER_MODE") || env_is_1("JJFB_NATIVE_BOOT_FULL") ||
-                   original_gwy_bootstrap_enabled() || p19_startgame_contract_enabled();
+                   original_gwy_bootstrap_enabled() || p19_startgame_contract_enabled() ||
+                   p20_gbrwcore_lifecycle_enabled();
     if (!g_sh.enabled) {
         const char *p = getenv("JJFB_LAUNCH_PATH");
         if (p && (strcmp(p, "gwy_shell_post_update") == 0 ||
@@ -524,6 +526,7 @@ void ext_gwy_shell_shim_finalize(const char *stop_reason) {
     int shell_any;
     GwyShellLaunchClass c;
     p19_startgame_contract_finalize(stop_reason);
+    p20_gbrwcore_lifecycle_finalize(stop_reason);
     if (!ext_gwy_shell_shim_enabled() || g_sh.finalized) return;
     g_sh.finalized = 1;
     shell_any = g_sh.gbrwcore_opened || g_sh.gamelist_opened || g_sh.gbrwshell_opened ||
