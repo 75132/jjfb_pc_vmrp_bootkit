@@ -66,6 +66,7 @@
 #include "gwy_launcher/platform_event_service.h"
 #include "gwy_launcher/platform_event_queue.h"
 #include "gwy_launcher/platform_memory_ops.h"
+#include "gwy_launcher/platform_char_bitmap.h"
 #include "gwy_launcher/platform_timer_cadence.h"
 #include "gwy_launcher/handler_forensic.h"
 #include "gwy_launcher/robotol_idle_watch.h"
@@ -493,6 +494,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     platform_scheduler_reset();
     platform_timer_cadence_reset();
     platform_memcpy_import_reset();
+    platform_char_bitmap_reset();
     platform_memcpy_import_bind_uc(uc);
     platform_memcpy_import_arm(uc);
     product_callback_trace_reset();
@@ -742,13 +744,19 @@ void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuest
     g_guest_to_ptr = to_guest;
 }
 
-uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
+uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **host_out) {
     void *host;
+    if (host_out) *host_out = NULL;
     if (!g_guest_alloc || !g_guest_to_ptr || !size) return 0;
     host = g_guest_alloc(size);
     if (!host) return 0;
     memset(host, 0, size);
+    if (host_out) *host_out = host;
     return g_guest_to_ptr(host);
+}
+
+uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
+    return gwy_ext_obs_guest_malloc0_ex(size, NULL);
 }
 
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {

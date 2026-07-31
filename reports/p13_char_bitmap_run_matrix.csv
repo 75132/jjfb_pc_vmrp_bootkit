@@ -1,0 +1,6 @@
+﻿run_kind,run_id,main_sha,case9_leave,mmochat,getchar_n,getchar_ret_n,first_ch,first_cjk,unimpl_getchar,dsm_reinit,draw,refresh,bmp_n,net,next_unimpl,p3_fault,proc
+diag30,p13_diag_20260801_051918_95170,fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de,yes,yes,0,0,NONE,NONE,no,5,no,yes,0,no,none,no,
+golden1,p2_20260801_051956_26083,fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de,yes,yes,4,2,0x0,NONE,no,4,yes,yes,0,no,mr_getUserInfo,no,prod_exit=0
+golden2,p2_20260801_052034_27369,fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de,yes,yes,0,0,NONE,NONE,no,4,no,yes,0,no,none,no,prod_exit=0
+golden3,p2_20260801_052116_89016,fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de,yes,yes,6,2,0x0,NONE,no,4,yes,yes,0,no,mr_getUserInfo,no,prod_exit=0
+visual180,p13_visual_20260801_052157_98657,fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de,yes,yes,0,0,NONE,NONE,no,5,no,yes,0,no,none,no,

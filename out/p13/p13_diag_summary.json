@@ -1,0 +1,16 @@
+﻿{
+    "case9_leave":  true,
+    "mmochat":  true,
+    "getchar_n":  0,
+    "getchar_ret_n":  0,
+    "first_ch":  "NONE",
+    "first_cjk":  "NONE",
+    "unimpl_getchar":  false,
+    "dsm_reinit":  5,
+    "draw":  false,
+    "refresh":  true,
+    "bmp_n":  0,
+    "net":  false,
+    "next_unimpl":  "none",
+    "p3_fault":  false
+}

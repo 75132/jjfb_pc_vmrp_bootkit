@@ -84,6 +84,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_path_a_response.c
     src/platform/platform_memory_ops.c
     src/platform/platform_display.c
+    src/platform/platform_char_bitmap.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c
@@ -387,6 +388,10 @@ add_test(NAME platform_userinfo COMMAND test_platform_userinfo)
 add_executable(test_platform_timer tests/unit/test_platform_timer.c)
 gwy_link_product_runtime(test_platform_timer)
 add_test(NAME platform_timer COMMAND test_platform_timer)
+
+add_executable(test_platform_char_bitmap tests/unit/test_platform_char_bitmap.c)
+gwy_link_product_runtime(test_platform_char_bitmap)
+add_test(NAME platform_char_bitmap COMMAND test_platform_char_bitmap)
 
 add_executable(test_platform_send_app_event tests/unit/test_platform_send_app_event.c)
 gwy_link_product_runtime(test_platform_send_app_event)

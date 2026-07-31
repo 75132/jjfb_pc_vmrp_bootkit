@@ -1,14 +1,5 @@
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-[VM_FILE_BIND] runtime=1 svc=09624a40
-[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950
+[VM_FILE_BIND] runtime=1 svc=063711a8
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_052116_89016
 [JJFB_VFS] gwy_vm_file bound=1
 [GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
 [VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1

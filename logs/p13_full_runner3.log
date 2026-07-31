@@ -1,0 +1,183 @@
+=== P13 identity ===
+source_commit=96567ac6febd1b6e56acd576cbb930f4b6ede886
+source_tree_clean=False
+build_time_utc=2026-07-31T21:19:09.5841654Z
+main_exe_sha256=fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de
+JJFB_Launcher_exe_sha256=06aabe5ab2f6789b99c4f1b8180962bea1809651aef9bed853b892a732ef4c24
+gwy_launcher_exe_sha256=0c39eaff54028f331e951b0f03b9266e9b427828a57509119bf7a8a6e69756f7
+compiler=gcc-16.1.0
+product_default_return_mode=direct_lr
+product_ffp_apply_abi=0
+JJFB_PRODUCT_EVENT_CONTRACT=0
+JJFB_FAMILY_4F_FOR_E6C=0
+==== P13 DIAG 30s ====
+  case9_leave=True
+  mmochat=True
+  getchar_n=0
+  getchar_ret_n=0
+  first_ch=NONE
+  first_cjk=NONE
+  unimpl_getchar=False
+  dsm_reinit=5
+  draw=False
+  refresh=True
+  bmp_n=0
+  net=False
+  next_unimpl=none
+  p3_fault=False
+[P13] diagnose did not clear getCharBitmap â€?still writing matrix from available evidence
+==== P13 GOLDEN x3 (SkipBuild product script) ====
+== gwy_launcher validate ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+== sync resources C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 -> C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\mythroad ==
+== launch SDL window (close window to end) ==
+run_dir=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run
+target=gwy/jjfb.mrp (cfg36 param)
+[OK] prepared only (-NoLaunch)
+== PRODUCT DIRECT JJFB Seconds=120 runtime=Gwy+stubs run_id=p2_20260801_051956_26083 ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+pid=24008
+==== PRODUCT gates run_id=p2_20260801_051956_26083 ====
+  DESCRIPTOR_FROZEN=yes
+  TARGET_HASH_VERIFIED=yes
+  START_MR_ENTERED=yes
+  MRC_LOADER_RESOLVED_EXACT=yes
+  ROBOTOL_RESOLVED_BY_PROFILE_ALIAS=yes
+  ROBOTOL_BOOTSTRAP_RETURN=yes
+  EXT_VERSION_RETURN_ZERO=yes
+  EXT_APPINFO_RETURN_ZERO=yes
+  ROBOTOL_INIT_RETURN_ZERO=yes
+  ROBOTOL_HANDLER_REGISTERED=yes
+  SCHEDULER_NATURAL_CALLBACK=yes
+post_callback=FIRST_NATURAL_DRAW
+report=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\product_direct_jjfb_verdict.md
+[OK] PRODUCT DIRECT JJFB strong success
+golden1 strongish_exit=0 unimpl_getchar=False mmochat=True next=mr_getUserInfo
+== gwy_launcher validate ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+== sync resources C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 -> C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\mythroad ==
+== launch SDL window (close window to end) ==
+run_dir=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run
+target=gwy/jjfb.mrp (cfg36 param)
+[OK] prepared only (-NoLaunch)
+== PRODUCT DIRECT JJFB Seconds=120 runtime=Gwy+stubs run_id=p2_20260801_052034_27369 ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+pid=3172
+==== PRODUCT gates run_id=p2_20260801_052034_27369 ====
+  DESCRIPTOR_FROZEN=yes
+  TARGET_HASH_VERIFIED=yes
+  START_MR_ENTERED=yes
+  MRC_LOADER_RESOLVED_EXACT=yes
+  ROBOTOL_RESOLVED_BY_PROFILE_ALIAS=yes
+  ROBOTOL_BOOTSTRAP_RETURN=yes
+  EXT_VERSION_RETURN_ZERO=yes
+  EXT_APPINFO_RETURN_ZERO=yes
+  ROBOTOL_INIT_RETURN_ZERO=yes
+  ROBOTOL_HANDLER_REGISTERED=yes
+  SCHEDULER_NATURAL_CALLBACK=yes
+post_callback=NATURAL_CALLBACK_IDLE_WAIT
+report=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\product_direct_jjfb_verdict.md
+[OK] PRODUCT DIRECT JJFB strong success
+golden2 strongish_exit=0 unimpl_getchar=False mmochat=True next=none
+== gwy_launcher validate ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+== sync resources C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 -> C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\mythroad ==
+== launch SDL window (close window to end) ==
+run_dir=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run
+target=gwy/jjfb.mrp (cfg36 param)
+[OK] prepared only (-NoLaunch)
+== PRODUCT DIRECT JJFB Seconds=120 runtime=Gwy+stubs run_id=p2_20260801_052116_89016 ==
+[validate] root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[validate] jjfb.sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[validate] appid=400101 appver=12 members=50
+[validate] start.mr decoded=3787
+[validate] robotol.ext decoded=253420
+[validate] cfunction.ext exact=MISS
+[validate] cfg36 target=gwy/jjfb.mrp napptype=12 nextid=482 ncode=512 narg=0 narg1=1
+[validate] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[validate] descriptor_ok=1
+[validate] vfs host=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp ok=1
+[validate] result=PASS
+pid=14024
+==== PRODUCT gates run_id=p2_20260801_052116_89016 ====
+  DESCRIPTOR_FROZEN=yes
+  TARGET_HASH_VERIFIED=yes
+  START_MR_ENTERED=yes
+  MRC_LOADER_RESOLVED_EXACT=yes
+  ROBOTOL_RESOLVED_BY_PROFILE_ALIAS=yes
+  ROBOTOL_BOOTSTRAP_RETURN=yes
+  EXT_VERSION_RETURN_ZERO=yes
+  EXT_APPINFO_RETURN_ZERO=yes
+  ROBOTOL_INIT_RETURN_ZERO=yes
+  ROBOTOL_HANDLER_REGISTERED=yes
+  SCHEDULER_NATURAL_CALLBACK=yes
+post_callback=FIRST_NATURAL_DRAW
+report=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\product_direct_jjfb_verdict.md
+[OK] PRODUCT DIRECT JJFB strong success
+golden3 strongish_exit=0 unimpl_getchar=False mmochat=True next=mr_getUserInfo
+==== P13 VISUAL 180s ====
+  case9_leave=True
+  mmochat=True
+  getchar_n=0
+  getchar_ret_n=0
+  first_ch=NONE
+  first_cjk=NONE
+  unimpl_getchar=False
+  dsm_reinit=5
+  draw=False
+  refresh=True
+  bmp_n=0
+  net=False
+  next_unimpl=none
+  p3_fault=False
+matrix=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\p13_char_bitmap_run_matrix.csv identity=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\p13\p13_build_identity.txt

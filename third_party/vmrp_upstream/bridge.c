@@ -21,6 +21,8 @@
 #include "gwy_launcher/jjfb_plat_11f00.h"
 #include "gwy_launcher/platform_memory_ops.h"
 #include "gwy_launcher/platform_display.h"
+#include "gwy_launcher/platform_char_bitmap.h"
+#include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31d_provenance.h"
@@ -1092,6 +1094,61 @@ static void jjfb_compat_draw_char_block(int32_t x, int32_t y, uint16_t ch, uint1
     guiDrawBitmapSprite(pix, x, y, gw, gh);
 }
 
+/* P13: real mr_getCharBitmap — sky16/gb16.uc2, Guest VA return, AAPCS R0..R3. */
+static void br_mr_getCharBitmap(BridgeMap *o, uc_engine *uc) {
+    uint32_t ch = 0, font = 0, width_ptr = 0, height_ptr = 0;
+    uint32_t guest_va = 0;
+    int w = 0, h = 0, rb = 0;
+    int32_t wi = 0, hi = 0;
+    (void)o;
+    uc_reg_read(uc, UC_ARM_REG_R0, &ch);
+    uc_reg_read(uc, UC_ARM_REG_R1, &font);
+    uc_reg_read(uc, UC_ARM_REG_R2, &width_ptr);
+    uc_reg_read(uc, UC_ARM_REG_R3, &height_ptr);
+
+    /* fontSize: accept MR_FONT_* or raw; sky16 ignores size but reject absurd values */
+    if (font > 16u) {
+        printf("[JJFB_P13_GETCHAR] WARN fontSize=0x%X note=unexpected evidence=OBSERVED\n", font);
+        fflush(stdout);
+    }
+
+    if (width_ptr) {
+        if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, width_ptr, 0)) {
+            printf("[JJFB_P13_GETCHAR] FAIL width_ptr=0x%X not_writable evidence=OBSERVED\n",
+                   width_ptr);
+            fflush(stdout);
+            SET_RET_V(0);
+            return;
+        }
+    }
+    if (height_ptr) {
+        if (!guest_memory_uc_poke_u32((struct uc_struct *)uc, height_ptr, 0)) {
+            printf("[JJFB_P13_GETCHAR] FAIL height_ptr=0x%X not_writable evidence=OBSERVED\n",
+                   height_ptr);
+            fflush(stdout);
+            SET_RET_V(0);
+            return;
+        }
+    }
+
+    if (!platform_char_bitmap_get_guest(uc, (uint16_t)(ch & 0xFFFFu), (uint16_t)(font & 0xFFFFu),
+                                        &guest_va, &w, &h, &rb) ||
+        !guest_va) {
+        SET_RET_V(0);
+        return;
+    }
+
+    wi = (int32_t)w;
+    hi = (int32_t)h;
+    if (width_ptr) {
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, width_ptr, &wi, sizeof(wi));
+    }
+    if (height_ptr) {
+        (void)guest_memory_uc_poke((struct uc_struct *)uc, height_ptr, &hi, sizeof(hi));
+    }
+    SET_RET_V(guest_va);
+}
+
 /* E9N: platform mr_platDrawChar compat — only when JJFB_FAST_PLATFORM_TEXT_DRAW_SHIM=1. */
 static void br_mr_platDrawChar_compat(BridgeMap *o, uc_engine *uc) {
     uint32_t ch = 0, x = 0, y = 0, color = 0;
@@ -2100,6 +2157,28 @@ static void br_getDatetime(BridgeMap *o, uc_engine *uc) {
     SET_RET_V(getDatetime(getMrpMemPtr(datetime)));
 }
 
+/* P13 follow-on: mr_getTime — ms since DSM/base (mythroad dsm.c contract). */
+static uint32_t g_mr_getTime_base;
+static int g_mr_getTime_armed;
+static void br_mr_getTime(BridgeMap *o, uc_engine *uc) {
+    uint32_t now = (uint32_t)get_uptime_ms();
+    uint32_t ret;
+    static uint32_t n;
+    (void)o;
+    if (!g_mr_getTime_armed) {
+        g_mr_getTime_base = now;
+        g_mr_getTime_armed = 1;
+    }
+    ret = now - g_mr_getTime_base;
+    gwy_ext_obs_timer_poll_uc(uc);
+    n++;
+    if (n <= 8u || (n % 64u) == 0u) {
+        printf("[JJFB_P13_GETTIME] n=%u ret=%u evidence=OBSERVED\n", n, ret);
+        fflush(stdout);
+    }
+    SET_RET_V(ret);
+}
+
 static void br_mr_initNetwork(BridgeMap *o, uc_engine *uc) {
     // int32 (*initNetwork)(NETWORK_CB cb, const char *mode, void *userData);
     LOG("ext call %s()\n", o->name);
@@ -2599,12 +2678,12 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x70, MAP_FUNC, mr_mem_free, NULL, br_mem_free, 0),
     /* Stage E6: DOCUMENTED draw entry used by plat 0x10113 getProc (mr_table+0x1E0/_DrawBitmap). */
     BRIDGE_FUNC_MAP(0x74, MAP_FUNC, mr_drawBitmap, NULL, br_mr_drawBitmap, 0),
-    BRIDGE_FUNC_MAP(0x78, MAP_FUNC, mr_getCharBitmap, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x78, MAP_FUNC, mr_getCharBitmap, NULL, br_mr_getCharBitmap, 0),
     /* Stage E5: DOCUMENTED mr_timerStart/Stop were NULL — guest arm never reached host. */
     BRIDGE_FUNC_MAP(0x7C, MAP_FUNC, mr_timerStart, NULL, br_timerStart, 0),
     BRIDGE_FUNC_MAP(0x80, MAP_FUNC, mr_timerStop, NULL, br_timerStop, 0),
-    BRIDGE_FUNC_MAP(0x84, MAP_FUNC, mr_getTime, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x88, MAP_FUNC, mr_getDatetime, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x84, MAP_FUNC, mr_getTime, NULL, br_mr_getTime, 0),
+    BRIDGE_FUNC_MAP(0x88, MAP_FUNC, mr_getDatetime, NULL, br_getDatetime, 0),
     BRIDGE_FUNC_MAP(0x8C, MAP_FUNC, mr_getUserInfo, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x90, MAP_FUNC, mr_sleep, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x94, MAP_FUNC, mr_plat, NULL, NULL, 0),
@@ -3617,6 +3696,9 @@ static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, c
             ? g_start_dsm_frame_stack[g_start_dsm_depth]
             : 0ull;
     g_start_dsm_depth += 1u;
+    /* P13: rematerialize getTime baseline across DSM restart. */
+    g_mr_getTime_armed = 0;
+    g_mr_getTime_base = 0;
     frame.depth = g_start_dsm_depth;
     if (frame.depth < P27_FRAME_STACK) g_start_dsm_frame_stack[frame.depth] = frame.frame_id;
 

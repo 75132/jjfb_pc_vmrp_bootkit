@@ -1,0 +1,14 @@
+﻿source_commit=96567ac6febd1b6e56acd576cbb930f4b6ede886
+source_tree_clean_product_src=False
+build_time_utc=2026-07-31T21:19:09.5841654Z
+main_exe_sha256=fea9654e7850b79dfe08aceb35ff9a160e00971ce368f55232b34a556fb864de
+JJFB_Launcher_exe_sha256=06aabe5ab2f6789b99c4f1b8180962bea1809651aef9bed853b892a732ef4c24
+gwy_launcher_exe_sha256=0c39eaff54028f331e951b0f03b9266e9b427828a57509119bf7a8a6e69756f7
+compiler=gcc-16.1.0
+build_commands=RUN_BUILD.ps1; RUN_BUILD_VMRP.ps1 -Mode Gwy
+product_default_return_mode=direct_lr
+product_ffp_apply_abi=0
+JJFB_PRODUCT_EVENT_CONTRACT=0
+JJFB_FAMILY_4F_FOR_E6C=0
+p13_impl=mr_getCharBitmap+mr_getTime
+next_door=mr_getUserInfo@0x280090

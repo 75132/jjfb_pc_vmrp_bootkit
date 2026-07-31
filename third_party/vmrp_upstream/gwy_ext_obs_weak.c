@@ -273,6 +273,12 @@ uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
     return 0;
 }
 
+uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **host_out) {
+    (void)size;
+    if (host_out) *host_out = NULL;
+    return 0;
+}
+
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {
     (void)start;
     (void)stop;

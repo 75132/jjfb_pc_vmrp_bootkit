@@ -150,6 +150,8 @@ typedef uint32_t (*GwyExtObsGuestPtrFn)(void *host);
 void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuestPtrFn to_guest);
 /* Zero-filled guest alloc via registered allocator; 0 if unbound/fail. */
 uint32_t gwy_ext_obs_guest_malloc0(uint32_t size);
+/* Same as guest_malloc0 but also returns host pointer for direct fill. */
+uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **host_out);
 
 /* Host timer ABI (registered from bridge: timerStart / timerStop / SDL_GetTicks). */
 typedef int32_t (*GwyExtObsTimerStartFn)(uint16_t ms);

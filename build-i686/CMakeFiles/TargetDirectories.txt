@@ -42,6 +42,7 @@ C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_e
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_identity.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_userinfo.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_timer.dir
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_char_bitmap.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_send_app_event.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_handler_registry.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_ext_abi_adapter_p2.dir
