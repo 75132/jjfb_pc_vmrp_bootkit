@@ -1,0 +1,482 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0xC00000
+START_ADDRESS:0x80000, END_ADDRESS:0xE80000
+TOTAL_MEMORY:0xE00000(14680064)
+[JJFB_WINDOW] kind=SDL_software flags=0 zoom=1 size=240x320 title=JJFB Launcher note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED
+[RUNTIME_PROGRESS] milestone=runtime_spawned source=vmrp details=startVmrp evidence=OBSERVED
+initMemoryManager: baseAddress:0x280000 len: 0xC00000
+[DRAW_FP_TABLE_SLOT] mt=0x280004 off=0x1E0 trampoline=0x2801E4 evidence=OBSERVED
+[PLATFORM_MEMCPY] import_armed slot=0x804A8 identity=dsm_misbound_copy mr_table_off=0xC evidence=DOCUMENTED
+[PLATFORM_MEMCPY] dsm_body_armed slot=0x94E94 identity=dsm_memcpy_body evidence=DOCUMENTED
+[PLATFORM_STRLEN] import_armed slot=0xAC374 identity=dsm_strlen_body evidence=DOCUMENTED+E10A
+[PLATFORM_STRCPY] import_armed slot=0xAC300 identity=dsm_strcpy_body evidence=DOCUMENTED
+[PLATFORM_STRCMP] import_armed slot=0xAC2D0 identity=dsm_strcmp_body mr_table_off=0x28 evidence=DOCUMENTED+E10A
+[PLATFORM_MRP_RES] maps_ok pixel=0x3920000 handle=0x3910000 evidence=OBSERVED
+[PLATFORM_MRP_RES] armed entry_frame_capture=0x304BF0 strcmp_match_hook=1 entry_complete=1 sibling=default2 note=no_force_equal evidence=OBSERVED
+[PATH_A_SECOND] hooks_armed leave_2FC26C@0x2FC3E6 evidence=OBSERVED+V74
+[JJFB_V68_CHROME] contract=nop_2F449C_only_under_2FC26C+frame_then_leave force_skip_draw=auto skip_2FC3BE=0 allow=0 note=after_first_DrawFP_arm_leave_fast evidence=OBSERVED+V68+V75+F1
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0xA4178 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_CFN_P_SLOT] package=? module=? helper=0xA4178 P=0x2803E4 slot=0x80004 lr=0x80034 reason=fixr9_c_function_p_image_plus4 evidence=DOCUMENTED wrote=1
+[JJFB_GAME_P_TIMELINE] package=? module=? event=CFN_P_SLOT_PUBLISH P=0x2803E4 p0=0 p4=0 registry_base=0x0 registry_len=0 slot=0x80004 evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CALLBACK_FRAME] boundary=HOST_CALLBACK_RETURN callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre=0x0 leave=0x0 resume=0x0 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=1 changed=no r4_pre=0x80008 r4_post=0x80008 r9_pre=0x0 r9_post=0x0 r10_pre=0x0 r10_post=0x0 sp_pre=0x27FFF0 sp_post=0x27FFF0 cpsr_t_pre=0 cpsr_t_post=0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=1 module= module_id=0 cfn_path=HOST_MAP_FUNC call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 helper=0xA4178 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[R9_SCOPE] stage=NOOP scope_id=0 owns_frame=no requested_by=bridge_mr_extHelper requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=bridge_mr_extHelper owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=NORMAL_GUEST_RETURN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x00000000	R1=0x00000000	 R2=0x000024B8	 R3=0x00000000	N:0
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=09a847b0
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=robotol.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=1 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/jjfb.mrp primary=robotol.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mrp_member_view/game_jjfb_cfunction.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/jjfb.mrp primary=installed status=installed mode=game_package evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp primary=mmochat.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=mmochat.ext insert_at=791 entry_size=30 index_end=791 offset=92949 stored_size=206148 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/wxjwq.mrp requested=mmochat.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/wxjwq.mrp module=mmochat.ext module_id=2 requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=206148 unpacked_size=320292 extracted_size=320292 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/wxjwq.mrp primary=mmochat.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mrp_member_view/game_wxjwq_cfunction.mrp original_sha256=6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/wxjwq.mrp primary=installed status=installed mode=game_package evidence=CROSS_TARGET
+[JJFB_PACKAGE_SCOPE] package=gwy/xyol.mrp primary=(none) result=MISS evidence=TARGET_OBSERVED
+[MODULE_REGISTRY] package=? module=dsm:cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=3 load_id=1 package= requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=3 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] package=? module=cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=3 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=? module=cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=3 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=3 load_id=1 package= requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER stage=EXTRACTED size=320292
+[EXT_LOAD] module_id=3 load_id=1 package= requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/xyol.mrp
+[GWY_LAUNCH] param=napptype=0_nextid=0_ncode=0_narg=0_narg1=1_nmrpname=gwy/xyol.mrp_gwyblink
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=3 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=3 method=1 return=0
+[MODULE_REGISTRY] package=? module=cfunction.ext module_id=3 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=3 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=3 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=LEGAL_HELPER_EVENT_WITH_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=3 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[JJFB_MODULE_IDENTITY] package=? module=dsm:cfunction.ext module_id=3 image_base=0x80000 image_size=0x51154 entry_pc=0xA4178 entry_in_range=yes sha256=? source=?
+[JJFB_ROBOTOL_ENTER_REJECT] reason=dsm_context module=dsm:cfunction.ext package=? pc=0xA4178 module_id=3 evidence=OBSERVED
+[HELPER_ABI] stage=MODULE_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=3 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+[R9_WRITE] event_seq=1 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x0 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=? to=cfunction.ext old_r9=0x0 new_r9=0x280400 call_kind=MR_HELPER depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=1 owns_frame=yes requested_kind=MR_HELPER caller=? callee=cfunction.ext current_r9=0x0 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=DSM_R9_GUARD_ATTACH code=[0x80000,0xD1154) module_id=3 evidence=DOCUMENTED note=block_hook_r9_only
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x2809D4 src=0x2829D4 ret=0x2809D4 evidence=OBSERVED
+[RUNTIME_PROGRESS] milestone=platform_strcpy_import source=strcpy details=0xAC300 evidence=OBSERVED
+gwy/xyol.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0758 ret=0x7 evidence=OBSERVED
+[RUNTIME_PROGRESS] milestone=platform_strlen_import source=strlen details=0xAC374 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=1 slot=0x94E94 dst=0x2A986C src=0xD0758 n=0x7 evidence=OBSERVED
+[RUNTIME_PROGRESS] milestone=platform_memcpy_dsm source=memcpy details=0x94E94 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD074C ret=0xA evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=2 slot=0x94E94 dst=0x2A9884 src=0xD074C n=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0744 ret=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=3 slot=0x94E94 dst=0x2A98A4 src=0xD0744 n=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD073C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0734 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD072C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0724 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD071C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0714 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD070C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0704 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06FC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06F4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06E8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06E0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0854 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD084C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0848 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0840 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0838 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0834 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD082C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0828 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0824 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0820 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD081C ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0814 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0810 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD080C ret=0x1 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0808 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0800 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07F8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07F0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07E8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07E0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07D8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF094 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF08C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF084 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF07C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF074 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF06C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF030 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF064 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF05C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF054 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF048 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF040 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF038 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF030 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF028 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF01C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF014 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF00C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF008 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF000 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFF8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFF0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFE4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFE0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFD4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFC8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFBC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0D0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0D0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0BC ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0B4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0AC ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0A4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF09C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0C8 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD65C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD65C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD658 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD650 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD648 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD640 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD638 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD634 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD62C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD624 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD61C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD618 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD610 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD608 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD600 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5F8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5F0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5E8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5E0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5DC ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5D8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5D0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5C8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5C0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5B8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5B0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5AC ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5A8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5A0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD598 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECE8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECDC ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECD0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECC8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECC0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECB8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECB0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECA4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC9C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC94 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC8C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC84 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC7C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC74 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC6C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC64 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC5C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC50 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC48 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC40 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEEC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEE0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFED8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFECC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEC4 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEB8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEAC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEA0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE94 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE88 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE7C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE70 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE64 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE58 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE4C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE40 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE34 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE28 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE1C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE14 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE14 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFC4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFC0 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFB8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFB0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFA4 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF98 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF8C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF80 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF74 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF6C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF60 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF54 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF4C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF44 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF3C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF34 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF28 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF1C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF10 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF04 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEF8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFF8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFF0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFD8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFD0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE0C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE0C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0010 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0008 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0000 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE648 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE648 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE640 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE638 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1AC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1A0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE194 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE188 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE180 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE178 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE168 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE15C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE150 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE148 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE144 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE13C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE138 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE12C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE120 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE114 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE108 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0FC ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0EC ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0E0 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0D4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0C8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0BC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0B0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0A4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE098 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE08C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE080 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE078 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2F4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2EC ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2E0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2D4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2C8 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2BC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2B0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2A4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE294 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE288 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE27C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE274 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE268 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE25C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE254 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE24C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE240 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE234 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE22C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE22C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE528 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE520 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE514 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE510 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE220 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE214 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE20C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE204 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1FC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1F8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1F0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1E8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1DC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1D0 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1C4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1B8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3E0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3D4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3C8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3C0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3B4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3A8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE39C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE390 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE388 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE37C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE370 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE364 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE35C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE350 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE348 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE340 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE338 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE330 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE324 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE318 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE30C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE300 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2829FC ret=0x49 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE42C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x280AD4 ret=0x0 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE420 ret=0x9 evidence=OBSERVED
+Used by VM(include screen buffer):175832 bytes
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF658 ret=0x0 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2829EC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF1E7 ret=0x0 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/gwy/xyol.mrp" normalized="mythroad/gwy/xyol.mrp" canonical="gwy/xyol.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/xyol.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/xyol.mrp" normalized="mythroad/gwy/xyol.mrp" canonical="gwy/xyol.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/xyol.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=2288 got=2288 eof=0
+[PLATFORM_STRCMP] import_ok n_calls=1 slot=0xAC2D0 a=0x2829EC b=0x27FEAC ret=0 evidence=OBSERVED
+[RUNTIME_PROGRESS] milestone=platform_strcmp_import source=strcmp details=0xAC2D0 evidence=OBSERVED
+[VM_FILE_SEEK] handle=2 pos=2545 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1392 got=1392 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1392)
+_mr_readFile reallen:3435
+mr_unzip
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=500 slot=0x94E94 dst=0x2AEE54 src=0x2AEE38 n=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE58 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE50 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE48 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE40 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE38 ret=0x4 evidence=OBSERVED
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE28 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE1C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE14 ret=0x3 evidence=OBSERVED
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE04 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDF8 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDF0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDE8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDDC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2809D4 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDD0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2809D4 ret=0xC evidence=OBSERVED
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FDCC src=0xCF8F4 ret=0x27FDCC evidence=OBSERVED
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FDDC src=0xCF8E4 ret=0x27FDDC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE80 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDEC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE78 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDF4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE70 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE68 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE60 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\multi_game_smoke\xyol\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[PLATFORM_STRCMP] import_ok n_calls=2 slot=0xAC2D0 a=0x2ABCCC b=0xCFDA4 ret=0 evidence=OBSERVED
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[PLATFORM_STRCMP] import_ok n_calls=3 slot=0xAC2D0 a=0x2ABCCC b=0xCFDA4 ret=0 evidence=OBSERVED
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDF8 ret=0x4 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/gwy/xyol.mrp" normalized="mythroad/gwy/xyol.mrp" canonical="gwy/xyol.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/xyol.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/xyol.mrp" normalized="mythroad/gwy/xyol.mrp" canonical="gwy/xyol.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/xyol.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=2288 got=2288 eof=0
+[PLATFORM_STRCMP] import_ok n_calls=4 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=-16 evidence=OBSERVED
+[PLATFORM_STRCMP] import_ok n_calls=5 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=-16 evidence=OBSERVED
+[PLATFORM_STRCMP] import_ok n_calls=6 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=1 evidence=OBSERVED
+[PLATFORM_STRCMP] import_ok n_calls=7 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=-17 evidence=OBSERVED
+[PLATFORM_STRCMP] import_ok n_calls=8 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=-17 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=1000 slot=0x94E94 dst=0x27FCDC src=0x2B025C n=0x9 evidence=OBSERVED
+[PLATFORM_STRCMP] import_ok n_calls=64 slot=0xAC2D0 a=0x2AF6DC b=0x27FCDC ret=-17 evidence=OBSERVED
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+read file  "cfunction.ext" err, code=3006
+[DEBUG]mr_exit() called by mythroad!
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+[JJFB_6N_SUMMARY] mode=game_package published=no last_chunk=0x0 stop=mr_exit evidence=TARGET_OBSERVED
+[JJFB_6O_SUMMARY] mode=game_package bound=no module=? module_id=0 P=0x0 er_rw_base=0x0 er_rw_len=0x0 deferred_switch=no stop=mr_exit evidence=TARGET_OBSERVED
+mythroad exit.
+

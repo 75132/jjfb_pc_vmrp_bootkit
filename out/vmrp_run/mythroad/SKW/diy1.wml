@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" "http://www.wapforum.org/DTD/wml_1.1.xml">
+<wml>
+<card title="loading..." ontimer="file://e:\wml\zhu.wml"><timer value="2"/>
+<br/>
+<span style="color:#e90312;">正在跳转……</span></a>
+</card>
+</wml>

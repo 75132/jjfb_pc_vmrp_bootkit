@@ -1,0 +1,732 @@
+{
+  "root": "C:\\Users\\Administrator\\Desktop\\jjfb_pc_vmrp_bootkit",
+  "ok": false,
+  "findings": [
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_JJFB_VISUAL_SMOKE.ps1",
+      "line": 37,
+      "match": "Host \"progress_hit=$okProgress"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 31,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 33,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 34,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 6,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 17,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 18,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 19,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 38,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 39,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 39,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 16,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 16,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 22,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_lifecycle_record_trace.h",
+      "line": 11,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/platform/platform_event_queue.c",
+      "line": 20,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 347,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 351,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 387,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 391,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 414,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 418,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 442,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 446,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 478,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 481,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_mem_map_outside_vm_runtime",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 584,
+      "match": "uc_mem_map_ptr("
+    },
+    {
+      "rule": "uc_mem_map_outside_vm_runtime",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 587,
+      "match": "uc_mem_map("
+    },
+    {
+      "rule": "uc_mem_map_outside_vm_runtime",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 595,
+      "match": "uc_mem_map_ptr("
+    },
+    {
+      "rule": "uc_mem_map_outside_vm_runtime",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 598,
+      "match": "uc_mem_map("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 977,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 978,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 999,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1000,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1002,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1013,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1014,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1015,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1016,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1017,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1018,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1019,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1020,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1021,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1022,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_mrp_resource.c",
+      "line": 1024,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_mem_rw_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 250,
+      "match": "uc_mem_read("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 263,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 310,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 332,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 367,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 394,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 357,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 688,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 689,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 775,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 819,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 849,
+      "match": "0xB71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 670,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 686,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 817,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 823,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 26,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 930,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 28,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 29,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 17,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 37,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 38,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 124,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 125,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 126,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 330,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 340,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 459,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 462,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 464,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 467,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 480,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 645,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 646,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 650,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 650,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 654,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 666,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 670,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 671,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 814,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 926,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 929,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 930,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 29,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 546,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 547,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 813,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 968,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 1023,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_helper_2f68e4_trace.c",
+      "line": 17,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_helper_2f68e4_trace.c",
+      "line": 744,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 37,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 34,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 35,
+      "match": "0xB71"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 15,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 24,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 202,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 205,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 319,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 322,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 324,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 477,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 484,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 30,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 31,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 22,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 511,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 525,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 579,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 598,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 27,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 28,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 22,
+      "match": "0x2DADC4"
+    }
+  ]
+}

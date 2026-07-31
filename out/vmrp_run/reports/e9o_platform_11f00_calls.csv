@@ -1,0 +1,2 @@
+n,pc,lr,app,code,param0,str_va,str_hex,enc,x,y,color,clip_x,clip_y,clip_w,clip_h,mode,ret,handled,font,fallback,note
+1,0x280058,0x2E239D,0xC,0x682BF0,0x1,0x0,"",ASCII,0,0,0xFF,0,0,240,320,0x0,0,0,"none",0,none

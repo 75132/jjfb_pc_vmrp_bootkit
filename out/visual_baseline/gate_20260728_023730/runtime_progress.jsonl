@@ -1,0 +1,24 @@
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177380,"pid":28408,"milestone":"resource_root_resolved","source":"explicit","details":"C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/game_files/mythroad/240x320"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177381,"pid":28008,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177382,"pid":28008,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177382,"pid":28008,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177383,"pid":28008,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177385,"pid":28008,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"platform_libc_cache","source":"memcpy_strlen","details":"0x1420_0x1450"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"drawfp_slot_published","source":"er_rw_150C","details":"mt_1E0"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177408,"pid":28008,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177421,"pid":28008,"milestone":"platform_mrp_resource","source":"member_loaded","details":"loadingbar!201!29.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177421,"pid":28008,"milestone":"platform_mrp_resource","source":"entry_complete","details":"loadingbar!201!29.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177425,"pid":28008,"milestone":"platform_mrp_resource","source":"member_loaded","details":"bar!16!18.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177425,"pid":28008,"milestone":"platform_mrp_resource","source":"entry_complete","details":"bar!16!18.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177428,"pid":28008,"milestone":"platform_mrp_resource","source":"member_loaded","details":"textbar!120!30.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177428,"pid":28008,"milestone":"platform_mrp_resource","source":"entry_complete","details":"textbar!120!30.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177429,"pid":28008,"milestone":"drawfp_first_drawn","source":"loadingbar_or_sprite","details":"frame"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177429,"pid":28008,"milestone":"drawfp_call","source":"drawn","details":"r0=1"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177436,"pid":28008,"milestone":"platform_mrp_resource","source":"member_loaded","details":"topleft!15!5.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177436,"pid":28008,"milestone":"platform_mrp_resource","source":"entry_complete","details":"topleft!15!5.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177440,"pid":28008,"milestone":"platform_mrp_resource","source":"member_loaded","details":"topright!12!4.bmp"}
+{"run_id":"launcher_20260728_023620_63156","timestamp":1785177440,"pid":28008,"milestone":"platform_mrp_resource","source":"entry_complete","details":"topright!12!4.bmp"}

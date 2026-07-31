@@ -1,0 +1,27 @@
+﻿{
+    "pass":  false,
+    "fail_reasons":  [
+                         "no_drawfp",
+                         "no_first_frame_milestone",
+                         "no_guest_drawfp_source",
+                         "runtime_pid_not_alive"
+                     ],
+    "runtime_pid":  28644,
+    "runtime_alive":  false,
+    "bmp":  {
+                "ok":  true,
+                "reason":  "ok",
+                "width":  240,
+                "height":  320,
+                "bytes":  230454,
+                "sha256":  "c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda",
+                "nonBlackPct":  7.08,
+                "uniqueColors":  16,
+                "variance":  1200.44
+            },
+    "members":  [
+
+                ],
+    "drawfp":  false,
+    "first_frame":  false
+}

@@ -1,0 +1,23 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+[VM_FILE_BIND] runtime=1 svc=09a04f30
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320 overlay_root=overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/font.mrp" normalized="mythroad/gwy/font.mrp" canonical="gwy/font.mrp" backend=canonical mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" backend=generated mode=read result=HIT handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=MISS handle=0

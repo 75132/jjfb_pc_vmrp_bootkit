@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" "http://www.wapforum.org/DTD/wml_1.1.xml">
+
+<wml>
+<card title="起始页----测试">
+
+<mttblock bgcolor="#123456">
+&nbsp;                                                                                <a href="file://e:\SKW\kz.wml"><img src="icon_tag.gif"/></a>&nbsp;             
+<a href="http://3g.qq.com/forward.jsp?bid=41&g_q=1"><img src="icon_email.gif"/></a>&nbsp;
+<a href="http://3g.qq.com/forward.jsp?bid=4&g_q=1"><img src="icon_game.gif" /></a>&nbsp;
+<a href="http://misc.3g.qq.com/g/channels/music.jsp"><img src="icon_music.gif"/></a>&nbsp;
+<a href="mtt:qq"><img src="icon_qq.gif"/></a>&nbsp;
+<a href="http://3g.qq.com/forward.jsp?bid=33&g_q=1"><img src="icon_qzone.gif"/></a>&nbsp;
+<a href="http://sqq.3g.qq.com/login.jsp"><img src="icon_book.gif"/></a>&nbsp;
+<a href="http://pet.3g.qq.com/index.jsp"><img src="icon_tnet.gif"/></a>&nbsp;
+<a href="http://house.3g.qq.com/g/my_home.jsp"><img src="icon_url.gif"/></a>&nbsp;    <a href="http://3g.qq.com/forward.jsp?bid=0&g_q=1"><img src="icon_search.gif"/></a>&nbsp;
+<a href="http://fwd.3g.qq.com:8080/forward.jsp?bid=146"><img src="icon_site.gif" /></a>&nbsp;
+<a href="http://u.yicha.cn"><img src="icon_history.gif"/></a>&nbsp;
+<wml>
+<card title="结束页----测试">
+
+</mttblock>
+
+
+</card>
+</wml>

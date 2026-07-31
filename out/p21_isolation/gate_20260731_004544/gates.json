@@ -1,0 +1,23 @@
+{
+    "cmd0":  1,
+    "reg10102":  1,
+    "callback":  1,
+    "lazy":  1,
+    "builder":  1,
+    "sg_ptr":  1,
+    "sg_enter":  0,
+    "op300":  0,
+    "nested":  0,
+    "fire_ext":  1,
+    "cont_ok":  1,
+    "p_iso":  1,
+    "parent_ok":  1,
+    "cb_r9":  1,
+    "no_fault":  1,
+    "sg_live":  0,
+    "no_400":  1,
+    "gl_erw":  1,
+    "image":  "0x2EB7FC",
+    "sg_fn":  "0x2AAD84",
+    "log":  "C:\\Users\\Administrator\\Desktop\\jjfb_pc_vmrp_bootkit\\out\\\\p21_isolation\\gate_20260731_004544\\vm_stdout.txt"
+}

@@ -1,0 +1,13 @@
+﻿=== time ===
+17:33:05
+=== alive procs (main/jjfb/launcher) ===
+=== runtime_progress tail ===
+lines=9
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317359,"pid":1740,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317359,"pid":1740,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317361,"pid":1740,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317361,"pid":1740,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317361,"pid":1740,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317363,"pid":1740,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317387,"pid":1740,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"launcher_20260729_172918_43187","timestamp":1785317388,"pid":1740,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FD20 r9=0x2B1858"}

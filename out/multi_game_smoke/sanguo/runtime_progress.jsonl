@@ -1,0 +1,5 @@
+{"run_id":"mg_sanguo_20260728_015301","timestamp":1785174781,"pid":28224,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"mg_sanguo_20260728_015301","timestamp":1785174784,"pid":28224,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"mg_sanguo_20260728_015301","timestamp":1785174784,"pid":28224,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"mg_sanguo_20260728_015301","timestamp":1785174784,"pid":28224,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"mg_sanguo_20260728_015301","timestamp":1785174787,"pid":28224,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}

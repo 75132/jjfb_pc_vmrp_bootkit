@@ -1,0 +1,18 @@
+﻿{
+    "gate_exit":  0,
+    "distinct_members":  [
+                             "loadingbar!201!29.bmp",
+                             "bar!16!18.bmp",
+                             "textbar!120!30.bmp",
+                             "topleft!15!5.bmp",
+                             "topright!12!4.bmp"
+                         ],
+    "member_count":  5,
+    "jjfbol_scope":  false,
+    "pending_fifo":  true,
+    "plat_11f00":  false,
+    "b54_code15":  false,
+    "e6c_natural":  false,
+    "path_2e2520":  true,
+    "inject_forbidden":  false
+}

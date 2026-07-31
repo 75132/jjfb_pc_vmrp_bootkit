@@ -1,0 +1,15 @@
+{
+    "cmd0":  1,
+    "reg10102":  1,
+    "callback":  1,
+    "lazy":  1,
+    "builder":  0,
+    "sg_ptr":  0,
+    "sg_enter":  0,
+    "op300":  0,
+    "nested":  0,
+    "fire_ext":  1,
+    "image":  "0x2EB7FC",
+    "sg_fn":  "0x0",
+    "log":  "C:\\Users\\Administrator\\Desktop\\jjfb_pc_vmrp_bootkit\\out\\p20_lifecycle\\gate_20260730_103422\\vm_stdout.txt"
+}

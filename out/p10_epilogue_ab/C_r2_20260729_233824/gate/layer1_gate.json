@@ -1,0 +1,27 @@
+﻿{
+    "pass":  false,
+    "fail_reasons":  [
+                         "no_drawfp",
+                         "bmp_missing"
+                     ],
+    "runtime_pid":  29264,
+    "runtime_alive":  true,
+    "bmp":  {
+                "ok":  false,
+                "reason":  "missing",
+                "width":  0,
+                "height":  0,
+                "bytes":  0,
+                "sha256":  "",
+                "nonBlackPct":  0,
+                "uniqueColors":  0,
+                "variance":  0
+            },
+    "members":  [
+                    "loadingbar!201!29.bmp",
+                    "bar!16!18.bmp",
+                    "textbar!120!30.bmp"
+                ],
+    "drawfp":  false,
+    "first_frame":  true
+}

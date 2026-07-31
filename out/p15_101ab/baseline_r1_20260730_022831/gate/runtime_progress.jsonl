@@ -1,0 +1,176 @@
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349713,"pid":30368,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349714,"pid":30368,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349717,"pid":30368,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349717,"pid":30368,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349717,"pid":30368,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349721,"pid":30368,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349745,"pid":30368,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349746,"pid":30368,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349749,"pid":30368,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349750,"pid":30368,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"platform_libc_cache","source":"memcpy_strlen","details":"0x1420_0x1450"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"drawfp_slot_published","source":"er_rw_150C","details":"mt_1E0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349751,"pid":30368,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349753,"pid":30368,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349760,"pid":30368,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x3 r2=0x0 r3=0x0 sp=0x27FF40 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349760,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349761,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D2F9 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349762,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349763,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x305EB9 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349763,"pid":30368,"milestone":"lifecycle_2dadc4","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349768,"pid":30368,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"p8_prologue_dump","source":"0x304BF0","details":"FFB50E1C0021AFB0F04C2D9129917C44"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"boot_successor","source":"UI_BUILDER_ENTER","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=1 bytes=0x2D8A member=loadingbar!201!29.bmp depth=1 host_owned=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"platform_mrp_resource","source":"member_loaded","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"platform_mrp_resource","source":"entry_complete","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"boot_successor","source":"UI_BUILDER_ENTER","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"boot_successor","source":"RESOURCE_1","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349775,"pid":30368,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=2 bytes=0x240 member=bar!16!18.bmp depth=1 host_owned=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"platform_mrp_resource","source":"member_loaded","details":"bar!16!18.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"platform_mrp_resource","source":"entry_complete","details":"bar!16!18.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"boot_successor","source":"RESOURCE_2","details":"bar!16!18.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"bar!16!18.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349782,"pid":30368,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=3 bytes=0x1C20 member=textbar!120!30.bmp depth=1 host_owned=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"platform_mrp_resource","source":"member_loaded","details":"textbar!120!30.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"platform_mrp_resource","source":"entry_complete","details":"textbar!120!30.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"boot_successor","source":"RESOURCE_3","details":"textbar!120!30.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"textbar!120!30.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349789,"pid":30368,"milestone":"drawfp_first_drawn","source":"loadingbar_or_sprite","details":"frame"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349790,"pid":30368,"milestone":"drawfp_call","source":"drawn","details":"r0=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349790,"pid":30368,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349792,"pid":30368,"milestone":"platform_text_11f00","source":"uc2_drawn","details":"8F7D51654E2D"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349795,"pid":30368,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x2 r2=0x0 r3=0x0 sp=0x27FF00 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=4 bytes=0x96 member=topleft!15!5.bmp depth=1 host_owned=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"platform_mrp_resource","source":"member_loaded","details":"topleft!15!5.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"platform_mrp_resource","source":"entry_complete","details":"topleft!15!5.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"boot_successor","source":"RESOURCE_4","details":"topleft!15!5.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"topleft!15!5.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349801,"pid":30368,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=5 bytes=0x60 member=topright!12!4.bmp depth=1 host_owned=1"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"platform_mrp_resource","source":"member_loaded","details":"topright!12!4.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"platform_mrp_resource","source":"entry_complete","details":"topright!12!4.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"RESOURCE_5","details":"topright!12!4.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"LAST_RESOURCE_COMPLETE","details":"topright!12!4.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"UI_BUILDER_LEAVE_CANDIDATE","details":"await_pc_leave_builder"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"topright!12!4.bmp"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"FIRST_POST_UI_PC","details":""}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"UI_BUILDER_LEAVE","details":"left_2D92E4_band"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C099C r2=0x0 r3=0x0 sp=0x27FEB8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349807,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x60 r2=0x0 r3=0x0 sp=0x27FED0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349808,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6BBADC r2=0x0 r3=0x0 sp=0x27FF28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349808,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6BBAB4 r2=0x0 r3=0x0 sp=0x27FF30 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349808,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6BBAC4 r2=0x0 r3=0x0 sp=0x27FF30 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349808,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349809,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x3 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349809,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x1E1FD r2=0x0 r3=0x0 sp=0x27FF28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349809,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349809,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x1E1FD r2=0x0 r3=0x0 sp=0x27FF08 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349809,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349810,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349811,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349811,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x50 r2=0x0 r3=0x0 sp=0x27FE90 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349811,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x90 r2=0x0 r3=0x0 sp=0x27FE90 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349811,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x22 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349811,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x3EC r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x22 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xCC r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x9 r2=0x0 r3=0x0 sp=0x27FE90 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"NO_NEW_RESOURCE_FOR_MS","details":"stable_after_res5"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"STABLE_LOOP_ENTER","details":""}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349812,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349813,"pid":30368,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349813,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x3E8 r3=0x0 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349813,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349814,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xAF000 r2=0x0 r3=0x0 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349814,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x27FF28 r2=0x27FF24 r3=0x27FF20 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349814,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349816,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xC r2=0x0 r3=0x0 sp=0x27FEA0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349816,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xC r2=0x0 r3=0x0 sp=0x27FEA0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349818,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x1 r2=0x0 r3=0x0 sp=0x27FEC0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349819,"pid":30368,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x3 r2=0x0 r3=0x0 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349819,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D2F9 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349820,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6AD11C r2=0x27FF48 r3=0x2 sp=0x27FF10 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349821,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x23 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349821,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FEA8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349821,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349821,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349822,"pid":30368,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x305EB9 r2=0x0 r3=0x0"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349822,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349822,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x14 r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349822,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349822,"pid":30368,"milestone":"lifecycle_2dadc4","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349823,"pid":30368,"milestone":"lifecycle_30ed2c","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349823,"pid":30368,"milestone":"lifecycle_lookup","source":"lrt","details":"nonzero"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349823,"pid":30368,"milestone":"lifecycle_local_version","source":"lrt","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349824,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x12 r2=0x0 r3=0x0 sp=0x27FE58 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349825,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C118C r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349828,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x8 r2=0x0 r3=0x0 sp=0x27FE60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349829,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C11A4 r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349829,"pid":30368,"milestone":"lifecycle_compare","source":"lrt","details":"ret"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349829,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349829,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349829,"pid":30368,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x9 r2=0x0 r3=0x0 sp=0x27FF60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349831,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x1 r2=0x1 r3=0x0 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349831,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x0 r2=0x1 r3=0x50 sp=0x27FEE0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349831,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE18 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349832,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x14 r2=0x0 r3=0x0 sp=0x27FE28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349832,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x10 r2=0x0 r3=0x0 sp=0x27FE18 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349832,"pid":30368,"milestone":"lifecycle_2dadc4","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349832,"pid":30368,"milestone":"lifecycle_30ed2c","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349832,"pid":30368,"milestone":"lifecycle_lookup","source":"lrt","details":"nonzero"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349833,"pid":30368,"milestone":"lifecycle_local_version","source":"lrt","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349834,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x12 r2=0x0 r3=0x0 sp=0x27FDE8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349834,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C11FC r2=0x0 r3=0x0 sp=0x27FE28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349837,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x8 r2=0x0 r3=0x0 sp=0x27FDF0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C1214 r2=0x0 r3=0x0 sp=0x27FE28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"lifecycle_compare","source":"lrt","details":"ret"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C1174 r2=0x0 r3=0x0 sp=0x27FE50 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C1144 r2=0x0 r3=0x0 sp=0x27FE60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349838,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C115C r2=0x0 r3=0x0 sp=0x27FE60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C112C r2=0x0 r3=0x0 sp=0x27FE80 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C10EC r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C1114 r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"lifecycle_2dadc4","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"lifecycle_30ed2c","source":"lrt","details":"enter"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349839,"pid":30368,"milestone":"lifecycle_lookup","source":"lrt","details":"nonzero"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349840,"pid":30368,"milestone":"lifecycle_local_version","source":"lrt","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349841,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x12 r2=0x0 r3=0x0 sp=0x27FE20 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349841,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C1224 r2=0x0 r3=0x0 sp=0x27FE60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349844,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x8 r2=0x0 r3=0x0 sp=0x27FE28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C123C r2=0x0 r3=0x0 sp=0x27FE60 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"lifecycle_compare","source":"lrt","details":"ret"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"b71_naturally_written","source":"lrt","details":"guest_store"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C11E4 r2=0x0 r3=0x0 sp=0x27FE88 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C11B4 r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349845,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C11CC r2=0x0 r3=0x0 sp=0x27FE98 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349847,"pid":30368,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349848,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x1A r2=0x0 r3=0x0 sp=0x27FDF0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349848,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xC r2=0x0 r3=0x0 sp=0x27FDD8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349849,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x8 r2=0x0 r3=0x0 sp=0x27FDC0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349850,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C127C r2=0x0 r3=0x0 sp=0x27FDF8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349851,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x7 r2=0x0 r3=0x0 sp=0x27FDC0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349852,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C128C r2=0x0 r3=0x0 sp=0x27FDF8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349852,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x18 r2=0x0 r3=0x0 sp=0x27FDF0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349852,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C126C r2=0x0 r3=0x0 sp=0x27FE10 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349891,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x6C124C r2=0x0 r3=0x0 sp=0x27FE10 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349891,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x2D8A r2=0x0 r3=0x0 sp=0x27FE28 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349892,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x12 r2=0x0 r3=0x0 sp=0x27FDF0 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349892,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0xC r2=0x0 r3=0x0 sp=0x27FDD8 r9=0x2B1858"}
+{"run_id":"p15_baseline_r1_20260730_022831","timestamp":1785349893,"pid":30368,"milestone":"boot_successor","source":"PLAT_OTHER","details":"app=0x7 r2=0x0 r3=0x0 sp=0x27FDC0 r9=0x2B1858"}

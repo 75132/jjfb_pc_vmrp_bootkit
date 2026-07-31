@@ -1,0 +1,6 @@
+[VERIFY] epilogue halfwords: 0xB033 (add sp,#0xcc) 0xBDF0 (pop{r4-r7,pc})
+[VERIFY] emulate real epilogue @0x304C4A sp_before=0x1FFF20 save_area=0x1FFFDC land=0x304C60
+[TRACE] exec pc=0x304C4A size=2 sp=0x1FFF20
+[TRACE] exec pc=0x304C4C size=2 sp=0x1FFFEC
+[VERIFY] sp_after=0x200000 pc_after=0x304C60 r0=0x0 r4=0xAABBCCDD r5=0x55667788 r6=0x99AABBCC r7=0xDDCCBBAA
+[PASS] resume-to-epilogue stack contract: SP 224-out/224-back balanced, PC->lr, r4-r7 restored, R0=status. Equivalent to direct_lr.

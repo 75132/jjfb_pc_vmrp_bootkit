@@ -1,0 +1,81 @@
+[1/7] Building C object CMakeFiles/launcher_core.dir/src/platform/platform_send_app_event.c.obj
+[2/7] Building C object CMakeFiles/launcher_core.dir/src/platform/platform_memory_ops.c.obj
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c: In function 'platform_memcpy_import_arm':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c:509:72: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  509 |         e = uc_hook_add((uc_engine *)uc, &g_import_hook, UC_HOOK_CODE, (void *)on_memcpy_import_slot,
+      |                                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c:524:76: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  524 |         e = uc_hook_add((uc_engine *)uc, &g_memcpy_dsm_hook, UC_HOOK_CODE, (void *)on_memcpy_dsm_body,
+      |                                                                            ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c:539:72: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  539 |         e = uc_hook_add((uc_engine *)uc, &g_strlen_hook, UC_HOOK_CODE, (void *)on_strlen_dsm_body,
+      |                                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c:554:72: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  554 |         e = uc_hook_add((uc_engine *)uc, &g_strcpy_hook, UC_HOOK_CODE, (void *)on_strcpy_dsm_body,
+      |                                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_memory_ops.c:569:72: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  569 |         e = uc_hook_add((uc_engine *)uc, &g_strcmp_hook, UC_HOOK_CODE, (void *)on_strcmp_dsm_body,
+      |                                                                        ^
+[3/7] Building C object CMakeFiles/launcher_core.dir/src/platform/platform_mrp_resource.c.obj
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_mrp_resource.c: In function 'platform_mrp_resource_arm':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/platform/platform_mrp_resource.c:1178:71: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+ 1178 |         e = uc_hook_add((uc_engine *)uc, &g_entry_hook, UC_HOOK_CODE, (void *)on_lookup_entry, NULL,
+      |                                                                       ^
+[4/7] Building C object CMakeFiles/launcher_core.dir/src/runtime/boot_successor_trace.c.obj
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c: In function 'arm_sp_obs_hooks':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c:255:42: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  255 |         {PLATFORM_MRP_DISPATCH_ENTRY_PC, (void *)on_sp_dispatch_enter},
+      |                                          ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c:256:47: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  256 |         {PLATFORM_MRP_LOOKUP_CONTINUATION_PC, (void *)on_sp_lookup_continuation},
+      |                                               ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c:257:45: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  257 |         {PLATFORM_MRP_DISPATCH_EPILOGUE_PC, (void *)on_sp_dispatch_epilogue},
+      |                                             ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c:258:47: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  258 |         {PLATFORM_MRP_CALLER_CONTINUATION_PC, (void *)on_sp_caller_continuation},
+      |                                               ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c: In function 'boot_successor_trace_arm':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/boot_successor_trace.c:431:68: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  431 |         if (uc_hook_add((uc_engine *)uc, &g_pc_hook, UC_HOOK_CODE, (void *)on_code_hook, NULL, 1,
+      |                                                                    ^
+[5/7] Building C object CMakeFiles/launcher_core.dir/src/runtime/gwy_ext_obs.c.obj
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_leave_2fc26c_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:399:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  399 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_leave_2fc26c, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_enter_2fc26c_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:409:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  409 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_enter_2fc26c, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_chrome_2f449c_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:417:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  417 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_2f449c, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_chrome_30630c_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:432:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  432 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_30630c, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_chrome_30a2fc_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:440:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  440 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_30a2fc, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_chrome_311fd4_tail_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:449:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  449 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_311fd4_tail, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_arm_chrome_2fc3be_hook':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:457:56: warning: ISO C forbids conversion of function pointer to object pointer type [-Wpedantic]
+  457 |     if (uc_hook_add((uc_engine *)uc, &h, UC_HOOK_CODE, (void *)on_chrome_2fc3be, NULL,
+      |                                                        ^
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c: In function 'gwy_ext_obs_lifecycle_deliver':
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:2070:69: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 64 [-Wformat-truncation=]
+ 2070 |             snprintf(snap.owner_module, sizeof(snap.owner_module), "%s",
+      |                                                                     ^~
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/src/runtime/gwy_ext_obs.c:2070:13: note: 'snprintf' output between 1 and 256 bytes into a destination of size 64
+ 2070 |             snprintf(snap.owner_module, sizeof(snap.owner_module), "%s",
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2071 |                      owner->resolved_name[0] ? owner->resolved_name : owner->requested_name);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[6/7] Linking C static library liblauncher_core.a
+[7/7] Linking C executable gwy_launcher.exe; Installing build-info.json beside gwy_launcher; Copy unicorn.dll for gwy_launcher

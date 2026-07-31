@@ -1,0 +1,9 @@
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349424,"pid":6092,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349425,"pid":6092,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349427,"pid":6092,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349427,"pid":6092,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349427,"pid":6092,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349431,"pid":6092,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349456,"pid":6092,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349456,"pid":6092,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r1_20260730_022342","timestamp":1785349459,"pid":6092,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FF90 r9=0x2B1858"}

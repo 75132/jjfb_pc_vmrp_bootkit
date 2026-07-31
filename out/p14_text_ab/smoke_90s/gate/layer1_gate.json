@@ -1,0 +1,29 @@
+﻿{
+    "pass":  false,
+    "fail_reasons":  [
+                         "bmp_mostly_black",
+                         "runtime_pid_not_alive"
+                     ],
+    "runtime_pid":  25828,
+    "runtime_alive":  false,
+    "bmp":  {
+                "ok":  false,
+                "reason":  "mostly_black",
+                "width":  240,
+                "height":  320,
+                "bytes":  230454,
+                "sha256":  "65b817aec7b0b7726fb6a3b63f8fbc1fd0e0c6290e2bb574f32784162af5127c",
+                "nonBlackPct":  0.06,
+                "uniqueColors":  2,
+                "variance":  35.89
+            },
+    "members":  [
+                    "loadingbar!201!29.bmp",
+                    "bar!16!18.bmp",
+                    "textbar!120!30.bmp",
+                    "topleft!15!5.bmp",
+                    "topright!12!4.bmp"
+                ],
+    "drawfp":  true,
+    "first_frame":  true
+}

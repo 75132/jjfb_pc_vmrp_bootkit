@@ -1,0 +1,34 @@
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350299,"pid":9056,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350301,"pid":9056,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350304,"pid":9056,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350304,"pid":9056,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350304,"pid":9056,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350307,"pid":9056,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350331,"pid":9056,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350332,"pid":9056,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350335,"pid":9056,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350336,"pid":9056,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350337,"pid":9056,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350337,"pid":9056,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350337,"pid":9056,"milestone":"platform_libc_cache","source":"memcpy_strlen","details":"0x1420_0x1450"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350337,"pid":9056,"milestone":"drawfp_slot_published","source":"er_rw_150C","details":"mt_1E0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350338,"pid":9056,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350338,"pid":9056,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350340,"pid":9056,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350348,"pid":9056,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x3 r2=0x0 r3=0x0 sp=0x27FF40 r9=0x2B1858"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350348,"pid":9056,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350349,"pid":9056,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D2F9 r2=0x0 r3=0x0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350350,"pid":9056,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x30D301 r2=0x0 r3=0x0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350351,"pid":9056,"milestone":"boot_successor","source":"FAMILY_HANDLER_ENTER","details":"handler=0x305EB9 r2=0x0 r3=0x0"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350351,"pid":9056,"milestone":"lifecycle_2dadc4","source":"lrt","details":"enter"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350356,"pid":9056,"milestone":"platform_text_12340","source":"uc2_measure","details":"ok"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"p8_prologue_dump","source":"0x304BF0","details":"FFB50E1C0021AFB0F04C2D9129917C44"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"boot_successor","source":"UI_BUILDER_ENTER","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"pending_bitmap_enqueue","source":"fifo","details":"seq=1 bytes=0x2D8A member=loadingbar!201!29.bmp depth=1 host_owned=1"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"platform_mrp_resource","source":"member_loaded","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"platform_mrp_resource","source":"entry_complete","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"boot_successor","source":"UI_BUILDER_ENTER","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"boot_successor","source":"RESOURCE_1","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"boot_successor","source":"MRP_RESUME","details":"direct_lr"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"boot_successor","source":"ENTRY_COMPLETE_SKIPPED_NATIVE","details":"loadingbar!201!29.bmp"}
+{"run_id":"p15_textB_xy_r2_20260730_023817","timestamp":1785350363,"pid":9056,"milestone":"pending_bitmap_commit","source":"fifo","details":"ok"}

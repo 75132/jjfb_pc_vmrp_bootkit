@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" "http://www.wapforum.org/DTD/wml_1.1.xml">
+<wml>                                                                                            
+<input src="icon_file.gif" value="" alt="文字搜索" maxlength="255" id="Search_9984" format="m" align="fill" />
+<input src="icon_file.gif" value="" alt="输入网址" maxlength="255" id="InputUrl_9984"format="a" align="fill" />                                                                                                                                      <mttmore title="★便携应用★" src="icon_file.gif" checked="shrink">
+<p>                                                                                      <a href="mtt:bookmark">书签</a>|<a href="mtt:config">设置</a>|<a href="file://e:\SKW\kz.wml">扩展应用</a><br/>                                    <a href="mtt:history">历史</a>|<a href="http://go.139.com">访问WWW网页</a><br/>          </p>
+</mttmore>                                                                                <mttmore title="★自定义txt★" src="icon_file.gif" checked="shrink">
+</p>
+<a href="file://e:\SKW\diy1.txt">页一</a>|
+<a href="file://e:\SKW\diy2.txt">页二</a>|
+<a href="file://e:\SKW\diy3.txt">页三</a>|
+<a href="file://e:\SKW\diy4.txt">页四</a>
+<br/>
+<a href="file://e:\SKW\diy5.txt">页五</a>|
+<a href="file://e:\SKW\diy6.txt">页六</a>|
+<a href="file://e:\SKW\diy7.txt">页七</a>|
+<a href="file://e:\SKW\diy8.txt">页八</a>
+<br/>
+<a href="file://e:\SKW\diy9.txt">页九</a>|
+<a href="file://e:\SKW\diy10.txt">页十</a>|
+<a href="file://e:\SKW\diy11.txt">十一</a>|
+<a href="file://e:\SKW\diy12.txt">十二</a>
+<br/>
+<a href="file://e:\SKW\diy13.txt">十三</a>|
+<a href="file://e:\SKW\diy14.txt">十四</a>|
+<a href="file://e:\SKW\diy15.txt">十五</a>|
+<a href="file://e:\SKW\diy16.txt">十六</a>
+<br/>
+<a href="file://e:\SKW\diy17.txt">十七</a>|
+<a href="file://e:\SKW\diy18.txt">十八</a>|
+<a href="file://e:\SKW\diy19.txt">十九</a>|
+<a href="file://e:\SKW\diy20.txt">二十</a>
+<br/>
+提示：您可以把自己的存的或自己做的网页重命名为“diy1--28.txt”，放入mythroad\SKW文件夹中，然后点击对应的链接就可以打开对应的网页。如把一个名为diy1.txt的网页放入mythroad/SKW文件夹中，再点击“页一”就可以打开这个网页。
+</p>
+</mttmore>
+<mttmore title="★自定义wml★" src="icon_file.gif" checked="shrink">
+</p>
+<a href="file://e:\SKW\diy1.WML">笑话</a>|
+<a href="file://e:\SKW\diy2.WML">页二</a>|
+<a href="file://e:\SKW\diy3.WML">页三</a>|
+<a href="file://e:\SKW\diy4.WML">页四</a>
+<br/>
+<a href="file://e:\SKW\diy5.WML">页五</a>|
+<a href="file://e:\SKW\diy6.WML">页六</a>|
+<a href="file://e:\SKW\diy7.WML">页七</a>|
+<a href="file://e:\SKW\diy8.WML">页八</a>
+<br/>
+<a href="file://e:\SKW\diy9.WML">页九</a>|
+<a href="file://e:\SKW\diy10.WML">页十</a>|
+<a href="file://e:\SKW\diy11.WML">十一</a>|
+<a href="file://e:\SKW\diy12.WML">十二</a>
+<br/>
+<a href="file://e:\SKW\diy13.WML">十三</a>|
+<a href="file://e:\SKW\diy14.WML">十四</a>|
+<a href="file://e:\SKW\diy15.WML">十五</a>|
+<a href="file://e:\SKW\diy16.WML">十六</a>
+<br/>
+<a href="file://e:\SKW\diy17.WML">十七</a>|
+<a href="file://e:\SKW\diy18.WML">十八</a>|
+<a href="file://e:\SKW\diy19.WML">十九</a>|
+<a href="file://e:\SKW\diy20.WML">二十</a>
+<br/>
+提示：您可以把自己的存的记事本重命名为“diy1--20.WML”，放入mythroad\SKW文件夹中，然后点击对应的链接就可以打开对应的文件。如把一个名为diy1.WML的记事本放入mythroad/SKW文件夹中，再点击“页一”就可以打开这个记事本了！<br/>                                  </p>
+</mttmore>
+     
+<mttmore title="★手机网站★" src="icon_file.gif" checked="shrink">
+<p>
+	<a href="http://info.3g.qq.com/g/s?aid=index&s_it">腾讯</a>|
+	<a href="http://3g.sina.com.cn/?wm=4010">新浪</a>|
+	<a href="http://wap.sohu.com/?v=1">搜狐</a>|
+	<a href="http://wap.kong.net">空中</a>
+<br/>
+	<a href="http://wap.3g.cn">3G门户</a>
+	<a href="http://wap.baidu.com">百度</a>|
+	<a href="http://3g.pp.cn">泡泡</a>|
+	<a href="http://wap.lexun.com">乐讯</a>
+<br/>                                                                                          手机凤凰pv.6大频道
+	<a href="http://my667.cn/179608.wap?uid=448">凤凰女性</a>|                            <a href="http://my667.cn/179608.wap?uid=450">凤凰娱乐</a><br/>                        <a href="http://my667.cn/179608.wap?uid=451">凤凰汽车</a>|                            <a href="http://my667.cn/179608.wap?uid=452">凤凰科技</a><br/>                        <a href="http://my667.cn/179608.wap?uid=454">凤凰军事</a>|                            <a href="http://my667.cn/179608.wap?uid=453">凤凰NBA</a>                                                                      
+</p>
+</mttmore>
+<mttmore title="★综合分类★" src="icon_file.gif" checked="shrink">
+<p>
+[<a href="http://misc.3g.qq.com/g/channels/news.jsp">资讯</a>]
+	<a href="http://gp.3g.qq.com/g/s?aid=template&amp;tid=stock_h&amp;icfa=mtt&amp;g_f=187">股票</a>|
+	<a href="http://info.3g.qq.com/g/s?aid=template&amp;tid=news_h&amp;s_it=1">新闻</a>|
+	<a href="http://wap.people.com.cn">人民</a><br/>
+	<a href="http://wap.cctv.com">央视</a>
+<br/>
+[<a href="http://misc.3g.qq.com/g/channels/book.jsp">小说</a>]
+	<a href="http://monternet.mbook.cn:9310/common/in.jsp?f=470">移动</a>|
+	<a href="http://ebook.3g.qq.com/g/s?g_f=153">书城</a>|
+	<a href="http://fywap.net">风语</a><br/>
+	<a href="http://wap.17k.com">17K</a>
+<br/>
+[<a href="http://misc.3g.qq.com/g/channels/community.jsp">社区</a>]
+	<a href="http://lt.3g.qq.com/g/bbs/index.jsp?g_f=164">家园</a>|
+	<a href="http://iwan.wap.sohu.com/?click=qq&amp;fr=iwan_qq">爱玩</a>|
+	<a href="http://tx.com.cn/index.do?cfrom=mk_artfish_QQ&amp;pid=1">天下</a><br/>
+	<a href="http://wap.tianya.cn/index.asp?fwid=4052">天涯</a>
+<br/>
+[<a href="http://misc.3g.qq.com/g/channels/music.jsp">音乐</a>]
+	<a href="http://music33.3g.qq.com/s?sid=0jL0y7kR7lmXmdFJoYat3g==s&aid=mu_index&g_f=572">Q歌</a>|
+	<a href="http://wap.dtmp3.cn/?_siteId=89">动听</a>|
+	<a href="http://wap.ltmp3.cn/link/wapnc.asp?id=4345">乐天</a><br/>
+	<a href="http://wap.kugou.com/YinYue/">酷狗</a>
+<br/>
+[<a href="http://misc.3g.qq.com/g/channels/pic.jsp">图片</a>]
+	<a href="http://res.3g.qq.com/g/s?aid=nr_pic_index&amp;s_it=1&amp;g_f=155">美图</a>|
+	<a href="http://mpwap.cn/link.jsp?id=78">精品</a>|
+	<a href="http://wgwap.com/lnk.jsp?uid=59">王国</a><br/>
+	<a href="http://wallpic.3g.cn/">壁纸</a>
+<br/>
+[<a href="http://misc.3g.qq.com/g/channels/sports.jsp">体育</a>]
+	<a href="http://info.3g.qq.com/g/s?aid=template&amp;tid=sports_nba&amp;g_f=188">篮球</a>|
+	<a href="http://wap.kong.net/sports/home.jsp">竞技</a>|
+	<a href="http://wap.wapzq.com">比分</a><br/>
+	<a href="http://wap.sohu.com/sports/">赛事</a>
+</p>
+</mttmore>
+<mttmore title="★精选分类★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http://misc.3g.qq.com/g/channels/mili.jsp">军事</a>|
+<a href="http://misc.3g.qq.com/g/channels/finance.jsp">财经</a>|
+<a href="http://misc.3g.qq.com/g/channels/blog.jsp">博客</a>|
+<a href="http://misc.3g.qq.com/g/channels/lady.jsp">女人</a><br/>
+<a href="http://misc.3g.qq.com/g/channels/love.jsp">两性</a>|
+<a href="http://misc.3g.qq.com/g/channels/friend.jsp">交友</a>|
+<a href="http://misc.3g.qq.com/g/channels/mail.jsp">邮箱</a>|
+<a href="http://misc.3g.qq.com/g/channels/ent.jsp">娱乐</a><br/>
+<a href="http://misc.3g.qq.com/g/channels/buy.jsp">购物</a>|
+<a href="http://misc.3g.qq.com/g/channels/mobile.jsp">手机</a>|
+<a href="http://misc.3g.qq.com/g/channels/lottery.jsp">彩票</a>|
+<a href="http://misc.3g.qq.com/g/channels/theme.jsp">主题</a><br/>
+<a href="http://misc.3g.qq.com/g/channels/joke.jsp">搞笑</a>|
+<a href="http://misc.3g.qq.com/g/channels/astro.jsp">星座</a>|
+<a href="http://misc.3g.qq.com/g/channels/cartoon.jsp">动漫</a>
+<br/>
+</p>
+</mttmore>
+<mttmore title="★实用查询★" src="icon_file.gif" checked="shrink">
+<p>
+<a href="http://3g.sina.com.cn/prog/wapsite/weather_new/">天气</a>|
+<a href="http://wap.aibang.com/push/ab.jsp?f=86&amp;t=4">生活</a>|
+<a href="http://3g.sina.com.cn/iask/">爱问</a>|
+<a href="http://wap.51job.com">招聘</a><br/>
+<a href="http://wap.hohocn.com">健康</a>|
+<a href="http://wap.tttz.cn">理财</a>|
+<a href="http://wap.aibang.com/bdpages/busmainforqq.jsp">公交</a>|
+<a href="http://infoapp.3g.qq.com/g/s?sid=AQUKgsPOFtwFpE_MC9WXHas2&aid=train_h">火车</a><br/>
+<a href="http://wap.qunar.com/">航班</a>|
+<a href="http://wapiknow.baidu.com/">知道</a>|
+<a href="http://wap.3g.qq.com/g/s?aid=navService&amp;s_it=1">便民工具箱</a><br/>
+</p>
+</mttmore>
+                                                                        
+                                                                                                                                                                                  </p>
+
+</card>
+</wml>

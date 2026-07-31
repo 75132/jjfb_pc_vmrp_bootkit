@@ -1,0 +1,6 @@
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349638,"pid":28644,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349639,"pid":28644,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349646,"pid":28644,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349646,"pid":28644,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349646,"pid":28644,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"p15_baseline_r2_20260730_022715","timestamp":1785349651,"pid":28644,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}

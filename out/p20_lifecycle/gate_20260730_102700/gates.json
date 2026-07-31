@@ -1,0 +1,12 @@
+{
+    "cmd0":  1,
+    "reg10102":  1,
+    "callback":  0,
+    "lazy":  0,
+    "builder":  0,
+    "sg_ptr":  0,
+    "sg_enter":  0,
+    "op300":  0,
+    "nested":  0,
+    "image":  "0x2EB7E0"
+}

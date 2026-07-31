@@ -1,0 +1,18 @@
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253018,"pid":26348,"milestone":"resource_root_resolved","source":"explicit","details":"c:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/game_files/mythroad/240x320"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253019,"pid":18220,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253019,"pid":18220,"milestone":"jjfbol_catalog_ready","source":"JJFBOL_CATALOG_READY","details":"packages=59 versions=60 downVersion=1006"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253020,"pid":18220,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253020,"pid":18220,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253020,"pid":18220,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253022,"pid":18220,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253038,"pid":18220,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253038,"pid":18220,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FD20 r9=0x2B1858"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253039,"pid":18220,"milestone":"boot_successor","source":"PLAT_10102","details":"app=0x1E200 r2=0x30D301 r3=0x0 sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"boot_successor","source":"PLAT_10140","details":"app=0x5 r2=0x682AA4 r3=0x30630D sp=0x27FF90 r9=0x2B1858"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"platform_libc_cache","source":"memcpy_strlen","details":"0x1420_0x1450"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"drawfp_slot_published","source":"er_rw_150C","details":"mt_1E0"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253040,"pid":18220,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}
+{"run_id":"launcher_20260728_233658_3125","timestamp":1785253044,"pid":18220,"milestone":"boot_successor","source":"FAMILY_1E209","details":"app=0x3 r2=0x0 r3=0x0 sp=0x27FF40 r9=0x2B1858"}
