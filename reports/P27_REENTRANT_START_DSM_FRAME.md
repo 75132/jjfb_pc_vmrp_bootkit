@@ -15,7 +15,8 @@ EXIT_PARK frozen this round. Former P26 G6 is **`RUN_CODE_RETURNED_TO_HELPER_TAI
 | Field | Value |
 |-------|-------|
 | source_commit (pre-P27 baseline) | `70e35adabed1ccb80f8692b5f8bdf888aaf59dd5` |
-| source_tree_clean_before_build | false (P27 sources dirty during first evidence build) |
+| report_commit (P27 landed) | `9259778bcfdb86efaa16e82d0510ca3f970cec22` |
+| source_tree_clean_before_build | false (P27 sources dirty during first evidence build; landed after) |
 | dirty_files_before_build | `src/runtime/gwy_ext_obs.c`; `third_party/vmrp_upstream/bridge.c`; `gwy_ext_obs_weak.c`; `header/gwy_ext_obs_abi.h`; `RUN_P27_START_DSM.ps1` |
 | research binary_sha | `10deb4e95ea7b74112a289abcbe192a6f54df7611e1c9d0d50fc38742ce86494` |
 | sha_aligned main/main_gwy | yes |

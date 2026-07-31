@@ -1,22 +1,21 @@
 # Post-Drain Gate Timeline
 
-- **run_id:** task14_C4_221233
-- **er_rw:** 0x2B1858
+- **run_id:** ffp_event_20260801_041844_51205
+- **er_rw:** 0x2B1868
 - **enter_30CBBC:** 1
-- **true_enter_2E2520:** 1
+- **true_enter_2E2520:** 0
 - **enter_2DC4D8:** 0
-- **store_15D:** 1 actual_store_pc=0x30CCF4
-- **store_B71:** 1 actual_store_pc=0x30ED7A
-- **15D_writer_grade:** proven_natural_writer
-- **B71_writer_grade:** store_from_unrelated_pc
+- **store_15D:** 0 actual_store_pc=0x0
+- **store_B71:** 0 actual_store_pc=0x0
+- **15D_writer_grade:** candidate_entered_no_store
+- **B71_writer_grade:** candidate_not_reached
 - **successor_status:** POST_DRAIN_SUCCESSOR_BLOCKED
-- **disp_trace:** 1 calls=1 branches=2 reads=10
+- **disp_trace:** 0 calls=0 branches=0 reads=0
 
 ## Dispatch calls
 
 | id | r0 | event_code | target | block_pred |
 |----|----|------------|--------|------------|
-| 1 | 0x6BBAE0 | 5 | 0x2E4040 | switch_case_not_MR_MOUSE_UP |
 
 ## Discipline
 

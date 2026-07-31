@@ -1,14 +1,14 @@
 ﻿# Product Direct JJFB Verdict
 
-- **run_id:** p2_20260801_040032_63208
+- **run_id:** p2_20260801_041753_81398
 - **runtime:** Gwy+stubs (Mode=Gwy 鈫?launcher_core + research stubs)
 - **seconds:** 90
 - **process_exit:** 
-- **main_exe_sha256:** beababbcede839e7430c41be77a7896cdc4423ef7bee38b8d069c66e271c4190
+- **main_exe_sha256:** cc9153ef48b1fb049e206464784939bec460e037b57ed74fd3aa08a9dad402ff
 - **strong_success:** YES
 - **forbidden_hits:** none
-- **post_callback:** NATURAL_CALLBACK_IDLE_WAIT
-- **manifest:** C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\product_direct_jjfb_manifest_p2_20260801_040032_63208.txt
+- **post_callback:** FIRST_NATURAL_DRAW
+- **manifest:** C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\product_direct_jjfb_manifest_p2_20260801_041753_81398.txt
 
 ## Required gates
 
