@@ -353,7 +353,51 @@ void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_e
     (void)uc_err;
 }
 
+void gwy_ext_obs_p26_cf_resume(void *uc, const char *event, const char *phase, int uc_err,
+                               uint32_t returned_depth, uint64_t returned_serial,
+                               uint32_t resumed_parent_depth, uint64_t resumed_parent_serial) {
+    (void)uc;
+    (void)event;
+    (void)phase;
+    (void)uc_err;
+    (void)returned_depth;
+    (void)returned_serial;
+    (void)resumed_parent_depth;
+    (void)resumed_parent_serial;
+}
+
 void gwy_ext_obs_p26_host_loop_reenter(const char *phase) { (void)phase; }
+
+void gwy_ext_obs_p27_event(void *uc, const char *event, const char *phase, uint64_t frame_id,
+                           uint64_t parent_frame_id, uint32_t start_dsm_depth, int32_t ret,
+                           int mutex_held, const char *extra) {
+    (void)uc;
+    (void)event;
+    (void)phase;
+    (void)frame_id;
+    (void)parent_frame_id;
+    (void)start_dsm_depth;
+    (void)ret;
+    (void)mutex_held;
+    (void)extra;
+}
+
+void gwy_ext_obs_p27_alloc_row(uint64_t allocation_id, uint64_t owner_frame_id, const char *kind,
+                               uint32_t guest_va, uint64_t host_ptr, uint32_t size, int allocated,
+                               int freed, uint64_t freed_by_frame_id, int free_count,
+                               const char *note) {
+    (void)allocation_id;
+    (void)owner_frame_id;
+    (void)kind;
+    (void)guest_va;
+    (void)host_ptr;
+    (void)size;
+    (void)allocated;
+    (void)freed;
+    (void)freed_by_frame_id;
+    (void)free_count;
+    (void)note;
+}
 
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     (void)uc;

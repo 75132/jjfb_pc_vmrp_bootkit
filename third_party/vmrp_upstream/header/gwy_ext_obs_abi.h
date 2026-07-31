@@ -249,7 +249,24 @@ void gwy_ext_obs_e10a31a_runtime_stop(const char *source, const char *reason, vo
 void gwy_ext_obs_p26_run_context(uint32_t depth, uint64_t serial, uint32_t park_owner_depth,
                                  uint64_t park_owner_serial, int parked);
 void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_err);
+/* P26 resume ladder: never substitute global serial for the frame that just returned. */
+void gwy_ext_obs_p26_cf_resume(void *uc, const char *event, const char *phase, int uc_err,
+                               uint32_t returned_depth, uint64_t returned_serial,
+                               uint32_t resumed_parent_depth, uint64_t resumed_parent_serial);
 void gwy_ext_obs_p26_host_loop_reenter(const char *phase);
+
+/*
+ * P27: reentrant start_dsm frame ownership / helper-tail ladder.
+ * Env: JJFB_P27_MODE=1
+ *      JJFB_P27_TRACE_CSV / JJFB_P27_ALLOC_CSV
+ */
+void gwy_ext_obs_p27_event(void *uc, const char *event, const char *phase, uint64_t frame_id,
+                           uint64_t parent_frame_id, uint32_t start_dsm_depth, int32_t ret,
+                           int mutex_held, const char *extra);
+void gwy_ext_obs_p27_alloc_row(uint64_t allocation_id, uint64_t owner_frame_id, const char *kind,
+                               uint32_t guest_va, uint64_t host_ptr, uint32_t size, int allocated,
+                               int freed, uint64_t freed_by_frame_id, int free_count,
+                               const char *note);
 
 #ifdef __cplusplus
 }

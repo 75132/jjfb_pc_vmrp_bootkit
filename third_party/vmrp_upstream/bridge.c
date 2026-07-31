@@ -272,6 +272,56 @@ static uint64_t g_e10a_exit_park_owner_serial;
 /* Nonzero while MAP_FUNC host callback runs — stop-hook must not re-stop. */
 static int g_in_map_func_callback;
 
+/* P27: per-call start_dsm ownership (do not share global mr_start_dsm_param). */
+typedef struct BridgeStartDsmFrame {
+    uint64_t frame_id;
+    uint64_t parent_frame_id;
+    uint32_t depth;
+    start_t *start_host;
+    uint32_t start_guest;
+    void *filename_host;
+    uint32_t filename_guest;
+    void *ext_host;
+    uint32_t ext_guest;
+    void *entry_host;
+    uint32_t entry_guest;
+    int filename_freed;
+    int ext_freed;
+    int entry_freed;
+    int start_freed;
+    char filename_name[96];
+    char ext_name[48];
+} BridgeStartDsmFrame;
+
+typedef struct BridgeStartAlloc {
+    uint64_t allocation_id;
+    uint64_t owner_frame_id;
+    char kind[24];
+    uint32_t guest_va;
+    void *host_ptr;
+    uint32_t size;
+    int allocated;
+    int freed;
+    uint64_t freed_by_frame_id;
+    int free_count;
+} BridgeStartAlloc;
+
+#define P27_ALLOC_CAP 128
+#define P27_FRAME_STACK 16
+static uint64_t g_p27_frame_seq;
+static uint64_t g_p27_alloc_seq;
+static uint32_t g_start_dsm_depth;
+static uint64_t g_start_dsm_frame_stack[P27_FRAME_STACK];
+static int g_bridge_mutex_held;
+static BridgeStartAlloc g_p27_allocs[P27_ALLOC_CAP];
+static int g_p27_alloc_n;
+static uint64_t g_mr_event_frame_seq;
+static uint32_t g_mr_event_depth;
+static uint64_t g_mr_event_parent_stack[P27_FRAME_STACK];
+static event_t g_mr_event_saved;
+static int g_mr_event_saved_valid;
+static uint32_t g_mr_event_guest_va;
+
 static uint64_t e10a_active_run_serial(void) {
     if (g_runCode_depth == 0u || g_runCode_depth >= 64u) return g_runCode_serial;
     return g_runCode_serial_stack[g_runCode_depth];
@@ -3031,11 +3081,27 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         gwy_ext_obs_timer_poll_uc(uc);
     }
 
-    e10a_sync_p26_ctx();
-    gwy_ext_obs_p26_cf(uc, "RUN_CODE_LEAVE", phase, 0);
-    if (g_runCode_depth > 0u) g_runCode_depth -= 1u;
-    e10a_sync_p26_ctx();
-    gwy_ext_obs_p26_cf(uc, "RUN_CODE_CALLER_RESUME", phase, 0);
+    /* LEAVE uses the frame that is exiting; RESUME records returned vs parent. */
+    {
+        uint32_t returned_depth = local_depth;
+        uint64_t returned_serial = local_serial;
+        uint32_t parent_depth;
+        uint64_t parent_serial;
+        gwy_ext_obs_p26_run_context(returned_depth, returned_serial, g_e10a_exit_park_owner_depth,
+                                    g_e10a_exit_park_owner_serial, g_e10a_exit_parked);
+        gwy_ext_obs_p26_cf(uc, "RUN_CODE_LEAVE", phase, 0);
+        if (g_runCode_depth > 0u) g_runCode_depth -= 1u;
+        parent_depth = g_runCode_depth;
+        parent_serial = (parent_depth > 0u && parent_depth < 64u) ? g_runCode_serial_stack[parent_depth]
+                                                                 : 0ull;
+        e10a_sync_p26_ctx();
+        gwy_ext_obs_p26_cf_resume(uc, "RUN_CODE_CALLER_RESUME", phase, 0, returned_depth,
+                                  returned_serial, parent_depth, parent_serial);
+        /* Alias for post-P26 reports: this is helper-tail resume, not START_DSM_RETURN. */
+        if (returned_depth == 1u && parent_depth == 0u)
+            gwy_ext_obs_p27_event(uc, "RUN_CODE_RETURNED_TO_HELPER_TAIL", phase, 0, 0,
+                                 g_start_dsm_depth, 0, g_bridge_mutex_held, "outer_runCode");
+    }
 }
 
 /* Forward: defined below with start_dsm helpers. */
@@ -3304,33 +3370,115 @@ static int32_t bridge_mr_extHelper(uc_engine *uc, uint32_t code, uint32_t input,
                          mr_extHelper_addr, code, v, rw_base, input, input_len, saved[15],
                          saved[14]);
     runCode(uc, mr_extHelper_addr, CODE_ADDRESS, false);
+#define P27_HELPER_STEP(step)                                                                  \
+    do {                                                                                       \
+        if (code == 1u)                                                                        \
+            gwy_ext_obs_p27_event(uc, step, "helper_tail",                                     \
+                                  g_start_dsm_depth ? g_start_dsm_frame_stack[g_start_dsm_depth] \
+                                                    : 0ull,                                    \
+                                  g_start_dsm_depth > 1u                                       \
+                                      ? g_start_dsm_frame_stack[g_start_dsm_depth - 1u]         \
+                                      : 0ull,                                                  \
+                                  g_start_dsm_depth, (int32_t)v, g_bridge_mutex_held, step);   \
+    } while (0)
+    P27_HELPER_STEP("HELPER_BEFORE_r9_switch_leave");
     gwy_ext_obs_r9_switch_leave(uc);
+    P27_HELPER_STEP("HELPER_AFTER_r9_switch_leave");
+    P27_HELPER_STEP("HELPER_BEFORE_uc_reg_read_R0");
     uc_reg_read(uc, UC_ARM_REG_R0, &v);
+    P27_HELPER_STEP("HELPER_AFTER_uc_reg_read_R0");
+    P27_HELPER_STEP("HELPER_BEFORE_e10a31d_helper_return");
     e10a31d_helper_return(uc, mr_extHelper_addr, code, (int32_t)v);
+    P27_HELPER_STEP("HELPER_AFTER_e10a31d_helper_return");
+    P27_HELPER_STEP("HELPER_BEFORE_gwy_ext_obs_helper_call");
     gwy_ext_obs_helper_call(mr_extHelper_addr, code, (int32_t)v);
+    P27_HELPER_STEP("HELPER_AFTER_gwy_ext_obs_helper_call");
+    P27_HELPER_STEP("HELPER_BEFORE_bridge_uc_restore_regs");
     bridge_uc_restore_regs(uc, saved);
+    P27_HELPER_STEP("HELPER_AFTER_bridge_uc_restore_regs");
     /*
      * Nested gbrwcore helper may leave R9 on MRP ER_RW (leave REJECT or
      * ALREADY_SWITCHED save). Outer gamelist/DSM needs cfunction ER_RW.
      */
-    if (g_e10a_shell_continued)
+    if (g_e10a_shell_continued) {
+        P27_HELPER_STEP("HELPER_BEFORE_ensure_dsm_r9");
         (void)gwy_ext_obs_ensure_dsm_r9(uc, 0x80008u);
+        P27_HELPER_STEP("HELPER_AFTER_ensure_dsm_r9");
+    }
 
     /* Mid-call queue (R9 restore during nested guest) → deliver before returning. */
-    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
+    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u) {
+        P27_HELPER_STEP("HELPER_BEFORE_deliver_ext_init_seq_after");
         bridge_deliver_ext_init_seq(uc, code, "after");
-    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u)
+        P27_HELPER_STEP("HELPER_AFTER_deliver_ext_init_seq_after");
+    }
+    if (!g_in_ext_init_deliver && code != 0u && code != 6u && code != 8u) {
+        P27_HELPER_STEP("HELPER_BEFORE_try_product_handshake");
         (void)gwy_ext_obs_try_product_handshake(uc);
+        P27_HELPER_STEP("HELPER_AFTER_try_product_handshake");
+    }
 
-    if (entered) e10a31c_leave(uc, dkind);
+    if (entered) {
+        P27_HELPER_STEP("HELPER_BEFORE_e10a31c_leave");
+        e10a31c_leave(uc, dkind);
+        P27_HELPER_STEP("HELPER_AFTER_e10a31c_leave");
+    }
+    if (code == 1u)
+        gwy_ext_obs_p27_event(uc, "BRIDGE_MR_EXTHELPER_RETURN", "helper_tail",
+                              g_start_dsm_depth ? g_start_dsm_frame_stack[g_start_dsm_depth] : 0ull,
+                              g_start_dsm_depth > 1u ? g_start_dsm_frame_stack[g_start_dsm_depth - 1u]
+                                                     : 0ull,
+                              g_start_dsm_depth, (int32_t)v, g_bridge_mutex_held, "return");
+#undef P27_HELPER_STEP
     return (int32_t)v;
 }
 
 static int32_t bridge_mr_event(uc_engine *uc, int32_t code, int32_t param0, int32_t param1) {
+    uint64_t efid;
+    uint64_t parent_efid;
+    uint32_t eg;
+    int32_t ret;
+    event_t before;
+
+    g_mr_event_frame_seq += 1ull;
+    efid = g_mr_event_frame_seq;
+    parent_efid = (g_mr_event_depth > 0u && g_mr_event_depth < P27_FRAME_STACK)
+                      ? g_mr_event_parent_stack[g_mr_event_depth]
+                      : 0ull;
+    g_mr_event_depth += 1u;
+    if (g_mr_event_depth < P27_FRAME_STACK) g_mr_event_parent_stack[g_mr_event_depth] = efid;
+
+    if (g_mr_event_depth > 1u && mr_c_event) {
+        before = *mr_c_event;
+        g_mr_event_saved = before;
+        g_mr_event_saved_valid = 1;
+        (void)before;
+        gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_CLOBBERED", "pre_write", efid, parent_efid,
+                              g_start_dsm_depth, code, g_bridge_mutex_held,
+                              "nested_overwrites_global_mr_c_event");
+    }
+
+    eg = toMrpMemAddr(mr_c_event);
+    g_mr_event_guest_va = eg;
+    gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_ENTER", "bridge_mr_event", efid, parent_efid,
+                          g_start_dsm_depth, code, g_bridge_mutex_held, "global_event_t");
     mr_c_event->code = code;
     mr_c_event->p0 = param0;
     mr_c_event->p1 = param1;
-    return bridge_mr_extHelper(uc, 1, toMrpMemAddr(mr_c_event), sizeof(event_t));
+    gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_BEFORE_RUN", "bridge_mr_event", efid, parent_efid,
+                          g_start_dsm_depth, code, g_bridge_mutex_held, "code_p0_p1_written");
+    ret = bridge_mr_extHelper(uc, 1, eg, sizeof(event_t));
+    gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_AFTER_RUN", "bridge_mr_event", efid, parent_efid,
+                          g_start_dsm_depth, ret, g_bridge_mutex_held, "helper_returned");
+    /*
+     * Case A: after nested return, host does not re-read mr_c_event for outer
+     * cleanup (runCode already returned). Risk recorded; keep global event_t.
+     */
+    gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_LEAVE", "bridge_mr_event", efid, parent_efid,
+                          g_start_dsm_depth, ret, g_bridge_mutex_held,
+                          "caseA_no_post_nested_host_reread");
+    if (g_mr_event_depth > 0u) g_mr_event_depth -= 1u;
+    return ret;
 }
 
 // 执行网络通信的回调
@@ -3366,61 +3514,275 @@ int32_t bridge_dsm_network_cb(uc_engine *uc, uint32_t addr, int32_t p0, uint32_t
     return ret;
 }
 
+static BridgeStartAlloc *p27_alloc_find_guest(uint32_t guest_va) {
+    int i;
+    if (!guest_va) return NULL;
+    for (i = 0; i < g_p27_alloc_n; i++) {
+        if (g_p27_allocs[i].guest_va == guest_va) return &g_p27_allocs[i];
+    }
+    return NULL;
+}
+
+static BridgeStartAlloc *p27_alloc_register(uint64_t owner_frame_id, const char *kind,
+                                            uint32_t guest_va, void *host_ptr, uint32_t size) {
+    BridgeStartAlloc *a;
+    if (g_p27_alloc_n >= P27_ALLOC_CAP) return NULL;
+    a = &g_p27_allocs[g_p27_alloc_n++];
+    memset(a, 0, sizeof(*a));
+    g_p27_alloc_seq += 1ull;
+    a->allocation_id = g_p27_alloc_seq;
+    a->owner_frame_id = owner_frame_id;
+    snprintf(a->kind, sizeof(a->kind), "%s", kind ? kind : "?");
+    a->guest_va = guest_va;
+    a->host_ptr = host_ptr;
+    a->size = size;
+    a->allocated = 1;
+    gwy_ext_obs_p27_alloc_row(a->allocation_id, a->owner_frame_id, a->kind, a->guest_va,
+                              (uint64_t)(uintptr_t)a->host_ptr, a->size, 1, 0, 0, 0, "ALLOCATED");
+    return a;
+}
+
+/* Free only current-frame ownership; never getMrpMemPtr(0). */
+static int p27_owned_free(uc_engine *uc, BridgeStartDsmFrame *frame, uint32_t guest_va,
+                          void *host_hint, const char *kind, int *freed_flag) {
+    BridgeStartAlloc *a;
+    char note[96];
+    (void)uc;
+    if (freed_flag && *freed_flag) {
+        gwy_ext_obs_p27_event(uc, "DOUBLE_FREE_ATTEMPT", kind, frame->frame_id,
+                              frame->parent_frame_id, frame->depth, 0, g_bridge_mutex_held,
+                              "already_freed_flag");
+        return 0;
+    }
+    if (guest_va == 0u) {
+        gwy_ext_obs_p27_event(uc, "WOULD_FREE_INVALID", kind, frame->frame_id,
+                              frame->parent_frame_id, frame->depth, 0, g_bridge_mutex_held,
+                              "guest_va=0");
+        return 0;
+    }
+    a = p27_alloc_find_guest(guest_va);
+    if (!a) {
+        gwy_ext_obs_p27_event(uc, "FOREIGN_FREE_ATTEMPT", kind, frame->frame_id,
+                              frame->parent_frame_id, frame->depth, 0, g_bridge_mutex_held,
+                              "not_in_ownership_table");
+        return 0;
+    }
+    if (a->owner_frame_id != frame->frame_id) {
+        snprintf(note, sizeof(note), "owner=%llu current=%llu",
+                 (unsigned long long)a->owner_frame_id, (unsigned long long)frame->frame_id);
+        gwy_ext_obs_p27_event(uc, "FOREIGN_FREE_ATTEMPT", kind, frame->frame_id,
+                              frame->parent_frame_id, frame->depth, 0, g_bridge_mutex_held, note);
+        return 0;
+    }
+    if (a->freed || a->free_count > 0) {
+        a->free_count += 1;
+        gwy_ext_obs_p27_alloc_row(a->allocation_id, a->owner_frame_id, a->kind, a->guest_va,
+                                  (uint64_t)(uintptr_t)a->host_ptr, a->size, a->allocated, 1,
+                                  frame->frame_id, a->free_count, "DOUBLE_FREE_ATTEMPT");
+        gwy_ext_obs_p27_event(uc, "DOUBLE_FREE_ATTEMPT", kind, frame->frame_id,
+                              frame->parent_frame_id, frame->depth, 0, g_bridge_mutex_held,
+                              "alloc_already_freed");
+        return 0;
+    }
+    if (host_hint) {
+        my_freeExt(host_hint);
+    } else {
+        void *hp = getMrpMemPtr(guest_va);
+        if (hp) my_freeExt(hp);
+    }
+    a->freed = 1;
+    a->freed_by_frame_id = frame->frame_id;
+    a->free_count = 1;
+    if (freed_flag) *freed_flag = 1;
+    gwy_ext_obs_p27_alloc_row(a->allocation_id, a->owner_frame_id, a->kind, a->guest_va,
+                              (uint64_t)(uintptr_t)a->host_ptr, a->size, a->allocated, 1,
+                              frame->frame_id, a->free_count, "FREED");
+    return 1;
+}
+
 /* Unlocked start_dsm body — caller already holds bridge mutex (e.g. inside br_exit). */
 static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, char *ext,
                                                 char *entry) {
+    BridgeStartDsmFrame frame;
     int32_t v;
-    mr_start_dsm_param->filename = (char *)copyStrToMrp(filename);
-    mr_start_dsm_param->ext = (char *)copyStrToMrp(ext);
-    mr_start_dsm_param->entry = entry ? (char *)copyStrToMrp(entry) : NULL;
+    uint32_t fn_g = 0, ext_g = 0, ent_g = 0;
+    uint32_t saved_fn = 0, saved_ext = 0, saved_ent = 0;
+    char extra[256];
+
+    memset(&frame, 0, sizeof(frame));
+    g_p27_frame_seq += 1ull;
+    frame.frame_id = g_p27_frame_seq;
+    frame.parent_frame_id =
+        (g_start_dsm_depth > 0u && g_start_dsm_depth < P27_FRAME_STACK)
+            ? g_start_dsm_frame_stack[g_start_dsm_depth]
+            : 0ull;
+    g_start_dsm_depth += 1u;
+    frame.depth = g_start_dsm_depth;
+    if (frame.depth < P27_FRAME_STACK) g_start_dsm_frame_stack[frame.depth] = frame.frame_id;
+
+    if (filename)
+        snprintf(frame.filename_name, sizeof(frame.filename_name), "%s", filename);
+    if (ext) snprintf(frame.ext_name, sizeof(frame.ext_name), "%s", ext);
+
+    snprintf(extra, sizeof(extra), "file=%s ext=%s entry=%s", frame.filename_name,
+             frame.ext_name, entry ? entry : "(null)");
+    gwy_ext_obs_p27_event(uc, "START_DSM_FRAME_ENTER", "unlocked", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, extra);
+
+    /* Per-call guest start_t — never reuse global mr_start_dsm_param for payload. */
+    frame.start_host = (start_t *)my_mallocExt(sizeof(start_t));
+    if (!frame.start_host) {
+        gwy_ext_obs_p27_event(uc, "START_DSM_FRAME_LEAVE", "alloc_fail", frame.frame_id,
+                              frame.parent_frame_id, frame.depth, -1, g_bridge_mutex_held,
+                              "start_t");
+        if (g_start_dsm_depth > 0u) g_start_dsm_depth -= 1u;
+        return -1;
+    }
+    memset(frame.start_host, 0, sizeof(start_t));
+    frame.start_guest = toMrpMemAddr(frame.start_host);
+    (void)p27_alloc_register(frame.frame_id, "start_struct", frame.start_guest, frame.start_host,
+                             (uint32_t)sizeof(start_t));
+    gwy_ext_obs_p27_event(uc, "START_DSM_PARAM_ALLOCATED", "start_t", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, extra);
+
+    fn_g = copyStrToMrp(filename);
+    ext_g = copyStrToMrp(ext);
+    ent_g = entry ? copyStrToMrp(entry) : 0u;
+    frame.filename_guest = fn_g;
+    frame.ext_guest = ext_g;
+    frame.entry_guest = ent_g;
+    frame.filename_host = fn_g ? getMrpMemPtr(fn_g) : NULL;
+    frame.ext_host = ext_g ? getMrpMemPtr(ext_g) : NULL;
+    frame.entry_host = ent_g ? getMrpMemPtr(ent_g) : NULL;
+    if (fn_g)
+        (void)p27_alloc_register(frame.frame_id, "filename", fn_g, frame.filename_host,
+                                 filename ? (uint32_t)strlen(filename) + 1u : 0u);
+    if (ext_g)
+        (void)p27_alloc_register(frame.frame_id, "ext", ext_g, frame.ext_host,
+                                 ext ? (uint32_t)strlen(ext) + 1u : 0u);
+    if (ent_g)
+        (void)p27_alloc_register(frame.frame_id, "entry", ent_g, frame.entry_host,
+                                 entry ? (uint32_t)strlen(entry) + 1u : 0u);
+
+    /* Guest start_t stores guest VAs only (legacy ABI). */
+    frame.start_host->filename = (char *)(uintptr_t)fn_g;
+    frame.start_host->ext = (char *)(uintptr_t)ext_g;
+    frame.start_host->entry = (char *)(uintptr_t)ent_g;
+    saved_fn = fn_g;
+    saved_ext = ext_g;
+    saved_ent = ent_g;
+
+    snprintf(extra, sizeof(extra),
+             "start_g=0x%X fn_g=0x%X ext_g=0x%X ent_g=0x%X parent_start_legacy=0x%X",
+             frame.start_guest, fn_g, ext_g, ent_g,
+             mr_start_dsm_param ? toMrpMemAddr(mr_start_dsm_param) : 0u);
+    gwy_ext_obs_p27_event(uc, "START_DSM_PARAM_ALLOCATED", "strings", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, extra);
 
     gwy_ext_obs_start_dsm(filename, ext, entry);
-    /* D5b observe-only: guest VA of entry string for PARAM_MAP/READ. */
-    if (entry && mr_start_dsm_param->entry)
-        gwy_ext_obs_launch_param_mapped((uint32_t)(uintptr_t)mr_start_dsm_param->entry, entry);
-    gwy_ext_obs_note_start_dsm_abi(uc, toMrpMemAddr(mr_start_dsm_param), filename, ext, entry);
+    if (entry && ent_g) gwy_ext_obs_launch_param_mapped(ent_g, entry);
+    gwy_ext_obs_note_start_dsm_abi(uc, frame.start_guest, filename, ext, entry);
 
-    v = bridge_mr_event(uc, MR_START_DSM, toMrpMemAddr(mr_start_dsm_param), 0);
+    gwy_ext_obs_p27_event(uc, "START_DSM_EVENT_ENTER", "MR_START_DSM", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, extra);
+    v = bridge_mr_event(uc, MR_START_DSM, (int32_t)frame.start_guest, 0);
+    gwy_ext_obs_p27_event(uc, "START_DSM_EVENT_RETURN", "MR_START_DSM", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, v, g_bridge_mutex_held, extra);
+
+    /* Detect whether nested start_dsm clobbered this frame's guest pointers. */
+    {
+        uint32_t cur_fn = frame.start_host ? (uint32_t)(uintptr_t)frame.start_host->filename : 0u;
+        uint32_t cur_ext = frame.start_host ? (uint32_t)(uintptr_t)frame.start_host->ext : 0u;
+        uint32_t cur_ent = frame.start_host ? (uint32_t)(uintptr_t)frame.start_host->entry : 0u;
+        int match = (cur_fn == saved_fn && cur_ext == saved_ext && cur_ent == saved_ent);
+        snprintf(extra, sizeof(extra),
+                 "saved_fn=0x%X saved_ext=0x%X saved_ent=0x%X cur_fn=0x%X cur_ext=0x%X "
+                 "cur_ent=0x%X match=%d legacy_global=0x%X",
+                 saved_fn, saved_ext, saved_ent, cur_fn, cur_ext, cur_ent, match,
+                 mr_start_dsm_param ? toMrpMemAddr(mr_start_dsm_param) : 0u);
+        gwy_ext_obs_p27_event(uc, match ? "START_DSM_PARAM_OWNERSHIP_OK" : "START_DSM_PARAM_CLOBBERED",
+                              "post_event", frame.frame_id, frame.parent_frame_id, frame.depth, v,
+                              g_bridge_mutex_held, extra);
+    }
 
     /*
      * START_DSM is one long host helper; R9/ER_RW restore queues init-seq mid-call.
      * Enter-path cannot see it; exit-path may race R9 leave. Deliver here once more
      * (no-op if already taken) before unlocking / returning to the host loop.
      */
+    gwy_ext_obs_p27_event(uc, "START_DSM_AFTER_INITSEQ_ENTER", "post_start_dsm", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, v, g_bridge_mutex_held, "-");
     if (!g_in_ext_init_deliver)
         bridge_deliver_ext_init_seq(uc, 1u, "post_start_dsm");
+    gwy_ext_obs_p27_event(uc, "START_DSM_AFTER_INITSEQ_RETURN", "post_start_dsm", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, v, g_bridge_mutex_held, "-");
 
-    my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->filename));
-    mr_start_dsm_param->filename = NULL;
+    /* Cleanup from local ownership only — never re-read a shared global start_t. */
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_ENTRY_BEFORE", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+    if (saved_ent)
+        (void)p27_owned_free(uc, &frame, saved_ent, frame.entry_host, "entry", &frame.entry_freed);
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_ENTRY_AFTER", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
 
-    my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->ext));
-    mr_start_dsm_param->ext = NULL;
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_EXT_BEFORE", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+    (void)p27_owned_free(uc, &frame, saved_ext, frame.ext_host, "ext", &frame.ext_freed);
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_EXT_AFTER", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
 
-    if (entry) {
-        my_freeExt(getMrpMemPtr((uint32_t)mr_start_dsm_param->entry));
-    }
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_FILENAME_BEFORE", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+    (void)p27_owned_free(uc, &frame, saved_fn, frame.filename_host, "filename",
+                         &frame.filename_freed);
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_FILENAME_AFTER", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_START_BEFORE", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+    (void)p27_owned_free(uc, &frame, frame.start_guest, frame.start_host, "start_struct",
+                         &frame.start_freed);
+    frame.start_host = NULL;
+    gwy_ext_obs_p27_event(uc, "START_DSM_FREE_START_AFTER", "cleanup", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, 0, g_bridge_mutex_held, "-");
+
+    gwy_ext_obs_p27_event(uc, "START_DSM_FRAME_LEAVE", "unlocked", frame.frame_id,
+                          frame.parent_frame_id, frame.depth, v, g_bridge_mutex_held, extra);
+    if (g_start_dsm_depth > 0u) g_start_dsm_depth -= 1u;
     return v;
 }
 
 int32_t bridge_dsm_mr_start_dsm(uc_engine *uc, char *filename, char *ext, char *entry) {
     int32_t v;
+    gwy_ext_obs_p27_event(uc, "MUTEX_LOCK_BEGIN", "start_dsm", 0, 0, g_start_dsm_depth, 0,
+                          g_bridge_mutex_held, filename ? filename : "?");
     if (pthread_mutex_lock(&mutex) != 0) {
         perror(MUTEX_LOCK_FAIL);
         exit(EXIT_FAILURE);
     }
+    g_bridge_mutex_held = 1;
+    gwy_ext_obs_p27_event(uc, "MUTEX_LOCK_END", "start_dsm", 0, 0, g_start_dsm_depth, 0,
+                          g_bridge_mutex_held, filename ? filename : "?");
 
     v = bridge_dsm_mr_start_dsm_unlocked(uc, filename, ext, entry);
 
+    gwy_ext_obs_p27_event(uc, "MUTEX_UNLOCK_BEGIN", "start_dsm", 0, 0, g_start_dsm_depth, v,
+                          g_bridge_mutex_held, filename ? filename : "?");
     if (pthread_mutex_unlock(&mutex) != 0) {
         perror(MUTEX_UNLOCK_FAIL);
         exit(EXIT_FAILURE);
     }
+    g_bridge_mutex_held = 0;
+    gwy_ext_obs_p27_event(uc, "MUTEX_UNLOCK_END", "start_dsm", 0, 0, g_start_dsm_depth, v,
+                          g_bridge_mutex_held, filename ? filename : "?");
+
     /* Outer start_dsm done — host loop can deliver MR_TIMER without deadlock. */
     printf("[PLATFORM_TIMER] op=START_DSM_RETURN filename=%s ret=%d evidence=DOCUMENTED\n",
            filename ? filename : "?", (int)v);
     fflush(stdout);
     e10a_sync_p26_ctx();
-    gwy_ext_obs_p26_cf(uc, "RUN_CODE_CALLER_RESUME", "start_dsm_return", 0);
+    gwy_ext_obs_p27_event(uc, "START_DSM_RETURN", "start_dsm", 0, 0, 0, v, 0,
+                          filename ? filename : "?");
     gwy_ext_obs_on_start_dsm_return(filename, v);
     gwy_ext_obs_p26_host_loop_reenter("start_dsm_unlock");
     return v;

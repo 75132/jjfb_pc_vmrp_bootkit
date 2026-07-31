@@ -38,7 +38,7 @@ P25 freeze retained: false BPs at +0x01AF8 / +0x0CE8A; real CFG at +0x7B6C / +0x
 | G3 uc_emu_start returns | PASS (~0.13s PARK→RETURN) |
 | G4 park consumed once by owner | PASS |
 | G5 no DSM/_mr_ FETCH / no fallback | PASS |
-| G6 caller resume after consume | PASS |
+| G6 RUN_CODE_RETURNED_TO_HELPER_TAIL (not START_DSM_RETURN) | PASS |
 | G7 CFG_LOADER base+0x7B6C | FAIL |
 | G8 internal cfg.bin 6898 | NOT_SEEN |
 | G9 external base+0xD768 | NOT_SEEN |
