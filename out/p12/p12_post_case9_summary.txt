@@ -1,0 +1,16 @@
+t0_kind=CASE9_LEAVE
+t0_line=9077
+timeline_rows=37
+stall_type=A
+blocker=mr_getCharBitmap
+first_plat_101xx_off=None
+first_sendAppEvent_off=6
+first_resource_off=None
+first_timer_off=None
+first_scheduler_off=5
+first_network_off=None
+first_module_switch_off=22
+first_exception_or_exit_off=47
+first_unimpl_api_off=47
+timeline=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\p12_post_case9_timeline.csv
+hot_blocks=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\reports\p12_post_case9_hot_blocks.csv

@@ -1,0 +1,14 @@
+﻿source_commit=58054980030fdddf082cb902b8fb17e9168bca19
+source_tree_clean=False
+source_tree_clean_product_src=False
+build_time_utc=2026-07-31T20:49:24.6027030Z
+main_exe_sha256=6870a17c0b75915b36798fd860f00b5c59b48f17b0564d92206b7907213836f1
+JJFB_Launcher_exe_sha256=74a8ec83819c1197d09f995f214414c8987a2755469934d7297bdcf2898dabbe
+gwy_launcher_exe_sha256=d50f89fbf65090ce8563af67f74c1fda71634b3a344405d12d28ad008dd1d229
+compiler=gcc-16.1.0
+build_commands=RUN_BUILD.ps1 -BuildDir build-i686; RUN_BUILD_VMRP.ps1 -Mode Gwy; RUN_TESTS.ps1 -SkipBuild
+product_default_return_mode=direct_lr
+product_ffp_apply_abi=0
+JJFB_PRODUCT_EVENT_CONTRACT=0
+JJFB_FAMILY_4F_FOR_E6C=0
+git_status_porcelain= M build-i686/build-info.json;  M logs/audit_preflight.json;  M out/vmrp_run/main.exe;  M out/vmrp_run/main_gwy.exe;  M reports/product_ext_abi_handshake.csv;  M reports/product_handler_registration.csv;  M third_party/vmrp_upstream/bin/main_gwy.exe; ?? build-i686/Testing/; ?? logs/p12_ctest.log; ?? logs/p12_run_build.log; ?? logs/p12_run_build_vmrp.log; ?? logs/p12_run_tests.log; ?? out/p12/; ?? research/runners/p12_analyze_post_case9.py; ?? research/runners/p12_run_clean_successor.ps1

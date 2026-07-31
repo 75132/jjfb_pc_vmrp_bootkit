@@ -49,11 +49,11 @@ bridge_dsm_init success
  R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
 R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
 ==============================================================
-[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
-[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
-[JJFB_SDK_KEY] path=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
-[VM_FILE_BIND] runtime=1 svc=09624a40
-[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=095a4a40
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623
 [JJFB_VFS] gwy_vm_file bound=1
 [PATH_A_RESPONSE_CFG] enabled=1 tag=1 name=downVersion secondary= field_c=0 field_d=0x3EE once_per_gen=1 evidence=PROFILE
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
@@ -73,14 +73,14 @@ R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
 [MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=robotol.ext scope=mrp_member
 [EXT_RESOLVE] package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext strategy=exact scope=mrp_member result=HIT
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
-[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/jjfb.mrp primary=robotol.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mrp_member_view/game_jjfb_cfunction.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/jjfb.mrp primary=robotol.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mrp_member_view/game_jjfb_cfunction.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 vfs_remap=enabled evidence=CROSS_TARGET
 [MRP_MEMBER_VIEW] package=gwy/jjfb.mrp primary=installed status=installed mode=game_package evidence=CROSS_TARGET
 [REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp primary=mmochat.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
 [MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=mmochat.ext insert_at=791 entry_size=30 index_end=791 offset=92949 stored_size=206148 result=HIT
 [MRP_MEMBER_REQUEST] package=gwy/wxjwq.mrp requested=mmochat.ext scope=mrp_member
 [EXT_RESOLVE] package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext strategy=exact scope=mrp_member result=HIT
 [MODULE_REGISTRY] package=gwy/wxjwq.mrp module=mmochat.ext module_id=4 requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=206148 unpacked_size=320292 extracted_size=320292 helper=0x0
-[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/wxjwq.mrp primary=mmochat.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mrp_member_view/game_wxjwq_cfunction.mrp original_sha256=6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/wxjwq.mrp primary=mmochat.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mrp_member_view/game_wxjwq_cfunction.mrp original_sha256=6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d vfs_remap=enabled evidence=CROSS_TARGET
 [MRP_MEMBER_VIEW] package=gwy/wxjwq.mrp primary=installed status=installed mode=game_package evidence=CROSS_TARGET
 [JJFB_PACKAGE_SCOPE] package=gwy/jjfb.mrp primary=robotol.ext class=mrc_loader_game cload=scoped evidence=CROSS_TARGET
 [GWY_PKG_META] activate=OK package=gwy/jjfb.mrp package_id=1 generation=1 archive=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp source=MRP_HEADER appid=400101 appver=12 evidence=OBSERVED
@@ -410,7 +410,7 @@ Used by VM(include screen buffer):175832 bytes
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF658 ret=0x0 evidence=OBSERVED
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2829FC ret=0x8 evidence=OBSERVED
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF1E7 ret=0x0 evidence=OBSERVED
-[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
 [VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
 [INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
 [VM_FILE_READ] handle=2 requested=16 got=16 eof=0
@@ -456,14 +456,14 @@ mr_unzip
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE68 ret=0x4 evidence=OBSERVED
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE60 ret=0x5 evidence=OBSERVED
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
-[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
 [VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
 [INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
 [VM_FILE_READ] handle=2 requested=256 got=48 eof=1
 [VM_FILE_CLOSE] handle=2 result=ok
 [INFO]mr_close(2): ret:0
 [PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDF8 ret=0x4 evidence=OBSERVED
-[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
 [VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
 [INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
 [VM_FILE_READ] handle=2 requested=16 got=16 eof=0
@@ -644,7 +644,7 @@ _mr_c_function_new(002AEB58, 20)  mr_c_function_P:002AC8EC
 [R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
 [R9_WRITE] event_seq=3 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
 [R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x0 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
-[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045208_75950/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p2_20260801_045052_71623/mrp_member_view/game_jjfb_cfunction.mrp" ok=1 backend=generated rule=generated
 [VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
 [INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
 [VM_FILE_READ] handle=2 requested=16 got=16 eof=0
@@ -796,7 +796,7 @@ _mr_c_function_new(00304AFD, 20)  mr_c_function_P:002AC8EC
 [ENTRY_TRANSFER] dispatch_target=0x303BA2 dispatch_module=robotol.ext dispatch_offset=0x2AD9E callee_module=robotol.ext first_executed_pc=0x303BA2 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
 [ENTRY_RECONCILE] module=robotol.ext module_id=3 image_base=0x2D8E04 header_raw=0x2D8E0C header_norm=0x2D8E0C chunk_field_04_raw=0x2D8E0C chunk_field_04_norm=0x2D8E0C helper_raw=0x304AFD helper_norm=0x304AFC observed_first_pc_raw=0x303BA2 observed_norm=0x303BA2 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
 [JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 image_base=0x2D8E04 image_size=0x3DE3C entry_pc=0x303BA2 entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=descriptor_launcher
-[ROBOTOL_BOOTSTRAP_ENTER] module=robotol.ext module_id=3 generation=3 pc=0x303BA2 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[ROBOTOL_BOOTSTRAP_ENTER] module=robotol.ext module_id=3 generation=3 pc=0x303BA2 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>MODULE_ENTER>DSM_ENTRY_SELECT>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
 [JJFB_ROBOTOL_ENTRY_CALLED] package=gwy/jjfb.mrp module=robotol.ext module_id=3 pc=0x303BA2 image_base=0x2D8E04 evidence=OBSERVED
 [JJFB_MRC_INIT_ATTEMPT] module=robotol.ext pc=0x303BA2 method=0 r0=0x0 r9=0x280400 route=bootstrap_first_pc evidence=OBSERVED note=first_pc_not_proof_of_mrc_init
@@ -827,8 +827,8 @@ _mr_c_function_new(00304AFD, 20)  mr_c_function_P:002AC8EC
 [R9_SWITCH] stage=ENTER from=? to=robotol.ext old_r9=0x280400 new_r9=0x2B1864 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=5404 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
 [R9_SCOPE] stage=ENTER scope_id=11 frame_id=2 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=? callee=robotol.ext current_r9=0x280400 target_r9=0x2B1864 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=2 top_frame_kind=RUNTIME_ENTRY generation=2 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [JJFB_R9_SWITCH_OK] package=gwy/jjfb.mrp module=robotol.ext module_id=3 r9=0x2B1864 er_rw_len=0x151C evidence=DOCUMENTED
-[ROBOTOL_BOOTSTRAP_RETURN] module=robotol.ext module_id=3 generation=3 bootstrap_return=0 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_HANDSHAKE_QUEUED] module=robotol.ext module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[ROBOTOL_BOOTSTRAP_RETURN] module=robotol.ext module_id=3 generation=3 bootstrap_return=0 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_HANDSHAKE_QUEUED] module=robotol.ext module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [POST_CONT] seq=3 event_type=RUNTIME_READY guest_pc=0x303BDE module=robotol.ext module_offset=0x2ADDA r0=0x2B1864 r1=0x2AC8EC r2=0x959A0 r3=0x27FB4C r9=0x280400 scope_depth=1 lr=0x303BD7 sp=0x27FD78 instr=32 post_continuation_gate=blocked graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
 [ROBOTOL_ER_RW_READY] event_seq=1 p=0x2AC8EC er_rw=0x2B1864 size=5404 available_before_continuation=no registry_published=no post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
 [JJFB_EXTCHUNK_SLOT] module=robotol.ext off=0x14 value=0x2B1864 meaning=var_buf evidence=DOCUMENTED
@@ -908,8 +908,8 @@ _mr_c_function_new(00304AFD, 20)  mr_c_function_P:002AC8EC
 [JJFB_PLAT_CALL] code=0x10113 app=0x11F04 arg2=0x0 out=0x27FD30 fp=0x2801E4 wrote=1 ret=0 kind=GRAPHICS_FP name=plat_10113_graphics_fp evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10113 r1=0x11F04 r2=0x0 r3=0x27FD30 r4=0x10113 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304942 target=0x304569 arg0=0x10102 arg1=0x1E200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 handler_mapped=yes instruction_set=THUMB source_api=plat_10102_register run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D311 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 handler_mapped=yes instruction_set=THUMB source_api=plat_10102_register run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D311 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x10102 family=0x1E200 handler=0x30D311 ret=1 kind=REGISTER name=plat_10102_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x1E200 r2=0x30D311 r3=0x0 r4=0x10102 ret=0x1 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=15 old=0x2B1868 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=6 scope_id=16 host_callsite=enter guest_pc=0x304962 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
@@ -928,8 +928,8 @@ _mr_c_function_new(00304AFD, 20)  mr_c_function_P:002AC8EC
 [JJFB_PLAT_CALL] code=0x10120 family=0x4 handler=0x682AB4 ret=1 kind=REGISTER name=plat_10120_bind evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682AB4 r3=0x0 r4=0x10120 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049A8 target=0x304569 arg0=0x10140 arg1=0x5
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D handler_mapped=yes instruction_set=THUMB source_api=plat_10140_register run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30631D run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D handler_mapped=yes instruction_set=THUMB source_api=plat_10140_register run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30631D run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x10140 family=0x5 handler=0x30631D ret=1 kind=REGISTER name=plat_10140_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10140 r1=0x5 r2=0x682AB4 r3=0x30631D r4=0x10140 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049B6 target=0x304661 arg0=0x1 arg1=0x5
@@ -947,14 +947,14 @@ _mr_c_function_new(00304AFD, 20)  mr_c_function_P:002AC8EC
 [R9_SCOPE] stage=LEAVE scope_id=17 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=7 actual_top_frame_id=7 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1868 generation=7 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1868 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049E2 target=0x304569 arg0=0x10162 arg1=0xE200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D259 handler_mapped=yes instruction_set=THUMB source_api=plat_10162_alloc run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D259 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D259 handler_mapped=yes instruction_set=THUMB source_api=plat_10162_alloc run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D259 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_ALLOC] code=0x10162 size=0xE200 buf=0x30D259 ret=0x682AFC tag_u16=0 name=plat_10162_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10162 app=0xE200 size=0xE200 ret=0x682AFC kind=ALLOC name=plat_10162_alloc handler=0x30D259 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10162 r1=0xE200 r2=0x30D259 r3=0x0 r4=0x10162 ret=0x682AFC evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304A08 target=0x304569 arg0=0x10165 arg1=0xE200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D309 handler_mapped=yes instruction_set=THUMB source_api=plat_10165_alloc run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D309 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D309 handler_mapped=yes instruction_set=THUMB source_api=plat_10165_alloc run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D309 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_ALLOC] code=0x10165 size=0xE200 buf=0x30D309 ret=0x690D04 tag_u16=0 name=plat_10165_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10165 app=0xE200 size=0xE200 ret=0x690D04 kind=ALLOC name=plat_10165_alloc handler=0x30D309 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10165 r1=0xE200 r2=0x30D309 r3=0x0 r4=0x10165 ret=0x690D04 evidence=TARGET_OBSERVED
@@ -970,24 +970,24 @@ After app init, memory left:3748952
 [R9_SCOPE] stage=REJECT scope_id=1 owns_frame=yes requested_by=bridge_mr_extHelper requested_frame_id=1 actual_top_frame_id=2 top_frame_kind=RUNTIME_ENTRY leave_action=REJECT emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [EXT_ENTRY] module_id=3 method=1 return=0
 [MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=3 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AFD
-[EXT_ABI_CONTEXT] verdict=EXT_ABI_CONTEXT_READY module=robotol.ext module_id=3 generation=3 helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 appid=400101 appver=12 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_ABI_READY] module=robotol.ext module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_ENTER] method=6 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_CALL] module=robotol.ext method=6 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x0 input_len=2011 module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[EXT_ABI_CONTEXT] verdict=EXT_ABI_CONTEXT_READY module=robotol.ext module_id=3 generation=3 helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 appid=400101 appver=12 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_ABI_READY] module=robotol.ext module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_ENTER] method=6 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_CALL] module=robotol.ext method=6 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x0 input_len=2011 module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304B0E target=0x2D8EF8 arg0=0x2B1868 arg1=0x2B1868
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D92E4 target=0x304B13 arg0=0x2B1868 arg1=0x2B1868
-[EXT_ABI_RETURN] module=robotol.ext method=6 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_VERSION_RETURN_ZERO] module=robotol.ext ret=0 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_LEAVE] method=6 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_ENTER] method=8 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_CALL] module=robotol.ext method=8 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x69EF0C input_len=16 module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[EXT_ABI_RETURN] module=robotol.ext method=6 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_VERSION_RETURN_ZERO] module=robotol.ext ret=0 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_LEAVE] method=6 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_ENTER] method=8 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_CALL] module=robotol.ext method=8 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x69EF0C input_len=16 module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304B0E target=0x2D8EF8 arg0=0x2B1868 arg1=0x2B1868
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D92E4 target=0x304B13 arg0=0x2B1868 arg1=0x2B1868
-[EXT_ABI_RETURN] module=robotol.ext method=8 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_APPINFO_RETURN_ZERO] module=robotol.ext ret=0 appid=400101 appver=12 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_LEAVE] method=8 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_ENTER] method=0 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_CALL] module=robotol.ext method=0 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x0 input_len=2011 module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[EXT_ABI_RETURN] module=robotol.ext method=8 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_APPINFO_RETURN_ZERO] module=robotol.ext ret=0 appid=400101 appver=12 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_LEAVE] method=8 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_ENTER] method=0 owner_module_id=3 owner_generation=3 r9=0x2B1868 helper=0x304AFD p=0x2AC8EC chunk=0x682AB4 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_CALL] module=robotol.ext method=0 source=PRODUCT_ADAPTER helper=0x304AFD P=0x2AC8EC erw=0x2B1868 chunk=0x682AB4 input=0x0 input_len=2011 module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304B0E target=0x2D8EF8 arg0=0x2B1868 arg1=0x2B1868
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2D92E4 target=0x304B13 arg0=0x2B1868 arg1=0x2B1868
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304B34 target=0x2D98F5 arg0=0x682AB4 arg1=0x2B2C58
@@ -1032,8 +1032,8 @@ After app init, memory left:3748952
 [JJFB_PLAT_CALL] code=0x10113 app=0x11F04 arg2=0x0 out=0x27FFA0 fp=0x2801E4 wrote=1 ret=0 kind=GRAPHICS_FP name=plat_10113_graphics_fp evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10113 r1=0x11F04 r2=0x0 r3=0x27FFA0 r4=0x10113 ret=0x0 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304942 target=0x304569 arg0=0x10102 arg1=0x1E200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 handler_mapped=yes instruction_set=THUMB source_api=plat_10102_register run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D311 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 handler_mapped=yes instruction_set=THUMB source_api=plat_10102_register run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D311 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x10102 family=0x1E200 handler=0x30D311 ret=1 kind=REGISTER name=plat_10102_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x1E200 r2=0x30D311 r3=0x0 r4=0x10102 ret=0x1 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=24 old=0x2B1868 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=10 scope_id=20 host_callsite=enter guest_pc=0x304962 guest_module=cfunction.ext depth_before=2 depth_after=3 evidence=OBSERVED
@@ -1052,8 +1052,8 @@ After app init, memory left:3748952
 [JJFB_PLAT_CALL] code=0x10120 family=0x4 handler=0x682AB4 ret=1 kind=REGISTER name=plat_10120_bind evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682AB4 r3=0x0 r4=0x10120 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049A8 target=0x304569 arg0=0x10140 arg1=0x5
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D handler_mapped=yes instruction_set=THUMB source_api=plat_10140_register run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30631D run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D handler_mapped=yes instruction_set=THUMB source_api=plat_10140_register run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30631D run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [JJFB_PLAT_CALL] code=0x10140 family=0x5 handler=0x30631D ret=1 kind=REGISTER name=plat_10140_register evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10140 r1=0x5 r2=0x682AB4 r3=0x30631D r4=0x10140 ret=0x1 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049B6 target=0x304661 arg0=0x1 arg1=0x5
@@ -1071,30 +1071,30 @@ After app init, memory left:3748952
 [R9_SCOPE] stage=LEAVE scope_id=21 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=11 actual_top_frame_id=11 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=3 depth_after=2 old_r9=0x280400 new_r9=0x2B1868 generation=11 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
 [R9_SWITCH] stage=LEAVE from=cfunction.ext to=robotol.ext restore_r9=0x2B1868 depth=2 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x3049E2 target=0x304569 arg0=0x10162 arg1=0xE200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D259 handler_mapped=yes instruction_set=THUMB source_api=plat_10162_alloc run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D259 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D259 handler_mapped=yes instruction_set=THUMB source_api=plat_10162_alloc run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D259 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_ALLOC] code=0x10162 size=0xE200 buf=0x30D259 ret=0x69EF24 tag_u16=0 name=plat_10162_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10162 app=0xE200 size=0xE200 ret=0x69EF24 kind=ALLOC name=plat_10162_alloc handler=0x30D259 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10162 r1=0xE200 r2=0x30D259 r3=0x0 r4=0x10162 ret=0x69EF24 evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304A08 target=0x304569 arg0=0x10165 arg1=0xE200
-[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D309 handler_mapped=yes instruction_set=THUMB source_api=plat_10165_alloc run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D309 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[PLATFORM_HANDLER_REGISTERED] owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D309 handler_mapped=yes instruction_set=THUMB source_api=plat_10165_alloc run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_HANDLER_REGISTERED] owner_module=robotol.ext handler=0x30D309 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_ALLOC] code=0x10165 size=0xE200 buf=0x30D309 ret=0x6AD12C tag_u16=0 name=plat_10165_alloc evidence=CROSS_TARGET+docs/06
 [JJFB_PLAT_CALL] code=0x10165 app=0xE200 size=0xE200 ret=0x6AD12C kind=ALLOC name=plat_10165_alloc handler=0x30D309 evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10165 r1=0xE200 r2=0x30D309 r3=0x0 r4=0x10165 ret=0x6AD12C evidence=TARGET_OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x304A28 target=0x304569 arg0=0x10800 arg1=0x4
 [JJFB_PLAT_CALL] code=0x10800 app=0x4 arg2=0x0 arg3=0x0 ret=1 kind=STATUS name=plat_10800_ack evidence=CROSS_TARGET+docs/06
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10800 r1=0x4 r2=0x0 r3=0x0 r4=0x10800 ret=0x1 evidence=TARGET_OBSERVED
-[EXT_ABI_RETURN] module=robotol.ext method=0 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[EXT_ABI_FRAME_LEAVE] method=0 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[ROBOTOL_INIT_RETURN_ZERO] module_id=3 generation=3 ret=0 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[EXT_ABI_RETURN] module=robotol.ext method=0 ret=0 source=PRODUCT_ADAPTER module_id=3 generation=3 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[EXT_ABI_FRAME_LEAVE] method=0 return=0 restored_r9=0x0 depth=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[ROBOTOL_INIT_RETURN_ZERO] module_id=3 generation=3 ret=0 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_TIMER] op=START_DSM_RETURN filename=gwy/jjfb.mrp ret=0 evidence=DOCUMENTED
 [JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return reason=no_timer_api_call_seen arm_count=0 evidence=TARGET_OBSERVED
 [PLATFORM_TIMER] op=START chunk=0x0 period_ms=50 id=1 name=lifecycle_10140_forced_host evidence=DOCUMENTED
 [JJFB_LIFECYCLE] op=ARM period_ms=50 handler=0x30631D family=0x5 reason=10140_registered_no_classic_timer forced=yes evidence=CROSS_TARGET+docs/06
-[SCHEDULER_ENQUEUE] source=PLATFORM_TIMER owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D forced=yes guest_depth=2 event_id=1 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
+[SCHEDULER_ENQUEUE] source=PLATFORM_TIMER owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30631D forced=yes guest_depth=2 event_id=1 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
+[PLATFORM_TIMER] op=FIRE_CB interval=50 evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
 [PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
@@ -1104,8 +1104,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [DRAW_FP_TABLE_SLOT] mt=0x280004 off=0x1E0 fp=0x2801E4 evidence=OBSERVED
 [DRAW_FP_ERW_SLOT_WRITE] erw=0x2B1868 off=0x150C old=0x2801E4 new=0x2801E4 evidence=OBSERVED
 [JJFB_LIFECYCLE] op=FIRE tick=1 handler=0x30631D r0=0 r1=0 r9=0x2B1868 owner=robotol.ext evidence=CROSS_TARGET+docs/06
-[P3_CALLBACK_ENTER] seq=1 handler=0x30631D owner=robotol.ext generation=3 depth=2 forced=0 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[CALLBACK_FRAME_ENTER] seq=1 frame_token=4298138397 handler=0x30631D r9=0x2B1868 stop_sentinel=0x80000 run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[P3_CALLBACK_ENTER] seq=1 handler=0x30631D owner=robotol.ext generation=3 depth=2 forced=0 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[CALLBACK_FRAME_ENTER] seq=1 frame_token=4298138397 handler=0x30631D r9=0x2B1868 stop_sentinel=0x80000 run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [LIFECYCLE_INSN_LIMIT] lim=5000000 env=(default) evidence=OBSERVED
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30634A target=0x2FEBA5 arg0=0x2B250F arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x2FEBC6 target=0x30634F arg0=0x4 arg1=0x13
@@ -1116,8 +1116,8 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x306666 target=0x3102F9 arg0=0x4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x31030C target=0x30666B arg0=0x2B18E4 arg1=0x0
 [GUEST_INDIRECT_CALL] module_id=3 pc=0x30667A target=0x304569 arg0=0x1E209 arg1=0x9
-[SCHEDULER_ENQUEUE] source=PLATFORM_EVENT owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 forced=no guest_depth=2 event_id=2 run_id=p2_20260801_045208_75950 evidence=OBSERVED
-[PROVEN_PLATFORM_CONTRACT_FIXED] contract=family_event_dispatch event=0x1E209 app=0x9 handler=0x30D311 via=10102_family run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[SCHEDULER_ENQUEUE] source=PLATFORM_EVENT owner_module=robotol.ext owner_module_id=3 owner_generation=3 handler=0x30D311 forced=no guest_depth=2 event_id=2 run_id=p2_20260801_045052_71623 evidence=OBSERVED
+[PROVEN_PLATFORM_CONTRACT_FIXED] contract=family_event_dispatch event=0x1E209 app=0x9 handler=0x30D311 via=10102_family run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [PLATFORM_FAMILY_EVENT] op=ENQUEUE event=0x1E209 app=0x9 handler=0x30D311 request_id=0 owner=robotol.ext evidence=OBSERVED
 [R9_WRITE] event_seq=29 old=0x2B1868 new=0x2B1868 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_FAMILY_EVENT] op=DELIVER event=0x1E209 app=0x9 handler=0x30D311 r9=0x2B1868 r2=0x0 r3=0x0 request_id=0 evidence=OBSERVED
@@ -1126,7 +1126,7 @@ bridge_dsm_mr_start_dsm('gwy/jjfb.mrp','start.mr','napptype=12_nextid=482_ncode=
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10133 r1=0x1E205 r2=0x0 r3=0x0 r4=0x10133 ret=0x0 evidence=TARGET_OBSERVED
 [R9_WRITE] event_seq=30 old=0x2B1868 new=0x2B1868 reason=OTHER frame_id=0 scope_id=0 host_callsite=? guest_pc=0x0 guest_module=? depth_before=0 depth_after=0 evidence=OBSERVED
 [PLATFORM_FAMILY_EVENT] op=DELIVER_DONE ok=1 ret=0 end=stop_at_base handler=0x30D311 pc_after=0x80000 lr_after=0x304599 lim=5000000 evidence=OBSERVED
-[SCHEDULER_NATURAL_CALLBACK] owner_module=robotol.ext source=PLATFORM_EVENT forced=no handler=0x30D311 ret=0 guest_entered=yes run_id=p2_20260801_045208_75950 evidence=OBSERVED
+[SCHEDULER_NATURAL_CALLBACK] owner_module=robotol.ext source=PLATFORM_EVENT forced=no handler=0x30D311 ret=0 guest_entered=yes run_id=p2_20260801_045052_71623 evidence=OBSERVED
 [JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1E209 r1=0x9 r2=0x0 r3=0x0 r4=0x1E209 ret=0x0 evidence=TARGET_OBSERVED
 !!! unregister function at 0x28005C !!! 
 !!! unregister function at 0x280060 !!! 
@@ -1164,3 +1164,9 @@ R12=0x00000000	SP=0x0027FFA8	 LR=0x00304599	 PC=0x00280068	V:0
 [guest-printf] (null)
 [JJFB_DSM_HEAP] action=reuse guest=0x282A64 len=4194304 reason=shell_package_restart memset=no note=preserve_ext_images evidence=TARGET_OBSERVED
 br_mem_get base=0x282A64 len=4194304(4096 kb) =================
+[JJFB_DRAW] api=mr_drawBitmap bmp=0x0 x=9 y=0 w=0 h=0 evidence=DOCUMENTED
+[JJFB_E8U_DRAW] api=mr_drawBitmap pc=0x280078 lr=0x304599 r0=0x0 r1=9 r2=0 r3=0 h=0 sp=0x27FFA8 surface=0x0 note=real_platform_draw evidence=OBSERVED
+[JJFB_FIRST_REAL_DRAW_CANDIDATE] api=mr_drawBitmap pc=0x280078 lr=0x304599 r0=0x0 r1=9 r2=0 r3=0 h=0 note=real_platform_draw evidence=OBSERVED
+[JJFB_E8Z_CLASS] class=DRAW_API_WITH_NULL_BMP evidence=OBSERVED
+[POST_CONT_UNIMPLEMENTED_API] api=mr_getCharBitmap slot=0x28007C evidence=OBSERVED note=observe_before_exit
+!!! mr_getCharBitmap() Not yet implemented function !!! 

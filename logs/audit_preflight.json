@@ -1,5 +1,666 @@
 {
-  "root": "C:\\Users\\24231\\Desktop\\jjfb_pc_vmrp_bootkit",
-  "ok": true,
-  "findings": []
+  "root": "C:\\Users\\Administrator\\Desktop\\jjfb_pc_vmrp_bootkit",
+  "ok": false,
+  "findings": [
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "JJFB 资源与显示链迁移任务.txt",
+      "line": 28,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "JJFB 资源与显示链迁移任务2.txt",
+      "line": 16,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "JJFB 资源与显示链迁移任务2.txt",
+      "line": 28,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "JJFB 资源与显示链迁移任务2.txt",
+      "line": 380,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "JJFB 资源与显示链迁移任务2.txt",
+      "line": 437,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "RUN_FIELD_STREAM_TASK9.ps1",
+      "line": 159,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "RUN_FIELD_STREAM_TASK9.ps1",
+      "line": 161,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_FIELD_STREAM_TASK9.ps1",
+      "line": 213,
+      "match": "Host '--- progress"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "RUN_HELPER_2F68E4_TASK7.ps1",
+      "line": 133,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_HELPER_2F68E4_TASK7.ps1",
+      "line": 174,
+      "match": "Host '--- progress"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_HELPER_2F68E4_TASK8.ps1",
+      "line": 190,
+      "match": "Host '--- progress"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_JJFB_LAUNCHER.ps1",
+      "line": 66,
+      "match": "Host '--- runtime_progress"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "RUN_P10138_TASK6.ps1",
+      "line": 138,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_P10138_TASK6.ps1",
+      "line": 134,
+      "match": "Host \"helper/handler progress"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_P10138_TASK6.ps1",
+      "line": 184,
+      "match": "Host '--- progress"
+    },
+    {
+      "rule": "host_fake_ui",
+      "file": "RUN_PAH_TASK5.ps1",
+      "line": 175,
+      "match": "Host '--- progress"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "RUN_PRODUCT_FIRST_FRAME_PUSH.ps1",
+      "line": 410,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "Task 14：正式发布 Robotol DrawFP.txt",
+      "line": 432,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 31,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 33,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 34,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 6,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 17,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 18,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 19,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 38,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 39,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "analysis/product_event_queue_consumer_key_map.txt",
+      "line": 39,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 16,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 16,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_event_queue_consumer.h",
+      "line": 22,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "include/gwy_launcher/product_lifecycle_record_trace.h",
+      "line": 11,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/platform/platform_event_queue.c",
+      "line": 20,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 291,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 295,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 331,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 335,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 358,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 362,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 386,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "uc_reg_write_outside_guest_memory",
+      "file": "src/platform/platform_memory_ops.c",
+      "line": 390,
+      "match": "uc_reg_write("
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 261,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 262,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 322,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 363,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 393,
+      "match": "0xB71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 243,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 259,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 361,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "legacy_injection",
+      "file": "src/runtime/gwy_ext_obs.c",
+      "line": 367,
+      "match": "FAMILY_C0_AFTER_B71"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 26,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 930,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 28,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 29,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 17,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 37,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 38,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 124,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 125,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 126,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 330,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 340,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 459,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 462,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 464,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 467,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 480,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 645,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 646,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 650,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 650,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 654,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 666,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 670,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 671,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 814,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 926,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 929,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_event_queue_consumer.c",
+      "line": 930,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 29,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 546,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 547,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 813,
+      "match": "0x305EB8"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 968,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_field_parser_trace.c",
+      "line": 1023,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_helper_2f68e4_trace.c",
+      "line": 17,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_helper_2f68e4_trace.c",
+      "line": 744,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "force_ui_mode",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 35,
+      "match": "0x8D0"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 32,
+      "match": "0xB70"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 33,
+      "match": "0xB71"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 15,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 24,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 194,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 197,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 295,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 298,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 300,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 409,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_lifecycle_record_trace.c",
+      "line": 416,
+      "match": "0x2FC418"
+    },
+    {
+      "rule": "uc_mem_rw_outside_guest_memory",
+      "file": "src/runtime/product_p11_case9_trace.c",
+      "line": 268,
+      "match": "uc_mem_read("
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 30,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 31,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 22,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 511,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 525,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 579,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_path_a_handler_trace.c",
+      "line": 598,
+      "match": "0x2DADC4"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 27,
+      "match": "0xB71"
+    },
+    {
+      "rule": "game_gate_offsets",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 28,
+      "match": "0x134D"
+    },
+    {
+      "rule": "jjfb_absolute_code",
+      "file": "src/runtime/product_post_drain_gate_trace.c",
+      "line": 22,
+      "match": "0x2DADC4"
+    }
+  ]
 }

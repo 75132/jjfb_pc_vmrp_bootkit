@@ -1,0 +1,59 @@
+smoke 1 0.011534
+mrp_jjfb 0 0
+cfg36 0 0
+game_catalog 0 0
+guest_vfs 1 0.0165197
+launch_descriptor 0 0
+ext_resolver 0 0
+module_registry 1 0.0166396
+ext_loader 1 0.0179918
+mrp_member_view 1 0.0160518
+mrp_reg_primary 0 0
+package_scope 1 0.0178004
+package_metadata 0 0
+ext_entry_observe 1 0.0159612
+ext_chunk_observe 1 0.0167379
+ext_object_observe 1 0.0173307
+ext_helper_handoff 1 0.0200618
+ext_dsm_record_observe 1 0.0168599
+ext_module_entry_abi 1 0.0178219
+ext_entry_null_contract 1 0.018459
+ext_module_data_init 1 0.0173377
+module_r9_switch 1 0.0187388
+ext_er_rw_producer 1 0.0180491
+ext_bootstrap_abi 1 0.0174011
+ext_callback_frame 1 0.016512
+ext_post_cont_audit 1 0.0172581
+ext_post_cfn_r9_audit 1 0.0178306
+ext_p_extchunk_audit 1 0.0172717
+ext_shell_publication_audit 1 0.0168096
+ext_mrpgcmap_entry_order 1 0.0178149
+ext_entry_abi_cluster_audit 1 0.0182531
+ext_cfunction_publication_audit 1 0.0183516
+ext_chunk_provider 1 0.0197571
+ext_er_rw_bind_restore 1 0.0174164
+ext_gwy_startgame_audit 1 0.0198399
+ext_gwy_shell_shim 1 0.0217121
+platform_identity 1 0.0126809
+platform_userinfo 1 0.0128154
+platform_timer 1 0.0124275
+platform_send_app_event 1 0.0130911
+platform_handler_registry 1 0.0137083
+ext_abi_adapter_p2 1 0.0218215
+product_p3_visual_stability 1 0.0228831
+product_p4_natural_progress 1 0.0366652
+product_p5_event_advance 1 0.0309556
+platform_event_service 1 0.0373656
+platform_event_queue 1 0.0330971
+vm_runtime 1 0.0271353
+guest_memory 1 0.0326565
+vm_file_service 0 0
+---
+mrp_jjfb
+cfg36
+game_catalog
+launch_descriptor
+ext_resolver
+mrp_reg_primary
+package_metadata
+vm_file_service
