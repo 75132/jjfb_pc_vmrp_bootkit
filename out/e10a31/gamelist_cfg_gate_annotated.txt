@@ -1,0 +1,4 @@
+﻿# gamelist cfg-open predecessor graph (E10A-3.1)
+run_id=1784656128442 overlay=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay\e10a31\1784656128442
+Success order: REBOUND > COHERENT > MIXED_MULTI > chunk/P/ERW mismatch > NOT_REGISTERED > INSUFFICIENT
+Safe ERW heal only when helper_owner==chunk_owner==p_owner and erw differs.

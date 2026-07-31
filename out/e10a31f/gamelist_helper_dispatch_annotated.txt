@@ -1,0 +1,212 @@
+# gamelist helper dispatch annotated (E10A-3.1d Lane B)
+
+- mrp: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480\gwy\gamelist.mrp`
+- ext_size: 91532
+- live_helper: 0x2E3089
+- code_base: 0x2D4354
+- file_off: 0xED34
+- entry_va: 0x2E3088
+
+## mythroad_mini natural ABI (DOCUMENTED)
+- code6: input=filebuf, input_len=MR_VERSION(2011) → store version
+- code8: input=&mrc_appInfo_st, input_len=16
+- code0: input=filebuf, input_len=MR_VERSION → mrc_init(); refresh
+- FAST_REAL currently passes code0 input=0 (not filebuf) — confirm via CMP/use of r2
+
+## method compare hits (CMP r1,#imm)
+
+## disassembly window
+```
+  0x002E3088: FFB5        PUSH
+  0x002E308A: 1F1C        h0=0x1C1F
+  0x002E308C: 161C        h0=0x1C16
+  0x002E308E: 051C        h0=0x1C05
+  0x002E3090: 0068        h0=0x6800
+  0x002E3092: 81B0        ADD/SUB SP
+  0x002E3094: 4946        h0=0x4649
+  0x002E3096: 0091        h0=0x9100
+  0x002E3098: 0024        h0=0x2400
+  0x002E309A: F1F75CEB    BLX -> 0x2D4756  ; << CALL
+  0x002E309E: 0298        h0=0x9802
+  0x002E30A0: 0B28        CMP r0, #0xB
+  0x002E30A2: 35D2        Bcond -> 0x2E3111
+  0x002E30A4: 01A3        h0=0xA301
+  0x002E30A6: 1B5C        h0=0x5C1B
+  0x002E30A8: 5B00        h0=0x005B
+  0x002E30AA: 9F44        h0=0x449F
+  0x002E30AC: 050F        h0=0x0F05
+  0x002E30AE: 1C1F        h0=0x1F1C
+  0x002E30B0: 2124        h0=0x2421
+  0x002E30B2: 2731        h0=0x3127
+  0x002E30B4: 2B31        h0=0x312B
+  0x002E30B6: 2F00        h0=0x002F
+  0x002E30B8: 1849        LDR r1, [pc, #0x60] lit≈0x2E311C
+  0x002E30BA: E868        h0=0x68E8
+  0x002E30BC: 4944        h0=0x4449
+  0x002E30BE: 4861        h0=0x6148
+  0x002E30C0: F7F7C0FF    BL -> 0x2DB045  ; << CALL
+  0x002E30C4: FFF730FA    BL -> 0x2E2529  ; << CALL
+  0x002E30C8: 041C        h0=0x1C04
+  0x002E30CA: 21E0        B -> 0x2E3111
+  0x002E30CC: 3068        h0=0x6830
+  0x002E30CE: 0828        CMP r0, #0x8
+  0x002E30D0: 03D1        Bcond -> 0x2E30DB
+  0x002E30D2: FFF767F8    BL -> 0x2E21A5  ; << CALL
+  0x002E30D6: 041C        h0=0x1C04
+  0x002E30D8: 1AE0        B -> 0x2E3111
+  0x002E30DA: 7168        h0=0x6871
+  0x002E30DC: B268        h0=0x68B2
+  0x002E30DE: FFF753F8    BL -> 0x2E2189  ; << CALL
+  0x002E30E2: 041C        h0=0x1C04
+  0x002E30E4: 14E0        B -> 0x2E3111
+  0x002E30E6: 00F06FFA    BL -> 0x2E35C9  ; << CALL
+  0x002E30EA: 11E0        B -> 0x2E3111
+  0x002E30EC: EF60        h0=0x60EF
+  0x002E30EE: 0FE0        B -> 0x2E3111
+  0x002E30F0: FFF7AAFF    BL -> 0x2E3049  ; << CALL
+  0x002E30F4: 0CE0        B -> 0x2E3111
+  0x002E30F6: 00F091F8    BL -> 0x2E321D  ; << CALL
+  0x002E30FA: 09E0        B -> 0x2E3111
+  0x002E30FC: 0748        LDR r0, [pc, #0x1C] lit≈0x2E311C
+  0x002E30FE: 4844        h0=0x4448
+  0x002E3100: C761        h0=0x61C7
+  0x002E3102: 05E0        B -> 0x2E3111
+  0x002E3104: 0548        LDR r0, [pc, #0x14] lit≈0x2E311C
+  0x002E3106: 4844        h0=0x4448
+  0x002E3108: 0662        h0=0x6206
+  0x002E310A: 01E0        B -> 0x2E3111
+  0x002E310C: 044C        LDR r4, [pc, #0x10] lit≈0x2E3120
+  0x002E310E: 7C44        h0=0x447C
+  0x002E3110: 0099        h0=0x9900
+  0x002E3112: 05B0        ADD/SUB SP
+  0x002E3114: 201C        h0=0x1C20
+  0x002E3116: 8946        h0=0x4689
+  0x002E3118: F0BD        POP
+  0x002E311A: 0000        h0=0x0000
+  0x002E311C: 0009        h0=0x0900
+  0x002E311E: 0000        h0=0x0000
+  0x002E3120: 1300        h0=0x0013
+  0x002E3122: 0000        h0=0x0000
+  0x002E3124: FFB5        PUSH
+  0x002E3126: 83B0        ADD/SUB SP
+  0x002E3128: 0E98        h0=0x980E
+  0x002E312A: 0F9C        h0=0x9C0F
+  0x002E312C: 0D9E        h0=0x9E0D
+  0x002E312E: 0068        h0=0x6800
+  0x002E3130: 4F46        h0=0x464F
+  0x002E3132: 0025        h0=0x2500
+  0x002E3134: F1F70EEB    BLX -> 0x2D4754  ; << CALL
+  0x002E3138: 002C        h0=0x2C00
+  0x002E313A: 06D0        Bcond -> 0x2E314B
+  0x002E313C: 0C99        h0=0x990C
+  0x002E313E: 0196        h0=0x9601
+  0x002E3140: 03AB        h0=0xAB03
+  0x002E3142: 0091        h0=0x9100
+  0x002E3144: 0FCB        h0=0xCB0F
+  0x002E3146: A047        h0=0x47A0
+  0x002E3148: 051C        h0=0x1C05
+  0x002E314A: B946        h0=0x46B9
+  0x002E314C: 281C        h0=0x1C28
+  0x002E314E: 07B0        ADD/SUB SP
+  0x002E3150: F0BD        POP
+  0x002E3152: 0000        h0=0x0000
+  0x002E3154: 08B5        PUSH
+  0x002E3156: 034B        LDR r3, [pc, #0xC] lit≈0x2E3164
+  0x002E3158: 7B44        h0=0x447B
+  0x002E315A: 9B6B        h0=0x6B9B
+  0x002E315C: 8033        h0=0x3380
+  0x002E315E: 1B6B        h0=0x6B1B
+  0x002E3160: 9847        h0=0x4798
+  0x002E3162: 08BD        POP
+  0x002E3164: C011        h0=0x11C0
+  0x002E3166: FFFF08B5    h0=0xFFFF h1=0xB508
+  0x002E316A: 044B        LDR r3, [pc, #0x10] lit≈0x2E317C
+  0x002E316C: 7B44        h0=0x447B
+  0x002E316E: 9B6B        h0=0x6B9B
+  0x002E3170: FF33        h0=0x33FF
+  0x002E3172: C133        h0=0x33C1
+  0x002E3174: 5B6B        h0=0x6B5B
+  0x002E3176: 9847        h0=0x4798
+  0x002E3178: 08BD        POP
+  0x002E317A: 0000        h0=0x0000
+  0x002E317C: AC11        h0=0x11AC
+  0x002E317E: FFFF031C    h0=0xFFFF h1=0x1C03
+  0x002E3182: 081C        h0=0x1C08
+  0x002E3184: 8721        h0=0x2187
+  0x002E3186: 4901        h0=0x0149
+  0x002E3188: 8B42        h0=0x428B
+  0x002E318A: 10B5        PUSH
+  0x002E318C: 04DA        Bcond -> 0x2E3199
+  0x002E318E: 002B        h0=0x2B00
+  0x002E3190: 02DB        Bcond -> 0x2E3199
+  0x002E3192: 9C18        h0=0x189C
+  0x002E3194: 8C42        h0=0x428C
+  0x002E3196: 02DB        Bcond -> 0x2E319F
+  0x002E3198: 0020        MOVS r0, #0x0
+  0x002E319A: C043        MVNS r0, r0  ; possible -1
+  0x002E319C: 10BD        POP
+  0x002E319E: 0549        LDR r1, [pc, #0x14] lit≈0x2E31B4
+  0x002E31A0: 7944        h0=0x4479
+  0x002E31A2: 8C6B        h0=0x6B8C
+  0x002E31A4: FF21        h0=0x21FF
+  0x002E31A6: C131        h0=0x31C1
+  0x002E31A8: 0959        h0=0x5909
+  0x002E31AA: C918        h0=0x18C9
+  0x002E31AC: E368        h0=0x68E3
+  0x002E31AE: 9847        h0=0x4798
+  0x002E31B0: 0020        MOVS r0, #0x0
+  0x002E31B2: 10BD        POP
+  0x002E31B4: 7811        h0=0x1178
+  0x002E31B6: FFFFF8B5    h0=0xFFFF h1=0xB5F8
+  0x002E31BA: 051C        h0=0x1C05
+  0x002E31BC: 0B48        LDR r0, [pc, #0x2C] lit≈0x2E31EC
+  0x002E31BE: 1F1C        h0=0x1C1F
+  0x002E31C0: 4844        h0=0x4448
+  0x002E31C2: 4068        h0=0x6840
+  0x002E31C4: 0E1C        h0=0x1C0E
+  0x002E31C6: 141C        h0=0x1C14
+  0x002E31C8: 0028        CMP r0, #0x0
+  0x002E31CA: 00D0        Bcond -> 0x2E31CF
+  0x002E31CC: 8047        h0=0x4780
+  0x002E31CE: 0848        LDR r0, [pc, #0x20] lit≈0x2E31F0
+  0x002E31D0: 0097        h0=0x9700
+  0x002E31D2: 7844        h0=0x4478
+  0x002E31D4: 816B        h0=0x6B81
+  0x002E31D6: FF20        MOVS r0, #0xFF
+  0x002E31D8: 6D30        h0=0x306D
+  0x002E31DA: 4058        h0=0x5840
+  0x002E31DC: 231C        h0=0x1C23
+  0x002E31DE: 0068        h0=0x6800
+  0x002E31E0: 4F6F        h0=0x6F4F
+  0x002E31E2: 321C        h0=0x1C32
+  0x002E31E4: 291C        h0=0x1C29
+  0x002E31E6: B847        h0=0x47B8
+  0x002E31E8: F8BD        POP
+  0x002E31EA: 0000        h0=0x0000
+  0x002E31EC: 8009        h0=0x0980
+  0x002E31EE: 0000        h0=0x0000
+  0x002E31F0: 4611        h0=0x1146
+  0x002E31F2: FFFF0349    h0=0xFFFF h1=0x4903
+  0x002E31F6: 08B5        PUSH
+  0x002E31F8: 7944        h0=0x4479
+  0x002E31FA: 896B        h0=0x6B89
+  0x002E31FC: 8031        h0=0x3180
+  0x002E31FE: C96B        h0=0x6BC9
+  0x002E3200: 8847        h0=0x4788
+  0x002E3202: 08BD        POP
+  0x002E3204: 2011        h0=0x1120
+  0x002E3206: FFFF        h0=0xFFFF
+```
+
+## first BL/BLX targets from dispatcher window
+- 0x2D4756
+- 0x2DB045
+- 0x2E2529
+- 0x2E21A5
+- 0x2E2189
+- 0x2E35C9
+- 0x2E3049
+- 0x2E321D
+- 0x2D4754
+
+Verdict: GAMELIST_MRC_INIT_TARGET_IDENTIFIED (first_bl=0x2D4756 — candidate, confirm via method0_trace)

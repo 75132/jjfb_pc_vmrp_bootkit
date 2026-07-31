@@ -1,2 +1,0 @@
-run_id,faulted,fault_pc,r0,lr,cpsr,fault_addr_class,arg_class
-p10138_B_20260725_001313,1,0x94E40,0x0,0x2D9AD3,0x200001D3,ENTRY_ARGUMENT,NODE_COPY_SOURCE_NULL

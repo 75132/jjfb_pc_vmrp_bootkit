@@ -1,0 +1,29 @@
+# DSM/cfunction ARM mem primitive around 0x94E40
+# source=out/vmrp_run/cfunction.ext code_base=0x80000
+# isa=ARM (CPSR.T=0 at live fault)
+
+===== function @ 0x94E34 (fault @ 0x94E40) =====
+0x00094E24: .word 0xF7537E82 cond=15 op=7
+0x00094E28: .word 0xBD3AF235 cond=11 op=13
+0x00094E2C: .word 0x2AD7D2BB cond=2 op=10
+0x00094E30: .word 0xEB86D391 cond=14 op=11
+0x00094E34: SUBS r2, r2, #1  ; *** function entry / length countdown ***
+0x00094E38: BCC +0x18
+0x00094E3C: AND r3, r1, #0xFF
+0x00094E40: LDRB r1, [r0], #1  ; *** FAULT: LDRB from r0 (null in live Path-A) ***
+0x00094E44: CMP r1, r3
+0x00094E48: SUBEQ r0, r0, #1
+0x00094E4C: BXEQ lr
+0x00094E50: SUBS r2, r2, #1
+0x00094E54: BCS loop
+0x00094E58: MOV r0, #0
+0x00094E5C: BX lr
+0x00094E60: .word 0xE3A03000 cond=14 op=3
+0x00094E64: .word 0xE3520000 cond=14 op=3
+0x00094E68: .word 0x9A000007 cond=9 op=10
+0x00094E6C: .word 0xE5D03000 cond=14 op=5
+0x00094E70: .word 0xE5D1C000 cond=14 op=5
+
+Classification: MEMCPY / byte-scan memory primitive (NOT allocator).
+Live Path-A: r0=0 at entry → LDRB fault @ 0x94E40.
+Verdict: NODE_94E40_FUNCTION_IDENTIFIED

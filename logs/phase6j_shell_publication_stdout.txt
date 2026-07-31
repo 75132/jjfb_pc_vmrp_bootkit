@@ -1,0 +1,727 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[LOADCODE_CONTRACT] stage=CODE_IMAGE image_base=0x80000 image_size=332116 evidence=OBSERVED
+[ENTRY_TYPE_EVIDENCE] prototype_candidate=int32(int32) note=MR_LOAD_C_FUNCTION_is_image_plus8_not_code_image_second_hop source=DOCUMENTED confidence=med code_image_second_hop_proto=unknown evidence=DOCUMENTED
+[P_ENTRY_LINK] linked=NO evidence=none note=helper_path_only_until_DOCUMENTED_or_CROSS_TARGET
+[DATA_INIT_RESPONSIBILITY] CODE_alloc=DSM/loadCode status=observed evidence=OBSERVED RW_template_copy=guest_mr_c_function_load status=not_observed evidence=DOCUMENTED BSS_zero=guest_mr_c_function_load status=not_observed evidence=DOCUMENTED relocation=UNKNOWN status=unknown evidence=UNKNOWN R9_set=helper_path_fixR9 status=pending evidence=DOCUMENTED entry_call=DSM_BLX status=confirmed evidence=OBSERVED host_duty=P_alloc_and_host_helper_R9_only note=nested_RW_not_host note=no_guest_mutation
+[CFUNCTION_LOAD_CONTRACT] allocates_er_rw=yes initializes_er_rw=yes publishes_er_rw=yes requires_module_entry_first=unknown evidence=DOCUMENTED note=guest_mrc_malloc_then_P_fill er_rw_metadata_timing_gate=blocked
+[ER_RW_TIMELINE] seq=1 module=dsm module_id=0 event=LOADCODE_ENTER base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=2 module=dsm module_id=0 event=LOADCODE_EXIT base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=3 module=? module_id=0 event=CODE_IMAGE_MAPPED base=0x80000 size=332116 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[FIXR9_STAGE_CONTRACT] stage=bootstrap r9_contract=UNKNOWN evidence=UNKNOWN note=not_extrapolate_helper bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=mr_c_function_load r9_contract=CREATES_CALLEE_ER_RW evidence=DOCUMENTED bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=helper r9_contract=CALLEE_ER_RW evidence=DOCUMENTED bootstrap_entry_r9_gate=blocked
+[FIXR9_STAGE_CONTRACT] stage=callback r9_contract=UNKNOWN evidence=UNKNOWN bootstrap_entry_r9_gate=blocked
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0xA4178 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[CFUNCTION_NEW] stage=ENTER caller_module=unknown caller_offset=0x0 module=unknown r0=0xA4178 r1=0x14 r2=0x0 r3=0x0 p_len=20 p_guest=0x2803E4 sp=0x0 lr=0x0 cpsr=0x0 origin=HOST_BRIDGE evidence=OBSERVED
+[CFUNCTION_NEW] note=p_struct_guest=0x2803E4 len=20 helper_is_input_r0=1
+[CFUNCTION_NEW_SIDE_EFFECT] kind=HOST_GLOBAL_HELPER helper=0xA4178 origin=HOST_BRIDGE evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=GUEST_P_STRUCT p_guest=0x2803E4 p_len=20 note=P_not_helper evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=NO_DSM_DISPATCH_WRITE note=documented_api_does_not_update_module_record_dispatch evidence=DOCUMENTED
+[CFUNCTION_P] stage=ALLOC address=0x2803E4 size=20 helper=0xA4178 caller=HOST_BRIDGE note=mr_c_function_st_doc_size_20 evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_P] stage=INIT address=0x2803E4 size=20 helper=0xA4178 note=zeroed_by_new_then_guest_fills_ER_RW evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=4 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x0 size=0 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[JJFB_P_STRUCT] base=0x2803E4 range=+0x00..+0x80 len=20 names=start_of_ER_RW,ER_RW_Length,ext_type,mrc_extChunk,stack evidence=DOCUMENTED source=mr_helper.h p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[JJFB_EXTCHUNK_PHASE] phase=after_cfunction_p_alloc P=0x2803E4 P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_LAUNCH_CONTEXT] resource_root="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320" target="gwy/gbrwcore.mrp" param="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" profile="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\profiles\jjfb.json" overlay="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay" shell_packages_loaded=pending gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_CFG36_CONTRACT] expected=napptype=12,nextid=482,ncode=512,narg=0,narg1=1,nmrpname=gwy/jjfb.mrp,gwyblink live=napptype=12,nextid=482,ncode=512,narg=0,narg1=1,nmrpname=gwy/jjfb.mrp,gwyblink=yes match=yes consumer=LaunchDescriptor_env_to_bridge_dsm_mr_start_dsm gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2803E4 len=32 is_chunk=0
+[CALLBACK_FRAME] boundary=HOST_CALLBACK_RETURN callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre=0x0 leave=0x0 resume=0x0 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=1 changed=no r4_pre=0x80008 r4_post=0x80008 r9_pre=0x0 r9_post=0x0 r10_pre=0x0 r10_post=0x0 sp_pre=0x27FFF0 sp_post=0x27FFF0 cpsr_t_pre=0 cpsr_t_post=0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=1 module= module_id=0 cfn_path=HOST_MAP_FUNC call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 helper=0xA4178 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x8 value=0x1 writer_module=unknown writer_offset=0x0 target_class=unknown
+[JJFB_P_FIELD_WRITE] off=0x08 old=0x0 new=0x1 pc=0x8003C lr=0x0 module=unknown P=0x2803E4 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x08 pc=0x8003C module=unknown value=0x1 evidence=TARGET_OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x4 value=0x25D0 writer_module=unknown writer_offset=0x0 target_class=guest_data
+[JJFB_P_FIELD_WRITE] off=0x04 old=0x0 new=0x25D0 pc=0x8008C lr=0x0 module=unknown P=0x2803E4 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x04 pc=0x8008C module=unknown value=0x25D0 evidence=TARGET_OBSERVED
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[CHUNK_RECORD] skip_large_alloc addr=0x2803FC size=9684 note=not_chunk_candidate
+[EXT_DATA_ALLOC] module=? kind=UNKNOWN base=0x2803FC size=9684 allocator=GUEST caller_module=? caller_offset=0 evidence=OBSERVED
+[ER_RW_TIMELINE] seq=5 module=? module_id=0 event=ER_RW_ALLOC base=0x2803FC size=9684 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x0 value=0x280400 writer_module=unknown writer_offset=0x0 target_class=unknown
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x0 new=0x280400 pc=0x80098 lr=0x0 module=unknown P=0x2803E4 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x80098 module=unknown value=0x280400 evidence=TARGET_OBSERVED
+[ER_RW_TIMELINE] seq=6 module=? module_id=0 event=ER_RW_INIT base=0x280400 size=280 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+-----> r9:@00280400
+[ER_RW_TIMELINE] seq=7 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[ER_RW_TIMELINE] seq=8 module=? module_id=0 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[R9_SCOPE] stage=NOOP scope_id=0 owns_frame=no requested_by=bridge_mr_extHelper requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=bridge_mr_extHelper owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=NORMAL_GUEST_RETURN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[ER_RW_TIMELINE] seq=9 module=? module_id=0 event=HELPER_CALL base=0x0 size=0 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=169e2898
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[JJFB_GWY_LAUNCH] mode=gwy_guest_native_runapp launcher_mode=1 alias_direct=disabled guest_native=yes
+[JJFB_GWY_ROOT] mythroad_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320
+[JJFB_GWY_ROOT] gwy_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=reg_primary scope=mrp_member result=HIT reason=reg_ext_primary
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/gbrwcore.mrp primary=gbrwcore.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwcore.ext insert_at=318 entry_size=30 index_end=318 offset=2058 stored_size=98264 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwcore.mrp requested=gbrwcore.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwcore.mrp primary=gbrwcore.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp original_sha256=dc7c2134d214e0667174d1806227ea88b41357269e92845d15afdb7f10267b44 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/gbrwshell.mrp primary=gbrwshell.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwshell.ext insert_at=482 entry_size=30 index_end=482 offset=3236 stored_size=29946 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwshell.mrp requested=gbrwshell.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=4 requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=29946 unpacked_size=45216 extracted_size=45216 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwshell.mrp primary=gbrwshell.ext view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp original_sha256=3cc99e87680b7ebb94dc6f4c3d765d4480a0595650ee97e3c5463400d1819916 vfs_remap=enabled evidence=CROSS_TARGET
+[MODULE_REGISTRY] module_id=5 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=5 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=5 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] module_id=5 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=5 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=5 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=5 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=5 event=ER_RW_PUBLISH base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=5 event=ER_RW_PUBLISH_SOURCE source=LOADER_DOCUMENTED base=0x280400 size=9680 er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[ER_RW_PRODUCER] module=cfunction.ext module_id=5 base=0x280400 size=9680 producer_kind=ALLOC producer_module=? producer_offset=0x0 seq=5 evidence=OBSERVED note=no_hardcoded_address
+[ER_RW_BIRTH_CORR] er_rw_base=0x280400 size=9680 match_ord=5 match_kind=ER_RW_ALLOC entry_ord=0 blocked_ord=0 relation=BEFORE_ENTRY evidence=OBSERVED note=no_hardcoded_address
+[EXT_LOAD] module_id=5 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=EXTRACTED size=147196
+[EXT_LOAD] module_id=4 load_id=5 package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER stage=EXTRACTED size=45216
+[EXT_LOAD] module_id=5 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwcore.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/gamelist.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[JJFB_FILEOPEN] guest="gwy/gamelist.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/gamelist.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gamelist.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" backend=canonical mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gamelist.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwshell.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwshell.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwshell.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_GWY_LAUNCH] mode=gwy_guest_native_runapp dsm_target=gwy/gbrwcore.mrp note=guest_shell_exec
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/gbrwcore.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" ext="start.mr" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" count=1 evidence=DOCUMENTED_lowest_layer_not_full_shell gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=mr_start entered=yes pc=pending entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=OBSERVED
+[ER_RW_TIMELINE] seq=11 module=cfunction.ext module_id=5 event=MR_C_FUNCTION_NEW base=0x280400 size=9680 helper=0xA4178 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=5 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[ER_RW_TIMELINE] seq=12 module=cfunction.ext module_id=5 event=ER_RW_PUBLISH base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=10 module=cfunction.ext module_id=5 event=ER_RW_PUBLISH_SOURCE source=MR_C_FUNCTION_LOAD base=0x280400 size=9680 er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[EXT_ENTRY] module_id=5 method=1 return=0
+[MODULE_REGISTRY] module_id=5 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=5 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=5 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=WRONG_HELPER_CALL_MISSING_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=5 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=5 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+[R9_CONTRACT] stage=MR_HELPER module=? r9=0x280400 er_rw=0x280400 classification=DSM_RW evidence=OBSERVED
+[R9_WRITE] event_seq=1 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x0 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=? to=cfunction.ext old_r9=0x0 new_r9=0x280400 call_kind=MR_HELPER depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=1 owns_frame=yes requested_kind=MR_HELPER caller=? callee=cfunction.ext current_r9=0x0 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=13 module=cfunction.ext module_id=5 event=R9_SWITCH_ENTER base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+gwy/gbrwcore.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN_MISS] guest="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=MISS handle=0
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 0
+[WARN]font load fail
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/gwy/gbrwcore.mrp,1) fd is: 1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=1 pos=365 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=1018 got=1018 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+mr_get_method(1018)
+_mr_readFile reallen:2490
+mr_unzip
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/gwy/gbrwcore.mrp,1) fd is: 1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=1 pos=2058 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=98264 got=98264 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+mr_get_method(98264)
+_mr_readFile reallen:147196
+mr_unzip
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=3 code_base=0x2EB7E0 code_size=147264 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2EB7E8 result=OK
+[MODULE_REGISTRY] module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x0
+[EXT_LOAD] module_id=3 load_id=4 stage=MAPPED code_base=0x2EB7E0 code_size=147264 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=3 code=[0x2EB7E0,0x30F720) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE
+[LOADCODE_CONTRACT] stage=CODE_IMAGE image_base=0x2EB7E0 image_size=147264 evidence=OBSERVED
+[ER_RW_TIMELINE] seq=14 module=gbrwcore.ext module_id=3 event=CODE_IMAGE_MAPPED base=0x2EB7E0 size=147264 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[JJFB_SHELL_EXT] package=gwy/gbrwcore.ext member=gbrwcore.ext loaded=yes base=0x2EB7E0 size=147264 evidence=OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.startGame registered=yes addr=0x30DBB4 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.runapp registered=yes addr=0x30DCA0 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[WARN]mr_cacheSync(0x002EB7E0, 147264)
+[GUEST_EXT] ext_base=0x2EB7FC
+--- ext: @002EB7FC
+[ER_RW_TIMELINE] seq=15 module=gbrwcore.ext module_id=3 event=DSM_FIRST_MODULE_ENTRY_CALL base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_PRE_ENTRY_META] module=gbrwcore.ext module_id=3 present=no field=registry_start_of_er_rw value=0x0 map_guest_rw=0x0 entry_r9=0x280400 evidence=OBSERVED note=caller_dsm_P_not_callee
+[ENTRY_IDENTITY] module=gbrwcore.ext module_id=3 identity=UNKNOWN first_entry_seq=15 cfn_seq=0 er_rw_publish_seq=0 helper_seq=0 evidence=OBSERVED er_rw_metadata_timing_gate=blocked
+[JJFB_EXTCHUNK_WATCH] armed base=0x2803E4 len=0x80 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_SHELL_GUEST_PC] pc=0x2EB804 module=gbrwcore.ext hit=first evidence=OBSERVED
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.ext stage=shell_guest_pc_hit entered=yes pc=0x2EB804 evidence=OBSERVED
+[JJFB_SHELL_NATIVE_GATE] shell_native_exec_gate=open class=EXEC_GATE_OPEN pc=0x2EB804 module=gbrwcore.ext note=continue_observe evidence=TARGET_OBSERVED
+[R9_SWITCH_BLOCKED] reason=CALLEE_ER_RW_NOT_AVAILABLE module=gbrwcore.ext call_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee_id=3 depth=1 module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked r9_policy=OBSERVE_ONLY evidence=DOCUMENTED note=no_dsm_r9_fallback
+[R9_SCOPE] stage=ENTER scope_id=2 frame_id=0 owns_frame=no requested_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee=gbrwcore.ext current_r9=0x0 target_r9=0x0 result=BLOCKED_NO_ER_RW frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=16 module=gbrwcore.ext module_id=3 event=DSM_FIRST_MODULE_ENTRY_SELECT base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=17 module=gbrwcore.ext module_id=3 event=R9_SWITCH_BLOCKED base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[R9_SWITCH_BLOCKED_OUTCOME] outcome=SWITCH_BLOCKED_ENTRY_EXECUTED_WITH_CALLER_R9 entry_deferred=no entry_executed=yes effective_r9=0x280400 caller_r9=0x280400 callee_er_rw=0x0 module=gbrwcore.ext module_id=3 call_kind=BOOTSTRAP_ENTRY seq=17 evidence=OBSERVED note=switch_fail_closed_not_entry_fail_closed er_rw_metadata_timing_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked
+[ENTRY_IDENTITY] module=gbrwcore.ext module_id=3 identity=BOOTSTRAP_ENTRY first_entry_seq=15 cfn_seq=0 er_rw_publish_seq=0 helper_seq=0 evidence=OBSERVED er_rw_metadata_timing_gate=blocked
+[CFUNCTION_LOAD_CONTRACT] allocates_er_rw=yes initializes_er_rw=yes publishes_er_rw=yes requires_module_entry_first=yes evidence=OBSERVED note=entry_blocked_before_callee_er_rw er_rw_metadata_timing_gate=blocked
+[ER_RW_TIMING_CLASS] class=BOOTSTRAP_ENTRY_PRECEDES_ER_RW module=gbrwcore.ext module_id=3 first_entry_seq=15 er_rw_publish_seq=0 alloc_match_seq=0 blocked_outcome=SWITCH_BLOCKED_ENTRY_EXECUTED_WITH_CALLER_R9 entry_identity=BOOTSTRAP_ENTRY er_rw_metadata_timing_gate=blocked module_r9_switch_gate=open phase6b_b_gate=blocked gate_evidence=DOCUMENTED next_allowed_fix=BOOTSTRAP_ENTRY_R9_CONTRACT evidence=DOCUMENTED note=observe_only_no_order_change
+[XT_ER_RW_ORDER] target=jjfb pattern=B first_entry_seq=15 er_rw_seq=0 blocked_seq=17 evidence=OBSERVED
+[BOOTSTRAP_R9_ABI] call_kind=BOOTSTRAP_ENTRY module=gbrwcore.ext module_id=3 caller_r9=0x280400 callee_er_rw=0x0 effective_r9=0x280400 enter_rc=-1 expected_policy=CALLER_DSM_RW_OR_UNSET r9_policy=OBSERVE_ONLY bootstrap_entry_r9_gate=blocked evidence=OBSERVED
+[BOOTSTRAP_PROTO] r0_role=ZERO_COMMAND_OR_NULL r0=0x0 r1_role=UNKNOWN r1=0x2EB804 r2_role=UNKNOWN r2=0x12 r3_role=UNKNOWN r3=0x27FB74 stack_args=unknown evidence=OBSERVED note=no_preset_context bootstrap_entry_r9_gate=blocked
+[BOOTSTRAP_STATIC_BASE] base=0x280400 source=CALLER_R9 available_before_entry=yes documented=no used_by_entry=unknown evidence=OBSERVED note=no_er_rw_delta_guess bootstrap_entry_r9_gate=blocked
+[BOOTSTRAP_STATIC_BASE] base=0x2EB7E0 source=CODE_IMAGE available_before_entry=yes documented=no used_by_entry=unknown evidence=OBSERVED bootstrap_entry_r9_gate=blocked
+[BOOTSTRAP_ENTRY_IDENTITY] raw_return=0x2EB804 normalized=0x2EB804 function_start=0x2EB7E8 first_pc=0x2EB804 relation=THUNK evidence=OBSERVED bootstrap_entry_r9_gate=blocked
+[CROSS_MODULE_CALL] transfer_id=1 hop=OTHER from_module=dsm:cfunction.ext from_module_id=5 from_pc=0x89B78 to_module=gbrwcore.ext to_module_id=3 target=0x2EB804 target_offset=0x24 r0=0x0 r1=0x2EB804 lr=0x89B78 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED
+[R9_SCOPE] stage=ENTER scope_id=3 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[CROSS_MODULE_CALL] transfer_id=2 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CA94 to_module=dsm:cfunction.ext to_module_id=5 target=0x89CF4 target_offset=0x9CF4 r0=0x30CFE9 r1=0x14 lr=0x2EB814 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CA94 function_entry_pc=0x89CF4 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=3 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[CFUNCTION_NEW] stage=EXIT return_r0=0x0 return_r1=0x0 return_r2=0x0 return_r3=0x0 registered_helper=0xA4178 helper_eq_return_r0=0 writes_count=0 note=preempted
+[CFUNCTION_NEW] stage=ENTER caller_module=gbrwcore.ext caller_offset=0x212B4 module=gbrwcore.ext r0=0x30CFE9 r1=0x14 r2=0x89CF4 r3=0x27FB74 p_len=20 p_guest=0x0 sp=0x27FD78 lr=0x2EB814 cpsr=0x200001F3 origin=GUEST_NESTED evidence=OBSERVED
+[CFUNCTION_NEW_SIDE_EFFECT] kind=HOST_GLOBAL_HELPER helper=0x30CFE9 origin=GUEST_NESTED evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=GUEST_P_STRUCT p_guest=0x0 p_len=20 note=P_not_helper evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=NO_DSM_DISPATCH_WRITE note=documented_api_does_not_update_module_record_dispatch evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x30CFE9 p_len=20 p_guest=0x0 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=3 helper=0x30CFE9 header_entry_candidate=0x2EB7E8 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFE9
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=REGISTERED size=147196
+[CFUNCTION_NEW] stage=EXIT return_r0=0x0 return_r1=0x0 return_r2=0x0 return_r3=0x0 registered_helper=0x30CFE9 helper_eq_return_r0=0 writes_count=0 note=api_returns_status_helper_is_input evidence=OBSERVED
+[HELPER_HANDOFF] stage=RETURN helper=0x30CFE9 consumer_module=gbrwcore.ext note=helper_is_register_input_not_return_r0 evidence=OBSERVED
+[DSM_RECORD_CONTRACT] stage=REGISTERED module_id=3 helper=0x30CFE9 post_register_window=1 evidence=OBSERVED
+[REGISTER_FINALIZE] module_id=3 helper=0x30CFE9 finalizer_module=pending finalizer_offset=0x0 record_field_written=none note=window_armed evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=2 module_id=3 module=gbrwcore.ext slot=0x89CF4 slot_name=_mr_c_function_new call_pc=0x30CA94 continuation_pc=0x30CA96 continuation_file_offset=0x212B6 r0=0x30CFE9 r1=0x14 r2=0x89CF4 r3=0x27FB74 r4=0x2EB7C4 r5=0x2EB7FC r6=0x2EB804 r7=0x280600 r8=0x2EB7E0 r9=0x280400 r10=0x23F40 r11=0x2EB804 r12=0x8E8F8 sp=0x27FD78 lr=0x2EB814 cpsr=0x200001F3 thumb=yes guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=2 module=gbrwcore.ext module_id=3 cfn_path=GUEST_NESTED call_pc=0x30CA94 continuation_pc=0x30CA96 continuation_file_offset=0x212B6 helper=0x30CFE9 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CA94 function_entry_pc=0x89CF4 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[GUEST_CFUNCTION_NEW] module_id=3 helper=0x30CFE9 p_len=20 reason=region_indirect
+[CFUNCTION_NEW] stage=ENTER caller_module=unknown caller_offset=0x0 module=gbrwcore.ext r0=0x30CFE9 r1=0x14 r2=0x0 r3=0x0 p_len=20 p_guest=0x2AC8DC sp=0x0 lr=0x0 cpsr=0x0 origin=LOG_PARSE evidence=OBSERVED
+[CFUNCTION_NEW] note=p_struct_guest=0x2AC8DC len=20 helper_is_input_r0=1
+[CFUNCTION_NEW_SIDE_EFFECT] kind=HOST_GLOBAL_HELPER helper=0x30CFE9 origin=LOG_PARSE evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=GUEST_P_STRUCT p_guest=0x2AC8DC p_len=20 note=P_not_helper evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=NO_DSM_DISPATCH_WRITE note=documented_api_does_not_update_module_record_dispatch evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=18 module=gbrwcore.ext module_id=3 event=MR_C_FUNCTION_NEW base=0x0 size=0 helper=0x30CFE9 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=19 module=gbrwcore.ext module_id=3 event=MR_C_FUNCTION_LOAD_ENTER base=0x0 size=0 helper=0x30CFE9 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[BOOTSTRAP_PATH] entry_offset=0x24 mr_c_function_load_reached=no c_function_new_seen=yes blocking_branch_offset=0x0 condition_source=ARGUMENT condition_value=0x0 fault_before_load=no evidence=OBSERVED bootstrap_entry_r9_gate=blocked
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=0 module_id=0 module=gbrwcore.ext slot=0x0 slot_name= call_pc=0x0 continuation_pc=0x0 continuation_file_offset=0x0 r0=0x0 r1=0x0 r2=0x0 r3=0x0 r4=0x0 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x0 lr=0x0 cpsr=0x0 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[JJFB_EXTCHUNK_WATCH] armed base=0x2AC8DC len=0x80 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x30CFE9 p_len=20 p_guest=0x2AC8DC rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8DC len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2AC8DC len=32 is_chunk=0
+_mr_c_function_new(0030CFE9, 20)  mr_c_function_P:002AC8DC
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=2 module_id=3 module=gbrwcore.ext slot=0x89CF4 slot_name=_mr_c_function_new call_pc=0x30CA94 continuation_pc=0x30CA96 continuation_file_offset=0x212B6 r0=0x0 r1=0x2EB804 r2=0x3A r3=0x27FB4C r4=0x2EB7C4 r5=0x2EB7FC r6=0x2EB804 r7=0x280600 r8=0x2EB7E0 r9=0x280400 r10=0x23F40 r11=0x2EB804 r12=0x8E8F8 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 thumb=yes guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=2 module=gbrwcore.ext cfn_path=GUEST_NESTED pre=0x280400 leave=0x0 resume=0x280400 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=2 changed=no r4_pre=0x2EB7C4 r4_post=0x2EB7C4 r9_pre=0x280400 r9_post=0x280400 r10_pre=0x23F40 r10_post=0x23F40 sp_pre=0x27FD78 sp_post=0x27FD78 cpsr_t_pre=1 cpsr_t_post=1 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=2 module=gbrwcore.ext module_id=3 cfn_path=GUEST_NESTED call_pc=0x30CA94 continuation_pc=0x30CA96 continuation_file_offset=0x212B6 helper=0x30CFE9 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=pre_continuation P=0x2AC8DC P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_DUMP] stage=pre_continuation p=0x2AC8DC +0x00=0x0 +0x04=0x0 +0x08=0x0 +0x0C=0x0 +0x10=0x0 +0x14=0x4 +0x18=0x2AF58 +0x1C=0x9E8 +0x20=0x2AAFAC +0x24=0x0 +0x28=0x4 +0x2C=0x2AACAC +0x30=0x6 +0x34=0x2AACCC +0x38=0x0 +0x3C=0x4 +0x40=0x2A86C4 +0x44=0x6 +0x48=0x2AA13C +0x4C=0x2ACF6C +0x50=0x4 +0x54=0x2AC63C +0x58=0x6 +0x5C=0x2AC65C +0x60=0x2ACEE0 +0x64=0x4 +0x68=0x2A9DD4 +0x6C=0x6 +0x70=0x2A9DF4 +0x74=0x0 +0x78=0x4 +0x7C=0x2AA23C +0x80=0x6 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=post_continuation P=0x2AC8DC P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_DUMP] stage=post_continuation p=0x2AC8DC +0x00=0x0 +0x04=0x0 +0x08=0x0 +0x0C=0x0 +0x10=0x0 +0x14=0x4 +0x18=0x2AF58 +0x1C=0x9E8 +0x20=0x2AAFAC +0x24=0x0 +0x28=0x4 +0x2C=0x2AACAC +0x30=0x6 +0x34=0x2AACCC +0x38=0x0 +0x3C=0x4 +0x40=0x2A86C4 +0x44=0x6 +0x48=0x2AA13C +0x4C=0x2ACF6C +0x50=0x4 +0x54=0x2AC63C +0x58=0x6 +0x5C=0x2AC65C +0x60=0x2ACEE0 +0x64=0x4 +0x68=0x2A9DD4 +0x6C=0x6 +0x70=0x2A9DF4 +0x74=0x0 +0x78=0x4 +0x7C=0x2AA23C +0x80=0x6 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_ARM] module=gbrwcore.ext cont_pc=0x30CA96 P=0x2AC8DC helper=0x30CFE9 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_GWY_CONTEXT_CONT] module=gbrwcore.ext cont_pc=0x30CA96 gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[CALLBACK_R9_LOSS] callback_id=2 module=gbrwcore.ext cfn_path=GUEST_NESTED pre_r9=0x280400 resume_r9=0x280400 first_r9_loss_writer=NONE_YET first_r9_write_reason=NONE first_r9_write_host_callsite=? first_r9_write_event_seq=0 first_r9_write_frame_id=0 guest_wrote_r9=no guest_write_pc=0x0 r9_switch_interfered=no r9_scope_interfered=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_FRAME_CLASS] class=CONTINUATION_CONFIRMED_R9_INTACT continuation_identity=CONFIRMED cfn_path=GUEST_NESTED callback_pre_r9=0x280400 callback_resume_r9=0x280400 first_r9_loss_writer=NONE_YET guest_wrote_r9=no dual_mrc_loader=no dual_robotol=no gate_evidence=OBSERVED next_allowed_fix=UNKNOWN guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_frame_restore
+[EXT_ENTRY] module_id=3 method=0 return=0
+[MODULE_REGISTRY] module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFE9
+[EXT_ENTRY_POINTS] module_id=3 image_base=0x2EB7E0 header_entry_candidate=0x2EB7E8 chunk_field_04=0x0 registered_helper=0x30CFE9 observed_first_pc=0x30CA96 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=3 load_id=4 helper=0x30CFE9 entry_pc=0x30CA96 module_offset=0x212B6 method=0 r0=0x0 r1=0x2EB804 r2=0x3A r3=0x27FB4C r9=0x280400 er_rw=0x280400 sp=0x27FD78 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=5 header_entry_candidate=0x2EB7E8 chunk_field_04=0x0 registered_helper=0x30CFE9 entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x30CA96 dispatch_module=gbrwcore.ext dispatch_offset=0x212B6 callee_module=gbrwcore.ext first_executed_pc=0x30CA96 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=gbrwcore.ext module_id=3 image_base=0x2EB7E0 header_raw=0x2EB7E8 header_norm=0x2EB7E8 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0x30CFE9 helper_norm=0x30CFE8 observed_first_pc_raw=0x30CA96 observed_norm=0x30CA96 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=gbrwcore.ext module=gbrwcore.ext module_id=3 module_offset=0x212B6 pc=0x30CA96 helper=0x30CFE9 target=0x30CA96 origin=GUEST_NESTED r0=0x0 r1=0x2EB804 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[CROSS_MODULE_CALL] transfer_id=3 hop=OTHER from_module=dsm:cfunction.ext from_module_id=5 from_pc=0xA2548 to_module=gbrwcore.ext to_module_id=3 target=0x30CA96 target_offset=0x212B6 r0=0x0 r1=0x2EB804 lr=0xA2548 evidence=OBSERVED
+[HELPER_ABI] stage=CALL_SITE_BEFORE nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=3 module_offset=0x22546 pc=0xA2546 helper=0x0 target=0x30CA96 origin=LR_PROXY r0=0x0 r1=0x2EB804 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[HELPER_ABI_CALLER_DISASM] call_pc=0xA2546 thumb=1 window=±30
+[HELPER_ABI_CALLER_DISASM]   off=-30 addr=0xA250A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-29 addr=0xA250C raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-28 addr=0xA250E raw=0x0000E58D .hword 0xE58D
+[HELPER_ABI_CALLER_DISASM]   off=-27 addr=0xA2510 raw=0x00004008 .hword 0x4008
+[HELPER_ABI_CALLER_DISASM]   off=-26 addr=0xA2512 raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-25 addr=0xA2514 raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-24 addr=0xA2516 raw=0x0000E1A0 .hword 0xE1A0
+[HELPER_ABI_CALLER_DISASM]   off=-23 addr=0xA2518 raw=0x00003004 .hword 0x3004
+[HELPER_ABI_CALLER_DISASM]   off=-22 addr=0xA251A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-21 addr=0xA251C raw=0x00002210 .hword 0x2210
+[HELPER_ABI_CALLER_DISASM]   off=-20 addr=0xA251E raw=0x0000E59D .hword 0xE59D
+[HELPER_ABI_CALLER_DISASM]   off=-19 addr=0xA2520 raw=0x00001F80 .hword 0x1F80
+[HELPER_ABI_CALLER_DISASM]   off=-18 addr=0xA2522 raw=0x0000E3A0 .hword 0xE3A0
+[HELPER_ABI_CALLER_DISASM]   off=-17 addr=0xA2524 raw=0x00002A87 .hword 0x2A87
+[HELPER_ABI_CALLER_DISASM]   off=-16 addr=0xA2526 raw=0x0000EB00 .hword 0xEB00
+[HELPER_ABI_CALLER_DISASM]   off=-15 addr=0xA2528 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=-14 addr=0xA252A raw=0x0000E3A0 .hword 0xE3A0
+[HELPER_ABI_CALLER_DISASM]   off=-13 addr=0xA252C raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-12 addr=0xA252E raw=0x0000E58D .hword 0xE58D
+[HELPER_ABI_CALLER_DISASM]   off=-11 addr=0xA2530 raw=0x0000001C MOVS r4, r3
+[HELPER_ABI_CALLER_DISASM]   off=-10 addr=0xA2532 raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=-9 addr=0xA2534 raw=0x00000009 MOVS r1, r1
+[HELPER_ABI_CALLER_DISASM]   off=-8 addr=0xA2536 raw=0x0000E080 .hword 0xE080
+[HELPER_ABI_CALLER_DISASM]   off=-7 addr=0xA2538 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=-6 addr=0xA253A raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=-5 addr=0xA253C raw=0x00001004 .hword 0x1004
+[HELPER_ABI_CALLER_DISASM]   off=-4 addr=0xA253E raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=-3 addr=0xA2540 raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-2 addr=0xA2542 raw=0x0000E1A0 .hword 0xE1A0
+[HELPER_ABI_CALLER_DISASM]   off=-1 addr=0xA2544 raw=0x0000FF31 .hword 0xFF31
+[HELPER_ABI_CALLER_DISASM] * off=+0 addr=0xA2546 raw=0x0000E12F .hword 0xE12F
+[HELPER_ABI_CALLER_DISASM]   off=+1 addr=0xA2548 raw=0x0000DF82 .hword 0xDF82
+[HELPER_ABI_CALLER_DISASM]   off=+2 addr=0xA254A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=+3 addr=0xA254C raw=0x00004004 .hword 0x4004
+[HELPER_ABI_CALLER_DISASM]   off=+4 addr=0xA254E raw=0x0000E49D .hword 0xE49D
+[HELPER_ABI_CALLER_DISASM]   off=+5 addr=0xA2550 raw=0x0000F014 .hword 0xF014
+[HELPER_ABI_CALLER_DISASM]   off=+6 addr=0xA2552 raw=0x0000E49D .hword 0xE49D
+[HELPER_ABI_CALLER_DISASM]   off=+7 addr=0xA2554 raw=0x00002084 MOVS r0, #0x84
+[HELPER_ABI_CALLER_DISASM]   off=+8 addr=0xA2556 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+9 addr=0xA2558 raw=0x0000000C MOVS r4, r1
+[HELPER_ABI_CALLER_DISASM]   off=+10 addr=0xA255A raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=+11 addr=0xA255C raw=0x00000009 MOVS r1, r1
+[HELPER_ABI_CALLER_DISASM]   off=+12 addr=0xA255E raw=0x0000E080 .hword 0xE080
+[HELPER_ABI_CALLER_DISASM]   off=+13 addr=0xA2560 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+14 addr=0xA2562 raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=+15 addr=0xA2564 raw=0x00000010 MOVS r0, r2
+[HELPER_ABI_CALLER_DISASM]   off=+16 addr=0xA2566 raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=+17 addr=0xA2568 raw=0x0000FF10 .hword 0xFF10
+[HELPER_ABI_CALLER_DISASM]   off=+18 addr=0xA256A raw=0x0000E12F .hword 0xE12F
+[HELPER_ABI_CALLER_DISASM]   off=+19 addr=0xA256C raw=0x00002084 MOVS r0, #0x84
+[HELPER_ABI_CALLER_DISASM]   off=+20 addr=0xA256E raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+21 addr=0xA2570 raw=0x0000300C .hword 0x300C
+[HELPER_ABI_CALLER_DISASM]   off=+22 addr=0xA2572 raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=+23 addr=0xA2574 raw=0x00003009 .hword 0x3009
+[HELPER_ABI_CALLER_DISASM]   off=+24 addr=0xA2576 raw=0x0000E083 .hword 0xE083
+[HELPER_ABI_CALLER_DISASM]   off=+25 addr=0xA2578 raw=0x00003000 .hword 0x3000
+[HELPER_ABI_CALLER_DISASM]   off=+26 addr=0xA257A raw=0x0000E593 .hword 0xE593
+[HELPER_ABI_CALLER_DISASM]   off=+27 addr=0xA257C raw=0x00003038 .hword 0x3038
+[HELPER_ABI_CALLER_DISASM]   off=+28 addr=0xA257E raw=0x0000E593 .hword 0xE593
+[HELPER_ABI_CALLER_DISASM]   off=+29 addr=0xA2580 raw=0x0000FF13 .hword 0xFF13
+[HELPER_ABI_CALLER_DISASM]   off=+30 addr=0xA2582 raw=0x0000E12F .hword 0xE12F
+[CHUNK_FIELD_04_WRITE] chunk_base=0x0 value=0x30CA96 writer_module=NONE writer_offset=0x0 module=gbrwcore.ext note=NONE_BEFORE_SELECT
+[DSM_ENTRY_SELECT] source=unknown entry_va=0x30CA96 entry_module=gbrwcore.ext entry_offset=0x212B6 registered_helper=0x30CFE9 header_entry_candidate=0x2EB7E8 chunk_field_04=0x30CA96 match=chunk_field_04 r0_source=explicit_zero r0_value=0x0 r1_target=0x30CA96 caller_module=dsm:cfunction.ext caller_offset=0x22546 evidence=OBSERVED+DOCUMENTED_chunk_plus4 chunk_field_04_writer=NONE_BEFORE_SELECT chunk_base=0x0 chunk_reg=r-1
+[BOOTSTRAP_SEQ] event=DSM_ENTRY_SELECT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT
+[ENTRY_TRANSFER] dispatch_target=0x30CA96 dispatch_module=gbrwcore.ext dispatch_offset=0x212B6 callee_module=gbrwcore.ext first_executed_pc=0x30CA96 r0=0x0 stage=CALL_SITE_BEFORE raw_target=0x30CA96
+[ENTRY_OBJECT_TRACE] stage=FIELD_LOAD base_reg=r-1 base_value=0x0 field_offset=0x4 field_value=0x30CA96 field_live_peek=0x0 dispatch_target=0x30CA96 r0_at_blx=0x0
+[ENTRY_OBJECT_TRACE] stage=BASE_SOURCE source=unknown source_address=0x0 producer_module=unknown producer_offset=0x0 caller_module=dsm:cfunction.ext caller_offset=0x22546
+[ADDR_CLASS] role=entry_object_base va=0x0 class=UNKNOWN module= offset=0x0 module_id=0
+[ADDR_CLASS] role=entry_object_field_04 va=0x30CA96 class=MODULE_CODE module=gbrwcore.ext offset=0x212B6 module_id=3
+[ADDR_CLASS] role=dispatch_target va=0x30CA96 class=MODULE_CODE module=gbrwcore.ext offset=0x212B6 module_id=3
+[ENTRY_TRANSFER] dispatch_target=0x30CA96 dispatch_module=gbrwcore.ext dispatch_offset=0x212B6 callee_module=gbrwcore.ext first_executed_pc=0x30CA96 r0=0x0 stage=CALL_SITE_BEFORE equals_observed_first=1
+[DISPATCH_DISASM] va=0x30CA96 module=gbrwcore.ext offset=0x212B6 class=MODULE_CODE
+[DISPATCH_DISASM]   off=-30 addr=0x30CA1E raw=0x1C286839 .word 0x1C286839
+[DISPATCH_DISASM]   off=-29 addr=0x30CA22 raw=0x1C034788 .word 0x1C034788
+[DISPATCH_DISASM]   off=-28 addr=0x30CA26 raw=0xDC1C4286 .word 0xDC1C4286
+[DISPATCH_DISASM]   off=-27 addr=0x30CA2A raw=0xE00E2000 .word 0xE00E2000
+[DISPATCH_DISASM]   off=-26 addr=0x30CA2E raw=0x1C0A5C21 .word 0x1C0A5C21
+[DISPATCH_DISASM]   off=-25 addr=0x30CA32 raw=0x2A193A41 .word 0x2A193A41
+[DISPATCH_DISASM]   off=-24 addr=0x30CA36 raw=0x3120D800 .word 0x3120D800
+[DISPATCH_DISASM]   off=-23 addr=0x30CA3A raw=0x1C175C2A .word 0x1C175C2A
+[DISPATCH_DISASM]   off=-22 addr=0x30CA3E raw=0x2F193F41 .word 0x2F193F41
+[DISPATCH_DISASM]   off=-21 addr=0x30CA42 raw=0x3220D800 .word 0x3220D800
+[DISPATCH_DISASM]   off=-20 addr=0x30CA46 raw=0xD10C4291 .word 0xD10C4291
+[DISPATCH_DISASM]   off=-19 addr=0x30CA4A raw=0x42B03001 .word 0x42B03001
+[DISPATCH_DISASM]   off=-18 addr=0x30CA4E raw=0x429EDBEE .word 0x429EDBEE
+[DISPATCH_DISASM]   off=-17 addr=0x30CA52 raw=0x1821D009 .word 0x1821D009
+[DISPATCH_DISASM]   off=-16 addr=0x30CA56 raw=0x7BC93910 .word 0x7BC93910
+[DISPATCH_DISASM]   off=-15 addr=0x30CA5A raw=0xD004292F .word 0xD004292F
+[DISPATCH_DISASM]   off=-14 addr=0x30CA5E raw=0x282F5C28 .word 0x282F5C28
+[DISPATCH_DISASM]   off=-13 addr=0x30CA62 raw=0x2000D001 .word 0x2000D001
+[DISPATCH_DISASM]   off=-12 addr=0x30CA66 raw=0x2001BDF8 .word 0x2001BDF8
+[DISPATCH_DISASM]   off=-11 addr=0x30CA6A raw=0x18ECE7FC .word 0x18ECE7FC
+[DISPATCH_DISASM]   off=-10 addr=0x30CA6E raw=0x1C010000 .word 0x1C010000
+[DISPATCH_DISASM]   off=-9 addr=0x30CA72 raw=0x20013930 .word 0x20013930
+[DISPATCH_DISASM]   off=-8 addr=0x30CA76 raw=0xD9002909 .word 0xD9002909
+[DISPATCH_DISASM]   off=-7 addr=0x30CA7A raw=0x47702000 .word 0x47702000
+[DISPATCH_DISASM]   off=-6 addr=0x30CA7E raw=0xB5700000 LDR r0,[r0,#0x0]
+[DISPATCH_DISASM]   off=-5 addr=0x30CA82 raw=0x447E4E29 LDR r4,[r14,#0xE29]
+[DISPATCH_DISASM]   off=-4 addr=0x30CA86 raw=0x3C401C34 .word 0x3C401C34
+[DISPATCH_DISASM]   off=-3 addr=0x30CA8A raw=0x21146BA0 .word 0x21146BA0
+[DISPATCH_DISASM]   off=-2 addr=0x30CA8E raw=0x48266E42 .word 0x48266E42
+[DISPATCH_DISASM]   off=-1 addr=0x30CA92 raw=0x47904478 .word 0x47904478
+[DISPATCH_DISASM] * off=+0 addr=0x30CA96 raw=0x43ED2500 .word 0x43ED2500
+[DISPATCH_DISASM]   off=+1 addr=0x30CA9A raw=0xD10142A8 .word 0xD10142A8
+[DISPATCH_DISASM]   off=+2 addr=0x30CA9E raw=0xBD701C28 .word 0xBD701C28
+[DISPATCH_DISASM]   off=+3 addr=0x30CAA2 raw=0x20016BE1 .word 0x20016BE1
+[DISPATCH_DISASM]   off=+4 addr=0x30CAA6 raw=0x48216088 .word 0x48216088
+[DISPATCH_DISASM]   off=+5 addr=0x30CAAA raw=0x6BA14478 .word 0x6BA14478
+[DISPATCH_DISASM]   off=+6 addr=0x30CAAE raw=0x482067C8 .word 0x482067C8
+[DISPATCH_DISASM]   off=+7 addr=0x30CAB2 raw=0x6BA14478 .word 0x6BA14478
+[DISPATCH_DISASM]   off=+8 addr=0x30CAB6 raw=0x60083180 .word 0x60083180
+[DISPATCH_DISASM]   off=+9 addr=0x30CABA raw=0xE94AF7DF .word 0xE94AF7DF
+[DISPATCH_DISASM]   off=+10 addr=0x30CABE raw=0x60486BE1 .word 0x60486BE1
+[DISPATCH_DISASM]   off=+11 addr=0x30CAC2 raw=0x30046BA1 .word 0x30046BA1
+[DISPATCH_DISASM]   off=+12 addr=0x30CAC6 raw=0x47886809 .word 0x47886809
+[DISPATCH_DISASM]   off=+13 addr=0x30CACA raw=0x28006BE1 .word 0x28006BE1
+[DISPATCH_DISASM]   off=+14 addr=0x30CACE raw=0x6BE16008 .word 0x6BE16008
+[DISPATCH_DISASM]   off=+15 addr=0x30CAD2 raw=0x6849D005 .word 0x6849D005
+[DISPATCH_DISASM]   off=+16 addr=0x30CAD6 raw=0x6BE06001 .word 0x6BE06001
+[DISPATCH_DISASM]   off=+17 addr=0x30CADA raw=0x31046801 .word 0x31046801
+[DISPATCH_DISASM]   off=+18 addr=0x30CADE raw=0x6BE06001 .word 0x6BE06001
+[DISPATCH_DISASM]   off=+19 addr=0x30CAE2 raw=0x28006800 .word 0x28006800
+[DISPATCH_DISASM]   off=+20 addr=0x30CAE6 raw=0xF7DFD01C .word 0xF7DFD01C
+[DISPATCH_DISASM]   off=+21 addr=0x30CAEA raw=0x1C05E942 .word 0x1C05E942
+[DISPATCH_DISASM]   off=+22 addr=0x30CAEE raw=0xE946F7DF .word 0xE946F7DF
+[DISPATCH_DISASM]   off=+23 addr=0x30CAF2 raw=0x6BE01981 .word 0x6BE01981
+[DISPATCH_DISASM]   off=+24 addr=0x30CAF6 raw=0x68006BA2 .word 0x68006BA2
+[DISPATCH_DISASM]   off=+25 addr=0x30CAFA raw=0x1C2A68D3 .word 0x1C2A68D3
+[DISPATCH_DISASM]   off=+26 addr=0x30CAFE raw=0xF7DF4798 .word 0xF7DF4798
+[DISPATCH_DISASM]   off=+27 addr=0x30CB02 raw=0x6BE1E936 .word 0x6BE1E936
+[DISPATCH_DISASM]   off=+28 addr=0x30CB06 raw=0x1A0D6849 .word 0x1A0D6849
+[DISPATCH_DISASM]   off=+29 addr=0x30CB0A raw=0xE932F7DF .word 0xE932F7DF
+[DISPATCH_DISASM]   off=+30 addr=0x30CB0E raw=0x68096BE1 .word 0x68096BE1
+[DISPATCH_CLASS] module=gbrwcore.ext offset=0x212B6 nature=guest_callback_continuation equals_observed_first=check_registry superseded_by_callback_continuation_identity=yes causal=false
+[ENTRY_OBJECT_KIND] kind=UNKNOWN confidence=CANDIDATE field_matches_dispatch=0 base_class=UNKNOWN dispatch_class=MODULE_CODE
+[OBJECT_IDENTITY_CASE] case=D legend=A_loader_dispatcher|B_trampoline|C_base_wrong|D_descriptor_or_table|E_attrib_bug dispatch_module=gbrwcore.ext dispatch_offset=0x212B6 object_kind=UNKNOWN dsm_direct_robotol=no r0_at_dsm_blx=0x0 candidate_wrong=0 phase6b_b_gate=blocked
+[CHUNK_FIELD_04] raw=0x30CA96 normalized=0x30CA96 class=abs_arm target_module=gbrwcore.ext target_offset=0x212B6
+[ENTRY_TRANSFER] raw_target=0x30CA96 normalized_target=0x30CA96 first_executed_pc=0x30CA96 delta=0 dsm_target=0x30CA96
+[CHUNK_PROVENANCE_CASE] case=E legend=A_observer_late|B_block_copy|C_static_template|D_wrong_identity|E_missing_bootstrap|F_corrupt_field|G_unknown chunk_base=0x0 field_04=0x30CA96 write_seen=0 block_copy=0 field_04_at_first_seen=0 identity_ok=1 evidence=OBSERVED phase6b_b_gate=candidate_only
+[CHUNK_WRITE] note=NONE_BEFORE_SELECT chunk_base=0x0
+[ENTRY_RECONCILE] module=gbrwcore.ext module_id=3 image_base=0x2EB7E0 header_raw=0x2EB7E8 header_norm=0x2EB7E8 chunk_field_04_raw=0x30CA96 chunk_field_04_norm=0x30CA96 helper_raw=0x30CFE9 helper_norm=0x30CFE8 observed_first_pc_raw=0x30CA96 observed_norm=0x30CA96 relation=HEADER_ENTRY_WRONG dsm_select_correct=no chunk_field_04_writer=NONE_BEFORE_SELECT
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=gbrwcore.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 dsm_match=chunk_field_04 dsm_select_correct=no fix_applied=none phase6b_b_gate=blocked
+[JJFB_P_WRITE] off=0x8 old=0x0 new=0x1 pc=0x30CAA6 lr=0xA2548 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x08 old=0x0 new=0x1 pc=0x30CAA6 lr=0xA2548 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x08 pc=0x30CAA6 module=gbrwcore.ext value=0x1 evidence=TARGET_OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2AC8DC offset=0x8 value=0x1 writer_module=gbrwcore.ext writer_offset=0x212C6 target_class=unknown
+[JJFB_P_FIELD_WRITE] off=0x08 old=0x0 new=0x1 pc=0x30CAA6 lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x08 pc=0x30CAA6 module=gbrwcore.ext value=0x1 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CABA target=0x2EBC08 arg0=0x30CD31 arg1=0x281F7C
+[JJFB_P_WRITE] off=0x4 old=0x0 new=0x19A8 pc=0x30CAC0 lr=0x30CABF p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x04 old=0x0 new=0x19A8 pc=0x30CAC0 lr=0x30CABF module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x04 pc=0x30CAC0 module=gbrwcore.ext value=0x19A8 evidence=TARGET_OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2AC8DC offset=0x4 value=0x19A8 writer_module=gbrwcore.ext writer_offset=0x212E0 target_class=guest_data
+[JJFB_P_FIELD_WRITE] off=0x04 old=0x0 new=0x19A8 pc=0x30CAC0 lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x04 pc=0x30CAC0 module=gbrwcore.ext value=0x19A8 evidence=TARGET_OBSERVED
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED
+[R9_SCOPE] stage=ENTER scope_id=4 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[CROSS_MODULE_CALL] transfer_id=4 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CAC8 to_module=dsm:cfunction.ext to_module_id=5 target=0x80160 target_offset=0x160 r0=0x19AC r1=0x80160 lr=0x30CABF evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CAC8 function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=4 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[JJFB_P_READ] off=0x1C val=0x9E8 pc=0xA185C lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x18 val=0x2AF58 pc=0xA185C lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x0 old=0x0 new=0x2B0D14 pc=0x30CACE lr=0x30CACB p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x0 new=0x2B0D14 pc=0x30CACE lr=0x30CACB module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x30CACE module=gbrwcore.ext value=0x2B0D14 evidence=TARGET_OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2AC8DC offset=0x0 value=0x2B0D14 writer_module=gbrwcore.ext writer_offset=0x212EE target_class=unknown
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x0 new=0x2B0D14 pc=0x30CACE lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x30CACE module=gbrwcore.ext value=0x2B0D14 evidence=TARGET_OBSERVED
+[JJFB_P_READ] off=0x4 val=0x19A8 pc=0x30CAD4 lr=0x30CACB p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x0 val=0x2B0D14 pc=0x30CADA lr=0x30CACB p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x0 old=0x2B0D14 new=0x2B0D18 pc=0x30CADE lr=0x30CACB p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x2B0D14 new=0x2B0D18 pc=0x30CADE lr=0x30CACB module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x30CADE module=gbrwcore.ext value=0x2B0D18 evidence=TARGET_OBSERVED
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2AC8DC offset=0x0 value=0x2B0D18 writer_module=gbrwcore.ext writer_offset=0x212FE target_class=unknown
+[JJFB_P_FIELD_WRITE] off=0x00 old=0x0 new=0x2B0D18 pc=0x30CADE lr=0x0 module=gbrwcore.ext P=0x2AC8DC evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] write P+0x00 pc=0x30CADE module=gbrwcore.ext value=0x2B0D18 evidence=TARGET_OBSERVED
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x30CAE2 lr=0x30CACB p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CAE8 target=0x2EBC2C arg0=0x2B0D18 arg1=0x2B0D18
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CAEE target=0x2EBC38 arg0=0x8 arg1=0x2B0D18
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x30CAF8 lr=0x30CAF3 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED
+[R9_SCOPE] stage=ENTER scope_id=5 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[CROSS_MODULE_CALL] transfer_id=5 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CAFE to_module=dsm:cfunction.ext to_module_id=5 target=0x94E94 target_offset=0x14E94 r0=0x2B0D18 r1=0x30F6F0 lr=0x30CAF3 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CAFE function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=5 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CB00 target=0x2EBC38 arg0=0x2B0D18 arg1=0x30F6F8
+[JJFB_P_READ] off=0x4 val=0x19A8 pc=0x30CB06 lr=0x30CB05 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CB0A target=0x2EBC40 arg0=0x8 arg1=0x19A8
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x30CB10 lr=0x30CB0F p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED
+[R9_SCOPE] stage=ENTER scope_id=6 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[CROSS_MODULE_CALL] transfer_id=6 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CB1C to_module=dsm:cfunction.ext to_module_id=5 target=0x94F04 target_offset=0x14F04 r0=0x2B0D20 r1=0x0 lr=0x30CB0F evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CB1C function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=6 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x89B88 lr=0x89B88 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+--- r9: mr_c_function_P.start_of_ER_RW = @002B0D18
+[JJFB_P_READ] off=0x1C val=0x9E8 pc=0xA185C lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x18 val=0x2AF58 pc=0xA1874 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x38 old=0x0 new=0x2AF58 pc=0xA1874 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1C val=0x9E8 pc=0xA1874 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x3C old=0x4 new=0x9C8 pc=0xA1874 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x18 old=0x2AF58 new=0x2AE24C pc=0x97098 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1D old=0xAC000009 new=0x0 pc=0x97098 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1C old=0xE8 new=0x5 pc=0x97098 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x20 old=0x2AAFAC new=0x2A8564 pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1E old=0x85640000 new=0xFF pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x24 old=0x0 new=0x0 pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x34 old=0x2AACCC new=0x0 pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1F old=0x2A856400 new=0x0 pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x28 old=0x4 new=0x0 pc=0x98C08 lr=0x98C08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x24 old=0x0 new=0x2A9D1C pc=0x98C44 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x0 pc=0x98C44 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x98C54 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x98C54 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x34 old=0x0 new=0x2 pc=0x98C68 lr=0x282A54 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x28 old=0x0 new=0x2A82EC pc=0xA9C44 lr=0x98C7C p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1F old=0x2A856400 new=0x0 pc=0xA9CB4 lr=0x98C7C p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x28 val=0x2A82EC pc=0xA9CB4 lr=0x98C7C p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x2C old=0x2AACAC new=0x2A82EC pc=0xA9CB4 lr=0x98C7C p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1D val=0x6400FF00 pc=0xACE00 lr=0xACE00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1D val=0x6400FF00 pc=0xA9704 lr=0xACE00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1D old=0x6400FF00 new=0x1 pc=0xA9704 lr=0xACE00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1C val=0xFF0105 pc=0xA9704 lr=0xACE00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x30 old=0x6 new=0x2AD7A4 pc=0xA9724 lr=0xACE00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1C val=0xFF0105 pc=0xA79E0 lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x30 val=0x2AD7A4 pc=0xA7A48 lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x20 val=0x2A8564 pc=0xA7A48 lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x20 val=0x2A8564 pc=0xA7A6C lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0xA7B20 lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0xA7B2C lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0xA7B2C lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1F val=0x2A856400 pc=0xA7B5C lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x28 val=0x2A82EC pc=0xA7B70 lr=0x96F78 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1D val=0x6400FF01 pc=0xACB44 lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1D old=0x6400FF01 new=0x0 pc=0xACB44 lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x18 val=0x2AE24C pc=0xACC28 lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0x989B4 lr=0x98E94 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x989B4 lr=0x98E94 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0x989B4 lr=0x98E94 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x989B4 lr=0x98E94 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0x989B4 lr=0xA60C4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x989B4 lr=0xA60C4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0x988E0 lr=0xA5E08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x988E0 lr=0xA5E08 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x30CFF0 lr=0x89BF0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1D val=0x6400FF00 pc=0xACB44 lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x18 val=0x2AE24C pc=0xACB7C lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1C val=0xFF0005 pc=0xACB7C lr=0x97010 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1F val=0x2A856400 pc=0x98874 lr=0xACBEC p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x34 val=0x2 pc=0x988AC lr=0xACBEC p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x24 val=0x2A9D1C pc=0x988AC lr=0xACBEC p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x18 old=0x2AE24C new=0x29EC0 pc=0xA053C lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1C old=0xFF0005 new=0x20 pc=0xA053C lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x38 val=0x2AF58 pc=0xA05BC lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x18 old=0x29EC0 new=0x2AF58 pc=0xA05BC lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x1C val=0x20 pc=0xA05BC lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x3C val=0x9C8 pc=0xA05BC lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_WRITE] off=0x1C old=0x20 new=0x9E8 pc=0xA05BC lr=0x2AC3A4 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0x0 val=0x2B0D18 pc=0x30CFF0 lr=0x89BF0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0xC val=0x0 pc=0x30D01A lr=0x30CFFF p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_READ] value=0x0 pc=0x30D01A func=0x30D000 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_WATCH] addr=P+0xC value=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D020 target=0x30B719 arg0=0x0 arg1=0x2B25A4
+[R9_WRITE] event_seq=2 old=0x2B0D18 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=2 scope_id=7 host_callsite=enter guest_pc=0x30B72C guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D18 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=7 frame_id=2 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D18 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=2 top_frame_kind=RUNTIME_ENTRY generation=2 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[ER_RW_TIMELINE] seq=20 module=cfunction.ext module_id=5 event=R9_SWITCH_ENTER base=0x280400 size=9680 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_TIMELINE] seq=21 module=cfunction.ext module_id=5 event=DSM_FIRST_MODULE_ENTRY_CALL base=0x0 size=0 helper=0x0 producer_offset=0x0 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_PRE_ENTRY_META] module=cfunction.ext module_id=5 present=yes field=registry_start_of_er_rw value=0x280400 map_guest_rw=0x280400 entry_r9=0x280400 evidence=OBSERVED note=caller_dsm_P_not_callee
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30B742 target=0x30CCD1 arg0=0x1 arg1=0x64
+[JJFB_P_OWNER] p=0x2AC8DC source_reg=r3 pc=0x30CCE8 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_READ] off=0xC val=0x0 pc=0x30CCF2 lr=0x30B747 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_READ] value=0x0 pc=0x30CCF2 func=0x30CC00 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_WATCH] addr=P+0xC value=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+>>> Tracing mem_invalid mem_type:UC_MEM_READ_UNMAPPED at 0x28, size:0x4, value:0x0
+==========================REG=================================
+ R0=0x00000000	R1=0x00000064	 R2=0x00000000	 R3=0x002AC8DC	N:0
+ R4=0x00000001	R5=0x00000064	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00280400	R10=0x00000040	R11=0x002AD95C	C:0
+R12=0x00000000	SP=0x0027FD28	 LR=0x0030B747	 PC=0x0030CCF8	V:0
+==============================================================
+[JJFB_SHELL_NATIVE_SUMMARY] class=EXEC_GATE_OPEN shell_native_exec_gate=open package_open=yes mrp_started=yes ext_loaded=yes export_registered=yes export_called=no guest_pc_hit=yes gbrwcore=yes gamelist=no gbrwshell=no jjfb_started=no cfg36_build=no post_update=no strcom_601=no strcom_800=no strcom_801=no mrc_init=no pxc_writes=0 stop=shell_ext_fault_in_guest_pc evidence=TARGET_OBSERVED
+[JJFB_GWY_SHELL_SUMMARY] class=SHELL_NATIVE_EXEC_PENDING shell_open=yes gbrwcore=yes gamelist=yes gbrwshell=yes jjfb_real=no jjfb_alias=no update_stub=yes runapp_chained=no guest_native=yes stop=mem_fault evidence=TARGET_OBSERVED
+[R9_SCOPE] stage=FAULT function_entry_pc=0x94F04 memory_access_pc=0x30CCF8 fault_pc=0x30CCF8 fault_addr=0x28 r9=0x280400 pre_r9=0x280400 nested_r9_scope_gate=open evidence=OBSERVED
+[R9_SCOPE_CLASS] class=R9_WRITE_SOURCE_UNKNOWN first_r9_write_reason=NONE first_r9_write_host_callsite=? first_r9_write_event_seq=0 first_r9_write_frame_id=0 old_r9=0x0 new_r9=0x0 enter_already_switched=yes frame_pushed=no leave_action=POP_FOREIGN_FRAME top_frame_kind=UNKNOWN emu_exit_reason=UNKNOWN function_entry_pc=0x94F04 memory_access_pc=0x30CCF8 guest_prologue_wrote_r9=no guest_write_pc=0x0 nested_r9_scope_gate=open next_allowed_fix=UNKNOWN guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked mode=observe_only evidence=DYNAMIC_EXACT_WRITER note=observe_only_no_scope_balancing
+[CALLBACK_R9_LOSS] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre_r9=0x0 resume_r9=0x0 first_r9_loss_writer=PRE_ALREADY_ZERO first_r9_write_reason=NONE first_r9_write_host_callsite=? first_r9_write_event_seq=0 first_r9_write_frame_id=0 guest_wrote_r9=yes guest_write_pc=0x2EBD68 r9_switch_interfered=no r9_scope_interfered=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_R9_LOSS] callback_id=3 module=gbrwcore.ext cfn_path=LOG_PARSE pre_r9=0x0 resume_r9=0x0 first_r9_loss_writer=PRE_ALREADY_ZERO first_r9_write_reason=NONE first_r9_write_host_callsite=? first_r9_write_event_seq=0 first_r9_write_frame_id=0 guest_wrote_r9=no guest_write_pc=0x0 r9_switch_interfered=no r9_scope_interfered=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=pre_fault P=0x2AC8DC P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_DUMP] stage=pre_fault p=0x2AC8DC +0x00=0x2B0D18 +0x04=0x19A8 +0x08=0x1 +0x0C=0x0 +0x10=0x0 +0x14=0x4 +0x18=0x2AF58 +0x1C=0x9E8 +0x20=0x2A8564 +0x24=0x2A9D1C +0x28=0x2A82EC +0x2C=0x2A82EC +0x30=0x2AD7A4 +0x34=0x2 +0x38=0x2AF58 +0x3C=0x9C8 +0x40=0x2A86C4 +0x44=0x6 +0x48=0x2AA13C +0x4C=0x2ACF6C +0x50=0x4 +0x54=0x2AC63C +0x58=0x6 +0x5C=0x2AC65C +0x60=0x2ACEE0 +0x64=0x4 +0x68=0x2A9DD4 +0x6C=0x6 +0x70=0x2A9DF4 +0x74=0x0 +0x78=0x4 +0x7C=0x2AA23C +0x80=0x6 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_FUNC_BYTES] start=0x30CCD0 end=0x30CD38 bytes=B5F0:1C0D:1C04:1C16:4A0A:B085:469C:447A:980B:990C:9F0A:6BD3:2202:9203:9102:9001:9700:68D8:1C29:1C32:6A87:1C20:4663:47B8:B005:BDF0:EAE2:FFFD:1C03:4808:B510:2200:4478:6BC4:B084:2100:9101:9102:9203:9200:68E0:6A42:6A84:47A0:B004:BD10:EAB0:FFFD:B510:4809:B084:4478 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_FAULT] function_start=0x30CCD0 memory_access_pc=0x30CCF8 expr=r0+0x28 r0=0x0 r3=0x2AC8DC P=0x2AC8DC P+0xC=0x0 fault_addr=0x28 writes_seen=0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_P_PROVIDER] chain P=0x2AC8DC wrote_0=yes wrote_4=yes wrote_8=yes wrote_C=no wrote_10=no P+0xC=0x0 fault_pc=0x30CCF8 fault_addr=0x28 evidence=TARGET_OBSERVED
+[JJFB_P_PROVIDER] missing P+0x0C nearest_048_writer_pc=0x30CADE module=gbrwcore.ext note=same_init_path_skipped_extchunk evidence=TARGET_OBSERVED
+[JJFB_PUBLICATION_SUMMARY] P=0x2AC8DC wrote_0=yes wrote_4=yes wrote_8=yes wrote_C=no wrote_10=no last_048_pc=0x30CADE last_048_module=gbrwcore.ext stop=mem_fault evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_PHASE] phase=mrc_init_not_observed P=0x2AC8DC P+0xC=0x0 p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_EXTCHUNK_SUMMARY] extchunk_class=EXTCHUNK_GWY_CONTEXT_HYPOTHESIS writes_seen=0 reads_seen=2 last_write_pc=0x0 last_write_val=0x0 null_at_use=yes function_start=0x30CCD0 memory_access_pc=0x30CCF8 fault_expr=r0+0x28 next_allowed_fix=GWY_STARTGAME_RUNAPP_CONTEXT_AUDIT stop_reason=NEW_FAULT P=0x2AC8DC p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+[JJFB_SHELL_BYPASS] gbrwcore_opened=yes gamelist_opened=yes gbrwshell_opened=yes vdload_opened=no startGame_string_exec=no start_dsm_seen=yes gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_STRCOM] strcom_601_800_801=not_observed testcom_seen=no plat_seen=no gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED
+[JJFB_MRC_INIT_GAP] mrc_init_seen=no note=fault_or_stop_before_mrc_init_or_path_never_entered gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=TARGET_OBSERVED
+[JJFB_GWY_CONTEXT_SUMMARY] gwy_context_class=SHELL_LOADED_BUT_NO_EXTCHUNK shell_bypassed=no start_dsm_count=1 pxc_writes_seen=0 p_plus_c_at_fault=0x0 cfg36_match=yes fileopen_miss_critical=no next_allowed_fix=SHELL_PUBLICATION_ROUTINE_AUDIT stop_reason=NEW_FAULT fault_pc=0x30CCF8 gwy_startgame_context_gate=blocked p_extchunk_gate=blocked post_cfn_r9_gate=blocked post_continuation_gate=open graphics_gate=blocked event_scheduler_gate=blocked nested_r9_scope_gate=open module_r9_switch_gate=open guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=OBSERVED note=observe_only
+[R9_SCOPE] stage=UNWIND active_depth=2 guest_r9=0x280400 restore_r9=0x0 reason=UC_FAULT module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=OBSERVED note=clear_all_frames_on_uc_fault
+[R9_SWITCH] stage=ABORT active_depth=2 guest_r9=0x280400 saved_r9=0x0 reason=UC_FAULT evidence=OBSERVED note=clear_host_frames
+[R9_WRITE] event_seq=3 old=0x280400 new=0x0 reason=MODULE_R9_SWITCH_ABORT frame_id=1 scope_id=1 host_callsite=UC_FAULT guest_pc=0x30CCF8 guest_module=? depth_before=2 depth_after=0 evidence=OBSERVED
+[R9_SCOPE_FIRST_ZERO] event_seq=3 old=0x280400 new=0x0 reason=MODULE_R9_SWITCH_ABORT host_callsite=UC_FAULT frame_id=1 scope_id=1 nested_r9_scope_gate=open evidence=DYNAMIC_EXACT_WRITER
+[MR_HELPER] stage=NOT_REACHED tag=MR_HELPER_NOT_REACHED_BEFORE_MODULE_ENTRY_FAULT fault_pc=0x30CCF8 fault_addr=0x28 evidence=OBSERVED note=event_helper_path_unrelated_to_current_fault
+[MODULE_ENTRY_ROOT] root=UNKNOWN r0=0x0 r0_assign=unknown return_class=UNKNOWN accesses_r0_plus_28=0 mr_helper_seen=0 evidence=OBSERVED note=entry_session_incomplete_no_guest_mutation phase6b_b_gate=blocked
+[MODULE_ENTRY_LIFECYCLE] load_id=1 seq=CODE_IMAGE>cacheSync>CODE_IMAGE>register>mr_helper load_return_ord=1 helper_register_ord=3 mr_helper_first_ord=4 module_entry_call_ord=0 note=compare_to_clean_dsm_order evidence=OBSERVED
+[NULL_CONTRACT_CLASS] class=MISSING_PRE_ENTRY_INITIALIZATION all_r0_zero=1 xt_crossed=0 entry_r0=0x0 saw_r0_plus_28=0 mr_helper_seen=1 phase6b_b_gate=blocked gate_evidence=none evidence=OBSERVED note=no_guest_mutation
+[DISCRIMINATION_MATRIX] H1_null_legal=supported H2_missing_ctx=unproven dsm_all_r0_zero=1 xt_entry_null_ok=0 xt_entry_nonzero=0 rw_r9_mismatch=0 lifecycle_odd=0
+[RW_BASE_IDENTITY] module=? declared_rw_size=6568 declared_bss_size=0 allocated_rw_base=0x2B0D18 registry_rw_base=0x280400 entry_r9=0x280400 derived_rw_base=0x2B0D18 source_class=D p_er_rw=0x2B0D18 p_er_len=6568 dsm_rw_base=0x280400 evidence=OBSERVED note=A_decl0|B_parser|C_registry|D_entry_r9|E_self_init|F_field_id
+[DATA_INIT_CLASS] class=MISSING_MODULE_R9_SWITCH source_class=D helper_r9=0x280400 entry_r9=0x280400 allocated_rw=0x2B0D18 registry_rw=0x280400 p_er_rw=0x2B0D18 entry_before_cfn=0 saw_r9_zero_load=0 phase6b_b_gate=blocked gate_evidence=DOCUMENTED next_allowed_fix=MODULE_R9_SWITCH evidence=OBSERVED note=no_guest_mutation
+[XT_DATA_INIT] target=jjfb declared_rw=6568 allocated_rw=0x2B0D18 entry_r9=0x280400 first_global_imm=0x0 first_global_value=0x0 xt_pattern=PARTIAL evidence=OBSERVED
+[ER_RW_TIMELINE] seq=22 module=gbrwcore.ext module_id=3 event=ENTRY_FAULT base=0x28 size=0 helper=0x0 producer_offset=0x21518 er_rw_metadata_timing_gate=blocked phase6b_b_gate=blocked evidence=OBSERVED
+[ER_RW_FAULT_PATH] path=BOOTSTRAP_CODE module=gbrwcore.ext module_id=3 fault_pc=0x30CCF8 module_offset=0x21518 fault_addr=0x28 r9=0x280400 depth=0 lifecycle=PRE_ER_RW evidence=OBSERVED note=not_progress_until_correct_r9 er_rw_metadata_timing_gate=blocked
+[BOOTSTRAP_FAULT] pc=0x30CCF8 pc_module=gbrwcore.ext pc_offset=0x21518 instruction=RECONSTRUCTED_REG_REL access=READ size=4 address_expr=r4+0x27 base_reg=r4 base_value=0x1 invalid_address=0x28 r9=0x280400 r9_in_dataflow=no causality=R9_NOT_USED_BEFORE_FAULT evidence=OBSERVED bootstrap_entry_r9_gate=blocked note=no_hardcoded_imm
+[BOOTSTRAP_ABI_CLASS] class=BOOTSTRAP_PRESERVE_CALLER_R9_DOCUMENTED r9_causality=R9_NOT_USED_BEFORE_FAULT bootstrap_entry_r9_gate=blocked module_r9_switch_gate=open phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked gate_evidence=DOCUMENTED next_allowed_fix=PRESERVE_CALLER_R9_POLICY evidence=DOCUMENTED note=observe_only_no_r9_mutation
+[XT_BOOTSTRAP_ORDER] target=jjfb pattern=A evidence=OBSERVED
+[BOOTSTRAP_FAULT_RING] i=0 pc=0x30B73E r0=0x0 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD50 lr=0x30B72F module_id=3
+[BOOTSTRAP_FAULT_RING] i=1 pc=0x30B740 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD50 lr=0x30B72F module_id=3
+[BOOTSTRAP_FAULT_RING] i=2 pc=0x30B742 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD50 lr=0x30B72F module_id=3
+[BOOTSTRAP_FAULT_RING] i=3 pc=0x30CCD0 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD50 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=4 pc=0x30CCD2 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD3C lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=5 pc=0x30CCD4 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD3C lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=6 pc=0x30CCD6 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD3C lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=7 pc=0x30CCD8 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r9=0x280400 sp=0x27FD3C lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=8 pc=0x30CCDA r0=0x1 r1=0x64 r2=0xFFFDEAE2 r3=0x0 r9=0x280400 sp=0x27FD3C lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=9 pc=0x30CCDC r0=0x1 r1=0x64 r2=0xFFFDEAE2 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=10 pc=0x30CCDE r0=0x1 r1=0x64 r2=0xFFFDEAE2 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=11 pc=0x30CCE0 r0=0x1 r1=0x64 r2=0x2EB7C4 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=12 pc=0x30CCE2 r0=0x281D88 r1=0x64 r2=0x2EB7C4 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=13 pc=0x30CCE4 r0=0x281D88 r1=0x0 r2=0x2EB7C4 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=14 pc=0x30CCE6 r0=0x281D88 r1=0x0 r2=0x2EB7C4 r3=0x0 r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=15 pc=0x30CCE8 r0=0x281D88 r1=0x0 r2=0x2EB7C4 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=16 pc=0x30CCEA r0=0x281D88 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=17 pc=0x30CCEC r0=0x281D88 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=18 pc=0x30CCEE r0=0x281D88 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=19 pc=0x30CCF0 r0=0x281D88 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=20 pc=0x30CCF2 r0=0x281D88 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=21 pc=0x30CCF4 r0=0x0 r1=0x0 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=22 pc=0x30CCF6 r0=0x0 r1=0x64 r2=0x2 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[BOOTSTRAP_FAULT_RING] i=23 pc=0x30CCF8 r0=0x0 r1=0x64 r2=0x0 r3=0x2AC8DC r9=0x280400 sp=0x27FD28 lr=0x30B747 module_id=3
+[EXT_FAULT] access_type=19 invalid_address=0x28 access_size=4 fault_pc=0x30CCF8 module_offset=0x21518 module_id=3 load_id=4 code_base=0x2EB7E0 code_size=147264 lr=0x30B747 sp=0x27FD28 cpsr=0x400001F3 caller_module=gbrwcore.ext caller_offset=0x1FF66
+[EXT_FAULT_REGS] r0=0x0 r1=0x64 r2=0x0 r3=0x2AC8DC r4=0x1 r5=0x64 r6=0x0 r7=0x0 r8=0x0 r9=0x280400 r10=0x40 r11=0x2AD95C r12=0x0 sp=0x27FD28 lr=0x30B747 pc=0x30CCF8
+[HELPER_ABI_SUMMARY] call_site_r0=0x0 thunk_r0=0x0 enter_r0=0x0 r0_became_zero_at=CALL_SITE_BEFORE thunk_drop=false call_site_origin=LR_PROXY
+[EXT_FAULT_CLASS] root_cause=ENTRY_ARGUMENT
+[BOOTSTRAP_CLASSIFY] entry_class=CHUNK_INIT_ENTRY primary=C field28_writer=NONE_BEFORE_FAULT p_candidate=0x2AC8DC chunk_candidate=0x0 bootstrap_seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT note_v49=HYPOTHESIS_only_not_copied phase6b_gate=no_context_create
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=gbrwcore.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 fix_applied=none phase6b_b_gate=blocked
+[BOOTSTRAP_SEQ] event=FAULT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT>FAULT
+[EXT_FAIL] module_id=3 stage=ENTRY_EXECUTION access=UC_MEM_READ_UNMAPPED fault_pc=0x30CCF8 module_offset=0x21518 invalid_address=0x28 access_size=4 method=0 caller_pc=0xA2548 base_reg=r0 base_value=0x0
+[MODULE_REGISTRY] module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=FAILED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFE9
+[EXT_FAULT_DISASM] window_pc=0x30CCF8 thumb=1
+[EXT_FAULT_DISASM]   off=-20 addr=0x30CCD0 raw=0x0000B5F0 .hword 0xB5F0
+[EXT_FAULT_DISASM]   off=-19 addr=0x30CCD2 raw=0x00001C0D .hword 0x1C0D
+[EXT_FAULT_DISASM]   off=-18 addr=0x30CCD4 raw=0x00001C04 .hword 0x1C04
+[EXT_FAULT_DISASM]   off=-17 addr=0x30CCD6 raw=0x00001C16 .hword 0x1C16
+[EXT_FAULT_DISASM]   off=-16 addr=0x30CCD8 raw=0x00004A0A .hword 0x4A0A
+[EXT_FAULT_DISASM]   off=-15 addr=0x30CCDA raw=0x0000B085 .hword 0xB085
+[EXT_FAULT_DISASM]   off=-14 addr=0x30CCDC raw=0x0000469C .hword 0x469C
+[EXT_FAULT_DISASM]   off=-13 addr=0x30CCDE raw=0x0000447A .hword 0x447A
+[EXT_FAULT_DISASM]   off=-12 addr=0x30CCE0 raw=0x0000980B LDR r0, [r13, #0x2C]
+[EXT_FAULT_DISASM]   off=-11 addr=0x30CCE2 raw=0x0000990C LDR r1, [r13, #0x30]
+[EXT_FAULT_DISASM]   off=-10 addr=0x30CCE4 raw=0x00009F0A LDR r7, [r13, #0x28]
+[EXT_FAULT_DISASM]   off=-9 addr=0x30CCE6 raw=0x00006BD3 LDR r3, [r2, #0x3C]
+[EXT_FAULT_DISASM]   off=-8 addr=0x30CCE8 raw=0x00002202 .hword 0x2202
+[EXT_FAULT_DISASM]   off=-7 addr=0x30CCEA raw=0x00009203 .hword 0x9203
+[EXT_FAULT_DISASM]   off=-6 addr=0x30CCEC raw=0x00009102 .hword 0x9102
+[EXT_FAULT_DISASM]   off=-5 addr=0x30CCEE raw=0x00009001 .hword 0x9001
+[EXT_FAULT_DISASM]   off=-4 addr=0x30CCF0 raw=0x00009700 .hword 0x9700
+[EXT_FAULT_DISASM]   off=-3 addr=0x30CCF2 raw=0x000068D8 LDR r0, [r3, #0xC]
+[EXT_FAULT_DISASM]   off=-2 addr=0x30CCF4 raw=0x00001C29 .hword 0x1C29
+[EXT_FAULT_DISASM]   off=-1 addr=0x30CCF6 raw=0x00001C32 .hword 0x1C32
+[EXT_FAULT_DISASM] * off=+0 addr=0x30CCF8 raw=0x00006A87 LDR r7, [r0, #0x28]
+[EXT_FAULT_INSN] fault_instruction=LDR r7, [r0, #0x28] base_register=r0 base_value=0x0 imm=0x28 effective_address=0x28 dest_or_src=r7
+[EXT_FAULT_DISASM]   off=+1 addr=0x30CCFA raw=0x00001C20 .hword 0x1C20
+[EXT_FAULT_DISASM]   off=+2 addr=0x30CCFC raw=0x00004663 .hword 0x4663
+[EXT_FAULT_DISASM]   off=+3 addr=0x30CCFE raw=0x000047B8 .hword 0x47B8
+[EXT_FAULT_DISASM]   off=+4 addr=0x30CD00 raw=0x0000B005 .hword 0xB005
+[EXT_FAULT_DISASM]   off=+5 addr=0x30CD02 raw=0x0000BDF0 .hword 0xBDF0
+[EXT_FAULT_DISASM]   off=+6 addr=0x30CD04 raw=0x0000EAE2 .hword 0xEAE2
+[EXT_FAULT_DISASM]   off=+7 addr=0x30CD06 raw=0x0000FFFD .hword 0xFFFD
+[EXT_FAULT_DISASM]   off=+8 addr=0x30CD08 raw=0x00001C03 .hword 0x1C03
+[EXT_FAULT_DISASM]   off=+9 addr=0x30CD0A raw=0x00004808 .hword 0x4808
+[EXT_FAULT_DISASM]   off=+10 addr=0x30CD0C raw=0x0000B510 .hword 0xB510
+[EXT_FAULT_DISASM]   off=+11 addr=0x30CD0E raw=0x00002200 .hword 0x2200
+[EXT_FAULT_DISASM]   off=+12 addr=0x30CD10 raw=0x00004478 .hword 0x4478
+[EXT_FAULT_DISASM]   off=+13 addr=0x30CD12 raw=0x00006BC4 LDR r4, [r0, #0x3C]
+[EXT_FAULT_DISASM]   off=+14 addr=0x30CD14 raw=0x0000B084 .hword 0xB084
+[EXT_FAULT_DISASM]   off=+15 addr=0x30CD16 raw=0x00002100 .hword 0x2100
+[EXT_FAULT_DISASM]   off=+16 addr=0x30CD18 raw=0x00009101 .hword 0x9101
+[EXT_FAULT_DISASM]   off=+17 addr=0x30CD1A raw=0x00009102 .hword 0x9102
+[EXT_FAULT_DISASM]   off=+18 addr=0x30CD1C raw=0x00009203 .hword 0x9203
+[EXT_FAULT_DISASM]   off=+19 addr=0x30CD1E raw=0x00009200 .hword 0x9200
+[EXT_FAULT_DISASM]   off=+20 addr=0x30CD20 raw=0x000068E0 LDR r0, [r4, #0xC]
+[HELPER_ABI_FIELD28] fault_pc=0x30CCF8 dest_rt=7 scan_forward=24
+[HELPER_ABI_FIELD28] r0_offsets saw_00=0 saw_04=0 saw_0c=0 saw_28=1 saw_2c=0
+[HELPER_ABI_FIELD28] dest_use blx=1 store=0 further_ldr=1
+[HELPER_ABI_FIELD28] layout_class=unknown_or_partial_chunk field_28=unconfirmed note=mr_c_function_st_len20_cannot_hold_0x28
+[HELPER_ABI_FIELD28] UnknownEntryContext candidate: field_00=? field_04=? field_0c=? field_28=seen field_2c=?
+[EXT_FAULT_RING] count=128
+[EXT_FAULT_RING] i=0 pc=0x2EBD70 off=0x590 r0=0x2B0D18 r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAED cpsr=0x200001D3
+[EXT_FAULT_RING] i=1 pc=0x2EBD74 off=0x594 r0=0x8 r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAED cpsr=0x200001D3
+[EXT_FAULT_RING] i=2 pc=0x30CAEC off=0x2130C r0=0x8 r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAED cpsr=0x200001F3
+[EXT_FAULT_RING] i=3 pc=0x30CAEE off=0x2130E r0=0x8 r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAED cpsr=0x1F3
+[EXT_FAULT_RING] i=4 pc=0x2EBD7C off=0x59C r0=0x8 r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAF3 cpsr=0x1D3
+[EXT_FAULT_RING] i=5 pc=0x2EBD80 off=0x5A0 r0=0x23EEC r1=0x2B0D18 r2=0x8CCA8 r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0x30CAF3 cpsr=0x1D3
+[EXT_FAULT_RING] i=6 pc=0x3

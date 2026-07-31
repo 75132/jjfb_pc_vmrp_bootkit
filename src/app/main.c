@@ -9,7 +9,6 @@
 #include "gwy_launcher/mrp_member_view.h"
 #include "gwy_launcher/compat_profile.h"
 #include "gwy_launcher/platform_identity.h"
-#include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/sha256.h"
 #include "gwy_launcher/byte_buffer.h"
 #include <stdio.h>
@@ -461,31 +460,6 @@ static int cmd_vfs_check(const char *root, const char *overlay) {
     return rc;
 }
 
-static int cmd_original_catalog(const char *root, const char *out_path) {
-    OriginalGwyBootstrapCatalog cat;
-    const char *out = out_path && out_path[0] ? out_path
-                                              : "reports/ORIGINAL_GWY_BOOTSTRAP_CATALOG.json";
-    int i;
-    if (!original_gwy_bootstrap_catalog_build(root, &cat)) {
-        fprintf(stderr, "[original-catalog] build failed root=%s\n", root ? root : "");
-        return 1;
-    }
-    if (original_gwy_bootstrap_catalog_write_json(&cat, out) != 0) {
-        fprintf(stderr, "[original-catalog] write failed path=%s\n", out);
-        return 1;
-    }
-    printf("[original-catalog] root=%s complete=%s pkgs=%d out=%s\n", cat.resource_root,
-           cat.complete ? "yes" : "no", cat.pkg_count, out);
-    printf("[original-catalog] cfg36_param=%s\n", cat.cfg36_param);
-    for (i = 0; i < cat.pkg_count; i++) {
-        const OriginalGwyPackageEntry *e = &cat.pkgs[i];
-        printf("[original-catalog] order=%d guest=%s present=%s sha256=%s ext=%s role=%s\n",
-               e->load_order, e->guest_path, e->present ? "yes" : "no", e->sha256_hex,
-               e->primary_ext, e->role);
-    }
-    return cat.complete ? 0 : 1;
-}
-
 static void usage(void) {
     puts("gwy_launcher <command> [args]");
     puts("  inspect-mrp <file.mrp>");
@@ -497,7 +471,6 @@ static void usage(void) {
     puts("  launch --root <root> --index N --vmrp <main.exe> [--cwd <run-dir>] [--manifest path]");
     puts("  sdk-key [--out <sdk_key.dat>]");
     puts("  vfs-check --root <root> [--overlay <dir>]");
-    puts("  original-catalog --root <mythroad-resolution-root> [--out <json>]");
 }
 
 int main(int argc, char **argv) {
@@ -619,18 +592,6 @@ int main(int argc, char **argv) {
         if (!root) root = getenv("GWY_RESOURCE_ROOT");
         if (!root || !root[0]) { usage(); return 1; }
         return cmd_vfs_check(root, overlay);
-    }
-    if (strcmp(argv[1], "original-catalog") == 0) {
-        const char *root = NULL;
-        const char *out = NULL;
-        int i;
-        for (i = 2; i + 1 < argc; i++) {
-            if (strcmp(argv[i], "--root") == 0) root = argv[++i];
-            else if (strcmp(argv[i], "--out") == 0) out = argv[++i];
-        }
-        if (!root) root = getenv("GWY_RESOURCE_ROOT");
-        if (!root || !root[0]) { usage(); return 1; }
-        return cmd_original_catalog(root, out);
     }
     usage();
     return 1;

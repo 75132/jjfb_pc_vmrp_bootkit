@@ -9,7 +9,6 @@
 #include "gwy_launcher/product_field_parser_trace.h"
 #include "gwy_launcher/product_lifecycle_record_trace.h"
 #include "gwy_launcher/product_event_object_trace.h"
-#include "gwy_launcher/product_101ab_trace.h"
 #include "gwy_launcher/product_runtime_progress.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/ext_loader.h"
@@ -415,11 +414,6 @@ int product_ffp_on_family_request(void *uc, uint32_t event_code, uint32_t app, u
         product_eot_bind_uc(uc);
         product_eot_arm_hooks(uc);
     }
-    if (product_101ab_trace_enabled()) {
-        product_101ab_trace_bind_uc(uc);
-        product_101ab_trace_note_er_rw(er_rw);
-        product_101ab_trace_arm_hooks(uc);
-    }
 
     accept = platform_event_service_on_guest_request(
         uc, event_code, app, family, handler, secondary_handler, caller_pc, caller_lr, r, r9,
@@ -446,23 +440,11 @@ void product_ffp_prepare_delivery_abi(uint64_t request_id, GwyEventDeliveryAbi *
         out->have_stack = 0;
         return;
     }
-    /*
-     * Round B (P12 contract):
-     * Family switch 0x30D301 saves incoming r2 into r5. Real case 9 @ 0x30E1A8 does
-     *   r1=r5; r0=event; BL 0x305E30 → MULS r0,r1.
-     * Guest sendAppEvent supplies r2=0; stuffing the 10165 context into r2 makes
-     * MULS(event, context) huge and is not producer-backed. Keep context on the
-     * stack only (switch LDR [sp,#0x20/0x24] → r6/r2 after r5 is saved).
-     * If the guest itself provided a non-zero r2, pass it through unchanged.
-     */
-    if (ev->r[2]) {
-        out->r2 = ev->r[2];
-        out->have_context = 1;
-    } else {
-        out->r2 = 0;
-    }
+    /* Round B: pass recovered context object into r2 and stack0 (candidate ABI). */
     if (ev->guest_context) {
+        out->r2 = ev->guest_context;
         out->stack0 = ev->guest_context;
+        out->have_context = 1;
         out->have_stack = 1;
     }
     if (ev->secondary_handler) {
@@ -949,7 +931,6 @@ void product_ffp_finalize(void) {
     product_fp_finalize();
     product_lrt_finalize();
     product_eot_finalize();
-    product_101ab_trace_finalize();
     write_samples_csv();
     write_mem_csv();
     write_abi_manifest();

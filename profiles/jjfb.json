@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "jjfb-400101-v12-original",
   "profile_id": "jjfb-400101-v12-original",
-  "resource_root": "game_files/mythroad/240x320",
+  "resource_root": "game_files/mythroad/320x480",
   "match": {
     "target": "gwy/jjfb.mrp",
     "appid": 400101,

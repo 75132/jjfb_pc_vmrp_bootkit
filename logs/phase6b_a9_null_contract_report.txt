@@ -1,0 +1,31 @@
+﻿Phase 6B-A9 Module Entry NULL-Argument Contract Discrimination
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+class=MISSING_MODULE_DATA_INITIALIZATION
+class_legend=ENTRY_NULL_DOCUMENTED|ENTRY_NULL_CROSS_TARGET|MISSING_MODULE_ENTRY_CONTEXT|MISSING_PRE_ENTRY_INITIALIZATION|MISSING_MODULE_DATA_INITIALIZATION|WRONG_MODULE_ENTRY_LIFECYCLE|LOADCODE_RETURN_MISINTERPRETED|UNKNOWN
+dsm_family_all_r0_zero=1
+discriminating_xt=ABSENT
+xt_detail=none
+FIELD_NOT_UPDATED=EXPECTED_BY_CONTRACT
+registered_helper_ne_module_entry=EXPECTED
+fix_applied=none (no r0 fill; no DSM dispatch write; no PlatformRegistry; no fake context)
+phase6b_b_gate=blocked
+gate_evidence=none
+Q1_entry_type=emitted Q2_dsm_family_all_r0_zero=1 Q3_discriminating_xt=ABSENT Q4_xt_detail=none Q5_entry_path=emitted Q6_module_data_init=emitted Q7_lifecycle=emitted Q8_p_entry_link=NO Q9_class=MISSING_MODULE_DATA_INITIALIZATION Q10_no_guest_mutation=yes Q11_phase6b_b_gate=blocked Q12_gate_evidence=none
+jjfb_hash=PASS ok
+dsm_entry_call=PASS ok
+dsm_entry_family=PASS ok
+entry_type=PASS ok
+entry_path=PASS ok
+module_data_init=PASS ok
+lifecycle=PASS ok
+p_entry_link=PASS ok
+null_class=PASS ok
+matrix=PASS ok
+phase6b_b_gate_line=PASS ok
+no_fake_context=PASS ok
+no_r0_poke=PASS ok
+xt_wxjwq=PASS ok
+xt_gwy=PASS ok
+xt_dload=PASS ok
+xt_gui=PASS ok
+xt_or_absent=PASS ok

@@ -1,0 +1,35 @@
+﻿phase=6L
+jjfb_hash=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+pack=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\JJFB_phase6l_entry_abi_cluster_audit_pack_20260719_050241.zip
+conclusion=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\CONCLUSION_PHASE6L.md
+
+# Phase 6L 鈥?verdict
+
+## Bottom line
+
+**Classification: `POST_ENTRY_MR_EXIT`**
+
+Phase 6K proved documented entry order; Phase 6L asks why entry returns without P+0xC publication.
+
+## Primary (baseline) facts
+
+- ENTRY_HIT: `yes`
+- ABI PRE/RET present: `yes` / `yes`
+- cluster reached: `no`
+- natural P+0xC nonzero: `no`
+- end_reason: `stop_at_base`
+- mythroad exit: `yes`
+
+## Interpretation
+
+Documented entry returned (EMU_OK / stop) without publishing P+0xC; `mr_exit` ran **after** entry (POST_ENTRY_MR_EXIT). Publication is not completed inside the current entry ABI/path 鈥?likely wrong ABI early-return, missing second-stage callback, or wrong P target.
+
+## Forbidden
+
+Do not invent P+0xC, jump to cluster, force UI, or expand to gamelist chase yet.
+
+## Best ABI_CANDIDATE
+
+`none`
+
+

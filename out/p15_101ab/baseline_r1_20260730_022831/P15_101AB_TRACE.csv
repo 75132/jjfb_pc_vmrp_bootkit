@@ -1,2 +1,0 @@
-frame_id,site,pc,buf_va,capacity,guest_r0,type,payload_len,header,body_size,event_code,body_sha,body_len,event_node_va,body_ptr,queue_gen,provider,dump_path,with_record,extra
-3,PLAT_101AB_FILL,0x0,0x6AD11C,192,0,2,41,5,33,5,b496d6c87679289b226d537530bc8b6ae2f9702b3a519b1e5037a1b66c010121,31,0x0,0x0,0,plat_101ab_synthetic_code5,C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\p15_101ab/frames/frame_3.bin,1,LOCAL_BOOTSTRAP_STREAM

@@ -1,5 +1,0 @@
-event,pc,r9,r0,slot1914,owner,note
-fault_trace,0x30D5D2,0x2B0D18,0x2AC8F8,0x2AC8F8,GBRWCORE,observed
-slot_writer,0x30D52E,0x2B0D18,0x0,0x2AC8F8,gbrwcore.ext,writes=8
-parent_p,0,0x2AC8DC,0,0,gbrwcore,isolated=0
-child_p,0,0x0,0,0,gamelist,isolated=0

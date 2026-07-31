@@ -1,0 +1,5 @@
+{"run_id":"p10138_C_20260725_002316","timestamp":1784910199,"pid":2020,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"p10138_C_20260725_002316","timestamp":1784910228,"pid":2020,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"p10138_C_20260725_002316","timestamp":1784910228,"pid":2020,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}
+{"run_id":"p10138_C_20260725_002316","timestamp":1784910232,"pid":2020,"milestone":"platform_10138_entered","source":"p10138","details":"Completing platform 0x10138"}
+{"run_id":"p10138_C_20260725_002316","timestamp":1784910232,"pid":2020,"milestone":"platform_10138_completed","source":"p10138","details":"heap"}

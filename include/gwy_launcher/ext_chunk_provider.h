@@ -130,12 +130,6 @@ int ext_chunk_provider_owner_for_p(uint32_t p_guest, ExtChunkOwnerInfo *out);
 int ext_chunk_provider_owner_for_erw(uint32_t erw, ExtChunkOwnerInfo *out);
 int ext_chunk_provider_rebind_chunk_erw(uint32_t chunk_guest, uint32_t new_erw, uint32_t p_guest);
 
-/* After isolate-on-collision publish: actual P used (may differ from request). */
-uint32_t ext_chunk_provider_last_published_p(void);
-int ext_chunk_provider_parent_p_sha(uint32_t *out_before, uint32_t *out_after);
-/* 1 if any ChunkRec currently owns this guest P VA (diag + preserve-parent). */
-int ext_chunk_provider_is_tracked_p(uint32_t p_guest);
-
 #ifdef __cplusplus
 }
 #endif

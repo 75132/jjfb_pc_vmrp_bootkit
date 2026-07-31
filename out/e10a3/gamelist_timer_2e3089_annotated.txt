@@ -1,0 +1,18 @@
+﻿# gamelist timer helper 0x2E3089 (E10A-3)
+
+Observed: PLATFORM_TIMER FIRE_EXT code=2 helper=0x2E3089
+P=0x2AC8DC erw=0x2B0D18 (gbrwcore leftover ER_RW, not fresh gamelist ER_RW)
+
+Wait predicate (runtime):
+- timer fires repeatedly with ret=0
+- no cfg.bin open
+- no PARAM_READ of gwyblink entry
+- no lib.startGame / lib.runapp lookup
+- 0x10180 returns sync blob (platform_userinfo) then idle
+
+Classification:
+GAMELIST_WAITING_FOR_EVENT / pre_cfg_idle_timer
+Not yet waiting on update callback - cfg selection itself not reached.
+
+Caller PC for 0x10180: 0x2E239D (gamelist.ext, sync subcode sweep R1=0,1,5,A,C,3,4)
+Stable wait loop logged at streak>=3 with real_cfg_selected=0.

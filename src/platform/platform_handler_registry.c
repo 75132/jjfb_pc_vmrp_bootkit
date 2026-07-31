@@ -139,27 +139,24 @@ int platform_handler_registry_register_owned(uint32_t plat_code, uint32_t family
     snprintf(slot->owner_module, sizeof(slot->owner_module), "%s", owner_module);
     snprintf(slot->source_api, sizeof(slot->source_api), "%s",
              source_api && source_api[0] ? source_api : "sendAppEvent");
-    /*
-     * Generic 0x10102 contract: any non-rejected MRP EXT owner is product-accepted
-     * for family-event delivery (gbrwcore/gamelist/robotol/mmochat). Robotol remains
-     * the product first-frame gate via g_robotol_owned.
-     */
-    slot->product_accepted = 1;
+    slot->product_accepted = is_robotol_owner(owner_module) ? 1 : 0;
 
-    if (is_robotol_owner(owner_module)) g_robotol_owned = 1;
-    printf("[PLATFORM_HANDLER_REGISTERED] owner_module=%s owner_module_id=%llu "
-           "owner_generation=%llu handler=0x%X family=0x%X plat=0x%X handler_mapped=yes "
-           "instruction_set=%s source_api=%s run_id=%s evidence=OBSERVED\n",
-           slot->owner_module, (unsigned long long)slot->owner_module_id,
-           (unsigned long long)slot->owner_generation, slot->handler, slot->family, slot->plat_code,
-           slot->isa == GWY_HANDLER_ISA_THUMB ? "THUMB" : "ARM", slot->source_api, run_id());
-    if (is_robotol_owner(owner_module)) {
+    if (slot->product_accepted) {
+        g_robotol_owned = 1;
+        printf("[PLATFORM_HANDLER_REGISTERED] owner_module=%s owner_module_id=%llu "
+               "owner_generation=%llu handler=0x%X handler_mapped=yes instruction_set=%s "
+               "source_api=%s run_id=%s evidence=OBSERVED\n",
+               slot->owner_module, (unsigned long long)slot->owner_module_id,
+               (unsigned long long)slot->owner_generation, slot->handler,
+               slot->isa == GWY_HANDLER_ISA_THUMB ? "THUMB" : "ARM", slot->source_api, run_id());
         printf("[ROBOTOL_HANDLER_REGISTERED] owner_module=%s handler=0x%X run_id=%s "
                "evidence=OBSERVED\n",
                slot->owner_module, slot->handler, run_id());
+        fflush(stdout);
+        append_csv(slot, "ACCEPTED");
+    } else {
+        append_csv(slot, "STORED_NOT_ROBOTOL");
     }
-    fflush(stdout);
-    append_csv(slot, is_robotol_owner(owner_module) ? "ACCEPTED" : "ACCEPTED_MODULE");
     return 1;
 }
 

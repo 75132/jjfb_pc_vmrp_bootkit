@@ -1,0 +1,3 @@
+{"run_id":"pah_C_20260724_234844","timestamp":1784908126,"pid":34748,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
+{"run_id":"pah_C_20260724_234844","timestamp":1784908157,"pid":34748,"milestone":"guest_entry_called","source":"vmrp","details":"target=gwy/jjfb.mrp ret=0x0"}
+{"run_id":"pah_C_20260724_234844","timestamp":1784908157,"pid":34748,"milestone":"waiting_for_first_frame","source":"vmrp","details":"post_start_dsm"}

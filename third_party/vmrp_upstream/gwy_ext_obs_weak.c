@@ -214,11 +214,6 @@ int gwy_shell_shim_try_continue_after_mr_exit(void *uc) {
     return 0;
 }
 
-int gwy_shell_shim_try_continue_after_gbrwcore_init_ok(void *uc) {
-    (void)uc;
-    return 0;
-}
-
 const char *gwy_shell_shim_continue_target(void) { return "gwy/gamelist.mrp"; }
 
 const char *gwy_shell_shim_continue_param(void) {
@@ -256,18 +251,13 @@ int gwy_ext_obs_extchunk_try_reuse(void *uc, uint32_t helper, uint32_t p_guest, 
 }
 
 int gwy_ext_obs_extchunk_on_c_function_new(void *uc, uint32_t helper, uint32_t p_guest, void *p_host,
-                                           void *chunk_host, uint32_t chunk_guest) {
+                                          void *chunk_host, uint32_t chunk_guest) {
     (void)uc;
     (void)helper;
     (void)p_guest;
     (void)p_host;
     (void)chunk_host;
     (void)chunk_guest;
-    return 0;
-}
-uint32_t gwy_ext_obs_extchunk_last_published_p(void) { return 0; }
-int gwy_ext_obs_preserve_c_function_p_guest(uint32_t p_guest) {
-    (void)p_guest;
     return 0;
 }
 
@@ -283,12 +273,6 @@ uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
     return 0;
 }
 
-uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **out_host) {
-    (void)size;
-    if (out_host) *out_host = NULL;
-    return 0;
-}
-
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {
     (void)start;
     (void)stop;
@@ -297,7 +281,6 @@ void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn
 void gwy_ext_obs_set_timer_clock(GwyExtObsTimerClockFn clock_ms) { (void)clock_ms; }
 
 void gwy_ext_obs_set_timer_deliver(GwyExtObsTimerDeliverFn deliver) { (void)deliver; }
-void gwy_ext_obs_set_after_timer_deliver(GwyExtObsAfterTimerDeliverFn after) { (void)after; }
 
 void gwy_ext_obs_timer_poll_uc(void *uc) { (void)uc; }
 

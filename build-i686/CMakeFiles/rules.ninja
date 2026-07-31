@@ -185,44 +185,6 @@ rule C_EXECUTABLE_LINKER__test_game_catalog_RelWithDebInfo
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__test_resource_root_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_resource_root_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__test_jjfbol_catalog_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_jjfbol_catalog_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
 rule C_COMPILER__test_guest_vfs_unscanned_RelWithDebInfo
   depfile = $DEP_FILE
   deps = gcc
@@ -812,25 +774,6 @@ rule C_EXECUTABLE_LINKER__test_ext_gwy_startgame_audit_RelWithDebInfo
 #############################################
 # Rule for compiling C files.
 
-rule C_COMPILER__test_original_gwy_bootstrap_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_original_gwy_bootstrap_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
 rule C_COMPILER__test_ext_gwy_shell_shim_unscanned_RelWithDebInfo
   depfile = $DEP_FILE
   deps = gcc
@@ -842,44 +785,6 @@ rule C_COMPILER__test_ext_gwy_shell_shim_unscanned_RelWithDebInfo
 # Rule for linking C executable.
 
 rule C_EXECUTABLE_LINKER__test_ext_gwy_shell_shim_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__test_platform_mrp_resource_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_platform_mrp_resource_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__test_jjfb_bitmap_geometry_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_jjfb_bitmap_geometry_RelWithDebInfo
   command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
   restat = $RESTAT
@@ -956,25 +861,6 @@ rule C_COMPILER__test_platform_send_app_event_unscanned_RelWithDebInfo
 # Rule for linking C executable.
 
 rule C_EXECUTABLE_LINKER__test_platform_send_app_event_RelWithDebInfo
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
-  description = Linking C executable $TARGET_FILE
-  restat = $RESTAT
-
-
-#############################################
-# Rule for compiling C files.
-
-rule C_COMPILER__test_platform_101ab_frame_unscanned_RelWithDebInfo
-  depfile = $DEP_FILE
-  deps = gcc
-  command = ${LAUNCHER}${CODE_CHECK}C:\msys64\mingw32\bin\gcc.exe $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building C object $out
-
-
-#############################################
-# Rule for linking C executable.
-
-rule C_EXECUTABLE_LINKER__test_platform_101ab_frame_RelWithDebInfo
   command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\msys64\mingw32\bin\gcc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
   restat = $RESTAT
@@ -1182,7 +1068,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\msys64\mingw32\bin\cmake.exe --regenerate-during-build -SC:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit -BC:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\build-i686
+  command = C:\msys64\mingw32\bin\cmake.exe --regenerate-during-build -SD:\Desktop\jjfb_pc_vmrp_bootkit -BD:\Desktop\jjfb_pc_vmrp_bootkit\build-i686
   description = Re-running CMake...
   generator = 1
 

@@ -102,26 +102,8 @@ void product_runtime_progress_emit(const char *milestone,
     FILE *fp;
     char ms[96], src[96], det[384];
     time_t now;
-    static char s_seen[32][96];
-    static int s_seen_n;
-    int i, noisy = 0;
     if (!milestone || !milestone[0]) return;
     if (!progress_enabled()) return;
-    /* Hot libc/import hooks fire thousands of times — keep one row each. */
-    if (strncmp(milestone, "platform_strlen", 15) == 0 ||
-        strncmp(milestone, "platform_strcpy", 15) == 0 ||
-        strncmp(milestone, "platform_strcmp", 15) == 0 ||
-        strncmp(milestone, "platform_memcpy", 15) == 0 ||
-        strcmp(milestone, "platform_libc_cache") == 0) {
-        noisy = 1;
-        for (i = 0; i < s_seen_n; i++) {
-            if (strcmp(s_seen[i], milestone) == 0) return;
-        }
-        if (s_seen_n < (int)(sizeof(s_seen) / sizeof(s_seen[0]))) {
-            snprintf(s_seen[s_seen_n], sizeof(s_seen[0]), "%s", milestone);
-            s_seen_n++;
-        }
-    }
     ensure_path();
     json_escape(milestone, ms, sizeof(ms));
     json_escape(source ? source : "", src, sizeof(src));
@@ -137,5 +119,4 @@ void product_runtime_progress_emit(const char *milestone,
     printf("[RUNTIME_PROGRESS] milestone=%s source=%s details=%s evidence=OBSERVED\n",
            milestone, source ? source : "", details ? details : "");
     fflush(stdout);
-    (void)noisy;
 }

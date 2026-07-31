@@ -1,0 +1,16 @@
+﻿gate,pass,note
+G0_BUILD,1,non_zero_gwyresearch_exe
+G1_STACK_DEPTH2,1,depth2_at_gamelist_start_dsm_frames_cfunction_gbrwcore
+G2_LAUNCH_PARAM,1,START_DSM_PARAM_ABI_CONFIRMED+SHELL_PARAM_GWYBLINK_READ
+G3_CFG_OPENED,0,no_gwy_cfg_bin_open
+G4_CFG36_PARSED,0,blocked_on_G3
+G5_ITEM_CREATED,0,blocked_on_G4
+G6_SELECT_CALLBACK,0,blocked_on_G5
+G7_DESC_BUILDER,1,hit_0x13A34_via_lr_off_0xB00D_state_all_zero
+G8_DESC_MATCH,0,no_exact_descriptor
+G9_API_HANDOFF,0,0x13B7C_not_entered
+G10_STARTGAME_LOOKUP,0,string_va_only
+G11_STARTGAME_ENTER,0,0x2AAD84_not_entered
+G12_OPCODE300,0,not_reached
+G13_NESTED_JJFB,0,not_reached
+G14_ROBOTOL_EXT,0,not_from_selection_chain

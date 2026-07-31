@@ -1,0 +1,16 @@
+﻿Phase 5B live ext lifecycle
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+robotol_final_state=EXTRACTED
+classification_case=C
+guest_nested_c_function_new=True
+cfunction_read_3004=True
+cfunction_read_3006=False
+note=Case_C: nested EXT _mr_c_function_new runs inside DSM guest code (not host bridge); robotol not mapped when guest read fails
+cfunction_alias=PASS alias missing
+robotol_extracted=PASS robotol EXTRACTED missing
+dsm_origin_separate=PASS DSM origin row missing
+no_ordinal_identity=PASS ordinal language found
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+resource_hash_unchanged=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+view_provenance=PASS member-view provenance missing
+robotol_stop_classified=PASS state=EXTRACTED case=C

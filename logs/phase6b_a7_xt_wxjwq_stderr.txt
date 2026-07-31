@@ -1,0 +1,41 @@
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+[VM_FILE_BIND] runtime=1 svc=143c4608
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_SEEK] handle=2 pos=808 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1514 got=1514 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[VM_FILE_CLOSE] handle=2 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_SEEK] handle=2 pos=2345 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=219 got=219 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[VM_FILE_CLOSE] handle=1 result=ok

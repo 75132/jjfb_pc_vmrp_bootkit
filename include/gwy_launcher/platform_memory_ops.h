@@ -27,13 +27,9 @@ extern "C" {
  * DSM strcpy body (0xAC300): post-gate 0x310740 BLX's strcpy(dst, src) with
  * src sometimes the same cursor idx after a zero-length strlen — bind equally.
  *
- * DSM strcmp body (0xAC2D0): robotol 0x304F92 BLX's strcmp for MRP member name
- * match during 0x304BF0 index scan. True strcmp only — never force equal.
- *
  * mr_table:
  *   +0xC  memcpy  → platform_guest_memcpy (br_memcpy)
  *   +0x14 strcpy  → platform_guest_strcpy
- *   +0x28 strcmp  → platform_guest_strcmp
  *   +0x38 memset  → br_memset
  *   +0x3C strlen  → platform_guest_strlen (br_strlen)
  *
@@ -53,10 +49,8 @@ extern "C" {
 #define PLATFORM_MEMCPY_DSM_BODY_VA 0x94E94u /* real DSM memcpy; 0x804A8 is a misbound alias */
 #define PLATFORM_STRLEN_DSM_BODY_VA 0xAC374u
 #define PLATFORM_STRCPY_DSM_BODY_VA 0xAC300u
-#define PLATFORM_STRCMP_DSM_BODY_VA 0xAC2D0u
 #define PLATFORM_MEMCPY_MR_TABLE_OFF 0xCu
 #define PLATFORM_STRCPY_MR_TABLE_OFF 0x14u
-#define PLATFORM_STRCMP_MR_TABLE_OFF 0x28u
 #define PLATFORM_MEMSET_MR_TABLE_OFF 0x38u
 #define PLATFORM_STRLEN_MR_TABLE_OFF 0x3Cu
 #define PLATFORM_ROBOTOL_ERW_MEMCPY_OFF 0x1420u
@@ -66,15 +60,6 @@ extern "C" {
 uint32_t platform_guest_memcpy(void *uc, uint32_t dst_guest, uint32_t src_guest, uint32_t size);
 uint32_t platform_guest_strlen(void *uc, uint32_t str_guest);
 uint32_t platform_guest_strcpy(void *uc, uint32_t dst_guest, uint32_t src_guest);
-/* True strcmp: returns 0 / neg / pos as int32 in R0. Never force-equal. */
-int32_t platform_guest_strcmp(void *uc, uint32_t a_guest, uint32_t b_guest);
-
-/*
- * Optional: when DSM strcmp returns 0, invoke hook(a,b,0).
- * Return 1 if hook already set R0/PC (consumed); 0 to apply normal strcmp R0.
- */
-typedef int (*PlatformStrcmpMatchFn)(void *uc, uint32_t a_guest, uint32_t b_guest, int32_t cmp);
-void platform_strcmp_set_match_hook(PlatformStrcmpMatchFn fn);
 
 int platform_memcpy_import_enabled(void);
 void platform_memcpy_import_reset(void);

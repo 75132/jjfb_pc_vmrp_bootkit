@@ -1,2 +1,0 @@
-run_id,seq,dest,src,size,src_word,dest_before,dest_after,repaired,skipped_blx
-task14_C4_221233,1,0x6BBAB8,0x6AD12B,0x1F,0x01000000,0x00000000,0x00000000,0,0

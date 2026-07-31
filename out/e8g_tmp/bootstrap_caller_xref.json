@@ -1,0 +1,2034 @@
+[
+  {
+    "tag": "C44_2F4E82",
+    "writer_pc": "0x2F4E82",
+    "caller_pc": "0x302340",
+    "fn_start": "0x3020C8",
+    "fn_end": "0x302118",
+    "upstream_bl_callers": [
+      "0x30103C"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x302106",
+          "target": "0x2F5B38"
+        },
+        {
+          "pc": "0x302110",
+          "target": "0x2DA424"
+        }
+      ],
+      "predicates": [
+        "0x3020CA: LDR r1,[pc,#0x3D0] =0xC6C",
+        "0x3020CE: ADD r1, r9",
+        "0x3020D8: LDR r0,[pc,#0x3C4] =0xEEC",
+        "0x3020DE: LDR r7,[pc,#0x3B8] =0x11D0",
+        "0x3020E4: ADD r0, r9",
+        "0x3020E8: CMP r4, #13",
+        "0x3020EA: ADD r7, r9",
+        "0x3020EC: BEQ -> 0x3021D2",
+        "0x3020EE: BGT -> 0x302118",
+        "0x3020F0: CMP r4, #2",
+        "0x3020F2: BEQ -> 0x302100",
+        "0x3020F4: CMP r4, #5",
+        "0x3020F6: BEQ -> 0x302124",
+        "0x3020F8: CMP r4, #8",
+        "0x3020FA: BEQ -> 0x3021D2",
+        "0x3020FC: CMP r4, #12",
+        "0x3020FE: BNE -> 0x302114",
+        "0x302100: CMP r0, #0",
+        "0x302102: BEQ -> 0x302114"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x3020CA",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x3020D8",
+          "off": "0xEEC"
+        },
+        {
+          "pc": "0x3020DE",
+          "off": "0x11D0"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2F4E82",
+    "writer_pc": "0x2F4E82",
+    "caller_pc": "0x302362",
+    "fn_start": "0x3020C8",
+    "fn_end": "0x302118",
+    "upstream_bl_callers": [
+      "0x30103C"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x302106",
+          "target": "0x2F5B38"
+        },
+        {
+          "pc": "0x302110",
+          "target": "0x2DA424"
+        }
+      ],
+      "predicates": [
+        "0x3020CA: LDR r1,[pc,#0x3D0] =0xC6C",
+        "0x3020CE: ADD r1, r9",
+        "0x3020D8: LDR r0,[pc,#0x3C4] =0xEEC",
+        "0x3020DE: LDR r7,[pc,#0x3B8] =0x11D0",
+        "0x3020E4: ADD r0, r9",
+        "0x3020E8: CMP r4, #13",
+        "0x3020EA: ADD r7, r9",
+        "0x3020EC: BEQ -> 0x3021D2",
+        "0x3020EE: BGT -> 0x302118",
+        "0x3020F0: CMP r4, #2",
+        "0x3020F2: BEQ -> 0x302100",
+        "0x3020F4: CMP r4, #5",
+        "0x3020F6: BEQ -> 0x302124",
+        "0x3020F8: CMP r4, #8",
+        "0x3020FA: BEQ -> 0x3021D2",
+        "0x3020FC: CMP r4, #12",
+        "0x3020FE: BNE -> 0x302114",
+        "0x302100: CMP r0, #0",
+        "0x302102: BEQ -> 0x302114"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x3020CA",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x3020D8",
+          "off": "0xEEC"
+        },
+        {
+          "pc": "0x3020DE",
+          "off": "0x11D0"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2FEDFA",
+    "writer_pc": "0x2FEDFA",
+    "caller_pc": "0x2FC048",
+    "fn_start": "0x2FC03C",
+    "fn_end": "0x2FC064",
+    "upstream_bl_callers": [
+      "0x2DAE24",
+      "0x2FECAA"
+    ],
+    "upstream_count": 2,
+    "bl_to_writer": [
+      {
+        "pc": "0x2FC048",
+        "target": "0x2FED14"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2FC048",
+          "target": "0x2FED14"
+        },
+        {
+          "pc": "0x2FC05E",
+          "target": "0x2FC418"
+        }
+      ],
+      "predicates": [
+        "0x2FC03E: LDR r4,[pc,#0x24] =0x11EC",
+        "0x2FC040: ADD r4, r9",
+        "0x2FC04C: LDR r1,[pc,#0x18] =0x1A8",
+        "0x2FC050: ADD r1, r9",
+        "0x2FC05A: LDR r0,[pc,#0x10] =0x18664",
+        "0x2FC05C: ADD r0, r15"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2FC03E",
+          "off": "0x11EC"
+        },
+        {
+          "pc": "0x2FC04C",
+          "off": "0x1A8"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2FEE4E",
+    "writer_pc": "0x2FEE4E",
+    "caller_pc": "0x2FC048",
+    "fn_start": "0x2FC03C",
+    "fn_end": "0x2FC064",
+    "upstream_bl_callers": [
+      "0x2DAE24",
+      "0x2FECAA"
+    ],
+    "upstream_count": 2,
+    "bl_to_writer": [
+      {
+        "pc": "0x2FC048",
+        "target": "0x2FED14"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2FC048",
+          "target": "0x2FED14"
+        },
+        {
+          "pc": "0x2FC05E",
+          "target": "0x2FC418"
+        }
+      ],
+      "predicates": [
+        "0x2FC03E: LDR r4,[pc,#0x24] =0x11EC",
+        "0x2FC040: ADD r4, r9",
+        "0x2FC04C: LDR r1,[pc,#0x18] =0x1A8",
+        "0x2FC050: ADD r1, r9",
+        "0x2FC05A: LDR r0,[pc,#0x10] =0x18664",
+        "0x2FC05C: ADD r0, r15"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2FC03E",
+          "off": "0x11EC"
+        },
+        {
+          "pc": "0x2FC04C",
+          "off": "0x1A8"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "CF5_2E7DBC",
+    "writer_pc": "0x2E7DBC",
+    "caller_pc": "0x2E32A2",
+    "fn_start": "0x2E32A2",
+    "fn_end": "0x2E3AA4",
+    "upstream_bl_callers": [],
+    "upstream_count": 0,
+    "bl_to_writer": [
+      {
+        "pc": "0x2E32A2",
+        "target": "0x2E7DA8"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2E32A2",
+          "target": "0x2E7DA8"
+        },
+        {
+          "pc": "0x2E32BA",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E32D2",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E32DA",
+          "target": "0x2DCCD4"
+        },
+        {
+          "pc": "0x2E32E0",
+          "target": "0x30C008"
+        },
+        {
+          "pc": "0x2E32E6",
+          "target": "0x2DCC2C"
+        },
+        {
+          "pc": "0x2E32EE",
+          "target": "0x2DDD5C"
+        },
+        {
+          "pc": "0x2E32F6",
+          "target": "0x2DB814"
+        },
+        {
+          "pc": "0x2E330E",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3318",
+          "target": "0x2DE098"
+        },
+        {
+          "pc": "0x2E3320",
+          "target": "0x2E805C"
+        },
+        {
+          "pc": "0x2E3328",
+          "target": "0x2E7CA8"
+        },
+        {
+          "pc": "0x2E3340",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3358",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3370",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3378",
+          "target": "0x2DE480"
+        },
+        {
+          "pc": "0x2E3380",
+          "target": "0x2DC094"
+        },
+        {
+          "pc": "0x2E3388",
+          "target": "0x2DE5B4"
+        },
+        {
+          "pc": "0x2E3390",
+          "target": "0x2DC04C"
+        },
+        {
+          "pc": "0x2E3398",
+          "target": "0x2DC694"
+        },
+        {
+          "pc": "0x2E33B0",
+          "target": "0x308DE8"
+        },
+        {
+          "pc": "0x2E33BE",
+          "target": "0x2DDB28"
+        },
+        {
+          "pc": "0x2E33C6",
+          "target": "0x2DDA24"
+        },
+        {
+          "pc": "0x2E33CE",
+          "target": "0x2DE2C4"
+        },
+        {
+          "pc": "0x2E33D6",
+          "target": "0x2E7FAC"
+        },
+        {
+          "pc": "0x2E33DE",
+          "target": "0x2DC33C"
+        },
+        {
+          "pc": "0x2E33E6",
+          "target": "0x2DF788"
+        },
+        {
+          "pc": "0x2E33FE",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3404",
+          "target": "0x2FA4B4"
+        },
+        {
+          "pc": "0x2E340E",
+          "target": "0x2FAF04"
+        },
+        {
+          "pc": "0x2E3416",
+          "target": "0x2DE324"
+        },
+        {
+          "pc": "0x2E342E",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3446",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E345E",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E3476",
+          "target": "0x2FAF04"
+        },
+        {
+          "pc": "0x2E34DA",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2E34E2",
+          "target": "0x2E7D34"
+        },
+        {
+          "pc": "0x2E34EA",
+          "target": "0x2DCD70"
+        },
+        {
+          "pc": "0x2E34F6",
+          "target": "0x2D9C88"
+        },
+        {
+          "pc": "0x2E3502",
+          "target": "0x2D9C54"
+        }
+      ],
+      "predicates": [
+        "0x2E32B8: LDR r0,[pc,#0x1F0] =0x1E206",
+        "0x2E32D0: LDR r0,[pc,#0x1D8] =0x1E206",
+        "0x2E330C: LDR r0,[pc,#0x1A0] =0x1E501",
+        "0x2E333E: LDR r0,[pc,#0x174] =0x1E217",
+        "0x2E3356: LDR r0,[pc,#0x160] =0x1E216",
+        "0x2E336E: LDR r0,[pc,#0x148] =0x1E216",
+        "0x2E339E: LDR r1,[pc,#0xF8] =0xB5C",
+        "0x2E33A2: ADD r1, r9",
+        "0x2E33A6: LDR r1,[pc,#0xF4] =0xB60",
+        "0x2E33AA: ADD r1, r9",
+        "0x2E33B6: LDR r0,[pc,#0xD8] =0x11C0",
+        "0x2E33B8: ADD r0, r9",
+        "0x2E33FC: LDR r0,[pc,#0xB4] =0x1E217",
+        "0x2E3408: LDR r0,[pc,#0xB0] =0x30C9C",
+        "0x2E340C: ADD r0, r15",
+        "0x2E342C: LDR r0,[pc,#0x80] =0x1E501",
+        "0x2E3444: LDR r0,[pc,#0x68] =0x1E501",
+        "0x2E345C: LDR r0,[pc,#0x50] =0x1E501",
+        "0x2E3464: LDR r0,[pc,#0x58] =0xBE0",
+        "0x2E3466: LDR r1,[pc,#0x38] =0x8D0",
+        "0x2E3468: ADD r0, r9",
+        "0x2E346C: ADD r1, r9",
+        "0x2E3470: LDR r0,[pc,#0x50] =0x30AD8",
+        "0x2E3474: ADD r0, r15",
+        "0x2E34D8: LDR r0,[pc,#0x3A0] =0x1E217",
+        "0x2E34F0: LDR r0,[pc,#0x38C] =0x1378",
+        "0x2E34F2: ADD r0, r9",
+        "0x2E34FC: LDR r0,[pc,#0x384] =0x1374",
+        "0x2E34FE: ADD r0, r9",
+        "0x2E3508: LDR r0,[pc,#0x37C] =0x137C"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2E339E",
+          "off": "0xB5C"
+        },
+        {
+          "pc": "0x2E33A6",
+          "off": "0xB60"
+        },
+        {
+          "pc": "0x2E33B6",
+          "off": "0x11C0"
+        },
+        {
+          "pc": "0x2E3464",
+          "off": "0xBE0"
+        },
+        {
+          "pc": "0x2E3466",
+          "off": "0x8D0"
+        },
+        {
+          "pc": "0x2E34F0",
+          "off": "0x1378"
+        },
+        {
+          "pc": "0x2E34FC",
+          "off": "0x1374"
+        },
+        {
+          "pc": "0x2E3508",
+          "off": "0x137C"
+        },
+        {
+          "pc": "0x2E3510",
+          "off": "0xCF0"
+        },
+        {
+          "pc": "0x2E3540",
+          "off": "0xF84"
+        },
+        {
+          "pc": "0x2E3542",
+          "off": "0x11C4"
+        },
+        {
+          "pc": "0x2E3578",
+          "off": "0x1380"
+        },
+        {
+          "pc": "0x2E357E",
+          "off": "0x7DA"
+        },
+        {
+          "pc": "0x2E3592",
+          "off": "0x7D4"
+        },
+        {
+          "pc": "0x2E3598",
+          "off": "0x7DA"
+        },
+        {
+          "pc": "0x2E35C6",
+          "off": "0xCB2"
+        },
+        {
+          "pc": "0x2E369A",
+          "off": "0xB5C"
+        },
+        {
+          "pc": "0x2E36A2",
+          "off": "0xB60"
+        },
+        {
+          "pc": "0x2E3740",
+          "off": "0xB5C"
+        },
+        {
+          "pc": "0x2E3748",
+          "off": "0xB60"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x2E32BA",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E32D2",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E330E",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3340",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3358",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3370",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E33FE",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E342E",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3446",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E345E",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E34DA",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E35B8",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3644",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E365C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3674",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E368C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E36CC",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E36E4",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E36FC",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3722",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E373A",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3798",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E381E",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3902",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E391A",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3932",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E394C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E396C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3984",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3A24",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2E3A3C",
+          "helper": "0x304558"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_2F097A",
+    "writer_pc": "0x2F097A",
+    "caller_pc": "0x2EFF1C",
+    "fn_start": "0x2EFD90",
+    "fn_end": "0x2EFF24",
+    "upstream_bl_callers": [
+      "0x3064E0",
+      "0x306518",
+      "0x30657C",
+      "0x30659C",
+      "0x3065AC",
+      "0x3065EC"
+    ],
+    "upstream_count": 6,
+    "bl_to_writer": [
+      {
+        "pc": "0x2EFF1C",
+        "target": "0x2F096C"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2EFDC2",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFDC8",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFDE6",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2EFDEE",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFDF4",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE10",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2EFE28",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x2EFE2E",
+          "target": "0x312AB4"
+        },
+        {
+          "pc": "0x2EFE36",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE3C",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE4E",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE54",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE5C",
+          "target": "0x2D96BC"
+        },
+        {
+          "pc": "0x2EFE76",
+          "target": "0x305E78"
+        },
+        {
+          "pc": "0x2EFE88",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2EFEA0",
+          "target": "0x2EA188"
+        },
+        {
+          "pc": "0x2EFEAE",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2EFEC0",
+          "target": "0x2EA058"
+        },
+        {
+          "pc": "0x2EFEDA",
+          "target": "0x305E78"
+        },
+        {
+          "pc": "0x2EFEEA",
+          "target": "0x2F5B38"
+        },
+        {
+          "pc": "0x2EFEF4",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2EFEF8",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2EFEFE",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2EFF0A",
+          "target": "0x2E9318"
+        },
+        {
+          "pc": "0x2EFF1C",
+          "target": "0x2F096C"
+        }
+      ],
+      "predicates": [
+        "0x2EFD94: LDR r0,[pc,#0x18C] =0x8D0",
+        "0x2EFD98: ADD r0, r9",
+        "0x2EFD9C: CMP r0, #239",
+        "0x2EFD9E: BEQ -> 0x2EFE86",
+        "0x2EFDA0: CMP r0, #242",
+        "0x2EFDA2: BEQ -> 0x2EFE86",
+        "0x2EFDA4: LDR r5,[pc,#0x180] =0x24942",
+        "0x2EFDA6: ADD r5, r15",
+        "0x2EFDA8: LDR r6,[pc,#0x180] =0x25F5E",
+        "0x2EFDAA: ADD r6, r15",
+        "0x2EFDAC: CMP r0, #209",
+        "0x2EFDAE: BNE -> 0x2EFDCE",
+        "0x2EFDB0: LDR r0,[pc,#0x17C] =0x106C",
+        "0x2EFDB2: ADD r0, r9",
+        "0x2EFDB8: CMP r1, #0",
+        "0x2EFDBA: BNE -> 0x2EFDC0",
+        "0x2EFDD6: CMP r1, #0",
+        "0x2EFDD8: BNE -> 0x2EFDFA",
+        "0x2EFDE4: LDR r0,[pc,#0x14C] =0x1E213",
+        "0x2EFDFA: CMP r0, #216",
+        "0x2EFDFC: BNE -> 0x2EFE42",
+        "0x2EFE0E: LDR r0,[pc,#0x128] =0x1E21F",
+        "0x2EFE26: LDR r0,[pc,#0x110] =0x1E21F",
+        "0x2EFE42: LDR r0,[pc,#0xF8] =0xE6C",
+        "0x2EFE44: ADD r0, r9",
+        "0x2EFE58: LDR r1,[pc,#0xE4] =0x25EB6",
+        "0x2EFE5A: ADD r1, r15",
+        "0x2EFE62: LDR r0,[pc,#0xE0] =0x818",
+        "0x2EFE68: ADD r0, r9",
+        "0x2EFE6C: LDR r0,[pc,#0xD8] =0x81C"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2EFD94",
+          "off": "0x8D0"
+        },
+        {
+          "pc": "0x2EFDB0",
+          "off": "0x106C"
+        },
+        {
+          "pc": "0x2EFE42",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x2EFE62",
+          "off": "0x818"
+        },
+        {
+          "pc": "0x2EFE6C",
+          "off": "0x81C"
+        },
+        {
+          "pc": "0x2EFE7A",
+          "off": "0x1A8"
+        },
+        {
+          "pc": "0x2EFEC4",
+          "off": "0x818"
+        },
+        {
+          "pc": "0x2EFECE",
+          "off": "0x81C"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x2EFDE6",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2EFE10",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x2EFE28",
+          "helper": "0x304558"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_2F097A",
+    "writer_pc": "0x2F097A",
+    "caller_pc": "0x2F08A4",
+    "fn_start": "0x2F0810",
+    "fn_end": "0x2F0956",
+    "upstream_bl_callers": [
+      "0x306A90"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [
+      {
+        "pc": "0x2F08A4",
+        "target": "0x2F096C"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2F081C",
+          "target": "0x2F5B38"
+        },
+        {
+          "pc": "0x2F0828",
+          "target": "0x2F1600"
+        },
+        {
+          "pc": "0x2F082C",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F0838",
+          "target": "0x2F2854"
+        },
+        {
+          "pc": "0x2F084C",
+          "target": "0x305E78"
+        },
+        {
+          "pc": "0x2F0850",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F0876",
+          "target": "0x305BFC"
+        },
+        {
+          "pc": "0x2F087A",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F08A4",
+          "target": "0x2F096C"
+        },
+        {
+          "pc": "0x2F08BE",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2F08C6",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F08E0",
+          "target": "0x2EE2C8"
+        },
+        {
+          "pc": "0x2F08E6",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F08EC",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2F08FA",
+          "target": "0x2F2854"
+        },
+        {
+          "pc": "0x2F0918",
+          "target": "0x2F99D0"
+        },
+        {
+          "pc": "0x2F0922",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F092A",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2F0946",
+          "target": "0x2EC9C0"
+        },
+        {
+          "pc": "0x2F094E",
+          "target": "0x2E9318"
+        }
+      ],
+      "predicates": [
+        "0x2F0812: LDR r6,[pc,#0x144] =0x10EC",
+        "0x2F0816: ADD r6, r9",
+        "0x2F083C: LDR r5,[pc,#0x11C] =0x24DF6",
+        "0x2F083E: ADD r5, r15",
+        "0x2F0888: LDR r2,[pc,#0xD4] =0x1A8",
+        "0x2F088E: ADD r2, r9",
+        "0x2F0892: LDR r2,[pc,#0xC4] =0x10EC",
+        "0x2F0896: ADD r2, r9",
+        "0x2F08B0: CMP r1, #0",
+        "0x2F08B2: BEQ -> 0x2F094A",
+        "0x2F08BA: BEQ -> 0x2F08E6",
+        "0x2F08FE: LDR r4,[pc,#0x64] =0x7C8",
+        "0x2F0900: LDR r7,[pc,#0x64] =0x7D0",
+        "0x2F0902: ADD r4, r9",
+        "0x2F0906: ADD r7, r9",
+        "0x2F0908: CMP r0, #0",
+        "0x2F090A: BNE -> 0x2F0922"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2F0812",
+          "off": "0x10EC"
+        },
+        {
+          "pc": "0x2F0888",
+          "off": "0x1A8"
+        },
+        {
+          "pc": "0x2F0892",
+          "off": "0x10EC"
+        },
+        {
+          "pc": "0x2F08FE",
+          "off": "0x7C8"
+        },
+        {
+          "pc": "0x2F0900",
+          "off": "0x7D0"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_2F097A",
+    "writer_pc": "0x2F097A",
+    "caller_pc": "0x2F0D6A",
+    "fn_start": "0x2F0D5C",
+    "fn_end": "0x2F0D72",
+    "upstream_bl_callers": [
+      "0x30E336"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [
+      {
+        "pc": "0x2F0D6A",
+        "target": "0x2F096C"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2F0D6A",
+          "target": "0x2F096C"
+        }
+      ],
+      "predicates": [],
+      "r9_offset_lits": [],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_2F097A",
+    "writer_pc": "0x2F097A",
+    "caller_pc": "0x2F1FF0",
+    "fn_start": "0x2F1FA0",
+    "fn_end": "0x2F2000",
+    "upstream_bl_callers": [
+      "0x306D28"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [
+      {
+        "pc": "0x2F1FF0",
+        "target": "0x2F096C"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2F1FAC",
+          "target": "0x2F5B38"
+        },
+        {
+          "pc": "0x2F1FC0",
+          "target": "0x305E78"
+        },
+        {
+          "pc": "0x2F1FD0",
+          "target": "0x2F9964"
+        },
+        {
+          "pc": "0x2F1FD8",
+          "target": "0x2F9970"
+        },
+        {
+          "pc": "0x2F1FF0",
+          "target": "0x2F096C"
+        },
+        {
+          "pc": "0x2F1FF8",
+          "target": "0x2E9318"
+        }
+      ],
+      "predicates": [
+        "0x2F1FA2: LDR r7,[pc,#0x5C] =0x10EC",
+        "0x2F1FA6: ADD r7, r9",
+        "0x2F1FB6: LDR r0,[pc,#0x4C] =0x23686",
+        "0x2F1FBE: ADD r0, r15",
+        "0x2F1FDC: LDR r2,[pc,#0x20] =0x10EC",
+        "0x2F1FE0: ADD r2, r9"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2F1FA2",
+          "off": "0x10EC"
+        },
+        {
+          "pc": "0x2F1FDC",
+          "off": "0x10EC"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_2FB008",
+    "writer_pc": "0x2FB008",
+    "caller_pc": "0x30D9EE",
+    "fn_start": "0x30D9EE",
+    "fn_end": "0x30E1F0",
+    "upstream_bl_callers": [],
+    "upstream_count": 0,
+    "bl_to_writer": [
+      {
+        "pc": "0x30D9EE",
+        "target": "0x2FAFFC"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x30D9EE",
+          "target": "0x2FAFFC"
+        },
+        {
+          "pc": "0x30D9F8",
+          "target": "0x30B738"
+        },
+        {
+          "pc": "0x30DA00",
+          "target": "0x2F989C"
+        },
+        {
+          "pc": "0x30DA06",
+          "target": "0x2F90E0"
+        },
+        {
+          "pc": "0x30DA12",
+          "target": "0x30FD84"
+        },
+        {
+          "pc": "0x30DA1E",
+          "target": "0x2FC824"
+        },
+        {
+          "pc": "0x30DA28",
+          "target": "0x2F8DF4"
+        },
+        {
+          "pc": "0x30DA30",
+          "target": "0x30FF70"
+        },
+        {
+          "pc": "0x30DA38",
+          "target": "0x30F99C"
+        },
+        {
+          "pc": "0x30DA42",
+          "target": "0x2FFC6C"
+        },
+        {
+          "pc": "0x30DA4A",
+          "target": "0x2FFCA0"
+        },
+        {
+          "pc": "0x30DA56",
+          "target": "0x3000AC"
+        },
+        {
+          "pc": "0x30DA62",
+          "target": "0x2FFC80"
+        },
+        {
+          "pc": "0x30DA68",
+          "target": "0x30B71C"
+        },
+        {
+          "pc": "0x30DA72",
+          "target": "0x2F4AFC"
+        },
+        {
+          "pc": "0x30DA7C",
+          "target": "0x30911C"
+        },
+        {
+          "pc": "0x30DA84",
+          "target": "0x2F59E8"
+        },
+        {
+          "pc": "0x30DA8C",
+          "target": "0x308D58"
+        },
+        {
+          "pc": "0x30DA9E",
+          "target": "0x2F6D4C"
+        },
+        {
+          "pc": "0x30DAC6",
+          "target": "0x2F663C"
+        },
+        {
+          "pc": "0x30DAD4",
+          "target": "0x2EB0E0"
+        },
+        {
+          "pc": "0x30DAE8",
+          "target": "0x2ED8E4"
+        },
+        {
+          "pc": "0x30DAF0",
+          "target": "0x2F93D8"
+        },
+        {
+          "pc": "0x30DAFA",
+          "target": "0x2F89DC"
+        },
+        {
+          "pc": "0x30DB02",
+          "target": "0x2F8F90"
+        },
+        {
+          "pc": "0x30DB0A",
+          "target": "0x3000F4"
+        },
+        {
+          "pc": "0x30DB16",
+          "target": "0x2F8FB0"
+        },
+        {
+          "pc": "0x30DB22",
+          "target": "0x2EFF90"
+        },
+        {
+          "pc": "0x30DB2A",
+          "target": "0x2DB0CC"
+        },
+        {
+          "pc": "0x30DB32",
+          "target": "0x30AC54"
+        },
+        {
+          "pc": "0x30DB3C",
+          "target": "0x310B3C"
+        },
+        {
+          "pc": "0x30DB46",
+          "target": "0x2F5DBC"
+        },
+        {
+          "pc": "0x30DB4E",
+          "target": "0x2F5D2C"
+        },
+        {
+          "pc": "0x30DB54",
+          "target": "0x2F90E4"
+        },
+        {
+          "pc": "0x30DB5E",
+          "target": "0x30ACD4"
+        },
+        {
+          "pc": "0x30DB68",
+          "target": "0x2FFC30"
+        },
+        {
+          "pc": "0x30DB72",
+          "target": "0x2DEDFC"
+        },
+        {
+          "pc": "0x30DB82",
+          "target": "0x2ED06C"
+        },
+        {
+          "pc": "0x30DB94",
+          "target": "0x2E9A00"
+        },
+        {
+          "pc": "0x30DB9A",
+          "target": "0x2FF0FC"
+        }
+      ],
+      "predicates": [
+        "0x30DAA4: CMP r1, #1",
+        "0x30DAA6: BEQ -> 0x30DAB4",
+        "0x30DAA8: CMP r1, #2",
+        "0x30DAAA: BEQ -> 0x30DABA",
+        "0x30DAAC: CMP r1, #4",
+        "0x30DAB0: BNE -> 0x30DAC0",
+        "0x30E0D8: LDR r6,[pc,#0x3A4] =0x858",
+        "0x30E0DA: ADD r6, r9",
+        "0x30E0EA: LDR r1,[pc,#0x394] =0x858",
+        "0x30E0EE: ADD r1, r9",
+        "0x30E13A: LDR r0,[pc,#0x348] =0x10106",
+        "0x30E156: LDR r0,[pc,#0x330] =0x10107"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x30E0D8",
+          "off": "0x858"
+        },
+        {
+          "pc": "0x30E0EA",
+          "off": "0x858"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x30E13C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x30E158",
+          "helper": "0x304558"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_30AA42",
+    "writer_pc": "0x30AA42",
+    "caller_pc": "0x30AF8A",
+    "fn_start": "0x30AED2",
+    "fn_end": "0x30B42C",
+    "upstream_bl_callers": [],
+    "upstream_count": 0,
+    "bl_to_writer": [
+      {
+        "pc": "0x30AF8A",
+        "target": "0x30A9EC"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x30AF0A",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x30AF0E",
+          "target": "0x30B8E4"
+        },
+        {
+          "pc": "0x30AF24",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30AF30",
+          "target": "0x30A424"
+        },
+        {
+          "pc": "0x30AF38",
+          "target": "0x2FA500"
+        },
+        {
+          "pc": "0x30AF3C",
+          "target": "0x30A214"
+        },
+        {
+          "pc": "0x30AF46",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30AF56",
+          "target": "0x30A424"
+        },
+        {
+          "pc": "0x30AF7C",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30AF86",
+          "target": "0x30BDDC"
+        },
+        {
+          "pc": "0x30AF8A",
+          "target": "0x30A9EC"
+        },
+        {
+          "pc": "0x30AF98",
+          "target": "0x30A3B4"
+        },
+        {
+          "pc": "0x30AFA8",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30AFAE",
+          "target": "0x30C7CC"
+        },
+        {
+          "pc": "0x30AFB8",
+          "target": "0x30BAD8"
+        },
+        {
+          "pc": "0x30AFC8",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30AFCE",
+          "target": "0x30CA40"
+        },
+        {
+          "pc": "0x30AFDA",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30AFEC",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30AFF4",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30AFFC",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30B008",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30B010",
+          "target": "0x30ACD4"
+        },
+        {
+          "pc": "0x30B016",
+          "target": "0x2FA500"
+        },
+        {
+          "pc": "0x30B020",
+          "target": "0x2D9600"
+        },
+        {
+          "pc": "0x30B040",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x30B04C",
+          "target": "0x30C538"
+        },
+        {
+          "pc": "0x30B060",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x30B06E",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30B07E",
+          "target": "0x312B88"
+        },
+        {
+          "pc": "0x30B084",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30B08A",
+          "target": "0x30BBF4"
+        },
+        {
+          "pc": "0x30B08E",
+          "target": "0x30B814"
+        },
+        {
+          "pc": "0x30B094",
+          "target": "0x30AC18"
+        },
+        {
+          "pc": "0x30B0A2",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30B0AE",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30B0C0",
+          "target": "0x312AC4"
+        },
+        {
+          "pc": "0x30B0CE",
+          "target": "0x30A928"
+        },
+        {
+          "pc": "0x30B0F0",
+          "target": "0x304558"
+        },
+        {
+          "pc": "0x30B104",
+          "target": "0x312AC4"
+        }
+      ],
+      "predicates": [
+        "0x30AED6: ADD r0, r9",
+        "0x30AEDC: CMP r1, #0",
+        "0x30AEDE: BEQ -> 0x30AFC4",
+        "0x30AEE0: LDR r2,[pc,#0x3D4] =0xC6C",
+        "0x30AEE4: ADD r2, r9",
+        "0x30AEF8: CMP r0, #1",
+        "0x30AEFA: BNE -> 0x30AF0E",
+        "0x30AF08: LDR r0,[pc,#0x3B0] =0x1E204",
+        "0x30AF12: LDR r5,[pc,#0x3A4] =0xC6C",
+        "0x30AF16: ADD r5, r9",
+        "0x30AF20: CMP r0, #0",
+        "0x30AF22: BEQ -> 0x30AF2A",
+        "0x30AF2C: CMP r0, #0",
+        "0x30AF2E: BEQ -> 0x30AF36",
+        "0x30AF42: CMP r0, #0",
+        "0x30AF44: BEQ -> 0x30AF4A",
+        "0x30AF4A: LDR r0,[pc,#0x36C] =0xC6C",
+        "0x30AF4C: ADD r0, r9",
+        "0x30AF52: CMP r0, #0",
+        "0x30AF54: BEQ -> 0x30AF5A",
+        "0x30AF5A: LDR r0,[pc,#0x35C] =0xC6C",
+        "0x30AF5C: LDR r1,[pc,#0x360] =0x1A8",
+        "0x30AF5E: ADD r0, r9",
+        "0x30AF6A: ADD r1, r9",
+        "0x30AF6E: LDR r5,[pc,#0x354] =0xE6C",
+        "0x30AF74: ADD r5, r9",
+        "0x30AF78: CMP r0, #0",
+        "0x30AF7A: BEQ -> 0x30AF80",
+        "0x30AF80: LDR r5,[pc,#0x340] =0xE6C",
+        "0x30AF82: ADD r5, r9"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x30AEE0",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30AF12",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30AF4A",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30AF5A",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30AF5C",
+          "off": "0x1A8"
+        },
+        {
+          "pc": "0x30AF6E",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x30AF80",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x30AF9E",
+          "off": "0x8A0"
+        },
+        {
+          "pc": "0x30AFE0",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x30B044",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30B064",
+          "off": "0xD6C"
+        },
+        {
+          "pc": "0x30B074",
+          "off": "0xF6C"
+        },
+        {
+          "pc": "0x30B098",
+          "off": "0x116C"
+        },
+        {
+          "pc": "0x30B0B2",
+          "off": "0x116C"
+        },
+        {
+          "pc": "0x30B0C6",
+          "off": "0xB7D"
+        },
+        {
+          "pc": "0x30B0D2",
+          "off": "0xC6C"
+        },
+        {
+          "pc": "0x30B0F4",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x30B12C",
+          "off": "0xE6C"
+        },
+        {
+          "pc": "0x30B136",
+          "off": "0xF6C"
+        },
+        {
+          "pc": "0x30B146",
+          "off": "0x116C"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x30AF0A",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x30B040",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x30B060",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x30B0F0",
+          "helper": "0x304558"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C9D_30AA42",
+    "writer_pc": "0x30AA42",
+    "caller_pc": "0x30DF78",
+    "fn_start": "0x30DF78",
+    "fn_end": "0x30E550",
+    "upstream_bl_callers": [],
+    "upstream_count": 0,
+    "bl_to_writer": [
+      {
+        "pc": "0x30DF78",
+        "target": "0x30A9EC"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x30DF78",
+          "target": "0x30A9EC"
+        },
+        {
+          "pc": "0x30DF82",
+          "target": "0x30C8A4"
+        },
+        {
+          "pc": "0x30DF8C",
+          "target": "0x2F007C"
+        },
+        {
+          "pc": "0x30DF94",
+          "target": "0x2F95B0"
+        },
+        {
+          "pc": "0x30DFA0",
+          "target": "0x2F6CFC"
+        },
+        {
+          "pc": "0x30DFA8",
+          "target": "0x2F8F84"
+        },
+        {
+          "pc": "0x30DFB4",
+          "target": "0x2FF8C8"
+        },
+        {
+          "pc": "0x30DFBC",
+          "target": "0x30CB8C"
+        },
+        {
+          "pc": "0x30DFC8",
+          "target": "0x2F5A14"
+        },
+        {
+          "pc": "0x30DFD0",
+          "target": "0x2D9CBC"
+        },
+        {
+          "pc": "0x30DFDA",
+          "target": "0x2F937C"
+        },
+        {
+          "pc": "0x30DFE2",
+          "target": "0x2FF890"
+        },
+        {
+          "pc": "0x30DFE8",
+          "target": "0x30A8B0"
+        },
+        {
+          "pc": "0x30DFF4",
+          "target": "0x30AC18"
+        },
+        {
+          "pc": "0x30DFFC",
+          "target": "0x30B814"
+        },
+        {
+          "pc": "0x30E004",
+          "target": "0x30B6DC"
+        },
+        {
+          "pc": "0x30E00C",
+          "target": "0x30BBF4"
+        },
+        {
+          "pc": "0x30E016",
+          "target": "0x2FA500"
+        },
+        {
+          "pc": "0x30E022",
+          "target": "0x30F50C"
+        },
+        {
+          "pc": "0x30E02A",
+          "target": "0x2F2478"
+        },
+        {
+          "pc": "0x30E036",
+          "target": "0x2DAAD8"
+        },
+        {
+          "pc": "0x30E040",
+          "target": "0x310C5C"
+        },
+        {
+          "pc": "0x30E04A",
+          "target": "0x30F044"
+        },
+        {
+          "pc": "0x30E054",
+          "target": "0x2FB360"
+        },
+        {
+          "pc": "0x30E05C",
+          "target": "0x30A928"
+        },
+        {
+          "pc": "0x30E066",
+          "target": "0x2F5074"
+        },
+        {
+          "pc": "0x30E06E",
+          "target": "0x2D9C88"
+        },
+        {
+          "pc": "0x30E076",
+          "target": "0x2D9C54"
+        },
+        {
+          "pc": "0x30E080",
+          "target": "0x310258"
+        },
+        {
+          "pc": "0x30E088",
+          "target": "0x2F1600"
+        },
+        {
+          "pc": "0x30E092",
+          "target": "0x2F2454"
+        },
+        {
+          "pc": "0x30E09C",
+          "target": "0x2F97B8"
+        },
+        {
+          "pc": "0x30E0A4",
+          "target": "0x2EA234"
+        },
+        {
+          "pc": "0x30E0AE",
+          "target": "0x305DE8"
+        },
+        {
+          "pc": "0x30E0C8",
+          "target": "0x2EE0F4"
+        },
+        {
+          "pc": "0x30E0D2",
+          "target": "0x2F99A4"
+        },
+        {
+          "pc": "0x30E0E2",
+          "target": "0x30E55C"
+        },
+        {
+          "pc": "0x30E102",
+          "target": "0x3130D0"
+        },
+        {
+          "pc": "0x30E10C",
+          "target": "0x2FBFB4"
+        },
+        {
+          "pc": "0x30E118",
+          "target": "0x30E7F8"
+        }
+      ],
+      "predicates": [
+        "0x30E0D8: LDR r6,[pc,#0x3A4] =0x858",
+        "0x30E0DA: ADD r6, r9",
+        "0x30E0EA: LDR r1,[pc,#0x394] =0x858",
+        "0x30E0EE: ADD r1, r9",
+        "0x30E13A: LDR r0,[pc,#0x348] =0x10106",
+        "0x30E156: LDR r0,[pc,#0x330] =0x10107",
+        "0x30E214: CMP r1, #1",
+        "0x30E216: BEQ -> 0x30E220",
+        "0x30E218: CMP r1, #2",
+        "0x30E21A: BNE -> 0x30E224",
+        "0x30E236: LDR r0,[pc,#0x248] =0x858",
+        "0x30E238: ADD r0, r9",
+        "0x30E242: LDR r4,[pc,#0x23C] =0x858",
+        "0x30E244: ADD r4, r9",
+        "0x30E4F8: LDR r0,[pc,#0x54] =0x820",
+        "0x30E4FA: ADD r0, r9",
+        "0x30E518: CMP r4, #0",
+        "0x30E51A: BLE -> 0x30E54E",
+        "0x30E522: LDR r6,[pc,#0x30] =0xB5C",
+        "0x30E524: LDR r1,[pc,#0x30] =0xB60",
+        "0x30E526: ADD r6, r9",
+        "0x30E52E: ADD r1, r9"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x30E0D8",
+          "off": "0x858"
+        },
+        {
+          "pc": "0x30E0EA",
+          "off": "0x858"
+        },
+        {
+          "pc": "0x30E236",
+          "off": "0x858"
+        },
+        {
+          "pc": "0x30E242",
+          "off": "0x858"
+        },
+        {
+          "pc": "0x30E4F8",
+          "off": "0x820"
+        },
+        {
+          "pc": "0x30E522",
+          "off": "0xB5C"
+        },
+        {
+          "pc": "0x30E524",
+          "off": "0xB60"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x30E13C",
+          "helper": "0x304558"
+        },
+        {
+          "pc": "0x30E158",
+          "helper": "0x304558"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2FB286",
+    "writer_pc": "0x2FB286",
+    "caller_pc": "0x2DA64A",
+    "fn_start": "0x2DA624",
+    "fn_end": "0x2DA650",
+    "upstream_bl_callers": [],
+    "upstream_count": 0,
+    "bl_to_writer": [
+      {
+        "pc": "0x2DA64A",
+        "target": "0x2FB248"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2DA63C",
+          "target": "0x305604"
+        },
+        {
+          "pc": "0x2DA64A",
+          "target": "0x2FB248"
+        }
+      ],
+      "predicates": [
+        "0x2DA628: ADD r1, r9",
+        "0x2DA62C: ADD r2, r9",
+        "0x2DA634: LDR r0,[pc,#0x18] =0x7D8",
+        "0x2DA636: ADD r0, r9",
+        "0x2DA640: LDR r0,[pc,#0x14] =0x8D8",
+        "0x2DA642: ADD r0, r9",
+        "0x2DA646: LDR r0,[pc,#0x14] =0x394EC",
+        "0x2DA648: ADD r0, r15"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2DA634",
+          "off": "0x7D8"
+        },
+        {
+          "pc": "0x2DA640",
+          "off": "0x8D8"
+        }
+      ],
+      "plat_helpers": [
+        {
+          "pc": "0x2DA63C",
+          "helper": "0x305604"
+        }
+      ]
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2FB286",
+    "writer_pc": "0x2FB286",
+    "caller_pc": "0x2DE7EC",
+    "fn_start": "0x2DE7BC",
+    "fn_end": "0x2DE7F8",
+    "upstream_bl_callers": [
+      "0x2E4076"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [
+      {
+        "pc": "0x2DE7EC",
+        "target": "0x2FB248"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x2DE7D4",
+          "target": "0x308DE8"
+        },
+        {
+          "pc": "0x2DE7E0",
+          "target": "0x30A0CC"
+        },
+        {
+          "pc": "0x2DE7EC",
+          "target": "0x2FB248"
+        },
+        {
+          "pc": "0x2DE7F2",
+          "target": "0x305E08"
+        }
+      ],
+      "predicates": [
+        "0x2DE7BE: LDR r7,[pc,#0x38] =0xB5C",
+        "0x2DE7C4: LDR r5,[pc,#0x34] =0xB60",
+        "0x2DE7C6: ADD r7, r9",
+        "0x2DE7CC: ADD r5, r9",
+        "0x2DE7E6: BEQ -> 0x2DE7F6"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x2DE7BE",
+          "off": "0xB5C"
+        },
+        {
+          "pc": "0x2DE7C4",
+          "off": "0xB60"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  },
+  {
+    "tag": "C44_2FB286",
+    "writer_pc": "0x2FB286",
+    "caller_pc": "0x30FCEE",
+    "fn_start": "0x30FCAC",
+    "fn_end": "0x30FCF4",
+    "upstream_bl_callers": [
+      "0x2DC9CE"
+    ],
+    "upstream_count": 1,
+    "bl_to_writer": [
+      {
+        "pc": "0x30FCEE",
+        "target": "0x2FB248"
+      }
+    ],
+    "body": {
+      "bl_targets": [
+        {
+          "pc": "0x30FCD4",
+          "target": "0x30EB38"
+        },
+        {
+          "pc": "0x30FCDC",
+          "target": "0x305E08"
+        },
+        {
+          "pc": "0x30FCEE",
+          "target": "0x2FB248"
+        }
+      ],
+      "predicates": [
+        "0x30FCAE: LDR r5,[pc,#0x44] =0xB64",
+        "0x30FCB0: ADD r5, r9",
+        "0x30FCB4: CMP r0, #0",
+        "0x30FCB6: BEQ -> 0x30FCF2",
+        "0x30FCB8: LDR r7,[pc,#0x3C] =0xB68",
+        "0x30FCBC: ADD r7, r9",
+        "0x30FCC0: CMP r1, #0",
+        "0x30FCC2: BLE -> 0x30FCCA",
+        "0x30FCC4: LDR r2,[pc,#0x34] =0xB7D",
+        "0x30FCC6: ADD r2, r9",
+        "0x30FCE4: CMP r4, #0",
+        "0x30FCE6: BNE -> 0x30FCF2",
+        "0x30FCE8: LDR r0,[pc,#0x14] =0x3F60",
+        "0x30FCEC: ADD r0, r15"
+      ],
+      "r9_offset_lits": [
+        {
+          "pc": "0x30FCAE",
+          "off": "0xB64"
+        },
+        {
+          "pc": "0x30FCB8",
+          "off": "0xB68"
+        },
+        {
+          "pc": "0x30FCC4",
+          "off": "0xB7D"
+        }
+      ],
+      "plat_helpers": []
+    },
+    "evidence": "TARGET_OBSERVED"
+  }
+]

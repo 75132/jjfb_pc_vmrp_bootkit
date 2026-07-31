@@ -1,0 +1,343 @@
+# E8F writer callpath xref
+code_base=0x2D8DF4
+ext=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\JJFB_E8A_delivery\02_mrp_extracted\jjfb\robotol.ext
+
+## C44
+
+### writer 0x2E87F2
+- store: `STR r1,[r3,#0xC]` kind=STR
+- function: `0x2E87B4` .. `0x2E87F8` size=0x44
+- BL callers (1): 0x3066B8
+- prior predicates:
+  - 0x2E87D0: MOVS r6, #0
+  - 0x2E87D4: ADD r7, r15
+  - 0x2E87D6: LDR r0,[pc,#0xA8] =0xC44
+  - 0x2E87D8: LDR r2,[pc,#0xAC] =0x8D0
+  - 0x2E87DA: ADD r0, r9
+  - 0x2E87DE: ADD r2, r9
+  - 0x2E87E4: CMP r2, #69
+  - 0x2E87E6: BNE -> 0x2E8800
+  - 0x2E87E8: LDR r3,[pc,#0x94] =0xC44
+  - 0x2E87EA: ADD r3, r9
+  - 0x2E87EE: CMP r2, #0
+  - 0x2E87F0: BNE -> 0x2E87F8
+
+### writer 0x2F4E82
+- store: `STRB r4,[r0,#0x0]` kind=STRB
+- function: `0x2F4E64` .. `0x2F4EAC` size=0x48
+- BL callers (2): 0x302340, 0x302362
+- prior predicates:
+  - 0x2F4E66: LDR r0,[pc,#0x44] =0xC6C
+  - 0x2F4E68: MOVS r4, #0
+  - 0x2F4E6A: MOVS r1, #34
+  - 0x2F4E6C: ADD r0, r9
+  - 0x2F4E70: MOVS r1, #67
+  - 0x2F4E76: MOVS r3, #87
+  - 0x2F4E7A: CMP r0, #0
+  - 0x2F4E7C: BNE -> 0x2F4E84
+  - 0x2F4E7E: LDR r0,[pc,#0x30] =0xC44
+  - 0x2F4E80: ADD r0, r9
+
+### writer 0x2F7F56
+- store: `STR r0,[r1,#0x0]` kind=STR
+- function: `0x2F7F56` .. `0x2F7F5E` size=0x8
+- BL callers (0): none
+- prior predicates:
+  - 0x2F7F36: BEQ -> 0x2F7F3C
+  - 0x2F7F38: MOVS r0, #4
+  - 0x2F7F3C: LDR r0,[pc,#0x288] =0x1048
+  - 0x2F7F3E: ADD r0, r9
+  - 0x2F7F42: CMP r1, #0
+  - 0x2F7F44: BEQ -> 0x2F7F4A
+  - 0x2F7F46: MOVS r0, #1
+  - 0x2F7F4A: LDR r0,[pc,#0x280] =0xC44
+  - 0x2F7F4C: ADD r0, r9
+  - 0x2F7F50: CMP r1, #0
+  - 0x2F7F52: BEQ -> 0x2F7F58
+  - 0x2F7F54: MOVS r0, #4
+
+### writer 0x2FB286
+- store: `STRB r7,[r0,#0x0]` kind=STRB
+- function: `0x2FB248` .. `0x2FB2FA` size=0xB2
+- BL callers (3): 0x2DA64A, 0x2DE7EC, 0x30FCEE
+- prior predicates:
+  - 0x2FB264: LDR r0,[pc,#0x9C] =0xC74
+  - 0x2FB266: ADD r0, r9
+  - 0x2FB26A: LDR r0,[pc,#0x9C] =0xC72
+  - 0x2FB26C: ADD r0, r9
+  - 0x2FB270: LDR r0,[pc,#0x98] =0xC6C
+  - 0x2FB272: ADD r0, r9
+  - 0x2FB276: LDR r0,[pc,#0x98] =0xC7B
+  - 0x2FB278: ADD r0, r9
+  - 0x2FB27C: LDR r0,[pc,#0x94] =0xCF1
+  - 0x2FB27E: ADD r0, r9
+  - 0x2FB282: LDR r0,[pc,#0x94] =0xC44
+  - 0x2FB284: ADD r0, r9
+
+### writer 0x2FC8CA
+- store: `STR r0,[r1,#0x4]` kind=STR
+- function: `0x2FC8C0` .. `0x2FC8D8` size=0x18
+- BL callers (9): 0x2DB9DC, 0x2E4840, 0x2E48BC, 0x2E4932, 0x2E49A8, 0x2E4A16, 0x2E4A90, 0x2E4B06
+- prior predicates:
+  - 0x2FC8A2: BL -> 0x2F5B38
+  - 0x2FC8A8: BL -> 0x30E55C
+  - 0x2FC8AC: LDR r1,[pc,#0xC] =0x8D0
+  - 0x2FC8AE: MOVS r0, #255
+  - 0x2FC8B2: ADD r1, r9
+  - 0x2FC8C2: BL -> 0x3046A8
+  - 0x2FC8C6: LDR r1,[pc,#0x10] =0xC44
+  - 0x2FC8C8: ADD r1, r9
+
+### writer 0x2FEDFA
+- store: `STRB r0,[r7,#0xA]` kind=STRB
+- function: `0x2FED14` .. `0x2FF09C` size=0x388
+- BL callers (1): 0x2FC048
+- prior predicates:
+  - 0x2FEDD2: CMP r0, #0
+  - 0x2FEDD4: BEQ -> 0x2FEDE2
+  - 0x2FEDDA: BL -> 0x305E08
+  - 0x2FEDDE: MOVS r0, #0
+  - 0x2FEDE2: LDR r1,[pc,#0x2DC] =0x106C
+  - 0x2FEDE4: MOVS r0, #0
+  - 0x2FEDE6: ADD r1, r9
+  - 0x2FEDEA: LDR r1,[pc,#0x2D8] =0xD6C
+  - 0x2FEDEC: LDR r6,[pc,#0x2AC] =0xC6C
+  - 0x2FEDEE: ADD r1, r9
+  - 0x2FEDF4: LDR r2,[pc,#0x2D0] =0xC44
+  - 0x2FEDF6: ADD r6, r9
+
+### writer 0x2FEE4E
+- store: `STRB r0,[r2,#0x0]` kind=STRB
+- function: `0x2FED14` .. `0x2FF09C` size=0x388
+- BL callers (1): 0x2FC048
+- prior predicates:
+  - 0x2FEE28: MOVS r0, #0
+  - 0x2FEE2A: LDR r2,[pc,#0x270] =0xC6C
+  - 0x2FEE2E: ADD r2, r9
+  - 0x2FEE38: LDR r3,[pc,#0x27C] =0x1A8
+  - 0x2FEE3E: MOVS r2, #1
+  - 0x2FEE40: ADD r3, r9
+  - 0x2FEE44: LDR r2,[pc,#0x284] =0xC48
+  - 0x2FEE46: ADD r2, r9
+  - 0x2FEE4A: LDR r2,[pc,#0x27C] =0xC44
+  - 0x2FEE4C: ADD r2, r9
+
+### writer 0x30CC72
+- store: `STRB r1,[r0,#0x0]` kind=STRB
+- function: `0x30CBBC` .. `0x30D074` size=0x4B8
+- BL callers (1): 0x30E15E
+- prior predicates:
+  - 0x30CC50: LDR r2,[pc,#0x204] =0xBC0
+  - 0x30CC52: ADD r2, r9
+  - 0x30CC56: LDR r2,[pc,#0x204] =0xBC4
+  - 0x30CC58: ADD r2, r9
+  - 0x30CC5C: LDR r2,[pc,#0x200] =0xBC8
+  - 0x30CC5E: ADD r2, r9
+  - 0x30CC64: LDR r0,[pc,#0x1FC] =0xDDC
+  - 0x30CC66: LDR r2,[pc,#0x218] =0x1E8
+  - 0x30CC68: ADD r0, r9
+  - 0x30CC6C: LDR r0,[pc,#0x1F8] =0xC44
+  - 0x30CC6E: ADD r2, r9
+  - 0x30CC70: ADD r0, r9
+
+### writer 0x311C3E
+- store: `STRB r5,[r0,#0x0]` kind=STRB
+- function: `0x311C2A` .. `0x311C9C` size=0x72
+- BL callers (0): none
+- prior predicates:
+  - 0x311C28: LDR r2,[pc,#0x260] =0xCEC
+  - 0x311C2C: ADD r2, r9
+  - 0x311C32: CMP r0, #0
+  - 0x311C34: BNE -> 0x311C98
+  - 0x311C36: LDR r0,[pc,#0x258] =0xC44
+  - 0x311C38: LDR r1,[pc,#0x250] =0xCEC
+  - 0x311C3A: MOVS r5, #0
+  - 0x311C3C: ADD r0, r9
+
+## C9D
+
+### writer 0x2E3A68
+- store: `STRB r0,[r1,#0x0]` kind=STRB
+- function: `0x2E3A68` .. `0x2E3E6A` size=0x402
+- BL callers (0): none
+- prior predicates:
+  - 0x2E3A48: ADD r0, r9
+  - 0x2E3A4C: CMP r0, #0
+  - 0x2E3A4E: BNE -> 0x2E3A6C
+  - 0x2E3A50: BL -> 0x2FA4B4
+  - 0x2E3A54: BL -> 0x2DA3C8
+  - 0x2E3A58: LDR r0,[pc,#0x2A0] =0x30788
+  - 0x2E3A5A: MOVS r1, #0
+  - 0x2E3A5C: ADD r0, r15
+  - 0x2E3A5E: BL -> 0x2FAF04
+  - 0x2E3A62: LDR r1,[pc,#0x29C] =0xC9C
+  - 0x2E3A64: MOVS r0, #1
+  - 0x2E3A66: ADD r1, r9
+
+### writer 0x2F097A
+- store: `STRB r1,[r0,#0xB]` kind=STRB
+- function: `0x2F096C` .. `0x2F0BE4` size=0x278
+- BL callers (4): 0x2EFF1C, 0x2F08A4, 0x2F0D6A, 0x2F1FF0
+- prior predicates:
+  - 0x2F095C: LDR r5,[pc,#0x3D8] =0x98059A0F
+  - 0x2F0970: LDR r0,[pc,#0x270] =0xC9C
+  - 0x2F0974: ADD r0, r9
+  - 0x2F0978: MOVS r1, #1
+
+### writer 0x2F7772
+- store: `STR r0,[r1,#0x0]` kind=STR
+- function: `0x2F7772` .. `0x2F777A` size=0x8
+- BL callers (0): none
+- prior predicates:
+  - 0x2F7752: BEQ -> 0x2F7758
+  - 0x2F7754: MOVS r0, #4
+  - 0x2F7758: LDR r0,[pc,#0x18C] =0xDC0
+  - 0x2F775A: ADD r0, r9
+  - 0x2F775E: CMP r1, #0
+  - 0x2F7760: BEQ -> 0x2F7766
+  - 0x2F7762: MOVS r0, #1
+  - 0x2F7766: LDR r0,[pc,#0x184] =0xC9C
+  - 0x2F7768: ADD r0, r9
+  - 0x2F776C: CMP r1, #0
+  - 0x2F776E: BEQ -> 0x2F7774
+  - 0x2F7770: MOVS r0, #4
+
+### writer 0x2FB008
+- store: `STRB r0,[r1,#0x0]` kind=STRB
+- function: `0x2FAFFC` .. `0x2FB00C` size=0x10
+- BL callers (1): 0x30D9EE
+- prior predicates:
+  - 0x2FAFFE: BL -> 0x2FAF04
+  - 0x2FB002: LDR r1,[pc,#0x8] =0xC9C
+  - 0x2FB004: MOVS r0, #1
+  - 0x2FB006: ADD r1, r9
+
+### writer 0x307796
+- store: `STRB r0,[r1,#0x2]` kind=STRB
+- function: `0x307788` .. `0x3077BC` size=0x34
+- BL callers (1): 0x2E5454
+- prior predicates:
+  - 0x30778A: MOVS r0, #0
+  - 0x30778C: BL -> 0x30C030
+  - 0x307790: LDR r1,[pc,#0x28] =0xC9C
+  - 0x307792: MOVS r0, #0
+  - 0x307794: ADD r1, r9
+
+### writer 0x30AA42
+- store: `STR r4,[r6,#0x8]` kind=STR
+- function: `0x30A9EC` .. `0x30AA52` size=0x66
+- BL callers (2): 0x30AF8A, 0x30DF78
+- prior predicates:
+  - 0x30AA1C: BL -> 0x312B88
+  - 0x30AA22: BL -> 0x305E08
+  - 0x30AA28: CMP r0, #0
+  - 0x30AA2A: BEQ -> 0x30AA30
+  - 0x30AA2C: BL -> 0x305E08
+  - 0x30AA30: MOVS r4, #0
+  - 0x30AA38: CMP r0, #0
+  - 0x30AA3A: BEQ -> 0x30AA40
+  - 0x30AA3C: BL -> 0x30A424
+  - 0x30AA40: LDR r0,[pc,#0x14] =0xC9C
+
+### writer 0x3115B4
+- store: `STR r7,[r4,#0x4]` kind=STR
+- function: `0x311546` .. `0x31164C` size=0x106
+- BL callers (0): none
+- prior predicates:
+  - 0x31158C: CMP r0, #0
+  - 0x31158E: BEQ -> 0x311594
+  - 0x311590: BL -> 0x30A424
+  - 0x311596: CMP r0, #0
+  - 0x311598: BEQ -> 0x31159E
+  - 0x31159A: BL -> 0x305E08
+  - 0x3115A2: CMP r0, #0
+  - 0x3115A4: BEQ -> 0x3115B0
+  - 0x3115A6: BL -> 0x312B88
+  - 0x3115AC: BL -> 0x305E08
+  - 0x3115B2: LDR r0,[pc,#0x60] =0xC9C
+
+### writer 0x2D9B68
+- store: `BL -> 0x304558` kind=BL
+- function: `0x2D9AF8` .. `0x2D9B76` size=0x7E
+- BL callers (11): 0x2DB48E, 0x2DB4B2, 0x2DB4C0, 0x2DB86C, 0x2DC2F2, 0x2DC6C4, 0x2DF7FA, 0x2E4C7E
+- prior predicates:
+  - 0x2D9B44: MOVS r0, #1
+  - 0x2D9B46: ADD r1, r9
+  - 0x2D9B4A: BL -> 0x3116B4
+  - 0x2D9B4E: LDR r0,[pc,#0x30] =0xCCC
+  - 0x2D9B50: MOVS r3, #0
+  - 0x2D9B52: ADD r0, r9
+  - 0x2D9B56: CMP r0, #1
+  - 0x2D9B58: BNE -> 0x2D9B6C
+  - 0x2D9B5A: MOVS r1, #0
+  - 0x2D9B5C: MOVS r2, #0
+  - 0x2D9B62: MOVS r1, #27
+  - 0x2D9B66: LDR r0,[pc,#0x1C] =0x1E217
+
+### writer 0x2D9CE6
+- store: `BL -> 0x2D9648` kind=BL
+- function: `0x2D9CBC` .. `0x2D9D12` size=0x56
+- BL callers (10): 0x2D9DE2, 0x2DB47E, 0x2DC300, 0x2DE158, 0x2E4BFE, 0x2E4D34, 0x2E5062, 0x2E54A6
+- prior predicates:
+  - 0x2D9CC0: BEQ -> 0x2D9D10
+  - 0x2D9CC2: LDR r6,[pc,#0x50] =0x3A9EC
+  - 0x2D9CC4: ADD r6, r15
+  - 0x2D9CC6: LDR r2,[pc,#0x50] =0x143C
+  - 0x2D9CCA: ADD r2, r9
+  - 0x2D9CD2: CMP r0, #0
+  - 0x2D9CD4: BEQ -> 0x2D9D10
+  - 0x2D9CD6: LDR r5,[pc,#0x44] =0xC6C
+  - 0x2D9CD8: MOVS r0, #87
+  - 0x2D9CDA: ADD r5, r9
+  - 0x2D9CDE: CMP r0, #1
+  - 0x2D9CE0: BEQ -> 0x2D9D10
+
+### writer 0x2DBA82
+- store: `BL -> 0x312A60` kind=BL
+- function: `0x2DBA38` .. `0x2DBA8C` size=0x54
+- BL callers (1): 0x2DB58A
+- prior predicates:
+  - 0x2DBA5A: BL -> 0x2D9648
+  - 0x2DBA62: LDR r1,[pc,#0x5C] =0x38C4C
+  - 0x2DBA64: ADD r1, r15
+  - 0x2DBA68: BL -> 0x2D9648
+  - 0x2DBA6E: LDR r7,[pc,#0x54] =0xC6C
+  - 0x2DBA70: MOVS r0, #76
+  - 0x2DBA72: ADD r7, r9
+  - 0x2DBA76: CMP r0, #1
+  - 0x2DBA78: BNE -> 0x2DBA8C
+  - 0x2DBA7A: LDR r0,[pc,#0x4C] =0xFEC
+  - 0x2DBA7E: ADD r0, r9
+
+## CF5
+
+### writer 0x2E7DBC
+- store: `STR r1,[r5,#0x0]` kind=STR
+- function: `0x2E7DA8` .. `0x2E7DF6` size=0x4E
+- BL callers (1): 0x2E32A2
+- prior predicates:
+  - 0x2E7DAA: LDR r6,[pc,#0x4C] =0xB5C
+  - 0x2E7DB0: LDR r5,[pc,#0x48] =0xB60
+  - 0x2E7DB2: ADD r6, r9
+  - 0x2E7DB6: MOVS r1, #0
+  - 0x2E7DB8: LDR r2,[pc,#0x44] =0xCF5
+  - 0x2E7DBA: ADD r5, r9
+
+### writer 0x2F7F2C
+- store: `STR r0,[r1,#0x0]` kind=STR
+- function: `0x2F7F2C` .. `0x2F7F34` size=0x8
+- BL callers (0): none
+- prior predicates:
+  - 0x2F7F0C: BEQ -> 0x2F7F12
+  - 0x2F7F0E: MOVS r0, #4
+  - 0x2F7F12: LDR r0,[pc,#0x2A8] =0x11C4
+  - 0x2F7F14: ADD r0, r9
+  - 0x2F7F18: CMP r1, #0
+  - 0x2F7F1A: BEQ -> 0x2F7F20
+  - 0x2F7F1C: MOVS r0, #1
+  - 0x2F7F20: LDR r0,[pc,#0x29C] =0xCF5
+  - 0x2F7F22: ADD r0, r9
+  - 0x2F7F26: CMP r1, #0
+  - 0x2F7F28: BEQ -> 0x2F7F2E
+  - 0x2F7F2A: MOVS r0, #1
+

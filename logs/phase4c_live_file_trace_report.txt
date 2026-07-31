@@ -1,0 +1,10 @@
+﻿Phase 4C live file trace
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+seconds=6
+bind_evidence=PASS missing GuestVFS/gwy_vm_file bind log
+jjfb_package_hit=PASS jjfb.mrp HIT via canonical or member-view generated missing
+sdk_key_generated=PASS sdk_key generated HIT not found
+no_cwd_sdk_key=PASS cwd mythroad/sdk_key.dat must not exist: C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\mythroad\sdk_key.dat
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+failfast_unbound=PASS plain+GWY_LAUNCH should fail-fast
+stdout=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\logs\phase4c_live_file_trace_stdout.txt

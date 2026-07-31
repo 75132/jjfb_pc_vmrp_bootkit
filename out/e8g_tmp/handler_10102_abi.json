@@ -1,0 +1,27 @@
+{
+  "handler": "0x30D301",
+  "fn_start": "0x30D300",
+  "fn_end": "0x30D5E0",
+  "cmp_sites": [],
+  "bl_to_bootstrap": [],
+  "body_summary": {
+    "bl_targets": [
+      {
+        "pc": "0x30D320",
+        "target": "0x30E4EC"
+      },
+      {
+        "pc": "0x30D5D8",
+        "target": "0x2F6CA8"
+      }
+    ],
+    "predicates": [
+      "0x30D314: BCS -> 0x30D320",
+      "0x30D31E: ADD r15, r3"
+    ],
+    "r9_offset_lits": [],
+    "plat_helpers": []
+  },
+  "note": "ZERO_ARGS insufficient; need case index from R0/R1 before firing",
+  "evidence": "TARGET_OBSERVED"
+}

@@ -176,44 +176,6 @@ LauncherStatus gwy_launch_spawn_vmrp_ex(const LaunchDescriptor *desc,
         printf("[JJFB_RUNAPP] source=descriptor_launcher target=%s spawned=ok "
                "pid=%lu evidence=DOCUMENTED\n",
                desc->target_mrp, (unsigned long)pi.dwProcessId);
-        /* Exact PID for Layer-1 gate (never match by process name). */
-        {
-            char proc_json[VFS_PATH_MAX];
-            char exe_json[VFS_PATH_MAX];
-            char root_json[VFS_PATH_MAX];
-            FILE *pf;
-            SYSTEMTIME stime;
-            size_t i, j;
-            GetLocalTime(&stime);
-            /* JSON-escape paths: backslash -> forward slash for stable parse. */
-            for (i = 0, j = 0; vmrp_exe[i] && j + 1 < sizeof(exe_json); i++) {
-                char c = vmrp_exe[i];
-                exe_json[j++] = (c == '\\') ? '/' : c;
-            }
-            exe_json[j] = 0;
-            for (i = 0, j = 0; desc->resource_root[i] && j + 1 < sizeof(root_json); i++) {
-                char c = desc->resource_root[i];
-                root_json[j++] = (c == '\\') ? '/' : c;
-            }
-            root_json[j] = 0;
-            snprintf(proc_json, sizeof(proc_json), "%s/runtime_process.json", vmrp_cwd);
-            pf = fopen(proc_json, "wb");
-            if (pf) {
-                fprintf(pf,
-                        "{\n"
-                        "  \"launcher_pid\": %lu,\n"
-                        "  \"runtime_pid\": %lu,\n"
-                        "  \"runtime_exe\": \"%s\",\n"
-                        "  \"resource_root\": \"%s\",\n"
-                        "  \"started_at\": \"%04u-%02u-%02uT%02u:%02u:%02u\"\n"
-                        "}\n",
-                        (unsigned long)GetCurrentProcessId(),
-                        (unsigned long)pi.dwProcessId, exe_json, root_json,
-                        (unsigned)stime.wYear, (unsigned)stime.wMonth, (unsigned)stime.wDay,
-                        (unsigned)stime.wHour, (unsigned)stime.wMinute, (unsigned)stime.wSecond);
-                fclose(pf);
-            }
-        }
         return L_OK;
     }
 #else

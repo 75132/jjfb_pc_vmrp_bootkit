@@ -1,6 +1,5 @@
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/ext_entry_observe.h"
-#include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/ext_r9_scope_audit.h"
 #include "gwy_launcher/ext_callback_frame.h"
@@ -374,25 +373,6 @@ int module_r9_switch_enter_ex(void *uc, uint64_t caller_module_id, uint64_t call
     fr->owner_scope_id = scope_id;
     fr->caller_module_id = caller_module_id;
     fr->callee_module_id = callee_module_id;
-    /*
-     * P21: before nesting into DSM/cfunction, sanitize caller's saved R9.
-     * If gamelist already holds a foreign (parent) ERW, do not freeze that poison
-     * into the frame — leave would otherwise restore it forever.
-     */
-    if (caller && caller->data.start_of_er_rw) {
-        const char *cn = caller->resolved_name[0] ? caller->resolved_name : caller->requested_name;
-        if (cn && strstr(cn, "gamelist") && cur_r9 && cur_r9 != caller->data.start_of_er_rw &&
-            cur_r9 != 0x280400u &&
-            !(cur_r9 + 4u == caller->data.start_of_er_rw ||
-              caller->data.start_of_er_rw + 4u == cur_r9)) {
-            printf("[R9_SWITCH] stage=SANITIZE_SAVED_R9 module=%s old=0x%X new=0x%X "
-                   "evidence=OBSERVED note=refuse_foreign_parent_erw\n",
-                   cn, cur_r9, caller->data.start_of_er_rw);
-            fflush(stdout);
-            cur_r9 = caller->data.start_of_er_rw;
-            (void)guest_memory_uc_write_r9((struct uc_struct *)uc, cur_r9);
-        }
-    }
     fr->saved_r9 = cur_r9;
     fr->callee_r9 = new_r9;
     fr->call_kind = call_kind;
@@ -528,21 +508,6 @@ int module_r9_switch_leave_scope(void *uc, const ModuleR9Scope *scope, const cha
     caller = reg ? module_registry_find_by_id(reg, fr->caller_module_id) : NULL;
     callee = reg ? module_registry_find_by_id(reg, fr->callee_module_id) : NULL;
 
-    /* P21: never restore a foreign parent ERW into gamelist after DSM leave. */
-    if (caller && caller->data.start_of_er_rw) {
-        const char *cn = caller->resolved_name[0] ? caller->resolved_name : caller->requested_name;
-        if (cn && strstr(cn, "gamelist") && fr->saved_r9 &&
-            fr->saved_r9 != caller->data.start_of_er_rw && fr->saved_r9 != 0x280400u &&
-            !(fr->saved_r9 + 4u == caller->data.start_of_er_rw ||
-              caller->data.start_of_er_rw + 4u == fr->saved_r9)) {
-            printf("[R9_SWITCH] stage=SANITIZE_LEAVE_R9 module=%s old=0x%X new=0x%X "
-                   "evidence=OBSERVED note=refuse_foreign_parent_erw\n",
-                   cn, fr->saved_r9, caller->data.start_of_er_rw);
-            fflush(stdout);
-            fr->saved_r9 = caller->data.start_of_er_rw;
-        }
-    }
-
     memset(&audit, 0, sizeof(audit));
     audit.reason = GWY_R9_WRITE_MODULE_R9_SWITCH_LEAVE;
     audit.frame_id = fr->frame_id;
@@ -575,7 +540,6 @@ int module_r9_switch_leave_scope(void *uc, const ModuleR9Scope *scope, const cha
            gwy_module_call_kind_name(fr->call_kind), gwy_r9_leave_action_name(action),
            ext_r9_scope_audit_gate_open() ? "open" : "blocked");
     fflush(stdout);
-    if (caller) ext_er_rw_bind_restore_correct_live_r9(caller->module_id);
 
     {
         GwyR9WriteRecord wr;

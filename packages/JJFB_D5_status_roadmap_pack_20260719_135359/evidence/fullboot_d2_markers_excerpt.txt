@@ -1,0 +1,153 @@
+[JJFB_GWY_LAUNCH] mode=gwy_native_full_shell launcher_mode=1 alias_direct=disabled guest_native=yes shell_core_continue=yes
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/gbrwcore.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_PACKAGE_SCOPE] package=gwy/gbrwcore.mrp primary=gbrwcore.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.startGame registered=yes addr=0x30DBB4 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.runapp registered=yes addr=0x30DCA0 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.startGame string_va=0x30DBB4 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.runapp string_va=0x30DCA0 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=init_ok evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x04 value=0x2EB804 meaning=init_func evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x08 value=0x30CFE9 meaning=event_helper evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x28 value=0x280058 meaning=sendAppEvent evidence=DOCUMENTED
+[EXT_ENTRY_CTX] module_id=3 load_id=4 helper=0x30CFE9 entry_pc=0x2EB804 module_offset=0x8 method=0 r0=0x1 r1=0x280258 r2=0x3A r3=0x27FB4C r9=0x280400 er_rw=0x280400 sp=0x27FB48 caller_pc=0x2EB7FC caller_module=gbrwcore.ext caller_offset=0x0 caller_module_id=3 header_entry_candidate=0x2EB804 chunk_field_04=0x2EB804 registered_helper=0x30CFE9 entry_class=LEGAL_HEADER_ENTRY_NULL_R0
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x04 value=0x2EB804 meaning=init_func evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x08 value=0x30CFE9 meaning=event_helper evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x28 value=0x280058 meaning=sendAppEvent evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x14 value=0x2B0D18 meaning=var_buf evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x18 value=0x19A8 meaning=var_len evidence=DOCUMENTED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=init_ok evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm reason=continue_after_gbrwcore_init evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_CONTINUE] apply=bridge_dsm_mr_start_dsm target=gwy/gamelist.mrp reason=continue_after_gbrwcore_init
+[JJFB_PACKAGE_SCOPE] package=gwy/gamelist.mrp primary=gamelist.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[JJFB_GAMELIST_STARTED] filename="gwy/gamelist.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" via=bridge_dsm_mr_start_dsm evidence=DOCUMENTED
+[JJFB_SHELL_CORE_MODULE] module=gamelist.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gamelist.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_GAMELIST_STARTED] filename="gwy/gamelist.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=DOCUMENTED
+[JJFB_SHELL_CORE_MODULE] module=gamelist.ext stage=entry evidence=TARGET_OBSERVED
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[JJFB_GAMELIST_CFG36_BUILD] param_fmt_va=0x2E846C note=format_string_mapped evidence=TARGET_OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gamelist.ext stage=init_ok evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x04 value=0x2D435C meaning=init_func evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x08 value=0x2E3089 meaning=event_helper evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x28 value=0x280058 meaning=sendAppEvent evidence=DOCUMENTED
+[ENTRY_RECONCILE] module=gamelist.ext module_id=4 image_base=0x2D4354 header_raw=0x2D435C header_norm=0x2D435C chunk_field_04_raw=0x2D435C chunk_field_04_norm=0x2D435C helper_raw=0x2E3089 helper_norm=0x2E3088 observed_first_pc_raw=0x2E1F1A observed_norm=0x2E1F1A relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r4=0x1 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0x0 r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[PLATFORM_ALLOC] code=0x1010C size=0x100 buf=0x27F7E0 ret=0x682C2C tag_u16=0 name=plat_sized_alloc evidence=CROSS_TARGET+TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1010C r1=0x100 r2=0x27F7E0 r3=0x0 r4=0x1010C ret=0x682C2C evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682A5C r3=0x0 r4=0x10120 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10600 r2=0x2E74AD r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10601 r2=0x2E03E1 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10602 r2=0x2E0421 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10603 r2=0x2E0359 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10604 r2=0x2E0445 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10605 r2=0x2E0361 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10606 r2=0x2DFC61 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x1060A r2=0x2DFC59 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10608 r2=0x2DF699 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x10609 r2=0x2E0405 r3=0x0 r4=0x10102 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_ALLOC] code=0x1010C size=0xE7D0 buf=0x27F878 ret=0x682D34 tag_u16=0 name=plat_sized_alloc evidence=CROSS_TARGET+TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1010C r1=0xE7D0 r2=0x27F878 r3=0x0 r4=0x1010C ret=0x682D34 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10108 r1=0x2E862C r2=0x0 r3=0x0 r4=0x10108 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0x1 r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0x5 r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[PLATFORM_ALLOC] code=0x10183 size=0x600 buf=0x0 ret=0x69150C tag_u16=0 name=plat_alloc_r1_10183 evidence=CROSS_TARGET+TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10183 r1=0x600 r2=0x0 r3=0x0 r4=0x10183 ret=0x69150C evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0xA r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x11F00 r1=0xC r2=0x2B0E04 r3=0x1 r4=0x11F00 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=STOP chunk=0x682A5C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x1 r2=0x0 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A5C period_ms=10000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x0 r2=0x0 r3=0x2710 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=POLL_WAIT period_ms=10000 evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x11F00 r1=0xC r2=0x2E8A88 r3=0x1 r4=0x11F00 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x11F00 r1=0x6 r2=0x27F7E4 r3=0x40 r4=0x11F00 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x11F00 r1=0x7 r2=0x2E8A88 r3=0x27F7A0 r4=0x11F00 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_DRAW] api=mr_drawBitmap bmp=0x282A54 x=115 y=156 w=6 h=4 evidence=DOCUMENTED
+[JJFB_REFRESH] api=mr_drawBitmap note=mrc_refreshScreen_path evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0xC r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0x3 r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10180 r1=0x4 r2=0x0 r3=0x0 r4=0x10180 ret=0x682B24 evidence=TARGET_OBSERVED
+[WARN]mr_plat(code:1327, param:0) not impl!
+After app init, memory left:3915272
+[PLATFORM_TIMER] op=POST_CONT_PUMP begin evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=10000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x2E3089 P=0x2AC8DC erw=0x2B0D18 chunk=0x682A5C evidence=DOCUMENTED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E7754 target=0x2E236D arg0=0x10204 arg1=0x4
+[PLATFORM_ALLOC] code=0x10204 size=0x40 buf=0xFFFFFFFF ret=0x682AA4 tag_u16=1 name=plat_10204_get_tagged evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0x4 r2=0xFFFFFFFF r3=0x0 r4=0x10204 ret=0x682AA4 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E776E target=0x2E236D arg0=0x10500 arg1=0x2
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10500 r1=0x2 r2=0x105 r3=0x0 r4=0x10500 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E77BE target=0x2E236D arg0=0x10204 arg1=0xF
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0xF r2=0x682AA4 r3=0x27FAE4 r4=0x10204 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=STOP chunk=0x682A5C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x1 r2=0x1 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A5C period_ms=5000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x0 r2=0x1 r3=0x1388 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=POLL_WAIT period_ms=5000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=5000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x2E3089 P=0x2AC8DC erw=0x2B0D18 chunk=0x682A5C evidence=DOCUMENTED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E7754 target=0x2E236D arg0=0x10204 arg1=0x4
+[PLATFORM_ALLOC] code=0x10204 size=0x40 buf=0xFFFFFFFF ret=0x691B14 tag_u16=1 name=plat_10204_get_tagged evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0x4 r2=0xFFFFFFFF r3=0x0 r4=0x10204 ret=0x691B14 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E776E target=0x2E236D arg0=0x10500 arg1=0x2
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10500 r1=0x2 r2=0x105 r3=0x0 r4=0x10500 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E77BE target=0x2E236D arg0=0x10204 arg1=0xF
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0xF r2=0x691B14 r3=0x27FAE4 r4=0x10204 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=STOP chunk=0x682A5C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x1 r2=0x1 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A5C period_ms=5000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x0 r2=0x1 r3=0x1388 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=5000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x2E3089 P=0x2AC8DC erw=0x2B0D18 chunk=0x682A5C evidence=DOCUMENTED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E7754 target=0x2E236D arg0=0x10204 arg1=0x4
+[PLATFORM_ALLOC] code=0x10204 size=0x40 buf=0xFFFFFFFF ret=0x691B5C tag_u16=1 name=plat_10204_get_tagged evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0x4 r2=0xFFFFFFFF r3=0x0 r4=0x10204 ret=0x691B5C evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E776E target=0x2E236D arg0=0x10500 arg1=0x2
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10500 r1=0x2 r2=0x105 r3=0x0 r4=0x10500 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E77BE target=0x2E236D arg0=0x10204 arg1=0xF
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0xF r2=0x691B5C r3=0x27FAE4 r4=0x10204 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=STOP chunk=0x682A5C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x1 r2=0x1 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A5C period_ms=5000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x0 r2=0x1 r3=0x1388 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=POLL_WAIT period_ms=5000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_CB interval=5000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=emu_slice_poll evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x2E3089 P=0x2AC8DC erw=0x2B0D18 chunk=0x682A5C evidence=DOCUMENTED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E7754 target=0x2E236D arg0=0x10204 arg1=0x4
+[PLATFORM_ALLOC] code=0x10204 size=0x40 buf=0xFFFFFFFF ret=0x691BA4 tag_u16=1 name=plat_10204_get_tagged evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0x4 r2=0xFFFFFFFF r3=0x0 r4=0x10204 ret=0x691BA4 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E776E target=0x2E236D arg0=0x10500 arg1=0x2
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10500 r1=0x2 r2=0x105 r3=0x0 r4=0x10500 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=4 pc=0x2E77BE target=0x2E236D arg0=0x10204 arg1=0xF
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10204 r1=0xF r2=0x691BA4 r3=0x27FAE4 r4=0x10204 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=STOP chunk=0x682A5C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x1 r2=0x1 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gamelist.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A5C period_ms=5000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A5C r1=0x0 r2=0x1 r3=0x1388 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=emu_slice_poll evidence=DOCUMENTED

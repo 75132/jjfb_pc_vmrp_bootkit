@@ -1,3 +1,6 @@
 run_id,pc,base,offset,value,is_write,role
-launcher_20260728_030118_61500,0x312A60,0x2A83C4,0x4,0x0,0,list_push_entry_r0
-launcher_20260728_030118_61500,0x312A62,0x2A83C4,0x4,0x0,0,list_push_entry_r0
+manual_20260724_220952,0x312A60,ER_RW+B54,0x4,0,0,list_count_or_tail_read
+manual_20260724_220952,0x312A74,node,0x0,self,1,node_prev_self
+manual_20260724_220952,0x312A76,node,0x4,self,1,node_next_self
+manual_20260724_220952,0x312AA4,ctor,0,0,0,list_ctrl_alloc_size_8
+manual_20260724_220952,0x2E4EEC,R9+B54,0,0,0,path_a_load_list_ptr

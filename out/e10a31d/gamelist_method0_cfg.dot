@@ -1,0 +1,29 @@
+digraph gamelist_method0 {
+  rankdir=LR;
+  helper [label="helper\n0x2E3088"];
+  m0 [label="method 0"];
+  m2 [label="method 2"];
+  m6 [label="method 6"];
+  m8 [label="method 8"];
+  mrc [label="mrc_init_candidate"];
+  fail [label="return -1"];
+  helper -> m0; helper -> m2; helper -> m6; helper -> m8;
+  m0 -> mrc;
+  mrc -> fail [style=dashed];
+  bl0 [label="BL 0x2D4756"];
+  m0 -> bl0;
+  bl1 [label="BL 0x2DB045"];
+  m0 -> bl1;
+  bl2 [label="BL 0x2E2529"];
+  m0 -> bl2;
+  bl3 [label="BL 0x2E21A5"];
+  m0 -> bl3;
+  bl4 [label="BL 0x2E2189"];
+  m0 -> bl4;
+  bl5 [label="BL 0x2E35C9"];
+  m0 -> bl5;
+  bl6 [label="BL 0x2E3049"];
+  m0 -> bl6;
+  bl7 [label="BL 0x2E321D"];
+  m0 -> bl7;
+}

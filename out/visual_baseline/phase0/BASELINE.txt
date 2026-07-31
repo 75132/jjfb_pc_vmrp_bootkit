@@ -1,8 +1,0 @@
-phase=0
-shot=out\vmrp_run\screenshots\launcher_first_frame.bmp
-bytes=230454
-sha256=c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda
-drawfp=yes
-members=loadingbar,bar,textbar,topleft,topright
-resource_root_note=320x480 (pre-refactor)
-captured=2026-07-28T02:20:47.5134844+08:00

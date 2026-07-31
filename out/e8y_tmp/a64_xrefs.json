@@ -1,0 +1,409 @@
+[
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F44A0",
+    "offset": "0xA64",
+    "str_pc": "0x2F44A4",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F44A0: LDR r0, [pc] ; =0xA64",
+      "0x2F44A2: MOVS r2, #0",
+      "0x2F44A4: STR r2, [sp, #0x20]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F44C8",
+    "offset": "0xA64",
+    "str_pc": "0x2F44CE",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F44C8: LDR r1, [pc] ; =0xA64",
+      "0x2F44CA: ADDS r3, r5, #0",
+      "0x2F44CC: ADD r1, r9",
+      "0x2F44CE: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F44F8",
+    "offset": "0xA58",
+    "str_pc": "0x2F4508",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F44F8: LDR r0, [pc] ; =0xA58",
+      "0x2F44FA: ADD r0, r9",
+      "0x2F44FC: LDR r0, [r0, #0x0]",
+      "0x2F44FE: BL 0x2D92E4",
+      "0x2F4500: t2 0xFEF1_49E7",
+      "0x2F4502: LDR r1, [pc] ; =0xA58",
+      "0x2F4504: ADDS r3, r5, #0",
+      "0x2F4506: ADD r1, r9",
+      "0x2F4508: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4502",
+    "offset": "0xA58",
+    "str_pc": "0x2F4508",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F4502: LDR r1, [pc] ; =0xA58",
+      "0x2F4504: ADDS r3, r5, #0",
+      "0x2F4506: ADD r1, r9",
+      "0x2F4508: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4510",
+    "offset": "0xA5C",
+    "str_pc": "0x2F4520",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F4510: LDR r0, [pc] ; =0xA5C",
+      "0x2F4512: ADD r0, r9",
+      "0x2F4514: LDR r0, [r0, #0x0]",
+      "0x2F4516: BL 0x2D92E4",
+      "0x2F4518: t2 0xFEE5_49E3",
+      "0x2F451A: LDR r1, [pc] ; =0xA5C",
+      "0x2F451C: ADDS r3, r5, #0",
+      "0x2F451E: ADD r1, r9",
+      "0x2F4520: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F451A",
+    "offset": "0xA5C",
+    "str_pc": "0x2F4520",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F451A: LDR r1, [pc] ; =0xA5C",
+      "0x2F451C: ADDS r3, r5, #0",
+      "0x2F451E: ADD r1, r9",
+      "0x2F4520: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4528",
+    "offset": "0xA60",
+    "str_pc": "0x2F4538",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F4528: LDR r0, [pc] ; =0xA60",
+      "0x2F452A: ADD r0, r9",
+      "0x2F452C: LDR r0, [r0, #0x0]",
+      "0x2F452E: BL 0x2D92E4",
+      "0x2F4530: t2 0xFED9_49DF",
+      "0x2F4532: LDR r1, [pc] ; =0xA60",
+      "0x2F4534: ADDS r3, r5, #0",
+      "0x2F4536: ADD r1, r9",
+      "0x2F4538: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4532",
+    "offset": "0xA60",
+    "str_pc": "0x2F4538",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F4532: LDR r1, [pc] ; =0xA60",
+      "0x2F4534: ADDS r3, r5, #0",
+      "0x2F4536: ADD r1, r9",
+      "0x2F4538: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4540",
+    "offset": "0xA70",
+    "str_pc": "0x2F4550",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F4540: LDR r0, [pc] ; =0xA70",
+      "0x2F4542: ADD r0, r9",
+      "0x2F4544: LDR r0, [r0, #0x0]",
+      "0x2F4546: BL 0x2D92E4",
+      "0x2F4548: t2 0xFECD_49DB",
+      "0x2F454A: LDR r1, [pc] ; =0xA70",
+      "0x2F454C: ADDS r3, r5, #0",
+      "0x2F454E: ADD r1, r9",
+      "0x2F4550: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F454A",
+    "offset": "0xA70",
+    "str_pc": "0x2F4550",
+    "insn": "STR r0, [r1, #0x0]",
+    "window": [
+      "0x2F454A: LDR r1, [pc] ; =0xA70",
+      "0x2F454C: ADDS r3, r5, #0",
+      "0x2F454E: ADD r1, r9",
+      "0x2F4550: STR r0, [r1, #0x0]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4638",
+    "offset": "0xA70",
+    "str_pc": "0x2F4650",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F4638: LDR r0, [pc] ; =0xA70",
+      "0x2F463A: MOVS r1, #49",
+      "0x2F463C: ADD r0, r9",
+      "0x2F463E: LDR r5, [r0, #0x0]",
+      "0x2F4640: LDR r0, [pc] ; =0xA74",
+      "0x2F4642: ADD r0, r9",
+      "0x2F4644: LDR r7, [r0, #0x0]",
+      "0x2F4646: LDR r0, [pc] ; =0xA78",
+      "0x2F4648: ADD r0, r9",
+      "0x2F464A: LDR r4, [r0, #0x0]",
+      "0x2F464C: MOVS r0, #16",
+      "0x2F464E: MOVS r2, #58"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F465C",
+    "offset": "0xA58",
+    "str_pc": "0x2F4674",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F465C: LDR r0, [pc] ; =0xA58",
+      "0x2F465E: MOVS r1, #2",
+      "0x2F4660: ADD r0, r9",
+      "0x2F4662: LDR r5, [r0, #0x0]",
+      "0x2F4664: LDR r0, [pc] ; =0xA5C",
+      "0x2F4666: ADD r0, r9",
+      "0x2F4668: LDR r7, [r0, #0x0]",
+      "0x2F466A: LDR r0, [pc] ; =0xA60",
+      "0x2F466C: ADD r0, r9",
+      "0x2F466E: LDR r4, [r0, #0x0]",
+      "0x2F4670: MOVS r0, #1",
+      "0x2F4672: MOVS r2, #1"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F4664",
+    "offset": "0xA5C",
+    "str_pc": "0x2F4674",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F4664: LDR r0, [pc] ; =0xA5C",
+      "0x2F4666: ADD r0, r9",
+      "0x2F4668: LDR r7, [r0, #0x0]",
+      "0x2F466A: LDR r0, [pc] ; =0xA60",
+      "0x2F466C: ADD r0, r9",
+      "0x2F466E: LDR r4, [r0, #0x0]",
+      "0x2F4670: MOVS r0, #1",
+      "0x2F4672: MOVS r2, #1",
+      "0x2F4674: STR r2, [sp, #0x20]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F466A",
+    "offset": "0xA60",
+    "str_pc": "0x2F4674",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F466A: LDR r0, [pc] ; =0xA60",
+      "0x2F466C: ADD r0, r9",
+      "0x2F466E: LDR r4, [r0, #0x0]",
+      "0x2F4670: MOVS r0, #1",
+      "0x2F4672: MOVS r2, #1",
+      "0x2F4674: STR r2, [sp, #0x20]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  },
+  {
+    "kind": "STR_via_lit",
+    "lit_pc": "0x2F46A4",
+    "offset": "0xA64",
+    "str_pc": "0x2F46B4",
+    "insn": "STR r2, [sp, #0x20]",
+    "window": [
+      "0x2F46A4: LDR r0, [pc] ; =0xA64",
+      "0x2F46A6: LDR r7, [r7, #0x0]",
+      "0x2F46A8: ADD r0, r9",
+      "0x2F46AA: LDR r5, [r0, #0x0]",
+      "0x2F46AC: MOVS r0, #11",
+      "0x2F46AE: MOVS r1, #43",
+      "0x2F46B0: MOVS r2, #25",
+      "0x2F46B2: LDR r4, [r4, #0x0]",
+      "0x2F46B4: STR r2, [sp, #0x20]"
+    ],
+    "fn": "0x2F449C",
+    "callers": [
+      "0x2E972C",
+      "0x2E977C",
+      "0x2E981E",
+      "0x2EA140",
+      "0x2EA158",
+      "0x2EA16C",
+      "0x2EA180",
+      "0x2EA1A0"
+    ]
+  }
+]

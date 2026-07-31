@@ -1,7 +1,6 @@
 #include "gwy_launcher/guest_vfs.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_post_cont_audit.h"
-#include "gwy_launcher/jjfbol_scope.h"
 #include "gwy_launcher/platform_call_census.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -543,7 +542,6 @@ void guest_vfs_trace_open(const VfsResolution *res, int ok) {
     if (ok) {
         product_p4_note_vfs("vfs_open", guest, 1);
         product_ffp_note_resource_open(guest);
-        jjfbol_scope_on_open(guest);
     }
     if (e10a_shell_trace_enabled()) {
         const char *lp = getenv("JJFB_LAUNCH_PATH");
@@ -716,11 +714,9 @@ LauncherStatus guest_vfs_write(GuestVfs *vfs,
 
 LauncherStatus guest_vfs_close(GuestVfs *vfs, VfsHandle handle, LauncherError *err) {
     VfsFile *f;
-    char guest_copy[VFS_PATH_MAX];
     launcher_error_clear(err);
     f = file_from_handle(vfs, handle, err);
     if (!f) return L_ERR_INVALID_ARGUMENT;
-    snprintf(guest_copy, sizeof(guest_copy), "%s", f->guest_normalized);
     /* Drop empty overlay stubs so the next read falls through to canonical. */
     if (f->fp && f->mode == VFS_OPEN_WRITE && f->backend == VFS_OVERLAY_WRITABLE &&
         f->host_path[0]) {
@@ -739,7 +735,6 @@ LauncherStatus guest_vfs_close(GuestVfs *vfs, VfsHandle handle, LauncherError *e
         f->fp = NULL;
     }
     memset(f, 0, sizeof(*f));
-    jjfbol_scope_on_close(guest_copy);
     return L_OK;
 }
 

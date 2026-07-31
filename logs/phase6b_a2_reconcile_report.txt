@@ -1,0 +1,27 @@
+﻿Phase 6B-A2 Chunk Init Entry Reconciliation
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+case=C
+case_legend=A_thumb_norm|B_trampoline|C_image_plus8_wrong|D_chunk_write_wrong|E_chunk_uninit|F_unknown
+relation=HEADER_ENTRY_WRONG
+chunk_field_04_writer=NONE_BEFORE_SELECT
+dsm_match=chunk_field_04
+header_norm=0x2D8DE8
+chunk_field_04_norm=0x0
+helper_norm=0x304AEC
+cross_target_gwy=ENTRY_RECONCILE_seen
+cross_target_wxjwq=ENTRY_RECONCILE_seen
+image_plus8_meaning=DOCUMENTED mr_load_c_function/init_func candidate (fixR9+TestCom800+mrc_extLoad)
+registry_field=header_entry_candidate (not assumed DSM target)
+fix_applied=none (no context create; no PlatformRegistry; no r0 poke)
+phase6b_b_gate=blocked
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+entry_reconcile=PASS ENTRY_RECONCILE missing
+dsm_entry_select=PASS DSM_ENTRY_SELECT missing
+chunk_field_04_status=PASS chunk init writer status missing
+header_candidate=PASS header_entry_candidate missing
+candidate_disasm=PASS candidate disasm missing
+reconcile_case=PASS ENTRY_RECONCILE_CASE missing
+no_fake_context=PASS fake context suspected
+no_low_va_map=PASS low VA map
+xt_gwy=PASS gwy.mrp log empty
+xt_wxjwq=PASS wxjwq log empty

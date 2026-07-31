@@ -1,0 +1,21 @@
+﻿resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+games=19
+[0] napptype=0 nextid=0 ncode=0 target=gwy/xaqd.mrp title=xaqd app=400101/67
+[6] napptype=0 nextid=0 ncode=0 target=gwy/sanguo.mrp title=sanguo app=400101/31
+[35] napptype=0 nextid=10496 ncode=0 target=gwy/gkdxy.mrp title=鍙ｈ瑗挎父OL app=479960/8
+[3] napptype=0 nextid=0 ncode=0 target=gwy/zsol.mrp title=鎴樼 app=400101/40
+[4] napptype=0 nextid=0 ncode=0 target=gwy/wxjwq.mrp title=wxjwq app=403095/1118
+[5] napptype=0 nextid=0 ncode=0 target=gwy/ssjx.mrp title=铚€灞眔l app=403084/48
+[7] napptype=0 nextid=0 ncode=0 target=gwy/xyol.mrp title=瑗挎父OL app=400101/11
+[28] napptype=0 nextid=0 ncode=0 target=gwy/yxlm.mrp title=yxlm app=400101/10
+[11] napptype=0 nextid=0 ncode=0 target=gwy/ajss.mrp title=鍌插墤Online app=479998/21
+[12] napptype=0 nextid=0 ncode=0 target=gwy/spacetime.mrp title=spacetime app=400101/30
+[13] napptype=0 nextid=0 ncode=0 target=gwy/tlbb.mrp title=澶╅緳鍏儴 app=400101/15
+[29] napptype=0 nextid=0 ncode=7235423 target=gwy/smd.mrp title=smd app=479977/13
+[37] napptype=40 nextid=179 ncode=7829807 target=gwy/wapgame.mrp title=缃戦〉娓告垙 app=400101/1000
+[48] napptype=9 nextid=0 ncode=0 target=gwy/cacddz.mrp title=cacddz app=400101/4
+[18] napptype=0 nextid=0 ncode=0 target=gwy/sgmj.mrp title=涓夊浗鐚涘皢 app=479961/6
+[32] napptype=0 nextid=0 ncode=5288585 target=gwy/assg.mrp title=鍌茶涓夊浗 app=400101/8
+[33] napptype=208 nextid=7038304 ncode=10321 target=gwy/bbjq.mrp title=gbbjq app=479958/5
+[36] napptype=12 nextid=482 ncode=512 target=gwy/jjfb.mrp title=robotol app=400101/12
+[52] napptype=0 nextid=0 ncode=0 target=gwy/caccharge.mrp title=caccharge app=400101/35

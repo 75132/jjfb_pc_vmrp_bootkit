@@ -1,4 +1,0 @@
-﻿group,rep,hold,resources,drawfp,101ab_codes,code15,e6c,api_startgame,api_run,stack_depth,fault,alive,shot,exit_code,run_id,notes
-A_direct_boot,1,45,0,1,"",0,0,0,0,0,0,1,0,,p16_A_direct_boot_r1_20260730_032649,product_jjfb_path_robotol_entered; quick hold too short for 5bmp census
-B_original_headless,1,60,0,1,"",0,0,1,1,1,0,1,0,,p16_B_original_headless_r1_20260730_032737,gbrwcore_pc_hit+API_REGISTER_string_va; no startGame_entry; no nested_jjfb; no natural_code15
-C_startgame_only,1,60,0,1,"",0,0,1,1,1,0,1,0,,p16_C_startgame_only_r1_20260730_032839,same_as_B_in_quick_window; startGame entry_pc still unknown

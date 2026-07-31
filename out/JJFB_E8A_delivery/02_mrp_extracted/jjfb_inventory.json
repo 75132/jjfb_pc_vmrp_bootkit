@@ -1,0 +1,416 @@
+{
+  "path": "game_files\\mythroad\\320x480\\gwy\\jjfb.mrp",
+  "sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+  "size": 414602,
+  "header_length": 240,
+  "first_data_offset": 1892,
+  "internal_name": "robotol.mrp",
+  "display_name": "robotol",
+  "appid_le": 400101,
+  "appver_le": 12,
+  "flags": 7,
+  "appid_be": 400101,
+  "appver_be": 12,
+  "members": [
+    {
+      "name": "start.mr",
+      "offset": 1921,
+      "stored_length": 1514,
+      "decoded_length": 3787,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "mrc_loader.ext",
+      "offset": 3458,
+      "stored_length": 219,
+      "decoded_length": 232,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jiantou_t!12!10.bmp",
+      "offset": 3705,
+      "stored_length": 47,
+      "decoded_length": 240,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "loadingbar!201!29.bmp",
+      "offset": 3782,
+      "stored_length": 1385,
+      "decoded_length": 11658,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao02!10!10.bmp",
+      "offset": 5195,
+      "stored_length": 91,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "bar!16!18.bmp",
+      "offset": 5308,
+      "stored_length": 35,
+      "decoded_length": 576,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jiao42!11!6.bmp",
+      "offset": 5367,
+      "stored_length": 48,
+      "decoded_length": 132,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "target.ani",
+      "offset": 5434,
+      "stored_length": 113,
+      "decoded_length": 125,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "textbar!120!30.bmp",
+      "offset": 5574,
+      "stored_length": 1544,
+      "decoded_length": 7200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "listicon.bmp",
+      "offset": 7139,
+      "stored_length": 184,
+      "decoded_length": 800,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "target!65!25.bmp",
+      "offset": 7348,
+      "stored_length": 351,
+      "decoded_length": 3250,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "dirarrow!13!12.bmp",
+      "offset": 7726,
+      "stored_length": 95,
+      "decoded_length": 312,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao3!10!10.bmp",
+      "offset": 7848,
+      "stored_length": 67,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_xian2!15!5.bmp",
+      "offset": 7941,
+      "stored_length": 35,
+      "decoded_length": 150,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao2!10!10.bmp",
+      "offset": 8003,
+      "stored_length": 67,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao22!10!10.bmp",
+      "offset": 8098,
+      "stored_length": 48,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao5!11!11.bmp",
+      "offset": 8173,
+      "stored_length": 73,
+      "decoded_length": 242,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_xian1!15!7.bmp",
+      "offset": 8272,
+      "stored_length": 36,
+      "decoded_length": 210,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao12!11!11.bmp",
+      "offset": 8336,
+      "stored_length": 51,
+      "decoded_length": 242,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao1!11!11.bmp",
+      "offset": 8414,
+      "stored_length": 90,
+      "decoded_length": 242,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jt!30!16.bmp",
+      "offset": 8525,
+      "stored_length": 148,
+      "decoded_length": 960,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "top!76!28.bmp",
+      "offset": 8695,
+      "stored_length": 1321,
+      "decoded_length": 4256,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jiantou!12!15.bmp",
+      "offset": 10042,
+      "stored_length": 108,
+      "decoded_length": 360,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_xian0!15!6.bmp",
+      "offset": 10176,
+      "stored_length": 42,
+      "decoded_length": 180,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao0!10!10.bmp",
+      "offset": 10245,
+      "stored_length": 89,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_xian3!15!5.bmp",
+      "offset": 10360,
+      "stored_length": 36,
+      "decoded_length": 150,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "wy_jiao32!10!10.bmp",
+      "offset": 10424,
+      "stored_length": 48,
+      "decoded_length": 200,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jiao41!12!12.bmp",
+      "offset": 10497,
+      "stored_length": 90,
+      "decoded_length": 288,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "jiantou_x!12!10.bmp",
+      "offset": 10615,
+      "stored_length": 45,
+      "decoded_length": 240,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "slogo!157!58.bmp",
+      "offset": 10685,
+      "stored_length": 11897,
+      "decoded_length": 18212,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "bigworldmapmodule.ext",
+      "offset": 22612,
+      "stored_length": 8741,
+      "decoded_length": 17360,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "mainmenumodule.ext",
+      "offset": 31380,
+      "stored_length": 15300,
+      "decoded_length": 28712,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "mailmodule.ext",
+      "offset": 46703,
+      "stored_length": 14778,
+      "decoded_length": 27692,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "moduletest.ext",
+      "offset": 61504,
+      "stored_length": 7200,
+      "decoded_length": 15152,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "chatmodule.ext",
+      "offset": 68727,
+      "stored_length": 8857,
+      "decoded_length": 15228,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "gezimodule.ext",
+      "offset": 77607,
+      "stored_length": 4261,
+      "decoded_length": 7356,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "taobaomodule.ext",
+      "offset": 81893,
+      "stored_length": 9352,
+      "decoded_length": 16504,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "gameattackmodule.ext",
+      "offset": 91274,
+      "stored_length": 26089,
+      "decoded_length": 47368,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "monsterstatemodule.ext",
+      "offset": 117394,
+      "stored_length": 10663,
+      "decoded_length": 18712,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "itembagshopmodule.ext",
+      "offset": 128087,
+      "stored_length": 20439,
+      "decoded_length": 43420,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "viewmanmodule.ext",
+      "offset": 148552,
+      "stored_length": 10976,
+      "decoded_length": 19436,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "betmodule.ext",
+      "offset": 159550,
+      "stored_length": 8327,
+      "decoded_length": 14512,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "monstermodule.ext",
+      "offset": 167903,
+      "stored_length": 8870,
+      "decoded_length": 19256,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "leitaimodule.ext",
+      "offset": 176798,
+      "stored_length": 11387,
+      "decoded_length": 21248,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "reg.ext",
+      "offset": 188201,
+      "stored_length": 1381,
+      "decoded_length": 2472,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "lianmengmodule.ext",
+      "offset": 189609,
+      "stored_length": 17529,
+      "decoded_length": 36216,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "othermodule.ext",
+      "offset": 207162,
+      "stored_length": 24412,
+      "decoded_length": 46708,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "robotol.ext",
+      "offset": 231594,
+      "stored_length": 161178,
+      "decoded_length": 253420,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "shopmodule.ext",
+      "offset": 392795,
+      "stored_length": 8820,
+      "decoded_length": 14836,
+      "encoding": "gzip",
+      "reserved": 0
+    },
+    {
+      "name": "itemhechengmodule.ext",
+      "offset": 401645,
+      "stored_length": 12957,
+      "decoded_length": 25136,
+      "encoding": "gzip",
+      "reserved": 0
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "LDR",
+    "pc": "0x2F9974",
+    "insn": "LDR r0, [r0, #0x0]",
+    "lit_pc": "0x2F9970"
+  },
+  {
+    "kind": "LDR",
+    "pc": "0x305C0C",
+    "insn": "LDR r1, [r1, #0x0]",
+    "lit_pc": "0x305C00"
+  },
+  {
+    "kind": "LDR",
+    "pc": "0x305C4C",
+    "insn": "LDR r0, [r0, #0x0]",
+    "lit_pc": "0x305C46"
+  },
+  {
+    "kind": "LDR",
+    "pc": "0x305C5A",
+    "insn": "LDR r0, [r0, #0x0]",
+    "lit_pc": "0x305C46"
+  },
+  {
+    "kind": "LDR",
+    "pc": "0x305CE8",
+    "insn": "LDR r0, [r0, #0x0]",
+    "lit_pc": "0x305CE2"
+  },
+  {
+    "kind": "LDR",
+    "pc": "0x305CF8",
+    "insn": "LDR r0, [r0, #0x0]",
+    "lit_pc": "0x305CE2"
+  }
+]

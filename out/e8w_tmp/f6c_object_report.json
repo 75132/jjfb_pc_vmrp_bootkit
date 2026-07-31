@@ -1,0 +1,547 @@
+{
+  "code_base": "0x2D8DF4",
+  "object_layout": {
+    "interpretation": "R9+0xF6C is EMBEDDED struct base, not a heap object pointer",
+    "gate": {
+      "pc_load_f74": "0x2E8908 LDR r0,[r5,#8] ; r5=R9+F6C => R9+0xF74",
+      "pc_bne_f74": "0x2E890E BNE 0x2E8930 ; if F74!=0 skip F70 check",
+      "pc_load_f70": "0x2E8910 LDR r0,[r5,#4] ; => R9+0xF70",
+      "pc_beq_exit": "0x2E8914 BEQ 0x2E898C ; if F70==0 early exit",
+      "open_condition": "R9+0xF74 != 0 OR R9+0xF70 != 0"
+    },
+    "fields": {
+      "R9+0xF6C": "struct word0 (may be written elsewhere; gate does not require nonzero)",
+      "R9+0xF70": "pointer/handle checked when F74==0; must be nonzero to pass",
+      "R9+0xF74": "pointer/handle; if nonzero, skip F70 check and continue"
+    },
+    "after_gate": {
+      "0x2E891A": "BL 0x2F99D0 then STR r0,[r5,#8] writes F74",
+      "0x2E8936": "LDR r0,[r5,#8] uses F74 then BL 0x2F5B38"
+    },
+    "e8v_correction": "E8V treated [R9+F6C] as object pointer; actual gate reads adjacent words F70/F74"
+  },
+  "bls": [
+    {
+      "pc": "0x2E88D0",
+      "target": "0x2F9970"
+    },
+    {
+      "pc": "0x2E88FE",
+      "target": "0x305E78"
+    },
+    {
+      "pc": "0x2E891A",
+      "target": "0x2F99D0"
+    },
+    {
+      "pc": "0x2E8922",
+      "target": "0x2F5B38"
+    },
+    {
+      "pc": "0x2E8938",
+      "target": "0x2F5B38"
+    },
+    {
+      "pc": "0x2E8960",
+      "target": "0x2F9964"
+    },
+    {
+      "pc": "0x2E8970",
+      "target": "0x2F9970"
+    },
+    {
+      "pc": "0x2E8980",
+      "target": "0x2F2854"
+    },
+    {
+      "pc": "0x2E8996",
+      "target": "0x2F9970"
+    },
+    {
+      "pc": "0x2E89A8",
+      "target": "0x2F2854"
+    },
+    {
+      "pc": "0x2E89DC",
+      "target": "0x305E78"
+    },
+    {
+      "pc": "0x2E89E8",
+      "target": "0x2FF908"
+    },
+    {
+      "pc": "0x2E89F0",
+      "target": "0x2F9970"
+    },
+    {
+      "pc": "0x2E8A22",
+      "target": "0x305BFC"
+    },
+    {
+      "pc": "0x2E8A28",
+      "target": "0x2F9970"
+    },
+    {
+      "pc": "0x2E8A44",
+      "target": "0x2EA058"
+    }
+  ],
+  "writers": [
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 2989308,
+      "insn": "STR r0, [r6, #0x0]",
+      "rt": 0,
+      "lit_pc": 2989290,
+      "lit": 3948,
+      "fn": 2989244,
+      "callers": [
+        2989538,
+        2995326,
+        2999040,
+        3006808,
+        3034110,
+        3034420,
+        3035234,
+        3036326,
+        3203024,
+        3216182
+      ],
+      "callers_n": 10,
+      "relation": "none",
+      "store_pc_h": "0x2D9CFC",
+      "fn_h": "0x2D9CBC",
+      "callers_h": [
+        "0x2D9DE2",
+        "0x2DB47E",
+        "0x2DC300",
+        "0x2DE158",
+        "0x2E4BFE",
+        "0x2E4D34",
+        "0x2E5062",
+        "0x2E54A6",
+        "0x30DFD0",
+        "0x311336"
+      ]
+    },
+    {
+      "abs_off": 3956,
+      "field": "R9+0xF74",
+      "store_pc": 3049760,
+      "insn": "STR r0, [r5, #0x8]",
+      "rt": 0,
+      "lit_pc": 3049730,
+      "lit": 3948,
+      "fn": 3049676,
+      "callers": [
+        3172160
+      ],
+      "callers_n": 1,
+      "relation": "none",
+      "store_pc_h": "0x2E8920",
+      "fn_h": "0x2E88CC",
+      "callers_h": [
+        "0x306740"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3090652,
+      "insn": "STR r0, [r7, #0x0]",
+      "rt": 0,
+      "lit_pc": 3090592,
+      "lit": 3948,
+      "fn": 3090556,
+      "callers": [
+        3077648,
+        3090354,
+        3090378
+      ],
+      "callers_n": 3,
+      "relation": "none",
+      "store_pc_h": "0x2F28DC",
+      "fn_h": "0x2F287C",
+      "callers_h": [
+        "0x2EF610",
+        "0x2F27B2",
+        "0x2F27CA"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3124976,
+      "insn": "STR r0, [r1, #0x0]",
+      "rt": 0,
+      "lit_pc": 3124890,
+      "lit": 3948,
+      "fn": 3124888,
+      "callers": [
+        3004002,
+        3219944
+      ],
+      "callers_n": 2,
+      "relation": "none",
+      "store_pc_h": "0x2FAEF0",
+      "fn_h": "0x2FAE98",
+      "callers_h": [
+        "0x2DD662",
+        "0x3121E8"
+      ]
+    },
+    {
+      "abs_off": 3952,
+      "field": "R9+0xF70",
+      "store_pc": 3128600,
+      "insn": "STR r0, [r7, #0x4]",
+      "rt": 0,
+      "lit_pc": 3128538,
+      "lit": 3948,
+      "fn": 3128172,
+      "callers": [
+        3038654
+      ],
+      "callers_n": 1,
+      "relation": "none",
+      "store_pc_h": "0x2FBD18",
+      "fn_h": "0x2FBB6C",
+      "callers_h": [
+        "0x2E5DBE"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3129856,
+      "insn": "STR r0, [r1, #0x0]",
+      "rt": 0,
+      "lit_pc": 3129830,
+      "lit": 3948,
+      "fn": 3129824,
+      "callers": [
+        3201456
+      ],
+      "callers_n": 1,
+      "relation": "none",
+      "store_pc_h": "0x2FC200",
+      "fn_h": "0x2FC1E0",
+      "callers_h": [
+        "0x30D9B0"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3129920,
+      "insn": "STR r1, [r2, #0x0]",
+      "rt": 1,
+      "lit_pc": 3129906,
+      "lit": 3948,
+      "fn": 3129900,
+      "callers": [
+        3201464
+      ],
+      "callers_n": 1,
+      "relation": "none",
+      "store_pc_h": "0x2FC240",
+      "fn_h": "0x2FC22C",
+      "callers_h": [
+        "0x30D9B8"
+      ]
+    },
+    {
+      "abs_off": 3956,
+      "field": "R9+0xF74",
+      "store_pc": 3138218,
+      "insn": "STR r3, [r7, #0x8]",
+      "rt": 3,
+      "lit_pc": 3138168,
+      "lit": 3948,
+      "fn": 3137918,
+      "callers": [],
+      "callers_n": 0,
+      "relation": "none",
+      "store_pc_h": "0x2FE2AA",
+      "fn_h": "0x2FE17E",
+      "callers_h": []
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3138232,
+      "insn": "STR r3, [r5, #0x0]",
+      "rt": 3,
+      "lit_pc": 3138168,
+      "lit": 3948,
+      "fn": 3137918,
+      "callers": [],
+      "callers_n": 0,
+      "relation": "none",
+      "store_pc_h": "0x2FE2B8",
+      "fn_h": "0x2FE17E",
+      "callers_h": []
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3140746,
+      "insn": "STR r7, [r0, #0x0]",
+      "rt": 7,
+      "lit_pc": 3140634,
+      "lit": 3948,
+      "fn": 3140540,
+      "callers": [
+        3001440,
+        3001540,
+        3001678,
+        3001838,
+        3002188,
+        3003942,
+        3005058,
+        3015392,
+        3028250,
+        3044648,
+        3045300,
+        3045790,
+        3129046,
+        3202116
+      ],
+      "callers_n": 14,
+      "relation": "ui_2E2520",
+      "store_pc_h": "0x2FEC8A",
+      "fn_h": "0x2FEBBC",
+      "callers_h": [
+        "0x2DCC60",
+        "0x2DCCC4",
+        "0x2DCD4E",
+        "0x2DCDEE",
+        "0x2DCF4C",
+        "0x2DD626",
+        "0x2DDA82",
+        "0x2E02E0",
+        "0x2E351A",
+        "0x2E7528",
+        "0x2E77B4",
+        "0x2E799E",
+        "0x2FBED6",
+        "0x30DC44"
+      ]
+    },
+    {
+      "abs_off": 3952,
+      "field": "R9+0xF70",
+      "store_pc": 3189298,
+      "insn": "STR r4, [r6, #0x4]",
+      "rt": 4,
+      "lit_pc": 3189230,
+      "lit": 3948,
+      "fn": 3189228,
+      "callers": [
+        3190666,
+        3202936
+      ],
+      "callers_n": 2,
+      "relation": "none",
+      "store_pc_h": "0x30AA32",
+      "fn_h": "0x30A9EC",
+      "callers_h": [
+        "0x30AF8A",
+        "0x30DF78"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3189300,
+      "insn": "STR r4, [r6, #0x0]",
+      "rt": 4,
+      "lit_pc": 3189230,
+      "lit": 3948,
+      "fn": 3189228,
+      "callers": [
+        3190666,
+        3202936
+      ],
+      "callers_n": 2,
+      "relation": "none",
+      "store_pc_h": "0x30AA34",
+      "fn_h": "0x30A9EC",
+      "callers_h": [
+        "0x30AF8A",
+        "0x30DF78"
+      ]
+    },
+    {
+      "abs_off": 3956,
+      "field": "R9+0xF74",
+      "store_pc": 3189314,
+      "insn": "STR r4, [r6, #0x8]",
+      "rt": 4,
+      "lit_pc": 3189230,
+      "lit": 3948,
+      "fn": 3189228,
+      "callers": [
+        3190666,
+        3202936
+      ],
+      "callers_n": 2,
+      "relation": "none",
+      "store_pc_h": "0x30AA42",
+      "fn_h": "0x30A9EC",
+      "callers_h": [
+        "0x30AF8A",
+        "0x30DF78"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3190950,
+      "insn": "STR r7, [r6, #0x0]",
+      "rt": 7,
+      "lit_pc": 3190900,
+      "lit": 3948,
+      "fn": 3190482,
+      "callers": [],
+      "callers_n": 0,
+      "relation": "none",
+      "store_pc_h": "0x30B0A6",
+      "fn_h": "0x30AED2",
+      "callers_h": []
+    },
+    {
+      "abs_off": 3952,
+      "field": "R9+0xF70",
+      "store_pc": 3216764,
+      "insn": "STR r0, [r4, #0x4]",
+      "rt": 0,
+      "lit_pc": 3216720,
+      "lit": 3948,
+      "fn": 3216710,
+      "callers": [],
+      "callers_n": 0,
+      "relation": "none",
+      "store_pc_h": "0x31157C",
+      "fn_h": "0x311546",
+      "callers_h": []
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3217316,
+      "insn": "STR r0, [r1, #0x0]",
+      "rt": 0,
+      "lit_pc": 3217272,
+      "lit": 3948,
+      "fn": 3217268,
+      "callers": [
+        3217824
+      ],
+      "callers_n": 1,
+      "relation": "none",
+      "store_pc_h": "0x3117A4",
+      "fn_h": "0x311774",
+      "callers_h": [
+        "0x3119A0"
+      ]
+    },
+    {
+      "abs_off": 3952,
+      "field": "R9+0xF70",
+      "store_pc": 3218086,
+      "insn": "STR r4, [r5, #0x4]",
+      "rt": 4,
+      "lit_pc": 3218072,
+      "lit": 3948,
+      "fn": 3217552,
+      "callers": [
+        2991282,
+        2991286,
+        2991366,
+        2991370,
+        3102068
+      ],
+      "callers_n": 5,
+      "relation": "none",
+      "store_pc_h": "0x311AA6",
+      "fn_h": "0x311890",
+      "callers_h": [
+        "0x2DA4B2",
+        "0x2DA4B6",
+        "0x2DA506",
+        "0x2DA50A",
+        "0x2F5574"
+      ]
+    },
+    {
+      "abs_off": 3948,
+      "field": "R9+0xF6C",
+      "store_pc": 3218104,
+      "insn": "STR r4, [r5, #0x0]",
+      "rt": 4,
+      "lit_pc": 3218072,
+      "lit": 3948,
+      "fn": 3217552,
+      "callers": [
+        2991282,
+        2991286,
+        2991366,
+        2991370,
+        3102068
+      ],
+      "callers_n": 5,
+      "relation": "none",
+      "store_pc_h": "0x311AB8",
+      "fn_h": "0x311890",
+      "callers_h": [
+        "0x2DA4B2",
+        "0x2DA4B6",
+        "0x2DA506",
+        "0x2DA50A",
+        "0x2F5574"
+      ]
+    },
+    {
+      "abs_off": 3956,
+      "field": "R9+0xF74",
+      "store_pc": 3218116,
+      "insn": "STR r4, [r5, #0x8]",
+      "rt": 4,
+      "lit_pc": 3218072,
+      "lit": 3948,
+      "fn": 3217552,
+      "callers": [
+        2991282,
+        2991286,
+        2991366,
+        2991370,
+        3102068
+      ],
+      "callers_n": 5,
+      "relation": "none",
+      "store_pc_h": "0x311AC4",
+      "fn_h": "0x311890",
+      "callers_h": [
+        "0x2DA4B2",
+        "0x2DA4B6",
+        "0x2DA506",
+        "0x2DA50A",
+        "0x2F5574"
+      ]
+    }
+  ],
+  "draw_targets": {
+    "0x2F2854": [
+      "0x2E8980",
+      "0x2E89A8"
+    ],
+    "0x305BFC": [
+      "0x2E8A22"
+    ],
+    "0x2EA058": [
+      "0x2E8A44"
+    ]
+  }
+}

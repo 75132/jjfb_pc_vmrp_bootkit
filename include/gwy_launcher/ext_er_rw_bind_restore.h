@@ -42,9 +42,6 @@ void ext_er_rw_bind_restore_peek_and_bind(uint32_t p_guest, const char *reason);
  */
 int ext_er_rw_bind_restore_ensure_isolated_erw(uint32_t p_guest, const char *module_hint);
 
-/* P21: if live R9 is another module's ERW while module has its own, rewrite R9. */
-void ext_er_rw_bind_restore_correct_live_r9(uint64_t module_id);
-
 void ext_er_rw_bind_restore_finalize(const char *stop_reason);
 
 int ext_er_rw_bind_restore_bound(void);

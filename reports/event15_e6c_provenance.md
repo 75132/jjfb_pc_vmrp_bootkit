@@ -1,42 +1,59 @@
-# Event 15 / E6C provenance (Task 13 / G1–G5)
+# Event 15 / E6C provenance (Task 14)
 
 ## Status
 
-**`E6C_NATURAL_STORE` still open.** G1–G5 corrected the producer map: family 4F / `30F45C` is **not** the E6C path.
+**No natural event 15 / no `0x2E5E60` / no `ER_RW+E6C` store** in Task 14 A/B/C.
 
-## Corrected producer map (static + live G2/G5)
+Prerequisite for the productive chain was:
 
-| Path | Queue | Consumer | E6C? |
-|------|-------|----------|------|
-| Family `0x4F` → `30E120` → `30F45C` → `30EE50` | **B50** (lit `0xB50`) | `305EB8` → `2DC985` → `2D9F50` | **No** — UI/"prmv" ingest; may write `UI_MODE=0x45` at `0x2FC448` without E6C/B70 |
-| Path-A `101AB` → `30D2F9` → `2E4D6C` → `312A60` | **B54** (lit `0xB54`) | `305EB8` → `2DC80C` → `2E2520` | **Yes only if event_code=15** → `2E4020` → `2E5E60` → `STR` @ `0x2E5FAE` |
+```
+leave_2FC26C @ 0x2FC3E6
+ → nested drain / 1E201
+ → event code 15
+ → 0x2E4020 → BL 0x2E5E60
+ → calloc + STR [R9+0xE6C]
+```
 
-Only BL to `0x2E5E60` in `robotol.ext`: `0x2E4022` (case code15).
+`LEAVE_2FC26C` was not reached, so this report records **absence** and the known producer map (static + prior tasks).
 
-### `2E5E60` gate (G5)
+## Known productive path (static / prior evidence)
 
-Reads 7× BE u32 from event payload via `308D98`. If field7 **≥ 0** (signed): `BL 0x3105B4` → `2F68E4` until BE `0xFFFFFFFF`. B50/30EE50 payload (`size=0x28`, starts like `prmv`) never terminates → alloc storm; **no** `E6C_NATURAL_STORE`.
+| Step | Address / API | Note |
+|------|----------------|------|
+| Event code | 15 | Robotol family dispatch |
+| Entry | `0x2E4020` | event-15 handler |
+| Alloc | `0x2E5E60` | int16 table / E6C object |
+| Heap | via `0x305E30` calloc | guest allocator |
+| Store | `STR` to `R9+0xE6C` | only observed BL caller of `2E5E60` is `0x2E4022` |
 
-## Live runs (`out/path_a_record_task13/`)
+Forbidden this task: host enqueue 15, direct call `2E5E60`, hardwrite E6C, FAST assists.
 
-| Run | Result |
-|-----|--------|
-| G1 | Frame + leave + B71 + `DEFER_FAMILY_C0_E6C_NULL` |
-| G2 | Family 4F + `LRT_E6C_PRODUCER`; UI45; E6C=0; code15 on **B50** |
-| G3 | B50 drained via `2DC985` / no `event_code=15` on B54 |
-| G4 | Host `2E2520` even addr → `uc_err` |
-| G5 | Thumb `2E2521`: `LRT_EVENT15` + `LRT_E6C_ALLOC` then `2F68E4` hang |
+## Variant C (record-first) C0 fault
 
-## Product defaults after G5
+```
+B71_NATURALLY_WRITTEN @ 0x30ED7A → ER_RW+0xB71
+CALL_FAMILY_C0 → 0x30D301 → 0x30DC44 → 0x2FEBBC
+at_2FEC3C: R9+E6C=0 → LDRSH unmapped @0
+```
 
-- `JJFB_FAMILY_4F_FOR_E6C` default **off** (set `=1` for forensics only)
-- B50→`2E2520` default **skipped** (`JJFB_B50_2E2520=1` forensic only)
-- Forbidden unchanged: host enqueue 15 / hardwrite E6C / FAST assists
+So E6C remains the Case-5 blocker on the product default path; DrawFP publish did not regress that chain and did not invent E6C.
 
-## Next for `E6C_NATURAL_STORE`
+## Empty-first (Variant B)
 
-1. Observe B54 for a guest-built **code=15** entry (`2E4D6C` / other B54 poster) with an E6C-shaped body (field7 path completes or `blt` skip + calloc).
-2. Current Path-A `platform_101ab_fill_path_a` only embeds **code=5** (`downVersion`) — not E6C.
-3. Do not re-dispatch B50 code15 through `2E2520`.
+Reached `2FC26C` with `E6C=0`, `B71=0`. Did not leave. Therefore:
 
-Mark only when natural: `EVENT15_NATURAL` (B54), `E6C_NATURAL_STORE`.
+- `PATH_A_SECOND` arm-after-leave did not fire a second 101AB record
+- No `LRT_EVENT15` / `LRT_E6C_ALLOC`
+
+## Next when leave is achieved
+
+Record at minimum:
+
+1. Producer PC/LR of event 15 enqueue  
+2. Event object / code / payload  
+3. Dispatch to `0x2E4020`  
+4. `0x2E5E60` enter + returned guest ptr  
+5. First non-zero `*(ER_RW+0xE6C)` writer PC  
+6. Then re-run record-first C0 for `2FEC3C` / B70 / UI_MODE=0x45  
+
+Mark only when natural: `EVENT15_NATURAL`, `E6C_NATURAL_STORE`.

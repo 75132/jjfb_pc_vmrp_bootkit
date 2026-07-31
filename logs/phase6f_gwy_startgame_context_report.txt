@@ -1,0 +1,23 @@
+﻿Phase 6F GWY startGame/runapp Context Audit
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+resource_root=game_files/mythroad/240x320
+gwy_startgame_context_gate=blocked
+p_extchunk_gate=blocked
+post_cfn_r9_gate=blocked
+gwy_context_class=SHELL_BYPASSED_DIRECT_JJFB
+shell_bypassed=yes
+pxc_writes_seen=0
+next_allowed_fix=RESTORE_GWY_STARTGAME_RUNAPP_CONTEXT
+mode=observe_only
+jjfb_hash=PASS ok
+resource_240x320=PASS ok
+launch_context=PASS ok
+cfg36=PASS ok
+startgame_equiv=PASS ok
+shell_bypass=PASS ok
+summary=PASS ok
+gates_blocked=PASS ok
+no_forbidden_fix=PASS ok
+observe_only=PASS ok
+class_allowed=PASS ok
+single_next_fix=PASS ok

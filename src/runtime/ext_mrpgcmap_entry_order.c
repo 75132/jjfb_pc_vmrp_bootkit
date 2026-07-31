@@ -331,16 +331,34 @@ void ext_mrpgcmap_entry_order_before_continuation(void *uc, const char *module_n
     if (mode_may_run_entry(m->name) && !m->entry_ran) {
         if (!uc) uc = g_eo.uc;
         /*
-         * E10A-3.1b: gamelist documented entry under shell continue fills the shared P
-         * with gbrwcore's ERW (or exits via br_exit) before TIMER_ARM — even after host
-         * isolates a fresh ERW. Keep skip; cfg gate must be pursued without entry emu.
+         * P25 tried documented entry: it returns EMU_OK but then DSM sticky walk
+         * hits mr_exit (already_continued) before POST_CONT_PUMP — aborting cfg.
+         * Default: skip entry again; force with JJFB_GAMELIST_DOCUMENTED_ENTRY=1.
+         * Cfg loader chase continues via CFN continuation + timer after park fix.
          */
         if (name_has(m->name, "gamelist")) {
-            printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP "
-                   "reason=e10a31b_skip_entry_avoid_early_exit evidence=OBSERVED\n",
-                   m->name);
-            fflush(stdout);
-            m->entry_ran = 1;
+            const char *force = getenv("JJFB_GAMELIST_DOCUMENTED_ENTRY");
+            if (force && force[0] == '1') {
+                printf("[JJFB_MRPGCMAP_ENTRY] module=%s note=p25_force_documented_entry "
+                       "intended=0x%X evidence=DOCUMENTED\n",
+                       m->name, m->base + 8u);
+                fflush(stdout);
+                if (!m->base) {
+                    printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP reason=no_code_base "
+                           "evidence=TARGET_OBSERVED\n",
+                           m->name);
+                    fflush(stdout);
+                } else {
+                    (void)run_documented_entry(uc, m);
+                }
+            } else {
+                printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP "
+                       "reason=p25_skip_entry_preserve_post_cont "
+                       "hint=JJFB_GAMELIST_DOCUMENTED_ENTRY=1 evidence=OBSERVED\n",
+                       m->name);
+                fflush(stdout);
+                m->entry_ran = 1;
+            }
         } else if (!m->base) {
             printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=SKIP reason=no_code_base "
                    "evidence=TARGET_OBSERVED\n",

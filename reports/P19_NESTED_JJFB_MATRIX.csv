@@ -1,2 +1,0 @@
-﻿name,hold,api_builder,sg_ptr,sg_enter,args,op300,nested,robotol,continue_gl,gbrw_pc,bp_armed,live_r9,sg_fn,cell,notes
-gate_headless,35,0,0,0,0,0,0,0,0,1,1,0x0,0x0,out/p19_startgame/gate_headless_20260730_040059,BPs armed at 0x306BE0/0x306CDA/0x306654; builder never executed; no br_exit continue; long holds skipped

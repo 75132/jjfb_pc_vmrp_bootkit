@@ -32,7 +32,14 @@ typedef enum GwyPlatCallKind {
      * R0=MR_SUCCESS(0); six guest *outs (R1/R2/R3/SP[0]/SP[4]/SP[8]).
      * Not an alloc — ret=0 is success; outs carry heap free / screen metrics.
      */
-    GWY_PLAT_KIND_MULTI_OUT = 9
+    GWY_PLAT_KIND_MULTI_OUT = 9,
+    /*
+     * TARGET_OBSERVED: gamelist.ext cfg loader (base+0x7B9C → sendAppEvent).
+     *   R0=0x10112 R1=ctx(R9+0x46C) R2=path
+     *   R3=*out_buf  SP[0]=*out_len  SP[4]/SP[8] usually 0
+     * Loads MRP member (bare name) or shared VFS path; writes guest buffer+len.
+     */
+    GWY_PLAT_KIND_READ_FILE = 10
 } GwyPlatCallKind;
 
 typedef struct GwyPlatCall {
@@ -58,9 +65,10 @@ typedef struct GwyPlatCallResult {
     uint32_t reg_handler;     /* REGISTER: guest handler/chunk */
     uint32_t graphics_id;     /* GRAPHICS_FP: query id (e.g. 0x11F02) */
     uint32_t graphics_out;    /* GRAPHICS_FP: guest *out for fp write */
-    uint32_t fill_buf;        /* BUFFER_FILL: guest buffer (R1/app) */
-    uint32_t fill_type;       /* BUFFER_FILL: type (R3; Path A uses 2) */
-    uint64_t resource_pending_id; /* 0x10134: reserved PendingBitmap id (0=none) */
+    uint32_t fill_buf;        /* BUFFER_FILL: guest buffer (R1/app); READ_FILE: path VA */
+    uint32_t fill_type;       /* BUFFER_FILL: type (R3; Path A uses 2); READ_FILE: *out_len */
+    uint32_t read_out_buf;    /* READ_FILE: guest *out_buf pointer */
+    uint32_t read_ctx;        /* READ_FILE: R1 context (R9+0x46C) */
     const char *name;
     const char *evidence;
     PlatformUserInfoBlob userinfo; /* valid when kind == USERINFO_BLOB */

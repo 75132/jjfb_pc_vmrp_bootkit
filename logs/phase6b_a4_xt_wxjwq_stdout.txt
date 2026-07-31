@@ -1,0 +1,333 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2803E4 len=32 is_chunk=0
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x8 value=0x1 writer_module=unknown writer_offset=0x0 target_class=unknown
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x4 value=0x25D0 writer_module=unknown writer_offset=0x0 target_class=guest_data
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[CHUNK_RECORD] skip_large_alloc addr=0x2803FC size=9684 note=not_chunk_candidate
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x0 value=0x280400 writer_module=unknown writer_offset=0x0 target_class=unknown
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=158345b8
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=profile_alias scope=mrp_member result=HIT
+[EXT_RESOLVE] profile=jjfb-400101-v12-original
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_VIEW_DECODE] member=cfunction.ext stored_size=161178 unpacked_size=253420 result=OK sha_source=robotol.ext
+[MRP_MEMBER_VIEW] installed package=gwy/jjfb.mrp view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=4 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=4 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/wxjwq.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=0_ncode=0_narg=0_narg1=0_nmrpname=gwy/wxjwq.mrp_gwyblink
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=4 method=1 return=0
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=4 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=4 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=WRONG_HELPER_CALL_MISSING_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=4 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=4 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+gwy/wxjwq.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/wxjwq.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_SEEK] handle=2 pos=808 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1514 got=1514 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+_mr_readFile reallen:3787
+mr_unzip
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+[JJFB_FILEOPEN] requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/wxjwq.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_SEEK] handle=2 pos=2345 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=219 got=219 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+_mr_readFile reallen:232
+mr_unzip
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=2 code_base=0x2AEAE0 code_size=320 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2AEAE8 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[EXT_LOAD] module_id=2 load_id=3 stage=MAPPED code_base=0x2AEAE0 code_size=320 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=2 code=[0x2AEAE0,0x2AEC20) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE
+[WARN]mr_cacheSync(0x002AEAE0, 320)
+[GUEST_EXT] ext_base=0x2AEAFC
+--- ext: @002AEAFC
+[CROSS_MODULE_CALL] transfer_id=1 hop=DSM_TO_LOADER from_module=dsm:cfunction.ext from_module_id=4 from_pc=0x89B78 to_module=mrc_loader.ext to_module_id=2 target=0x2AEB04 target_offset=0x24 r0=0x0 r1=0x2AEB04 lr=0x89B78 evidence=OBSERVED
+[R0_LAYER] stage=DSM_TO_DISPATCH r0=0x0 dispatch_module=mrc_loader.ext
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x2AEB40 p_len=20 p_guest=0x2AC8D4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=2 helper=0x2AEB40 header_entry_candidate=0x2AEAE8 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB40
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=REGISTERED size=232
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8D4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2AC8D4 len=32 is_chunk=0
+_mr_c_function_new(002AEB40, 20)  mr_c_function_P:002AC8D4
+[EXT_ENTRY] module_id=2 method=0 return=0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB40
+[EXT_ENTRY_POINTS] module_id=2 image_base=0x2AEAE0 header_entry_candidate=0x2AEAE8 chunk_field_04=0x0 registered_helper=0x2AEB40 observed_first_pc=0x2AEB2C match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=2 load_id=3 helper=0x2AEB40 entry_pc=0x2AEB2C module_offset=0x4C method=0 r0=0x0 r1=0x2AEB04 r2=0x3A r3=0x27FB5C r9=0x280400 er_rw=0x280400 sp=0x27FD88 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=4 header_entry_candidate=0x2AEAE8 chunk_field_04=0x0 registered_helper=0x2AEB40 entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x2AEB2C dispatch_module=mrc_loader.ext dispatch_offset=0x4C callee_module=mrc_loader.ext first_executed_pc=0x2AEB2C r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=mrc_loader.ext module_id=2 image_base=0x2AEAE0 header_raw=0x2AEAE8 header_norm=0x2AEAE8 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0x2AEB40 helper_norm=0x2AEB40 observed_first_pc_raw=0x2AEB2C observed_norm=0x2AEB2C relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[BOOTSTRAP_SEQ] event=ROBOTOL_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=mrc_loader.ext module=mrc_loader.ext module_id=2 module_offset=0x4C pc=0x2AEB2C helper=0x2AEB40 target=0x2AEB2C origin=GUEST_NESTED r0=0x0 r1=0x2AEB04 r2=0x3A r3=0x27FB5C r9=0x280400 sp=0x27FD88 lr=0xA2548 cpsr=0x600001D3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[CROSS_MODULE_CALL] transfer_id=2 hop=DSM_TO_LOADER from_module=dsm:cfunction.ext from_module_id=4 from_pc=0xA2548 to_module=mrc_loader.ext to_module_id=2 target=0x2AEB2C target_offset=0x4C r0=0x0 r1=0x2AEB04 lr=0xA2548 evidence=OBSERVED
+[R0_LAYER] stage=DSM_TO_DISPATCH r0=0x0 dispatch_module=mrc_loader.ext
+[HELPER_ABI] stage=CALL_SITE_BEFORE nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=2 module_offset=0x22544 pc=0xA2544 helper=0x0 target=0x2AEB2C origin=LR_PROXY r0=0x0 r1=0x2AEB04 r2=0x3A r3=0x27FB5C r9=0x280400 sp=0x27FD88 lr=0xA2548 cpsr=0x600001D3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[HELPER_ABI_CALLER_DISASM] call_pc=0xA2544 thumb=0 window=±30
+[HELPER_ABI_CALLER_DISASM]   off=-30 addr=0xA24CC raw=0xE59F1024 LDR r1, [r15, #0x24]
+[HELPER_ABI_CALLER_DISASM]   off=-29 addr=0xA24D0 raw=0xE08F1001 .word 0xE08F1001
+[HELPER_ABI_CALLER_DISASM]   off=-28 addr=0xA24D4 raw=0xE580100C STR r1, [r0, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=-27 addr=0xA24D8 raw=0xE3A01000 MOV r1, #0x0
+[HELPER_ABI_CALLER_DISASM]   off=-26 addr=0xA24DC raw=0xE5801010 STR r1, [r0, #0x10]
+[HELPER_ABI_CALLER_DISASM]   off=-25 addr=0xA24E0 raw=0xE5801014 STR r1, [r0, #0x14]
+[HELPER_ABI_CALLER_DISASM]   off=-24 addr=0xA24E4 raw=0xE12FFF1E .word 0xE12FFF1E
+[HELPER_ABI_CALLER_DISASM]   off=-23 addr=0xA24E8 raw=0x0000C194 .word 0x0000C194
+[HELPER_ABI_CALLER_DISASM]   off=-22 addr=0xA24EC raw=0x00001D7C .word 0x00001D7C
+[HELPER_ABI_CALLER_DISASM]   off=-21 addr=0xA24F0 raw=0x00004FD4 .word 0x00004FD4
+[HELPER_ABI_CALLER_DISASM]   off=-20 addr=0xA24F4 raw=0x0000C16C .word 0x0000C16C
+[HELPER_ABI_CALLER_DISASM]   off=-19 addr=0xA24F8 raw=0x0000A9D8 .word 0x0000A9D8
+[HELPER_ABI_CALLER_DISASM]   off=-18 addr=0xA24FC raw=0xE92D000F .word 0xE92D000F
+[HELPER_ABI_CALLER_DISASM]   off=-17 addr=0xA2500 raw=0xE92D4010 .word 0xE92D4010
+[HELPER_ABI_CALLER_DISASM]   off=-16 addr=0xA2504 raw=0xE24DDF82 .word 0xE24DDF82
+[HELPER_ABI_CALLER_DISASM]   off=-15 addr=0xA2508 raw=0xE28D0F85 .word 0xE28D0F85
+[HELPER_ABI_CALLER_DISASM]   off=-14 addr=0xA250C raw=0xE58D0004 STR r0, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-13 addr=0xA2510 raw=0xE28D4008 .word 0xE28D4008
+[HELPER_ABI_CALLER_DISASM]   off=-12 addr=0xA2514 raw=0xE1A00004 .word 0xE1A00004
+[HELPER_ABI_CALLER_DISASM]   off=-11 addr=0xA2518 raw=0xE28D3004 .word 0xE28D3004
+[HELPER_ABI_CALLER_DISASM]   off=-10 addr=0xA251C raw=0xE59D2210 LDR r2, [r13, #0x210]
+[HELPER_ABI_CALLER_DISASM]   off=-9 addr=0xA2520 raw=0xE3A01F80 MOV r1, #0x200
+[HELPER_ABI_CALLER_DISASM]   off=-8 addr=0xA2524 raw=0xEB002A87 .word 0xEB002A87
+[HELPER_ABI_CALLER_DISASM]   off=-7 addr=0xA2528 raw=0xE3A00000 MOV r0, #0x0
+[HELPER_ABI_CALLER_DISASM]   off=-6 addr=0xA252C raw=0xE58D0004 STR r0, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-5 addr=0xA2530 raw=0xE59F001C LDR r0, [r15, #0x1C]
+[HELPER_ABI_CALLER_DISASM]   off=-4 addr=0xA2534 raw=0xE0800009 .word 0xE0800009
+[HELPER_ABI_CALLER_DISASM]   off=-3 addr=0xA2538 raw=0xE5900000 LDR r0, [r0, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=-2 addr=0xA253C raw=0xE5901004 LDR r1, [r0, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=-1 addr=0xA2540 raw=0xE1A00004 .word 0xE1A00004
+[HELPER_ABI_CALLER_DISASM] * off=+0 addr=0xA2544 raw=0xE12FFF31 BLX r1
+[HELPER_ABI_CALLER_DISASM]   off=+1 addr=0xA2548 raw=0xE28DDF82 .word 0xE28DDF82
+[HELPER_ABI_CALLER_DISASM]   off=+2 addr=0xA254C raw=0xE49D4004 LDR r4, [r13, #0x4]
+[HELPER_ABI_CALLER_DISASM]   off=+3 addr=0xA2550 raw=0xE49DF014 LDR r15, [r13, #0x14]
+[HELPER_ABI_CALLER_DISASM]   off=+4 addr=0xA2554 raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+5 addr=0xA2558 raw=0xE59F000C LDR r0, [r15, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=+6 addr=0xA255C raw=0xE0800009 .word 0xE0800009
+[HELPER_ABI_CALLER_DISASM]   off=+7 addr=0xA2560 raw=0xE5900000 LDR r0, [r0, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=+8 addr=0xA2564 raw=0xE5900010 LDR r0, [r0, #0x10]
+[HELPER_ABI_CALLER_DISASM]   off=+9 addr=0xA2568 raw=0xE12FFF10 .word 0xE12FFF10
+[HELPER_ABI_CALLER_DISASM]   off=+10 addr=0xA256C raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+11 addr=0xA2570 raw=0xE59F300C LDR r3, [r15, #0xC]
+[HELPER_ABI_CALLER_DISASM]   off=+12 addr=0xA2574 raw=0xE0833009 .word 0xE0833009
+[HELPER_ABI_CALLER_DISASM]   off=+13 addr=0xA2578 raw=0xE5933000 LDR r3, [r3, #0x0]
+[HELPER_ABI_CALLER_DISASM]   off=+14 addr=0xA257C raw=0xE5933038 LDR r3, [r3, #0x38]
+[HELPER_ABI_CALLER_DISASM]   off=+15 addr=0xA2580 raw=0xE12FFF13 .word 0xE12FFF13
+[HELPER_ABI_CALLER_DISASM]   off=+16 addr=0xA2584 raw=0x00002084 .word 0x00002084
+[HELPER_ABI_CALLER_DISASM]   off=+17 addr=0xA2588 raw=0xE92D40F8 .word 0xE92D40F8
+[HELPER_ABI_CALLER_DISASM]   off=+18 addr=0xA258C raw=0xE1A05000 .word 0xE1A05000
+[HELPER_ABI_CALLER_DISASM]   off=+19 addr=0xA2590 raw=0xE1510002 .word 0xE1510002
+[HELPER_ABI_CALLER_DISASM]   off=+20 addr=0xA2594 raw=0xE1A00002 .word 0xE1A00002
+[HELPER_ABI_CALLER_DISASM]   off=+21 addr=0xA2598 raw=0xE1A06001 .word 0xE1A06001
+[HELPER_ABI_CALLER_DISASM]   off=+22 addr=0xA259C raw=0x91A07006 .word 0x91A07006
+[HELPER_ABI_CALLER_DISASM]   off=+23 addr=0xA25A0 raw=0x81A07000 .word 0x81A07000
+[HELPER_ABI_CALLER_DISASM]   off=+24 addr=0xA25A4 raw=0xE3550000 .word 0xE3550000
+[HELPER_ABI_CALLER_DISASM]   off=+25 addr=0xA25A8 raw=0x08BD40F8 .word 0x08BD40F8
+[HELPER_ABI_CALLER_DISASM]   off=+26 addr=0xA25AC raw=0x0AFFFC87 .word 0x0AFFFC87
+[HELPER_ABI_CALLER_DISASM]   off=+27 addr=0xA25B0 raw=0xE3500000 .word 0xE3500000
+[HELPER_ABI_CALLER_DISASM]   off=+28 addr=0xA25B4 raw=0x1A000004 .word 0x1A000004
+[HELPER_ABI_CALLER_DISASM]   off=+29 addr=0xA25B8 raw=0xE1A01006 .word 0xE1A01006
+[HELPER_ABI_CALLER_DISASM]   off=+30 addr=0xA25BC raw=0xE1A00005 .word 0xE1A00005
+[CHUNK_PTR_TRACE] reconstruct=pc_rel_add_r9 lit=0x2084 r9=0x280400 slot=0x282484 chunk=0x280254 evidence=OBSERVED
+[CHUNK_PTR_TRACE] reconstruct_field04_mismatch cand=0x280254 at4=0x280258 dsm_target=0x2AEB2C note=observe_anyway
+[CHUNK_RECORD] chunk_id=1 base=0x280254 size=64 origin=FROM_P_PLUS_0C creator_pc=0x0 creator_module_id=0
+[CHUNK_WRITE] watch_armed chunk_id=1 base=0x280254 size=64 watch_len=64
+[CHUNK_SNAPSHOT] stage=FIRST_SEEN chunk_id=1 base=0x280254 size=64 origin=FROM_P_PLUS_0C field_04=0x280258 snap_valid=1 offset_00=0x00280254 offset_04=0x00280258 offset_08=0x0028025C offset_0C=0x00280260 offset_10=0x00280264 offset_14=0x00280268 offset_18=0x0028026C offset_1C=0x00280270 offset_20=0x00280274 offset_24=0x00280278 offset_28=0x0028027C offset_2C=0x00280280 offset_30=0x00280284 offset_34=0x00280288 offset_38=0x0028028C offset_3C=0x00280290
+[CHUNK_FIELD_04_WRITE] chunk_base=0x280254 value=0x2AEB2C writer_module=NONE writer_offset=0x0 module=mrc_loader.ext note=NONE_BEFORE_SELECT
+[DSM_ENTRY_SELECT] source=chunk_field_0x4 entry_va=0x2AEB2C entry_module=mrc_loader.ext entry_offset=0x4C registered_helper=0x2AEB40 header_entry_candidate=0x2AEAE8 chunk_field_04=0x2AEB2C match=chunk_field_04 r0_source=explicit_zero r0_value=0x0 r1_target=0x2AEB2C caller_module=dsm:cfunction.ext caller_offset=0x22544 evidence=OBSERVED+DOCUMENTED_chunk_plus4 chunk_field_04_writer=NONE_BEFORE_SELECT chunk_base=0x280254 chunk_reg=r0
+[BOOTSTRAP_SEQ] event=DSM_ENTRY_SELECT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>ROBOTOL_ENTER>DSM_ENTRY_SELECT
+[ENTRY_TRANSFER] dispatch_target=0x2AEB2C dispatch_module=mrc_loader.ext dispatch_offset=0x4C callee_module=mrc_loader.ext first_executed_pc=0x2AEB2C r0=0x0 stage=CALL_SITE_BEFORE raw_target=0x2AEB2C
+[ENTRY_OBJECT_TRACE] stage=FIELD_LOAD base_reg=r0 base_value=0x280254 field_offset=0x4 field_value=0x2AEB2C field_live_peek=0x280258 dispatch_target=0x2AEB2C r0_at_blx=0x0
+[ENTRY_OBJECT_TRACE] stage=BASE_SOURCE source=pc_rel_add_r9 source_address=0x282484 producer_module=dsm:cfunction.ext producer_offset=0x22544 caller_module=dsm:cfunction.ext caller_offset=0x22544
+[ADDR_CLASS] role=entry_object_base va=0x280254 class=STACK module=stack offset=0x0 module_id=0
+[ADDR_CLASS] role=entry_object_field_04 va=0x2AEB2C class=MODULE_CODE module=mrc_loader.ext offset=0x4C module_id=2
+[ADDR_CLASS] role=dispatch_target va=0x2AEB2C class=MODULE_CODE module=mrc_loader.ext offset=0x4C module_id=2
+[CANDIDATE_CHUNK] chunk_id=1 base=0x280254 vs_entry_object_base=0x280254 mismatch=1 confidence=CANDIDATE note=candidate_only_until_confirmed
+[CANDIDATE_CHUNK] candidate_mismatch evidence=OBSERVED
+[ENTRY_TRANSFER] dispatch_target=0x2AEB2C dispatch_module=mrc_loader.ext dispatch_offset=0x4C callee_module=mrc_loader.ext first_executed_pc=0x2AEB2C r0=0x0 stage=CALL_SITE_BEFORE equals_observed_first=1
+[DISPATCH_DISASM] va=0x2AEB2C module=mrc_loader.ext offset=0x4C class=MODULE_CODE
+[DISPATCH_DISASM]   off=-30 addr=0x2AEAB4 raw=0x05848004 STR r8,[r4,#0x4]
+[DISPATCH_DISASM]   off=-29 addr=0x2AEAB8 raw=0xE5854000 STR r4,[r5,#0x0]
+[DISPATCH_DISASM]   off=-28 addr=0x2AEABC raw=0xE3A00008 .word 0xE3A00008
+[DISPATCH_DISASM]   off=-27 addr=0x2AEAC0 raw=0xE5860000 STR r0,[r6,#0x0]
+[DISPATCH_DISASM]   off=-26 addr=0x2AEAC4 raw=0xE8BD45F8 .word 0xE8BD45F8
+[DISPATCH_DISASM]   off=-25 addr=0x2AEAC8 raw=0xE3A00000 .word 0xE3A00000
+[DISPATCH_DISASM]   off=-24 addr=0x2AEACC raw=0xE12FFF1E .word 0xE12FFF1E
+[DISPATCH_DISASM]   off=-23 addr=0x2AEAD0 raw=0xFFFFFFB0 .word 0xFFFFFFB0
+[DISPATCH_DISASM]   off=-22 addr=0x2AEAD4 raw=0x00000030 .word 0x00000030
+[DISPATCH_DISASM]   off=-21 addr=0x2AEAD8 raw=0x6E756663 .word 0x6E756663
+[DISPATCH_DISASM]   off=-20 addr=0x2AEADC raw=0x6F697463 .word 0x6F697463
+[DISPATCH_DISASM]   off=-19 addr=0x2AEAE0 raw=0x78652E6E .word 0x78652E6E
+[DISPATCH_DISASM]   off=-18 addr=0x2AEAE4 raw=0x00000074 .word 0x00000074
+[DISPATCH_DISASM]   off=-17 addr=0x2AEAE8 raw=0x00000000 .word 0x00000000
+[DISPATCH_DISASM]   off=-16 addr=0x2AEAEC raw=0x00000000 .word 0x00000000
+[DISPATCH_DISASM]   off=-15 addr=0x2AEAF0 raw=0x00000004 .word 0x00000004
+[DISPATCH_DISASM]   off=-14 addr=0x2AEAF4 raw=0x0A93BF6F .word 0x0A93BF6F
+[DISPATCH_DISASM]   off=-13 addr=0x2AEAF8 raw=0x000000E8 .word 0x000000E8
+[DISPATCH_DISASM]   off=-12 addr=0x2AEAFC raw=0x00281EFC .word 0x00281EFC
+[DISPATCH_DISASM]   off=-11 addr=0x2AEB00 raw=0x002AC8D4 .word 0x002AC8D4
+[DISPATCH_DISASM]   off=-10 addr=0x2AEB04 raw=0xE59F002C LDR r0,[r15,#0x2C]
+[DISPATCH_DISASM]   off=-9 addr=0x2AEB08 raw=0xE92D4008 STMFD ...
+[DISPATCH_DISASM]   off=-8 addr=0x2AEB0C raw=0xE08F0000 .word 0xE08F0000
+[DISPATCH_DISASM]   off=-7 addr=0x2AEB10 raw=0xE5100008 LDR r0,[r0,#0x8]
+[DISPATCH_DISASM]   off=-6 addr=0x2AEB14 raw=0xE3A01014 .word 0xE3A01014
+[DISPATCH_DISASM]   off=-5 addr=0x2AEB18 raw=0xE5902064 LDR r2,[r0,#0x64]
+[DISPATCH_DISASM]   off=-4 addr=0x2AEB1C raw=0xE59F0018 LDR r0,[r15,#0x18]
+[DISPATCH_DISASM]   off=-3 addr=0x2AEB20 raw=0xE08F0000 .word 0xE08F0000
+[DISPATCH_DISASM]   off=-2 addr=0x2AEB24 raw=0xE1A0E00F .word 0xE1A0E00F
+[DISPATCH_DISASM]   off=-1 addr=0x2AEB28 raw=0xE12FFF12 .word 0xE12FFF12
+[DISPATCH_DISASM] * off=+0 addr=0x2AEB2C raw=0xE8BD4008 .word 0xE8BD4008
+[DISPATCH_DISASM]   off=+1 addr=0x2AEB30 raw=0xE3A00003 .word 0xE3A00003
+[DISPATCH_DISASM]   off=+2 addr=0x2AEB34 raw=0xE12FFF1E .word 0xE12FFF1E
+[DISPATCH_DISASM]   off=+3 addr=0x2AEB38 raw=0xFFFFFFF0 .word 0xFFFFFFF0
+[DISPATCH_DISASM]   off=+4 addr=0x2AEB3C raw=0x00000018 .word 0x00000018
+[DISPATCH_DISASM]   off=+5 addr=0x2AEB40 raw=0xE92D45F8 STMFD ...
+[DISPATCH_DISASM]   off=+6 addr=0x2AEB44 raw=0xE59F707C LDR r7,[r15,#0x7C]
+[DISPATCH_DISASM]   off=+7 addr=0x2AEB48 raw=0xE28D6020 .word 0xE28D6020
+[DISPATCH_DISASM]   off=+8 addr=0x2AEB4C raw=0xE08F7007 .word 0xE08F7007
+[DISPATCH_DISASM]   off=+9 addr=0x2AEB50 raw=0xE5170008 LDR r0,[r7,#0x8]
+[DISPATCH_DISASM]   off=+10 addr=0x2AEB54 raw=0xE8960060 .word 0xE8960060
+[DISPATCH_DISASM]   off=+11 addr=0x2AEB58 raw=0xE1A0A001 .word 0xE1A0A001
+[DISPATCH_DISASM]   off=+12 addr=0x2AEB5C raw=0xE5901000 LDR r1,[r0,#0x0]
+[DISPATCH_DISASM]   off=+13 addr=0x2AEB60 raw=0xE3A00008 .word 0xE3A00008
+[DISPATCH_DISASM]   off=+14 addr=0x2AEB64 raw=0xE1A0E00F .word 0xE1A0E00F
+[DISPATCH_DISASM]   off=+15 addr=0x2AEB68 raw=0xE12FFF11 .word 0xE12FFF11
+[DISPATCH_DISASM]   off=+16 addr=0x2AEB6C raw=0xE3A08000 .word 0xE3A08000
+[DISPATCH_DISASM]   off=+17 addr=0x2AEB70 raw=0xE5808004 STR r8,[r0,#0x4]
+[DISPATCH_DISASM]   off=+18 addr=0x2AEB74 raw=0xE5808000 STR r8,[r0,#0x0]
+[DISPATCH_DISASM]   off=+19 addr=0x2AEB78 raw=0xE1A04000 .word 0xE1A04000
+[DISPATCH_DISASM]   off=+20 addr=0x2AEB7C raw=0xE35A0001 .word 0xE35A0001
+[DISPATCH_DISASM]   off=+21 addr=0x2AEB80 raw=0x1A00000D .word 0x1A00000D
+[DISPATCH_DISASM]   off=+22 addr=0x2AEB84 raw=0xE5170008 LDR r0,[r7,#0x8]
+[DISPATCH_DISASM]   off=+23 addr=0x2AEB88 raw=0xE3A02000 .word 0xE3A02000
+[DISPATCH_DISASM]   off=+24 addr=0x2AEB8C raw=0xE59031F4 LDR r3,[r0,#0x1F4]
+[DISPATCH_DISASM]   off=+25 addr=0x2AEB90 raw=0xE59F0034 LDR r0,[r15,#0x34]
+[DISPATCH_DISASM]   off=+26 addr=0x2AEB94 raw=0xE2841004 .word 0xE2841004
+[DISPATCH_DISASM]   off=+27 addr=0x2AEB98 raw=0xE08F0000 .word 0xE08F0000
+[DISPATCH_DISASM]   off=+28 addr=0x2AEB9C raw=0xE1A0E00F .word 0xE1A0E00F
+[DISPATCH_DISASM]   off=+29 addr=0x2AEBA0 raw=0xE12FFF13 .word 0xE12FFF13
+[DISPATCH_DISASM]   off=+30 addr=0x2AEBA4 raw=0xE5840000 STR r0,[r4,#0x0]
+[DISPATCH_CLASS] module=mrc_loader.ext offset=0x4C nature=entry_or_dispatcher equals_observed_first=check_registry superseded_by_callback_continuation_identity=no causal=unknown
+[ENTRY_OBJECT_KIND] kind=FUNCTION_TABLE confidence=CANDIDATE field_matches_dispatch=0 base_class=STACK dispatch_class=MODULE_CODE
+[OBJECT_IDENTITY_CASE] case=A legend=A_loader_dispatcher|B_trampoline|C_base_wrong|D_descriptor_or_table|E_attrib_bug dispatch_module=mrc_loader.ext dispatch_offset=0x4C object_kind=FUNCTION_TABLE dsm_direct_robotol=no r0_at_dsm_blx=0x0 candidate_wrong=1 phase6b_b_gate=blocked
+[CHUNK_PTR_TRACE] caller_module=dsm:cfunction.ext caller_offset=0x22544 chunk_reg=? chunk_base=0x280254 field_04=0x280258 via=P_plus_0C evidence=OBSERVED wrong_chunk_identity=0 chunk_id=1
+[CHUNK_SNAPSHOT] stage=BEFORE_SELECT chunk_id=1 base=0x280254 size=64 origin=FROM_P_PLUS_0C field_04=0x280258 snap_valid=1 offset_00=0x00280254 offset_04=0x00280258 offset_08=0x0028025C offset_0C=0x00280260 offset_10=0x00280264 offset_14=0x00280268 offset_18=0x0028026C offset_1C=0x00280270 offset_20=0x00280274 offset_24=0x00280278 offset_28=0x0028027C offset_2C=0x00280280 offset_30=0x00280284 offset_34=0x00280288 offset_38=0x0028028C offset_3C=0x00280290
+[CHUNK_SNAPSHOT] stage=AFTER_SELECT chunk_id=1 base=0x280254 size=64 origin=FROM_P_PLUS_0C field_04=0x280258 snap_valid=1 offset_00=0x00280254 offset_04=0x00280258 offset_08=0x0028025C offset_0C=0x00280260 offset_10=0x00280264 offset_14=0x00280268 offset_18=0x0028026C offset_1C=0x00280270 offset_20=0x00280274 offset_24=0x00280278 offset_28=0x0028027C offset_2C=0x00280280 offset_30=0x00280284 offset_34=0x00280288 offset_38=0x0028028C offset_3C=0x00280290
+[CHUNK_FIELD_04] snap_mismatch snap=0x280258 dsm_select=0x2AEB2C note=wrong_chunk_or_mutated
+[CANDIDATE_CHUNK] chunk_id=1 evidence=0x10 bits=1 confidence=CANDIDATE
+[CANDIDATE_CHUNK] chunk_id=1 candidate_mismatch confidence=CANDIDATE note=not_confirmed_mrc_extChunk
+[CHUNK_FIELD_04] raw=0x2AEB2C normalized=0x2AEB2C class=abs_arm target_module=mrc_loader.ext target_offset=0x4C
+[ENTRY_TRANSFER] raw_target=0x2AEB2C normalized_target=0x2AEB2C first_executed_pc=0x2AEB2C delta=0 dsm_target=0x2AEB2C
+[CHUNK_PROVENANCE_CASE] case=D legend=A_observer_late|B_block_copy|C_static_template|D_wrong_identity|E_missing_bootstrap|F_corrupt_field|G_unknown chunk_base=0x280254 field_04=0x2AEB2C write_seen=0 block_copy=0 field_04_at_first_seen=1 identity_ok=0 evidence=OBSERVED phase6b_b_gate=blocked
+[CHUNK_WRITE] note=NONE_BEFORE_SELECT chunk_base=0x280254
+[ENTRY_RECONCILE] module=mrc_loader.ext module_id=2 image_base=0x2AEAE0 header_raw=0x2AEAE8 header_norm=0x2AEAE8 chunk_field_04_raw=0x2AEB2C chunk_field_04_norm=0x2AEB2C helper_raw=0x2AEB40 helper_norm=0x2AEB40 observed_first_pc_raw=0x2AEB2C observed_norm=0x2AEB2C relation=HEADER_ENTRY_WRONG dsm_select_correct=no chunk_field_04_writer=NONE_BEFORE_SELECT
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=mrc_loader.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 dsm_match=chunk_field_04 dsm_select_correct=no fix_applied=none phase6b_b_gate=blocked
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILEOPEN] requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/wxjwq.mrp" normalized="mythroad/gwy/wxjwq.mrp" canonical="gwy/wxjwq.mrp" backend=canonical mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/wxjwq.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=551 got=551 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+read file  "cfunction.ext" err, code=3006
+[DEBUG]mr_exit() called by mythroad!
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+mythroad exit.
+

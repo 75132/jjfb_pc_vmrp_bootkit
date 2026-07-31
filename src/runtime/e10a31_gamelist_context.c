@@ -9,6 +9,7 @@
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/p22_selection_gates.h"
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -399,20 +400,6 @@ uint32_t e10a31_timer_armed_chunk(void) {
     return g_e31.binding_valid ? g_e31.binding.chunk_guest : 0;
 }
 
-uint32_t e10a31_timer_arm_erw(void) {
-    uint32_t erw;
-    if (!g_e31.binding_valid || !g_e31.binding.chunk_guest) return 0;
-    erw = g_e31.binding.er_rw;
-    if (!erw) erw = g_e31.binding.registry_erw;
-    if (!erw) erw = g_e31.binding.source_r9;
-    return erw;
-}
-
-const char *e10a31_timer_arm_module_name(void) {
-    if (!g_e31.binding_valid || !g_e31.binding.module_name[0]) return "";
-    return g_e31.binding.module_name;
-}
-
 int e10a31_timer_arm_observed(void) {
     return g_e31.binding_valid && g_e31.binding.helper && g_e31.binding.p_guest;
 }
@@ -423,14 +410,13 @@ int e10a31_timer_fire_count(void) { return (int)g_e31.timer_fire_n; }
 
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest,
                               uint32_t *out_erw) {
+    GwyTimerBinding fire;
+    const GwyLoadedModule *hm;
+    const char *cls;
     uint32_t helper = 0, p = 0, erw = 0;
+    int rebound = 0;
     (void)uc;
 
-    /*
-     * P21: fire from immutable arm-time binding only.
-     * Do not re-resolve owner via find_by_p(latest) — nested packages may share
-     * historical P VAs; R9 must be the ER_RW saved when the timer was armed.
-     */
     if (!g_e31.binding_valid || !g_e31.binding.chunk_guest) {
         if (out_helper) *out_helper = 0;
         if (out_p_guest) *out_p_guest = 0;
@@ -438,20 +424,88 @@ int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_gu
         return 0;
     }
 
-    helper = g_e31.binding.helper;
-    p = g_e31.binding.p_guest;
-    erw = g_e31.binding.er_rw;
-    if (!erw) erw = g_e31.binding.registry_erw;
-    if (!erw) erw = g_e31.binding.source_r9;
+    fill_binding_from_chunk(&fire, g_e31.binding.chunk_guest);
+    fire.timer_generation = g_e31.binding.timer_generation;
+    fire.timer_id = g_e31.binding.timer_id;
+    fire.period_ms = g_e31.binding.period_ms;
+    fire.source_pc = g_e31.binding.source_pc;
+    fire.source_lr = g_e31.binding.source_lr;
+    fire.source_r9 = g_e31.binding.source_r9;
+    snprintf(fire.module_name, sizeof(fire.module_name), "%s", g_e31.binding.module_name);
+    snprintf(fire.package_name, sizeof(fire.package_name), "%s", g_e31.binding.package_name);
 
-    printf("[CALLBACK_OWNER] source=timer_arm frame_gen=%llu module_id=%llu helper=0x%X "
-           "p=0x%X chunk=0x%X erw=0x%X module=%s evidence=OBSERVED\n",
-           (unsigned long long)g_e31.binding.timer_generation,
-           (unsigned long long)g_e31.binding.module_id, helper, p, g_e31.binding.chunk_guest, erw,
-           g_e31.binding.module_name[0] ? g_e31.binding.module_name : "?");
-    fflush(stdout);
+    helper = fire.helper ? fire.helper : g_e31.binding.helper;
+    p = fire.p_guest ? fire.p_guest : g_e31.binding.p_guest;
+    erw = fire.er_rw ? fire.er_rw : g_e31.binding.er_rw;
 
-    log_timer_row("TIMER_FIRE", &g_e31.binding, "TIMER_CONTEXT_FROZEN_ARM", "immutable_arm_binding");
+    hm = mod_by_helper(helper);
+    /* Refresh owner fields from live chunk before classify. */
+    fire.helper = helper;
+    fire.p_guest = p;
+    fire.er_rw = erw;
+    {
+        const GwyLoadedModule *pm = mod_by_p(p);
+        const GwyLoadedModule *em = mod_by_erw(erw);
+        if (hm) fire.helper_module_id = hm->module_id;
+        if (pm) fire.p_module_id = pm->module_id;
+        if (em) fire.erw_module_id = em->module_id;
+    }
+    cls = classify_timer_context(&fire);
+
+    /*
+     * Auto-heal ERW only when helper/chunk/P owners agree, only ERW is wrong,
+     * and the helper module has a published registry ER_RW to bind to.
+     * Do not invent ERW or hide stale P/chunk by rewriting R9 alone.
+     */
+    if (erw_only_mismatch(&fire)) {
+        uint32_t owned = hm ? hm->data.start_of_er_rw : 0;
+        if (!owned) {
+            cls = "GAMELIST_ERW_NOT_PUBLISHED";
+            printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk_mod=%llu p_mod=%llu "
+                   "erw_mod=%llu registry_erw=0x0 live_erw=0x%X class=%s "
+                   "note=helper_has_no_published_er_rw evidence=OBSERVED\n",
+                   (unsigned long long)fire.helper_module_id,
+                   (unsigned long long)fire.chunk_module_id,
+                   (unsigned long long)fire.p_module_id,
+                   (unsigned long long)fire.erw_module_id, erw, cls);
+            fflush(stdout);
+            e10a31_mark_milestone("GAMELIST_ERW_NOT_PUBLISHED", fire.module_name);
+        } else if (owned == erw) {
+            cls = "TIMER_CONTEXT_COHERENT";
+        } else if (ext_chunk_provider_rebind_chunk_erw(fire.chunk_guest, owned, p)) {
+            erw = owned;
+            fire.er_rw = owned;
+            fire.erw_module_id = hm->module_id;
+            fire.registry_erw = owned;
+            rebound = 1;
+            g_e31.timer_rebound = 1;
+            cls = "GAMELIST_TIMER_CONTEXT_REBOUND";
+            e10a31_mark_milestone("GAMELIST_TIMER_CONTEXT_REBOUND", fire.module_name);
+        } else {
+            cls = "TIMER_ERW_OWNER_MISMATCH";
+            printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk=0x%X owned_erw=0x%X "
+                   "live_erw=0x%X class=%s note=rebind_chunk_erw_failed evidence=OBSERVED\n",
+                   (unsigned long long)fire.helper_module_id, fire.chunk_guest, owned, erw, cls);
+            fflush(stdout);
+        }
+    } else if (multi_owner_mismatch(&fire)) {
+        cls = "TIMER_CONTEXT_MIXED_MULTI_OWNER";
+        printf("[JJFB_E10A31_TIMER_NO_HEAL] helper_mod=%llu chunk_mod=%llu p_mod=%llu "
+               "erw_mod=%llu class=%s note=refuse_erw_only_heal evidence=OBSERVED\n",
+               (unsigned long long)fire.helper_module_id,
+               (unsigned long long)fire.chunk_module_id, (unsigned long long)fire.p_module_id,
+               (unsigned long long)fire.erw_module_id, cls);
+        fflush(stdout);
+    }
+
+    if (rebound)
+        e10a31_mark_milestone("GAMELIST_TIMER_FIRES_WITH_OWN_ERW", "after_safe_erw_rebind");
+    else if (strcmp(cls, "TIMER_CONTEXT_COHERENT") == 0)
+        e10a31_mark_milestone("GAMELIST_TIMER_FIRES_WITH_OWN_ERW", fire.module_name);
+
+    log_timer_row("TIMER_FIRE", &fire, cls,
+                  rebound ? "safe_erw_rebind" : (multi_owner_mismatch(&fire) ? "no_heal_multi_owner"
+                                                                             : "fire_resolve"));
 
     if (out_helper) *out_helper = helper;
     if (out_p_guest) *out_p_guest = p;
@@ -533,6 +587,10 @@ static void param_mem_read_cb(uc_engine *uc, uc_mem_type type, uint64_t address,
                "milestone=%s evidence=OBSERVED\n",
                pc, mod, (unsigned long long)address, size, hex, milestone);
         fflush(stdout);
+    }
+    if (strstr(milestone, "GWYBLINK")) {
+        e10a31_mark_milestone("SHELL_PARAM_GWYBLINK_READ", "param_mem_read");
+        p22_note_param_read("SHELL_PARAM_GWYBLINK_READ");
     }
 }
 

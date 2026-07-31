@@ -78,19 +78,11 @@ void platform_path_a_response_bind(uint64_t module_id, uint64_t module_generatio
         (g_state.module_id != 0 && g_state.module_id != module_id) ||
         (module_generation != 0 && g_state.module_generation != 0 &&
          g_state.module_generation != module_generation);
-    /* Task 13 / V75: empty priming → leave_2FC26C → second record → B71 → C0.
-     * Record-first (old default) writes B71 before E6C exists → 2FEC3C Case A fault.
-     * Opt into record-first only: JJFB_PATH_A_RECORD_FIRST=1 (or EMPTY_FIRST=0 legacy). */
-    GwyPathAResponsePhase start_phase = GWY_PATH_A_RESPONSE_PRIMING_EMPTY;
+    /* Task 14 A/B: JJFB_PATH_A_EMPTY_FIRST=1 → PRIMING_EMPTY (not product default). */
+    GwyPathAResponsePhase start_phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
     {
-        const char *rec1 = getenv("JJFB_PATH_A_RECORD_FIRST");
         const char *e = getenv("JJFB_PATH_A_EMPTY_FIRST");
-        if (rec1 && rec1[0] == '1' && rec1[1] == '\0')
-            start_phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
-        else if (e && e[0] == '0' && e[1] == '\0')
-            start_phase = GWY_PATH_A_RESPONSE_INITIAL_RECORD;
-        else if (e && e[0] == '1' && e[1] == '\0')
-            start_phase = GWY_PATH_A_RESPONSE_PRIMING_EMPTY;
+        if (e && e[0] == '1' && e[1] == '\0') start_phase = GWY_PATH_A_RESPONSE_PRIMING_EMPTY;
     }
 
     if (!g_state.module_id && !g_state.module_generation) {

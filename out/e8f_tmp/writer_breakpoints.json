@@ -1,0 +1,133 @@
+{
+  "writer_pcs": [
+    {
+      "flag": "C44",
+      "pc": 3049458,
+      "pc_hex": "0x2E87F2"
+    },
+    {
+      "flag": "C44",
+      "pc": 3100290,
+      "pc_hex": "0x2F4E82"
+    },
+    {
+      "flag": "C44",
+      "pc": 3112790,
+      "pc_hex": "0x2F7F56"
+    },
+    {
+      "flag": "C44",
+      "pc": 3125894,
+      "pc_hex": "0x2FB286"
+    },
+    {
+      "flag": "C44",
+      "pc": 3131594,
+      "pc_hex": "0x2FC8CA"
+    },
+    {
+      "flag": "C44",
+      "pc": 3141114,
+      "pc_hex": "0x2FEDFA"
+    },
+    {
+      "flag": "C44",
+      "pc": 3141198,
+      "pc_hex": "0x2FEE4E"
+    },
+    {
+      "flag": "C44",
+      "pc": 3198066,
+      "pc_hex": "0x30CC72"
+    },
+    {
+      "flag": "C44",
+      "pc": 3218494,
+      "pc_hex": "0x311C3E"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3029608,
+      "pc_hex": "0x2E3A68"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3082618,
+      "pc_hex": "0x2F097A"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3110770,
+      "pc_hex": "0x2F7772"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3125256,
+      "pc_hex": "0x2FB008"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3176342,
+      "pc_hex": "0x307796"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3189314,
+      "pc_hex": "0x30AA42"
+    },
+    {
+      "flag": "C9D",
+      "pc": 3216820,
+      "pc_hex": "0x3115B4"
+    },
+    {
+      "flag": "C9D",
+      "pc": 2988904,
+      "pc_hex": "0x2D9B68"
+    },
+    {
+      "flag": "C9D",
+      "pc": 2989286,
+      "pc_hex": "0x2D9CE6"
+    },
+    {
+      "flag": "C9D",
+      "pc": 2996866,
+      "pc_hex": "0x2DBA82"
+    },
+    {
+      "flag": "CF5",
+      "pc": 3046844,
+      "pc_hex": "0x2E7DBC"
+    },
+    {
+      "flag": "CF5",
+      "pc": 3112748,
+      "pc_hex": "0x2F7F2C"
+    }
+  ],
+  "fn_entry_pcs": [
+    "0x2D9AF8",
+    "0x2D9CBC",
+    "0x2DBA38",
+    "0x2E3A68",
+    "0x2E7DA8",
+    "0x2E87B4",
+    "0x2F096C",
+    "0x2F4E64",
+    "0x2F7772",
+    "0x2F7F2C",
+    "0x2F7F56",
+    "0x2FAFFC",
+    "0x2FB248",
+    "0x2FC8C0",
+    "0x2FED14",
+    "0x307788",
+    "0x30A9EC",
+    "0x30CBBC",
+    "0x311546",
+    "0x311C2A"
+  ],
+  "long_path_pc": "0x30D28C",
+  "fe8_store_pc": "0x30D262"
+}

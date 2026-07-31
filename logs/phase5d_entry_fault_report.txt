@@ -1,0 +1,20 @@
+﻿Phase 5D robotol entry ABI / null-context fault
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+root_cause=ENTRY_ARGUMENT
+fault_pc=0x304580
+module_offset=0x2B7A0
+fault_instruction=LDR r7, [r0, #0x28]
+base_register=r0
+base_value=0x0
+phase6a_note=NEXT=fix_generic_helper_dispatch_or_guest_nested_P_arg; no PlatformRegistry yet
+note=observe-only fault path; no alias/3004 changes; no low-VA map
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+resource_hash_unchanged=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+robotol_registered=PASS robotol REGISTERED missing
+entry_called_or_ctx=PASS ENTRY_CALLED / EXT_ENTRY_CTX missing
+ext_fault_present=PASS EXT_FAULT missing
+module_relative_offset=PASS module_offset missing
+fault_insn_or_regs=PASS fault insn decode missing
+failed_lifecycle=PASS FAILED ENTRY_EXECUTION missing
+root_cause_class=PASS root_cause class missing
+no_low_va_map_hack=PASS low VA map hack suspected

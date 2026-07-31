@@ -1,0 +1,28 @@
+﻿Phase 6B-A10 EXT Module Data Initialization Contract
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+class=MISSING_MODULE_R9_SWITCH
+class_legend=MISSING_RW_TEMPLATE_INITIALIZATION|MISSING_BSS_INITIALIZATION|MISSING_DATA_RELOCATION|MISSING_MODULE_R9_SWITCH|REGISTRY_DATA_METADATA_MISSING|MISSING_PRE_ENTRY_INITIALIZATION|UNKNOWN
+source_class=D
+helper_r9=0x280400
+entry_r9=0x280400
+xt_pattern=PARTIAL
+xt_detail=wxjwq:entry_r9=0x280400
+fix_applied=none (observe-only; no R9/r0/guest memory mutation)
+phase6b_b_gate=blocked
+gate_evidence=DOCUMENTED
+next_allowed_fix=MODULE_R9_SWITCH
+Q1_layout=emitted Q2_rw_identity=source_class=D Q3_alloc=emitted Q4_reloc=emitted Q5_entry_r9=0x280400 Q6_helper_vs_entry=helper_r9=0x280400 entry_r9=0x280400 Q7_global=absent_or_no_r9_load Q8_causal_class=MISSING_MODULE_R9_SWITCH Q9_responsibility=emitted Q10_xt_pattern=PARTIAL xt_detail=wxjwq:entry_r9=0x280400 Q11_no_guest_mutation=yes Q12_phase6b_b_gate=blocked gate_evidence=DOCUMENTED next_allowed_fix=MODULE_R9_SWITCH
+jjfb_hash=PASS ok
+rw_base_identity=PASS ok
+ext_image_layout=PASS ok
+ext_data_alloc=PASS ok
+r9_contract=PASS ok
+r9_helper_vs_entry=PASS ok
+module_data_snapshot=PASS ok
+data_init_class=PASS ok
+responsibility=PASS ok
+ext_relocation=PASS ok
+phase6b_b_gate_line=PASS ok
+no_guest_mutation=PASS ok
+xt_wxjwq=PASS ok
+xt_or_partial=PASS ok

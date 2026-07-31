@@ -28,9 +28,7 @@
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/sms_cfg_compat_profile.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
-#include "gwy_launcher/p19_startgame_contract.h"
-#include "gwy_launcher/p20_gbrwcore_lifecycle.h"
-#include "gwy_launcher/p21_runtime_isolation.h"
+#include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
 
@@ -309,10 +307,6 @@ void e10a31_timer_arm(void *uc, uint32_t source_pc, uint32_t source_lr, uint32_t
 void e10a31_timer_disarm(void) {}
 
 uint32_t e10a31_timer_armed_chunk(void) { return 0; }
-
-uint32_t e10a31_timer_arm_erw(void) { return 0; }
-
-const char *e10a31_timer_arm_module_name(void) { return ""; }
 
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest, uint32_t *out_erw) { return 0; }
 
@@ -625,91 +619,103 @@ const SmsCfgCompatProfile *sms_cfg_compat_select(const uint8_t cfunction_sha256[
     return 0;
 }
 
-int p19_startgame_contract_enabled(void) { return 0; }
-void p19_startgame_contract_reset(void) {}
-void p19_startgame_contract_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
+/* P22 selection gates — product stubs. */
+int p22_enabled(void) { return 0; }
+void p22_reset(void) {}
+void p22_note_start_dsm(const char *filename, const char *entry, uint32_t param_va) {
+    (void)filename;
+    (void)entry;
+    (void)param_va;
+}
+void p22_note_param_read(const char *milestone) { (void)milestone; }
+void p22_note_file_open(const char *guest_path, const char *host_path, int ok, uint32_t size) {
+    (void)guest_path;
+    (void)host_path;
+    (void)ok;
+    (void)size;
+}
+void p22_note_file_io(const char *op, const char *guest_path, uint32_t offset, uint32_t length,
+                      int32_t ret) {
+    (void)op;
+    (void)guest_path;
+    (void)offset;
+    (void)length;
+    (void)ret;
+}
+void p22_note_plat_10112(const char *path, const char *ns, const char *host, uint32_t buf,
+                         uint32_t len, int loaded, int ret) {
+    (void)path;
+    (void)ns;
+    (void)host;
+    (void)buf;
+    (void)len;
+    (void)loaded;
+    (void)ret;
+}
+void p22_note_module_map(const char *module_name, uint32_t base, uint32_t size) {
     (void)module_name;
     (void)base;
     (void)size;
 }
-void p19_startgame_contract_bind_uc(void *uc) { (void)uc; }
-void p19_startgame_contract_on_code(void *uc, uint64_t module_id, const char *module_name,
-                                    uint32_t pc, const uint32_t regs[16]) {
-    (void)uc;
-    (void)module_id;
-    (void)module_name;
-    (void)pc;
-    (void)regs;
-}
-int p19_startgame_contract_prefer_gamelist_continue(void) { return 0; }
-void p19_startgame_contract_finalize(const char *stop_reason) { (void)stop_reason; }
-int p19_gate_api_builder(void) { return 0; }
-int p19_gate_startgame_ptr(void) { return 0; }
-int p19_gate_startgame_entry(void) { return 0; }
-int p19_gate_three_args(void) { return 0; }
-int p19_gate_opcode300(void) { return 0; }
-int p19_gate_nested_jjfb(void) { return 0; }
-int p19_gate_child_robotol(void) { return 0; }
-
-int p20_gbrwcore_lifecycle_enabled(void) { return 0; }
-void p20_gbrwcore_lifecycle_reset(void) {}
-void p20_gbrwcore_lifecycle_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
-    (void)module_name;
-    (void)base;
+void p22_note_host_mem_write(uint32_t guest_addr, uint32_t size, const void *buf) {
+    (void)guest_addr;
     (void)size;
+    (void)buf;
 }
-void p20_gbrwcore_lifecycle_on_helper_register(uint32_t helper, uint32_t p_guest) {
-    (void)helper;
-    (void)p_guest;
+void p22_note_platform_memcpy(uint32_t dst, uint32_t src, uint32_t n) {
+    (void)dst;
+    (void)src;
+    (void)n;
 }
-void p20_gbrwcore_lifecycle_bind_uc(void *uc) { (void)uc; }
-void p20_gbrwcore_lifecycle_on_code(void *uc, uint64_t module_id, const char *module_name,
-                                    uint32_t pc, const uint32_t regs[16]) {
+void p22_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                 uint32_t lr, uint32_t sp, uint32_t cpsr) {
     (void)uc;
-    (void)module_id;
     (void)module_name;
     (void)pc;
     (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
 }
-void p20_gbrwcore_lifecycle_on_plat_10102(uint32_t family, uint32_t callback, uint32_t r9,
-                                          const char *owner) {
-    (void)family;
-    (void)callback;
+void p22_note_startgame_lookup(uint32_t target_pc, const char *name) {
+    (void)target_pc;
+    (void)name;
+}
+void p22_note_startgame_enter(uint32_t pc, uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r9) {
+    (void)pc;
+    (void)r0;
+    (void)r1;
+    (void)r2;
     (void)r9;
-    (void)owner;
 }
-void p20_gbrwcore_lifecycle_finalize(const char *stop_reason) { (void)stop_reason; }
-
-int p21_runtime_isolation_enabled(void) { return 0; }
-void p21_runtime_isolation_reset(void) {}
-void p21_runtime_isolation_bind_uc(void *uc) { (void)uc; }
-void p21_runtime_isolation_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
-    (void)module_name;
-    (void)base;
-    (void)size;
-}
-void p21_runtime_isolation_on_code(void *uc, uint32_t pc, const uint32_t regs[16]) {
-    (void)uc;
+void p22_note_opcode300(uint32_t pc, uint32_t a0, uint32_t a1, uint32_t a2, const char *note) {
     (void)pc;
-    (void)regs;
+    (void)a0;
+    (void)a1;
+    (void)a2;
+    (void)note;
 }
-void p21_runtime_isolation_finalize(const char *stop_reason) { (void)stop_reason; }
-int p21_gate_p_isolated(void) { return 0; }
-int p21_gate_parent_p_intact(void) { return 0; }
-int p21_gate_callback_r9_parent(void) { return 0; }
-int p21_gate_no_30d5d2_fault(void) { return 0; }
-int p21_gate_startgame_enter(void) { return 0; }
-const char *p21_fault_r9_owner(void) { return "UNKNOWN"; }
-uint32_t p21_slot_1914_last_writer_pc(void) { return 0; }
-int p20_gate_cmd0(void) { return 0; }
-int p20_gate_reg10102(void) { return 0; }
-int p20_gate_callback_enter(void) { return 0; }
-int p20_gate_lazy_init(void) { return 0; }
-int p20_gate_api_builder(void) { return 0; }
-int p20_gate_sg_ptr(void) { return 0; }
-int p20_gate_startgame(void) { return 0; }
-int p20_gate_opcode300(void) { return 0; }
-int p20_gate_nested_jjfb(void) { return 0; }
-uint32_t p20_image_base(void) { return 0; }
-uint32_t p20_live_r9(void) { return 0; }
-uint32_t p20_sg_fn_ptr(void) { return 0; }
+void p22_note_nested_mrp(const char *target, const char *entry) {
+    (void)target;
+    (void)entry;
+}
+void p22_note_robotol_ext(const char *member) { (void)member; }
+void p22_note_fetch_fault(uint32_t fault_pc, uint32_t fetch_addr, uint32_t lr, uint32_t sp,
+                          uint32_t r9) {
+    (void)fault_pc;
+    (void)fetch_addr;
+    (void)lr;
+    (void)sp;
+    (void)r9;
+}
+void p22_report_runtime_stack(const char *why) { (void)why; }
+int p22_gate_done(P22Gate g) {
+    (void)g;
+    return 0;
+}
+const char *p22_gate_name(P22Gate g) {
+    (void)g;
+    return "?";
+}
+void p22_finalize(const char *stop_reason) { (void)stop_reason; }
+

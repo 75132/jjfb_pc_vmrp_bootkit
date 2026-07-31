@@ -1,0 +1,87 @@
+# E10A-3.1g cfunction.ext true-fail annotate (0xAC2D0 / 0xAC2E8)
+
+## Live register snapshot (method0 insn trace)
+
+| PC | r0 | r1 | r2 | r3 | r9 | note |
+|----|----|----|----|----|----|------|
+| 0x2E53A6 BLX | 0x27FA30 | 0x2E845C | 0xAC2D0 | 0x27FA33 | 0x280400 | gamelist calls strcmp |
+| 0xAC2D0 enter | 0x27FA30 | 0x2E845C | (fn) | 0x27FA33 | 0x280400 | ARM mode |
+| 0xAC2D4 | 0x27FA31 | 0x2E845C | **0x00** | … | | first byte of A = NUL |
+| 0xAC2D8 CMP | 0x27FA31 | 0x2E845D | 0x00 | **0x47='G'** | | mismatch |
+| 0xAC2E8 | … | … | 0 | 0x47 | | r0 becomes -1 |
+| 0xAC2EC BX lr | **-1** | | | | | return to gamelist |
+
+## Static interpretation
+
+Classic ARM `strcmp` returning `-1/0/+1` via conditional MOV/MVN:
+
+```
+LDRB r2, [r0], #1
+LDRB r3, [r1], #1
+CMP  r2, r3
+BEQ  equal_continue     ; -> 0xAC2F0
+CMP  r2, r3
+MOVCS r0, #1            ; r2 > r3
+MVNCC r0, #0            ; r2 < r3 => r0 = -1
+BX   lr
+```
+
+Observed first-byte compare:
+- A = `*(uint8*)0x27FA30` = **0x00** (stack field empty)
+- B = `*(uint8*)0x2E845C` = **`'G'` of literal `"GPT"`**
+
+## Gamelist call chain (Thumb @ 0x2E5380)
+
+```
+memset(sp+0x30, 0, 0x10)                 ; R9+0x95C -> cfunction
+BL  0x2E3180(id=0x349, dst=sp+0x30, len=3)
+  BLX memcpy(dst, src=0x28101D, len=3)   ; src = base+0x349
+strcmp(sp+0x30, "GPT")                   ; R9+0x94C -> 0xAC2D0
+  TRUE FAIL @ 0xAC2E8
+```
+
+Live memcpy (insn seq 5023): dst=`0x27FA30` src=`0x28101D` len=3;
+src_base=`0x280CD4` (inside cfunction ERW `0x280400`+0x8D4).
+strcmp then sees NUL vs `GPT` — appInfo is not on this path.
+
+## Disassembly (from live-traced / image bytes)
+
+  0x000AC2D0: 0120D0E4  LDRB r2, [r0], #1
+  0x000AC2D4: 0130D1E4  LDRB r3, [r1], #1
+  0x000AC2D8: 030052E1  CMP r2, r3
+  0x000AC2DC: 0300000A  BEQ -> 0xAC2F0
+  0x000AC2E0: 030052E1  CMP r2, r3
+  0x000AC2E4: 0100A023  MOVCS r0, #1
+  0x000AC2E8: 0000E033  MVNCC r0, #0  ; r0=-1  <<< TRUE_FAIL
+  0x000AC2EC: 1EFF2FE1  BX lr  <<< return
+
+## Operand B string @ gamelist VA 0x2E845C
+
+- file_off: 0x14108
+- raw_hex: 475054006e617070747970653d25645f6e75726c3d25735f677779626c696e6b000000006e617070
+- ascii: `GPT.napptype=%d_nurl=%s_gwyblink....napptype=%d_nextid=%d_nc`
+- cstring: `GPT`
+
+## cfunction.ext image window @ file_off 0x2C2D0 (VA 0xAC2D0 - 0x80000)
+
+- source_len: 332116
+- file_off: 0x2C2D0
+- bytes: 0120d0e40130d1e4030052e10300000a030052e10100a0230000e0331eff2fe1
+  0x000AC2D0: LDRB r2, [r0], #1
+  0x000AC2D4: LDRB r3, [r1], #1
+  0x000AC2D8: CMP r2, r3
+  0x000AC2DC: BEQ -> 0xAC2F0
+  0x000AC2E0: CMP r2, r3
+  0x000AC2E4: MOVCS r0, #1
+  0x000AC2E8: MVNCC r0, #0  ; r0=-1
+  0x000AC2EC: BX lr
+
+## Verdicts
+
+- `TRUE_FAIL_IS_STRCMP_IN_CFUNCTION`
+- `STRCMP_EMPTY_VS_GPT_LITERAL`
+- `GPT_FIELD_READ_OFF_349_SRC_EMPTY`
+- `APPINFO_NOT_ON_TRUE_FAIL_PATH`
+- Next: identify who owns buffer base `0x280CD4` / ERW+0x8D4 and why
+  offset `0x349` is not populated with `GPT` before method0.
+

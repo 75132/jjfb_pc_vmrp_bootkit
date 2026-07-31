@@ -1,0 +1,2039 @@
+{
+  "unlock_fn": {
+    "fn": "0x2FC8C0",
+    "strb_site": "0x2FC8CE",
+    "disasm": [
+      "0x2FC8C0: PUSH {...,lr} 0xB508",
+      "0x2FC8C2: BL 0x3046A8",
+      "0x2FC8C6: LDR r1, [pc] ; =0xC44",
+      "0x2FC8C8: ADD r1, r9",
+      "0x2FC8CA: STR r0, [r1, #0x4]",
+      "0x2FC8CC: MOVS r0, #1",
+      "0x2FC8CE: STRB r0, [r1, #0x0]",
+      "0x2FC8D0: MOVS r0, #0",
+      "0x2FC8D2: STR r0, [r1, #0x8]",
+      "0x2FC8D4: STR r0, [r1, #0xC]",
+      "0x2FC8D6: POP 0xBD08",
+      "0x2FC8D8: raw 0x0C44",
+      "0x2FC8DA: raw 0x0000",
+      "0x2FC8DC: PUSH {...,lr} 0xB5FF",
+      "0x2FC8DE: SUB sp, #0x4"
+    ],
+    "bl_targets": [
+      {
+        "pc": "0x2FC8C2",
+        "target": "0x3046A8"
+      }
+    ],
+    "r9_lits": [
+      "0xC44"
+    ],
+    "precondition": "BL 0x3046A8 then STR ret@C44+4; STRB#1@C44; clear C44+8/+C",
+    "entry_args": "R0-R3 unused before first BL (uses R9 only); R0 overwritten by 0x3046A8 ret",
+    "safe_for_fast_call": true,
+    "note": "No unsafe pointer arg; depends on R9 + helper 0x3046A8"
+  },
+  "helper_3046a8": {
+    "fn": "0x3046A8",
+    "disasm": [
+      "0x3046A8: LDR r0, [pc] ; =0xFFFD470C",
+      "0x3046AA: PUSH {...,lr} 0xB508",
+      "0x3046AC: ADD r0, r15",
+      "0x3046AE: LDR r0, [r0, #0x38]",
+      "0x3046B0: ADDS r0, #128",
+      "0x3046B2: LDR r0, [r0, #0x4]",
+      "0x3046B4: raw 0x4780",
+      "0x3046B6: POP 0xBD08",
+      "0x3046B8: raw 0x470C",
+      "0x3046BA: raw 0xFFFD",
+      "0x3046BC: PUSH {...,lr} 0xB5F8",
+      "0x3046BE: LDR r4, [pc] ; =0x1470",
+      "0x3046C0: ADD r4, r9",
+      "0x3046C2: LDR r0, [r4, #0x20]",
+      "0x3046C4: LDR r1, [r4, #0x24]",
+      "0x3046C6: raw 0x4288",
+      "0x3046C8: Bcond(10) 0x3046D4",
+      "0x3046CA: raw 0x1C41",
+      "0x3046CC: STR r1, [r4, #0x20]",
+      "0x3046CE: LDR r1, [r4, #0x14]",
+      "0x3046D0: raw 0x5C08",
+      "0x3046D2: B 0x3046D8",
+      "0x3046D4: BL 0x2F531C",
+      "0x3046D8: raw 0xAB00",
+      "0x3046DA: STRB r0, [r3, #0x0]",
+      "0x3046DC: LDR r0, [r4, #0x20]",
+      "0x3046DE: LDR r1, [r4, #0x24]",
+      "0x3046E0: raw 0x4288",
+      "0x3046E2: Bcond(10) 0x3046EE",
+      "0x3046E4: raw 0x1C41",
+      "0x3046E6: STR r1, [r4, #0x20]",
+      "0x3046E8: LDR r1, [r4, #0x14]",
+      "0x3046EA: raw 0x5C08",
+      "0x3046EC: B 0x3046F2",
+      "0x3046EE: BL 0x2F531C",
+      "0x3046F2: raw 0xAB00",
+      "0x3046F4: LDR r1, [pc] ; =0x11902",
+      "0x3046F6: STRB r0, [r3, #0x1]",
+      "0x3046F8: MOVS r2, #2",
+      "0x3046FA: ADD r1, r15",
+      "0x3046FC: LDR r6, [pc] ; =0x1470",
+      "0x3046FE: raw 0x466D",
+      "0x304700: ADD r6, r9",
+      "0x304702: raw 0x3E80",
+      "0x304704: LDR r3, [r6, #0x48]",
+      "0x304706: raw 0x4668",
+      "0x304708: raw 0x4798",
+      "0x30470A: CMP r0, #0",
+      "0x30470C: Bcond(0) 0x30471E",
+      "0x30470E: LDR r1, [pc] ; =0x118EE",
+      "0x304710: MOVS r2, #2",
+      "0x304712: ADD r1, r15",
+      "0x304714: LDR r3, [r6, #0x48]",
+      "0x304716: MOVS r0, r5",
+      "0x304718: raw 0x4798",
+      "0x30471A: CMP r0, #0",
+      "0x30471C: Bcond(1) 0x3047F6",
+      "0x30471E: LDR r0, [r4, #0x20]",
+      "0x304720: LDR r1, [r4, #0x24]",
+      "0x304722: raw 0x4288",
+      "0x304724: Bcond(10) 0x304730",
+      "0x304726: raw 0x1C41"
+    ],
+    "bls": [
+      "0x3046D4: BL 0x2F531C",
+      "0x3046EE: BL 0x2F531C"
+    ],
+    "n_callers": 14
+  },
+  "bl_sites": [
+    "0x2DB9DC",
+    "0x2E4840",
+    "0x2E48BC",
+    "0x2E4932",
+    "0x2E49A8",
+    "0x2E4A16",
+    "0x2E4A90",
+    "0x2E4B06",
+    "0x30DDE2"
+  ],
+  "callers": [
+    {
+      "bl_pc": "0x2DB9DC",
+      "fn": "0x2DB948",
+      "class": "EVENT_SWITCH_CASE_UI_INIT",
+      "r9_offsets": [
+        "0xB5C",
+        "0xB60",
+        "0xCD8",
+        "0xCD9",
+        "0xDB4",
+        "0x1090",
+        "0x1094",
+        "0x1098"
+      ],
+      "bl_targets_nearby": [
+        "0x305E08",
+        "0x30A0CC",
+        "0x308DE8",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2DB9A8",
+          "text": "Bcond(1) 0x2DB9C8"
+        },
+        {
+          "pc": "0x2DB9B2",
+          "text": "Bcond(0) 0x2DB9B8"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2DB9B8: LDR r0, [pc] ; =0xB5C",
+        "0x2DB9BA: LDR r2, [r4, #0x8]",
+        "0x2DB9BC: ADD r0, r9",
+        "0x2DB9BE: LDR r0, [r0, #0x0]",
+        "0x2DB9C0: MOVS r1, r5",
+        "0x2DB9C8: LDR r0, [pc] ; =0xB5C",
+        "0x2DB9CA: LDR r2, [r4, #0x8]",
+        "0x2DB9CC: ADD r0, r9",
+        "0x2DB9CE: LDR r0, [r0, #0x0]",
+        "0x2DB9D0: MOVS r1, r5",
+        "0x2DB9D6: LDR r1, [pc] ; =0xCD9",
+        "0x2DB9D8: ADD r1, r9"
+      ],
+      "upstream_callers": [
+        "0x2E325A"
+      ],
+      "n_upstream": 1,
+      "context": [
+        "0x2DB98C: MOVS r1, #1",
+        "0x2DB98E: ADD r2, r9",
+        "0x2DB990: STRB r1, [r2, #0x0]",
+        "0x2DB992: LDR r1, [pc] ; =0x1098",
+        "0x2DB994: ADD r1, r9",
+        "0x2DB996: STR r0, [r1, #0x0]",
+        "0x2DB998: LDR r1, [pc] ; =0x1090",
+        "0x2DB99A: LDR r0, [sp, #0x4]",
+        "0x2DB99C: ADD r1, r9",
+        "0x2DB99E: STR r0, [r1, #0x0]",
+        "0x2DB9A0: LDR r1, [pc] ; =0x1094",
+        "0x2DB9A2: CMP r0, #6",
+        "0x2DB9A4: ADD r1, r9",
+        "0x2DB9A6: STR r7, [r1, #0x0]",
+        "0x2DB9A8: Bcond(1) 0x2DB9C8",
+        "0x2DB9AA: LDR r6, [pc] ; =0xDB4",
+        "0x2DB9AC: ADD r6, r9",
+        "0x2DB9AE: LDR r0, [r6, #0x0]",
+        "0x2DB9B0: CMP r0, #0",
+        "0x2DB9B2: Bcond(0) 0x2DB9B8",
+        "0x2DB9B4: BL 0x305E08",
+        "0x2DB9B8: LDR r0, [pc] ; =0xB5C",
+        "0x2DB9BA: LDR r2, [r4, #0x8]",
+        "0x2DB9BC: ADD r0, r9",
+        "0x2DB9BE: LDR r0, [r0, #0x0]",
+        "0x2DB9C0: MOVS r1, r5",
+        "0x2DB9C2: BL 0x30A0CC",
+        "0x2DB9C6: STR r0, [r6, #0x0]",
+        "0x2DB9C8: LDR r0, [pc] ; =0xB5C",
+        "0x2DB9CA: LDR r2, [r4, #0x8]",
+        "0x2DB9CC: ADD r0, r9",
+        "0x2DB9CE: LDR r0, [r0, #0x0]",
+        "0x2DB9D0: MOVS r1, r5",
+        "0x2DB9D2: BL 0x308DE8",
+        "0x2DB9D6: LDR r1, [pc] ; =0xCD9",
+        "0x2DB9D8: ADD r1, r9",
+        "0x2DB9DA: STRB r0, [r1, #0x0]",
+        "0x2DB9DC: BL 0x2FC8C0",
+        "0x2DB9E0: LDR r0, [sp, #0x8]",
+        "0x2DB9E2: BL 0x2FBFB4",
+        "0x2DB9E6: ADD sp, #0xC",
+        "0x2DB9E8: POP 0xBDF0",
+        "0x2DB9EA: raw 0x0000",
+        "0x2DB9EC: raw 0x0B5C",
+        "0x2DB9EE: raw 0x0000",
+        "0x2DB9F0: raw 0x0B60",
+        "0x2DB9F2: raw 0x0000",
+        "0x2DB9F4: raw 0x0CD8",
+        "0x2DB9F6: raw 0x0000",
+        "0x2DB9F8: raw 0x1098",
+        "0x2DB9FA: raw 0x0000",
+        "0x2DB9FC: raw 0x1090",
+        "0x2DB9FE: raw 0x0000"
+      ],
+      "fn_head": [
+        "0x2DB948: PUSH {...,lr} 0xB5F0",
+        "0x2DB94A: LDR r6, [pc] ; =0xB5C",
+        "0x2DB94C: MOVS r4, r0",
+        "0x2DB94E: LDR r0, [r0, #0x4]",
+        "0x2DB950: LDR r5, [pc] ; =0xB60",
+        "0x2DB952: SUB sp, #0xC",
+        "0x2DB954: ADD r6, r9",
+        "0x2DB956: STR r0, [r6, #0x0]",
+        "0x2DB958: MOVS r1, #0",
+        "0x2DB95A: ADD r5, r9",
+        "0x2DB95C: STR r1, [r5, #0x0]",
+        "0x2DB95E: LDR r2, [r4, #0x8]",
+        "0x2DB960: MOVS r1, r5",
+        "0x2DB962: BL 0x30A0CC",
+        "0x2DB966: STR r0, [sp, #0x8]",
+        "0x2DB968: LDR r2, [r4, #0x8]",
+        "0x2DB96A: LDR r0, [r6, #0x0]",
+        "0x2DB96C: MOVS r1, r5",
+        "0x2DB96E: BL 0x308D98",
+        "0x2DB972: STR r0, [sp, #0x4]",
+        "0x2DB974: LDR r2, [r4, #0x8]",
+        "0x2DB976: LDR r0, [r6, #0x0]",
+        "0x2DB978: MOVS r1, r5",
+        "0x2DB97A: BL 0x308D98",
+        "0x2DB97E: MOVS r7, r0",
+        "0x2DB980: LDR r2, [r4, #0x8]",
+        "0x2DB982: LDR r0, [r6, #0x0]",
+        "0x2DB984: MOVS r1, r5",
+        "0x2DB986: BL 0x308D98",
+        "0x2DB98A: LDR r2, [pc] ; =0xCD8",
+        "0x2DB98C: MOVS r1, #1",
+        "0x2DB98E: ADD r2, r9",
+        "0x2DB990: STRB r1, [r2, #0x0]",
+        "0x2DB992: LDR r1, [pc] ; =0x1098",
+        "0x2DB994: ADD r1, r9",
+        "0x2DB996: STR r0, [r1, #0x0]",
+        "0x2DB998: LDR r1, [pc] ; =0x1090",
+        "0x2DB99A: LDR r0, [sp, #0x4]",
+        "0x2DB99C: ADD r1, r9",
+        "0x2DB99E: STR r0, [r1, #0x0]"
+      ],
+      "in_ui_cluster": false,
+      "depends_state_8d0": false,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E325A",
+          "fn": "0x2E2520"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E4840",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E4856",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E485E",
+          "text": "Bcond(1) 0x2E48D6"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E4816: MOVS r1, r0",
+        "0x2E4818: LDR r0, [pc] ; =0x2F526",
+        "0x2E481A: ADD r0, r15",
+        "0x2E4820: LDR r1, [pc] ; =0x2F506",
+        "0x2E4822: ADD r1, r15",
+        "0x2E4828: LDR r1, [pc] ; =0xC8E",
+        "0x2E482C: MOVS r0, #1",
+        "0x2E4830: ADD r1, r9",
+        "0x2E4834: MOVS r0, #0",
+        "0x2E483A: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E47F0: LDR r0, [r4, #0x0]",
+        "0x2E47F2: ADD r1, r9",
+        "0x2E47F4: BL 0x308D98",
+        "0x2E47F8: LDR r1, [pc] ; =0xB60",
+        "0x2E47FA: MOVS r6, r0",
+        "0x2E47FC: LDR r2, [r5, #0x8]",
+        "0x2E47FE: LDR r0, [r4, #0x0]",
+        "0x2E4800: ADD r1, r9",
+        "0x2E4802: BL 0x308D98",
+        "0x2E4806: LDR r1, [pc] ; =0xB60",
+        "0x2E4808: MOVS r7, r0",
+        "0x2E480A: LDR r2, [r5, #0x8]",
+        "0x2E480C: LDR r0, [r4, #0x0]",
+        "0x2E480E: ADD r1, r9",
+        "0x2E4810: BL 0x30A0CC",
+        "0x2E4814: MOVS r4, r0",
+        "0x2E4816: MOVS r1, r0",
+        "0x2E4818: LDR r0, [pc] ; =0x2F526",
+        "0x2E481A: ADD r0, r15",
+        "0x2E481C: BL 0x2D96BC",
+        "0x2E4820: LDR r1, [pc] ; =0x2F506",
+        "0x2E4822: ADD r1, r15",
+        "0x2E4824: BL 0x2D96BC",
+        "0x2E4828: LDR r1, [pc] ; =0xC8E",
+        "0x2E482A: STR r0, [sp, #0x0]",
+        "0x2E482C: MOVS r0, #1",
+        "0x2E482E: LDR r5, [pc] ; =0xA90",
+        "0x2E4830: ADD r1, r9",
+        "0x2E4832: STRB r0, [r1, #0x0]",
+        "0x2E4834: MOVS r0, #0",
+        "0x2E4836: ADD r5, r9",
+        "0x2E4838: STR r0, [r5, #0x28]",
+        "0x2E483A: MOVS r0, #20",
+        "0x2E483C: BL 0x2FA500",
+        "0x2E4840: BL 0x2FC8C0",
+        "0x2E4844: LDR r0, [sp, #0x0]",
+        "0x2E4846: BL 0x2FBFB4",
+        "0x2E484A: LDR r1, [pc] ; =0xA90",
+        "0x2E484C: STR r6, [r5, #0x7C]",
+        "0x2E484E: ADD r1, r9",
+        "0x2E4850: ADDS r1, #128",
+        "0x2E4852: STR r7, [r1, #0x0]",
+        "0x2E4854: STR r4, [r5, #0x10]",
+        "0x2E4856: B 0x2E4B1E",
+        "0x2E4858: MOVS r0, r6",
+        "0x2E485A: raw 0x38FF",
+        "0x2E485C: raw 0x3847",
+        "0x2E485E: Bcond(1) 0x2E48D6",
+        "0x2E4860: LDR r4, [pc] ; =0xB5C",
+        "0x2E4862: LDR r1, [pc] ; =0xB60"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E48BC",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E487E",
+          "text": "B 0x2E4882"
+        },
+        {
+          "pc": "0x2E4880",
+          "text": "B 0x2E4B30"
+        },
+        {
+          "pc": "0x2E48D4",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E48D8",
+          "text": "Bcond(1) 0x2E494C"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E4892: MOVS r1, r0",
+        "0x2E4894: LDR r0, [pc] ; =0x2F4AA",
+        "0x2E4896: ADD r0, r15",
+        "0x2E489C: LDR r1, [pc] ; =0x2F4A6",
+        "0x2E489E: ADD r1, r15",
+        "0x2E48A4: LDR r1, [pc] ; =0xC8E",
+        "0x2E48A8: MOVS r0, #1",
+        "0x2E48AA: ADD r1, r9",
+        "0x2E48AE: LDR r1, [pc] ; =0xA90",
+        "0x2E48B0: MOVS r0, #0",
+        "0x2E48B2: ADD r1, r9",
+        "0x2E48B6: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E486C: BL 0x308D98",
+        "0x2E4870: LDR r1, [pc] ; =0xB60",
+        "0x2E4872: MOVS r6, r0",
+        "0x2E4874: LDR r2, [r5, #0x8]",
+        "0x2E4876: LDR r0, [r4, #0x0]",
+        "0x2E4878: ADD r1, r9",
+        "0x2E487A: BL 0x308D98",
+        "0x2E487E: B 0x2E4882",
+        "0x2E4880: B 0x2E4B30",
+        "0x2E4882: LDR r1, [pc] ; =0xB60",
+        "0x2E4884: MOVS r7, r0",
+        "0x2E4886: LDR r2, [r5, #0x8]",
+        "0x2E4888: LDR r0, [r4, #0x0]",
+        "0x2E488A: ADD r1, r9",
+        "0x2E488C: BL 0x30A0CC",
+        "0x2E4890: MOVS r4, r0",
+        "0x2E4892: MOVS r1, r0",
+        "0x2E4894: LDR r0, [pc] ; =0x2F4AA",
+        "0x2E4896: ADD r0, r15",
+        "0x2E4898: BL 0x2D96BC",
+        "0x2E489C: LDR r1, [pc] ; =0x2F4A6",
+        "0x2E489E: ADD r1, r15",
+        "0x2E48A0: BL 0x2D96BC",
+        "0x2E48A4: LDR r1, [pc] ; =0xC8E",
+        "0x2E48A6: MOVS r5, r0",
+        "0x2E48A8: MOVS r0, #1",
+        "0x2E48AA: ADD r1, r9",
+        "0x2E48AC: STRB r0, [r1, #0x0]",
+        "0x2E48AE: LDR r1, [pc] ; =0xA90",
+        "0x2E48B0: MOVS r0, #0",
+        "0x2E48B2: ADD r1, r9",
+        "0x2E48B4: STR r0, [r1, #0x28]",
+        "0x2E48B6: MOVS r0, #20",
+        "0x2E48B8: BL 0x2FA500",
+        "0x2E48BC: BL 0x2FC8C0",
+        "0x2E48C0: MOVS r0, r5",
+        "0x2E48C2: BL 0x2FBFB4",
+        "0x2E48C6: LDR r1, [pc] ; =0xA90",
+        "0x2E48C8: ADD r1, r9",
+        "0x2E48CA: ADDS r1, #128",
+        "0x2E48CC: STR r6, [r1, #0x24]",
+        "0x2E48CE: STR r7, [r1, #0x28]",
+        "0x2E48D0: raw 0x3980",
+        "0x2E48D2: STR r4, [r1, #0x24]",
+        "0x2E48D4: B 0x2E4B1E",
+        "0x2E48D6: CMP r6, #230",
+        "0x2E48D8: Bcond(1) 0x2E494C",
+        "0x2E48DA: LDR r4, [pc] ; =0xB5C",
+        "0x2E48DC: LDR r1, [pc] ; =0xB60",
+        "0x2E48DE: LDR r2, [r5, #0x8]"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E4932",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F45C",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E494A",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E494E",
+          "text": "Bcond(1) 0x2E49BA"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E4908: MOVS r1, r0",
+        "0x2E490A: LDR r0, [pc] ; =0x2F434",
+        "0x2E490C: ADD r0, r15",
+        "0x2E4912: LDR r1, [pc] ; =0x2F45C",
+        "0x2E4914: ADD r1, r15",
+        "0x2E491A: LDR r1, [pc] ; =0xC8E",
+        "0x2E491E: MOVS r0, #1",
+        "0x2E4920: ADD r1, r9",
+        "0x2E4924: LDR r1, [pc] ; =0xA90",
+        "0x2E4926: MOVS r0, #0",
+        "0x2E4928: ADD r1, r9",
+        "0x2E492C: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E48E2: LDR r0, [r4, #0x0]",
+        "0x2E48E4: ADD r1, r9",
+        "0x2E48E6: BL 0x308D98",
+        "0x2E48EA: LDR r1, [pc] ; =0xB60",
+        "0x2E48EC: MOVS r6, r0",
+        "0x2E48EE: LDR r2, [r5, #0x8]",
+        "0x2E48F0: LDR r0, [r4, #0x0]",
+        "0x2E48F2: ADD r1, r9",
+        "0x2E48F4: BL 0x308D98",
+        "0x2E48F8: LDR r1, [pc] ; =0xB60",
+        "0x2E48FA: MOVS r7, r0",
+        "0x2E48FC: LDR r2, [r5, #0x8]",
+        "0x2E48FE: LDR r0, [r4, #0x0]",
+        "0x2E4900: ADD r1, r9",
+        "0x2E4902: BL 0x30A0CC",
+        "0x2E4906: MOVS r4, r0",
+        "0x2E4908: MOVS r1, r0",
+        "0x2E490A: LDR r0, [pc] ; =0x2F434",
+        "0x2E490C: ADD r0, r15",
+        "0x2E490E: BL 0x2D96BC",
+        "0x2E4912: LDR r1, [pc] ; =0x2F45C",
+        "0x2E4914: ADD r1, r15",
+        "0x2E4916: BL 0x2D96BC",
+        "0x2E491A: LDR r1, [pc] ; =0xC8E",
+        "0x2E491C: MOVS r5, r0",
+        "0x2E491E: MOVS r0, #1",
+        "0x2E4920: ADD r1, r9",
+        "0x2E4922: STRB r0, [r1, #0x0]",
+        "0x2E4924: LDR r1, [pc] ; =0xA90",
+        "0x2E4926: MOVS r0, #0",
+        "0x2E4928: ADD r1, r9",
+        "0x2E492A: STR r0, [r1, #0x28]",
+        "0x2E492C: MOVS r0, #20",
+        "0x2E492E: BL 0x2FA500",
+        "0x2E4932: BL 0x2FC8C0",
+        "0x2E4936: MOVS r0, r5",
+        "0x2E4938: BL 0x2FBFB4",
+        "0x2E493C: LDR r1, [pc] ; =0xA90",
+        "0x2E493E: ADD r1, r9",
+        "0x2E4940: ADDS r1, #128",
+        "0x2E4942: STR r6, [r1, #0x4]",
+        "0x2E4944: STR r7, [r1, #0x8]",
+        "0x2E4946: raw 0x3980",
+        "0x2E4948: STR r4, [r1, #0x14]",
+        "0x2E494A: B 0x2E4B1E",
+        "0x2E494C: CMP r6, #218",
+        "0x2E494E: Bcond(1) 0x2E49BA",
+        "0x2E4950: LDR r4, [pc] ; =0xB5C",
+        "0x2E4952: LDR r1, [pc] ; =0xB60",
+        "0x2E4954: LDR r2, [r5, #0x8]"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E49A8",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F45C",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4",
+        "0x308D98"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E49B8",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E49BC",
+          "text": "Bcond(1) 0x2E4A30"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E497E: MOVS r1, r0",
+        "0x2E4980: LDR r0, [pc] ; =0x2F3BE",
+        "0x2E4982: ADD r0, r15",
+        "0x2E4988: LDR r1, [pc] ; =0x2F402",
+        "0x2E498A: ADD r1, r15",
+        "0x2E4990: LDR r1, [pc] ; =0xC8E",
+        "0x2E4994: MOVS r0, #1",
+        "0x2E4998: ADD r1, r9",
+        "0x2E499C: MOVS r0, #0",
+        "0x2E49A2: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E4958: LDR r0, [r4, #0x0]",
+        "0x2E495A: ADD r1, r9",
+        "0x2E495C: BL 0x308D98",
+        "0x2E4960: LDR r1, [pc] ; =0xB60",
+        "0x2E4962: MOVS r6, r0",
+        "0x2E4964: LDR r2, [r5, #0x8]",
+        "0x2E4966: LDR r0, [r4, #0x0]",
+        "0x2E4968: ADD r1, r9",
+        "0x2E496A: BL 0x308D98",
+        "0x2E496E: LDR r1, [pc] ; =0xB60",
+        "0x2E4970: MOVS r7, r0",
+        "0x2E4972: LDR r2, [r5, #0x8]",
+        "0x2E4974: LDR r0, [r4, #0x0]",
+        "0x2E4976: ADD r1, r9",
+        "0x2E4978: BL 0x30A0CC",
+        "0x2E497C: MOVS r4, r0",
+        "0x2E497E: MOVS r1, r0",
+        "0x2E4980: LDR r0, [pc] ; =0x2F3BE",
+        "0x2E4982: ADD r0, r15",
+        "0x2E4984: BL 0x2D96BC",
+        "0x2E4988: LDR r1, [pc] ; =0x2F402",
+        "0x2E498A: ADD r1, r15",
+        "0x2E498C: BL 0x2D96BC",
+        "0x2E4990: LDR r1, [pc] ; =0xC8E",
+        "0x2E4992: STR r0, [sp, #0x0]",
+        "0x2E4994: MOVS r0, #1",
+        "0x2E4996: LDR r5, [pc] ; =0xA90",
+        "0x2E4998: ADD r1, r9",
+        "0x2E499A: STRB r0, [r1, #0x0]",
+        "0x2E499C: MOVS r0, #0",
+        "0x2E499E: ADD r5, r9",
+        "0x2E49A0: STR r0, [r5, #0x28]",
+        "0x2E49A2: MOVS r0, #20",
+        "0x2E49A4: BL 0x2FA500",
+        "0x2E49A8: BL 0x2FC8C0",
+        "0x2E49AC: LDR r0, [sp, #0x0]",
+        "0x2E49AE: BL 0x2FBFB4",
+        "0x2E49B2: STR r4, [r5, #0xC]",
+        "0x2E49B4: STR r6, [r5, #0x74]",
+        "0x2E49B6: STR r7, [r5, #0x78]",
+        "0x2E49B8: B 0x2E4B1E",
+        "0x2E49BA: CMP r6, #108",
+        "0x2E49BC: Bcond(1) 0x2E4A30",
+        "0x2E49BE: LDR r4, [pc] ; =0xB5C",
+        "0x2E49C0: LDR r1, [pc] ; =0xB60",
+        "0x2E49C2: LDR r2, [r5, #0x8]",
+        "0x2E49C4: ADD r4, r9",
+        "0x2E49C6: LDR r0, [r4, #0x0]",
+        "0x2E49C8: ADD r1, r9",
+        "0x2E49CA: BL 0x308D98"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E4A16",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F3B0",
+        "0x2F45C",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E4A2E",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E4A32",
+          "text": "Bcond(1) 0x2E4AAA"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E49EC: MOVS r1, r0",
+        "0x2E49EE: LDR r0, [pc] ; =0x2F350",
+        "0x2E49F0: ADD r0, r15",
+        "0x2E49F6: LDR r1, [pc] ; =0x2F3B0",
+        "0x2E49F8: ADD r1, r15",
+        "0x2E49FE: LDR r1, [pc] ; =0xC8E",
+        "0x2E4A02: MOVS r0, #1",
+        "0x2E4A04: ADD r1, r9",
+        "0x2E4A08: LDR r1, [pc] ; =0xA90",
+        "0x2E4A0A: MOVS r0, #0",
+        "0x2E4A0C: ADD r1, r9",
+        "0x2E4A10: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E49C6: LDR r0, [r4, #0x0]",
+        "0x2E49C8: ADD r1, r9",
+        "0x2E49CA: BL 0x308D98",
+        "0x2E49CE: LDR r1, [pc] ; =0xB60",
+        "0x2E49D0: MOVS r6, r0",
+        "0x2E49D2: LDR r2, [r5, #0x8]",
+        "0x2E49D4: LDR r0, [r4, #0x0]",
+        "0x2E49D6: ADD r1, r9",
+        "0x2E49D8: BL 0x308D98",
+        "0x2E49DC: LDR r1, [pc] ; =0xB60",
+        "0x2E49DE: MOVS r7, r0",
+        "0x2E49E0: LDR r2, [r5, #0x8]",
+        "0x2E49E2: LDR r0, [r4, #0x0]",
+        "0x2E49E4: ADD r1, r9",
+        "0x2E49E6: BL 0x30A0CC",
+        "0x2E49EA: MOVS r4, r0",
+        "0x2E49EC: MOVS r1, r0",
+        "0x2E49EE: LDR r0, [pc] ; =0x2F350",
+        "0x2E49F0: ADD r0, r15",
+        "0x2E49F2: BL 0x2D96BC",
+        "0x2E49F6: LDR r1, [pc] ; =0x2F3B0",
+        "0x2E49F8: ADD r1, r15",
+        "0x2E49FA: BL 0x2D96BC",
+        "0x2E49FE: LDR r1, [pc] ; =0xC8E",
+        "0x2E4A00: MOVS r5, r0",
+        "0x2E4A02: MOVS r0, #1",
+        "0x2E4A04: ADD r1, r9",
+        "0x2E4A06: STRB r0, [r1, #0x0]",
+        "0x2E4A08: LDR r1, [pc] ; =0xA90",
+        "0x2E4A0A: MOVS r0, #0",
+        "0x2E4A0C: ADD r1, r9",
+        "0x2E4A0E: STR r0, [r1, #0x28]",
+        "0x2E4A10: MOVS r0, #20",
+        "0x2E4A12: BL 0x2FA500",
+        "0x2E4A16: BL 0x2FC8C0",
+        "0x2E4A1A: MOVS r0, r5",
+        "0x2E4A1C: BL 0x2FBFB4",
+        "0x2E4A20: LDR r1, [pc] ; =0xA90",
+        "0x2E4A22: ADD r1, r9",
+        "0x2E4A24: ADDS r1, #128",
+        "0x2E4A26: STR r6, [r1, #0xC]",
+        "0x2E4A28: STR r7, [r1, #0x10]",
+        "0x2E4A2A: raw 0x3980",
+        "0x2E4A2C: STR r4, [r1, #0x18]",
+        "0x2E4A2E: B 0x2E4B1E",
+        "0x2E4A30: CMP r6, #23",
+        "0x2E4A32: Bcond(1) 0x2E4AAA",
+        "0x2E4A34: LDR r4, [pc] ; =0xB60",
+        "0x2E4A36: LDR r0, [pc] ; =0xB5C",
+        "0x2E4A38: LDR r2, [r5, #0x8]"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E4A90",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F354",
+        "0x2F3B0",
+        "0x2F45C",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x2E4AA8",
+          "text": "B 0x2E4B1E"
+        },
+        {
+          "pc": "0x2E4AAC",
+          "text": "Bcond(1) 0x2E4B1E"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x2E4A60: MOVS r1, r4",
+        "0x2E4A68: MOVS r1, r0",
+        "0x2E4A6A: LDR r0, [pc] ; =0x2F2D4",
+        "0x2E4A6C: ADD r0, r15",
+        "0x2E4A72: LDR r1, [pc] ; =0x2F354",
+        "0x2E4A74: ADD r1, r15",
+        "0x2E4A7A: LDR r1, [pc] ; =0xC8E",
+        "0x2E4A7E: MOVS r0, #1",
+        "0x2E4A80: ADD r1, r9",
+        "0x2E4A84: LDR r1, [pc] ; =0xA90",
+        "0x2E4A86: ADD r1, r9",
+        "0x2E4A8A: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E4A40: MOVS r1, r4",
+        "0x2E4A42: BL 0x308D98",
+        "0x2E4A46: MOVS r6, r0",
+        "0x2E4A48: LDR r0, [pc] ; =0xB5C",
+        "0x2E4A4A: LDR r2, [r5, #0x8]",
+        "0x2E4A4C: ADD r0, r9",
+        "0x2E4A4E: LDR r0, [r0, #0x0]",
+        "0x2E4A50: MOVS r1, r4",
+        "0x2E4A52: BL 0x308D98",
+        "0x2E4A56: MOVS r7, r0",
+        "0x2E4A58: LDR r0, [pc] ; =0xB5C",
+        "0x2E4A5A: LDR r2, [r5, #0x8]",
+        "0x2E4A5C: ADD r0, r9",
+        "0x2E4A5E: LDR r0, [r0, #0x0]",
+        "0x2E4A60: MOVS r1, r4",
+        "0x2E4A62: BL 0x30A0CC",
+        "0x2E4A66: MOVS r4, r0",
+        "0x2E4A68: MOVS r1, r0",
+        "0x2E4A6A: LDR r0, [pc] ; =0x2F2D4",
+        "0x2E4A6C: ADD r0, r15",
+        "0x2E4A6E: BL 0x2D96BC",
+        "0x2E4A72: LDR r1, [pc] ; =0x2F354",
+        "0x2E4A74: ADD r1, r15",
+        "0x2E4A76: BL 0x2D96BC",
+        "0x2E4A7A: LDR r1, [pc] ; =0xC8E",
+        "0x2E4A7C: MOVS r5, r0",
+        "0x2E4A7E: MOVS r0, #1",
+        "0x2E4A80: ADD r1, r9",
+        "0x2E4A82: STRB r0, [r1, #0x0]",
+        "0x2E4A84: LDR r1, [pc] ; =0xA90",
+        "0x2E4A86: ADD r1, r9",
+        "0x2E4A88: STR r0, [r1, #0x28]",
+        "0x2E4A8A: MOVS r0, #20",
+        "0x2E4A8C: BL 0x2FA500",
+        "0x2E4A90: BL 0x2FC8C0",
+        "0x2E4A94: MOVS r0, r5",
+        "0x2E4A96: BL 0x2FBFB4",
+        "0x2E4A9A: LDR r1, [pc] ; =0xA90",
+        "0x2E4A9C: ADD r1, r9",
+        "0x2E4A9E: ADDS r1, #128",
+        "0x2E4AA0: STR r6, [r1, #0x14]",
+        "0x2E4AA2: STR r7, [r1, #0x18]",
+        "0x2E4AA4: raw 0x3980",
+        "0x2E4AA6: STR r4, [r1, #0x1C]",
+        "0x2E4AA8: B 0x2E4B1E",
+        "0x2E4AAA: CMP r6, #58",
+        "0x2E4AAC: Bcond(1) 0x2E4B1E",
+        "0x2E4AAE: LDR r4, [pc] ; =0xB5C",
+        "0x2E4AB0: LDR r1, [pc] ; =0xB60",
+        "0x2E4AB2: LDR r2, [r5, #0x8]"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x2E4B06",
+      "fn": "0x2E4788",
+      "class": "APP_INIT_UI_CLUSTER",
+      "r9_offsets": [
+        "0x8D0",
+        "0xA90",
+        "0xB5C",
+        "0xB60",
+        "0xC8E",
+        "0xCA3",
+        "0xED8",
+        "0x2F300",
+        "0x2F354",
+        "0x2F3B0",
+        "0x2F45C",
+        "0x2F4A6"
+      ],
+      "bl_targets_nearby": [
+        "0x308D98",
+        "0x308D98",
+        "0x30A0CC",
+        "0x2D96BC",
+        "0x2D96BC",
+        "0x2FA500",
+        "0x2FC8C0",
+        "0x2FBFB4"
+      ],
+      "branch_preds": [],
+      "r0_r3_setup": [
+        "0x2E4ADC: MOVS r1, r0",
+        "0x2E4ADE: LDR r0, [pc] ; =0x2F260",
+        "0x2E4AE0: ADD r0, r15",
+        "0x2E4AE6: LDR r1, [pc] ; =0x2F300",
+        "0x2E4AE8: ADD r1, r15",
+        "0x2E4AEE: LDR r1, [pc] ; =0xC8E",
+        "0x2E4AF2: MOVS r0, #1",
+        "0x2E4AF4: ADD r1, r9",
+        "0x2E4AF8: LDR r1, [pc] ; =0xA90",
+        "0x2E4AFA: MOVS r0, #2",
+        "0x2E4AFC: ADD r1, r9",
+        "0x2E4B00: MOVS r0, #20"
+      ],
+      "upstream_callers": [
+        "0x2E2F50",
+        "0x2E39BE",
+        "0x2E39C8",
+        "0x2E39D2",
+        "0x2E39DC",
+        "0x2E3BB2",
+        "0x2E3F7C"
+      ],
+      "n_upstream": 7,
+      "context": [
+        "0x2E4AB6: LDR r0, [r4, #0x0]",
+        "0x2E4AB8: ADD r1, r9",
+        "0x2E4ABA: BL 0x308D98",
+        "0x2E4ABE: LDR r1, [pc] ; =0xB60",
+        "0x2E4AC0: MOVS r6, r0",
+        "0x2E4AC2: LDR r2, [r5, #0x8]",
+        "0x2E4AC4: LDR r0, [r4, #0x0]",
+        "0x2E4AC6: ADD r1, r9",
+        "0x2E4AC8: BL 0x308D98",
+        "0x2E4ACC: LDR r1, [pc] ; =0xB60",
+        "0x2E4ACE: MOVS r7, r0",
+        "0x2E4AD0: LDR r2, [r5, #0x8]",
+        "0x2E4AD2: LDR r0, [r4, #0x0]",
+        "0x2E4AD4: ADD r1, r9",
+        "0x2E4AD6: BL 0x30A0CC",
+        "0x2E4ADA: MOVS r4, r0",
+        "0x2E4ADC: MOVS r1, r0",
+        "0x2E4ADE: LDR r0, [pc] ; =0x2F260",
+        "0x2E4AE0: ADD r0, r15",
+        "0x2E4AE2: BL 0x2D96BC",
+        "0x2E4AE6: LDR r1, [pc] ; =0x2F300",
+        "0x2E4AE8: ADD r1, r15",
+        "0x2E4AEA: BL 0x2D96BC",
+        "0x2E4AEE: LDR r1, [pc] ; =0xC8E",
+        "0x2E4AF0: MOVS r5, r0",
+        "0x2E4AF2: MOVS r0, #1",
+        "0x2E4AF4: ADD r1, r9",
+        "0x2E4AF6: STRB r0, [r1, #0x0]",
+        "0x2E4AF8: LDR r1, [pc] ; =0xA90",
+        "0x2E4AFA: MOVS r0, #2",
+        "0x2E4AFC: ADD r1, r9",
+        "0x2E4AFE: STR r0, [r1, #0x28]",
+        "0x2E4B00: MOVS r0, #20",
+        "0x2E4B02: BL 0x2FA500",
+        "0x2E4B06: BL 0x2FC8C0",
+        "0x2E4B0A: MOVS r0, r5",
+        "0x2E4B0C: BL 0x2FBFB4",
+        "0x2E4B10: LDR r1, [pc] ; =0xA90",
+        "0x2E4B12: ADD r1, r9",
+        "0x2E4B14: ADDS r1, #128",
+        "0x2E4B16: STR r6, [r1, #0x1C]",
+        "0x2E4B18: STR r7, [r1, #0x20]",
+        "0x2E4B1A: raw 0x3980",
+        "0x2E4B1C: STR r4, [r1, #0x20]",
+        "0x2E4B1E: LDR r0, [pc] ; =0x1154",
+        "0x2E4B20: ADD r0, r9",
+        "0x2E4B22: STR r6, [r0, #0x0]",
+        "0x2E4B24: LDR r0, [pc] ; =0x1158",
+        "0x2E4B26: ADD r0, r9",
+        "0x2E4B28: STR r7, [r0, #0x0]"
+      ],
+      "fn_head": [
+        "0x2E4788: PUSH {...,lr} 0xB5F8",
+        "0x2E478A: MOVS r5, r0",
+        "0x2E478C: LDR r0, [pc] ; =0xED8",
+        "0x2E478E: MOVS r6, r1",
+        "0x2E4790: ADD r0, r9",
+        "0x2E4792: LDR r0, [r0, #0x0]",
+        "0x2E4794: MOVS r4, #0",
+        "0x2E4796: CMP r0, #0",
+        "0x2E4798: Bcond(12) 0x2E4880",
+        "0x2E479A: LDR r1, [pc] ; =0xB5C",
+        "0x2E479C: LDR r0, [r5, #0x4]",
+        "0x2E479E: ADD r1, r9",
+        "0x2E47A0: STR r0, [r1, #0x0]",
+        "0x2E47A2: LDR r1, [pc] ; =0xB60",
+        "0x2E47A4: MOVS r0, #0",
+        "0x2E47A6: ADD r1, r9",
+        "0x2E47A8: STR r0, [r1, #0x0]",
+        "0x2E47AA: LDR r0, [pc] ; =0xC8E",
+        "0x2E47AC: MOVS r3, #0",
+        "0x2E47AE: ADD r0, r9",
+        "0x2E47B0: raw 0x56C0",
+        "0x2E47B2: CMP r0, #0",
+        "0x2E47B4: Bcond(1) 0x2E4880",
+        "0x2E47B6: LDR r0, [pc] ; =0x8D0",
+        "0x2E47B8: ADD r0, r9",
+        "0x2E47BA: LDR r0, [r0, #0x0]",
+        "0x2E47BC: MOVS r1, r0",
+        "0x2E47BE: raw 0x39FF",
+        "0x2E47C0: raw 0x392D",
+        "0x2E47C2: Bcond(0) 0x2E4880",
+        "0x2E47C4: CMP r0, #252",
+        "0x2E47C6: Bcond(0) 0x2E4880",
+        "0x2E47C8: CMP r0, #38",
+        "0x2E47CA: Bcond(0) 0x2E4880",
+        "0x2E47CC: CMP r0, #46",
+        "0x2E47CE: Bcond(0) 0x2E4880",
+        "0x2E47D0: CMP r0, #69",
+        "0x2E47D2: Bcond(0) 0x2E4880",
+        "0x2E47D4: LDR r0, [pc] ; =0xCA3",
+        "0x2E47D6: ADD r0, r9"
+      ],
+      "in_ui_cluster": true,
+      "depends_state_8d0": true,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": [
+        {
+          "bl": "0x2E2F50",
+          "fn": "0x2E2520"
+        },
+        {
+          "bl": "0x2E39BE",
+          "fn": "0x2E39BE"
+        },
+        {
+          "bl": "0x2E39C8",
+          "fn": "0x2E39C8"
+        },
+        {
+          "bl": "0x2E39D2",
+          "fn": "0x2E39D2"
+        },
+        {
+          "bl": "0x2E39DC",
+          "fn": "0x2E39DC"
+        },
+        {
+          "bl": "0x2E3BB2",
+          "fn": "0x2E3BB2"
+        },
+        {
+          "bl": "0x2E3F7C",
+          "fn": "0x2E3F7C"
+        }
+      ]
+    },
+    {
+      "bl_pc": "0x30DDE2",
+      "fn": "0x30D300",
+      "class": "PLATFORM_SIDE_EFFECT_UI_INIT",
+      "r9_offsets": [
+        "0x7D8",
+        "0x9B8",
+        "0x1420"
+      ],
+      "bl_targets_nearby": [
+        "0x2F96E8",
+        "0x2EE240",
+        "0x2FBF64",
+        "0x2F276C",
+        "0x2F4D10",
+        "0x2FC798",
+        "0x30C6FC",
+        "0x2E8DCC",
+        "0x2FC8C0",
+        "0x2FD3C8",
+        "0x300158",
+        "0x2F2340"
+      ],
+      "branch_preds": [
+        {
+          "pc": "0x30DD9A",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDAA",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDB2",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDBA",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDC2",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDCE",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDD8",
+          "text": "B 0x30D5DC"
+        },
+        {
+          "pc": "0x30DDE0",
+          "text": "B 0x30D608"
+        },
+        {
+          "pc": "0x30DDE8",
+          "text": "B 0x30D608"
+        },
+        {
+          "pc": "0x30DDF2",
+          "text": "B 0x30D608"
+        },
+        {
+          "pc": "0x30DDFC",
+          "text": "B 0x30D608"
+        }
+      ],
+      "r0_r3_setup": [
+        "0x30DDB8: MOVS r0, #0",
+        "0x30DDC0: MOVS r0, #0",
+        "0x30DDC4: MOVS r1, r5",
+        "0x30DDC6: MOVS r0, r4",
+        "0x30DDCC: MOVS r0, #0",
+        "0x30DDD0: MOVS r0, r4",
+        "0x30DDD6: MOVS r0, #0",
+        "0x30DDDE: MOVS r0, #0"
+      ],
+      "upstream_callers": [],
+      "n_upstream": 0,
+      "context": [
+        "0x30DD92: MOVS r1, r5",
+        "0x30DD94: MOVS r0, r4",
+        "0x30DD96: BL 0x2F96E8",
+        "0x30DD9A: B 0x30D5DC",
+        "0x30DD9C: MOVS r2, r1",
+        "0x30DD9E: MOVS r1, r5",
+        "0x30DDA0: MOVS r3, r6",
+        "0x30DDA2: MOVS r0, r4",
+        "0x30DDA4: BL 0x2EE240",
+        "0x30DDA8: MOVS r0, #0",
+        "0x30DDAA: B 0x30D5DC",
+        "0x30DDAC: BL 0x2FBF64",
+        "0x30DDB0: MOVS r0, #0",
+        "0x30DDB2: B 0x30D5DC",
+        "0x30DDB4: BL 0x2F276C",
+        "0x30DDB8: MOVS r0, #0",
+        "0x30DDBA: B 0x30D5DC",
+        "0x30DDBC: BL 0x2F4D10",
+        "0x30DDC0: MOVS r0, #0",
+        "0x30DDC2: B 0x30D5DC",
+        "0x30DDC4: MOVS r1, r5",
+        "0x30DDC6: MOVS r0, r4",
+        "0x30DDC8: BL 0x2FC798",
+        "0x30DDCC: MOVS r0, #0",
+        "0x30DDCE: B 0x30D5DC",
+        "0x30DDD0: MOVS r0, r4",
+        "0x30DDD2: BL 0x30C6FC",
+        "0x30DDD6: MOVS r0, #0",
+        "0x30DDD8: B 0x30D5DC",
+        "0x30DDDA: BL 0x2E8DCC",
+        "0x30DDDE: MOVS r0, #0",
+        "0x30DDE0: B 0x30D608",
+        "0x30DDE2: BL 0x2FC8C0",
+        "0x30DDE6: MOVS r0, #0",
+        "0x30DDE8: B 0x30D608",
+        "0x30DDEA: MOVS r0, r4",
+        "0x30DDEC: BL 0x2FD3C8",
+        "0x30DDF0: MOVS r0, #0",
+        "0x30DDF2: B 0x30D608",
+        "0x30DDF4: MOVS r0, r4",
+        "0x30DDF6: BL 0x300158",
+        "0x30DDFA: MOVS r0, #0",
+        "0x30DDFC: B 0x30D608",
+        "0x30DDFE: MOVS r0, r4",
+        "0x30DE00: BL 0x2F2340",
+        "0x30DE04: MOVS r0, #0"
+      ],
+      "fn_head": [
+        "0x30D300: PUSH {...,lr} 0xB570",
+        "0x30D302: MOVS r4, r1",
+        "0x30D304: MOVS r1, r3",
+        "0x30D306: MOVS r3, #255",
+        "0x30D308: SUB sp, #0x10",
+        "0x30D30A: MOVS r5, r2",
+        "0x30D30C: ADDS r3, #88",
+        "0x30D30E: raw 0x4298",
+        "0x30D310: LDR r2, [sp, #0x24]",
+        "0x30D312: LDR r6, [sp, #0x20]",
+        "0x30D314: Bcond(2) 0x30D320",
+        "0x30D316: raw 0xA303",
+        "0x30D318: raw 0x181B",
+        "0x30D31A: raw 0x5A1B",
+        "0x30D31C: raw 0x005B",
+        "0x30D31E: ADD r15, r3",
+        "0x30D320: BL 0x30E4EC",
+        "0x30D324: raw 0x0704",
+        "0x30D326: raw 0x0710",
+        "0x30D328: raw 0x071E",
+        "0x30D32A: raw 0x0722",
+        "0x30D32C: raw 0x0726",
+        "0x30D32E: raw 0x072B",
+        "0x30D330: raw 0x0732",
+        "0x30D332: raw 0x0736",
+        "0x30D334: raw 0x073A",
+        "0x30D336: raw 0x073E",
+        "0x30D338: raw 0x0743",
+        "0x30D33A: raw 0x0748",
+        "0x30D33C: raw 0x074E",
+        "0x30D33E: raw 0x0752",
+        "0x30D340: raw 0x0758",
+        "0x30D342: raw 0x075C",
+        "0x30D344: raw 0x0760",
+        "0x30D346: raw 0x0765",
+        "0x30D348: raw 0x076A",
+        "0x30D34A: raw 0x076F",
+        "0x30D34C: raw 0x0772",
+        "0x30D34E: raw 0x0784",
+        "0x30D350: raw 0x078A"
+      ],
+      "in_ui_cluster": false,
+      "depends_state_8d0": false,
+      "depends_c6c": false,
+      "depends_dec": false,
+      "depends_1a8": false,
+      "depends_e6c": false,
+      "depends_queue": false,
+      "upstream_detail": []
+    }
+  ],
+  "ui_cluster": {
+    "range": "0x2E4840..0x2E4B06",
+    "unlock_bl_sites": [
+      "0x2E4840",
+      "0x2E48BC",
+      "0x2E4932",
+      "0x2E49A8",
+      "0x2E4A16",
+      "0x2E4A90",
+      "0x2E4B06"
+    ],
+    "fn_starts": [
+      "0x2E4788"
+    ],
+    "all_bls_in_cluster": [
+      {
+        "pc": "0x2E4840",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E4846",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E486C",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E487A",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E488C",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E4898",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E48A0",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E48B8",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E48BC",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E48C2",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E48E6",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E48F4",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4902",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E490E",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4916",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E492E",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E4932",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E4938",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E495C",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E496A",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4978",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E4984",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E498C",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E49A4",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E49A8",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E49AE",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E49CA",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E49D8",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E49E6",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E49F2",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E49FA",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4A12",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E4A16",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E4A1C",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E4A42",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4A52",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4A62",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E4A6E",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4A76",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4A8C",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E4A90",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E4A96",
+        "target": "0x2FBFB4"
+      },
+      {
+        "pc": "0x2E4ABA",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4AC8",
+        "target": "0x308D98"
+      },
+      {
+        "pc": "0x2E4AD6",
+        "target": "0x30A0CC"
+      },
+      {
+        "pc": "0x2E4AE2",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4AEA",
+        "target": "0x2D96BC"
+      },
+      {
+        "pc": "0x2E4B02",
+        "target": "0x2FA500"
+      },
+      {
+        "pc": "0x2E4B06",
+        "target": "0x2FC8C0"
+      },
+      {
+        "pc": "0x2E4B0C",
+        "target": "0x2FBFB4"
+      }
+    ],
+    "n_bls": 50
+  },
+  "bp_spec_sites": [
+    2996552,
+    2996700,
+    3024160,
+    3029438,
+    3029448,
+    3029458,
+    3029468,
+    3029938,
+    3030908,
+    3032968,
+    3033152,
+    3033276,
+    3033394,
+    3033512,
+    3033622,
+    3033744,
+    3033862,
+    3131584,
+    3131598,
+    3163816,
+    3199744,
+    3202530
+  ]
+}

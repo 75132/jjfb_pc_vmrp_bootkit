@@ -1,0 +1,6 @@
+﻿variant=B
+run_id=pah_B_20260724_234746
+contract=0
+pah_trace=1
+hold=55
+expected_hash=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036

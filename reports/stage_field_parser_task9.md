@@ -1,10 +1,10 @@
 # Task 9: Field Length / Cursor Provenance and Contract Repair
 
-- **run_id:** launcher_20260728_030118_61500
+- **run_id:** task14_C4_221233
 - **verdict:** `FIELD_PARSER_CONTRACT_REPAIRED`
 - **FIELD_STREAM_CONTRACT:** 0
 - **copy repairs:** 0
-- **parser calls:** 0
+- **parser calls:** 2
 - **bad r5=0x7374 seen:** no
 - **0x2F68E4 return:** yes
 - **0x2E4066 entered:** yes
@@ -38,13 +38,13 @@ Adjacent OOB at inner+4 showed ASCII `"stat"` → BE length `0x7374`.
 
 | item | GOOD | BAD |
 |---|---:|---:|
-| call_id | (none / empty-body exit) | n/a |
+| call_id | 1 | n/a |
 
 ## Copy contract @0x2E4ECA
 
 | dest | src | n | repaired |
 |---|---|---|---|
-| 0x6BBAB8 | 0x6AD12B | 0x4 | 0 |
+| 0x6BBAB8 | 0x6AD12B | 0x1F | 0 |
 
 ## Classification
 

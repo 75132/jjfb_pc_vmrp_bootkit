@@ -1,1 +1,0 @@
-frame_id,site,pc,buf_va,capacity,guest_r0,type,payload_len,header,body_size,event_code,body_sha,body_len,event_node_va,body_ptr,queue_gen,provider,dump_path,with_record,extra

@@ -1,0 +1,7 @@
+﻿run_id=pa11_C_20260725_200021
+variant=C
+with_rec=
+import=1
+fsc=0
+lrt=1
+hold=100

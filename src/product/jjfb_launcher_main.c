@@ -6,11 +6,9 @@
 #include "gwy_launcher/compat_profile.h"
 #include "gwy_launcher/launch_descriptor.h"
 #include "gwy_launcher/launch_runtime.h"
-#include "gwy_launcher/resource_root.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -50,19 +48,10 @@ typedef struct JjfbLauncherState {
     int diagnostic;
     int test_pattern;
     int closing;
-    int has_explicit_resource_root;
     long progress_off;
     char repo_root[MAX_PATH];
     char profile_path[MAX_PATH];
     char resource_root[MAX_PATH];
-    char resource_root_reason[128];
-    char explicit_resource_root[MAX_PATH];
-    char expected_sha256_hex[65];
-    uint32_t expected_appid;
-    uint32_t expected_appver;
-    int has_sha256;
-    int has_appid;
-    int has_appver;
     char mrp_host[MAX_PATH];
     char vmrp_exe[MAX_PATH];
     char vmrp_cwd[MAX_PATH];
@@ -91,6 +80,11 @@ static const char *stage_text(JjfbStage s) {
 static int file_exists(const char *path) {
     DWORD a = GetFileAttributesA(path);
     return (a != INVALID_FILE_ATTRIBUTES) && !(a & FILE_ATTRIBUTE_DIRECTORY);
+}
+
+static int dir_exists(const char *path) {
+    DWORD a = GetFileAttributesA(path);
+    return (a != INVALID_FILE_ATTRIBUTES) && (a & FILE_ATTRIBUTE_DIRECTORY);
 }
 
 static void path_join(char *out, size_t cap, const char *a, const char *b) {
@@ -137,12 +131,9 @@ static void set_stage(JjfbLauncherState *st, JjfbStage stage) {
 }
 
 static void set_path_label(JjfbLauncherState *st) {
-    char line[MAX_PATH + 96];
+    char line[MAX_PATH + 64];
     if (!st->path_label) return;
-    if (st->resource_root[0])
-        snprintf(line, sizeof(line), "Root: %s (%s)", st->resource_root,
-                 st->resource_root_reason[0] ? st->resource_root_reason : "?");
-    else if (st->mrp_host[0])
+    if (st->mrp_host[0])
         snprintf(line, sizeof(line), "MRP: %s", st->mrp_host);
     else
         snprintf(line, sizeof(line), "MRP: (resolving)");
@@ -187,7 +178,6 @@ static void stop_child(JjfbLauncherState *st) {
 
 static void apply_product_env(JjfbLauncherState *st) {
     SetEnvironmentVariableA("GWY_PROFILE", st->profile_path);
-    SetEnvironmentVariableA("GWY_RESOURCE_ROOT", st->resource_root);
     SetEnvironmentVariableA("GWY_WINDOW_TITLE", "JJFB Launcher");
     SetEnvironmentVariableA("JJFB_LAUNCH_SOURCE", "jjfb_launcher");
     SetEnvironmentVariableA("JJFB_PRIMARY_TARGET", "gwy/jjfb.mrp");
@@ -203,25 +193,6 @@ static void apply_product_env(JjfbLauncherState *st) {
     /* Never hide HWND in product launcher path — window must stay visible. */
     SetEnvironmentVariableA("JJFB_HWND_UNTIL_DISPUP", NULL);
     SetEnvironmentVariableA("JJFB_PRODUCT_P5_MODE", NULL);
-    /* Never use dummy video for product launch — first frame must be visible. */
-    SetEnvironmentVariableA("SDL_VIDEODRIVER", NULL);
-    /* Frame-then-leave: unset = auto (skip chrome only after first DrawFP). */
-    SetEnvironmentVariableA("JJFB_CHROME_SKIP_DRAW", NULL);
-    /* Display stack (defaults ON in modules; pin explicitly for launcher). */
-    if (!getenv("JJFB_DRAWFP_BINDING"))
-        SetEnvironmentVariableA("JJFB_DRAWFP_BINDING", "1");
-    if (!getenv("JJFB_PLATFORM_MRP_RESOURCE"))
-        SetEnvironmentVariableA("JJFB_PLATFORM_MRP_RESOURCE", "1");
-    if (!getenv("JJFB_PLATFORM_10134_CONTRACT"))
-        SetEnvironmentVariableA("JJFB_PLATFORM_10134_CONTRACT", "1");
-    {
-        char shot_dir[MAX_PATH];
-        char shot[MAX_PATH];
-        path_join(shot_dir, sizeof(shot_dir), st->vmrp_cwd, "screenshots");
-        CreateDirectoryA(shot_dir, NULL);
-        path_join(shot, sizeof(shot), shot_dir, "launcher_first_frame.bmp");
-        SetEnvironmentVariableA("JJFB_E8Z_SCREENSHOT", shot);
-    }
 
     if (st->test_pattern)
         SetEnvironmentVariableA("GWY_HOST_TEST_PATTERN", "1");
@@ -232,6 +203,10 @@ static void apply_product_env(JjfbLauncherState *st) {
     SetEnvironmentVariableA("JJFB_PRODUCT_FFP_MODE", "1");
     SetEnvironmentVariableA("JJFB_PRODUCT_FFP_PHASE", "event");
     SetEnvironmentVariableA("JJFB_PRODUCT_EVENT_CONTRACT", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_305E09", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_NODE_ALLOC", "1");
+    SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_CONSUMER", "1");
     /*
      * Platform list-head recovery (ER_RW+B54) — same gate as FFP Event runner when
      * TraceQueueConsumer is on. Publishes proven 8-byte list control via
@@ -241,21 +216,6 @@ static void apply_product_env(JjfbLauncherState *st) {
     /* Path-A hdr-preconsume framing (entry+0=event_code). Override with =0 for A/B. */
     if (!getenv("JJFB_PATH_A_EVENT_CONTRACT"))
         SetEnvironmentVariableA("JJFB_PATH_A_EVENT_CONTRACT", "1");
-    /* Heavy FFP CSV traces only with --debug / --diagnostic (keeps frame path responsive). */
-    if (st->debug || st->diagnostic) {
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_305E09", "1");
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP", "1");
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_NODE_ALLOC", "1");
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_CONSUMER", "1");
-        SetEnvironmentVariableA("JJFB_REFRESH_TRACE", "1");
-        SetEnvironmentVariableA("JJFB_FB_HASH_TRACE", "1");
-        SetEnvironmentVariableA("JJFB_TIMER_TRACE", "1");
-    } else {
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_305E09", NULL);
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_BOOTSTRAP", NULL);
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_NODE_ALLOC", NULL);
-        SetEnvironmentVariableA("JJFB_PRODUCT_TRACE_QUEUE_CONSUMER", NULL);
-    }
 
     /* Always emit runtime_progress.jsonl for status-window milestones. */
     {
@@ -313,9 +273,6 @@ static void apply_product_env(JjfbLauncherState *st) {
 static int resolve_paths(JjfbLauncherState *st) {
     CompatibilityProfile profile;
     LauncherError err;
-    GwyResourceRootRequest req;
-    GwyResourceRootResult rr;
-    const char *env_root;
 
     set_stage(st, STAGE_LOADING_PROFILE);
     if (!find_repo_root(st->repo_root, sizeof(st->repo_root))) {
@@ -324,6 +281,9 @@ static int resolve_paths(JjfbLauncherState *st) {
         return 0;
     }
     path_join(st->profile_path, sizeof(st->profile_path), st->repo_root, "profiles\\jjfb.json");
+    path_join(st->resource_root, sizeof(st->resource_root), st->repo_root,
+              "game_files\\mythroad\\320x480");
+    path_join(st->mrp_host, sizeof(st->mrp_host), st->resource_root, "gwy\\jjfb.mrp");
     path_join(st->vmrp_cwd, sizeof(st->vmrp_cwd), st->repo_root, "out\\vmrp_run");
     path_join(st->vmrp_exe, sizeof(st->vmrp_exe), st->vmrp_cwd, "main.exe");
 
@@ -335,45 +295,20 @@ static int resolve_paths(JjfbLauncherState *st) {
         snprintf(st->error_msg, sizeof(st->error_msg), "Profile load failed: %s", err.message);
         return 0;
     }
-    st->has_sha256 = profile.has_sha256;
-    st->has_appid = profile.has_appid;
-    st->has_appver = profile.has_appver;
-    st->expected_appid = profile.appid;
-    st->expected_appver = profile.appver;
-    if (profile.has_sha256)
-        snprintf(st->expected_sha256_hex, sizeof(st->expected_sha256_hex), "%s",
-                 profile.expected_sha256_hex);
-    else
-        st->expected_sha256_hex[0] = 0;
-
-    memset(&req, 0, sizeof(req));
-    req.repo_root = st->repo_root;
-    req.cfg_index = JJFB_CFG_INDEX;
-    req.expected_sha256_hex = st->has_sha256 ? st->expected_sha256_hex : NULL;
-    if (st->has_explicit_resource_root)
-        req.explicit_root = st->explicit_resource_root;
-    env_root = getenv("GWY_RESOURCE_ROOT");
-    if (!st->has_explicit_resource_root && env_root && env_root[0])
-        req.env_root = env_root;
-
-    if (gwy_resource_root_resolve(&req, &rr, &err) != L_OK) {
-        snprintf(st->error_msg, sizeof(st->error_msg), "Resource root resolve failed: %s\n%s",
-                 err.message, err.detail);
+    if (!dir_exists(st->resource_root)) {
+        snprintf(st->error_msg, sizeof(st->error_msg), "Missing resource root: %s", st->resource_root);
         return 0;
     }
-    snprintf(st->resource_root, sizeof(st->resource_root), "%s", rr.path);
-    snprintf(st->resource_root_reason, sizeof(st->resource_root_reason), "%s", rr.reason);
-    snprintf(st->mrp_host, sizeof(st->mrp_host), "%s", rr.jjfb_mrp);
-
+    if (!file_exists(st->mrp_host)) {
+        snprintf(st->error_msg, sizeof(st->error_msg), "Missing MRP: %s", st->mrp_host);
+        return 0;
+    }
     if (!file_exists(st->vmrp_exe)) {
         snprintf(st->error_msg, sizeof(st->error_msg),
                  "Missing runtime: %s\nBuild with RUN_BUILD_VMRP.ps1 -Mode Gwy", st->vmrp_exe);
         return 0;
     }
     set_path_label(st);
-    printf("[JJFB_LAUNCHER] resource_root=%s reason=%s\n", st->resource_root,
-           st->resource_root_reason);
-    fflush(stdout);
     return 1;
 }
 
@@ -390,18 +325,6 @@ static int start_runtime(JjfbLauncherState *st) {
     memset(&ex, 0, sizeof(ex));
     ex.has_target = 1;
     snprintf(ex.target_mrp, sizeof(ex.target_mrp), "%s", "gwy/jjfb.mrp");
-    if (st->has_sha256) {
-        ex.has_sha256 = 1;
-        snprintf(ex.sha256_hex, sizeof(ex.sha256_hex), "%s", st->expected_sha256_hex);
-    }
-    if (st->has_appid) {
-        ex.has_appid = 1;
-        ex.appid = st->expected_appid;
-    }
-    if (st->has_appver) {
-        ex.has_appver = 1;
-        ex.appver = st->expected_appver;
-    }
 
     stv = launch_descriptor_build(st->resource_root, JJFB_CFG_INDEX, "jjfb", &ex, &desc, &err);
     if (stv != L_OK) {
@@ -411,20 +334,6 @@ static int start_runtime(JjfbLauncherState *st) {
 
     set_stage(st, STAGE_LOADING_EXT);
     apply_product_env(st);
-    /* Launcher-side milestone so gate can see resolved root even before guest emits. */
-    {
-        FILE *pf = fopen(st->progress_path, "ab");
-        if (pf) {
-            fprintf(pf,
-                    "{\"run_id\":\"%s\",\"timestamp\":%lu,\"pid\":%lu,"
-                    "\"milestone\":\"resource_root_resolved\",\"source\":\"%s\","
-                    "\"details\":\"%s\"}\n",
-                    st->run_id, (unsigned long)time(NULL),
-                    (unsigned long)GetCurrentProcessId(), st->resource_root_reason,
-                    st->resource_root);
-            fclose(pf);
-        }
-    }
     path_join(manifest, sizeof(manifest), st->vmrp_cwd, "launch_manifest.json");
 
     set_stage(st, STAGE_STARTING_VM);
@@ -594,19 +503,9 @@ static int parse_args(JjfbLauncherState *st, int argc, char **argv) {
             st->diagnostic = 1;
         else if (strcmp(argv[i], "--test-pattern") == 0)
             st->test_pattern = 1;
-        else if ((strcmp(argv[i], "--root") == 0 || strcmp(argv[i], "-root") == 0) &&
-                 i + 1 < argc) {
-            snprintf(st->explicit_resource_root, sizeof(st->explicit_resource_root), "%s",
-                     argv[++i]);
-            st->has_explicit_resource_root = 1;
-        } else if (strncmp(argv[i], "--root=", 7) == 0) {
-            snprintf(st->explicit_resource_root, sizeof(st->explicit_resource_root), "%s",
-                     argv[i] + 7);
-            st->has_explicit_resource_root = 1;
-        } else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
-            puts("JJFB_Launcher [--root PATH] [--debug] [--diagnostic] [--test-pattern]");
-            puts("  Default: resolve game_files/mythroad/240x320 and start gwy/jjfb.mrp");
-            puts("  --root PATH     explicit resource root (fail closed if invalid)");
+        else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
+            puts("JJFB_Launcher [--debug] [--diagnostic] [--test-pattern]");
+            puts("  Default: load profiles/jjfb.json and start gwy/jjfb.mrp");
             puts("  --debug         attach console log");
             puts("  --diagnostic    observe-only PDGT/B71/event-object traces");
             puts("  --test-pattern  host framebuffer test pattern (not JJFB first frame)");

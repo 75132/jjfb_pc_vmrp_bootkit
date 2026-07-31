@@ -25,9 +25,6 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/launcher/launch_runtime.c
     src/launcher/utf.c
     src/launcher/game_catalog.c
-    src/launcher/resource_root.c
-    src/resources/jjfbol_catalog.c
-    src/resources/jjfbol_scope.c
     src/vfs/guest_vfs.c
     src/formats/sha256.c
     src/formats/mrp_archive.c
@@ -66,8 +63,6 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/ext_chunk_provider.c
     src/runtime/ext_er_rw_bind_restore.c
     src/runtime/ext_gwy_startgame_audit.c
-    src/runtime/mrp_runtime_stack.c
-    src/runtime/original_gwy_bootstrap.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c
@@ -79,8 +74,6 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_identity.c
     src/platform/platform_userinfo.c
     src/platform/platform_send_app_event.c
-    src/platform/platform_101ab_frame.c
-    src/platform/platform_101ab_provider.c
     src/platform/platform_timer.c
     src/platform/platform_handler_registry.c
     src/platform/platform_scheduler.c
@@ -91,12 +84,6 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/platform/platform_path_a_response.c
     src/platform/platform_memory_ops.c
     src/platform/platform_display.c
-    src/platform/platform_mrp_resource.c
-    src/platform/platform_mrp_resource_census.c
-    src/platform/jjfb_bitmap_geometry.c
-    src/platform/jjfb_uc2_font.c
-    src/platform/platform_text_api.c
-    src/runtime/boot_successor_trace.c
     src/runtime/product_callback_trace.c
     src/runtime/product_p4_progress.c
     src/runtime/product_p5_event_advance.c
@@ -113,7 +100,6 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_platform_10138_trace.c
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c
-    src/runtime/product_101ab_trace.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES
@@ -138,11 +124,9 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/e10a31l_config_map.c
     src/runtime/e10a31m_fail_2e5404.c
     src/runtime/e10a31n_post_range.c
+    src/runtime/p22_selection_gates.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
-    src/runtime/p19_startgame_contract.c
-    src/runtime/p20_gbrwcore_lifecycle.c
-    src/runtime/p21_runtime_isolation.c
 )
 
 add_library(launcher_core STATIC ${GWY_LAUNCHER_CORE_SOURCES})
@@ -247,14 +231,6 @@ add_test(NAME cfg36 COMMAND test_cfg36)
 add_executable(test_game_catalog tests/unit/test_game_catalog.c)
 gwy_link_product_runtime(test_game_catalog)
 add_test(NAME game_catalog COMMAND test_game_catalog)
-
-add_executable(test_resource_root tests/unit/test_resource_root.c)
-gwy_link_product_runtime(test_resource_root)
-add_test(NAME resource_root COMMAND test_resource_root)
-
-add_executable(test_jjfbol_catalog tests/unit/test_jjfbol_catalog.c)
-gwy_link_product_runtime(test_jjfbol_catalog)
-add_test(NAME jjfbol_catalog COMMAND test_jjfbol_catalog)
 
 add_executable(test_guest_vfs tests/unit/test_guest_vfs.c)
 gwy_link_product_runtime(test_guest_vfs)
@@ -395,21 +371,9 @@ gwy_link_product_runtime(test_ext_gwy_startgame_audit)
 gwy_copy_unicorn_dll(test_ext_gwy_startgame_audit)
 add_test(NAME ext_gwy_startgame_audit COMMAND test_ext_gwy_startgame_audit)
 
-add_executable(test_original_gwy_bootstrap tests/unit/test_original_gwy_bootstrap.c)
-gwy_link_product_runtime(test_original_gwy_bootstrap)
-add_test(NAME original_gwy_bootstrap COMMAND test_original_gwy_bootstrap)
-
 add_executable(test_ext_gwy_shell_shim tests/unit/test_ext_gwy_shell_shim.c)
 gwy_link_research_runtime(test_ext_gwy_shell_shim)
 add_test(NAME ext_gwy_shell_shim COMMAND test_ext_gwy_shell_shim)
-
-add_executable(test_platform_mrp_resource tests/unit/test_platform_mrp_resource.c)
-gwy_link_product_runtime(test_platform_mrp_resource)
-add_test(NAME platform_mrp_resource COMMAND test_platform_mrp_resource)
-
-add_executable(test_jjfb_bitmap_geometry tests/unit/test_jjfb_bitmap_geometry.c)
-gwy_link_product_runtime(test_jjfb_bitmap_geometry)
-add_test(NAME jjfb_bitmap_geometry COMMAND test_jjfb_bitmap_geometry)
 
 add_executable(test_platform_identity tests/unit/test_platform_identity.c)
 gwy_link_product_runtime(test_platform_identity)
@@ -426,10 +390,6 @@ add_test(NAME platform_timer COMMAND test_platform_timer)
 add_executable(test_platform_send_app_event tests/unit/test_platform_send_app_event.c)
 gwy_link_product_runtime(test_platform_send_app_event)
 add_test(NAME platform_send_app_event COMMAND test_platform_send_app_event)
-
-add_executable(test_platform_101ab_frame tests/unit/test_platform_101ab_frame.c)
-gwy_link_product_runtime(test_platform_101ab_frame)
-add_test(NAME platform_101ab_frame COMMAND test_platform_101ab_frame)
 
 add_executable(test_platform_handler_registry tests/unit/test_platform_handler_registry.c)
 gwy_link_product_runtime(test_platform_handler_registry)

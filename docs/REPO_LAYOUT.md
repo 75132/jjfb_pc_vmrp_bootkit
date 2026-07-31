@@ -5,41 +5,33 @@ jjfb_pc_vmrp_bootkit/
 ├─ README.md
 ├─ CMakeLists.txt
 ├─ RUN_BUILD.ps1 / RUN_BUILD_VMRP.ps1 / RUN_TESTS.ps1
-├─ RUN_PRODUCT_DIRECT_JJFB.ps1 / RUN_E_PRODUCT_ROBOTOL_MRCINIT.ps1
-├─ RUN_GAMES.ps1 / RUN_VMRP_VISUAL.ps1 / RUN_JJFB_LAUNCHER.ps1
-├─ RUN_RESEARCH_GWY_SHELL.ps1
+├─ RUN_PRODUCT_DIRECT_JJFB.ps1          # product golden chain
+├─ RUN_E_PRODUCT_ROBOTOL_MRCINIT.ps1    # product smoke
+├─ RUN_GAMES.ps1 / RUN_VMRP_VISUAL.ps1
+├─ RUN_RESEARCH_GWY_SHELL.ps1           # explicit research entry
 ├─ include/ src/ tests/ tools/ profiles/ schemas/
-├─ docs/                 # guides + cursor entry
-├─ reports/              # ACTIVE stage notes only (~20 files)
-│  └─ archive/           # historical phase / E-series / fullboot
-├─ evidence/             # frozen evidence (screenshots ignored by Cursor)
+├─ docs/          # guides, ADR index, cursor prompts
+├─ evidence/      # screenshots + frozen evidence
 ├─ decisions/
-├─ research/runners/     # stage / task runners (not product root)
-├─ packages/
-│  ├─ reference/
-│  └─ archive/           # zip packs
-├─ game_files/           # original resources (immutable)
-├─ out/ logs/ build-i686/  # local artifacts (gitignored)
+├─ research/
+│  ├─ runners/    # RUN_E5..E10A stage scripts (not product)
+│  ├─ e10a31r/    # 0xA1B8C provenance artifacts
+│  └─ packs/      # analysis packs (e.g. E8B)
+├─ packages/      # reference packs + PACKAGE_INDEX
+├─ reports/       # stage verdicts
+├─ game_files/    # original resources (immutable)
+├─ logs/ out/ build-i686/   # local build/run artifacts
 ├─ third_party/vmrp_upstream/
-└─ legacy_lab/           # frozen old bootkit — do not browse for product work
+└─ legacy_lab/    # frozen old bootkit / LIVE / PHASE6 runners
 ```
 
 ## Root policy
 
 根目录只保留：**构建、产品测试、产品验收、显式研究入口**。
 
-| Put new work here | Not here |
-|-------------------|----------|
-| `research/runners/` | root `RUN_TASK*.ps1` |
-| `reports/` (active only) | `reports/archive/` for old verdicts |
-| `packages/archive/` | root zip dumps |
-| `evidence/` | `out/` run trees |
+- 新阶段 runner → `research/runners/`
+- 新截图 → `evidence/screenshots/`
+- 新参考包 → `packages/reference/` 或 `research/packs/`
+- 历史 LIVE/PHASE6 → `legacy_lab/runners/`
 
-## What to ignore when reading
-
-1. `legacy_lab/` — frozen history  
-2. `reports/archive/` — old phase/E/fullboot notes  
-3. `out/` `logs/` `build-i686/` — regenerable  
-4. `packages/archive/` — reference zips  
-
-Start from [`docs/00_READ_ME_FIRST.md`](00_READ_ME_FIRST.md) and [`reports/README.md`](../reports/README.md).
+Do not add one-off `RUN_E*.ps1` or analysis packs back to the repo root.

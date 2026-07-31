@@ -1,2 +1,0 @@
-run_id,ctor_publishes,push_requires,extra_field,verdict
-p10138_B_20260725_001313,8byte_list_control_head_count,same_list_control_plus_internal_node_alloc,none_observed,LIST_CONTROL_ONLY_IS_SUFFICIENT

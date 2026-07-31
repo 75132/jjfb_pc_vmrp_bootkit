@@ -1,0 +1,62 @@
+# E10A-3.1h: gamelist field-read 0x2E3180 pointer chain
+
+## Entry ABI (live)
+
+- r0 = field_off = `0x349`
+- r1 = dst = `sp+0x30`
+- r2 = len = `3`
+- r9 = gamelist ERW `0x682B6C` at call; switches to cfunction for memcpy
+
+## Thumb body (annotated)
+
+  0x2E3180: 031C  ADDS r3, r0, #0     ; r3 = field_off
+  0x2E3182: 081C  ADDS r0, r1, #0     ; r0 = dst
+  0x2E3184: 8721  MOVS r1, #0x87
+  0x2E3186: 4901  LSLS r1, r1, #5     ; r1 = 0x10E0 range_limit
+  0x2E3188: 8B42  CMP  r3, r1
+  0x2E318A: 10B5  PUSH {r4, lr}
+  0x2E318C: 04DA  BGE  fail_neg1      ; off >= limit
+  0x2E318E: 002B  CMP  r3, #0
+  0x2E3190: 02DB  BLT  fail_neg1
+  0x2E3192: 9C18  ADDS r4, r3, r2     ; end = off+len
+  0x2E3194: 8C42  CMP  r4, r1
+  0x2E3196: 02DB  BLT  ok_path
+  0x2E3198: 0020  MOVS r0, #0
+  0x2E319A: C043  MVNS r0, r0         ; return -1
+  0x2E319C: 10BD  POP  {r4, pc}
+  0x2E319E: 0549  LDR  r1, [pc, #0x14]; lit -> addend
+  0x2E31A0: 7944  ADD  r1, pc         ; r1 = &global_obj_slot
+  0x2E31A2: 8C6B  LDR  r4, [r1, #0x38]; r4 = *(global+0x38)
+  0x2E31A4: FF21  MOVS r1, #0xFF
+  0x2E31A6: C131  ADDS r1, #0xC1      ; r1 = 0x1C0
+  0x2E31A8: 0959  LDR  r1, [r4, r1]   ; EXPECT: r1 = *(obj+0x1C0) buffer_base
+  0x2E31AA: C918  ADDS r1, r1, r3     ; r1 = buffer_base + field_off
+  0x2E31AC: E368  LDR  r3, [r4, #0xC] ; r3 = memcpy-like fn from obj+0xC
+  0x2E31AE: 9847  BLX  r3             ; memcpy(dst, src, len)  [r0 still dst, r2 len]
+  0x2E31B0: 0020  MOVS r0, #0
+  0x2E31B2: 10BD  POP  {r4, pc}
+
+## Materialized addresses
+
+- literal @ 0x2E31B4 = -61064 (0xFFFF1178)
+- global_obj_slot = lit + (0x2E31A0+4) = **0x2D431C**
+- object = *(global_obj_slot + 0x38)
+- buffer_base = *(object + 0x1C0)
+- live memcpy src = 0x28101D ⇒ buffer_base = **0x280CD4**
+- 0x280CD4 - cfunction_ERW(0x280400) = **0x8D4**
+
+## Hypotheses
+
+1. `*(object+0x1C0)` should be a file/work buffer; live value equals cfunction ERW+0x8D4.
+2. Historical ERW writes at off=0x8D4 were **status words** (e.g. 0xFFFFFF9D), not file bytes —
+   so using ERW+0x8D4 as a content buffer is suspicious / wrong binding.
+3. mem_get allocated `base=0x282A54 len=4MB` in the same run — a plausible intended filebuf,
+   but GPT field read did **not** use it (used 0x280CD4 instead).
+4. Offset 0x349 is a packed-field index into that buffer; empty ⇒ tag mismatch vs `"GPT"`.
+
+## Next probes
+
+- Live dump: `*(0x2D431C+0x38)`, `*(object+0x1C0)`, 16 bytes at base and base+0x349
+- Find writers of `object+0x1C0` (buffer_base publish)
+- Correlate with method0 input/filebuf ABI (still open, now primary-adjacent)
+

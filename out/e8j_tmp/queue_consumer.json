@@ -1,0 +1,2334 @@
+{
+  "counts": {
+    "FE8_readers": 1,
+    "B7D_readers": 8,
+    "7D8_readers": 59,
+    "FE8_writers": 2,
+    "B7D_writers": 13
+  },
+  "bridge": [
+    {
+      "role": "B7D_reader",
+      "fn": 3000392,
+      "access_pc": 3000404,
+      "bl_to_parent_cluster": [
+        3024160
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "B7D_reader",
+      "fn": 3000392,
+      "access_pc": 3000446,
+      "bl_to_parent_cluster": [
+        3024160
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "B7D_reader",
+      "fn": 3000392,
+      "access_pc": 3000646,
+      "bl_to_parent_cluster": [
+        3024160
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3101750,
+      "access_pc": 3101766,
+      "bl_to_parent_cluster": [
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3101750,
+      "access_pc": 3101828,
+      "bl_to_parent_cluster": [
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3101750,
+      "access_pc": 3102078,
+      "bl_to_parent_cluster": [
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3101750,
+      "access_pc": 3102482,
+      "bl_to_parent_cluster": [
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3101750,
+      "access_pc": 3102560,
+      "bl_to_parent_cluster": [
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3162170,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3162246,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3162702,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3162788,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3162930,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3162106,
+      "access_pc": 3163082,
+      "bl_to_parent_cluster": [
+        3101584,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3171148,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3172246,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3172278,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3172318,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3172404,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3171106,
+      "access_pc": 3172540,
+      "bl_to_parent_cluster": [
+        3172612
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3200480,
+      "access_pc": 3200494,
+      "bl_to_parent_cluster": [
+        3013692,
+        3122432,
+        3126716,
+        3146072
+      ],
+      "upstream_count": 0
+    },
+    {
+      "role": "7D8_reader",
+      "fn": 3200480,
+      "access_pc": 3200586,
+      "bl_to_parent_cluster": [
+        3013692,
+        3122432,
+        3126716,
+        3146072
+      ],
+      "upstream_count": 0
+    }
+  ],
+  "consumers": {
+    "FE8_readers": [
+      {
+        "ldr_pc": 3199580,
+        "rd": 1,
+        "access": {
+          "pc": 3199592,
+          "raw": 27210,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3199564,
+        "offset": 4072,
+        "role": "FE8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3199738,
+            "enclosing_fn": 3199736
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      }
+    ],
+    "B7D_readers": [
+      {
+        "ldr_pc": 2991650,
+        "rd": 2,
+        "access": {
+          "pc": 2991674,
+          "raw": 28416,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 2991652,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000382,
+        "rd": 1,
+        "access": {
+          "pc": 3000404,
+          "raw": 26656,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3000392,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3024160
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000430,
+        "rd": 1,
+        "access": {
+          "pc": 3000446,
+          "raw": 26624,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3000392,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3024160
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000628,
+        "rd": 1,
+        "access": {
+          "pc": 3000646,
+          "raw": 26632,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3000392,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3024160
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000720,
+        "rd": 1,
+        "access": {
+          "pc": 3000738,
+          "raw": 26664,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3000708,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3169978,
+            "enclosing_fn": 3169976
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3138010,
+        "rd": 1,
+        "access": {
+          "pc": 3138046,
+          "raw": 27752,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3137918,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3199614,
+        "rd": 1,
+        "access": {
+          "pc": 3199636,
+          "raw": 28416,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3199628,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3210436,
+        "rd": 2,
+        "access": {
+          "pc": 3210458,
+          "raw": 26664,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3210412,
+        "offset": 2941,
+        "role": "B7D_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3000782,
+            "enclosing_fn": 3000708
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      }
+    ],
+    "7D8_readers": [
+      {
+        "ldr_pc": 2991648,
+        "rd": 1,
+        "access": {
+          "pc": 2991674,
+          "raw": 28416,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 2991652,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3002358,
+        "rd": 4,
+        "access": {
+          "pc": 3002362,
+          "raw": 27040,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3002356,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3101956,
+            "enclosing_fn": 3101750
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "UHUI"
+        ]
+      },
+      {
+        "ldr_pc": 3010284,
+        "rd": 5,
+        "access": {
+          "pc": 3010294,
+          "raw": 27371,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010308,
+        "rd": 0,
+        "access": {
+          "pc": 3010314,
+          "raw": 27333,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010430,
+        "rd": 1,
+        "access": {
+          "pc": 3010436,
+          "raw": 27340,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010484,
+        "rd": 1,
+        "access": {
+          "pc": 3010490,
+          "raw": 27340,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010528,
+        "rd": 1,
+        "access": {
+          "pc": 3010534,
+          "raw": 27341,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010732,
+        "rd": 0,
+        "access": {
+          "pc": 3010738,
+          "raw": 27332,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010776,
+        "rd": 0,
+        "access": {
+          "pc": 3010782,
+          "raw": 27331,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010850,
+        "rd": 1,
+        "access": {
+          "pc": 3010856,
+          "raw": 27340,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010944,
+        "rd": 6,
+        "access": {
+          "pc": 3010952,
+          "raw": 27379,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3010978,
+        "rd": 0,
+        "access": {
+          "pc": 3010984,
+          "raw": 27329,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011062,
+        "rd": 1,
+        "access": {
+          "pc": 3011066,
+          "raw": 27336,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011076,
+        "rd": 5,
+        "access": {
+          "pc": 3011082,
+          "raw": 27372,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011120,
+        "rd": 1,
+        "access": {
+          "pc": 3011126,
+          "raw": 27340,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011148,
+        "rd": 1,
+        "access": {
+          "pc": 3011154,
+          "raw": 27340,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011176,
+        "rd": 4,
+        "access": {
+          "pc": 3011180,
+          "raw": 27296,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3011218,
+        "rd": 1,
+        "access": {
+          "pc": 3011224,
+          "raw": 27341,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3010046,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3031454,
+        "rd": 6,
+        "access": {
+          "pc": 3031460,
+          "raw": 26864,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3031452,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3161990,
+            "enclosing_fn": 3161620
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3090954,
+        "rd": 4,
+        "access": {
+          "pc": 3090960,
+          "raw": 26848,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3090952,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3172192,
+            "enclosing_fn": 3171106
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3090976,
+        "rd": 7,
+        "access": {
+          "pc": 3090982,
+          "raw": 28602,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3090952,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3172192,
+            "enclosing_fn": 3171106
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3101758,
+        "rd": 4,
+        "access": {
+          "pc": 3101766,
+          "raw": 28192,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3101750,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3101816,
+        "rd": 6,
+        "access": {
+          "pc": 3101828,
+          "raw": 28576,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3101750,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3102072,
+        "rd": 4,
+        "access": {
+          "pc": 3102078,
+          "raw": 28576,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3101750,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3102474,
+        "rd": 4,
+        "access": {
+          "pc": 3102482,
+          "raw": 26624,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3101750,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3102520,
+        "rd": 6,
+        "access": {
+          "pc": 3102560,
+          "raw": 28576,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3101750,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3146074,
+        "rd": 1,
+        "access": {
+          "pc": 3146106,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3146072,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3000276,
+            "enclosing_fn": 3000184
+          },
+          {
+            "bl_pc": 3014102,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014232,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014248,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014286,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014392,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014424,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3014462,
+            "enclosing_fn": 3013804
+          },
+          {
+            "bl_pc": 3016058,
+            "enclosing_fn": 3016058
+          },
+          {
+            "bl_pc": 3016292,
+            "enclosing_fn": 3016292
+          }
+        ],
+        "upstream_count": 85,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3161642,
+        "rd": 6,
+        "access": {
+          "pc": 3161648,
+          "raw": 27056,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3161620,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3164994,
+            "enclosing_fn": 3164908
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3161908,
+        "rd": 6,
+        "access": {
+          "pc": 3161918,
+          "raw": 26624,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3161620,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3164994,
+            "enclosing_fn": 3164908
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3161958,
+        "rd": 6,
+        "access": {
+          "pc": 3162000,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3161620,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3164994,
+            "enclosing_fn": 3164908
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162044,
+        "rd": 0,
+        "access": {
+          "pc": 3162050,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3161620,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3164994,
+            "enclosing_fn": 3164908
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162130,
+        "rd": 1,
+        "access": {
+          "pc": 3162170,
+          "raw": 26633,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162240,
+        "rd": 2,
+        "access": {
+          "pc": 3162246,
+          "raw": 26898,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162698,
+        "rd": 6,
+        "access": {
+          "pc": 3162702,
+          "raw": 27889,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162782,
+        "rd": 0,
+        "access": {
+          "pc": 3162788,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3162924,
+        "rd": 0,
+        "access": {
+          "pc": 3162930,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3163076,
+        "rd": 0,
+        "access": {
+          "pc": 3163082,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3162106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3101584,
+          3146072
+        ],
+        "is_parent_cluster_fn": true,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": [
+          "/'_p"
+        ]
+      },
+      {
+        "ldr_pc": 3171106,
+        "rd": 6,
+        "access": {
+          "pc": 3171148,
+          "raw": 28544,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3172236,
+        "rd": 0,
+        "access": {
+          "pc": 3172246,
+          "raw": 27650,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3172260,
+        "rd": 6,
+        "access": {
+          "pc": 3172278,
+          "raw": 28336,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3172292,
+        "rd": 0,
+        "access": {
+          "pc": 3172318,
+          "raw": 28336,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3172386,
+        "rd": 6,
+        "access": {
+          "pc": 3172404,
+          "raw": 28336,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3172532,
+        "rd": 0,
+        "access": {
+          "pc": 3172540,
+          "raw": 28288,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3171106,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3172612
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3177972,
+        "rd": 1,
+        "access": {
+          "pc": 3178012,
+          "raw": 38914,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3178008,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3036734,
+            "enclosing_fn": 3036200
+          },
+          {
+            "bl_pc": 3186852,
+            "enclosing_fn": 3186728
+          },
+          {
+            "bl_pc": 3202930,
+            "enclosing_fn": 3202930
+          }
+        ],
+        "upstream_count": 3,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "/NND",
+          "%/I-KIDKD",
+          "/L/M"
+        ]
+      },
+      {
+        "ldr_pc": 3187390,
+        "rd": 4,
+        "access": {
+          "pc": 3187394,
+          "raw": 26848,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3187356,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3202140,
+            "enclosing_fn": 3200480
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3187496,
+        "rd": 4,
+        "access": {
+          "pc": 3187500,
+          "raw": 26848,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3187452,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 2999920,
+            "enclosing_fn": 2999840
+          },
+          {
+            "bl_pc": 3031440,
+            "enclosing_fn": 3031440
+          },
+          {
+            "bl_pc": 3036702,
+            "enclosing_fn": 3036200
+          },
+          {
+            "bl_pc": 3102566,
+            "enclosing_fn": 3101750
+          },
+          {
+            "bl_pc": 3201010,
+            "enclosing_fn": 3200480
+          },
+          {
+            "bl_pc": 3219464,
+            "enclosing_fn": 3219412
+          }
+        ],
+        "upstream_count": 6,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3187584,
+        "rd": 5,
+        "access": {
+          "pc": 3187590,
+          "raw": 27880,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3187568,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3102578,
+            "enclosing_fn": 3101750
+          },
+          {
+            "bl_pc": 3219468,
+            "enclosing_fn": 3219412
+          }
+        ],
+        "upstream_count": 2,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3192218,
+        "rd": 5,
+        "access": {
+          "pc": 3192224,
+          "raw": 27560,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3192216,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3100084,
+            "enclosing_fn": 3099996
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3192282,
+        "rd": 6,
+        "access": {
+          "pc": 3192288,
+          "raw": 27120,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3192216,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3100084,
+            "enclosing_fn": 3099996
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3198420,
+        "rd": 0,
+        "access": {
+          "pc": 3198452,
+          "raw": 27650,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3197884,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3203422,
+            "enclosing_fn": 3203422
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "UIID"
+        ]
+      },
+      {
+        "ldr_pc": 3199122,
+        "rd": 0,
+        "access": {
+          "pc": 3199152,
+          "raw": 28264,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3197884,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3203422,
+            "enclosing_fn": 3203422
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "UIID"
+        ]
+      },
+      {
+        "ldr_pc": 3199588,
+        "rd": 1,
+        "access": {
+          "pc": 3199592,
+          "raw": 27210,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3199564,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3199738,
+            "enclosing_fn": 3199736
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3199628,
+        "rd": 0,
+        "access": {
+          "pc": 3199636,
+          "raw": 28416,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3199628,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3200490,
+        "rd": 4,
+        "access": {
+          "pc": 3200494,
+          "raw": 26848,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3200480,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3013692,
+          3122432,
+          3126716,
+          3146072
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3200580,
+        "rd": 6,
+        "access": {
+          "pc": 3200586,
+          "raw": 28272,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3200480,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3013692,
+          3122432,
+          3126716,
+          3146072
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3211934,
+        "rd": 1,
+        "access": {
+          "pc": 3211938,
+          "raw": 28104,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3211928,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3131166,
+            "enclosing_fn": 3131164
+          },
+          {
+            "bl_pc": 3200500,
+            "enclosing_fn": 3200480
+          },
+          {
+            "bl_pc": 3200522,
+            "enclosing_fn": 3200480
+          },
+          {
+            "bl_pc": 3212428,
+            "enclosing_fn": 3212416
+          }
+        ],
+        "upstream_count": 4,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3212418,
+        "rd": 4,
+        "access": {
+          "pc": 3212422,
+          "raw": 26848,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3212416,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 3128220,
+            "enclosing_fn": 3128172
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3212912,
+        "rd": 2,
+        "access": {
+          "pc": 3212940,
+          "raw": 28416,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3212914,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3224332,
+        "rd": 0,
+        "access": {
+          "pc": 3224364,
+          "raw": 26656,
+          "kind": "load",
+          "width_guess": 4
+        },
+        "fn": 3224280,
+        "offset": 2008,
+        "role": "7D8_reader",
+        "upstream_callers": [
+          {
+            "bl_pc": 2992004,
+            "enclosing_fn": 2991982
+          },
+          {
+            "bl_pc": 3002392,
+            "enclosing_fn": 3002356
+          },
+          {
+            "bl_pc": 3122468,
+            "enclosing_fn": 3122432
+          },
+          {
+            "bl_pc": 3122598,
+            "enclosing_fn": 3122432
+          },
+          {
+            "bl_pc": 3161894,
+            "enclosing_fn": 3161620
+          }
+        ],
+        "upstream_count": 5,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          ".mrp",
+          "default.mrp",
+          "default2.mrp",
+          "default3.mrp"
+        ]
+      }
+    ],
+    "FE8_writers": [
+      {
+        "ldr_pc": 3198804,
+        "rd": 0,
+        "access": {
+          "pc": 3198810,
+          "raw": 24580,
+          "kind": "store",
+          "width_guess": 4
+        },
+        "fn": 3197884,
+        "offset": 4072,
+        "role": "FE8_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3203422,
+            "enclosing_fn": 3203422
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "UIID"
+        ]
+      },
+      {
+        "ldr_pc": 3199580,
+        "rd": 1,
+        "access": {
+          "pc": 3199586,
+          "raw": 24584,
+          "kind": "store",
+          "width_guess": 4
+        },
+        "fn": 3199564,
+        "offset": 4072,
+        "role": "FE8_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3199738,
+            "enclosing_fn": 3199736
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      }
+    ],
+    "B7D_writers": [
+      {
+        "ldr_pc": 2991650,
+        "rd": 2,
+        "access": {
+          "pc": 2991658,
+          "raw": 26312,
+          "kind": "store",
+          "width_guess": 4
+        },
+        "fn": 2991652,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000382,
+        "rd": 1,
+        "access": {
+          "pc": 3000388,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3000332,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3169982,
+            "enclosing_fn": 3169976
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000430,
+        "rd": 1,
+        "access": {
+          "pc": 3000438,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3000392,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3024160
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3000628,
+        "rd": 1,
+        "access": {
+          "pc": 3000634,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3000392,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3024160
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3030206,
+        "rd": 1,
+        "access": {
+          "pc": 3030212,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3030212,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": true,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3034918,
+        "rd": 1,
+        "access": {
+          "pc": 3034924,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3034770,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3113794,
+        "rd": 0,
+        "access": {
+          "pc": 3113806,
+          "raw": 24584,
+          "kind": "store",
+          "width_guess": 4
+        },
+        "fn": 3113800,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "`/HHD"
+        ]
+      },
+      {
+        "ldr_pc": 3130334,
+        "rd": 0,
+        "access": {
+          "pc": 3130338,
+          "raw": 28677,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3129964,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 2993690,
+            "enclosing_fn": 2993664
+          },
+          {
+            "bl_pc": 3009592,
+            "enclosing_fn": 3009592
+          }
+        ],
+        "upstream_count": 2,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": [
+          "I/0ID"
+        ]
+      },
+      {
+        "ldr_pc": 3138010,
+        "rd": 1,
+        "access": {
+          "pc": 3138016,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3137918,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3139958,
+        "rd": 1,
+        "access": {
+          "pc": 3139964,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3139628,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3199148,
+            "enclosing_fn": 3197884
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3190982,
+        "rd": 1,
+        "access": {
+          "pc": 3190988,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3190482,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [],
+        "upstream_count": 0,
+        "can_call_parent_cluster": true,
+        "bl_to_parent_cluster": [
+          3122432
+        ],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": true,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3199614,
+        "rd": 1,
+        "access": {
+          "pc": 3199620,
+          "raw": 28680,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3199564,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3199738,
+            "enclosing_fn": 3199736
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      },
+      {
+        "ldr_pc": 3210436,
+        "rd": 2,
+        "access": {
+          "pc": 3210440,
+          "raw": 28694,
+          "kind": "store",
+          "width_guess": 1
+        },
+        "fn": 3210412,
+        "offset": 2941,
+        "role": "B7D_writer",
+        "upstream_callers": [
+          {
+            "bl_pc": 3000782,
+            "enclosing_fn": 3000708
+          }
+        ],
+        "upstream_count": 1,
+        "can_call_parent_cluster": false,
+        "bl_to_parent_cluster": [],
+        "is_parent_cluster_fn": false,
+        "is_upstream_of_parent_cluster": false,
+        "touches_state": false,
+        "strings": []
+      }
+    ]
+  }
+}

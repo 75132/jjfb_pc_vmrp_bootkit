@@ -1,0 +1,36 @@
+﻿Phase 6C-A Generic Nested EXT R9 Switch
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+module_r9_switch_gate=open
+evidence=DOCUMENTED
+allowed_fix=MODULE_R9_SWITCH_ONLY
+phase6b_b_gate=blocked
+r9_switch_result=FAULT_PERSISTS
+next_allowed_fix=POST_R9_ABI_ANALYSIS
+xt_pattern=PARTIAL
+fix_applied=R9_save_switch_restore_only
+Q1_module_r9_switch_gate=open
+Q2_phase6b_b_gate=blocked
+Q3_module_er_rw=
+emitted
+Q4_entry_switch=
+applied
+Q5_helper_switch=
+seen
+Q6_leave=
+absent
+Q7_nested_stack=frames_not_single_global
+Q8_fail_closed=
+yes
+Q9_code_region_id=yes
+Q10_r9_only=yes
+Q11_xt_pattern=PARTIAL
+Q12_r9_switch_result=FAULT_PERSISTS next_allowed_fix=POST_R9_ABI_ANALYSIS
+jjfb_hash=PASS ok
+module_er_rw=PASS ok
+r9_switch_or_blocked=PASS ok
+module_r9_switch_gate=PASS ok
+phase6b_b_still_blocked=PASS ok
+allowed_fix=PASS ok
+no_r0_poke=PASS ok
+no_other_reg_write_note=PASS ok
+xt_wxjwq=PASS ok

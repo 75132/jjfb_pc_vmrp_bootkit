@@ -1,0 +1,13 @@
+digraph list_path {
+  rankdir=LR;
+  node [shape=box];
+  "30D2F9" -> "30D24C" [label="BL"];
+  "30D24C" -> "101AB" [label="plat_buffer_fill"];
+  "30D24C" -> "2E4D6C" [label="PathA_publish"];
+  "2E4D6C" -> "312A60" [label="list_push via R9+B54"];
+  "30E15E" -> "30CBBC" [label="case_app_2"];
+  "30CBBC" -> "2FE82C" [label="BL_init"];
+  "2FE82C" -> "312AA4" [label="list_ctor"];
+  "312AA4" -> "B54" [label="STR_list_ptr"];
+  "B54" -> "312A60" [label="required_nonzero"];
+}

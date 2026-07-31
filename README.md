@@ -24,33 +24,30 @@
 | `RUN_E_PRODUCT_ROBOTOL_MRCINIT.ps1` | 产品 robotol/mrc_init 冒烟 |
 | `RUN_GAMES.ps1` | 游戏列表 GUI |
 | `RUN_VMRP_VISUAL.ps1` | 资源同步 / 可视化准备 |
-| `RUN_JJFB_LAUNCHER.ps1` | Launcher 启动 |
 | `RUN_RESEARCH_GWY_SHELL.ps1` | **显式**研究轨入口 |
 
-历史 task runner 在 [`research/runners/`](research/runners/)（含 `archived_tasks/`）。当前结论看 [`reports/README.md`](reports/README.md)（约 20 个活跃文件；旧 phase/E 在 `reports/archive/`）。
+研究阶段 runner（E5–E10A / E8–E9）在 [`research/runners/`](research/runners/)，不要塞回根目录。
 
 ## 目录角色
 
 | 路径 | 角色 |
 |---|---|
 | `src/` `include/gwy_launcher/` | 产品核心 |
-| `research/` | 研究轨（runners、packs） |
+| `research/` | 研究轨（runners、e10a 产物、packs） |
 | `third_party/vmrp_upstream/` | 干净 vmrp 基线 |
 | `game_files/` | 原始游戏资源（只读） |
 | `profiles/` `schemas/` | 声明式兼容 profile |
 | `tools/` | 审计与工具 |
 | `docs/` `evidence/` `decisions/` | 路线、证据、ADR |
-| `reports/` | **活跃**阶段结论；历史在 `reports/archive/` |
-| `packages/reference/` + `packages/archive/` | 参考包 |
-| `out/` `logs/` `build-i686/` | 本地产物（`.gitignore`） |
-| `legacy_lab/` | 冻结旧 bootkit（日常勿扫；已 `.cursorignore`） |
+| `packages/` | 参考包与清单 |
+| `legacy_lab/` | 冻结旧 bootkit（不参与产品 build） |
 
 ## 禁止
 
 - 把 `legacy_lab` 修改版 `bridge.c` 复制进 clean 核心
 - 在核心写入 JJFB 固定地址 / ERW offset / ui_mode / progress 强制
 - 修改原始 `gwy/jjfb.mrp` / `robotol.ext` / `mrc_loader.ext`
-- 把新的阶段 runner / 分析 pack / 旧报告塞回仓库根目录或 `reports/` 根下
+- 把新的阶段 runner / 分析 pack 放回仓库根目录
 
 ## 构建
 

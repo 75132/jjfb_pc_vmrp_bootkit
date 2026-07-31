@@ -99,6 +99,9 @@ void gwy_ext_obs_entry_begin(uint32_t helper,
                              uint32_t sp);
 
 /* Unicorn mem-invalid → structured fault report (do not map fault VA). */
+/* P25: br_exit parks at END_ADDRESS-0x1000 with UC_PROT_READ (no EXEC).
+ * Must stay inside primary guest map — PC writes outside are ignored. */
+#define GWY_EXIT_PARK_PC 0xE7F000u
 void gwy_ext_obs_mem_fault(void *uc,
                            uint32_t access_type,
                            uint64_t address,
@@ -131,8 +134,6 @@ void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *nam
 void gwy_ext_obs_mr_exit(void *uc);
 /* Phase 6P: return 1 if first post-gbrwcore mr_exit was consumed (do not exit(0)). */
 int gwy_shell_shim_try_continue_after_mr_exit(void *uc);
-/* After gbrwcore API table publishes startGame (init_ok), continue without waiting for br_exit. */
-int gwy_shell_shim_try_continue_after_gbrwcore_init_ok(void *uc);
 
 /* Phase 6N: platform mrc_extChunk publication (gated by JJFB_EXTCHUNK_PROVIDER). */
 void gwy_ext_obs_extchunk_set_sendappevent(uint32_t guest_addr);
@@ -141,14 +142,7 @@ int gwy_ext_obs_extchunk_want(uint32_t helper);
 int gwy_ext_obs_extchunk_try_reuse(void *uc, uint32_t helper, uint32_t p_guest, void *p_host);
 int gwy_ext_obs_extchunk_on_c_function_new(void *uc, uint32_t helper, uint32_t p_guest, void *p_host,
                                            void *chunk_host, uint32_t chunk_guest);
-/* Actual P after isolate-on-collision (may differ from request). */
-uint32_t gwy_ext_obs_extchunk_last_published_p(void);
 void gwy_ext_obs_extchunk_slot28_call(void *uc);
-/*
- * P21: guest _mr_c_function_new calls mr_free on the previous P.
- * Return 1 to skip free so a nested package cannot destroy the parent P/ER_RW.
- */
-int gwy_ext_obs_preserve_c_function_p_guest(uint32_t p_guest);
 
 /* Guest heap for platform blobs (registered from bridge: my_mallocExt / toMrpMemAddr). */
 typedef void *(*GwyExtObsGuestAllocFn)(uint32_t size);
@@ -156,19 +150,15 @@ typedef uint32_t (*GwyExtObsGuestPtrFn)(void *host);
 void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuestPtrFn to_guest);
 /* Zero-filled guest alloc via registered allocator; 0 if unbound/fail. */
 uint32_t gwy_ext_obs_guest_malloc0(uint32_t size);
-/* Same as guest_malloc0, also returns host pointer for publishers. */
-uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **out_host);
 
 /* Host timer ABI (registered from bridge: timerStart / timerStop / SDL_GetTicks). */
 typedef int32_t (*GwyExtObsTimerStartFn)(uint16_t ms);
 typedef int32_t (*GwyExtObsTimerStopFn)(void);
 typedef uint32_t (*GwyExtObsTimerClockFn)(void);
 typedef void (*GwyExtObsTimerDeliverFn)(void *uc);
-typedef void (*GwyExtObsAfterTimerDeliverFn)(void *uc);
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop);
 void gwy_ext_obs_set_timer_clock(GwyExtObsTimerClockFn clock_ms);
 void gwy_ext_obs_set_timer_deliver(GwyExtObsTimerDeliverFn deliver);
-void gwy_ext_obs_set_after_timer_deliver(GwyExtObsAfterTimerDeliverFn after);
 /* Poll due deadline while guest holds emu (call from plat stubs / runCode slices). */
 void gwy_ext_obs_timer_poll_uc(void *uc);
 /* SDL timer thread: mark due only — never take bridge mutex. */

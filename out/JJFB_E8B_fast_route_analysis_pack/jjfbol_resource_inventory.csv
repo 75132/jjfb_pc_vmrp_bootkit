@@ -1,0 +1,60 @@
+package,size,sha256,member_count,sample_members
+attack.mrp,9105,d65f6d406c361b69e85fb1f6c841bc5bebe34ef1ae196bb60d140220f5ecb0d6,13,start.mr; blood@attack.ani; blood!141!114@attack.bmp; beattack@attack.ani; beattack!52!106@attack.bmp; s@attack.ani; myeffect!104!33@attack.bmp; daoguang@attack.ani
+bigWorldMap.mrp,2644,2bf19e4adb556b29d43e1482bac1559ab748e1244906026a6b723ad583ae3a3a,2,start.mr; bigworldmap@bigworldmap.txt
+bmm1.mrp,26443,1559eeba17cd8dfeb9d7a1db27fe16997c19f7a12fac68c7a3f81f99bd5286ec,2,start.mr; m1!160!120@bmm1.bmp
+bmm2.mrp,25469,4060a3421b86a6843011e67113329842e3b9ebab35fc4ab0145ae387dd28b064,2,start.mr; m2!160!120@bmm2.bmp
+bmm3.mrp,28335,1cd6699f1c48928f899f37326c68d708a89944dd9ce8b7d0892b684a4770a795,2,start.mr; m3!160!120@bmm3.bmp
+bmm4.mrp,25451,953640faa44c30ea5ead6c13a0da921d5afac39031cca8f59265a017c9d22c91,2,start.mr; m4!160!120@bmm4.bmp
+bmm5.mrp,26837,ffcf7d86ec5c52347854b7ea8a138c65f0439bb59f7602dfaaac4b45d21c5f23,2,start.mr; m5!160!120@bmm5.bmp
+bmm6.mrp,26619,4aabdd62436b4ad28954b4c0777217131ed59b4a46b578a0155a10fd2702af03,2,start.mr; m6!160!120@bmm6.bmp
+bmm7.mrp,22246,4e9a483d9bacb8d6c010525348e8d41493125b861c868d712aba0455c70d3c95,2,start.mr; m7!160!120@bmm7.bmp
+bmm8.mrp,25525,8ee29d7b6bcbf182296d06bf1a9f782e3bfe736a4c8fda6aceb36910ff455313,2,start.mr; m8!160!120@bmm8.bmp
+cannon1.mrp,3506,3d974c1c9334c8c88c48c0a35f5c2d2c2229b507a31230e4c0c621b46815eabe,5,start.mr; cannon3!34!33@cannon1.bmp; cannon2!33!23@cannon1.bmp; cannon1!43!26@cannon1.bmp; cannon0!41!24@cannon1.bmp
+chi.mrp,3937,0e6b65d247e127110ebc81ac2acbf61b7c21efa962346fdc222637c0a139b592,2,start.mr; chi!144!16@chi.bmp
+default.mrp,17480,d356c994b3ed36568fe287bdbac42cc6bb533b08344fc873b2e4713afdd1cb8b,39,start.mr; bag2!25!21.bmp; bag1!18!19.bmp; buttons!36!12.bmp; boygirl!40!15.bmp; bighand!25!25.bmp; bag_hand!17!16.bmp; car1!34!53.bmp
+default2.mrp,19640,8abf618178767e07077fcc29a270edae6d17efdf604a52bb83a11cba89939ebb,52,start.mr; man1.ani; man1!27!29.bmp; lucklight!102!15.bmp; zuobiao!60!8.bmp; mapload!23!15.bmp; mapcity!150!30.bmp; man2.ani
+default3.mrp,13415,775ad23b8abe4bb6dd5d0078f3298b4fa182ce33385f04e02f72959586bc4c13,25,start.mr; dun!16!16.bmp; daoju!176!16.bmp; chibang!16!16.bmp; baoshi!16!16.bmp; kongzhi!16!16.bmp; jiqiang!32!16.bmp; jian!64!16.bmp
+devil1.mrp,36608,57a09a23ee4a71774425c2acc4e588357af26385454f6a0fafef0d271c0fb682,63,start.mr; devil2!60!45@devil1.bmp; devil1@devil1.ani; devil1!54!59@devil1.bmp; devil4!58!47@devil1.bmp; devil3@devil1.ani; devil3!54!60@devil1.bmp; devil2@devil1.ani
+devil2.mrp,3855,0f3cc3916aa273a7e904503f2413a345c3f8c6f9433af41433713582da224a34,3,start.mr; devil30!94!80@devil4.bmp; devil30@devil4.ani
+devil4.mrp,3502,5fbbdae6723e034254a265d75f635dcd6faf72ee2807b9402519867642257756,3,start.mr; devil33!134!49@devil4.bmp; devil33@devil4.ani
+dong1.mrp,16571,aa1d2397dc260f8fbef09fa6a7d7c79c23fd2836437e611dff197d6c7153b9b4,34,start.mr; dong0!20!31@dong1.bmp; dong8!20!49@dong1.bmp; dong9!30!38@dong1.bmp; dong26!21!31@dong1.bmp; dong27!18!45@dong1.bmp; dong20!21!34@dong1.bmp; dong21!26!38@dong1.bmp
+dongimage.mrp,2179,956c95005d3756d45317075a260098ba8661a8ce3580bcd6e621b949d8d858c8,2,start.mr; dongimage@dongimage.txt
+downimage1.mrp,26668,f0531e35bf5a41e011583877b3cbfed337a3120a15749e39ff0ecb026a5339d0,2,start.mr; show1!232!100@downimage1.bmp
+downimage2.mrp,23656,dd54c66757ff59b7023baed7f7453fcaa7d8821e6ea44ca4676c038a84d5d3f8,2,start.mr; show2!232!100@downimage2.bmp
+downimage3.mrp,24117,3b8f2411bd9147d6caab7b070c8b1309a7ea354f06ed300ff4efba8287ad823c,2,start.mr; show3!232!100@downimage3.bmp
+gun1.mrp,10231,116e5035b93ef95a426b691d7b6d78a36c059b5811c8bb3b0814c5d725ea1ede,23,start.mr; gun0!26!10@gun1.bmp; gun21!59!34@gun1.bmp; gun4!29!16@gun1.bmp; gun3!36!15@gun1.bmp; gun2!34!15@gun1.bmp; gun1!28!22@gun1.bmp; gun8!41!19@gun1.bmp
+gun2.mrp,3982,5f7580844657c481b66f6abc8e26eb422743ba09b4eba0a82615a958d5887667,5,start.mr; gun93!50!29@gun2.bmp; gun92!54!30@gun2.bmp; gun79!52!23@gun2.bmp; gun78!46!20@gun2.bmp
+gunimage.mrp,2111,16cf055f69a71aee352b9c917a2b27fa09205494041d5359dc8ce5968a44122a,2,start.mr; gunimage@gunimage.txt
+hint.mrp,2294,84208084112495d952f27b5862877defd0d2910ed8dcc296bbee814d38e22078,2,start.mr; hint@hint.txt
+itemType.mrp,16033,031497f2fc83989ff41b205563f6fcc5aa53357107c1dcab85db3174f5242f8c,2,start.mr; itemtype@itemtype.txt
+man1.mrp,10296,582f45bd3bb8d95ffb7452c85c36f3072fc425c9f51e41783fe2414c7a9f3492,31,start.mr; monster2@man1.ani; npc15@man1.ani; monster1!29!38@man1.bmp; robot3!30!37@man1.bmp; monster3!27!40@man1.bmp; npc2@man1.ani; monster2!28!40@man1.bmp
+man2.mrp,9750,d5537ce5a265887bed05721d987e2f4d2c7e9e8ddf5555b52904f397c9640e43,23,start.mr; robot2!25!34@man2.bmp; yongbing1!27!29@man2.bmp; ufo@man2.ani; yongbing1@man2.ani; npc17!18!30@man2.bmp; npc17@man2.ani; robot2@man2.ani
+man3.mrp,10480,d2783d4593b6e97a8092082b3c755f6ced4a46af8e63fecefe1372856466d5cf,21,start.mr; npc19!21!34@man3.bmp; chong!48!48@man3.bmp; xw@man3.ani; npc18!20!36@man3.bmp; emo@man3.ani; emo!89!86@man3.bmp; chong@man3.ani
+mantecimg.mrp,2397,f9601e2afbd7faba3b0308ab421194f0a95f5b9e1ce66c21a1ef62193345b07d,2,start.mr; skill!80!16@mantecimg.bmp
+mapValue.mrp,2568,2042fab51d0300d52d960a11b29348171f1920bb5dd96dbfe90554420517c53f,2,start.mr; mapvalue@mapvalue.txt
+mapimage1.mrp,32460,1fa2d3d845d558d8075d475288d9e6d762fda88b79421afd5066c78e76ec89b0,14,start.mr; build05!96!32@mapimage1.bmp; build04!80!96@mapimage1.bmp; build03!48!80@mapimage1.bmp; build02!48!80@mapimage1.bmp; map03!112!96@mapimage1.bmp; map02!112!96@mapimage1.bmp; map01!112!96@mapimage1.bmp
+mapimage2.mrp,33775,e558a1429caac32d3b2abb4643cf7e5b0c88e1225ecc2ba8758f663ace34f7ac,10,start.mr; map09!96!160@mapimage2.bmp; build09!48!48@mapimage2.bmp; build08!64!96@mapimage2.bmp; build07!64!80@mapimage2.bmp; waixingsenlin!96!160@mapimage2.bmp; waitaikong!112!128@mapimage2.bmp; build10!48!80@mapimage2.bmp
+mapman.mrp,2674,80a70f6b84ff6ba026b5f22945f6af040198d52b2fe9685184ca170994dda508,2,start.mr; mapman.txt
+monster.mrp,10739,121a896a42417d0bb620bb881a5f04384b1c949cc8d6bb1935eb9dce598644ff,2,start.mr; monster@monster.txt
+monster1.mrp,39707,27d2b23d6c66e4f0fcc70c3de6b55d22fec56d3b93148a4e944b4846a56a4545,53,start.mr; 17_2@monster2.ani; 2_2@monster1.ani; 2_2!53!54@monster1.bmp; 1_1@monster1.ani; 1_1!51!49@monster1.bmp; 3_3@monster1.ani; 3_3!74!64@monster1.bmp
+monster10.mrp,23574,54ae5ad1fb2f4aec9c879ecfdce89c595d76904933ce293ef2d4a0f537373b29,25,start.mr; hj1!61!63@monster10.bmp; hj12!60!66@monster10.bmp; hj11@monster10.ani; hj12@monster10.ani; hj3!64!61@monster10.bmp; hj2@monster10.ani; hj2!65!67@monster10.bmp
+monster2.mrp,37410,d4e31397923a5326f5a05d8377a51743b2b38de36595e7f316e450df386b630f,47,start.mr; 58_1@monster6.ani; 49_1@monster5.ani; 49_1!45!54@monster5.bmp; 48_3@monster5.ani; 48_3!70!65@monster5.bmp; 50_2@monster6.ani; 50_2!50!58@monster6.bmp
+monster3.mrp,36437,de714522b7b0131822bf43b924d37f419e3da61f6042fbd679d35449b0988674,47,start.mr; 109_1@monster11.ani; 109_1!47!45@monster11.bmp; 115_1!62!41@monster12.bmp; 110_2@monster12.ani; 110_2!55!50@monster12.bmp; 137_2!51!64@monster14.bmp; 126_3@monster13.ani
+monster4.mrp,39768,044ebf7648919acf88b243eaf8c772d3f25542d9c2bba950887505656f1b10d3,51,start.mr; 166_1!67!43@monster17.bmp; 165_3@monster17.ani; 165_3!89!54@monster17.bmp; 167_2!63!50@monster17.bmp; 166_1@monster17.ani; 26_2!57!57@monster3.bmp; 20_2!59!58@monster3.bmp
+monster5.mrp,45739,368a276b029de15dba3eab93ce2f0343265cc8dc3010e60d4c307c10f0405d39,57,start.mr; 46_1@monster5.ani; 22_1!47!47@monster3.bmp; 22_1@monster3.ani; 41_2@monster5.ani; 41_2!57!59@monster5.bmp; 40_1@monster5.ani; 40_1!53!45@monster5.bmp
+monster6.mrp,33922,ff4ff570667d270e5255344f3e18c2e59ff1a0c174ede28888ce1d24180600d3,39,start.mr; 81_3!73!65@monster9.bmp; 96_3@monster10.ani; 15_3!65!67@monster2.bmp; 11_2!55!53@monster2.bmp; 76_1@monster8.ani; 76_1!47!45@monster8.bmp; 6_3@monster1.ani
+monster7.mrp,32448,c4ed5a6e4891c0af614a8a74515dfe8991e52aa34bfedacfd903dcff01384b23,37,start.mr; 86_2!50!56@monster9.bmp; 175_1@monster18.ani; 226_2@monster7.ani; 227_3!46!49@monster7.bmp; 227_3@monster7.ani; 177_3!80!47@monster18.bmp; boss05@monster7.ani
+monster8.mrp,37735,309adab4d0f64138a6bebcd654699bc10c9f58c13eb440caa424967d281939d7,49,start.mr; 242_2@monster8.ani; 229_1!43!45@monster8.bmp; 238_1@monster8.ani; 30_3@monster4.ani; boss06!48!78@monster8.bmp; boss06@monster8.ani; 239_2!62!63@monster8.bmp
+monster9.mrp,25315,a6870e870d8b28d29c81a2be4e4ef392a37dc4952210528f462c14dfdb7ac1c8,31,start.mr; 244_1!65!39@monster9.bmp; 119_2!57!54@monster9.bmp; 78_3@monster9.ani; 119_2@monster9.ani; 122_2!67!36@monster9.bmp; 246_3!59!73@monster9.bmp; 245_2@monster9.ani
+mti.mrp,2385,aa20caf7121eecf80c8406e552a6509f847eca0f76992914224b9988c80763ae,2,start.mr; skill!80!16@mti.bmp
+newzuojia.mrp,14792,b6ce2dd79b5b8600d879fe255100c4847d2ebebb8779c6e246f5c05a36afbd42,15,start.mr; zuojia4!67!84@newzuojia.bmp; zuojia6!68!47@newzuojia.bmp; zuojia5@newzuojia.ani; zuojia5!65!94@newzuojia.bmp; zuojia4@newzuojia.ani; zuojia7!66!92@newzuojia.bmp; zuojia6@newzuojia.ani
+state1.mrp,2170,655570af01d90ab8d861f1da574256818071623e7dd3ea112722a4834ab5c73d,3,start.mr; state1!6!15@state1.bmp; state1@state1.ani
+tecbuff.mrp,2509,c278574b84418ed07da91cbaa34878da97aed938150fae1c15d729b42370ce97,2,start.mr; img!128!16@tecbuff.bmp
+vmimage.mrp,9828,e799bdb2e7d44d6f3839794676ecdff2b5c56397e0e4fbf5d793978d69ed0e61,5,start.mr; dir!100!100@vmimage.bmp; taskbutton!57!36@vmimage.bmp; vmright!57!36@vmimage.bmp; vmleft!57!36@vmimage.bmp
+weapon1.mrp,17584,841ef3e90a5835f55776f97edda4fffedc9cf3f5052668ec8a7e8e1d63397e3e,35,start.mr; weapon0!35!35@weapon1.bmp; weapon19!43!42@weapon1.bmp; weapon31!51!51@weapon1.bmp; weapon32!45!36@weapon1.bmp; weapon33!45!80@weapon1.bmp; weapon20!37!38@weapon1.bmp; weapon13!25!49@weapon1.bmp
+weaponimage.mrp,2224,23abdc92c34d457a1472ff04a52269d402c1875d835b8352931d27c41e0872f2,2,start.mr; weaponimage@weaponimage.txt
+wing1.mrp,20357,a0ea92ad670ce734839d7fc67780e2962067a6cb3d9d189ec0cd9d66534db54d,26,start.mr; wing0!85!23@wing1.bmp; wing22!94!54@wing1.bmp; wing21!98!47@wing1.bmp; wing23!81!53@wing1.bmp; wing24!99!55@wing1.bmp; wing4!71!33@wing1.bmp; wing3!60!35@wing1.bmp
+wing2.mrp,3175,a86b048da2696ac798c2f8dba2b7f85ee1ba79192f1f61d380f9e37b08142eb2,2,start.mr; wing25!109!62@wing2.bmp
+wingimage.mrp,2135,6ad7fd10f363ab6cc29f1d4ab8de2026559e698ae414ac28f844230b4917431c,2,start.mr; wingimage@wingimage.txt
+xg1.mrp,18015,b05260fcc2a90e39667d6a87cf1612c0516035030def1341d4dd25a0fe497ff8,31,start.mr; buff!6!15@xg1.bmp; leiting@xg1.ani; leiting!78!64@xg1.bmp; zidong!77!31@xg1.bmp; zidong@xg1.ani; ganrao!168!110@xg1.bmp; debuff@xg1.ani
+xg2.mrp,18222,1bcb261a686fe81877bfd0d337114dbf6c6bcf5b7737be754c43b821b5dd34c0,19,start.mr; roubo@xg2.ani; zhaqu@xg2.ani; zhaqu!164!32@xg2.bmp; lizi!79!156@xg2.bmp; roubo!199!55@xg2.bmp; lizi@xg2.ani; shengmingshequ!164!32@xg2.bmp

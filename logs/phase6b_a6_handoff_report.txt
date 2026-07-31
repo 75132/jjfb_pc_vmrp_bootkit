@@ -1,0 +1,36 @@
+﻿Phase 6B-A6 Registered Helper Handoff & Public Entry Resolution
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+case=FIELD_NOT_UPDATED
+case_legend=RETURN_LOST|FIELD_NOT_UPDATED|WRONG_FIELD_READ|WRONG_HELPER_IDENTITY|MISSING_TRAMPOLINE|CROSS_TARGET_DISPROVES|UNKNOWN
+helper_nature=command_dispatch
+direct_nature=unknown
+helper_eq_return_r0=0
+field_eq_helper=0
+xt_second_hop_vs_helper=unknown
+cross_target_gwy=handoff_tags_seen
+cross_target_wxjwq=handoff_tags_seen
+fix_applied=none (no second-hop overwrite; no context; no PlatformRegistry)
+phase6b_b_gate=blocked
+Q1_cfunction_return_semantics=helper_is_input_eq_return_r0=0
+Q2_helper_handoff=
+RETURN
+Q3_dsm_record_field_eq_helper=0
+Q4_direct_provenance=
+UNKNOWN
+Q5_helper_should_replace_field=hypothesis_FIELD_NOT_UPDATED
+Q6_helper_nature=command_dispatch
+Q7_direct_nature=unknown
+Q8_xt_second_hop_vs_helper=unknown
+Q9_handoff_case=FIELD_NOT_UPDATED
+Q10_no_guest_mutation=yes
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+cfunction_enter=PASS CFUNCTION_NEW ENTER missing
+cfunction_exit=PASS CFUNCTION_NEW EXIT missing
+handoff_or_none=PASS HELPER_HANDOFF missing
+record_or_prov=PASS DSM_RECORD_FIELD / DIRECT_TARGET_PROVENANCE missing
+entry_nature=PASS need ENTRY_NATURE x2
+handoff_case=PASS HANDOFF_CASE missing
+no_fake_context=PASS fake context / PlatformRegistry suspected
+no_target_overwrite=PASS second-hop overwrite suspected
+xt_gwy=PASS gwy.mrp log empty
+xt_wxjwq=PASS wxjwq log empty

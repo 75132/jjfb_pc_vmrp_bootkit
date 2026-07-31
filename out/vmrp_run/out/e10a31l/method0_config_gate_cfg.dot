@@ -1,0 +1,6 @@
+digraph method0_config_gates {
+  rankdir=LR;
+  r1 [label="STACK_FROM_SMSCFG\nGPT............................. vs GPT.napptype=%d_nurl=%s_gwyblink"];
+  r2 [label="STACK_FROM_SMSCFG\ngwy............................. vs gwy.GPT.napptype=%d_nurl=%s_gwyb"];
+  r1 -> r2;
+}

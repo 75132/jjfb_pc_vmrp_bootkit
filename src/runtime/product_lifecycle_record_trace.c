@@ -26,8 +26,6 @@
 #define PC_2F6C44 0x2F6C44u
 #define PC_2E5E60 0x2E5E60u /* E6C int16 table allocator (event 15) */
 #define PC_2E4020 0x2E4020u /* event 15 → BL 0x2E5E60 */
-#define PC_30F45C 0x30F45Cu /* UI init → BL 0x3130F4(r0=15) upstream of event15 */
-#define PC_2D92E4 0x2D92E4u /* 2FC26C epilogue string/object init (V75 ran this) */
 
 #define OFF_B58 0xB58u
 #define OFF_B5C 0xB5Cu
@@ -101,19 +99,13 @@ void product_lrt_note_er_rw(uint32_t er_rw) {
     /* Re-arm B71 watch when ER_RW base drifts (off-by-4 header vs payload). */
     if (product_lrt_enabled() && g_uc && g_er_rw && g_hook_ok &&
         (!g_mem_hook_ok || g_b71_hook_base != g_er_rw)) {
-        uc_hook hm = 0, he6 = 0, hui = 0;
+        uc_hook hm = 0;
         uint64_t a = (uint64_t)g_er_rw + (uint64_t)OFF_B71;
-        uint64_t e6 = (uint64_t)g_er_rw + (uint64_t)OFF_E6C;
-        uint64_t ui = (uint64_t)g_er_rw + (uint64_t)OFF_UI;
         if (uc_hook_add((uc_engine *)g_uc, &hm, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, a, a) ==
             UC_ERR_OK) {
             g_mem_hook_ok = 1;
             g_b71_hook_base = g_er_rw;
         }
-        (void)uc_hook_add((uc_engine *)g_uc, &he6, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, e6,
-                          e6 + 3ull);
-        (void)uc_hook_add((uc_engine *)g_uc, &hui, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, ui,
-                          ui + 3ull);
     }
     /* Module-registration libc cache: Robotol ER_RW+0x1450 must be strlen. */
     if (g_uc && er_rw) {
@@ -300,22 +292,6 @@ static void on_lrt_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         uc_reg_read(uc, UC_ARM_REG_R4, &r4);
         printf("[LRT_EVENT15] pc=0x2E4020 lr=0x%X r4_event=0x%X evidence=OBSERVED\n", lr, r4);
         fflush(stdout);
-    } else if (tag == 15) { /* 0x30F45C event15 producer */
-        printf("[LRT_E6C_PRODUCER] pc=0x30F45C lr=0x%X r0=0x%X r9_er=0x%X "
-               "note=posts_code15_via_3130F4 evidence=OBSERVED+Task13\n",
-               lr, r0, er);
-        fflush(stdout);
-    } else if (tag == 16) { /* 0x2D92E4 */
-        static uint32_t n;
-        uint32_t e6c = 0;
-        n++;
-        if (er) (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, er + OFF_E6C, &e6c);
-        if (n <= 8u || (n % 20u) == 0u) {
-            printf("[LRT_2D92E4] enter #%u lr=0x%X r0=0x%X r1=0x%X E6C=0x%X "
-                   "evidence=OBSERVED+Task13\n",
-                   n, lr, r0, r1, e6c);
-            fflush(stdout);
-        }
     } else if (tag == 8) { /* 0x2FC418 */
         g_saw_2fc418 = 1;
         sample_er_gates(uc, er, NULL, NULL, NULL, NULL, NULL, &ui);
@@ -340,31 +316,6 @@ static void on_lrt_mem_write(uc_engine *uc, uc_mem_type type, uint64_t address, 
     (void)type;
     (void)user;
     if (!product_lrt_enabled() || !g_er_rw) return;
-    if ((uint32_t)address == g_er_rw + OFF_UI && size >= 4) {
-        uint32_t neu = (uint32_t)value;
-        if (neu == 0x45u) {
-            uc_reg_read(uc, UC_ARM_REG_PC, &pc);
-            printf("[UI_MODE_NATURAL_45] pc=0x%X addr=0x%X new=0x45 evidence=OBSERVED+Task13\n",
-                   pc, (uint32_t)address);
-            fflush(stdout);
-            product_runtime_progress_emit("ui_mode_natural_45", "lrt", "guest_store");
-        }
-        return;
-    }
-    if ((uint32_t)address == g_er_rw + OFF_E6C && size >= 4) {
-        uint32_t neu = (uint32_t)value;
-        uint32_t lr = 0;
-        if (neu == 0)
-            return;
-        uc_reg_read(uc, UC_ARM_REG_PC, &pc);
-        uc_reg_read(uc, UC_ARM_REG_LR, &lr);
-        printf("[E6C_NATURAL_STORE] pc=0x%X lr=0x%X addr=0x%X new=0x%X size=%d "
-               "evidence=OBSERVED+Task13\n",
-               pc, lr, (uint32_t)address, neu, size);
-        fflush(stdout);
-        product_runtime_progress_emit("e6c_natural_store", "lrt", "guest_store");
-        return;
-    }
     if ((uint32_t)address != g_er_rw + OFF_B71) return;
     if (size < 1) return;
     /* 0x2FE854 inside 0x30CBBC clears B71; only treat nonzero stores as success. */
@@ -420,15 +371,6 @@ void product_lrt_arm_hooks(void *uc) {
                           (uint64_t)PC_2E5E60, (uint64_t)PC_2E5E60 + 1ull);
         (void)uc_hook_add((uc_engine *)uc, &h14, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)14,
                           (uint64_t)PC_2E4020, (uint64_t)PC_2E4020 + 1ull);
-        {
-            uc_hook h15 = 0, h16 = 0;
-            (void)uc_hook_add((uc_engine *)uc, &h15, UC_HOOK_CODE, on_lrt_code,
-                              (void *)(intptr_t)15, (uint64_t)PC_30F45C,
-                              (uint64_t)PC_30F45C + 1ull);
-            (void)uc_hook_add((uc_engine *)uc, &h16, UC_HOOK_CODE, on_lrt_code,
-                              (void *)(intptr_t)16, (uint64_t)PC_2D92E4,
-                              (uint64_t)PC_2D92E4 + 1ull);
-        }
     }
     (void)uc_hook_add((uc_engine *)uc, &h8, UC_HOOK_CODE, on_lrt_code, (void *)(intptr_t)8,
                       (uint64_t)PC_2FC418, (uint64_t)PC_2FC418 + 1ull);
@@ -438,19 +380,9 @@ void product_lrt_arm_hooks(void *uc) {
                       (uint64_t)PC_2F6C44, (uint64_t)PC_2F6C44 + 1ull);
     if (g_er_rw) {
         uint64_t a = (uint64_t)g_er_rw + (uint64_t)OFF_B71;
-        uint64_t ui = (uint64_t)g_er_rw + (uint64_t)OFF_UI;
-        uc_hook hui = 0;
         if (uc_hook_add((uc_engine *)uc, &hm, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, a, a) ==
             UC_ERR_OK)
             g_mem_hook_ok = 1;
-        (void)uc_hook_add((uc_engine *)uc, &hui, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, ui,
-                          ui + 3ull);
-        {
-            uint64_t e6 = (uint64_t)g_er_rw + (uint64_t)OFF_E6C;
-            uc_hook he6 = 0;
-            (void)uc_hook_add((uc_engine *)uc, &he6, UC_HOOK_MEM_WRITE, on_lrt_mem_write, NULL, e6,
-                              e6 + 3ull);
-        }
     }
     g_hook_ok = 1;
     printf("[LRT] hooks armed er_rw=0x%X evidence=OBSERVED\n", g_er_rw);

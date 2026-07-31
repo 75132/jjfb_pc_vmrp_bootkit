@@ -1,0 +1,132 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[LOADCODE_CONTRACT] stage=CODE_IMAGE image_base=0x80000 image_size=332116 evidence=OBSERVED
+[ENTRY_TYPE_EVIDENCE] prototype_candidate=int32(int32) note=MR_LOAD_C_FUNCTION_is_image_plus8_not_code_image_second_hop source=DOCUMENTED confidence=med code_image_second_hop_proto=unknown evidence=DOCUMENTED
+[P_ENTRY_LINK] linked=NO evidence=none note=helper_path_only_until_DOCUMENTED_or_CROSS_TARGET
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[CFUNCTION_NEW] stage=ENTER caller_module=unknown caller_offset=0x0 module=unknown r0=0xA4178 r1=0x14 r2=0x0 r3=0x0 p_len=20 p_guest=0x2803E4 sp=0x0 lr=0x0 cpsr=0x0 origin=HOST_BRIDGE evidence=OBSERVED
+[CFUNCTION_NEW] note=p_struct_guest=0x2803E4 len=20 helper_is_input_r0=1
+[CFUNCTION_NEW_SIDE_EFFECT] kind=HOST_GLOBAL_HELPER helper=0xA4178 origin=HOST_BRIDGE evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=GUEST_P_STRUCT p_guest=0x2803E4 p_len=20 note=P_not_helper evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_NEW_SIDE_EFFECT] kind=NO_DSM_DISPATCH_WRITE note=documented_api_does_not_update_module_record_dispatch evidence=DOCUMENTED
+[CFUNCTION_P] stage=ALLOC address=0x2803E4 size=20 helper=0xA4178 caller=HOST_BRIDGE note=mr_c_function_st_doc_size_20 evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[CFUNCTION_P] stage=INIT address=0x2803E4 size=20 helper=0xA4178 note=zeroed_by_new_then_guest_fills_ER_RW evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_FIELD_WRITE] watch_armed base=0x2803E4 len=32 is_chunk=0
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x8 value=0x1 writer_module=unknown writer_offset=0x0 target_class=unknown
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x4 value=0x25D0 writer_module=unknown writer_offset=0x0 target_class=guest_data
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+[CHUNK_RECORD] skip_large_alloc addr=0x2803FC size=9684 note=not_chunk_candidate
+[CONTEXT_FIELD_WRITE] allocation_id=p_or_chunk base=0x2803E4 offset=0x0 value=0x280400 writer_module=unknown writer_offset=0x0 target_class=unknown
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=153845d0
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=profile_alias scope=mrp_member result=HIT
+[EXT_RESOLVE] profile=jjfb-400101-v12-original
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_VIEW_DECODE] member=cfunction.ext stored_size=161178 unpacked_size=253420 result=OK sha_source=robotol.ext
+[MRP_MEMBER_VIEW] installed package=gwy/jjfb.mrp view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=4 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=4 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/dload.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=0_ncode=0_narg=0_narg1=0_nmrpname=gwy/dload.mrp_gwyblink
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=4 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=4 method=1 return=0
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=4 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=4 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=WRONG_HELPER_CALL_MISSING_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=4 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[HELPER_ABI] stage=ROBOTOL_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=4 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+gwy/dload.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN_MISS] guest="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_MISS] requested="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" kind=unresolved
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=MISS handle=0
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 0
+[WARN]font load fail
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/dload.mrp" normalized="mythroad/gwy/dload.mrp" canonical="gwy/dload.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/dload.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/dload.mrp" normalized="mythroad/gwy/dload.mrp" canonical="gwy/dload.mrp" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/gwy/dload.mrp,1) fd is: 1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=78 got=78 eof=0
+[VM_FILE_SEEK] handle=1 pos=335 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=917 got=917 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+mr_get_method(917)
+_mr_readFile reallen:2240
+mr_unzip
+[JJFB_FILEOPEN] requested="mythroad/gwy/dload.mrp" normalized="mythroad/gwy/dload.mrp" canonical="gwy/dload.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\240x320/gwy/dload.mrp" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/dload.mrp" normalized="mythroad/gwy/dload.mrp" canonical="gwy/dload.mrp" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/gwy/dload.mrp,1) fd is: 1
+[VM_FILE_READ] handle=1 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=1 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=1 requested=78 got=78 eof=0
+[VM_FILE_CLOSE] handle=1 result=ok
+[INFO]mr_close(1): ret:0
+read file  "cfunction.ext" err, code=3006
+[DEBUG]mr_exit() called by mythroad!
+[INFO]mr_close(0): ret:-1
+mythroad exit.
+

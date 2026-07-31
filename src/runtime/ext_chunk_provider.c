@@ -2,18 +2,10 @@
 #include "gwy_launcher/ext_er_rw_bind_restore.h"
 #include "gwy_launcher/ext_gwy_shell_native_exec.h"
 #include "gwy_launcher/ext_loader.h"
-#include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
-#include "gwy_launcher/mrp_runtime_stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-/* Provided by gwy_ext_obs (bridge-registered allocator). */
-extern uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **out_host);
-extern uint32_t gwy_ext_obs_c_function_p_slot_va(uint32_t helper, uint32_t lr);
-extern void gwy_ext_obs_note_c_function_p_slot(uint32_t p_guest, uint32_t helper, uint32_t slot,
-                                               uint32_t lr, int wrote);
 
 typedef struct {
     uint32_t helper;
@@ -48,10 +40,6 @@ static struct {
     int contract_emitted;
     uint32_t global_module_generation;
     uint32_t global_p_generation;
-    uint32_t last_published_p;
-    void *last_published_p_host;
-    uint32_t parent_p_sha_before;
-    uint32_t parent_p_sha_after;
 } g_prov;
 
 static int env_is_1(const char *k) {
@@ -190,65 +178,20 @@ static void emit_contract_once(void) {
     fflush(stdout);
 }
 
-static uint32_t fingerprint_p_words(const void *p_host, uint32_t nbytes) {
-    const uint8_t *b = (const uint8_t *)p_host;
-    uint32_t h = 2166136261u;
-    uint32_t i;
-    if (!b || !nbytes) return 0;
-    for (i = 0; i < nbytes; i++) {
-        h ^= b[i];
-        h *= 16777619u;
-    }
-    return h;
-}
-
-static int count_by_p(uint32_t p_guest) {
-    int i, n = 0;
-    if (!p_guest) return 0;
-    for (i = 0; i < g_prov.rec_n; i++) {
-        if (g_prov.recs[i].p_guest == p_guest) n++;
-    }
-    return n;
-}
-
-/*
- * Diagnostic-only: prefer latest ChunkRec for a P VA.
- * Execution paths must use helper/chunk/generation keys — not this.
- */
-static ChunkRec *find_by_p_latest(uint32_t p_guest) {
+static ChunkRec *find_by_p(uint32_t p_guest) {
     int i;
     ChunkRec *best = NULL;
     if (!p_guest) return NULL;
+    /*
+     * Shell continue reuses one guest P VA across packages. After E10A-3.1b
+     * isolation there may be multiple ChunkRecs with the same p_guest — prefer
+     * the latest (gamelist) so set_var / owner_for_p track the active package.
+     */
     for (i = 0; i < g_prov.rec_n; i++) {
         if (g_prov.recs[i].p_guest == p_guest) best = &g_prov.recs[i];
     }
     return best;
 }
-
-/* Unique-P only. Returns NULL if 0 or >1 owners (ambiguous). */
-static ChunkRec *find_by_p_unique(uint32_t p_guest) {
-    int n = count_by_p(p_guest);
-    if (n == 1) return find_by_p_latest(p_guest);
-    if (n > 1) {
-        int i;
-        printf("[P_LOOKUP_AMBIGUOUS] p=0x%X owners=%d note=refuse_latest_for_exec "
-               "evidence=OBSERVED\n",
-               p_guest, n);
-        for (i = 0; i < g_prov.rec_n; i++) {
-            if (g_prov.recs[i].p_guest != p_guest) continue;
-            printf("[P_LOOKUP_CANDIDATE] p=0x%X helper=0x%X chunk=0x%X module=%s gen=%u "
-                   "evidence=OBSERVED\n",
-                   p_guest, g_prov.recs[i].helper, g_prov.recs[i].chunk_guest,
-                   g_prov.recs[i].name[0] ? g_prov.recs[i].name : "?",
-                   g_prov.recs[i].module_generation);
-        }
-        fflush(stdout);
-    }
-    return NULL;
-}
-
-/* Collision probe only — latest is OK to detect "someone already owns this P". */
-static ChunkRec *find_by_p(uint32_t p_guest) { return find_by_p_latest(p_guest); }
 
 static ChunkRec *find_by_helper(uint32_t helper) {
     int i;
@@ -351,52 +294,23 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
         ChunkRec *by_p = find_by_p(p_guest);
         if (by_p && by_p->helper && by_p->helper != helper) {
             /*
-             * P21: guest _mr_c_function_new often reuses the same P VA without a
-             * host-visible mr_free. Snapshot parent P to a fresh VA, retarget the
-             * parent ChunkRec + CFN slot, then let the child keep the requested VA.
+             * Same guest P VA as a prior package helper — do not steal that ChunkRec.
+             * Clear stale start_of_ER_RW / len so entry/guest must publish a new ERW.
              */
-            uint32_t parent_p = by_p->p_guest;
-            void *parent_host = by_p->p_host;
-            void *snap_host = NULL;
-            uint32_t snap_p = 0;
-            uint32_t sha_before = fingerprint_p_words(parent_host, 20u);
-            g_prov.parent_p_sha_before = sha_before;
-            printf("[JJFB_E10A31B] milestone=GAMELIST_P_COLLISION_ISOLATE_NEW_P parent_p=0x%X "
-                   "old_helper=0x%X new_helper=0x%X old_module=%s parent_sha=0x%X "
-                   "note=snapshot_parent_keep_child_va evidence=OBSERVED\n",
-                   parent_p, by_p->helper, helper, by_p->name[0] ? by_p->name : "?", sha_before);
+            uint32_t *words = (uint32_t *)p_host;
+            uint32_t old0 = words[0], old1 = words[1];
+            printf("[JJFB_E10A31B] milestone=GAMELIST_P_COLLISION_NEW_CHUNK_REC P=0x%X "
+                   "old_helper=0x%X new_helper=0x%X old_module=%s old_erw=0x%X old_len=0x%X "
+                   "note=isolate_package_publication evidence=OBSERVED\n",
+                   p_guest, by_p->helper, helper, by_p->name[0] ? by_p->name : "?", old0, old1);
             fflush(stdout);
-            snap_p = gwy_ext_obs_guest_malloc0_ex(20u, &snap_host);
-            if (snap_p && snap_host && parent_host) {
-                uint32_t slot = 0;
-                memcpy(snap_host, parent_host, 20u);
-                by_p->p_guest = snap_p;
-                by_p->p_host = snap_host;
-                printf("[JJFB_RUNTIME_FRAME] isolate_p parent_p=0x%X parent_snap=0x%X "
-                       "child_p=0x%X old_helper=0x%X new_helper=0x%X evidence=OBSERVED\n",
-                       parent_p, snap_p, p_guest, by_p->helper, helper);
-                fflush(stdout);
-                if (uc) {
-                    /* Parent module CFN slot → snapshot (preserve parent ER_RW words). */
-                    slot = gwy_ext_obs_c_function_p_slot_va(by_p->helper, 0);
-                    if (slot &&
-                        guest_memory_uc_poke_u32((struct uc_struct *)uc, slot, snap_p)) {
-                        gwy_ext_obs_note_c_function_p_slot(snap_p, by_p->helper, slot, 0, 1);
-                    }
-                    /* Child keeps requested VA; clear so child publish starts clean. */
-                    memset(parent_host, 0, 20u);
-                }
-                g_prov.parent_p_sha_after = fingerprint_p_words(snap_host, 20u);
-                printf("[PARENT_P_SHA_BEFORE_CHILD] p=0x%X sha=0x%X evidence=OBSERVED\n", snap_p,
-                       g_prov.parent_p_sha_before);
-                printf("[PARENT_P_SHA_AFTER_CHILD] p=0x%X sha=0x%X match=%s evidence=OBSERVED\n",
-                       snap_p, g_prov.parent_p_sha_after,
-                       g_prov.parent_p_sha_before == g_prov.parent_p_sha_after ? "yes" : "no");
-                fflush(stdout);
-            } else {
-                printf("[JJFB_RUNTIME_FRAME] isolate_p_failed parent_p=0x%X note=alloc_failed "
+            if (old0 || old1) {
+                words[0] = 0;
+                words[1] = 0;
+                printf("[JJFB_E10A31B] milestone=GAMELIST_P_ERW_FIELDS_CLEARED P=0x%X "
+                       "cleared_erw=0x%X cleared_len=0x%X note=force_fresh_erw_fill "
                        "evidence=OBSERVED\n",
-                       parent_p);
+                       p_guest, old0, old1);
                 fflush(stdout);
             }
             rec = add_rec();
@@ -460,22 +374,10 @@ static int ensure_and_publish(void *uc, uint32_t helper, uint32_t p_guest, void 
     emit_slots(mn, ch);
     publish_to_p(p_host, p_guest, chunk_guest, reason, mn);
     rec->published = 1;
-    g_prov.last_published_p = p_guest;
-    g_prov.last_published_p_host = p_host;
-    g_prov.last_chunk_guest = chunk_guest;
-    snprintf(g_prov.last_module, sizeof(g_prov.last_module), "%.47s", mn);
 
     /* E10A-3.1b: after isolating a new gamelist ChunkRec, host-publish own ERW. */
     if (mn && strstr(mn, "gamelist")) {
         (void)ext_er_rw_bind_restore_ensure_isolated_erw(p_guest, mn);
-    }
-
-    {
-        MrpRuntimeStack *st = mrp_runtime_stack_global();
-        if (st && mrp_runtime_stack_top(st)) {
-            (void)mrp_runtime_stack_bind_top(st, mid, helper, p_guest, chunk_guest);
-            (void)mrp_runtime_stack_update_top(st, 0, 0, 0, 0, 0, helper);
-        }
     }
 
     if (reg && mid && ch->init_func) {
@@ -588,23 +490,10 @@ int ext_chunk_provider_owner_for_helper(uint32_t helper, ExtChunkOwnerInfo *out)
 }
 
 int ext_chunk_provider_owner_for_p(uint32_t p_guest, ExtChunkOwnerInfo *out) {
-    /* Execution: refuse ambiguous P (multiple ChunkRecs). */
-    ChunkRec *rec = find_by_p_unique(p_guest);
+    ChunkRec *rec = find_by_p(p_guest);
     if (!rec || !out) return 0;
     fill_owner_info(rec, out);
     return 1;
-}
-
-uint32_t ext_chunk_provider_last_published_p(void) { return g_prov.last_published_p; }
-
-int ext_chunk_provider_is_tracked_p(uint32_t p_guest) {
-    return p_guest && count_by_p(p_guest) > 0;
-}
-
-int ext_chunk_provider_parent_p_sha(uint32_t *out_before, uint32_t *out_after) {
-    if (out_before) *out_before = g_prov.parent_p_sha_before;
-    if (out_after) *out_after = g_prov.parent_p_sha_after;
-    return g_prov.parent_p_sha_before != 0;
 }
 
 int ext_chunk_provider_owner_for_erw(uint32_t erw, ExtChunkOwnerInfo *out) {
@@ -740,7 +629,7 @@ const char *ext_chunk_provider_last_module(void) {
 
 int ext_chunk_provider_lookup_p(uint32_t p_guest, void **out_p_host, uint32_t *out_helper,
                                 uint32_t *out_chunk_guest) {
-    ChunkRec *rec = find_by_p_unique(p_guest);
+    ChunkRec *rec = find_by_p(p_guest);
     if (!rec) return 0;
     if (out_p_host) *out_p_host = rec->p_host;
     if (out_helper) *out_helper = rec->helper;
@@ -749,7 +638,7 @@ int ext_chunk_provider_lookup_p(uint32_t p_guest, void **out_p_host, uint32_t *o
 }
 
 int ext_chunk_provider_set_var_fields(uint32_t p_guest, uint32_t var_buf, uint32_t var_len) {
-    ChunkRec *rec = find_by_p_unique(p_guest);
+    ChunkRec *rec = find_by_p(p_guest);
     GwyMrcExtChunk *ch;
     if (!rec || !rec->chunk_host || !var_buf || !var_len) return 0;
     ch = (GwyMrcExtChunk *)rec->chunk_host;
@@ -766,7 +655,7 @@ int ext_chunk_provider_set_var_fields(uint32_t p_guest, uint32_t var_buf, uint32
 }
 
 int ext_chunk_provider_peek_p_er_rw(uint32_t p_guest, uint32_t *out_base, uint32_t *out_len) {
-    ChunkRec *rec = find_by_p_unique(p_guest);
+    ChunkRec *rec = find_by_p(p_guest);
     uint32_t *words;
     if (!rec || !rec->p_host) return 0;
     words = (uint32_t *)rec->p_host;

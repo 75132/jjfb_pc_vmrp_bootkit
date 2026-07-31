@@ -1,0 +1,55 @@
+# E10A-3.1n fail-site annotate 0x2E3FBA
+
+- mrp: `C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480\gwy\gamelist.mrp`
+
+## Role of 0x2E3FBA
+
+- Function entry: `0x2E3F85` (PUSH at 0x2E3F84).
+- Sequence:
+  1. BLX platform/helper (slot)
+  2. optional BLX
+  3. BLX at `0x2E3FB4` → result in r0
+  4. `ADDS r7,r0,#0`; `BNE 0x2E3FC0`
+  5. fallthrough `0x2E3FBA`: **`MVNS r0,r0`** — when r0 was 0, becomes 0xFFFFFFFF
+  6. ADD SP; POP PC — return -1 to caller
+- Therefore 0x2E3FBA is **DIRECT failure construction** after a **zero callee return**,
+  not the shared GPT/gwy/0x355 epilogue at 0x2E5404.
+
+## Disassembly
+
+  0x002E3F84: FFB5          PUSH
+  0x002E3F86: 0D1C          ADDS r5, r1, #0x0
+  0x002E3F88: 2749          LDR r1, [pc, #0x9C] lit=0x2E4028
+  0x002E3F8A: 041C          ADDS r4, r0, #0x0
+  0x002E3F8C: 4944          ADD r1, r9
+  0x002E3F8E: 0968          LDR r1, [r1, #0x0]
+  0x002E3F90: 161C          ADDS r6, r2, #0x0
+  0x002E3F92: 81B0          SUB SP, #0x4
+  0x002E3F94: 8847          BLX r1
+  0x002E3F96: 0090          h0=0x9000
+  0x002E3F98: 2868          LDR r0, [r5, #0x0]
+  0x002E3F9A: 0028          CMP r0, #0x0
+  0x002E3F9C: 05D0          BEQ -> 0x2E3FAA
+  0x002E3F9E: 234B          LDR r3, [pc, #0x8C] lit=0x2E402C
+  0x002E3FA0: 3268          LDR r2, [r6, #0x0]
+  0x002E3FA2: 4B44          ADD r3, r9
+  0x002E3FA4: 1B68          LDR r3, [r3, #0x0]
+  0x002E3FA6: 0021          MOVS r1, #0x0
+  0x002E3FA8: 9847          BLX r3
+  0x002E3FAA: 214A          LDR r2, [pc, #0x84] lit=0x2E4030
+  0x002E3FAC: 0499          LDR r1, [SP, #0x10]
+  0x002E3FAE: 4A44          ADD r2, r9
+  0x002E3FB0: 1268          LDR r2, [r2, #0x0]
+  0x002E3FB2: 201C          ADDS r0, r4, #0x0
+  0x002E3FB4: 9047          BLX r2  <<< BLX whose R0==0 causes fallthrough to MVNS
+  0x002E3FB6: 071C          ADDS r7, r0, #0x0
+  0x002E3FB8: 02D1          BNE -> 0x2E3FC0  <<< BNE skip MVNS if callee nonzero
+  0x002E3FBA: C043          MVNS r0, r0  <<< DIRECT -1: MVNS r0,r0 after zero return (NOT shared epilogue)
+  0x002E3FBC: 05B0          ADD SP, #0x14
+  0x002E3FBE: F0BD          POP PC
+
+## Verdicts (static)
+
+- `METHOD0_2E3FBA_ROLE_IDENTIFIED`
+- `METHOD0_2E3FBA_DIRECT_FAILURE`
+

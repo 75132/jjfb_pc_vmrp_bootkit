@@ -1,0 +1,10 @@
+{
+  "package": "",
+  "logical_package": "",
+  "original_sha256": "",
+  "view_backend": "",
+  "view_reason": "",
+  "modules": [
+    {"module_id":1,"requested":"dsm:cfunction.ext","resolved":"cfunction.ext","origin":"DSM","strategy":"unknown","stored_size":0,"unpacked_size":0,"extracted_size":0,"compression":"raw","state":"REGISTERED","guest_code_base":524288,"guest_code_size":332116,"guest_rw_base":2622464,"guest_rw_size":9680,"start_of_er_rw":2622464,"er_rw_size":9680,"er_rw_source":"LOADER_DOCUMENTED","er_rw_evidence":"DOCUMENTED","available_before_entry":1,"helper_address":672120,"entry_address":524296,"header_entry_candidate":524296,"chunk_field_04":0,"registered_helper":672120,"observed_first_pc":0,"dsm_direct_target":0,"header_evidence":"DOCUMENTED","helper_evidence":"OBSERVED","chunk_field_evidence":"UNKNOWN","relation":"UNKNOWN","direct_target_relation":"UNKNOWN","error_code":0,"fail_stage":"","fail_access":"","fault_pc":0,"fault_module_offset":0,"fault_invalid_address":0,"fault_access_size":0,"fault_method":0,"fault_caller_pc":0,"fault_base_reg_index":0,"fault_base_reg_value":0}
+  ]
+}

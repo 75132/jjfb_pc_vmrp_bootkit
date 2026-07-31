@@ -1,0 +1,13 @@
+run_id,metric,value
+pah_B_20260724_234746,enter_30CBBC,0
+pah_B_20260724_234746,true_enter_2E2520,2
+pah_B_20260724_234746,enter_2DC4D8,0
+pah_B_20260724_234746,store_15D,0
+pah_B_20260724_234746,store_B71,0
+pah_B_20260724_234746,store_15D_pc,0x0
+pah_B_20260724_234746,store_B71_pc,0x0
+pah_B_20260724_234746,15D_writer_grade,candidate_unproven
+pah_B_20260724_234746,B71_writer_grade,candidate_entered_no_dispatch
+pah_B_20260724_234746,watch_events,6
+pah_B_20260724_234746,dispatch_calls,2
+pah_B_20260724_234746,successor_status,POST_DRAIN_SUCCESSOR_BLOCKED

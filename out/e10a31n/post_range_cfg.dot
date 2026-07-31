@@ -1,0 +1,22 @@
+digraph post_range {
+  rankdir=TB;
+  node [shape=box, fontname="Consolas"];
+  gate [label="0x355 range check PASS\nvalue in 1..0x1B2"];
+  call1 [label="0x2E5410 BL 0x2E2FED\nr0=value+1"];
+  chk1 [label="0x2E5416 CMP r0,#0"];
+  epi [label="shared -1 epilogue\n0x2E541E", style=filled, fillcolor="#ffcccc"];
+  copy377 [label="0x2E5440 sms_get\noff=0x377 (dynamic)", style=filled, fillcolor="#ffe0a0"];
+  call2 [label="0x2E5474 BL 0x2E2FED"];
+  call_failfn [label="0x2E5486 BL 0x2E3F85"];
+  blx [label="0x2E3FB4 BLX helper\n(strcmp/memcmp/platform?)"];
+  pred [label="0x2E3FB8 BNE\nif r0!=0 skip", style=filled, fillcolor="#ffe0a0"];
+  mvn [label="0x2E3FBA MVNS r0,r0\n0 -> -1 DIRECT", style=filled, fillcolor="#ff6666"];
+  ok [label="0x2E3FC0 success path", style=filled, fillcolor="#ccffcc"];
+
+  gate -> call1 -> chk1;
+  chk1 -> epi [label="EQ"];
+  chk1 -> copy377 [label="NE"];
+  copy377 -> call2 -> call_failfn -> blx -> pred;
+  pred -> ok [label="NE"];
+  pred -> mvn [label="EQ (r0==0)"];
+}

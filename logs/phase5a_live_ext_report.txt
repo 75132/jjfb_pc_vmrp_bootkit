@@ -1,0 +1,9 @@
+﻿Phase 5A live ext resolve
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+mrc_loader_exact=PASS mrc_loader.ext exact HIT missing
+cfunction_alias=PASS cfunction.ext profile_alias 鈫?robotol.ext missing
+robotol_extracted=PASS robotol EXTRACTED / snapshot missing
+no_code_3006=PASS guest still reports cfunction.ext err 3006
+jjfb_hash=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+dsm_cfunction_present=PASS DSM host cfunction.ext missing
+resource_hash_unchanged=PASS 52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036

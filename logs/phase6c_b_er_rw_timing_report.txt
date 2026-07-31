@@ -1,0 +1,45 @@
+﻿Phase 6C-B ER_RW Producer Timing & First-Entry Ordering
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+er_rw_metadata_timing_gate=blocked
+module_r9_switch_gate=open
+phase6b_b_gate=blocked
+timing_class=BOOTSTRAP_ENTRY_PRECEDES_ER_RW
+entry_identity=BOOTSTRAP_ENTRY
+blocked_outcome=SWITCH_BLOCKED_ENTRY_EXECUTED_WITH_CALLER_R9
+birth_relation=AFTER_ENTRY
+producer_kind=NONE_BEFORE_ENTRY
+fault_path=BOOTSTRAP_CODE
+next_allowed_fix=BOOTSTRAP_ENTRY_R9_CONTRACT
+xt_pattern=PARTIAL
+mode=observe_only
+Q1_producer_kind=NONE_BEFORE_ENTRY
+Q2_er_rw_before_entry=
+no
+Q3_cfunction_load_contract=emitted
+Q4_entry_triggers_er_rw=
+likely_yes
+Q5_entry_identity=BOOTSTRAP_ENTRY
+Q6_blocked_outcome=SWITCH_BLOCKED_ENTRY_EXECUTED_WITH_CALLER_R9
+Q7_effective_r9_after_block=
+0x280400
+Q8_fault_path=BOOTSTRAP_CODE
+Q9_xt_pattern=PARTIAL
+Q10_class=BOOTSTRAP_ENTRY_PRECEDES_ER_RW next_allowed_fix=BOOTSTRAP_ENTRY_R9_CONTRACT
+Q11_observe_only=yes
+Q12_gates=er_rw_metadata_timing_gate=blocked;module_r9_switch_gate=open;phase6b_b_gate=blocked
+jjfb_hash=PASS ok
+er_rw_timeline=PASS ok
+cfunction_load_contract=PASS ok
+r9_switch_blocked_outcome=PASS ok
+entry_executed_with_caller_r9=PASS ok
+entry_not_deferred=PASS ok
+pre_entry_meta=PASS ok
+entry_identity=PASS ok
+er_rw_timing_class=PASS ok
+er_rw_metadata_timing_gate=PASS ok
+module_r9_switch_gate=PASS ok
+phase6b_b_gate=PASS ok
+no_guest_mutation=PASS ok
+switch_not_entry_fail_closed=PASS ok
+xt_wxjwq=PASS ok
+next_fix_gated=PASS ok

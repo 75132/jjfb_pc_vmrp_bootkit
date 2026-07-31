@@ -1,0 +1,13 @@
+{
+  "package": "gwy/jjfb.mrp",
+  "logical_package": "gwy/jjfb.mrp",
+  "original_sha256": "52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036",
+  "view_backend": "generated_member_view",
+  "view_reason": "scoped_member_alias",
+  "modules": [
+    {"module_id":1,"requested":"start.mr","resolved":"start.mr","origin":"MRP_MEMBER","strategy":"exact","stored_size":1514,"unpacked_size":3787,"extracted_size":3787,"compression":"gzip","state":"EXTRACTED","guest_code_base":0,"guest_code_size":0,"guest_rw_base":0,"guest_rw_size":0,"helper_address":0,"entry_address":0,"error_code":0},
+    {"module_id":2,"requested":"mrc_loader.ext","resolved":"mrc_loader.ext","origin":"MRP_MEMBER","strategy":"exact","stored_size":219,"unpacked_size":232,"extracted_size":232,"compression":"gzip","state":"REGISTERED","guest_code_base":2812672,"guest_code_size":320,"guest_rw_base":0,"guest_rw_size":0,"helper_address":2812744,"entry_address":2812744,"error_code":0},
+    {"module_id":3,"requested":"cfunction.ext","resolved":"robotol.ext","origin":"MRP_MEMBER","strategy":"profile_alias","stored_size":161178,"unpacked_size":253420,"extracted_size":253420,"compression":"gzip","state":"REGISTERED","guest_code_base":2985440,"guest_code_size":253504,"guest_rw_base":0,"guest_rw_size":0,"helper_address":3164909,"entry_address":3164909,"error_code":0},
+    {"module_id":4,"requested":"dsm:cfunction.ext","resolved":"cfunction.ext","origin":"DSM","strategy":"unknown","stored_size":0,"unpacked_size":0,"extracted_size":0,"compression":"raw","state":"REGISTERED","guest_code_base":672120,"guest_code_size":1,"guest_rw_base":2622464,"guest_rw_size":9680,"helper_address":672120,"entry_address":672120,"error_code":0}
+  ]
+}

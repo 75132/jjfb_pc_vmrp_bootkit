@@ -1,0 +1,56 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0xC00000
+START_ADDRESS:0x80000, END_ADDRESS:0xE80000
+TOTAL_MEMORY:0xE00000(14680064)
+[JJFB_WINDOW] kind=SDL_software flags=0 zoom=1 size=240x320 note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED
+initMemoryManager: baseAddress:0x280000 len: 0xC00000
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_CFN_P_SLOT] package=? module=? helper=0xA4178 P=0x2803E4 slot=0x80004 lr=0x80034 reason=fixr9_c_function_p_image_plus4 evidence=DOCUMENTED wrote=1
+[JJFB_GAME_P_TIMELINE] package=? module=? event=CFN_P_SLOT_PUBLISH P=0x2803E4 p0=0 p4=0 registry_base=0x0 registry_len=0 slot=0x80004 evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x00000000	R1=0x00000000	 R2=0x000024B8	 R3=0x00000000	N:0
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
+==============================================================
+[JJFB_E10A31] milestone=SHELL_PARAM_POINTER_COPIED note=mr_start_dsm_entry_mapped evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+dsm_gm.mrp
+br_mem_get base=0x282A4C len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[INFO]mr_open(mythroad/dsm_gm.mrp,1) fd is: 0
+read file  "start.mr" err, code=2002
+cannot read start.mr
+exit de is nil!
+init failed
+[INFO]mr_connectWAP(https://github.com/zengming00/vmrp)
+[PLATFORM_TIMER] op=START_DSM_RETURN filename=dsm_gm.mrp ret=-1 evidence=DOCUMENTED
+[JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return reason=no_timer_api_call_seen arm_count=0 evidence=TARGET_OBSERVED
+bridge_dsm_mr_start_dsm('dsm_gm.mrp','start.mr','napptype=0_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0xFFFFFFFF

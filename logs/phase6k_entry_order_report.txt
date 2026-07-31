@@ -1,0 +1,7 @@
+﻿phase=6K
+jjfb_hash=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+entry_hit=yes
+natural_pxc=no
+mid_success=False
+fault_class=ENTRY_OK_BUT_NO_EXTCHUNK
+pack=c:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\packages\JJFB_phase6k_entry_order_pack_20260719_044400.zip

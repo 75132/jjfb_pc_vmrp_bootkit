@@ -1,8 +1,0 @@
-run_id,t_s,frame_file,full_sha,guest_fb_note,drawfp,text_11f00,text_hex,resources,active_jjfbol,notes
-p14_r1,0,frame_000.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,launcher_first_frame,YES,pending,,0,,boot
-p14_r1,5,frame_005.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,same_as_layer1_capture,YES,YES_app7,8F7D51654E2D,2,default2.mrp,text@219,114 after chrome start
-p14_r1,30,frame_030.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,layer1_stable,YES,YES_app7,8F7D51654E2D,5,default2.mrp,res5 complete
-p14_r1,60,frame_060.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,layer1_stable,YES,YES_app7,8F7D51654E2D,5,default2.mrp,stable_after_res5
-p14_r1,120,frame_120.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,layer1_stable,YES,YES_app7,8F7D51654E2D,5,default2.mrp,no_6th_resource
-p14_r1,180,frame_180.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,layer1_stable,YES,YES_app7,8F7D51654E2D,5,default2.mrp,alive_180s
-p14_r2,180,frame_180.bmp,c789a1293e19f663074b70cd31191c9a98a07cb851bd7b262e76857f844bffda,layer1_stable,YES,YES_app7,8F7D51654E2D,5,default2.mrp,rep2_identical_surface

@@ -1,0 +1,154 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0x600000
+START_ADDRESS:0x80000, END_ADDRESS:0x880000
+TOTAL_MEMORY:0x800000(8388608)
+initMemoryManager: baseAddress:0x280000 len: 0x600000
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+-----> r9:@00280400
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x0134640D	R1=0x00000001	 R2=0x002803B4	 R3=0x0000000C	N:1
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x000CF7B0	SP=0x00280000	 LR=0x00090DF8	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=14664518
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay
+[JJFB_VFS] gwy_vm_file bound=1
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=profile_alias scope=mrp_member result=HIT
+[EXT_RESOLVE] profile=jjfb-400101-v12-original
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_VIEW_DECODE] member=cfunction.ext stored_size=161178 unpacked_size=253420 result=OK sha_source=robotol.ext
+[MRP_MEMBER_VIEW] installed package=gwy/jjfb.mrp view=C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=4 code_base=0xA4178 code_size=1 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=4 helper=0xA4178 entry=0xA4178 result=OK
+[MODULE_REGISTRY] module_id=4 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=4 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/jjfb.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+gwy/jjfb.mrp
+br_mem_get base=0x282A54 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+Used by VM(include screen buffer):175832 bytes
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=1951 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1514 got=1514 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1514)
+_mr_readFile reallen:3787
+mr_unzip
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/sdk_key.dat,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=256 got=48 eof=1
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=3488 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=219 got=219 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(219)
+_mr_readFile reallen:232
+mr_unzip
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=2 code_base=0x2AEB00 code_size=320 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[EXT_LOAD] module_id=2 load_id=3 stage=MAPPED code_base=0x2AEB00 code_size=320 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=2 code=[0x2AEB00,0x2AEC40) observe_only=1
+[WARN]mr_cacheSync(0x002AEB00, 320)
+[GUEST_EXT] ext_base=0x2AEB04
+--- ext: @002AEB04
+[EXT_REGISTER] module_id=2 helper=0x2AEB48 entry=0x2AEB48 result=OK
+[MODULE_REGISTRY] module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x2AEB48
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=REGISTERED size=232
+_mr_c_function_new(002AEB48, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @00000000
+[JJFB_FILEOPEN] requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" host="C:\Users\24231\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay/mrp_member_view/jjfb_alias.mrp" ok=1 backend=generated rule=generated
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/jjfb.mrp" normalized="mythroad/gwy/jjfb.mrp" canonical="gwy/jjfb.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/jjfb.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=1694 got=1694 eof=0
+[VM_FILE_SEEK] handle=2 pos=231624 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=161178 got=161178 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(161178)
+_mr_readFile reallen:253420
+mr_unzip
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=3 code_base=0x2D8DE0 code_size=253504 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 result=OK
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=MAPPED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[EXT_LOAD] module_id=3 load_id=4 stage=MAPPED code_base=0x2D8DE0 code_size=253504 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=3 code=[0x2D8DE0,0x316C20) observe_only=1
+[WARN]mr_cacheSync(0x002D8DE0, 253504)
+[GUEST_EXT] ext_base=0x2D8DF4
+--- ext: @002D8DF4
+[EXT_REGISTER] module_id=3 helper=0x304AED entry=0x304AED result=OK
+[MODULE_REGISTRY] module_id=3 requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER strategy=profile_alias state=REGISTERED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x304AED
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext origin=MRP_MEMBER stage=REGISTERED size=253420
+_mr_c_function_new(00304AED, 20)  mr_c_function_P:002AC8DC
+--- r9: mr_c_function_P.start_of_ER_RW = @002B1858
+>>> Tracing mem_invalid mem_type:UC_MEM_READ_UNMAPPED at 0x28, size:0x4, value:0x0
+==========================REG=================================
+ R0=0x00000000	R1=0x00000064	 R2=0x00000000	 R3=0x002AC8DC	N:0
+ R4=0x00000001	R5=0x00000064	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x002B1858	R10=0x00000040	R11=0x002AD95C	C:0
+R12=0x00000000	SP=0x0027FD28	 LR=0x002D9913	 PC=0x00304580	V:0
+==============================================================
+Failed on uc_emu_start() with error returned: 6 (Invalid memory read (UC_ERR_READ_UNMAPPED))

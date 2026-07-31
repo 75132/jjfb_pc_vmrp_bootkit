@@ -1,5 +1,0 @@
-{"run_id":"mg_spacetime_20260728_014827","timestamp":1785174508,"pid":28976,"milestone":"runtime_spawned","source":"vmrp","details":"startVmrp"}
-{"run_id":"mg_spacetime_20260728_014827","timestamp":1785174510,"pid":28976,"milestone":"platform_strcpy_import","source":"strcpy","details":"0xAC300"}
-{"run_id":"mg_spacetime_20260728_014827","timestamp":1785174510,"pid":28976,"milestone":"platform_strlen_import","source":"strlen","details":"0xAC374"}
-{"run_id":"mg_spacetime_20260728_014827","timestamp":1785174510,"pid":28976,"milestone":"platform_memcpy_dsm","source":"memcpy","details":"0x94E94"}
-{"run_id":"mg_spacetime_20260728_014827","timestamp":1785174513,"pid":28976,"milestone":"platform_strcmp_import","source":"strcmp","details":"0xAC2D0"}

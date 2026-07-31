@@ -1,0 +1,81 @@
+# E10A-3.1o cfunction helpers: 0xAC374=strlen, 0xAC4A4=strstr
+
+## Live call (method0 failfn 0x2E3F85)
+
+| PC | target | r0 | r1 | role |
+|----|--------|----|----|------|
+| 0x2E3F94 | 0xAC374 | haystack buf | (fn) | strlen(haystack) |
+| 0x2E3FB4 | 0xAC4A4 | haystack buf | needle="napptype" | strstr; NULL→MVNS -1 |
+
+## 0xAC374 — strlen
+
+```
+  0x000AC374: E1A01000  MOV r1, r0
+  0x000AC378: E5D12000  .word 0xE5D12000
+  0x000AC37C: E3520000  CMP r2, #0x0
+  0x000AC380: 12811001  ADDNE r1, r1, #0x1
+  0x000AC384: 1AFFFFFB  BNE 0xAC378
+  0x000AC388: E0410000  SUB r0, r1, r0
+  0x000AC38C: E12FFF1E  BX r14
+```
+
+Returns end-start (C string length).
+
+## 0xAC4A4 — strstr(haystack=r0, needle=r1)
+
+```
+  0x000AC4A4: E92D4070  STMFD sp!, {0x4070}
+  0x000AC4A8: E1A02001  MOV r2, r1
+  0x000AC4AC: E5D23000  .word 0xE5D23000
+  0x000AC4B0: E3530000  CMP r3, #0x0
+  0x000AC4B4: 12822001  ADDNE r2, r2, #0x1
+  0x000AC4B8: 1AFFFFFB  BNE 0xAC4AC
+  0x000AC4BC: E0526001  .word 0xE0526001
+  0x000AC4C0: 08BD8070  .word 0x08BD8070
+  0x000AC4C4: E1A02000  MOV r2, r0
+  0x000AC4C8: E5D23000  .word 0xE5D23000
+  0x000AC4CC: E3530000  CMP r3, #0x0
+  0x000AC4D0: 12822001  ADDNE r2, r2, #0x1
+  0x000AC4D4: 1AFFFFFB  BNE 0xAC4C8
+  0x000AC4D8: E042E000  SUB r14, r2, r0
+  0x000AC4DC: E15E0006  CMP r14, r6
+  0x000AC4E0: 3A000013  BCC 0xAC534
+  0x000AC4E4: E24EE001  SUB r14, r14, #0x1
+  0x000AC4E8: E1A02006  MOV r2, r6
+  0x000AC4EC: E3A04000  MOV r4, #0x0
+  0x000AC4F0: E1A03000  MOV r3, r0
+  0x000AC4F4: E1A0C001  MOV r12, r1
+  0x000AC4F8: E3560000  CMP r6, #0x0
+  0x000AC4FC: 9A000007  BLS 0xAC520
+  0x000AC500: E5D34000  .word 0xE5D34000
+  0x000AC504: E5DC5000  .word 0xE5DC5000
+  0x000AC508: E0544005  .word 0xE0544005
+  0x000AC50C: 1A000003  BNE 0xAC520
+  0x000AC510: E2833001  ADD r3, r3, #0x1
+  0x000AC514: E28CC001  ADD r12, r12, #0x1
+  0x000AC518: E2522001  .word 0xE2522001
+  0x000AC51C: 1AFFFFF7  BNE 0xAC500
+  0x000AC520: E3540000  CMP r4, #0x0
+  0x000AC524: 08BD8070  .word 0x08BD8070
+  0x000AC528: E2800001  ADD r0, r0, #0x1
+  0x000AC52C: E15E0006  CMP r14, r6
+  0x000AC530: 2AFFFFEB  BCS 0xAC4E4
+  0x000AC534: E3A00000  MOV r0, #0x0
+  0x000AC538: E8BD8070  LDMFD sp!, {0x8070}
+```
+
+Returns pointer to first match, or 0 if needle longer than haystack / not found.
+
+## Failfn contract
+
+1. strlen(buf)
+2. strstr(buf, key) — key from caller r3 (first call: "napptype")
+3. NULL → MVNS → return -1
+4. else skip key + one char (`=`), take value until `_`, return 0
+
+## SMSCFG pairing
+
+- `@0x355` int16_le = copy length for field at `@0x377`
+- `@0x377` = C-string haystack (must contain `napptype=<val>`)
+- Compat int16=1 only copies 1 byte → empty/NUL haystack → strstr fails
+

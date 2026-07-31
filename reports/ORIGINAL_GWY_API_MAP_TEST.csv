@@ -1,2 +1,0 @@
-api_name,function_pointer,wrapper_pointer,string_va,context,owner_module,R9,generation,kind,registered
-lib.startGame,0x30D001,0x0,0x3223D4,0x0,gbrwcore.ext,0x1000,1,entry,1

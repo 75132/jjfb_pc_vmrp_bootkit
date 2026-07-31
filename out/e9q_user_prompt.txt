@@ -1,0 +1,209 @@
+<timestamp>Tuesday, Jul 21, 2026, 12:35 AM (UTC+8)</timestamp>
+<user_query>
+确认，E9P 可以收口：**文字黑底已经不是问题了**。报告里明确是 `PLATFORM_TEXT_TRANSPARENT_RENDERED`，`0x11F00` 仍使用 guest 传入的字符串、坐标和颜色，没有走 E9N textshim；`guiDrawBitmapSpriteKey` 只写非 key 像素，loading UI / progress 仍保留。([GitHub][1])
+
+现在进入 **E9Q：把 measure `0x12340` 从 E9M shim 升级为正式平台 text-measure API**。这一步做完后，`FAST_TEXT_MEASURE_SHIM` 就可以退出主路径。
+
+直接发 Cursor：
+
+```text
+E9P complete. Verdict PLATFORM_TEXT_TRANSPARENT_RENDERED accepted.
+Still NOT product success.
+
+Current stable visible UI:
+- loadingbar visible
+- progress segments visible
+- "请稍候" visible
+- transparent text background works
+- no E9N diagnostic textshim
+- platform 0x11F00 is now normal runtime compatibility API
+- guiDrawBitmapSpriteKey skips key color and preserves splash background
+
+Remaining assists:
+- measure shim 0x12340
+- TEXTCTX 818/81C assist
+- BD0 assist
+- DisplayFirst/state/C9D assists
+
+Start Stage E9Q: formal platform text-measure API 0x12340.
+
+Primary goal:
+Replace FAST_TEXT_MEASURE_SHIM with a normal runtime platform text-measure implementation, consistent with 0x11F00 text draw.
+
+Non-negotiable:
+- no fake UI
+- no hardcoded text
+- no hardcoded width/height for "请稍候"
+- no host-side text drawing outside 0x11F00
+- no MRP/EXT edits
+- no request rewrite
+- no REAL_MRP_MEMBER_BRIDGE success path
+- measurement must use the guest string and font metrics
+- output must match the ABI expected by robotol/game code
+
+Known:
+- Bad E9L value came from platform measure 0x304558(code=0x12340).
+- The broken helper wrote garbage height_out around 3202555.
+- E9M shim wrote w=36 h=16.
+- Caller then used valid layout:
+  r1/x = 0x70
+  r2/y = 0x105
+- E9O/E9P text draw uses Microsoft YaHei successfully.
+- E9P transparent draw is visually correct.
+
+Task 1: Formalize 0x12340 ABI.
+
+Instrument calls to 0x304558 where platform code == 0x12340.
+
+For every call, log:
+- caller PC/LR
+- R0-R3
+- SP args
+- input string pointer
+- raw string bytes
+- decoded string
+- output pointer(s)
+- width_out address
+- height_out address
+- old width/height values
+- new width/height values
+- return value expected by caller
+- whether caller reads width, height, or both
+- whether caller treats output as signed or unsigned
+
+Write:
+reports/e9q_platform_12340_measure_calls.csv
+
+Task 2: Implement normal platform text measure.
+
+Add:
+JJFB_PLATFORM_TEXT_MEASURE_12340=1
+
+Behavior:
+- active as normal runtime compatibility, not E9-only shim
+- decode guest string using same encoding path as 0x11F00
+- use the same font family/size as 0x11F00 draw path
+- compute measured width/height using real font metrics
+- write results to the guest output pointers expected by 0x304558(code=0x12340)
+- return MR_SUCCESS-compatible value
+- log:
+  [JJFB_PLATFORM_TEXT_MEASURE_12340] text=... w=... h=... ret=...
+
+Do not:
+- hardcode "请稍候"
+- hardcode w=36 h=16
+- ignore output pointer ABI
+- leave old garbage values in output slots
+
+Task 3: Remove FAST_TEXT_MEASURE_SHIM from success path.
+
+Add run mode:
+RUN_E9Q_TEXT_MEASURE_API.ps1
+
+Modes:
+- -Mode trace
+  no measure API, only log calls and prove old failure
+- -Mode api
+  enable JJFB_PLATFORM_TEXT_MEASURE_12340
+- -Mode compare
+  compare old E9M shim vs new platform API
+
+Success mode must use:
+JJFB_PLATFORM_TEXT_MEASURE_12340=1
+
+Success mode must not use:
+JJFB_FAST_TEXT_MEASURE_SHIM=1
+
+Task 4: Verify layout and visible result.
+
+Run the full splash text path with:
+- BD0 assist still allowed
+- TEXTCTX assist still allowed
+- 0x11F00 platform text API enabled
+- transparent text enabled
+- 0x12340 platform measure API enabled
+- no FAST_TEXT_MEASURE_SHIM
+
+Verify:
+- 0x305E78 returns valid measurement
+- 0x2F2174 runs
+- 0x305BFC receives valid args
+- r1/x is sane, ideally around 0..240
+- r2/y is sane, around 0..320
+- 0x305C3C reaches 0x2F2360
+- 0x11F00 renders text
+- HWND screenshot shows loadingbar + progress + transparent "请稍候"
+
+Save:
+screenshots/e9q_text_measure_api_window.png
+screenshots/e9q_actual_window_capture.png
+
+Task 5: Use same font metrics for measure and draw.
+
+The measure API and draw API must agree.
+
+Log:
+- font name
+- font size
+- fallback status
+- measured width/height
+- actual rendered bounding box if available
+- difference between measured and rendered width/height
+
+If mismatch is large:
+- adjust font metric extraction
+- do not hardcode one string
+
+Task 6: Regression checks.
+
+Ensure E9P visual transparency is preserved:
+- no black rectangle behind text
+- loadingbar/progress remain visible
+- only glyph pixels are modified
+- transparent background still works
+
+Task 7: Verdict options.
+
+Use one of:
+PLATFORM_TEXT_MEASURE_12340_RENDERED
+PLATFORM_TEXT_MEASURE_12340_RENDERED_WITH_FONT_FALLBACK
+PLATFORM_TEXT_MEASURE_12340_ABI_WRONG
+PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_ENCODING
+PLATFORM_TEXT_MEASURE_12340_BLOCKED_BY_OUTPUT_POINTER
+TEXT_MEASURE_SHIM_REMOVED_SUCCESSFULLY
+TEXT_MEASURE_API_REGRESSED
+PRODUCT_STILL_NEEDS_TEXTCTX_NATURALIZATION
+
+Artifacts:
+- reports/stage_e9q_text_measure_api_verdict.md
+- reports/e9q_platform_12340_measure_calls.csv
+- reports/e9q_measure_vs_draw_metrics.csv
+- screenshots/e9q_text_measure_api_window.png
+- screenshots/e9q_actual_window_capture.png
+- logs/e9q_text_measure_api_stdout.txt
+
+Speed:
+- default max 90s
+- max 3 cases
+- no full matrix
+- stop after first visible text screenshot
+- every case prints:
+  == E9Q_CASE_DONE name=<case> verdict=<verdict> elapsed=<seconds>
+
+Forbidden:
+- no fake UI
+- no hardcoded text
+- no hardcoded "请稍候" measurement
+- no invented pixels
+- no MRP/EXT edits
+- no request rewrite
+- no REAL_MRP_MEMBER_BRIDGE success
+- no direct framebuffer paint outside platform text/draw APIs
+- no long full matrix
+```
+
+一句话：**E9P 修的是“文字怎么画”；E9Q 修的是“文字画之前怎么量”。把 `0x12340` 正式做成平台测量 API 后，就能去掉 E9M 的 measure shim。**
+
+[1]: https://raw.githubusercontent.com/75132/jjfb_pc_vmrp_bootkit/main/reports/stage_e9p_text_transparency_verdict.md "raw.githubusercontent.com"
+
+</user_query>

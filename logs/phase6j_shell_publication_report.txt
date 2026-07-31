@@ -1,0 +1,12 @@
+﻿Phase 6J Shell Publication Routine Audit
+jjfb_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036
+mode=gwy_guest_native_runapp+JJFB_PUBLICATION_AUDIT
+targets=gbrwcore+jjfb,gbrwcore+wxjwq
+jjfb_hash=PASS ok
+launch_banner=PASS ok
+publication_audit=PASS ok
+no_host_equivalent=PASS ok
+shell_guest_pc=PASS ok
+extchunk_fault_or_summary=PASS ok
+wrote_048_missing_c=PASS ok
+verdict=B

@@ -1,4 +1,5 @@
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/p22_selection_gates.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -102,6 +103,7 @@ LauncherStatus guest_memory_write(VmRuntime *rt,
                            uc_strerror(uerr));
         return L_ERR_GUEST_FAULT;
     }
+    if (p22_enabled()) p22_note_host_mem_write(guest_address, (uint32_t)size, buffer);
     return L_OK;
 }
 
@@ -161,6 +163,7 @@ int guest_memory_uc_poke(struct uc_struct *uc, uint32_t guest_address, const voi
                          size_t size) {
     if (!uc || !buffer || size == 0) return 0;
     if (uc_mem_write((uc_engine *)uc, guest_address, buffer, size) != UC_ERR_OK) return 0;
+    if (p22_enabled()) p22_note_host_mem_write(guest_address, (uint32_t)size, buffer);
     return 1;
 }
 
