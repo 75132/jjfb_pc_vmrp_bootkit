@@ -53,6 +53,7 @@
 #include "gwy_launcher/product_p4_progress.h"
 #include "gwy_launcher/product_p5_event_advance.h"
 #include "gwy_launcher/product_first_frame_push.h"
+#include "gwy_launcher/product_p11_case9_trace.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
@@ -1216,6 +1217,7 @@ static int gwy_ext_obs_note_family_event(uint32_t event_code, uint32_t app) {
            event_code, app, target->handler, (unsigned long long)slot->request_id,
            slot->owner_module);
     fflush(stdout);
+    product_p11_on_family_request(slot->request_id, event_code, app, target->handler, pc, lr);
     return 1;
 }
 
@@ -1344,6 +1346,9 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                                         abi.r3, r9_run);
         }
 
+        product_p11_case9_deliver_begin(uc, ev->request_id, ev->event_code, ev->app, ev->handler,
+                                        abi.r0, abi.r1, abi.r2, abi.r3, r9_run, stop);
+
         /* Path-A 0x30D2F9 must finish list insert; nested timer FIRE aborts that
          * (observed: PATH_A_ENQUEUE_BEGIN then POLL_WAIT/FIRE, no DELIVER_DONE, head=0). */
         if (ev->enqueue_mode) g_suppress_timer_poll = 1;
@@ -1355,6 +1360,8 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
                                           gwy_lifecycle_insn_limit(), &abi, &out);
         g_in_family_entry = 0;
         g_suppress_timer_poll = 0;
+        product_p11_case9_deliver_end(uc, ev->request_id, ok, (unsigned)out.uc_err, out.pc_after,
+                                      (int32_t)out.r0_after);
         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 
         if (product_ffp_enabled()) {
@@ -2020,6 +2027,17 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                     result.name ? result.name : "sendAppEvent");
             } else {
                 (void)platform_handler_registry_register(r0, result.reg_family, result.reg_handler);
+            }
+            if (r0 == 0x10102u) {
+                uint32_t erw = 0, cbase = 0, csize = 0;
+                if (owner) {
+                    erw = owner->data.start_of_er_rw;
+                    cbase = owner->map.guest_code_base;
+                    csize = owner->map.guest_code_size;
+                }
+                product_p11_on_10102_register(uc, result.reg_family, result.reg_handler, caller_pc,
+                                              lr, (int32_t)ret, oname, owner ? owner->module_id : 0,
+                                              gen, erw, cbase, csize);
             }
             robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
             if (owner && oname && strstr(oname, "robotol"))
@@ -3019,6 +3037,7 @@ void gwy_ext_obs_mem_fault(void *uc,
         return;
     }
     p22_note_fetch_fault(pc, (uint32_t)address, lr, sp, r9);
+    product_p11_on_mem_fault(uc, access_type, address, size, value);
     product_callback_trace_on_mem_fault(pc, (uint32_t)address, size,
                                         (access_type & 2) ? 1 : 0, (access_type & 4) ? 1 : 0);
     e10a31a_runtime_set_stop("mem_fault", "UNICORN_FAULT_BEFORE_CONTINUATION", uc, 0, 0, 0, 0, 0,

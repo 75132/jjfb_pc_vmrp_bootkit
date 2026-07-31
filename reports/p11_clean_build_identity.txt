@@ -1,0 +1,15 @@
+﻿clean_commit=568ed0f1548525ee83bbf8b13d7de7d33446a747
+source_commit=568ed0f1548525ee83bbf8b13d7de7d33446a747
+source_tree_clean=False
+build_time_utc=2026-07-31T20:39:11.7176247Z
+main_exe_sha256=386f009967e64eed2a3f04d6584dd6a255268a69630503fd4b8346d0d746371f
+JJFB_Launcher_exe_sha256=74a8ec83819c1197d09f995f214414c8987a2755469934d7297bdcf2898dabbe
+gwy_launcher_exe_sha256=d50f89fbf65090ce8563af67f74c1fda71634b3a344405d12d28ad008dd1d229
+compiler=gcc-16.1.0
+build_commands=RUN_BUILD.ps1 -BuildDir build-i686; RUN_BUILD_VMRP.ps1 -Mode Gwy
+git_status_porcelain_source= M CMakeLists.txt;  M src/runtime/gwy_ext_obs.c;  M third_party/vmrp_upstream/bin/main_gwy.exe; ?? include/gwy_launcher/product_p11_case9_trace.h; ?? src/runtime/product_p11_case9_trace.c
+product_default_return_mode=direct_lr
+product_ffp_apply_abi=0
+JJFB_PRODUCT_EVENT_CONTRACT=0
+JJFB_FAMILY_4F_FOR_E6C=0
+run_id=p11_20260801_043903_31840

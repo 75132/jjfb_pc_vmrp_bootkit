@@ -1,0 +1,83 @@
+# Runtime Thumb disasm base=0x2D95C0 len=160 file=p11_runtime_fault_2d95c0_2d9660.bin
+
+0x002D95C0: 50 14        1450  .thumb
+0x002D95C2: 00 00        0000  .thumb
+0x002D95C4: 4C 14        144C  .thumb
+0x002D95C6: 00 00        0000  .thumb
+0x002D95C8: 2E A0        A02E  .thumb
+0x002D95CA: 03 00        0003  .thumb
+0x002D95CC: 20 08        0820  .thumb
+0x002D95CE: 00 00        0000  .thumb
+0x002D95D0: 14 09        0914  .thumb
+0x002D95D2: 00 00        0000  .thumb
+0x002D95D4: DD 07        07DD  .thumb
+0x002D95D6: 00 00        0000  .thumb
+0x002D95D8: FA 9F        9FFA  LDR R7, [SP, #0x3E8]
+0x002D95DA: 03 00        0003  .thumb
+0x002D95DC: F6 9F        9FF6  LDR R7, [SP, #0x3D8]
+0x002D95DE: 03 00        0003  .thumb
+0x002D95E0: 94 9F        9F94  LDR R7, [SP, #0x250]
+0x002D95E2: 03 00        0003  .thumb
+0x002D95E4: 8A 9F        9F8A  LDR R7, [SP, #0x228]
+0x002D95E6: 03 00        0003  .thumb
+0x002D95E8: 5E 9F        9F5E  LDR R7, [SP, #0x178]
+0x002D95EA: 03 00        0003  .thumb
+0x002D95EC: 2C 9F        9F2C  LDR R7, [SP, #0xB0]
+0x002D95EE: 03 00        0003  .thumb
+0x002D95F0: 1E 9F        9F1E  LDR R7, [SP, #0x78]
+0x002D95F2: 03 00        0003  .thumb
+0x002D95F4: F0 9E        9EF0  LDR R6, [SP, #0x3C0]
+0x002D95F6: 03 00        0003  .thumb
+0x002D95F8: D4 9E        9ED4  LDR R6, [SP, #0x350]
+0x002D95FA: 03 00        0003  .thumb
+0x002D95FC: BE 9E        9EBE  LDR R6, [SP, #0x2F8]
+0x002D95FE: 03 00        0003  .thumb
+0x002D9600: AC 9E        9EAC  LDR R6, [SP, #0x2B0]
+0x002D9602: 03 00        0003  .thumb
+0x002D9604: E8 07        07E8  .thumb
+0x002D9606: 00 00        0000  .thumb
+0x002D9608: 34 01        0134  .thumb
+0x002D960A: 01 00        0001  .thumb
+0x002D960C: 20 14        1420  .thumb
+0x002D960E: 00 00        0000  .thumb <<<
+0x002D9610: 30 B5        B530  PUSH {130}
+0x002D9612: 83 B0        B083  SUB SP, #0xC
+0x002D9614: 04 1C        1C04  .thumb
+0x002D9616: 02 D1        D102  Bcond -> 0x2D961E
+0x002D9618: 20 1C        1C20  .thumb
+0x002D961A: 03 B0        B003  ADD SP, #0xC
+0x002D961C: 30 BD        BD30  POP {130}
+0x002D961E: 63 68        6863  LDR R3, [R4, #0x4]
+0x002D9620: 00 2B        2B00  CMP R3, #0x0
+0x002D9622: 12 D0        D012  Bcond -> 0x2D964A
+0x002D9624: 20 7C        7C20  .thumb
+0x002D9626: 00 25        2500  MOVS R5, #0x0
+0x002D9628: 00 28        2800  CMP R0, #0x0
+0x002D962A: 03 D1        D103  Bcond -> 0x2D9634
+0x002D962C: 18 1C        1C18  .thumb
+0x002D962E: 2A F0 E1 FF  F02A FFE1  BL 0x3045F5
+0x002D9632: 09 E0        E009  B -> 0x2D9648
+0x002D9634: 00 21        2100  MOVS R1, #0x0
+0x002D9636: 00 91        9100  STR R1, [SP, #0x0]
+0x002D9638: 01 91        9101  STR R1, [SP, #0x4]
+0x002D963A: 00 22        2200  MOVS R2, #0x0
+0x002D963C: 19 1C        1C19  .thumb
+0x002D963E: 2B 1C        1C2B  .thumb
+0x002D9640: 02 92        9202  STR R2, [SP, #0x8]
+0x002D9642: 04 48        4804  .thumb
+0x002D9644: 2A F0 90 FF  F02A FF90  BL 0x304569
+0x002D9648: 65 60        6065  STR R5, [R4, #0x4]
+0x002D964A: 20 1C        1C20  .thumb
+0x002D964C: 2C F0 E4 FB  F02C FBE4  BL 0x305E19
+0x002D9650: 00 20        2000  MOVS R0, #0x0
+0x002D9652: E2 E7        E7E2  B -> 0x2D961A
+0x002D9654: 33 01        0133  .thumb
+0x002D9656: 01 00        0001  .thumb
+0x002D9658: F0 B5        B5F0  PUSH {1F0}
+0x002D965A: 83 B0        B083  SUB SP, #0xC
+0x002D965C: 07 1C        1C07  .thumb
+0x002D965E: 0E 1C        1C0E  .thumb
+
+# Focus 0x2D960E
+0x2D960E: 00 00  0000  .thumb
+# Role of nearby 0x1E205 must be confirmed by dynamic slice / fault ring.

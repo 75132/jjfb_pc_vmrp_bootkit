@@ -1,0 +1,251 @@
+# Runtime Thumb disasm base=0x30D280 len=512 file=p11_runtime_case9_30d280_30d480.bin
+
+0x0030D280: 00 28        2800  CMP R0, #0x0
+0x0030D282: 0B DD        DD0B  Bcond -> 0x30D29C
+0x0030D284: 01 38        3801  .thumb
+0x0030D286: C8 66        66C8  STR R0, [R1, #0x6C]
+0x0030D288: 00 2A        2A00  CMP R2, #0x0
+0x0030D28A: 00 DC        DC00  Bcond -> 0x30D28E
+0x0030D28C: CB 66        66CB  STR R3, [R1, #0x6C]
+0x0030D28E: 1A 49        491A  .thumb
+0x0030D290: 01 20        2001  MOVS R0, #0x1
+0x0030D292: 49 44        4449  ADD R1, R9
+0x0030D294: 08 70        7008  .thumb
+0x0030D296: 00 20        2000  MOVS R0, #0x0
+0x0030D298: 05 B0        B005  ADD SP, #0x14
+0x0030D29A: F0 BD        BDF0  POP {1F0}
+0x0030D29C: 15 48        4815  .thumb
+0x0030D29E: CB 72        72CB  .thumb
+0x0030D2A0: 48 44        4448  ADD R0, R9
+0x0030D2A2: 80 30        3080  .thumb
+0x0030D2A4: 00 6F        6F00  LDR R0, [R0, #0x70]
+0x0030D2A6: F8 F7 B5 F9  F7F8 F9B5  BL 0x305615
+0x0030D2AA: 00 22        2200  MOVS R2, #0x0
+0x0030D2AC: 00 21        2100  MOVS R1, #0x0
+0x0030D2AE: 01 91        9101  STR R1, [SP, #0x4]
+0x0030D2B0: 02 92        9202  STR R2, [SP, #0x8]
+0x0030D2B2: 02 23        2302  MOVS R3, #0x2
+0x0030D2B4: 21 1C        1C21  .thumb
+0x0030D2B6: 04 AA        AA04  .thumb
+0x0030D2B8: 00 95        9500  STR R5, [SP, #0x0]
+0x0030D2BA: 10 48        4810  .thumb
+0x0030D2BC: F7 F7 54 F9  F7F7 F954  BL 0x304569
+0x0030D2C0: 05 1C        1C05  .thumb
+0x0030D2C2: 31 1A        1A31  .thumb
+0x0030D2C4: 0E 4A        4A0E  .thumb
+0x0030D2C6: 20 18        1820  .thumb
+0x0030D2C8: 03 AF        AF03  .thumb
+0x0030D2CA: 3B 1C        1C3B  .thumb
+0x0030D2CC: 7A 44        447A  ADD R2, R15
+0x0030D2CE: 03 F0 BD FE  F003 FEBD  BL 0x31104D
+0x0030D2D2: 45 19        1945  .thumb
+0x0030D2D4: 0B 4A        4A0B  .thumb
+0x0030D2D6: 71 1B        1B71  .thumb
+0x0030D2D8: 60 19        1960  .thumb
+0x0030D2DA: 3B 1C        1C3B  .thumb
+0x0030D2DC: 7A 44        447A  ADD R2, R15
+0x0030D2DE: 03 F0 B5 FE  F003 FEB5  BL 0x31104D
+0x0030D2E2: 40 19        1940  .thumb
+0x0030D2E4: 20 18        1820  .thumb
+0x0030D2E6: 03 99        9903  LDR R1, [SP, #0xC]
+0x0030D2E8: D7 F7 48 FD  F7D7 FD48  BL 0x2E4D7D
+0x0030D2EC: 00 20        2000  MOVS R0, #0x0
+0x0030D2EE: D3 E7        E7D3  B -> 0x30D298
+0x0030D2F0: E8 0F        0FE8  .thumb
+0x0030D2F2: 00 00        0000  .thumb
+0x0030D2F4: D8 07        07D8  .thumb
+0x0030D2F6: 00 00        0000  .thumb
+0x0030D2F8: 7D 0B        0B7D  .thumb
+0x0030D2FA: 00 00        0000  .thumb
+0x0030D2FC: AB 01        01AB  .thumb
+0x0030D2FE: 01 00        0001  .thumb
+0x0030D300: 60 67        6760  STR R0, [R4, #0x74]
+0x0030D302: 00 00        0000  .thumb
+0x0030D304: 4C 67        674C  STR R4, [R1, #0x74]
+0x0030D306: 00 00        0000  .thumb
+0x0030D308: 08 B5        B508  PUSH {108}
+0x0030D30A: FF F7 A7 FF  F7FF FFA7  BL 0x30D25D
+0x0030D30E: 08 BD        BD08  POP {108}
+0x0030D310: 70 B5        B570  PUSH {170}
+0x0030D312: 0C 1C        1C0C  .thumb
+0x0030D314: 19 1C        1C19  .thumb
+0x0030D316: FF 23        23FF  MOVS R3, #0xFF
+0x0030D318: 84 B0        B084  SUB SP, #0x10
+0x0030D31A: 15 1C        1C15  .thumb
+0x0030D31C: 58 33        3358  .thumb
+0x0030D31E: 98 42        4298  CMP R0, R3
+0x0030D320: 09 9A        9A09  LDR R2, [SP, #0x24]
+0x0030D322: 08 9E        9E08  LDR R6, [SP, #0x20]
+0x0030D324: 04 D2        D204  Bcond -> 0x30D330
+0x0030D326: 03 A3        A303  .thumb
+0x0030D328: 1B 18        181B  .thumb
+0x0030D32A: 1B 5A        5A1B  .thumb
+0x0030D32C: 5B 00        005B  .thumb
+0x0030D32E: 9F 44        449F  ADD R15, R3
+0x0030D330: 01 F0 E4 F8  F001 F8E4  BL 0x30E4FD
+0x0030D334: 04 07        0704  .thumb
+0x0030D336: 10 07        0710  .thumb
+0x0030D338: 1E 07        071E  .thumb
+0x0030D33A: 22 07        0722  .thumb
+0x0030D33C: 26 07        0726  .thumb
+0x0030D33E: 2B 07        072B  .thumb
+0x0030D340: 32 07        0732  .thumb
+0x0030D342: 36 07        0736  .thumb
+0x0030D344: 3A 07        073A  .thumb
+0x0030D346: 3E 07        073E  .thumb
+0x0030D348: 43 07        0743  .thumb
+0x0030D34A: 48 07        0748  .thumb
+0x0030D34C: 4E 07        074E  .thumb
+0x0030D34E: 52 07        0752  .thumb
+0x0030D350: 58 07        0758  .thumb
+0x0030D352: 5C 07        075C  .thumb
+0x0030D354: 60 07        0760  .thumb
+0x0030D356: 65 07        0765  .thumb
+0x0030D358: 6A 07        076A  .thumb
+0x0030D35A: 6F 07        076F  .thumb
+0x0030D35C: 72 07        0772  .thumb
+0x0030D35E: 84 07        0784  .thumb
+0x0030D360: 8A 07        078A  .thumb
+0x0030D362: 99 07        0799  .thumb
+0x0030D364: 9E 07        079E  .thumb
+0x0030D366: A4 07        07A4  .thumb
+0x0030D368: A9 07        07A9  .thumb
+0x0030D36A: AF 07        07AF  .thumb
+0x0030D36C: B6 07        07B6  .thumb
+0x0030D36E: B9 07        07B9  .thumb
+0x0030D370: BC 07        07BC  .thumb
+0x0030D372: C1 07        07C1  .thumb
+0x0030D374: C6 07        07C6  .thumb
+0x0030D376: CB 07        07CB  .thumb
+0x0030D378: D0 07        07D0  .thumb
+0x0030D37A: D5 07        07D5  .thumb
+0x0030D37C: DE 07        07DE  .thumb
+0x0030D37E: E4 07        07E4  .thumb
+0x0030D380: E9 07        07E9  .thumb
+0x0030D382: ED 07        07ED  .thumb
+0x0030D384: F2 07        07F2  .thumb
+0x0030D386: F7 07        07F7  .thumb
+0x0030D388: 00 08        0800  .thumb
+0x0030D38A: 09 08        0809  .thumb
+0x0030D38C: 0E 08        080E  .thumb
+0x0030D38E: 11 08        0811  .thumb
+0x0030D390: 16 08        0816  .thumb
+0x0030D392: 1E 08        081E  .thumb
+0x0030D394: 25 08        0825  .thumb
+0x0030D396: 2D 08        082D  .thumb
+0x0030D398: 35 08        0835  .thumb
+0x0030D39A: 3D 08        083D  .thumb
+0x0030D39C: 43 08        0843  .thumb
+0x0030D39E: 47 08        0847  .thumb
+0x0030D3A0: 4C 08        084C  .thumb
+0x0030D3A2: 52 08        0852  .thumb
+0x0030D3A4: 56 08        0856  .thumb
+0x0030D3A6: 5B 08        085B  .thumb
+0x0030D3A8: 60 08        0860  .thumb
+0x0030D3AA: 65 08        0865  .thumb
+0x0030D3AC: 6E 08        086E  .thumb
+0x0030D3AE: 75 08        0875  .thumb
+0x0030D3B0: 7F 08        087F  .thumb
+0x0030D3B2: 87 08        0887  .thumb
+0x0030D3B4: 8B 08        088B  .thumb
+0x0030D3B6: 92 08        0892  .thumb
+0x0030D3B8: 97 08        0897  .thumb
+0x0030D3BA: 9C 08        089C  .thumb
+0x0030D3BC: A1 08        08A1  .thumb
+0x0030D3BE: A6 08        08A6  .thumb
+0x0030D3C0: AA 08        08AA  .thumb
+0x0030D3C2: B5 08        08B5  .thumb
+0x0030D3C4: B9 08        08B9  .thumb
+0x0030D3C6: BD 08        08BD  .thumb
+0x0030D3C8: C2 08        08C2  .thumb
+0x0030D3CA: C7 08        08C7  .thumb
+0x0030D3CC: CD 08        08CD  .thumb
+0x0030D3CE: D2 08        08D2  .thumb
+0x0030D3D0: DA 08        08DA  .thumb
+0x0030D3D2: FF 06        06FF  .thumb
+0x0030D3D4: F9 06        06F9  .thumb
+0x0030D3D6: F4 06        06F4  .thumb
+0x0030D3D8: EC 06        06EC  .thumb
+0x0030D3DA: DB 06        06DB  .thumb
+0x0030D3DC: D7 06        06D7  .thumb
+0x0030D3DE: CA 06        06CA  .thumb
+0x0030D3E0: C5 06        06C5  .thumb
+0x0030D3E2: C0 06        06C0  .thumb
+0x0030D3E4: BC 06        06BC  .thumb
+0x0030D3E6: B7 06        06B7  .thumb
+0x0030D3E8: B3 06        06B3  .thumb
+0x0030D3EA: E0 08        08E0  .thumb
+0x0030D3EC: AD 06        06AD  .thumb
+0x0030D3EE: A9 06        06A9  .thumb
+0x0030D3F0: A5 06        06A5  .thumb
+0x0030D3F2: A1 06        06A1  .thumb
+0x0030D3F4: 9D 06        069D  .thumb
+0x0030D3F6: 98 06        0698  .thumb
+0x0030D3F8: 93 06        0693  .thumb
+0x0030D3FA: 8E 06        068E  .thumb
+0x0030D3FC: 88 06        0688  .thumb
+0x0030D3FE: 84 06        0684  .thumb
+0x0030D400: 7E 06        067E  .thumb
+0x0030D402: 79 06        0679  .thumb
+0x0030D404: 75 06        0675  .thumb
+0x0030D406: 71 06        0671  .thumb
+0x0030D408: 6D 06        066D  .thumb
+0x0030D40A: 67 06        0667  .thumb
+0x0030D40C: 63 06        0663  .thumb
+0x0030D40E: 5F 06        065F  .thumb
+0x0030D410: 5B 06        065B  .thumb
+0x0030D412: 56 06        0656  .thumb
+0x0030D414: 50 06        0650  .thumb
+0x0030D416: 4C 06        064C  .thumb
+0x0030D418: 48 06        0648  .thumb
+0x0030D41A: 42 06        0642  .thumb
+0x0030D41C: 3C 06        063C  .thumb
+0x0030D41E: 38 06        0638  .thumb
+0x0030D420: 34 06        0634  .thumb
+0x0030D422: 2F 06        062F  .thumb
+0x0030D424: 2B 06        062B  .thumb
+0x0030D426: 27 06        0627  .thumb
+0x0030D428: 23 06        0623  .thumb
+0x0030D42A: 1B 06        061B  .thumb
+0x0030D42C: 15 06        0615  .thumb
+0x0030D42E: 11 06        0611  .thumb
+0x0030D430: 0B 06        060B  .thumb
+0x0030D432: 07 06        0607  .thumb
+0x0030D434: 03 06        0603  .thumb
+0x0030D436: FC 05        05FC  .thumb
+0x0030D438: F5 05        05F5  .thumb
+0x0030D43A: F0 05        05F0  .thumb
+0x0030D43C: EB 05        05EB  .thumb
+0x0030D43E: E6 05        05E6  .thumb
+0x0030D440: DD 05        05DD  .thumb
+0x0030D442: D8 05        05D8  .thumb
+0x0030D444: D3 05        05D3  .thumb
+0x0030D446: CF 05        05CF  .thumb
+0x0030D448: CA 05        05CA  .thumb
+0x0030D44A: C5 05        05C5  .thumb
+0x0030D44C: C0 05        05C0  .thumb
+0x0030D44E: BA 05        05BA  .thumb
+0x0030D450: B5 05        05B5  .thumb
+0x0030D452: B0 05        05B0  .thumb
+0x0030D454: AC 05        05AC  .thumb
+0x0030D456: A7 05        05A7  .thumb
+0x0030D458: A2 05        05A2  .thumb
+0x0030D45A: 9B 05        059B  .thumb
+0x0030D45C: 96 05        0596  .thumb
+0x0030D45E: 91 05        0591  .thumb
+0x0030D460: 8C 05        058C  .thumb
+0x0030D462: 87 05        0587  .thumb
+0x0030D464: 82 05        0582  .thumb
+0x0030D466: 7C 05        057C  .thumb
+0x0030D468: 73 05        0573  .thumb
+0x0030D46A: 6E 05        056E  .thumb
+0x0030D46C: 69 05        0569  .thumb
+0x0030D46E: 64 05        0564  .thumb
+0x0030D470: 60 05        0560  .thumb
+0x0030D472: 5C 05        055C  .thumb
+0x0030D474: 57 05        0557  .thumb
+0x0030D476: 51 05        0551  .thumb
+0x0030D478: 4D 05        054D  .thumb
+0x0030D47A: 49 05        0549  .thumb
+0x0030D47C: 45 05        0545  .thumb
+0x0030D47E: 3D 05        053D  .thumb
