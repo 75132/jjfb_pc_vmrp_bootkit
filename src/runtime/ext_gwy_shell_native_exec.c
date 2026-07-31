@@ -6,6 +6,7 @@
 #include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/p19_startgame_contract.h"
 #include "gwy_launcher/p20_gbrwcore_lifecycle.h"
+#include "gwy_launcher/p21_runtime_isolation.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -218,6 +219,7 @@ void ext_gwy_shell_native_exec_bind_uc(void *uc) {
     g_ne.uc = uc;
     p19_startgame_contract_bind_uc(uc);
     p20_gbrwcore_lifecycle_bind_uc(uc);
+    p21_runtime_isolation_bind_uc(uc);
 }
 
 const char *ext_gwy_shell_native_exec_class_name(GwyShellNativeExecClass c) {
@@ -436,6 +438,7 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
     fflush(stdout);
     p19_startgame_contract_on_module_map(label, guest_addr, size);
     p20_gbrwcore_lifecycle_on_module_map(label, guest_addr, size);
+    p21_runtime_isolation_on_module_map(label, guest_addr, size);
     emit_export_table(m);
     if (strcmp(label, "gamelist.ext") == 0) {
         /* Format string mapped != live cfg36 select (E10A-3). */

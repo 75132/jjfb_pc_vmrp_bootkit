@@ -37,9 +37,13 @@ static const char *role_name(MrpRuntimeFrameRole r) {
 int mrp_runtime_stack_push(MrpRuntimeStack *st, const char *package, const char *primary_ext,
                            uint32_t r9, uint32_t erw, uint32_t module_generation) {
     MrpRuntimeFrame *f;
+    uint32_t parent_id = 0;
     if (!st || st->depth >= MRP_RUNTIME_STACK_MAX) return 0;
+    if (st->depth > 0) parent_id = st->frames[st->depth - 1].frame_id;
     f = &st->frames[st->depth++];
     memset(f, 0, sizeof(*f));
+    f->frame_id = (uint32_t)st->depth;
+    f->parent_frame_id = parent_id;
     f->role = mrp_runtime_stack_role_for_package(package);
     snprintf(f->package, sizeof(f->package), "%s", package ? package : "");
     snprintf(f->primary_ext, sizeof(f->primary_ext), "%s", primary_ext ? primary_ext : "");
@@ -47,10 +51,26 @@ int mrp_runtime_stack_push(MrpRuntimeStack *st, const char *package, const char 
     f->erw = erw;
     f->module_generation = module_generation;
     f->active = 1;
-    printf("[MRP_RUNTIME_STACK] push depth=%d role=%s package=%s ext=%s r9=0x%X erw=0x%X "
-           "gen=%u evidence=OBSERVED\n",
-           st->depth, role_name(f->role), f->package, f->primary_ext, f->r9, f->erw,
-           f->module_generation);
+    printf("[MRP_RUNTIME_STACK] push depth=%d frame_id=%u parent_frame_id=%u role=%s "
+           "package=%s ext=%s r9=0x%X erw=0x%X gen=%u evidence=OBSERVED\n",
+           st->depth, f->frame_id, f->parent_frame_id, role_name(f->role), f->package,
+           f->primary_ext, f->r9, f->erw, f->module_generation);
+    fflush(stdout);
+    return 1;
+}
+
+int mrp_runtime_stack_bind_top(MrpRuntimeStack *st, uint64_t module_id, uint32_t helper_pc,
+                               uint32_t p_guest, uint32_t chunk_guest) {
+    MrpRuntimeFrame *f = mrp_runtime_stack_top(st);
+    if (!f) return 0;
+    if (module_id) f->module_id = module_id;
+    if (helper_pc) f->helper_pc = helper_pc;
+    if (p_guest) f->p_guest = p_guest;
+    if (chunk_guest) f->chunk_guest = chunk_guest;
+    printf("[MRP_RUNTIME_STACK] bind frame_id=%u module_id=%llu helper=0x%X p=0x%X chunk=0x%X "
+           "evidence=OBSERVED\n",
+           f->frame_id, (unsigned long long)f->module_id, f->helper_pc, f->p_guest,
+           f->chunk_guest);
     fflush(stdout);
     return 1;
 }

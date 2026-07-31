@@ -27,9 +27,9 @@
 
 ## Opcode 300 dispatcher
 
-- `[R9+0x1488]`: `0xDE207313`
-- observed owner/module: `gamelist.ext`
-- writer pc hint: `0x2D4758`
+- `[R9+0x1488]`: `0x0`
+- observed owner/module: `(unknown)`
+- writer pc hint: `0x0`
 
 ## Nested JJFB / first screen
 

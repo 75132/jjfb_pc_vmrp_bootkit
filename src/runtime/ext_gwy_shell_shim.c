@@ -5,6 +5,7 @@
 #include "gwy_launcher/original_gwy_bootstrap.h"
 #include "gwy_launcher/p19_startgame_contract.h"
 #include "gwy_launcher/p20_gbrwcore_lifecycle.h"
+#include "gwy_launcher/p21_runtime_isolation.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/vm_file_service.h"
 #include <stdio.h>
@@ -527,6 +528,7 @@ void ext_gwy_shell_shim_finalize(const char *stop_reason) {
     GwyShellLaunchClass c;
     p19_startgame_contract_finalize(stop_reason);
     p20_gbrwcore_lifecycle_finalize(stop_reason);
+    p21_runtime_isolation_finalize(stop_reason);
     if (!ext_gwy_shell_shim_enabled() || g_sh.finalized) return;
     g_sh.finalized = 1;
     shell_any = g_sh.gbrwcore_opened || g_sh.gamelist_opened || g_sh.gbrwshell_opened ||

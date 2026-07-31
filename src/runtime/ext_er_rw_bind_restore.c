@@ -152,25 +152,52 @@ static int peek_p_fields(uint32_t p_guest, uint32_t *base, uint32_t *len) {
     return ext_chunk_provider_peek_p_er_rw(p_guest, base, len);
 }
 
-/* If guest already sits on robotol with a stale R9 (off-by-4 vs published ER_RW), fix in place. */
+/* If guest already sits on robotol with a stale R9 (off-by-4 vs published ER_RW), fix in place.
+ * P21: also refuse foreign-module ERW while this module has its own published base
+ * (gamelist must not keep gbrwcore R9 after isolate). gbrwcore often has registry
+ * start_of_er_rw=0 — also treat timer-arm ERW / any other module chunk ERW as foreign. */
 static void correct_live_r9_if_drifted(const GwyLoadedModule *gm) {
     uint32_t cur = 0;
     GwyR9WriteAudit audit;
+    ModuleRegistry *reg;
+    size_t i;
+    int foreign = 0;
+    const char *mn;
     if (!gm || !g_bind.uc || !gm->data.start_of_er_rw) return;
     if (!guest_memory_uc_read_r9((struct uc_struct *)g_bind.uc, &cur) || !cur) return;
     if (cur == gm->data.start_of_er_rw) return;
+    mn = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
     /* Typical drift: R9 = mrc_malloc header, P->start_of_ER_RW = header+4 payload. */
-    if (!(cur + 4u == gm->data.start_of_er_rw || gm->data.start_of_er_rw + 4u == cur)) return;
+    if (cur + 4u == gm->data.start_of_er_rw || gm->data.start_of_er_rw + 4u == cur) {
+        /* fall through to write */
+    } else {
+        reg = gwy_ext_loader_bound_registry();
+        if (reg) {
+            for (i = 0; i < reg->count; i++) {
+                if (reg->modules[i].module_id == gm->module_id) continue;
+                if (reg->modules[i].data.start_of_er_rw == cur) {
+                    foreign = 1;
+                    break;
+                }
+            }
+        }
+        /* Gamelist isolation: any non-own non-DSM R9 is poison after host isolate. */
+        if (!foreign && mn && strstr(mn, "gamelist")) {
+            if (cur != 0x280400u) foreign = 1;
+        }
+        if (!foreign) return;
+    }
     memset(&audit, 0, sizeof(audit));
     audit.reason = GWY_R9_WRITE_MODULE_R9_SWITCH_ENTER;
-    audit.host_callsite = "er_rw_off_by_4_repair";
-    audit.guest_module = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
+    audit.host_callsite = foreign ? "er_rw_foreign_r9_repair" : "er_rw_off_by_4_repair";
+    audit.guest_module = mn ? mn : "?";
     if (!guest_memory_uc_write_r9_ex((struct uc_struct *)g_bind.uc, gm->data.start_of_er_rw,
                                      &audit))
         return;
-    printf("[ER_RW_R9_CORRECT] module=%s old_r9=0x%X new_r9=0x%X note=off_by_4_vs_P "
+    printf("[ER_RW_R9_CORRECT] module=%s old_r9=0x%X new_r9=0x%X note=%s "
            "evidence=OBSERVED+V75\n",
-           audit.guest_module, cur, gm->data.start_of_er_rw);
+           audit.guest_module, cur, gm->data.start_of_er_rw,
+           foreign ? "foreign_erw_vs_own" : "off_by_4_vs_P");
     fflush(stdout);
     /* Keep B71/PDGT watches on the corrected payload base. */
     product_lrt_note_er_rw(gm->data.start_of_er_rw);
@@ -299,11 +326,19 @@ static void try_deferred_r9(const GwyLoadedModule *gm) {
 static int poke_p_er_rw(uint32_t p_guest, uint32_t base, uint32_t len) {
     void *p_host = NULL;
     uint32_t *words;
-    if (!ext_chunk_provider_lookup_p(p_guest, &p_host, NULL, NULL) || !p_host) return 0;
-    words = (uint32_t *)p_host;
-    words[0] = base;
-    words[1] = len;
-    return 1;
+    int ok = 0;
+    if (ext_chunk_provider_lookup_p(p_guest, &p_host, NULL, NULL) && p_host) {
+        words = (uint32_t *)p_host;
+        words[0] = base;
+        words[1] = len;
+        ok = 1;
+    }
+    /* Always mirror into Unicorn guest VA — host p_host can diverge from mapped guest. */
+    if (g_bind.uc) {
+        if (guest_memory_uc_poke_u32((struct uc_struct *)g_bind.uc, p_guest, base)) ok = 1;
+        if (guest_memory_uc_poke_u32((struct uc_struct *)g_bind.uc, p_guest + 4u, len)) ok = 1;
+    }
+    return ok;
 }
 
 static uint32_t alloc_distinct_erw(uint32_t len, uint32_t avoid) {
@@ -347,7 +382,11 @@ static int isolate_erw_into_p(uint32_t p_guest, const GwyLoadedModule *gm, uint3
     if (!gm || !inout_base || !inout_len) return 0;
     mn = gm->resolved_name[0] ? gm->resolved_name : gm->requested_name;
     if (!mn || !strstr(mn, "gamelist")) return 0;
-    if (!e10a31b_enabled()) return 0;
+    if (!e10a31b_enabled()) {
+        const char *p21 = getenv("JJFB_P21_RUNTIME_ISOLATION");
+        const char *p20 = getenv("JJFB_P20_GBRWCORE_LIFECYCLE");
+        if (!(p21 && p21[0] == '1') && !(p20 && p20[0] == '1')) return 0;
+    }
 
     want_len = *inout_len ? *inout_len : k_gamelist_erw_default_len;
     avoid = *inout_base;
@@ -529,9 +568,22 @@ static int do_bind(uint32_t p_guest, const char *module_hint, const char *reason
 int ext_er_rw_bind_restore_ensure_isolated_erw(uint32_t p_guest, const char *module_hint) {
     parse_mode();
     if (!ext_er_rw_bind_restore_enabled() || !p_guest) return 0;
-    if (!e10a31b_enabled()) return 0;
+    /* P21 / nested: always allow host ERW isolate when bind mode is active. */
+    if (!e10a31b_enabled()) {
+        const char *p21 = getenv("JJFB_P21_RUNTIME_ISOLATION");
+        const char *p20 = getenv("JJFB_P20_GBRWCORE_LIFECYCLE");
+        if (!(p21 && p21[0] == '1') && !(p20 && p20[0] == '1')) return 0;
+    }
     return do_bind(p_guest, module_hint && module_hint[0] ? module_hint : "gamelist.ext",
                    "e10a31b_ensure_isolated_erw");
+}
+
+void ext_er_rw_bind_restore_correct_live_r9(uint64_t module_id) {
+    ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+    const GwyLoadedModule *gm;
+    if (!reg || !module_id) return;
+    gm = module_registry_find_by_id(reg, module_id);
+    if (gm) correct_live_r9_if_drifted(gm);
 }
 
 void ext_er_rw_bind_restore_on_p_write(uint32_t p_guest, uint32_t off, uint32_t new_v,

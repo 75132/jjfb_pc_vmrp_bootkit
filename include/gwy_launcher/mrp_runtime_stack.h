@@ -27,8 +27,14 @@ typedef enum MrpRuntimeFrameRole {
 
 typedef struct MrpRuntimeFrame {
     MrpRuntimeFrameRole role;
+    uint32_t frame_id;
+    uint32_t parent_frame_id;
     char package[96];
     char primary_ext[64];
+    uint64_t module_id;
+    uint32_t helper_pc;
+    uint32_t p_guest;
+    uint32_t chunk_guest;
     uint32_t r9;
     uint32_t erw;
     uint32_t module_generation;
@@ -54,6 +60,8 @@ MrpRuntimeFrameRole mrp_runtime_stack_role_for_package(const char *package);
 
 int mrp_runtime_stack_push(MrpRuntimeStack *st, const char *package, const char *primary_ext,
                            uint32_t r9, uint32_t erw, uint32_t module_generation);
+int mrp_runtime_stack_bind_top(MrpRuntimeStack *st, uint64_t module_id, uint32_t helper_pc,
+                               uint32_t p_guest, uint32_t chunk_guest);
 int mrp_runtime_stack_update_top(MrpRuntimeStack *st, uint32_t r9, uint32_t erw,
                                  uint32_t callback_registry, uint32_t transport_provider,
                                  uint32_t provider_101ab, uint32_t timer_owner);

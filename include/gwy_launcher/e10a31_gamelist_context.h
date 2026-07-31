@@ -61,6 +61,10 @@ void e10a31_timer_arm(void *uc, uint32_t source_pc, uint32_t source_lr, uint32_t
                       uint32_t timer_chunk, uint32_t timer_id, uint32_t period_ms);
 void e10a31_timer_disarm(void);
 uint32_t e10a31_timer_armed_chunk(void);
+/* Silent arm-time ER_RW (no CALLBACK_OWNER log). 0 if unbound. */
+uint32_t e10a31_timer_arm_erw(void);
+/* Silent arm-time module name ("" if unbound). */
+const char *e10a31_timer_arm_module_name(void);
 /*
  * Resolve fire target from immutable arm binding.
  * Repairs mixed helper/ERW when gamelist module ER_RW is available.

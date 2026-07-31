@@ -142,6 +142,7 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/gwy_sms_cfg.c
     src/runtime/p19_startgame_contract.c
     src/runtime/p20_gbrwcore_lifecycle.c
+    src/runtime/p21_runtime_isolation.c
 )
 
 add_library(launcher_core STATIC ${GWY_LAUNCHER_CORE_SOURCES})

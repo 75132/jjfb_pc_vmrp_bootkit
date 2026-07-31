@@ -31,6 +31,7 @@
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
 #include "gwy_launcher/original_gwy_bootstrap.h"
+#include "gwy_launcher/mrp_runtime_stack.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/guest_call_observer.h"
 #include "gwy_launcher/guest_memory.h"
@@ -105,9 +106,11 @@ typedef int32_t (*GwyExtObsTimerStartFn)(uint16_t ms);
 typedef int32_t (*GwyExtObsTimerStopFn)(void);
 typedef uint32_t (*GwyExtObsTimerClockFn)(void);
 typedef void (*GwyExtObsTimerDeliverFn)(void *uc);
+typedef void (*GwyExtObsAfterTimerDeliverFn)(void *uc);
 static GwyExtObsTimerStartFn g_timer_start;
 static GwyExtObsTimerStopFn g_timer_stop;
 static GwyExtObsTimerDeliverFn g_timer_deliver;
+static GwyExtObsAfterTimerDeliverFn g_after_timer_deliver;
 static int g_timer_flushing;
 static uint32_t g_armed_timer_chunk;
 static int g_timer_arm_seen;
@@ -1224,6 +1227,24 @@ int gwy_ext_obs_extchunk_on_c_function_new(void *uc, uint32_t helper, uint32_t p
     return ext_chunk_provider_on_c_function_new(uc, helper, p_guest, p_host, chunk_host, chunk_guest);
 }
 
+uint32_t gwy_ext_obs_extchunk_last_published_p(void) {
+    return ext_chunk_provider_last_published_p();
+}
+
+int gwy_ext_obs_preserve_c_function_p_guest(uint32_t p_guest) {
+    MrpRuntimeStack *st;
+    if (!p_guest || !ext_chunk_provider_published()) return 0;
+    if (ext_chunk_provider_is_tracked_p(p_guest)) return 1;
+    st = mrp_runtime_stack_global();
+    if (st) {
+        MrpRuntimeFrame *par = mrp_runtime_stack_parent(st);
+        MrpRuntimeFrame *top = mrp_runtime_stack_top(st);
+        if (par && par->p_guest == p_guest) return 1;
+        if (top && top->p_guest == p_guest && st->depth >= 2) return 1;
+    }
+    return 0;
+}
+
 void gwy_ext_obs_set_guest_allocator(GwyExtObsGuestAllocFn alloc, GwyExtObsGuestPtrFn to_guest) {
     g_guest_alloc = alloc;
     g_guest_to_ptr = to_guest;
@@ -1238,6 +1259,17 @@ uint32_t gwy_ext_obs_guest_malloc0(uint32_t size) {
     return g_guest_to_ptr(host);
 }
 
+uint32_t gwy_ext_obs_guest_malloc0_ex(uint32_t size, void **out_host) {
+    void *host;
+    if (out_host) *out_host = NULL;
+    if (!g_guest_alloc || !g_guest_to_ptr || !size) return 0;
+    host = g_guest_alloc(size);
+    if (!host) return 0;
+    memset(host, 0, size);
+    if (out_host) *out_host = host;
+    return g_guest_to_ptr(host);
+}
+
 void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn stop) {
     g_timer_start = start;
     g_timer_stop = stop;
@@ -1245,6 +1277,10 @@ void gwy_ext_obs_set_timer_fns(GwyExtObsTimerStartFn start, GwyExtObsTimerStopFn
 
 void gwy_ext_obs_set_timer_deliver(GwyExtObsTimerDeliverFn deliver) {
     g_timer_deliver = deliver;
+}
+
+void gwy_ext_obs_set_after_timer_deliver(GwyExtObsAfterTimerDeliverFn after) {
+    g_after_timer_deliver = after;
 }
 
 void gwy_ext_obs_set_timer_clock(GwyExtObsTimerClockFn clock_ms) {
@@ -2337,6 +2373,7 @@ static void gwy_ext_obs_deferred_timer_pump(void *uc) {
     else if (!gwy_ext_obs_lifecycle_on_timer_due(uc) && g_timer_stop)
         (void)g_timer_stop();
     g_timer_flushing = 0;
+    if (g_after_timer_deliver) g_after_timer_deliver(uc);
     if (env_flag("JJFB_PLATFORM_TIMER_DISPATCH") && g_timer_last_period_ms > 0u &&
         g_timer_last_period_ms <= 60000u) {
         platform_timer_start(g_timer_last_period_ms);
@@ -2389,6 +2426,8 @@ static void gwy_ext_obs_timer_poll(void *uc) {
     else if (!gwy_ext_obs_lifecycle_on_timer_due(uc) && g_timer_stop)
         (void)g_timer_stop();
     g_timer_flushing = 0;
+    /* P21: shell continue deferred from FIRE must run after flushing clears. */
+    if (g_after_timer_deliver) g_after_timer_deliver(uc);
     /* E9V: Maopao splash progress expects periodic timer callbacks.
      * platform_timer_take_due is one-shot; re-arm when dispatch compat is on. */
     if (env_flag("JJFB_PLATFORM_TIMER_DISPATCH") && g_timer_last_period_ms > 0u &&
@@ -3828,6 +3867,42 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
  */
 static int g_post_fire_ext_delivering;
 
+/* Return/stop sentinel for scheduled callbacks — must be mapped (Unicorn fetches it).
+ * Must NOT be DSM base 0x80000 (handlers BLX into cfunction there). */
+#define GWY_SCHED_CB_STOP 0x7F000000u
+
+static void gwy_ext_obs_ensure_sched_cb_stop(void *uc) {
+#ifdef GWY_HAVE_UNICORN
+    static int mapped;
+    uint8_t thumb_bx_lr[2];
+    uc_err ue;
+    if (!uc || mapped) return;
+    ue = uc_mem_map((uc_engine *)uc, GWY_SCHED_CB_STOP, 0x1000u, UC_PROT_ALL);
+    if (ue != UC_ERR_OK && ue != UC_ERR_MAP) {
+        printf("[PLATFORM_TIMER] op=SCHED_CB_STOP_MAP_FAIL va=0x%X err=%u evidence=OBSERVED\n",
+               GWY_SCHED_CB_STOP, (unsigned)ue);
+        fflush(stdout);
+        return;
+    }
+    /* Thumb BX LR so a fall-through fetch is harmless. */
+    thumb_bx_lr[0] = 0x70;
+    thumb_bx_lr[1] = 0x47;
+    (void)uc_mem_write((uc_engine *)uc, GWY_SCHED_CB_STOP, thumb_bx_lr, sizeof(thumb_bx_lr));
+    mapped = 1;
+    printf("[PLATFORM_TIMER] op=SCHED_CB_STOP_MAPPED va=0x%X evidence=DOCUMENTED\n",
+           GWY_SCHED_CB_STOP);
+    fflush(stdout);
+#else
+    (void)uc;
+#endif
+}
+
+static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, int32_t fire_ret);
+
+/* Forward decls used by deliver_scheduled (defined below). */
+uint32_t gwy_ext_obs_module_erw_by_name(const char *needle);
+uint32_t gwy_ext_obs_module_helper_by_name(const char *needle);
+
 static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, int32_t fire_ret) {
     void *uc = g_bound_uc;
     int n = 0;
@@ -3867,18 +3942,65 @@ static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, i
             continue;
         }
 
+        /*
+         * P21: after continue, drop stale gbrwcore scheduled callbacks — gamelist
+         * owns the live timer. Delivering parent handler with child ERW BX-to-null.
+         */
+        if (w.owner_module[0] && strstr(w.owner_module, "gbrwcore") &&
+            gwy_ext_obs_module_erw_by_name("gamelist")) {
+            printf("[PLATFORM_TIMER] op=DELIVER_SKIP owner=%s handler=0x%X "
+                   "reason=stale_parent_after_continue evidence=OBSERVED\n",
+                   w.owner_module, h);
+            fflush(stdout);
+            platform_scheduler_note_natural_callback(&w, 0, 0);
+            continue;
+        }
+
         (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &r9_save);
         r9_run = r9_save;
         reg = gwy_ext_loader_bound_registry();
         owner = reg ? module_registry_find_by_code_addr(reg, h & ~1u) : NULL;
-        if (owner && owner->data.start_of_er_rw) r9_run = owner->data.start_of_er_rw;
-        if (owner) {
-            uint32_t p = ext_chunk_provider_last_p_guest();
-            uint32_t live = 0;
-            if (p && guest_memory_uc_peek_u32((struct uc_struct *)uc, p, &live) && live)
-                r9_run = live;
+        /*
+         * P21: R9 must match the HANDLER's module — not the latest arm binding.
+         * After gamelist rearms, arm_erw is child ERW; using it for a gbrwcore
+         * handler poisons the callback (BX to 0x0).
+         */
+        {
+            uint32_t arm_erw = e10a31_timer_arm_erw();
+            ExtChunkOwnerInfo oi;
+            const char *own_name =
+                owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name)
+                      : (w.owner_module[0] ? w.owner_module : "");
+            if (owner && owner->data.start_of_er_rw)
+                r9_run = owner->data.start_of_er_rw;
+            if ((!r9_run || r9_run == r9_save) &&
+                ext_chunk_provider_owner_for_helper(h, &oi) && oi.erw)
+                r9_run = oi.registry_erw ? oi.registry_erw : oi.erw;
+            if ((!r9_run || r9_run == r9_save) && arm_erw && own_name[0]) {
+                /* Arm ERW only when it belongs to the same module as the handler. */
+                if ((strstr(own_name, "gamelist") && strstr(e10a31_timer_arm_module_name(), "gamelist")) ||
+                    (strstr(own_name, "gbrwcore") && strstr(e10a31_timer_arm_module_name(), "gbrwcore")))
+                    r9_run = arm_erw;
+            }
+            if ((!r9_run || r9_run == r9_save) && e10a31_timer_arm_observed()) {
+                uint32_t armed_chunk = e10a31_timer_armed_chunk();
+                if (armed_chunk && ext_chunk_provider_owner_for_chunk(armed_chunk, &oi) &&
+                    oi.erw) {
+                    if (!owner || oi.module_id == 0 ||
+                        (owner && oi.module_id == owner->module_id))
+                        r9_run = oi.registry_erw ? oi.registry_erw : oi.erw;
+                }
+            }
         }
+        printf("[CALLBACK_SCOPE_PUSH] handler=0x%X r9_save=0x%X r9_run=0x%X owner=%s "
+               "evidence=OBSERVED\n",
+               h, r9_save, r9_run,
+               owner ? (owner->resolved_name[0] ? owner->resolved_name : owner->requested_name)
+                     : "?");
+        fflush(stdout);
         if (r9_run) (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_run);
+        printf("[CALLBACK_R9] handler=0x%X r9=0x%X evidence=OBSERVED\n", h, r9_run);
+        fflush(stdout);
 
         fam = platform_handler_registry_family(0x10102u);
         if (w.owner_module[0] && strstr(w.owner_module, "gbrwcore"))
@@ -3891,17 +4013,27 @@ static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, i
         abi.set_r0 = 1;
         abi.set_r1 = 1;
         abi.set_lr = 1;
+        /*
+         * P21: do NOT use DSM base 0x80000 as stop/LR — gamelist handlers BLX into
+         * 0x80000 (cfunction). That collided with stop_at_base and aborted the
+         * callback after one insn, leaving module_r9_switch_depth stuck >0 so later
+         * delivers were skipped. Sentinel page is mapped once (Unicorn fetches it).
+         */
+        gwy_ext_obs_ensure_sched_cb_stop(uc);
+        stop = GWY_SCHED_CB_STOP;
         abi.lr = stop;
         /*
          * Period tick into registered callback: R0=0 is not 0x7D/0x7E (lazy-init gate).
-         * Family/gbrwcore layout keeps event in R0; robotol 0x10140 keeps R0=R1=0.
+         * Family/gbrwcore layout keeps event in R0; gamelist period tick keeps R0=R1=0
+         * (r0=method=2 made 0x2E0405 return immediately without DSM work).
          */
         abi.r0 = 0;
         abi.r1 = 0;
         if (event_in_r0) {
+            abi.r0 = w.method_or_event ? w.method_or_event : 2u;
             printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED layout=R0_EVENT owner=%s "
-                   "handler=0x%X r9=0x%X after_fire_helper=0x%X evidence=OBSERVED\n",
-                   w.owner_module[0] ? w.owner_module : "?", h, r9_run, fire_helper);
+                   "handler=0x%X r9=0x%X r0=0x%X after_fire_helper=0x%X evidence=OBSERVED\n",
+                   w.owner_module[0] ? w.owner_module : "?", h, r9_run, abi.r0, fire_helper);
         } else {
             printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED layout=R0_R1_ZERO owner=%s "
                    "handler=0x%X r9=0x%X after_fire_helper=0x%X evidence=OBSERVED\n",
@@ -3909,9 +4041,23 @@ static void gwy_ext_obs_deliver_scheduled_after_fire_ext(uint32_t fire_helper, i
         }
         fflush(stdout);
 
-        ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, h, stop, gwy_lifecycle_insn_limit(),
-                                         &abi, &out);
+        {
+            uint32_t depth0 = module_r9_switch_depth();
+            ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, h, stop,
+                                             gwy_lifecycle_insn_limit(), &abi, &out);
+            /* Balance any MRP→DSM frames left by YIELD_TO_NESTED / early stop. */
+            while (module_r9_switch_depth() > depth0) {
+                if (!module_r9_switch_leave(uc)) {
+                    module_r9_switch_abort(uc, "post_scheduled_deliver_balance");
+                    break;
+                }
+            }
+        }
         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
+        printf("[CALLBACK_SCOPE_POP] handler=0x%X restored_r9=0x%X evidence=OBSERVED\n", h,
+               r9_save);
+        printf("[RESTORED_R9] r9=0x%X evidence=OBSERVED\n", r9_save);
+        fflush(stdout);
         platform_scheduler_note_natural_callback(&w, (int32_t)out.r0_after, ok ? 1 : 0);
         printf("[PLATFORM_TIMER] op=DELIVER_SCHEDULED_DONE ok=%d ret=%d end=%s pc_after=0x%X "
                "evidence=OBSERVED\n",
@@ -3985,13 +4131,15 @@ uint32_t gwy_ext_obs_module_helper_by_name(const char *needle) {
     return 0;
 }
 
-/* Called from CODE hook during FIRE: force R9 off forbidden foreign ERW. */
+/* Called from BLOCK hook during FIRE: refuse R9==0 and forbidden foreign ERW.
+ * Intentional DSM switches (e.g. to cfunction ERW) are allowed when not forbidden. */
 int gwy_ext_obs_timer_fire_r9_guard(void *uc) {
 #ifdef GWY_HAVE_UNICORN
     uint32_t r9 = 0;
-    if (!uc || !g_timer_fire_pin_erw || !g_timer_fire_forbid_erw) return 0;
+    if (!uc || !g_timer_fire_pin_erw) return 0;
     if (uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9) != UC_ERR_OK) return 0;
-    if (r9 != g_timer_fire_forbid_erw) return 0;
+    if (r9 == g_timer_fire_pin_erw) return 0;
+    if (r9 != 0u && (!g_timer_fire_forbid_erw || r9 != g_timer_fire_forbid_erw)) return 0;
     if (guest_memory_uc_write_r9((uc_engine *)uc, g_timer_fire_pin_erw) != 0) return 0;
     g_timer_fire_pin_hits++;
     if (g_timer_fire_pin_hits <= 8u) {

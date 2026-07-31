@@ -30,6 +30,7 @@
 #include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/p19_startgame_contract.h"
 #include "gwy_launcher/p20_gbrwcore_lifecycle.h"
+#include "gwy_launcher/p21_runtime_isolation.h"
 
 int e10a31a_enabled(void) { return 0; }
 
@@ -308,6 +309,10 @@ void e10a31_timer_arm(void *uc, uint32_t source_pc, uint32_t source_lr, uint32_t
 void e10a31_timer_disarm(void) {}
 
 uint32_t e10a31_timer_armed_chunk(void) { return 0; }
+
+uint32_t e10a31_timer_arm_erw(void) { return 0; }
+
+const char *e10a31_timer_arm_module_name(void) { return ""; }
 
 int e10a31_timer_fire_resolve(void *uc, uint32_t *out_helper, uint32_t *out_p_guest, uint32_t *out_erw) { return 0; }
 
@@ -674,6 +679,28 @@ void p20_gbrwcore_lifecycle_on_plat_10102(uint32_t family, uint32_t callback, ui
     (void)owner;
 }
 void p20_gbrwcore_lifecycle_finalize(const char *stop_reason) { (void)stop_reason; }
+
+int p21_runtime_isolation_enabled(void) { return 0; }
+void p21_runtime_isolation_reset(void) {}
+void p21_runtime_isolation_bind_uc(void *uc) { (void)uc; }
+void p21_runtime_isolation_on_module_map(const char *module_name, uint32_t base, uint32_t size) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+}
+void p21_runtime_isolation_on_code(void *uc, uint32_t pc, const uint32_t regs[16]) {
+    (void)uc;
+    (void)pc;
+    (void)regs;
+}
+void p21_runtime_isolation_finalize(const char *stop_reason) { (void)stop_reason; }
+int p21_gate_p_isolated(void) { return 0; }
+int p21_gate_parent_p_intact(void) { return 0; }
+int p21_gate_callback_r9_parent(void) { return 0; }
+int p21_gate_no_30d5d2_fault(void) { return 0; }
+int p21_gate_startgame_enter(void) { return 0; }
+const char *p21_fault_r9_owner(void) { return "UNKNOWN"; }
+uint32_t p21_slot_1914_last_writer_pc(void) { return 0; }
 int p20_gate_cmd0(void) { return 0; }
 int p20_gate_reg10102(void) { return 0; }
 int p20_gate_callback_enter(void) { return 0; }

@@ -258,6 +258,8 @@ static uint32_t mr_extHelper_addr;
 static int g_in_ext_init_deliver;
 /* E10A-2: after gbrwcore→gamelist continue, re-pin DSM R9 when nested MRP helpers return. */
 static int g_e10a_shell_continued;
+static int g_pending_shell_continue;
+static char g_pending_continue_via[48];
 /* DSM cfunction helper/P saved before nested MRP retargets mr_extHelper_addr. */
 static uint32_t g_dsm_extHelper_addr;
 static uint32_t g_dsm_c_function_P_guest;
@@ -559,6 +561,17 @@ static void br_mr_free(BridgeMap *o, uc_engine *uc) {
     uc_reg_read(uc, UC_ARM_REG_R1, &len);
 
     LOG("ext call %s(0x%X[%u], 0x%X[%u])\n", o->name, p, p, len, len);
+    /*
+     * P21: nested _mr_c_function_new must not free the parent package P.
+     * Skipping free forces the subsequent mr_malloc onto a fresh guest VA.
+     */
+    if (p && gwy_ext_obs_preserve_c_function_p_guest(p)) {
+        printf("[JJFB_RUNTIME_FRAME] preserve_parent_p skip_free p=0x%X len=%u "
+               "evidence=OBSERVED\n",
+               p, len);
+        fflush(stdout);
+        return;
+    }
     my_freeExt(getMrpMemPtr(p));
 }
 
@@ -1529,10 +1542,22 @@ static void br_log(BridgeMap *o, uc_engine *uc) {
                     void *chunk_host = my_mallocExt(0x40);
                     if (chunk_host) {
                         uint32_t chunk_guest;
+                        uint32_t used_p;
                         memset(chunk_host, 0, 0x40);
                         chunk_guest = toMrpMemAddr(chunk_host);
                         gwy_ext_obs_extchunk_on_c_function_new(uc, helper, p_addr, p_host,
                                                               chunk_host, chunk_guest);
+                        /* P21: child may have been given an isolated P. */
+                        used_p = gwy_ext_obs_extchunk_last_published_p();
+                        if (used_p && used_p != p_addr) {
+                            void *used_host = getMrpMemPtr(used_p);
+                            if (used_host) mr_c_function_P = (mr_c_function_P_t *)used_host;
+                            bridge_note_dsm_helper(helper, mr_c_function_P, used_p);
+                            printf("[JJFB_RUNTIME_FRAME] log_parse_sync_p requested=0x%X "
+                                   "published=0x%X evidence=OBSERVED\n",
+                                   p_addr, used_p);
+                            fflush(stdout);
+                        }
                     }
                 }
             }
@@ -1693,6 +1718,14 @@ static void br_mem_free(BridgeMap *o, uc_engine *uc) {
     uc_reg_read(uc, UC_ARM_REG_R1, &mem_len);
 
     LOG("ext call %s(0x%X, 0x%X)\n", o->name, mem, mem_len);
+    if (mem && gwy_ext_obs_preserve_c_function_p_guest(mem)) {
+        printf("[JJFB_RUNTIME_FRAME] preserve_parent_p skip_mem_free p=0x%X len=%u "
+               "evidence=OBSERVED\n",
+               mem, mem_len);
+        fflush(stdout);
+        SET_RET_V(MR_SUCCESS);
+        return;
+    }
     host = getMrpMemPtr(mem);
     if (host && host == g_br_mem_host) {
         g_br_mem_host = NULL;
@@ -1737,6 +1770,9 @@ static void br_test(BridgeMap *o, uc_engine *uc) {
 static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, char *ext,
                                                 char *entry);
 
+/* Apply continue only after the current timer FIRE fully unwinds (mutex/flushing). */
+static void bridge_flush_pending_shell_continue(void *uc_ptr);
+
 /* Shared by br_exit and post-FIRE_EXT init_ok: continue into gamelist/shell next. */
 static void bridge_apply_shell_core_continue(uc_engine *uc, const char *via) {
     const char *tgt = gwy_shell_shim_continue_target();
@@ -1772,31 +1808,38 @@ static void bridge_apply_shell_core_continue(uc_engine *uc, const char *via) {
         int pumps = 0;
         int wait_timer = 0;
         uint32_t wait_ms = 60000u;
+        int fire_baseline = gwy_ext_obs_e10a31_timer_fire_count();
         const char *wt = getenv("JJFB_E10A31_WAIT_FOR_TIMER");
         const char *wms = getenv("JJFB_E10A31_WAIT_MS");
+        /* After shell continue, default to waiting for child (gamelist) timer fires. */
         if (wt && wt[0] == '1') wait_timer = 1;
+        else if (wt && wt[0] == '0') wait_timer = 0;
+        else wait_timer = 1;
         if (wms && wms[0]) wait_ms = (uint32_t)strtoul(wms, NULL, 10);
         if (wait_ms < 5000u) wait_ms = 5000u;
         if (wait_ms > 180000u) wait_ms = 180000u;
         printf("[PLATFORM_TIMER] op=POST_CONT_PUMP begin wait_for_timer=%d wait_ms=%u "
-               "evidence=DOCUMENTED\n",
-               wait_timer, wait_ms);
+               "fire_baseline=%d evidence=DOCUMENTED\n",
+               wait_timer, wait_ms, fire_baseline);
         fflush(stdout);
         for (;;) {
             gwy_ext_obs_timer_poll_uc(uc);
-            if (wait_timer && gwy_ext_obs_e10a31_timer_fire_observed()) {
+            if (wait_timer) {
                 int need = 1;
                 int got = 0;
+                int since;
                 const char *wn = getenv("JJFB_E10A31_WAIT_FIRE_N");
                 if (wn && wn[0]) need = (int)strtol(wn, NULL, 10);
                 if (need < 1) need = 1;
                 if (need > 8) need = 8;
                 got = gwy_ext_obs_e10a31_timer_fire_count();
-                if (got < 0) got = 1;
-                if (got >= need) {
+                if (got < 0) got = 0;
+                since = got - fire_baseline;
+                if (since < 0) since = 0;
+                if (since >= need) {
                     printf("[JJFB_E10A31_WAIT_FOR_TIMER] stop=TIMER_FIRE_OBSERVED "
-                           "fires=%d need=%d pumps=%d evidence=OBSERVED\n",
-                           got, need, pumps);
+                           "fires=%d since_baseline=%d need=%d pumps=%d evidence=OBSERVED\n",
+                           got, since, need, pumps);
                     fflush(stdout);
                     break;
                 }
@@ -1804,16 +1847,19 @@ static void bridge_apply_shell_core_continue(uc_engine *uc, const char *via) {
             if (!gwy_ext_obs_timer_running()) {
                 int need_fires = 1;
                 int got_fires = gwy_ext_obs_e10a31_timer_fire_count();
+                int since_fires;
                 const char *wn2 = getenv("JJFB_E10A31_WAIT_FIRE_N");
                 if (wn2 && wn2[0]) need_fires = (int)strtol(wn2, NULL, 10);
                 if (need_fires < 1) need_fires = 1;
                 if (need_fires > 8) need_fires = 8;
+                since_fires = got_fires - fire_baseline;
+                if (since_fires < 0) since_fires = 0;
                 if (wait_timer && !gwy_ext_obs_e10a31_timer_arm_observed()) {
                     idle = 0;
-                } else if (wait_timer && got_fires < need_fires) {
+                } else if (wait_timer && since_fires < need_fires) {
                     idle = 0;
                 } else if (++idle >= 6) {
-                    if (wait_timer && !gwy_ext_obs_e10a31_timer_fire_observed()) {
+                    if (wait_timer && since_fires < need_fires) {
                         idle = 0;
                     } else {
                         break;
@@ -2881,16 +2927,26 @@ static int32_t bridge_ext_helper_call(uc_engine *uc, uint32_t helper, uint32_t p
     bridge_uc_save_regs(uc, saved);
     caller_pc = saved[15];
     caller_lr = saved[14];
-    if (erw) uc_reg_write(uc, UC_ARM_REG_R9, &erw);
-    /* Timer FIRE (code=2): pin R9 to target ERW; refuse drift to gbrwcore ERW. */
-    if (code == 2u && erw && g_e10a_shell_continued) {
-        uint32_t forbid = gwy_ext_obs_module_erw_by_name("gbrwcore");
-        if (forbid && forbid != erw) {
-            gwy_ext_obs_timer_fire_r9_pin(erw, forbid);
-            if (uc_hook_add(uc, &hh, UC_HOOK_BLOCK, (void *)bridge_timer_fire_r9_guard_cb, NULL, 1,
-                            0) == UC_ERR_OK)
-                armed_pin = 1;
+    if (erw) {
+        /* Audited write so R9_WRITE timeline shows FIRE install. */
+        gwy_ext_obs_r9_write_raw(uc, erw, "bridge_ext_helper_timer_fire");
+    }
+    /*
+     * Timer FIRE (code=2): pin R9 to target ERW.
+     * - After shell continue, gamelist fires must refuse drift to gbrwcore ERW.
+     * - Parent gbrwcore re-fire after continue must refuse R9==0 (ambient often wiped).
+     * DSM switches to cfunction ERW remain allowed unless that ERW is the forbid target.
+     */
+    if (code == 2u && erw) {
+        uint32_t forbid = 0;
+        if (g_e10a_shell_continued) {
+            uint32_t gb = gwy_ext_obs_module_erw_by_name("gbrwcore");
+            if (gb && gb != erw) forbid = gb;
         }
+        gwy_ext_obs_timer_fire_r9_pin(erw, forbid);
+        if (uc_hook_add(uc, &hh, UC_HOOK_BLOCK, (void *)bridge_timer_fire_r9_guard_cb, NULL, 1,
+                        0) == UC_ERR_OK)
+            armed_pin = 1;
     }
     uc_reg_write(uc, UC_ARM_REG_R0, &p_guest);
     uc_reg_write(uc, UC_ARM_REG_R1, &code);
@@ -2922,6 +2978,22 @@ static int32_t bridge_deliver_timer_body(uc_engine *uc) {
     if (!uc) return MR_FAILED;
     /* DOCUMENTED mrc_extHelper case 2 → mrc_timerTimeout (not DSM Lua MR_TIMER). */
     if (gwy_ext_obs_timer_ext_target(&helper, &p_guest, &erw)) {
+        /*
+         * P21: after shell_core_continue, parent gbrwcore timer must not re-enter
+         * while gamelist already has an isolated ERW — that path re-poisons R9/slot
+         * 0x1914 and faults at 0x30D5D2. Wait for gamelist to arm its own timer.
+         */
+        if (g_e10a_shell_continued) {
+            uint32_t gl_erw = gwy_ext_obs_module_erw_by_name("gamelist");
+            uint32_t gb_h = gwy_ext_obs_module_helper_by_name("gbrwcore");
+            if (gl_erw && gb_h && (helper & ~1u) == (gb_h & ~1u)) {
+                printf("[PLATFORM_TIMER] op=FIRE_EXT_SKIP helper=0x%X reason=parent_after_continue "
+                       "gamelist_erw=0x%X evidence=OBSERVED\n",
+                       helper, gl_erw);
+                fflush(stdout);
+                return MR_SUCCESS;
+            }
+        }
         printf("[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x%X P=0x%X erw=0x%X "
                "chunk=0x%X evidence=DOCUMENTED\n",
                helper, p_guest, erw, gwy_ext_obs_timer_armed_chunk());
@@ -2937,11 +3009,17 @@ static int32_t bridge_deliver_timer_body(uc_engine *uc) {
         v = bridge_ext_helper_call(uc, helper, p_guest, 2u, 0u, 0u, erw);
         gwy_ext_obs_on_timer_fire_ext(helper, p_guest, erw, v);
         /*
-         * After scheduled callback delivers and publishes startGame, continue into
-         * gamelist without waiting for br_exit (module may stay timer-resident).
+         * P21: defer shell continue until FIRE unwinds (mutex unlock / timer
+         * flushing clear). Nesting continue inside FIRE starved POST_CONT_PUMP
+         * under GateHold and blocked nested gamelist timer delivery.
          */
         if (gwy_shell_shim_try_continue_after_gbrwcore_init_ok(uc)) {
-            bridge_apply_shell_core_continue(uc, "timer_fire_ext_init_ok");
+            g_pending_shell_continue = 1;
+            snprintf(g_pending_continue_via, sizeof(g_pending_continue_via), "%s",
+                     "timer_fire_ext_init_ok");
+            printf("[JJFB_SHELL_CORE_CONTINUE] defer=after_timer_fire_return "
+                   "via=timer_fire_ext_init_ok evidence=OBSERVED\n");
+            fflush(stdout);
         }
         printf("[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=%d evidence=DOCUMENTED\n", (int)v);
         if (dtr && dtr[0] == '1') {
@@ -2972,10 +3050,22 @@ static int32_t bridge_deliver_timer_body(uc_engine *uc) {
     return v;
 }
 
+static void bridge_flush_pending_shell_continue(void *uc_ptr) {
+    uc_engine *uc = (uc_engine *)uc_ptr;
+    if (!g_pending_shell_continue || !uc) return;
+    g_pending_shell_continue = 0;
+    printf("[JJFB_SHELL_CORE_CONTINUE] flush_deferred via=%s evidence=OBSERVED\n",
+           g_pending_continue_via[0] ? g_pending_continue_via : "?");
+    fflush(stdout);
+    bridge_apply_shell_core_continue(uc, g_pending_continue_via[0] ? g_pending_continue_via
+                                                                   : "deferred");
+}
+
 static void bridge_deliver_mr_timer_unlocked(void *uc_ptr) {
     uc_engine *uc = (uc_engine *)uc_ptr;
     if (!uc) return;
     (void)bridge_deliver_timer_body(uc);
+    /* Flush is deferred: emu_slice_poll still holds g_timer_flushing here. */
 }
 
 static int32_t bridge_product_helper_call(void *uc_ptr, uint32_t helper, uint32_t p_guest,
@@ -3004,6 +3094,7 @@ uc_err bridge_init(uc_engine *uc) {
     gwy_ext_obs_set_timer_fns(timerStart, timerStop);
     gwy_ext_obs_set_timer_clock(bridge_timer_clock_ms);
     gwy_ext_obs_set_timer_deliver(bridge_deliver_mr_timer_unlocked);
+    gwy_ext_obs_set_after_timer_deliver(bridge_flush_pending_shell_continue);
     gwy_ext_obs_set_product_helper_call(bridge_product_helper_call);
     gwy_ext_obs_set_product_appinfo_alloc(bridge_product_appinfo_alloc);
     uint32_t len = 4 * countof(mr_table_funcMap);  // 因为都是指针，所以直接可以算出来总内存大小
@@ -3277,6 +3368,8 @@ int32_t bridge_dsm_mr_timer(uc_engine *uc) {
             perror(MUTEX_UNLOCK_FAIL);
             exit(EXIT_FAILURE);
         }
+        /* Continue only after FIRE mutex is released so POST_CONT can pump. */
+        bridge_flush_pending_shell_continue(uc);
         return v;
     }
 }
