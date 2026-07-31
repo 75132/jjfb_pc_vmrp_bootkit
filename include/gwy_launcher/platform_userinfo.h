@@ -44,6 +44,14 @@ LauncherStatus platform_userinfo_fill(const PlatformIdentity *id,
                                       PlatformUserInfoBlob *out,
                                       LauncherError *err);
 
+/*
+ * Unified current identity → mr_userinfo blob (shared by mr_getUserInfo and
+ * sendAppEvent(0x10180)). Uses platform_identity_set_defaults + GWY_DEFAULT_IMSI
+ * until a global launcher identity context exists — do not duplicate constants
+ * at call sites.
+ */
+LauncherStatus platform_userinfo_current(PlatformUserInfoBlob *out, LauncherError *err);
+
 #ifdef __cplusplus
 }
 #endif

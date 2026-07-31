@@ -1,0 +1,15 @@
+﻿source_commit=6579fd159f023fcb7e19ab0117c14851b4f58c22
+source_tree_clean=False
+build_time_utc=2026-07-31T21:47:42.3908866Z
+main_exe_sha256=63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615
+JJFB_Launcher_exe_sha256=5cb0771529deec58f1503343efb260cd4687ea7978b907a4f3238741f7f2870e
+gwy_launcher_exe_sha256=26ebe6e59cdc25e39e7db96d053825acaaf9fad61bdff234f0d797eaf4fd4a9c
+compiler=gcc-16.1.0
+product_default_return_mode=direct_lr
+product_ffp_apply_abi=0
+JJFB_PRODUCT_EVENT_CONTRACT=0
+JJFB_FAMILY_4F_FOR_E6C=0
+p14_contract_hits=3
+p14_natural_leave_note=null_ptr
+p14_chase=mr_sleep
+p14_next_door=mr_plat

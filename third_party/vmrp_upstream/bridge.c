@@ -22,7 +22,11 @@
 #include "gwy_launcher/platform_memory_ops.h"
 #include "gwy_launcher/platform_display.h"
 #include "gwy_launcher/platform_char_bitmap.h"
+#include "gwy_launcher/platform_userinfo.h"
 #include "gwy_launcher/guest_memory.h"
+#include "gwy_launcher/ext_loader.h"
+#include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/sha256.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a31c_dispatch.h"
 #include "gwy_launcher/e10a31d_provenance.h"
@@ -31,7 +35,6 @@
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
-#include "gwy_launcher/sha256.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -2087,10 +2090,23 @@ static void br_rand(BridgeMap *o, uc_engine *uc) {
 }
 
 static void br_sleep(BridgeMap *o, uc_engine *uc) {
-    // int32 (*sleep)(uint32 ms);
+    // int32 (*sleep)(uint32 ms);  also wired as mr_sleep @0x90
     uint32_t ms;
+    uint32_t requested;
+    static uint32_t n;
     uc_reg_read(uc, UC_ARM_REG_R0, &ms);
-    LOG("ext call %s(%d)\n", o->name, ms);
+    requested = ms;
+    /* Post-Case9 table walk often leaves R0=MR_FAILED(-1); never sleep ~49 days. */
+    if (ms > 10000u) {
+        ms = 0;
+    }
+    n++;
+    if (n <= 16u || requested != ms) {
+        printf("[JJFB_MR_SLEEP] n=%u requested_ms=%u sleep_ms=%u name=%s evidence=OBSERVED\n",
+               n, requested, ms, o && o->name ? o->name : "?");
+        fflush(stdout);
+    }
+    LOG("ext call %s(%d)\n", o->name, (int)ms);
     /* Slice sleep so deadline timers can fire while guest holds emu. */
     while (ms > 0) {
         uint32_t slice = (ms > 50u) ? 50u : ms;
@@ -2155,6 +2171,174 @@ static void br_getDatetime(BridgeMap *o, uc_engine *uc) {
     uint32_t datetime;
     uc_reg_read(uc, UC_ARM_REG_R0, &datetime);
     SET_RET_V(getDatetime(getMrpMemPtr(datetime)));
+}
+
+/* P14: mr_getUserInfo — write 64-byte mr_userinfo to caller buffer; return status. */
+static void br_mr_getUserInfo(BridgeMap *o, uc_engine *uc) {
+    uint32_t info_guest = 0, r1 = 0, r2 = 0, r3 = 0, pc = 0, lr = 0;
+    PlatformUserInfoBlob blob;
+    LauncherError err;
+    static uint32_t call_n;
+    uint32_t call_id;
+    const char *owner = "?";
+    const char *logical_pkg = "?";
+    const char *current_mrp = "?";
+    uint8_t digest[32];
+    char hex[65];
+    char imei_mask[20];
+    char imsi_suf[8];
+    char manuf[9];
+    char model[9];
+    uint32_t ver = 0;
+    int writable = 0;
+    (void)o;
+
+    uc_reg_read(uc, UC_ARM_REG_R0, &info_guest);
+    uc_reg_read(uc, UC_ARM_REG_R1, &r1);
+    uc_reg_read(uc, UC_ARM_REG_R2, &r2);
+    uc_reg_read(uc, UC_ARM_REG_R3, &r3);
+    uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+    uc_reg_read(uc, UC_ARM_REG_LR, &lr);
+    call_n++;
+    call_id = call_n;
+
+    {
+        const char *ap = package_scope_active_package();
+        if (ap && ap[0]) current_mrp = ap;
+    }
+    {
+        ModuleRegistry *reg = gwy_ext_loader_bound_registry();
+        const GwyLoadedModule *m = NULL;
+        if (reg && lr)
+            m = module_registry_find_by_code_addr(reg, lr & ~1u);
+        if (!m && reg && pc)
+            m = module_registry_find_by_code_addr(reg, pc & ~1u);
+        if (m) {
+            owner = m->resolved_name[0] ? m->resolved_name : m->requested_name;
+            if (m->package_path[0]) {
+                if (strstr(m->package_path, "jjfb.mrp")) logical_pkg = "gwy/jjfb.mrp";
+                else if (strstr(m->package_path, "wxjwq.mrp")) logical_pkg = "gwy/wxjwq.mrp";
+                else logical_pkg = m->package_path;
+            }
+        }
+    }
+
+    if (call_id <= 16u) {
+        printf("[MR_GETUSERINFO_ENTER] call_id=%u caller_pc=0x%X caller_lr=0x%X "
+               "owner_module=%s logical_package=%s current_mrp=%s info_guest=0x%X "
+               "r1=0x%X r2=0x%X r3=0x%X evidence=OBSERVED\n",
+               call_id, pc, lr, owner, logical_pkg, current_mrp, info_guest, r1, r2, r3);
+        fflush(stdout);
+    }
+
+    if (!info_guest) {
+        if (call_id <= 16u) {
+            printf("[MR_GETUSERINFO_LEAVE] call_id=%u info_guest=0x0 status=%d "
+                   "bytes_written=0 note=null_ptr evidence=OBSERVED\n",
+                   call_id, (int)MR_FAILED);
+            fflush(stdout);
+        }
+        SET_RET_V((uint32_t)(int32_t)MR_FAILED);
+        return;
+    }
+
+    /* Probe full 64-byte writable range (first + last word). */
+    {
+        uint32_t probe = 0xA5A5A5A5u;
+        uint32_t saved0 = 0, savedN = 0;
+        int ok0 = guest_memory_uc_peek_u32((struct uc_struct *)uc, info_guest, &saved0);
+        int okN = guest_memory_uc_peek_u32((struct uc_struct *)uc,
+                                           info_guest + GWY_MR_USERINFO_BYTES - 4u, &savedN);
+        if (ok0 && okN &&
+            guest_memory_uc_poke_u32((struct uc_struct *)uc, info_guest, probe) &&
+            guest_memory_uc_poke_u32((struct uc_struct *)uc,
+                                    info_guest + GWY_MR_USERINFO_BYTES - 4u, probe) &&
+            guest_memory_uc_poke_u32((struct uc_struct *)uc, info_guest, saved0) &&
+            guest_memory_uc_poke_u32((struct uc_struct *)uc,
+                                    info_guest + GWY_MR_USERINFO_BYTES - 4u, savedN)) {
+            writable = 1;
+        }
+    }
+    if (!writable) {
+        if (call_id <= 16u) {
+            printf("[MR_GETUSERINFO_LEAVE] call_id=%u info_guest=0x%X status=%d "
+                   "bytes_written=0 note=not_writable evidence=OBSERVED\n",
+                   call_id, info_guest, (int)MR_FAILED);
+            fflush(stdout);
+        }
+        SET_RET_V((uint32_t)(int32_t)MR_FAILED);
+        return;
+    }
+
+    if (platform_userinfo_current(&blob, &err) != L_OK ||
+        blob.filled < GWY_MR_USERINFO_BYTES) {
+        if (call_id <= 16u) {
+            printf("[MR_GETUSERINFO_LEAVE] call_id=%u info_guest=0x%X status=%d "
+                   "bytes_written=0 note=fill_failed evidence=OBSERVED\n",
+                   call_id, info_guest, (int)MR_FAILED);
+            fflush(stdout);
+        }
+        SET_RET_V((uint32_t)(int32_t)MR_FAILED);
+        return;
+    }
+
+    if (!guest_memory_uc_poke((struct uc_struct *)uc, info_guest, blob.bytes,
+                              GWY_MR_USERINFO_BYTES)) {
+        if (call_id <= 16u) {
+            printf("[MR_GETUSERINFO_LEAVE] call_id=%u info_guest=0x%X status=%d "
+                   "bytes_written=0 note=poke_failed evidence=OBSERVED\n",
+                   call_id, info_guest, (int)MR_FAILED);
+            fflush(stdout);
+        }
+        SET_RET_V((uint32_t)(int32_t)MR_FAILED);
+        return;
+    }
+
+    memcpy(&ver, blob.bytes + 0x30, 4);
+    snprintf(manuf, sizeof(manuf), "%.7s", (const char *)(blob.bytes + 0x20));
+    snprintf(model, sizeof(model), "%.7s", (const char *)(blob.bytes + 0x28));
+    {
+        char imei_tmp[17];
+        char imsi_tmp[17];
+        size_t n;
+        memcpy(imei_tmp, blob.bytes, 16);
+        imei_tmp[16] = '\0';
+        n = strlen(imei_tmp);
+        if (n <= 8)
+            snprintf(imei_mask, sizeof(imei_mask), "%s", imei_tmp);
+        else
+            snprintf(imei_mask, sizeof(imei_mask), "%.4s***%.4s", imei_tmp, imei_tmp + n - 4);
+        memcpy(imsi_tmp, blob.bytes + 0x10, 16);
+        imsi_tmp[16] = '\0';
+        n = strlen(imsi_tmp);
+        if (n == 0)
+            imsi_suf[0] = '\0';
+        else if (n <= 4)
+            snprintf(imsi_suf, sizeof(imsi_suf), "%.4s", imsi_tmp);
+        else
+            snprintf(imsi_suf, sizeof(imsi_suf), "%.4s", imsi_tmp + n - 4);
+    }
+    gwy_sha256(blob.bytes, GWY_MR_USERINFO_BYTES, digest);
+    gwy_sha256_hex(digest, hex);
+
+    if (call_id <= 16u) {
+        printf("[MR_GETUSERINFO_LEAVE] call_id=%u info_guest=0x%X status=%d bytes_written=64 "
+               "imei=%s imsi_suffix=%s manufacturer=%s model=%s ver=%u blob_sha256=%s "
+               "owner_module=%s current_mrp=%s logical_package=%s evidence=OBSERVED\n",
+               call_id, info_guest, (int)MR_SUCCESS, imei_mask, imsi_suf, manuf, model, ver, hex,
+               owner, current_mrp, logical_pkg);
+        fflush(stdout);
+    }
+
+    /* Hard stop if active package switched to wxjwq without jjfb scope. */
+    if (current_mrp && strstr(current_mrp, "wxjwq.mrp")) {
+        printf("[MR_GETUSERINFO_PACKAGE_ALERT] current_mrp=%s note=possible_cross_package "
+               "evidence=OBSERVED\n",
+               current_mrp);
+        fflush(stdout);
+    }
+
+    SET_RET_V((uint32_t)(int32_t)MR_SUCCESS);
 }
 
 /* P13 follow-on: mr_getTime — ms since DSM/base (mythroad dsm.c contract). */
@@ -2684,8 +2868,8 @@ static BridgeMap mr_table_funcMap[] = {
     BRIDGE_FUNC_MAP(0x80, MAP_FUNC, mr_timerStop, NULL, br_timerStop, 0),
     BRIDGE_FUNC_MAP(0x84, MAP_FUNC, mr_getTime, NULL, br_mr_getTime, 0),
     BRIDGE_FUNC_MAP(0x88, MAP_FUNC, mr_getDatetime, NULL, br_getDatetime, 0),
-    BRIDGE_FUNC_MAP(0x8C, MAP_FUNC, mr_getUserInfo, NULL, NULL, 0),
-    BRIDGE_FUNC_MAP(0x90, MAP_FUNC, mr_sleep, NULL, NULL, 0),
+    BRIDGE_FUNC_MAP(0x8C, MAP_FUNC, mr_getUserInfo, NULL, br_mr_getUserInfo, 0),
+    BRIDGE_FUNC_MAP(0x90, MAP_FUNC, mr_sleep, NULL, br_sleep, 0),
     BRIDGE_FUNC_MAP(0x94, MAP_FUNC, mr_plat, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x98, MAP_FUNC, mr_platEx, NULL, NULL, 0),
     BRIDGE_FUNC_MAP(0x9C, MAP_FUNC, mr_ferrno, NULL, NULL, 0),

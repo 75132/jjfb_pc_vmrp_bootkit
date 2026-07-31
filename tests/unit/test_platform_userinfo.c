@@ -51,6 +51,43 @@ int main(void) {
             }
         }
     }
+    /* spare[12] at +0x34 must be zero. */
+    {
+        size_t i;
+        for (i = 0x34; i < GWY_MR_USERINFO_BYTES; i++) {
+            if (blob.bytes[i] != 0) {
+                fprintf(stderr, "non-zero spare at +0x%zX\n", i);
+                return 1;
+            }
+        }
+    }
+
+    /* P14: platform_userinfo_current == fill(defaults) and only 64 logical bytes. */
+    {
+        PlatformUserInfoBlob cur;
+        uint8_t sentinel[80];
+        size_t i;
+        memset(sentinel, 0xCC, sizeof(sentinel));
+        if (platform_userinfo_current(&cur, &err) != L_OK) {
+            fprintf(stderr, "current failed: %s\n", err.message);
+            return 1;
+        }
+        if (memcmp(cur.bytes, blob.bytes, GWY_MR_USERINFO_BYTES) != 0) {
+            fprintf(stderr, "current vs fill mismatch\n");
+            return 1;
+        }
+        if (cur.filled != GWY_MR_USERINFO_BYTES) {
+            fprintf(stderr, "current.filled=%zu\n", cur.filled);
+            return 1;
+        }
+        memcpy(sentinel, cur.bytes, GWY_MR_USERINFO_BYTES);
+        for (i = GWY_MR_USERINFO_BYTES; i < sizeof(sentinel); i++) {
+            if (sentinel[i] != 0xCC) {
+                fprintf(stderr, "sentinel overwrite at +0x%zX\n", i);
+                return 1;
+            }
+        }
+    }
 
     memset(&call, 0, sizeof(call));
     call.code = 0x10180u;
@@ -62,6 +99,15 @@ int main(void) {
     if (memcmp(result.userinfo.bytes, blob.bytes, GWY_MR_USERINFO_BYTES) != 0) {
         fprintf(stderr, "classify blob mismatch\n");
         return 1;
+    }
+    /* 0x10180 and mr_getUserInfo share platform_userinfo_current(). */
+    {
+        PlatformUserInfoBlob cur;
+        if (platform_userinfo_current(&cur, &err) != L_OK ||
+            memcmp(result.userinfo.bytes, cur.bytes, GWY_MR_USERINFO_BYTES) != 0) {
+            fprintf(stderr, "0x10180 vs current mismatch\n");
+            return 1;
+        }
     }
 
     call.code = 0x1u;

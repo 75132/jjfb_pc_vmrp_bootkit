@@ -118,7 +118,6 @@ static void fill_timer_stop(GwyPlatCallResult *out, uint32_t chunk, const char *
 }
 
 void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult *out) {
-    PlatformIdentity id;
     LauncherError err;
     uint32_t chunk;
 
@@ -181,11 +180,10 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
      * TARGET_OBSERVED: gamelist sendAppEvent(0x10180) then LDRB [ret+0x20].
      */
     if (call->code == 0x10180u) {
-        platform_identity_set_defaults(&id);
         out->kind = GWY_PLAT_KIND_USERINFO_BLOB;
         out->name = "userinfo_blob";
         out->evidence = "DOCUMENTED+TARGET_OBSERVED";
-        if (platform_userinfo_fill(&id, GWY_DEFAULT_IMSI, &out->userinfo, &err) != L_OK) {
+        if (platform_userinfo_current(&out->userinfo, &err) != L_OK) {
             out->kind = GWY_PLAT_KIND_UNSUPPORTED;
             out->name = "userinfo_fill_failed";
             out->evidence = "DOCUMENTED";

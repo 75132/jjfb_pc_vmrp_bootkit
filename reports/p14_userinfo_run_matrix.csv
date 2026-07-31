@@ -1,0 +1,8 @@
+﻿run_kind,run_id,main_sha,applicable,hit,case9_leave,mmochat,enter_n,leave_write,leave_null,leave_note,unimpl,owner_module,blob_sha256,package_alert,wxjwq_active,sleep_n,sleep_unimpl,dsm_reinit,next_unimpl,p3_fault,proc
+diag,p14_diag_20260801_055129_88108,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,HIT,yes,yes,yes,1,0,1,null_ptr,no,robotol.ext,NONE,no,no,1,no,1,mr_plat,no,
+hit1,p14_hit1_20260801_055210_30983,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,HIT,yes,yes,yes,1,0,1,null_ptr,no,robotol.ext,NONE,no,no,1,no,1,mr_plat,no,
+hit2,p14_hit2_20260801_055245_6388,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,NOT_APPLICABLE,no,yes,yes,0,0,0,NONE,no,NONE,NONE,no,no,0,no,1,none,no,
+hit3,p14_hit3_20260801_055325_1169,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,NOT_APPLICABLE,no,no,no,0,0,0,NONE,no,NONE,NONE,no,no,0,no,1,none,no,
+hit4,p14_hit4_20260801_055406_65222,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,NOT_APPLICABLE,no,no,no,0,0,0,NONE,no,NONE,NONE,no,no,0,no,1,none,no,
+extra1,p14_x1_20260801_055429_33825,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,NOT_APPLICABLE,no,yes,yes,0,0,0,NONE,no,NONE,NONE,no,no,0,no,1,none,no,
+extra2,p14_x2_20260801_055525_57463,63321b9648027d9f5c4619d25a743146277af6bcc6e734331f511a82689c3615,HIT,yes,yes,yes,1,0,1,null_ptr,no,robotol.ext,NONE,no,no,1,no,1,mr_plat,no,

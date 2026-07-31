@@ -47,3 +47,9 @@ LauncherStatus platform_userinfo_fill(const PlatformIdentity *id,
     out->filled = GWY_MR_USERINFO_BYTES;
     return L_OK;
 }
+
+LauncherStatus platform_userinfo_current(PlatformUserInfoBlob *out, LauncherError *err) {
+    PlatformIdentity id;
+    platform_identity_set_defaults(&id);
+    return platform_userinfo_fill(&id, GWY_DEFAULT_IMSI, out, err);
+}
