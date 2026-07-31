@@ -258,26 +258,43 @@ static uint32_t mr_extHelper_addr;
 static int g_in_ext_init_deliver;
 /* E10A-2: after gbrwcore→gamelist continue, re-pin DSM R9 when nested MRP helpers return. */
 static int g_e10a_shell_continued;
-/* br_exit EXIT_PARK: no longer park at live CODE_ADDRESS (DSM). Flag forces
- * runCode break; a global UC_HOOK_CODE stop-hook calls uc_emu_stop on next insn. */
+/* P26: owner-scoped EXIT_PARK — flag + depth/serial; br_exit calls uc_emu_stop
+ * directly. Global CODE stop-hook is fallback only (must not clear park). */
 static int g_e10a_exit_parked;
 static int g_e10a_park_page_ready;
-static int g_e10a_park_skip_once;
 static uc_hook g_e10a_park_stop_hook;
 static int g_e10a_park_stop_hook_on;
+static uint32_t g_runCode_depth;
+static uint64_t g_runCode_serial;
+static uint64_t g_runCode_serial_stack[64];
+static uint32_t g_e10a_exit_park_owner_depth;
+static uint64_t g_e10a_exit_park_owner_serial;
+/* Nonzero while MAP_FUNC host callback runs — stop-hook must not re-stop. */
+static int g_in_map_func_callback;
+
+static uint64_t e10a_active_run_serial(void) {
+    if (g_runCode_depth == 0u || g_runCode_depth >= 64u) return g_runCode_serial;
+    return g_runCode_serial_stack[g_runCode_depth];
+}
+
+static void e10a_sync_p26_ctx(void) {
+    gwy_ext_obs_p26_run_context(g_runCode_depth, e10a_active_run_serial(),
+                                g_e10a_exit_park_owner_depth, g_e10a_exit_park_owner_serial,
+                                g_e10a_exit_parked);
+}
 
 static void park_stop_hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user_data) {
     uint32_t pc;
     (void)size;
     (void)user_data;
     if (!g_e10a_exit_parked) return;
-    /* Skip the in-progress mr_exit stub hook; stop on the next guest PC. */
-    if (g_e10a_park_skip_once) {
-        g_e10a_park_skip_once = 0;
-        return;
-    }
+    /* Direct uc_emu_stop already issued from br_exit inside MAP_FUNC — do not
+     * re-enter stop while that callback is still unwinding (unicorn 1.0.2). */
+    if (g_in_map_func_callback) return;
     pc = (uint32_t)address;
-    printf("[JJFB_E10A_EXIT_PARK] stop_hook pc=0x%X evidence=TARGET_OBSERVED\n", pc);
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "PARK_STOP_HOOK_FALLBACK", "code_hook", 0);
+    printf("[JJFB_E10A_EXIT_PARK] stop_hook_fallback pc=0x%X evidence=TARGET_OBSERVED\n", pc);
     fflush(stdout);
     (void)uc_emu_stop(uc);
 }
@@ -294,18 +311,43 @@ static void ensure_exit_park_stop_hook(uc_engine *uc) {
 
 static void ensure_exit_park_page(uc_engine *uc) {
     if (g_e10a_park_page_ready || !uc) return;
-    /* Inside primary map: drop EXEC so FETCH_PROT stops if PC lands here. */
-    if (uc_mem_protect(uc, GWY_EXIT_PARK_PC, 0x1000, UC_PROT_READ) == UC_ERR_OK) {
-        g_e10a_park_page_ready = 1;
-        printf("[JJFB_E10A_EXIT_PARK] protect_ro_page=0x%X size=0x1000 evidence=TARGET_OBSERVED\n",
-               GWY_EXIT_PARK_PC);
-        fflush(stdout);
-    } else {
-        printf("[JJFB_E10A_EXIT_PARK] protect_ro_failed=0x%X evidence=OBSERVED\n",
-               GWY_EXIT_PARK_PC);
-        fflush(stdout);
-    }
-    ensure_exit_park_stop_hook(uc);
+    /* Park PC is intentionally unmapped (FETCH_UNMAPPED). Do not map/protect it.
+     * Do NOT arm global CODE stop-hook here (re-fires on MAP_FUNC stub). */
+    g_e10a_park_page_ready = 1;
+    printf("[JJFB_E10A_EXIT_PARK] unmapped_park_pc=0x%X note=fetch_unmapped_not_prot "
+           "evidence=TARGET_OBSERVED\n",
+           GWY_EXIT_PARK_PC);
+    fflush(stdout);
+    (void)uc;
+}
+
+/* Set owner-scoped park and stop current emulation from inside the callback.
+ * PC/LR → RO park page (not CODE_ADDRESS: that word is mr_table data and executes
+ * as garbage). Primary stop is uc_emu_stop; RO FETCH_PROT is insurance. */
+static void e10a_exit_park_set(uc_engine *uc, const char *reason) {
+    uint32_t stop_pc = GWY_EXIT_PARK_PC;
+    uint32_t cpsr = 0;
+    ensure_exit_park_page(uc);
+    uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
+    uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
+    uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
+    cpsr &= ~(1u << 5);
+    uc_reg_write(uc, UC_ARM_REG_CPSR, &cpsr);
+    g_e10a_exit_parked = 1;
+    g_e10a_exit_park_owner_depth = g_runCode_depth;
+    g_e10a_exit_park_owner_serial = e10a_active_run_serial();
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "PARK_SET", reason ? reason : "br_exit", 0);
+    printf("[JJFB_E10A_EXIT_PARK] PARK_SET pc=0x%X reason=%s owner_depth=%u owner_serial=%llu "
+           "note=ro_page_plus_emu_stop evidence=TARGET_OBSERVED\n",
+           stop_pc, reason ? reason : "?", g_e10a_exit_park_owner_depth,
+           (unsigned long long)g_e10a_exit_park_owner_serial);
+    fflush(stdout);
+    (void)uc_emu_stop(uc);
+    gwy_ext_obs_p26_cf(uc, "EMU_STOP_REQUESTED", reason ? reason : "br_exit", 0);
+    printf("[JJFB_E10A_EXIT_PARK] EMU_STOP_REQUESTED reason=%s evidence=TARGET_OBSERVED\n",
+           reason ? reason : "?");
+    fflush(stdout);
 }
 /* DSM cfunction helper/P saved before nested MRP retargets mr_extHelper_addr. */
 static uint32_t g_dsm_extHelper_addr;
@@ -1758,6 +1800,8 @@ static int32_t bridge_dsm_mr_start_dsm_unlocked(uc_engine *uc, char *filename, c
 static void br_exit(BridgeMap *o, uc_engine *uc) {
     // void (*exit)(void);
     LOG("ext call %s()\n", o->name);
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "BR_EXIT_ENTER", o && o->name ? o->name : "exit", 0);
     gwy_ext_obs_e10a31a_br_exit_enter(uc);
     /* Phase 6P: first post-gbrwcore exit may continue into gamelist (no process exit). */
     if (gwy_shell_shim_try_continue_after_mr_exit(uc)) {
@@ -1895,48 +1939,17 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                    gwy_ext_obs_e10a31_timer_fire_observed());
             fflush(stdout);
         }
-        /*
-         * mr_exit sticky walk: park at READ-only mapped page (FETCH_PROT).
-         * CODE_ADDRESS is live DSM (executes); unmapped PC writes are ignored.
-         */
-        {
-            uint32_t stop_pc = GWY_EXIT_PARK_PC;
-            uint32_t cpsr = 0;
-            ensure_exit_park_page(uc);
-            uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
-            uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
-            uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
-            cpsr &= ~(1u << 5);
-            uc_reg_write(uc, UC_ARM_REG_CPSR, &cpsr);
-            g_e10a_exit_parked = 1;
-            g_e10a_park_skip_once = 1;
-            printf("[JJFB_E10A_EXIT_PARK] pc=0x%X reason=shell_core_continue "
-                   "note=ro_park_page evidence=TARGET_OBSERVED\n",
-                   stop_pc);
-            fflush(stdout);
-        }
+        /* P26: owner-scoped park + immediate uc_emu_stop (no RO-page wait). */
+        e10a_exit_park_set(uc, "shell_core_continue");
         return;
     }
     /*
      * After shell_core_continue has already consumed mr_exit once, a later sticky
-     * DSM/gamelist mr_exit must not process-exit — park so POST_CONT_PUMP / host
-     * loop can keep delivering timer/cfg. First gbrwcore exit still continues above.
+     * DSM/gamelist mr_exit must not process-exit — park so host loop can keep
+     * delivering timer/cfg. First gbrwcore exit still continues above.
      */
     if (g_e10a_shell_continued) {
-        uint32_t stop_pc = GWY_EXIT_PARK_PC;
-        uint32_t cpsr = 0;
-        ensure_exit_park_page(uc);
-        uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
-        uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
-        uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr);
-        cpsr &= ~(1u << 5);
-        uc_reg_write(uc, UC_ARM_REG_CPSR, &cpsr);
-        g_e10a_exit_parked = 1;
-        g_e10a_park_skip_once = 1;
-        printf("[JJFB_E10A_EXIT_PARK] pc=0x%X reason=already_continued "
-               "note=ro_park_page evidence=TARGET_OBSERVED\n",
-               stop_pc);
-        fflush(stdout);
+        e10a_exit_park_set(uc, "already_continued");
         return;
     }
     gwy_ext_obs_e10a31a_br_exit_fallback(uc);
@@ -2723,12 +2736,11 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
     uIntMap *mobj;
     (void)size;
     (void)user_data;
-    /* After EXIT_PARK, refuse further sticky MAP_FUNC resumes. */
+    /* After EXIT_PARK: stop emulation; do not rewrite PC/LR or clear park.
+     * Lazy-arm stop-hook only once a subsequent guest insn is reached. */
     if (g_e10a_exit_parked) {
-        uint32_t stop_pc = GWY_EXIT_PARK_PC;
-        ensure_exit_park_page(uc);
-        uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
-        uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
+        ensure_exit_park_stop_hook(uc);
+        (void)uc_emu_stop(uc);
         return;
     }
     mobj = uIntMap_search(&root, address);
@@ -2787,11 +2799,17 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
 #endif
             /* Phase 6C-D1: observe-only snapshots; must not mutate r4-r11/r9. */
             gwy_ext_obs_host_callback_enter(uc, slot, obj->name);
+            g_in_map_func_callback = 1;
             obj->fn(obj, uc);
+            g_in_map_func_callback = 0;
             gwy_ext_obs_host_callback_leave(uc, slot, obj->name);
 
-            /* EXIT_PARK already set PC/LR/CPSR and uc_emu_stop — do not resume sticky LR. */
+            /* EXIT_PARK: do not resume sticky LR; re-assert unmapped PC + stop. */
             if (g_e10a_exit_parked) {
+                uint32_t stop_pc = GWY_EXIT_PARK_PC;
+                uc_reg_write(uc, UC_ARM_REG_PC, &stop_pc);
+                uc_reg_write(uc, UC_ARM_REG_LR, &stop_pc);
+                (void)uc_emu_stop(uc);
                 gwy_ext_obs_host_callback_resume(uc, slot, obj->name);
                 return;
             }
@@ -2880,10 +2898,24 @@ static void bridge_uc_restore_regs(uc_engine *uc, const uint32_t in[17]) {
 
 static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool isThumb) {
     uint32_t pc;
+    uint32_t local_depth;
+    uint64_t local_serial;
+    int owner_break = 0;
+    int non_owner_seen = 0;
+    char phase[64];
+
+    g_runCode_depth += 1u;
+    local_depth = g_runCode_depth;
+    g_runCode_serial += 1ull;
+    local_serial = g_runCode_serial;
+    if (local_depth < 64u) g_runCode_serial_stack[local_depth] = local_serial;
+    e10a_sync_p26_ctx();
+    snprintf(phase, sizeof(phase), "start=0x%X stop=0x%X", startAddr, stopAddr);
+    gwy_ext_obs_p26_cf(uc, "RUN_CODE_ENTER", phase, 0);
+
     uc_reg_write(uc, UC_ARM_REG_LR, &stopAddr);  // 当程序执行到这里时停止运行(return)
 
-    /* Instruction slices (unicorn 1.0.2 timeout is unreliable). Poll deadline
-     * between slices so EXT timers advance while start_dsm holds the mutex. */
+    /* Instruction slices (unicorn 1.0.2 timeout is unreliable). */
     pc = isThumb ? (startAddr | 1u) : startAddr;
     for (;;) {
         uint32_t cpsr = 0;
@@ -2891,8 +2923,39 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         uint32_t lr_before_poll = 0;
         uint32_t cpsr_before_poll = 0;
         uc_err err = uc_emu_start(uc, pc, stopAddr, 0, 100000ull);
+        uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+        e10a_sync_p26_ctx();
+        gwy_ext_obs_p26_cf(uc, "UC_EMU_START_RETURN", phase, (int)err);
+
+        /*
+         * P26: owner-scoped EXIT_PARK must be checked BEFORE timer_poll /
+         * guiPumpEvents so nested runCode cannot consume or disturb park.
+         */
+        if (g_e10a_exit_parked) {
+            if (local_depth == g_e10a_exit_park_owner_depth &&
+                local_serial == g_e10a_exit_park_owner_serial) {
+                owner_break = 1;
+                gwy_ext_obs_p26_cf(uc, "RUN_CODE_BREAK_OWNER", phase, (int)err);
+                printf("[JJFB_E10A_EXIT_PARK] RUN_CODE_BREAK_OWNER pc=0x%X stop=0x%X err=%u "
+                       "depth=%u serial=%llu evidence=TARGET_OBSERVED\n",
+                       pc, stopAddr, (unsigned)err, local_depth,
+                       (unsigned long long)local_serial);
+                fflush(stdout);
+                break;
+            }
+            non_owner_seen = 1;
+            gwy_ext_obs_p26_cf(uc, "PARK_SEEN_NON_OWNER", phase, (int)err);
+            printf("[JJFB_E10A_EXIT_PARK] PARK_SEEN_NON_OWNER depth=%u serial=%llu "
+                   "owner_depth=%u owner_serial=%llu evidence=OBSERVED\n",
+                   local_depth, (unsigned long long)local_serial, g_e10a_exit_park_owner_depth,
+                   (unsigned long long)g_e10a_exit_park_owner_serial);
+            fflush(stdout);
+            /* Non-owner: do not clear park, do not rewrite PC, do not poll. */
+            break;
+        }
+
         /* Preserve outer PC/LR across nested helper deliveries inside the poll. */
-        uc_reg_read(uc, UC_ARM_REG_PC, &pc_before_poll);
+        pc_before_poll = pc;
         uc_reg_read(uc, UC_ARM_REG_LR, &lr_before_poll);
         uc_reg_read(uc, UC_ARM_REG_CPSR, &cpsr_before_poll);
         gwy_ext_obs_timer_poll_uc(uc);
@@ -2909,16 +2972,21 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         /* E9B: keep HWND responsive while Unicorn owns the UI thread. */
         guiPumpEvents();
         uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+        /* Re-check after poll in case a nested path set park (should be rare). */
         if (g_e10a_exit_parked) {
-            g_e10a_exit_parked = 0;
-            printf("[JJFB_E10A_EXIT_PARK] runCode_break pc=0x%X stop=0x%X err=%u "
-                   "evidence=TARGET_OBSERVED\n",
-                   pc, stopAddr, (unsigned)err);
-            fflush(stdout);
+            if (local_depth == g_e10a_exit_park_owner_depth &&
+                local_serial == g_e10a_exit_park_owner_serial) {
+                owner_break = 1;
+                gwy_ext_obs_p26_cf(uc, "RUN_CODE_BREAK_OWNER", "after_poll", (int)err);
+                break;
+            }
+            non_owner_seen = 1;
+            gwy_ext_obs_p26_cf(uc, "PARK_SEEN_NON_OWNER", "after_poll", (int)err);
             break;
         }
         if ((pc & ~1u) == (stopAddr & ~1u)) break;
         if ((pc & ~1u) == (GWY_EXIT_PARK_PC & ~1u)) {
+            /* Sentinel insurance — primary path is owner flag + uc_emu_stop. */
             printf("[JJFB_E10A_EXIT_PARK] runCode_break_sentinel pc=0x%X err=%u "
                    "evidence=TARGET_OBSERVED\n",
                    pc, (unsigned)err);
@@ -2926,6 +2994,16 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
             break;
         }
         if (err != UC_ERR_OK) {
+            /* Park RO page / stop may surface FETCH_PROT — never fatal after park. */
+            if (g_e10a_exit_parked ||
+                (pc & ~1u) == (GWY_EXIT_PARK_PC & ~1u) ||
+                err == UC_ERR_FETCH_PROT || err == UC_ERR_FETCH_UNMAPPED) {
+                printf("[JJFB_E10A_EXIT_PARK] uc_emu_start_err_nonfatal err=%u (%s) pc=0x%X "
+                       "evidence=OBSERVED\n",
+                       (unsigned)err, uc_strerror(err), pc);
+                fflush(stdout);
+                break;
+            }
             printf("Failed on uc_emu_start() with error returned: %u (%s)\n", err,
                    uc_strerror(err));
             exit(1);
@@ -2936,7 +3014,28 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         else
             pc &= ~1u;
     }
-    gwy_ext_obs_timer_poll_uc(uc);
+
+    /* Unified leave: only owner may clear park; never early-return past this. */
+    if (owner_break && g_e10a_exit_parked && local_depth == g_e10a_exit_park_owner_depth &&
+        local_serial == g_e10a_exit_park_owner_serial) {
+        gwy_ext_obs_p26_cf(uc, "PARK_CONSUMED_BY_OWNER", phase, 0);
+        printf("[JJFB_E10A_EXIT_PARK] PARK_CONSUMED_BY_OWNER depth=%u serial=%llu "
+               "evidence=TARGET_OBSERVED\n",
+               local_depth, (unsigned long long)local_serial);
+        fflush(stdout);
+        g_e10a_exit_parked = 0;
+        g_e10a_exit_park_owner_depth = 0;
+        g_e10a_exit_park_owner_serial = 0;
+    } else if (!owner_break && !non_owner_seen) {
+        /* Normal completion — poll once for pending deadlines. */
+        gwy_ext_obs_timer_poll_uc(uc);
+    }
+
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "RUN_CODE_LEAVE", phase, 0);
+    if (g_runCode_depth > 0u) g_runCode_depth -= 1u;
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "RUN_CODE_CALLER_RESUME", phase, 0);
 }
 
 /* Forward: defined below with start_dsm helpers. */
@@ -3320,7 +3419,10 @@ int32_t bridge_dsm_mr_start_dsm(uc_engine *uc, char *filename, char *ext, char *
     printf("[PLATFORM_TIMER] op=START_DSM_RETURN filename=%s ret=%d evidence=DOCUMENTED\n",
            filename ? filename : "?", (int)v);
     fflush(stdout);
+    e10a_sync_p26_ctx();
+    gwy_ext_obs_p26_cf(uc, "RUN_CODE_CALLER_RESUME", "start_dsm_return", 0);
     gwy_ext_obs_on_start_dsm_return(filename, v);
+    gwy_ext_obs_p26_host_loop_reenter("start_dsm_unlock");
     return v;
 }
 

@@ -76,8 +76,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 /* Forward decls for product P2 helpers defined later in this file. */
+void gwy_ext_obs_p26_host_loop_reenter(const char *phase);
 void gwy_ext_obs_set_product_run_id(const char *run_id);
 int gwy_ext_obs_try_product_handshake(void *uc);
 void gwy_ext_obs_request_product_handshake(void);
@@ -121,6 +126,8 @@ static int g_lifecycle_pending;
 static int g_lifecycle_delivering;
 static uint32_t g_lifecycle_ticks;
 static void *g_bound_uc;
+/* Mirrored from P26 run context — mem_fault may run before g_p26 block. */
+static int g_p26_parked_flag;
 static const uint32_t GWY_LIFECYCLE_PERIOD_MS = 50u;
 /* Product nested family/drain previously capped at 200k and aborted inside
  * 0x2F6C44 (downVersion compare) with insn_limit_or_yield + full register
@@ -1738,6 +1745,8 @@ void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms) {
     uint32_t due_in = 0;
     int active;
     const char *reason;
+    /* P26: first host SDL loop tick after start_dsm return = control restored. */
+    gwy_ext_obs_p26_host_loop_reenter("post_start_loop_tick");
     if (!env_flag("JJFB_POST_START_SCHEDULER_TRACE")) return;
     if (!g_start_dsm_returned) {
         if ((g_post_loop_iter++ % 40u) == 1u) {
@@ -2980,8 +2989,8 @@ void gwy_ext_obs_mem_fault(void *uc,
                            int64_t value) {
     uint32_t pc = 0, lr = 0, sp = 0, r9 = 0;
 #ifndef GWY_EXIT_PARK_PC
-/* Keep in sync with third_party/.../gwy_ext_obs_abi.h (END_ADDRESS-0x1000). */
-#define GWY_EXIT_PARK_PC 0xE7F000u
+/* Keep in sync with third_party/.../gwy_ext_obs_abi.h (unmapped park sentinel). */
+#define GWY_EXIT_PARK_PC 0xDEAD0000u
 #endif
 #ifdef GWY_HAVE_UNICORN
     if (uc) {
@@ -2991,13 +3000,16 @@ void gwy_ext_obs_mem_fault(void *uc,
         uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9);
     }
 #endif
-    /* Intentional br_exit park on READ-only page — not a real CF fault. */
-    if ((address & ~0xFFFull) == ((uint64_t)GWY_EXIT_PARK_PC & ~0xFFFull) ||
+    /* Intentional EXIT_PARK unmapped sentinel / owner-scoped park — not a real CF fault. */
+    if (g_p26_parked_flag || (address & ~0xFFFull) == ((uint64_t)GWY_EXIT_PARK_PC & ~0xFFFull) ||
         (pc & ~0xFFFu) == (GWY_EXIT_PARK_PC & ~0xFFFu)) {
-        printf("[JJFB_E10A_EXIT_PARK] mem_fault_suppressed addr=0x%llX pc=0x%X "
+        printf("[JJFB_E10A_EXIT_PARK] mem_fault_suppressed addr=0x%llX pc=0x%X parked=%d "
                "evidence=TARGET_OBSERVED\n",
-               (unsigned long long)address, pc);
+               (unsigned long long)address, pc, g_p26_parked_flag);
         fflush(stdout);
+#ifdef GWY_HAVE_UNICORN
+        if (uc) (void)uc_emu_stop((uc_engine *)uc);
+#endif
         return;
     }
     p22_note_fetch_fault(pc, (uint32_t)address, lr, sp, r9);
@@ -3337,4 +3349,118 @@ int gwy_ext_obs_timer_fire_r9_guard(void *uc) {
     (void)uc;
     return 0;
 #endif
+}
+
+/* ---- P26 EXIT_PARK owner-scoped control-flow ladder ---- */
+static struct {
+    int known;
+    int enabled;
+    int host_loop_reenter_emitted;
+    uint32_t depth;
+    uint64_t serial;
+    uint32_t park_owner_depth;
+    uint64_t park_owner_serial;
+    int parked;
+    FILE *csv;
+#ifdef _WIN32
+    LARGE_INTEGER qpf;
+    LARGE_INTEGER t0;
+#else
+    struct timespec t0;
+#endif
+} g_p26;
+
+static int p26_enabled(void) {
+    if (g_p26.known) return g_p26.enabled;
+    g_p26.enabled = env_flag("JJFB_P26_MODE") || env_flag("JJFB_P25_MODE") ||
+                    env_flag("JJFB_P22_MODE") || env_flag("JJFB_E10A_MODE");
+    g_p26.known = 1;
+#ifdef _WIN32
+    if (g_p26.enabled) {
+        QueryPerformanceFrequency(&g_p26.qpf);
+        QueryPerformanceCounter(&g_p26.t0);
+    }
+#else
+    if (g_p26.enabled) clock_gettime(CLOCK_MONOTONIC, &g_p26.t0);
+#endif
+    return g_p26.enabled;
+}
+
+static double p26_elapsed_s(void) {
+#ifdef _WIN32
+    LARGE_INTEGER n;
+    if (!g_p26.qpf.QuadPart) return 0.0;
+    QueryPerformanceCounter(&n);
+    return (double)(n.QuadPart - g_p26.t0.QuadPart) / (double)g_p26.qpf.QuadPart;
+#else
+    struct timespec n;
+    if (clock_gettime(CLOCK_MONOTONIC, &n) != 0) return 0.0;
+    return (double)(n.tv_sec - g_p26.t0.tv_sec) +
+           (double)(n.tv_nsec - g_p26.t0.tv_nsec) / 1e9;
+#endif
+}
+
+static void p26_ensure_csv(void) {
+    const char *p;
+    if (g_p26.csv || !p26_enabled()) return;
+    p = getenv("JJFB_P26_TRACE_CSV");
+    if (!p || !p[0]) p = "research/packs/p26_exit_park/P26_CONTROL_FLOW_TRACE.csv";
+    g_p26.csv = fopen(p, "wb");
+    if (g_p26.csv) {
+        fputs("t_sec,event,depth,serial,pc,lr,sp,r9,cpsr,uc_err,phase,"
+              "park_owner_depth,park_owner_serial,parked\n",
+              g_p26.csv);
+        fflush(g_p26.csv);
+    }
+}
+
+void gwy_ext_obs_p26_run_context(uint32_t depth, uint64_t serial, uint32_t park_owner_depth,
+                                 uint64_t park_owner_serial, int parked) {
+    g_p26_parked_flag = parked ? 1 : 0;
+    if (!p26_enabled()) return;
+    g_p26.depth = depth;
+    g_p26.serial = serial;
+    g_p26.park_owner_depth = park_owner_depth;
+    g_p26.park_owner_serial = park_owner_serial;
+    g_p26.parked = g_p26_parked_flag;
+}
+
+void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_err) {
+    uint32_t pc = 0, lr = 0, sp = 0, r9 = 0, cpsr = 0;
+    if (!p26_enabled() || !event || !event[0]) return;
+    p26_ensure_csv();
+#ifdef GWY_HAVE_UNICORN
+    if (uc) {
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_PC, &pc);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_SP, &sp);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R9, &r9);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_CPSR, &cpsr);
+    }
+#else
+    (void)uc;
+#endif
+    printf("[JJFB_P26_CF] t=%.6f event=%s depth=%u serial=%llu pc=0x%X lr=0x%X sp=0x%X "
+           "r9=0x%X cpsr=0x%X uc_err=%d phase=%s park_owner_depth=%u park_owner_serial=%llu "
+           "parked=%d evidence=OBSERVED\n",
+           p26_elapsed_s(), event, g_p26.depth, (unsigned long long)g_p26.serial, pc, lr, sp, r9,
+           cpsr, uc_err, phase ? phase : "-", g_p26.park_owner_depth,
+           (unsigned long long)g_p26.park_owner_serial, g_p26.parked);
+    fflush(stdout);
+    if (g_p26.csv) {
+        fprintf(g_p26.csv,
+                "%.6f,%s,%u,%llu,0x%X,0x%X,0x%X,0x%X,0x%X,%d,%s,%u,%llu,%d\n",
+                p26_elapsed_s(), event, g_p26.depth, (unsigned long long)g_p26.serial, pc, lr, sp,
+                r9, cpsr, uc_err, phase ? phase : "-", g_p26.park_owner_depth,
+                (unsigned long long)g_p26.park_owner_serial, g_p26.parked);
+        fflush(g_p26.csv);
+    }
+}
+
+void gwy_ext_obs_p26_host_loop_reenter(const char *phase) {
+    if (!p26_enabled()) return;
+    if (g_p26.host_loop_reenter_emitted) return;
+    if (!g_start_dsm_returned) return;
+    g_p26.host_loop_reenter_emitted = 1;
+    gwy_ext_obs_p26_cf(g_bound_uc, "HOST_LOOP_REENTER", phase ? phase : "sdl_loop", 0);
 }

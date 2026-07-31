@@ -56,12 +56,13 @@ static void hook_mem_valid(uc_engine *uc, uc_mem_type type, uint64_t address, in
 
 static bool hook_mem_invalid(uc_engine *uc, uc_mem_type type, uint64_t address, int size, int64_t value, void *user_data) {
     (void)user_data;
-    /* P25: intentional EXIT_PARK on READ-only page — stop without fatal path. */
+    /* EXIT_PARK unmapped sentinel: stop emu; return false so uc_emu_start unwinds. */
     if ((address & ~0xFFFull) == ((uint64_t)GWY_EXIT_PARK_PC & ~0xFFFull)) {
         printf("[JJFB_E10A_EXIT_PARK] mem_invalid_ignored addr=0x%" PRIx64 " type=%s "
-               "note=ro_park_page evidence=TARGET_OBSERVED\n",
+               "note=unmapped_park_pc evidence=TARGET_OBSERVED\n",
                address, memTypeStr(type));
         fflush(stdout);
+        (void)uc_emu_stop(uc);
         return false;
     }
     printf(">>> Tracing mem_invalid mem_type:%s at 0x%" PRIx64 ", size:0x%x, value:0x%" PRIx64 "\n",

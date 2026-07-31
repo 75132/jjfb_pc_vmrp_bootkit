@@ -3,7 +3,7 @@ set(CMAKE_HOST_SYSTEM_NAME "Windows")
 set(CMAKE_HOST_SYSTEM_VERSION "10.0.19045")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "AMD64")
 
-include("D:/Desktop/jjfb_pc_vmrp_bootkit/cmake/toolchains/mingw-i686.cmake")
+include("C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/cmake/toolchains/mingw-i686.cmake")
 
 set(CMAKE_SYSTEM "Windows")
 set(CMAKE_SYSTEM_NAME "Windows")

@@ -1068,7 +1068,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\msys64\mingw32\bin\cmake.exe --regenerate-during-build -SD:\Desktop\jjfb_pc_vmrp_bootkit -BD:\Desktop\jjfb_pc_vmrp_bootkit\build-i686
+  command = C:\msys64\mingw32\bin\cmake.exe --regenerate-during-build -SC:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit -BC:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\build-i686
   description = Re-running CMake...
   generator = 1
 

@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# C/C++源码强制LF
+*.c text eol=lf
+*.h text eol=h
+*.cpp text eol=lf
+*.hpp text eol=lf
+# 第三方源码同样LF
+third_party/**/*.c text eol=lf
+third_party/**/*.h text eol=lf
+# 二进制文件不处理换行
+*.bin binary
+*.elf binary

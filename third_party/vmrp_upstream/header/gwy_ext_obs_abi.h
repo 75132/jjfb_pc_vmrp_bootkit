@@ -99,9 +99,9 @@ void gwy_ext_obs_entry_begin(uint32_t helper,
                              uint32_t sp);
 
 /* Unicorn mem-invalid → structured fault report (do not map fault VA). */
-/* P25: br_exit parks at END_ADDRESS-0x1000 with UC_PROT_READ (no EXEC).
- * Must stay inside primary guest map — PC writes outside are ignored. */
-#define GWY_EXIT_PARK_PC 0xE7F000u
+/* P26: park PC must be UNMAPPED (FETCH_UNMAPPED). RO FETCH_PROT on a mapped
+ * page is unreliable on unicorn 1.0.2 (only first FETCH_PROT is hooked). */
+#define GWY_EXIT_PARK_PC 0xDEAD0000u
 void gwy_ext_obs_mem_fault(void *uc,
                            uint32_t access_type,
                            uint64_t address,
@@ -240,6 +240,16 @@ void gwy_ext_obs_e10a31a_process_exit(int code);
 void gwy_ext_obs_e10a31a_note_font_load(void *uc);
 void gwy_ext_obs_e10a31a_runtime_stop(const char *source, const char *reason, void *uc,
                                       int32_t return_code, const char *detail);
+
+/*
+ * P26: EXIT_PARK owner-scoped control-flow ladder.
+ * Env: JJFB_P26_TRACE_CSV (default research/packs/p26_exit_park/P26_CONTROL_FLOW_TRACE.csv)
+ *      JJFB_P26_MODE=1 to force-enable CSV even without other research envs.
+ */
+void gwy_ext_obs_p26_run_context(uint32_t depth, uint64_t serial, uint32_t park_owner_depth,
+                                 uint64_t park_owner_serial, int parked);
+void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_err);
+void gwy_ext_obs_p26_host_loop_reenter(const char *phase);
 
 #ifdef __cplusplus
 }

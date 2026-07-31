@@ -337,6 +337,24 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
 
 void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms) { (void)t_ms; }
 
+void gwy_ext_obs_p26_run_context(uint32_t depth, uint64_t serial, uint32_t park_owner_depth,
+                                 uint64_t park_owner_serial, int parked) {
+    (void)depth;
+    (void)serial;
+    (void)park_owner_depth;
+    (void)park_owner_serial;
+    (void)parked;
+}
+
+void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_err) {
+    (void)uc;
+    (void)event;
+    (void)phase;
+    (void)uc_err;
+}
+
+void gwy_ext_obs_p26_host_loop_reenter(const char *phase) { (void)phase; }
+
 uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     (void)uc;
     return 0;

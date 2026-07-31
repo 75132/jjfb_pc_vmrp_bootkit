@@ -1,8 +1,8 @@
 ﻿# Product Post-Callback Visual
 
-- **run_id:** p2_20260723_013118_52070
-- **verdict:** NATURAL_CALLBACK_FAULT
+- **run_id:** p2_20260801_040032_63208
+- **verdict:** NATURAL_CALLBACK_IDLE_WAIT
 - **SCHEDULER_NATURAL_CALLBACK:** yes
-- **draw_seen:** yes
-- **refresh_seen:** yes
+- **draw_seen:** no
+- **refresh_seen:** no
 - **note:** no host overlay / substitute pixels

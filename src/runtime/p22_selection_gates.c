@@ -5,6 +5,9 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_r9_switch.h"
 
+/* Implemented in gwy_ext_obs.c (P26 CF ladder). */
+void gwy_ext_obs_p26_cf(void *uc, const char *event, const char *phase, int uc_err);
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -554,6 +557,7 @@ void p22_note_plat_10112(const char *path, const char *ns, const char *host, uin
            "evidence=OBSERVED\n",
            path ? path : "?", ns ? ns : "?", host ? host : "?", buf, len, loaded, ret);
     fflush(stdout);
+    gwy_ext_obs_p26_cf(NULL, "PLATFORM_10112_ENTER", path ? path : "?", ret);
     trace_row("PLAT_10112", -1, (uint32_t)loaded, 0, 0, buf, len, (uint32_t)ret, 0,
               path ? path : "");
     if (path && (strcmp(path, "cfg.bin") == 0 || path_eq_ci_tail(path, "cfg.bin")) &&
@@ -923,6 +927,7 @@ void p22_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t 
         if (!g_p22.bp_logged[2]) {
             g_p22.bp_logged[2] = 1;
             dump_bp(uc, "CFG_LOADER_ENTRY", pc, off, regs, lr, sp, cpsr);
+            gwy_ext_obs_p26_cf(uc, "CFG_LOADER_ENTRY", "base+0x7B6C", 0);
         }
         mark_gate(P22_G1_CFG_LOADER, pc, off, regs ? regs[0] : 0, 0, 0, regs ? regs[9] : 0,
                   "CFG_LOADER_ENTRY");
@@ -943,6 +948,7 @@ void p22_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t 
         if (!g_p22.bp_logged[6]) {
             g_p22.bp_logged[6] = 1;
             dump_cfg_dispatch(uc, pc, off, regs, lr, sp, cpsr);
+            gwy_ext_obs_p26_cf(uc, "CFG_DISPATCH", "base+0x7B9C", 0);
         }
         ring_push_bl(pc, lr, 0); /* target via E018 */
     }
@@ -962,6 +968,7 @@ void p22_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t 
         if (!g_p22.bp_logged[11]) {
             g_p22.bp_logged[11] = 1;
             dump_bp(uc, "CFG_PATH_STATE_ENTRY", pc, off, regs, lr, sp, cpsr);
+            gwy_ext_obs_p26_cf(uc, "CFG_EXTERNAL_STATE", "base+0xD768", 0);
         }
         mark_gate(P22_G5_PATH_STATE, pc, off, regs ? regs[0] : 0, 0, 0, regs ? regs[9] : 0,
                   "CFG_PATH_STATE_ENTRY");

@@ -1,0 +1,2 @@
+run_id,t_sec,event,gate,value,pc,off,r0,r1,r2,r9,item_va,callback_va,note
+1785527926237,37.768,CODE_WRITE,-,4,0x89D8C,0x4,0x2AC8DC,0xA2548,0x0,0x0,0x0,0x0,"gamelist_code"
