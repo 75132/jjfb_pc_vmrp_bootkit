@@ -47,6 +47,9 @@ void gwy_ext_obs_p_update(uint32_t helper,
 
 void gwy_ext_obs_helper_call(uint32_t helper, uint32_t method, int32_t ret_value);
 
+/* Observe Host bridge_mr_event → method=1 path (P22H). */
+void gwy_ext_obs_note_mr_event(int32_t event_code, int32_t p0, int32_t p1);
+
 /*
  * Stage E3: queue DOCUMENTED init sequence (case_801 codes 6→8→0) after game_package
  * ER_RW/R9 restore. Delivered on next host mr_extHelper enter (not from Unicorn hooks).

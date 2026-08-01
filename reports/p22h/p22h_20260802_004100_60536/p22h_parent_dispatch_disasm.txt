@@ -1,0 +1,15 @@
+# run_id=p22h_20260802_004100_60536 source_commit=819ef645ae90ab7ee0cf4e16415af2b23b165d91 main_exe=630858e442e7be195b31ef49b04ad4c335b5f8f3b450f9e246a81c744f1f1950 raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_sha=e510fe8795381f27e1ec49048f04ee94a486baf0ede0c9382825d2d606427ca8 module_id=0x4 runtime_base=0x2D4364 helper=0x2E3099 ERW=0x682B8C P=0x2AC8EC gen=2 owner=gamelist.ext gaps=generation
+# P22H parent dispatch note
+# method=1 natural path is Host (not Guest BL to registered_helper).
+# Documented chain:
+#   bridge_mr_event(code,p0,p1)
+#     → writes mr_c_event
+#     → bridge_mr_extHelper(uc, code=1, input=event_t*, len=sizeof(event_t))
+#       → R0=P R1=1 R2=input R3=len R9=ER_RW
+#       → runCode(mr_extHelper_addr)
+# Same Host function can also deliver code 6/8/0 (bridge_deliver_ext_init_seq /
+# documented mythroad case_801) but those were NOT observed naturally this run.
+# source=HISTORICAL_HOST_RECONSTRUCTION natural_evidence=NO for 6→8→0
+# grade=NATURAL_EQUIVALENT_FOUND
+# method1_host_fn=UNKNOWN_NOT_EXPOSED
+# method1_helper=0x2E3099

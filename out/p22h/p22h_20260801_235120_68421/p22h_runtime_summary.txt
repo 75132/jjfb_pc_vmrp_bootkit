@@ -1,0 +1,15 @@
+﻿run_id=p22h_20260801_235120_68421
+source_commit=819ef645ae90ab7ee0cf4e16415af2b23b165d91
+main_exe_sha256=eaa48b6054540e178eee1b7673390472496e3937adaaba66251d02b1f135ccb3
+raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414
+runtime_image_sha256=UNKNOWN_NOT_EXPOSED
+class=G
+missing=finalize_missing
+sole_lock=process killed before p22h_finalize
+stop_reason=runner_timeout
+guest_state_written=0
+events_injected=0
+headless=0
+fast_init=0
+p22h_final=
+fire_ext_n=16

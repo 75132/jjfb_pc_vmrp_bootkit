@@ -1,0 +1,27 @@
+run_id=p22h_20260802_004100_60536
+class=E
+helper=0x2E3099
+method1_seen=1
+saw_m0=1
+saw_m1=1
+saw_m2=1
+saw_m6=1
+saw_m8=0
+hist_680=NATURAL_EQUIVALENT_FOUND
+missing=method8_or_full_680_sequence
+sole_lock=Guest path hit helper with partial init methods (saw_m6=1 saw_m8=0 saw_m0=1); full natural 6→8→0 not confirmed
+next_fix=disasm Guest caller LR/continuation for missing method=8 producer
+fire_ext_n=1
+gl_insn_n=2253
+bound_n=11
+stop_reason=method1_and_fire
+guest_state_written=0
+events_injected=0
+headless=0
+fast_init=0
+gl_base=0x2D4364
+ERW=0x682B8C
+P=0x2AC8EC
+generation=2
+module_id=0x4
+runtime_image_sha256=e510fe8795381f27e1ec49048f04ee94a486baf0ede0c9382825d2d606427ca8

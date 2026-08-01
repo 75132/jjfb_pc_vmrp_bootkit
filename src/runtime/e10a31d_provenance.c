@@ -14,6 +14,7 @@
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/package_metadata.h"
+#include "gwy_launcher/p22h_helper_handoff.h"
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -400,6 +401,33 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
                           uint32_t caller_pc, uint32_t caller_lr) {
     uint32_t chunk = 0;
     int ok = 0;
+    /* P22H: always forward Host/Guest helper enter (independent of E10A31D_MODE). */
+    {
+        P22hCallSource ps = P22H_SRC_UNKNOWN;
+        const char *hfn = "UNKNOWN_NOT_EXPOSED";
+        if (source == E10A31D_SRC_TIMER) {
+            ps = P22H_SRC_HOST_TIMER_FIRE_EXT;
+            hfn = "bridge_ext_helper_call";
+        } else if (source == E10A31D_SRC_HOST_FAST_REAL) {
+            ps = P22H_SRC_HOST_FAST_REAL;
+            hfn = "bridge_deliver_ext_init_seq/bridge_mr_extHelper";
+        } else if (source == E10A31D_SRC_PLATFORM_CALLBACK) {
+            ps = P22H_SRC_PLATFORM_CALLBACK;
+            hfn = "platform_callback";
+        } else if (method == 1u) {
+            /* bridge_mr_event always uses code=1 via bridge_mr_extHelper; Host runCode. */
+            ps = P22H_SRC_HOST_MR_EVENT;
+            hfn = "bridge_mr_extHelper";
+        } else if (method == 2u) {
+            ps = P22H_SRC_HOST_TIMER_FIRE_EXT;
+            hfn = "bridge_ext_helper_call";
+        } else {
+            ps = P22H_SRC_HOST_BRIDGE_MR_EXTHELPER;
+            hfn = "bridge_mr_extHelper";
+        }
+        p22h_helper_enter(uc, ps, helper, method, p_guest, erw, input, input_len, caller_pc,
+                          caller_lr, hfn);
+    }
     ensure_enabled();
     if (!g_d.enabled) return;
     if (!g_d.recording && !g_d.appinfo && !g_d.m0_trace) return;
@@ -469,6 +497,7 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
 }
 
 void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t ret) {
+    p22h_helper_return(uc, helper, method, ret);
     ensure_enabled();
     if (!g_d.enabled || !g_d.in_helper) return;
     (void)helper;

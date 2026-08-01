@@ -53,6 +53,7 @@
 #include "gwy_launcher/p22_cfg_loader_predicate.h"
 #include "gwy_launcher/p22f_10740_scheduler.h"
 #include "gwy_launcher/p22g_callback_publication.h"
+#include "gwy_launcher/p22h_helper_handoff.h"
 #include "gwy_launcher/sha256.h"
 #include "gwy_launcher/product_callback_trace.h"
 #include "gwy_launcher/product_p4_progress.h"
@@ -465,6 +466,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     p21_bind_uc(uc);
     p22f_bind_uc(uc);
     p22g_bind_uc(uc);
+    p22h_bind_uc(uc);
     e10a31j_bind_uc(uc);
     gwy_guest_call_observer_bind_uc(uc);
     ext_entry_observe_bind_uc(uc);
@@ -798,6 +800,8 @@ void gwy_ext_obs_c_function_new_ex(uint32_t helper,
     ext_cfunction_publication_audit_on_cfunction_new(helper, p_len, p_guest_addr,
                                                      origin ? origin : "HOST_BRIDGE");
     p22g_note_c_function_new(helper, p_len, p_guest_addr, rw_base, rw_size,
+                             origin ? origin : "HOST_BRIDGE");
+    p22h_note_c_function_new(helper, p_len, p_guest_addr, rw_base, rw_size,
                              origin ? origin : "HOST_BRIDGE");
     /* Phase 6K: after nested register, run documented entry before guest continues. */
     if (origin && (strstr(origin, "GUEST_NESTED") || strstr(origin, "LOG_PARSE"))) {
@@ -2909,6 +2913,7 @@ void gwy_ext_obs_helper_call(uint32_t helper, uint32_t method, int32_t ret_value
     ext_loader_on_helper_call(L, helper, method, ret_value);
     ext_gwy_shell_native_exec_on_helper_call(helper, method, ret_value);
     p22g_note_helper_call(helper, method, ret_value);
+    p22h_note_helper_call(helper, method, ret_value);
 
     /* Product track: DOCUMENTED mythroad case_801 code=0 → mrc_init (not shell-gated). */
     trace = getenv("JJFB_MRC_INIT_TRACE");
@@ -2928,11 +2933,18 @@ void gwy_ext_obs_helper_call(uint32_t helper, uint32_t method, int32_t ret_value
     }
 }
 
+void gwy_ext_obs_note_mr_event(int32_t event_code, int32_t p0, int32_t p1) {
+    p22h_note_mr_event(event_code, p0, p1);
+}
+
 static int g_pending_ext_init_seq;
 static int g_ext_init_seq_delivered;
 
 void gwy_ext_obs_request_ext_init_seq(void) {
     const char *e = getenv("JJFB_ROBOTOL_RETRY_AFTER_CONTEXT_RESTORE");
+    const char *p22h = getenv("JJFB_P22H_CLEAN");
+    /* P22H-CLEAN: observe natural helper dispatch; do not queue Host 6→8→0. */
+    if (p22h && p22h[0] == '1') return;
     if (!e || e[0] != '1') return;
     if (g_ext_init_seq_delivered || g_pending_ext_init_seq) return;
     g_pending_ext_init_seq = 1;
@@ -3151,6 +3163,8 @@ void gwy_ext_obs_ext_image_raw(uint32_t raw_base) {
                                  m->data.start_of_er_rw, 0, 0, m->module_id, "gwy/gamelist.mrp");
             p22g_note_module_map(mn, m->map.guest_code_base, m->map.guest_code_size,
                                  m->data.start_of_er_rw, 0, 0, m->module_id, "gwy/gamelist.mrp");
+            p22h_note_module_map(mn, m->map.guest_code_base, m->map.guest_code_size,
+                                 m->data.start_of_er_rw, 0, 0, m->module_id, "gwy/gamelist.mrp");
         }
     }
 }
@@ -3175,6 +3189,7 @@ void gwy_ext_obs_block_copy(uint32_t dst, uint32_t src, uint32_t len) {
     ext_module_data_init_on_block_copy(dst, src, len);
     ext_er_rw_producer_on_block_copy(dst, src, len);
     p22g_note_memcpy(dst, src, len, 0);
+    p22h_note_memcpy(dst, src, len, 0);
 }
 
 void gwy_ext_obs_member_open(const char *guest_path) {
@@ -3206,6 +3221,7 @@ void gwy_ext_obs_entry_begin(uint32_t helper,
     ext_module_data_init_on_entry_begin(helper, er_rw, er_rw);
     ext_post_cont_audit_on_helper_call(helper, method, p_guest, er_rw);
     p22g_note_entry_begin(helper, method, p_guest, input, input_len, er_rw, sp);
+    p22h_note_entry_begin(helper, method, p_guest, input, input_len, er_rw, sp);
 }
 
 void gwy_ext_obs_note_product_draw(const char *api) {
@@ -3547,6 +3563,7 @@ void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t e
     p22c_note_timer_fire(helper, 2u, 1);
     p22f_note_timer_fire(helper, p_guest, erw, 1);
     p22g_note_timer_fire(helper, p_guest, erw, 1);
+    p22h_note_timer_fire(helper, p_guest, erw, 1);
     e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
 }
 

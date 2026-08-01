@@ -3,6 +3,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/p22_selection_gates.h"
 #include "gwy_launcher/p22g_callback_publication.h"
+#include "gwy_launcher/p22h_helper_handoff.h"
 #include "gwy_launcher/product_runtime_progress.h"
 
 #include <stdio.h>
@@ -222,6 +223,7 @@ uint32_t platform_guest_memcpy(void *uc, uint32_t dst_guest, uint32_t src_guest,
     }
     if (p22_enabled()) p22_note_platform_memcpy(dst_guest, src_guest, size);
     if (p22g_enabled()) p22g_note_memcpy(dst_guest, src_guest, size, 0);
+    if (p22h_enabled()) p22h_note_memcpy(dst_guest, src_guest, size, 0);
     /* Reject 32-bit range wrap. */
     if (dst_guest + size < dst_guest || src_guest + size < src_guest) {
         printf("[PLATFORM_MEMCPY] fail reason=range_overflow dst=0x%X src=0x%X n=0x%X "

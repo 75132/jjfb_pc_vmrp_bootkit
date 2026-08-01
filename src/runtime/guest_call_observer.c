@@ -26,6 +26,7 @@
 #include "gwy_launcher/ext_object_observe.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/p22h_helper_handoff.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -345,6 +346,11 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             }
             ext_entry_observe_helper_abi(HELPER_ABI_STAGE_THUNK_ENTER, w->module_id, pc,
                                          w->helper_address, pc, regs, cpsr, "GUEST_NESTED", uc);
+            {
+                const char *tname = m->resolved_name[0] ? m->resolved_name : m->requested_name;
+                p22h_note_guest_boundary("THUNK_ENTER", w->helper_address, regs[1], pc, lr, regs,
+                                         cpsr, tname, w->module_id, "helper_pc", -1, 0);
+            }
             {
                 const char *mt = getenv("JJFB_MRC_INIT_TRACE");
                 const char *mn = m->resolved_name[0] ? m->resolved_name : m->requested_name;

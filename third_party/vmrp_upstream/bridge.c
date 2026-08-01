@@ -1987,10 +1987,15 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                     const char *wn = getenv("JJFB_E10A31_WAIT_FIRE_N");
                     if (wn && wn[0]) need = (int)strtol(wn, NULL, 10);
                     if (need < 1) need = 1;
-                    /* P22F-CLEAN needs a longer natural FIRE window than the default 8. */
+                    /* P22F/H-CLEAN need a longer natural FIRE window than the default 8. */
                     {
                         const char *p22f = getenv("JJFB_P22F_CLEAN");
-                        int cap = (p22f && p22f[0] == '1') ? 16 : 8;
+                        const char *p22h = getenv("JJFB_P22H_CLEAN");
+                        int cap = 8;
+                        if (p22h && p22h[0] == '1')
+                            cap = 24;
+                        else if (p22f && p22f[0] == '1')
+                            cap = 16;
                         if (need > cap) need = cap;
                     }
                     /* timer_fire_n is latched in e10a31; expose via observed + CSV count. */
@@ -2024,7 +2029,12 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                     if (need_fires < 1) need_fires = 1;
                     {
                         const char *p22f = getenv("JJFB_P22F_CLEAN");
-                        int cap = (p22f && p22f[0] == '1') ? 16 : 8;
+                        const char *p22h = getenv("JJFB_P22H_CLEAN");
+                        int cap = 8;
+                        if (p22h && p22h[0] == '1')
+                            cap = 24;
+                        else if (p22f && p22f[0] == '1')
+                            cap = 16;
                         if (need_fires > cap) need_fires = cap;
                     }
                     if (wait_timer && !gwy_ext_obs_e10a31_timer_arm_observed()) {
@@ -3851,6 +3861,7 @@ static int32_t bridge_mr_event(uc_engine *uc, int32_t code, int32_t param0, int3
     mr_c_event->code = code;
     mr_c_event->p0 = param0;
     mr_c_event->p1 = param1;
+    gwy_ext_obs_note_mr_event(code, param0, param1);
     gwy_ext_obs_p27_event(uc, "MR_EVENT_FRAME_BEFORE_RUN", "bridge_mr_event", efid, parent_efid,
                           g_start_dsm_depth, code, g_bridge_mutex_held, "code_p0_p1_written");
     ret = bridge_mr_extHelper(uc, 1, eg, sizeof(event_t));

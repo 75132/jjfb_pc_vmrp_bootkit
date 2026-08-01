@@ -1,0 +1,3 @@
+# run_id=p22g_20260801_235000_44810 source_commit=819ef645ae90ab7ee0cf4e16415af2b23b165d91 main_exe_sha256=eaa48b6054540e178eee1b7673390472496e3937adaaba66251d02b1f135ccb3 raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED generation=UNKNOWN_NOT_EXPOSED package_owner=UNKNOWN_NOT_EXPOSED identity_gaps=none
+farthest_state,missing_transition,expected_producer,expected_method_or_event,block_branch,block_ops,natural_method_sequence,note
+HELPER_REGISTERED,HELPER_INVOKED,parent_Shell_handoff,method_6_8_0_or_equiv,"n/a","n/a",NONE,"Shell→gamelist helper init handoff missing (no natural method 6/8/0)"

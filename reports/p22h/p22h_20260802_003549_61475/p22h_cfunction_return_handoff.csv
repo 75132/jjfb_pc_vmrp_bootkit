@@ -1,0 +1,12 @@
+# run_id=p22h_20260802_003549_61475 source_commit=819ef645ae90ab7ee0cf4e16415af2b23b165d91 main_exe=f3a26be665391863525a9f7eddfabe20f0d25eabc43fb321ca96e027b2da3856 raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_sha=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 helper=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED gen=UNKNOWN_NOT_EXPOSED owner=UNKNOWN_NOT_EXPOSED gaps=none
+sequence,step,helper,P,ERW,origin,detail
+1,mr_event,0x0,0x0,0x0,bridge_mr_event,"event=-100 p0=2622036 p1=0 → method=1"
+2,mr_event,0x0,0x0,0x0,bridge_mr_event,"event=-99 p0=2632148 p1=0 → method=1"
+3,gamelist_started,0x0,0x0,0x0,shell,"started"
+4,mr_event,0x0,0x0,0x0,bridge_mr_event,"event=-99 p0=6826676 p1=0 → method=1"
+5,module_map,0x0,0x2AC8EC,0x0,gamelist.ext,"mapped"
+6,module_map,0x0,0x2AC8EC,0x2AF58,gamelist.ext,"mapped"
+7,c_function_new,0x2E3099,0x2AC8EC,0x2AF58,LOG_PARSE,"helper=0x2E3099 P=0x2AC8EC len=0x14 erw=0x0 sz=0x0"
+8,helper_registered,0x2E3099,0x2AC8EC,0x2AF58,LOG_PARSE,"helper=0x2E3099 P=0x2AC8EC len=0x14 erw=0x0 sz=0x0"
+18,helper_enter,0x2E3099,0x2AC8EC,0x2AF58,HOST_timer_FIRE_EXT,"method=2 source=HOST_timer_FIRE_EXT host=bridge_ext_helper_call"
+22,FIRE_EXT,0x2E3099,0x2AC8EC,0x682B8C,platform_timer,"code=2"
