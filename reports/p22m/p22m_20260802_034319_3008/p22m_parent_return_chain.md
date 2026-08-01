@@ -1,0 +1,11 @@
+# P22M parent return chain
+
+- fn_1d098_entry=0x0 sp=0x0
+- call_174c8 @ +0x1D0DC r0=0x0 r1=0x0 r2=0x0 r3=0x0 r9=0x0 sp=0x0 lr/cont=0x0
+- ret_174c8 r0=0x0 continuation=+0x1D0E0 seen=0
+- fn_1d098_returned=0 ret_pc=0x0 ret_r0=0x0
+- parent_after=0x0 parent_returned=0 helper_reenter=0
+
+## Timeline
+
+1. `begin_dense` pc=0x86E5C off=0x0 r0=0x2 r2=0x2ACA0C — post_wrapper_m1

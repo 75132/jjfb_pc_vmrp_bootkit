@@ -1,0 +1,7 @@
+# run_id=p22m_20260802_035802_81997 commit=3bc788dd6b0b13a5614e6301edb98cdada4498d9 main=c4a74455c8da1d6a40b08edf84cf4a07c377136004353aa2f27814f50f146171 raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 gl_base=0x0 cf_base=0x0 helper=0x0 gl_erw=0x0 cf_erw=0x0 P=? gen=?
+sequence,call_id,method,return_r0,return_pc,first_consumer_pc,first_consumer_insn,cmp_lhs,cmp_rhs,branch_taken,fail_path,success_path,next_method_pc,next_method,note
+10,1,6,0,0x89BF0,0x0,,0x0,0x0,,,,0x0,0,"IMPLIED_BEFORE_NEXT_ENTER"
+15,2,0,0,0x89BF0,0x0,,0x0,0x0,,,,0x0,0,"IMPLIED_BEFORE_NEXT_ENTER"
+21,3,1,0,0x89BF0,0x0,,0x0,0x0,,,,0x0,0,"HOST_RETURN"
+29,5,2,0,0x80000,0x0,,0x0,0x0,,,,0x0,0,"HOST_RETURN"
+32,4,2,0,0xA2548,0x0,,0x0,0x0,,,,0x0,0,"FINALIZE_OPEN"

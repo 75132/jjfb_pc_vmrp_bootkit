@@ -1,0 +1,25 @@
+run_id=p22m_20260802_035802_81997
+cf_base=0x80000
+cf_end=0xD1154
+cf_sha=2e6bea16b462f1bb141644fbb6c0a7088cc88f969648535b730659ca505eecf5
+object=0x2A8264
+node=0x2ACA04
+index_r0=2
+index_base=0x2ACA14
+ret_174c8=0x2AC9E4
+fn_1d098_ret=0
+fn_1d098_ret_pc=0x0
+queue_empty=0
+next_record=0
+callback=0
+entered_10740=0
+entered_7b6c=0
+slice_n=1370
+parent_n=10
+cf_insn=1369
+saw_174c8_ret=1
+saw_1d0e0=1
+sole_lock=init node 0x2ACA04 unlinked via +0x174C8; dispatcher branch @0x9C41C TAKEN ->0x9C56C (lhs=0x0); continues draining object list but never enqueues callback/UI/+0x10740 after natural 6→0→1
+next_fix=find natural producer that sets object flag bits (TST #0xC path) or enqueues UI/init record after helper 6/0/1; do not inject
+stop_reason=helper_reenter
+guest_modified=NO

@@ -1,0 +1,2 @@
+seq,pc,off,addr,value,kind,note
+1,0x9797C,0x1797C,0x2ACA04,0x2,derive,"base - index*8"
