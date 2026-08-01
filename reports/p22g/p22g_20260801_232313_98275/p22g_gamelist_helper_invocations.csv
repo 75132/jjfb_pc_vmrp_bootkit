@@ -1,0 +1,3 @@
+# run_id=p22g_20260801_232313_98275 source_commit=3a1fdfa12492827ce1a183af464001d7c6398841 main_exe_sha256=05abaa54b779a02f8ed0ef988fd84c7daf52092846261cfecb1b8f74bf9d4226 raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED generation=UNKNOWN_NOT_EXPOSED package_owner=UNKNOWN_NOT_EXPOSED identity_gaps=none
+sequence,caller_module,caller_pc,helper_target,method,R0,R1,R2,R3,stack0,stack1,stack2,stack3,input,input_len,return_value,output_hint,R9,phase
+8,helper_return,0x0,0x2E3099,1,0,0,0,0,0,0,0,0,0,0,0,0,0,return

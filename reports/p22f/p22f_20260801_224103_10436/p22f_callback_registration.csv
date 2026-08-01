@@ -1,0 +1,2 @@
+﻿# run_id=p22f_20260801_224103_10436 note=no_callback_registration_observed_this_run
+seq,registration_pc,registration_module,destination_address,table_slot,platform_service,callback_target,callback_owner,r9,erw,arg0,arg1,arg2,arg3,registration_return,delivered,delivery_seq,event_code

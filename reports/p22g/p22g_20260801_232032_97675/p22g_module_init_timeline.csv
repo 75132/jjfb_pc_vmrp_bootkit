@@ -1,0 +1,10 @@
+# run_id=p22g_20260801_232032_97675 source_commit=3a1fdfa12492827ce1a183af464001d7c6398841 main_exe_sha256=4a671f3ce58df6333e9e7662bbec452cf21a48a12937a9cc9ffd9cab26b4f25d raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED generation=UNKNOWN_NOT_EXPOSED package_owner=UNKNOWN_NOT_EXPOSED identity_gaps=none
+sequence,state_before,state_after,caller,callee,module,PC,R0,R1,R2,R3,LR,R9,ERW,P,generation,return_value,note
+1,NONE,NONE,shell,gamelist_started,gamelist,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0,0,"started"
+2,NONE,MAPPED,loader,module_map,gamelist.ext,0x2D4360,0x2D4360,0x165E0,0x0,0x0,0x0,0x0,0x0,0x2AC8EC,0,0,"mapped"
+3,MAPPED,REGISTERED,ModuleRegistry,register,gamelist.ext,0x2D4360,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2AC8EC,0,0,"registered"
+4,REGISTERED,REGISTERED,loader,module_map,gamelist.ext,0x2D4364,0x2D4364,0x165DC,0x0,0x0,0x0,0x0,0x2AF58,0x2AC8EC,1,0,"mapped"
+5,REGISTERED,REGISTERED,ModuleRegistry,register,gamelist.ext,0x2D4364,0x0,0x0,0x0,0x0,0x0,0x0,0x2AF58,0x2AC8EC,1,0,"registered"
+6,REGISTERED,HEADER_ENTRY_CALLED,guest,header_entry_cand,gamelist,0x2D436C,0x0,0x2D436C,0x12,0x27F6BC,0x89B78,0x280400,0x2AF58,0x2AC8EC,1,0,"header_cand_pc"
+7,HEADER_ENTRY_CALLED,HELPER_REGISTERED,LOG_PARSE,_mr_c_function_new,gamelist,0x2E3099,0x2E3099,0x14,0x2AC8EC,0x0,0x0,0x0,0x2AF58,0x2AC8EC,1,0,"helper_registered"
+9,HELPER_REGISTERED,HELPER_INVOKED,platform,helper_return,gamelist,0x2E3099,0x0,0x1,0x0,0x0,0x0,0x0,0x2AF58,0x2AC8EC,1,0,"helper_return"

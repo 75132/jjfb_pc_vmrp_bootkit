@@ -29,6 +29,7 @@
 #include "gwy_launcher/sms_cfg_compat_profile.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/p21_cfg36_selection.h"
+#include "gwy_launcher/p22g_callback_publication.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
@@ -768,6 +769,143 @@ void p22c_note_timer_fire(uint32_t helper, uint32_t method, int end) {
     (void)end;
 }
 void p22c_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                  uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
+}
+
+/* P22F-CLEAN +0x10740 scheduler provenance — product stubs. */
+int p22f_enabled(void) { return 0; }
+void p22f_reset(void) {}
+void p22f_bind_uc(void *uc) { (void)uc; }
+void p22f_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22f_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
+                          uint32_t p_guest, uint64_t generation, uint64_t module_id,
+                          const char *package_owner) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+    (void)p_guest;
+    (void)generation;
+    (void)module_id;
+    (void)package_owner;
+}
+void p22f_note_gamelist_started(void) {}
+void p22f_note_timer_fire(uint32_t helper, uint32_t p_guest, uint32_t erw, int end) {
+    (void)helper;
+    (void)p_guest;
+    (void)erw;
+    (void)end;
+}
+void p22f_note_plat(uint32_t code, uint32_t app, uint32_t arg2, uint32_t arg3, uint32_t ret,
+                    uint32_t caller_pc, uint32_t r9) {
+    (void)code;
+    (void)app;
+    (void)arg2;
+    (void)arg3;
+    (void)ret;
+    (void)caller_pc;
+    (void)r9;
+}
+void p22f_note_mem_write(uint32_t pc, uint32_t addr, uint32_t size, uint32_t value,
+                         const char *module) {
+    (void)pc;
+    (void)addr;
+    (void)size;
+    (void)value;
+    (void)module;
+}
+void p22f_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                  uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
+}
+
+/* P22G-CLEAN callback publication — product stubs. */
+int p22g_enabled(void) { return 0; }
+void p22g_reset(void) {}
+void p22g_bind_uc(void *uc) { (void)uc; }
+void p22g_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22g_note_member_open(const char *guest_path) { (void)guest_path; }
+void p22g_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
+                          uint32_t p_guest, uint64_t generation, uint64_t module_id,
+                          const char *package_owner) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+    (void)p_guest;
+    (void)generation;
+    (void)module_id;
+    (void)package_owner;
+}
+void p22g_note_gamelist_started(void) {}
+void p22g_note_c_function_new(uint32_t helper, uint32_t p_len, uint32_t p_guest, uint32_t rw_base,
+                              uint32_t rw_size, const char *origin) {
+    (void)helper;
+    (void)p_len;
+    (void)p_guest;
+    (void)rw_base;
+    (void)rw_size;
+    (void)origin;
+}
+void p22g_note_helper_call(uint32_t helper, uint32_t method, int32_t ret_value) {
+    (void)helper;
+    (void)method;
+    (void)ret_value;
+}
+void p22g_note_entry_begin(uint32_t helper, uint32_t method, uint32_t p_guest, uint32_t input,
+                           uint32_t input_len, uint32_t er_rw, uint32_t sp) {
+    (void)helper;
+    (void)method;
+    (void)p_guest;
+    (void)input;
+    (void)input_len;
+    (void)er_rw;
+    (void)sp;
+}
+void p22g_note_timer_fire(uint32_t helper, uint32_t p_guest, uint32_t erw, int end) {
+    (void)helper;
+    (void)p_guest;
+    (void)erw;
+    (void)end;
+}
+void p22g_note_plat(uint32_t code, uint32_t app, uint32_t arg2, uint32_t arg3, uint32_t ret,
+                    uint32_t caller_pc, uint32_t r9) {
+    (void)code;
+    (void)app;
+    (void)arg2;
+    (void)arg3;
+    (void)ret;
+    (void)caller_pc;
+    (void)r9;
+}
+void p22g_note_memcpy(uint32_t dst, uint32_t src, uint32_t n, uint32_t caller_pc) {
+    (void)dst;
+    (void)src;
+    (void)n;
+    (void)caller_pc;
+}
+void p22g_note_mem_write(uint32_t pc, uint32_t addr, uint32_t size, uint32_t value,
+                         const char *module) {
+    (void)pc;
+    (void)addr;
+    (void)size;
+    (void)value;
+    (void)module;
+}
+void p22g_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
                   uint32_t lr, uint32_t sp, uint32_t cpsr) {
     (void)uc;
     (void)module_name;

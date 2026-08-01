@@ -1987,7 +1987,12 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                     const char *wn = getenv("JJFB_E10A31_WAIT_FIRE_N");
                     if (wn && wn[0]) need = (int)strtol(wn, NULL, 10);
                     if (need < 1) need = 1;
-                    if (need > 8) need = 8;
+                    /* P22F-CLEAN needs a longer natural FIRE window than the default 8. */
+                    {
+                        const char *p22f = getenv("JJFB_P22F_CLEAN");
+                        int cap = (p22f && p22f[0] == '1') ? 16 : 8;
+                        if (need > cap) need = cap;
+                    }
                     /* timer_fire_n is latched in e10a31; expose via observed + CSV count. */
                     got = gwy_ext_obs_e10a31_timer_fire_count();
                     if (got < 0) got = 1;
@@ -2017,7 +2022,11 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                     const char *wn2 = getenv("JJFB_E10A31_WAIT_FIRE_N");
                     if (wn2 && wn2[0]) need_fires = (int)strtol(wn2, NULL, 10);
                     if (need_fires < 1) need_fires = 1;
-                    if (need_fires > 8) need_fires = 8;
+                    {
+                        const char *p22f = getenv("JJFB_P22F_CLEAN");
+                        int cap = (p22f && p22f[0] == '1') ? 16 : 8;
+                        if (need_fires > cap) need_fires = cap;
+                    }
                     if (wait_timer && !gwy_ext_obs_e10a31_timer_arm_observed()) {
                         /* Keep host phase alive until arm, fire, fault, or hard timeout. */
                         idle = 0;
@@ -2051,6 +2060,11 @@ static void br_exit(BridgeMap *o, uc_engine *uc) {
                    pumps, gwy_ext_obs_e10a31_timer_arm_observed(),
                    gwy_ext_obs_e10a31_timer_fire_observed());
             fflush(stdout);
+            {
+                const char *p22f = getenv("JJFB_P22F_CLEAN");
+                if (p22f && p22f[0] == '1')
+                    gwy_shell_shim_finalize("post_cont_pump_end");
+            }
         }
         /* P26: owner-scoped park + immediate uc_emu_stop (no RO-page wait). */
         e10a_exit_park_set(uc, "shell_core_continue");

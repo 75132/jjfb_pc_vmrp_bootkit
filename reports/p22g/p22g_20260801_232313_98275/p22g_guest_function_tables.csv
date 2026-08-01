@@ -1,0 +1,2 @@
+﻿# run_id=p22g_20260801_232313_98275 note=zero_hits_header_only
+sequence,target,memory_address,first_seen_sequence,last_seen_sequence,containing_region,possible_table_base,ctx_m8,ctx_m7,ctx_m6,ctx_m5,ctx_m4,ctx_m3,ctx_m2,ctx_m1,ctx_0,ctx_p1,ctx_p2,ctx_p3,ctx_p4,ctx_p5,ctx_p6,ctx_p7,overwritten,scan_reason

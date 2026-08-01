@@ -1,0 +1,5 @@
+# run_id=p22f_20260801_213543_36941 source_commit=3a1fdfa12492827ce1a183af464001d7c6398841 main_exe_sha256=b108a66114e2beec2609457edb7bcffb44b941a330c2798ebe41375a9249420b raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 runtime_end=0x0 runtime_size=0x0 raw_base_refine_pad=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED generation=UNKNOWN_NOT_EXPOSED package_owner=UNKNOWN_NOT_EXPOSED identity_gaps=none
+# offset_map=runtime_module_offset = guest_pc - runtime_base; raw_file_offset ≈ runtime_module_offset (after RAW_BASE_REFINE pad)
+seq,subject,classification,detail
+1,+0x10740_xrefs,PARTIAL,"static11_match=0/11 extra_direct=0 literals=0"
+2,+0x10740_xrefs,VERIFIED,"static11_match=11/11 extra_direct=0 literals=0"

@@ -131,6 +131,8 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/p21_cfg36_selection.c
     src/runtime/p22_selection_gates.c
     src/runtime/p22_cfg_loader_predicate.c
+    src/runtime/p22f_10740_scheduler.c
+    src/runtime/p22g_callback_publication.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
 )

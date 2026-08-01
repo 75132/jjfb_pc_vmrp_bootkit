@@ -1,0 +1,14 @@
+# run_id=p22f_20260801_212340_63514 source_commit=3a1fdfa12492827ce1a183af464001d7c6398841 main_exe_sha256=02f16e0021a028335194acacca8b02204bae6f0c9b258b2b49532bd472768194 raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=PENDING module_id=UNKNOWN_NOT_EXPOSED runtime_base=0x0 runtime_end=0x0 runtime_size=0x0 raw_base_refine_pad=0x0 ERW=0x0 P=UNKNOWN_NOT_EXPOSED generation=UNKNOWN_NOT_EXPOSED package_owner=UNKNOWN_NOT_EXPOSED identity_gaps=none
+# offset_map=runtime_module_offset = guest_pc - runtime_base; raw_file_offset ≈ runtime_module_offset (after RAW_BASE_REFINE pad)
+caller_offset,absolute_pc,raw_bytes,instruction,decoded_target,target_normalized,runtime_bytes_match,containing_function,kind,hit_n
+0x4076,0x2D83D6,c162201c,NOT_BL raw=c162201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x4526,0x2D8886,c862201c,NOT_BL raw=c862201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x458A,0x2D88EA,c862201c,NOT_BL raw=c862201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x46C4,0x2D8A24,c862201c,NOT_BL raw=c862201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x4778,0x2D8AD8,201cca62,NOT_BL raw=201cca62,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x4C76,0x2D8FD6,c862201c,NOT_BL raw=c862201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x53A4,0x2D9704,c862201c,NOT_BL raw=c862201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x5904,0x2D9C64,02d1201c,NOT_BL raw=02d1201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x5918,0x2D9C78,02d1201c,NOT_BL raw=02d1201c,0x0,0x0,0,dispatcher_392C,mismatch,0
+0x8D26,0x2DD086,7af9201c,NOT_BL raw=7af9201c,0x0,0x0,0,cb_8CDC,mismatch,0
+0x12D0E,0x2E706E,002801d0,NOT_BL raw=002801d0,0x0,0x0,0,fn_12CF0,mismatch,0

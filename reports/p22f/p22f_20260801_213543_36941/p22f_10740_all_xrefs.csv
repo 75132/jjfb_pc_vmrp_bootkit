@@ -1,0 +1,14 @@
+# run_id=p22f_20260801_213543_36941 source_commit=3a1fdfa12492827ce1a183af464001d7c6398841 main_exe_sha256=b108a66114e2beec2609457edb7bcffb44b941a330c2798ebe41375a9249420b raw_gamelist_ext_sha256=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 runtime_image_sha256=e510fe8795381f27e1ec49048f04ee94a486baf0ede0c9382825d2d606427ca8 module_id=0x4 runtime_base=0x2D4364 runtime_end=0x2EA940 runtime_size=0x165DC raw_base_refine_pad=0x4 ERW=0x2AF58 P=0x2AC8EC generation=1 package_owner=gamelist.ext identity_gaps=none
+# offset_map=runtime_module_offset = guest_pc - runtime_base; raw_file_offset ≈ runtime_module_offset (after RAW_BASE_REFINE pad)
+caller_offset,absolute_pc,raw_bytes,instruction,decoded_target,target_normalized,runtime_bytes_match,containing_function,kind,hit_n
+0x4076,0x2D83DA,0cf063fb,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x4526,0x2D888A,0cf00bf9,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x458A,0x2D88EE,0cf0d9f8,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x46C4,0x2D8A28,0cf03cf8,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x4778,0x2D8ADC,0bf0e2ff,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x4C76,0x2D8FDA,0bf063fd,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x53A4,0x2D9708,0bf0ccf9,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x5904,0x2D9C68,0af01cff,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x5918,0x2D9C7C,0af012ff,bl #0x10740,0x10740,0x10740,1,dispatcher_392C,direct_bl,0
+0x8D26,0x2DD08A,07f00bfd,bl #0x10740,0x10740,0x10740,1,cb_8CDC,direct_bl,0
+0x12D0E,0x2E7072,fdf717fd,bl #0x10740,0x10740,0x10740,1,fn_12CF0,direct_bl,0
