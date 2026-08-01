@@ -15,6 +15,7 @@
 #include "gwy_launcher/mrp_archive.h"
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/p22h_helper_handoff.h"
+#include "gwy_launcher/p22i_cfunction_dispatcher.h"
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -427,6 +428,23 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
         }
         p22h_helper_enter(uc, ps, helper, method, p_guest, erw, input, input_len, caller_pc,
                           caller_lr, hfn);
+        {
+            P22iCallSource is = P22I_SRC_UNKNOWN;
+            if (source == E10A31D_SRC_TIMER)
+                is = P22I_SRC_HOST_TIMER_FIRE_EXT;
+            else if (source == E10A31D_SRC_HOST_FAST_REAL)
+                is = P22I_SRC_HOST_FAST_REAL;
+            else if (source == E10A31D_SRC_PLATFORM_CALLBACK)
+                is = P22I_SRC_PLATFORM_CALLBACK;
+            else if (method == 1u)
+                is = P22I_SRC_HOST_MR_EVENT;
+            else if (method == 2u)
+                is = P22I_SRC_HOST_TIMER_FIRE_EXT;
+            else
+                is = P22I_SRC_HOST_BRIDGE_MR_EXTHELPER;
+            p22i_helper_enter(uc, is, helper, method, p_guest, erw, input, input_len, caller_pc,
+                              caller_lr, hfn);
+        }
     }
     ensure_enabled();
     if (!g_d.enabled) return;
@@ -498,6 +516,7 @@ void e10a31d_helper_enter(void *uc, E10a31dSource source, uint32_t helper, uint3
 
 void e10a31d_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t ret) {
     p22h_helper_return(uc, helper, method, ret);
+    p22i_helper_return(uc, helper, method, ret);
     ensure_enabled();
     if (!g_d.enabled || !g_d.in_helper) return;
     (void)helper;

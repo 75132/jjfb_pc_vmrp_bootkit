@@ -577,6 +577,45 @@ void module_r9_switch_note_dsm_code(uint64_t module_id) {
     }
 }
 
+/*
+ * P22J: when control is back in DSM after a DSM→MRP registered_helper call, pop the
+ * MR_HELPER frame (YIELD leave is NOOP). Safe while nested MRP→DSM is top: that
+ * frame has callee=DSM, so this path does not touch it.
+ */
+static int leave_dsm_to_mrp_helper_if_needed(void *uc, uint64_t dsm_module_id, uint32_t guest_pc) {
+    ModuleR9Frame *fr;
+    ModuleR9Scope sc;
+    ModuleRegistry *reg;
+    const GwyLoadedModule *callee;
+
+    if (!uc || !dsm_module_id || g_r9s.depth == 0) return 0;
+    fr = &g_r9s.frames[g_r9s.depth - 1u];
+    if (!fr->pushed || fr->call_kind != GWY_CALL_MR_HELPER) return 0;
+    if (fr->caller_module_id != dsm_module_id) return 0;
+    reg = gwy_ext_loader_bound_registry();
+    callee = reg ? module_registry_find_by_id(reg, fr->callee_module_id) : NULL;
+    if (!callee || callee->origin != MODULE_ORIGIN_MRP_MEMBER) return 0;
+
+    memset(&sc, 0, sizeof(sc));
+    sc.scope_id = fr->owner_scope_id;
+    sc.frame_id = fr->frame_id;
+    sc.generation = fr->generation;
+    sc.caller_module_id = fr->caller_module_id;
+    sc.callee_module_id = fr->callee_module_id;
+    sc.call_kind = fr->call_kind;
+    sc.owns_frame = 1;
+    sc.frame_pushed = 1;
+    sc.enter_result = 1;
+    module_r9_switch_set_guest_context(guest_pc, "dsm:cfunction.ext");
+    printf("[R9_SWITCH] stage=DSM_RETURN_FROM_MRP pc=0x%X frame_id=%llu caller_id=%llu "
+           "callee_id=%llu evidence=DOCUMENTED note=p22j_helper_return\n",
+           guest_pc, (unsigned long long)fr->frame_id, (unsigned long long)dsm_module_id,
+           (unsigned long long)fr->callee_module_id);
+    fflush(stdout);
+    return module_r9_switch_leave_scope(uc, &sc, "dsm_return_from_mrp_helper",
+                                        GWY_EMU_EXIT_NORMAL_GUEST_RETURN);
+}
+
 /* If DSM code is running with an MRP module R9, force DSM ER_RW (observe+correct). */
 int module_r9_switch_ensure_dsm_r9(void *uc, uint32_t guest_pc) {
     ModuleRegistry *reg;
@@ -586,12 +625,16 @@ int module_r9_switch_ensure_dsm_r9(void *uc, uint32_t guest_pc) {
     uint32_t dsm_r9;
     GwyR9WriteAudit audit;
     size_t i;
+    int left = 0;
 
     if (!module_r9_switch_enabled() || !uc) return 0;
     reg = gwy_ext_loader_bound_registry();
     if (!reg) return 0;
     pc_mod = module_registry_find_by_code_addr(reg, guest_pc & ~1u);
     if (!pc_mod || pc_mod->origin != MODULE_ORIGIN_DSM) return 0;
+
+    /* Pop DSM→MRP helper frame first so restore+ensure land on parent ERW. */
+    left = leave_dsm_to_mrp_helper_if_needed(uc, pc_mod->module_id, guest_pc);
 
     dsm = NULL;
     for (i = 0; i < reg->count; i++) {
@@ -600,17 +643,17 @@ int module_r9_switch_ensure_dsm_r9(void *uc, uint32_t guest_pc) {
             break;
         }
     }
-    if (!dsm) return 0;
+    if (!dsm) return left;
     dsm_r9 = dsm->data.start_of_er_rw;
     (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &cur_r9);
-    if (cur_r9 == dsm_r9) return 0;
+    if (cur_r9 == dsm_r9) return left;
 
     memset(&audit, 0, sizeof(audit));
     audit.reason = GWY_R9_WRITE_MODULE_R9_SWITCH_ENTER;
     audit.host_callsite = "ensure_dsm_r9";
     audit.guest_pc = guest_pc;
     audit.guest_module = "dsm:cfunction.ext";
-    if (!guest_memory_uc_write_r9_ex((struct uc_struct *)uc, dsm_r9, &audit)) return 0;
+    if (!guest_memory_uc_write_r9_ex((struct uc_struct *)uc, dsm_r9, &audit)) return left;
     printf("[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x%X old_r9=0x%X new_r9=0x%X "
            "evidence=DOCUMENTED note=dsm_code_with_mrp_r9\n",
            guest_pc, cur_r9, dsm_r9);

@@ -1,0 +1,55 @@
+# run_id=p22k_20260802_025137_93077 commit=8ebc5a63ea82cf61d21a1e3bba0f2bc7ab7fdd1d main=9fe94d773e469b9e70dc267658061da65ac6e57fe54311366667fd007350f012 raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 gl_base=0x2D4364 cf_base=0x80000 helper=0x2E3099 gl_erw=0x0 cf_erw=0x280400 P=0x2AC8EC gen=?
+# dynamic cfunction helper callsite (absolute addrs are run-local)
+caller_continuation=0x89BF0
+cfunction_runtime_base=0x80000
+cfunction_runtime_end=0xD1154
+caller_continuation_offset=0x9BF0
+decoded_callsite_pc=0x89BEC
+decoded_callsite_offset=0x9BEC
+thumb=0 arm_callsite=1
+gamelist_helper=0x2E3099
+0x89BCC off=0x9BCC bytes=68308DE2 w=0xE28D3068
+0x89BD0 off=0x9BD0 bytes=64208DE2 w=0xE28D2064
+0x89BD4 off=0x9BD4 bytes=0C008DE8 w=0xE88D000C
+0x89BD8 off=0x9BD8 bytes=70C0B7E5 w=0xE5B7C070
+0x89BDC off=0x9BDC bytes=040097E5 w=0xE5970004
+0x89BE0 off=0x9BE0 bytes=0630A0E1 w=0xE1A03006
+0x89BE4 off=0x9BE4 bytes=0520A0E1 w=0xE1A02005
+0x89BE8 off=0x9BE8 bytes=0810A0E1 w=0xE1A01008
+0x89BEC off=0x9BEC bytes=3CFF2FE1 BLX r12  <== callsite
+0x89BF0 off=0x9BF0 bytes=64109DE5 w=0xE59D1064
+0x89BF4 off=0x9BF4 bytes=0050A0E1 w=0xE1A05000
+0x89BF8 off=0x9BF8 bytes=000051E3 w=0xE3510000
+0x89BFC off=0x9BFC bytes=68209D15 w=0x159D2068
+0x89C00 off=0x9C00 bytes=00005213 w=0x13520000
+0x89C04 off=0x9C04 bytes=0200000A w=0x0A000002
+0x89C08 off=0x9C08 bytes=0400A0E1 MOV Rd,Rm w=0xE1A00004
+0x89C0C off=0x9C0C bytes=9F6E00EB w=0xEB006E9F
+0x89C10 off=0x9C10 bytes=030000EA w=0xEA000003
+0x89C14 off=0x9C14 bytes=D4109FE5 w=0xE59F10D4
+0x89C18 off=0x9C18 bytes=01108FE0 w=0xE08F1001
+0x89C1C off=0x9C1C bytes=0400A0E1 MOV Rd,Rm w=0xE1A00004
+0x89C20 off=0x9C20 bytes=BF6E00EB w=0xEB006EBF
+0x89C24 off=0x9C24 bytes=0510A0E1 w=0xE1A01005
+0x89C28 off=0x9C28 bytes=0400A0E1 MOV Rd,Rm w=0xE1A00004
+0x89C2C off=0x9C2C bytes=B46E00EB w=0xEB006EB4
+0x89C30 off=0x9C30 bytes=0200A0E3 MOV/imm approx w=0xE3A00002
+0x89C34 off=0x9C34 bytes=70D08DE2 w=0xE28DD070
+0x89C38 off=0x9C38 bytes=F08DBDE8 w=0xE8BD8DF0
+0x89C3C off=0x9C3C bytes=0020A0E3 MOV/imm approx w=0xE3A02000
+0x89C40 off=0x9C40 bytes=0310A0E3 MOV/imm approx w=0xE3A01003
+0x89C44 off=0x9C44 bytes=0400A0E1 MOV Rd,Rm w=0xE1A00004
+0x89C48 off=0x9C48 bytes=BB4400EB w=0xEB0044BB
+0x89C4C off=0x9C4C bytes=0050A0E1 w=0xE1A05000
+0x89C50 off=0x9C50 bytes=0400A0E1 MOV Rd,Rm w=0xE1A00004
+0x89C54 off=0x9C54 bytes=0020A0E3 MOV/imm approx w=0xE3A02000
+0x89C58 off=0x9C58 bytes=0410A0E3 MOV/imm approx w=0xE3A01004
+0x89C5C off=0x9C5C bytes=B64400EB w=0xEB0044B6
+0x89C60 off=0x9C60 bytes=7C109FE5 w=0xE59F107C
+0x89C64 off=0x9C64 bytes=7C0087E5 w=0xE587007C
+0x89C68 off=0x9C68 bytes=6CB087E5 w=0xE587B06C
+containing_function_entry=0x80000
+containing_function_end_heuristic=0x89DEC
+call_insn=BLX r12
+target_register=r12
+R12_producer=UNKNOWN_NOT_EXPOSED

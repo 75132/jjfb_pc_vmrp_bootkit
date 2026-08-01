@@ -10,6 +10,7 @@
 #include "gwy_launcher/p22f_10740_scheduler.h"
 #include "gwy_launcher/p22g_callback_publication.h"
 #include "gwy_launcher/p22h_helper_handoff.h"
+#include "gwy_launcher/p22i_cfunction_dispatcher.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -330,6 +331,7 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
         p22f_note_gamelist_started();
         p22g_note_gamelist_started();
         p22h_note_gamelist_started();
+        p22i_note_gamelist_started();
         p21_on_timer_fire_begin(g_ne.uc, 0, 0, 0, 0, 0);
     } else if (path_has(pkg, "gbrwshell")) {
         g_ne.mrp_started_gbrwshell = 1;
@@ -639,6 +641,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
     p22f_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
     p22g_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
     p22h_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
+    p22i_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
     for (i = 0; i < g_ne.mod_count; i++) {

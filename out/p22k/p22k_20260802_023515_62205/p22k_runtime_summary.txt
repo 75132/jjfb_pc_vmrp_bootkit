@@ -1,0 +1,15 @@
+run_id=p22k_20260802_023515_62205
+class=K1
+cont=0x89BF0
+saw_cont=1
+sp64=0x0
+sp68=0x0
+beq_taken=1
+fallthrough=0
+mov_r0_2=1
+ldmfd=1
+return_pc=0xC
+sole_lock=dispatcher function epilogues with r0=2 after m1; no further init in this fn
+next_fix=trace parent resume after LDMFD return_pc=0xC (who consumes r0=2)
+stop_reason=natural_601_complete_no_post_progress
+insn_n=48

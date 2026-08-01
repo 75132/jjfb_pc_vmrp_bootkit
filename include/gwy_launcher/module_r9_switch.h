@@ -126,7 +126,10 @@ void module_r9_switch_set_emu_exit_hint(GwyEmuExitReason reason);
 /* Mark that guest executed at least one insn inside DSM after MRP→DSM enter. */
 void module_r9_switch_note_dsm_code(uint64_t module_id);
 
-/* If PC is in DSM but R9 is an MRP ER_RW, force DSM R9. Returns 1 if corrected. */
+/*
+ * If PC is in DSM: pop DSM→MRP MR_HELPER frame (P22J), then if R9 is still an
+ * MRP ER_RW, force DSM R9. Returns 1 if R9 was corrected (leave alone = 0/1).
+ */
 int module_r9_switch_ensure_dsm_r9(void *uc, uint32_t guest_pc);
 
 /* Minimal UC_HOOK_CODE on DSM image: note executed + ensure DSM R9 (not full GCO). */

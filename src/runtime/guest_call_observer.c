@@ -27,6 +27,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/p22h_helper_handoff.h"
+#include "gwy_launcher/p22i_cfunction_dispatcher.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -267,6 +268,42 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
         }
     }
 
+    /*
+     * P22J: DSM→MRP registered_helper entry R9 switch (every call).
+     * Full DSM GCO is intentionally not attached (too slow); switch here on the
+     * callee's first helper insn using LR to recover the DSM caller.
+     * Must run before p22i_on_code so entry_r9 reflects child ERW.
+     */
+    if (m && m->origin == MODULE_ORIGIN_MRP_MEMBER && reg) {
+        uint32_t helper_pc = 0;
+        if (m->entries.registered_helper)
+            helper_pc = m->entries.registered_helper & ~1u;
+        else if (w->helper_address)
+            helper_pc = w->helper_address & ~1u;
+        if (helper_pc && (pc & ~1u) == helper_pc) {
+            uint32_t lr = regs[14];
+            const GwyLoadedModule *caller =
+                (lr && reg) ? module_registry_find_by_code_addr(reg, lr & ~1u) : NULL;
+            if (caller && caller->origin == MODULE_ORIGIN_DSM &&
+                caller->module_id != m->module_id) {
+                ModuleR9Scope sc;
+                int sw = module_r9_switch_enter_ex(uc, caller->module_id, m->module_id,
+                                                   GWY_CALL_MR_HELPER, "dsm_to_mrp_helper", &sc);
+                ext_er_rw_producer_on_r9_switch(uc, caller->module_id, m->module_id,
+                                                GWY_CALL_MR_HELPER, sw);
+                (void)guest_memory_uc_read_r9((struct uc_struct *)uc, &regs[9]);
+                if (sw == 1) {
+                    printf("[R9_SWITCH] stage=DSM_TO_MRP_HELPER pc=0x%X lr=0x%X method=0x%X "
+                           "from=%s to=%s r9=0x%X evidence=DOCUMENTED note=p22j\n",
+                           pc, lr, regs[1],
+                           caller->resolved_name[0] ? caller->resolved_name : caller->requested_name,
+                           m->resolved_name[0] ? m->resolved_name : m->requested_name, regs[9]);
+                    fflush(stdout);
+                }
+            }
+        }
+    }
+
     /* A5: DISPATCH_CALL EXIT + MODULE_POINTER_WRITE (observe-only). */
     ext_object_dispatch_on_code(uc, w->module_id, pc, regs, cpsr);
     /* A6: CFUNCTION_NEW EXIT + HELPER_HANDOFF STR watch. */
@@ -349,6 +386,8 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
             {
                 const char *tname = m->resolved_name[0] ? m->resolved_name : m->requested_name;
                 p22h_note_guest_boundary("THUNK_ENTER", w->helper_address, regs[1], pc, lr, regs,
+                                         cpsr, tname, w->module_id, "helper_pc", -1, 0);
+                p22i_note_guest_boundary("THUNK_ENTER", w->helper_address, regs[1], pc, lr, regs,
                                          cpsr, tname, w->module_id, "helper_pc", -1, 0);
             }
             {

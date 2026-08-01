@@ -31,6 +31,8 @@
 #include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/p22g_callback_publication.h"
 #include "gwy_launcher/p22h_helper_handoff.h"
+#include "gwy_launcher/p22i_cfunction_dispatcher.h"
+#include "gwy_launcher/p22k_post_m1_path.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
@@ -1042,6 +1044,134 @@ void p22h_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t
     (void)lr;
     (void)sp;
     (void)cpsr;
+}
+
+/* P22I-CLEAN cfunction dispatcher — product stubs. */
+int p22i_enabled(void) { return 0; }
+void p22i_reset(void) {}
+void p22i_bind_uc(void *uc) { (void)uc; }
+void p22i_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22i_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
+                          uint32_t p_guest, uint64_t generation, uint64_t module_id,
+                          const char *package_owner) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+    (void)p_guest;
+    (void)generation;
+    (void)module_id;
+    (void)package_owner;
+}
+void p22i_note_gamelist_started(void) {}
+void p22i_note_c_function_new(uint32_t helper, uint32_t p_len, uint32_t p_guest, uint32_t rw_base,
+                              uint32_t rw_size, const char *origin) {
+    (void)helper;
+    (void)p_len;
+    (void)p_guest;
+    (void)rw_base;
+    (void)rw_size;
+    (void)origin;
+}
+void p22i_helper_enter(void *uc, P22iCallSource source, uint32_t helper, uint32_t method,
+                       uint32_t p_guest, uint32_t erw, uint32_t input, uint32_t input_len,
+                       uint32_t caller_pc, uint32_t caller_lr, const char *host_fn) {
+    (void)uc;
+    (void)source;
+    (void)helper;
+    (void)method;
+    (void)p_guest;
+    (void)erw;
+    (void)input;
+    (void)input_len;
+    (void)caller_pc;
+    (void)caller_lr;
+    (void)host_fn;
+}
+void p22i_helper_return(void *uc, uint32_t helper, uint32_t method, int32_t ret) {
+    (void)uc;
+    (void)helper;
+    (void)method;
+    (void)ret;
+}
+void p22i_note_entry_begin(uint32_t helper, uint32_t method, uint32_t p_guest, uint32_t input,
+                           uint32_t input_len, uint32_t er_rw, uint32_t sp) {
+    (void)helper;
+    (void)method;
+    (void)p_guest;
+    (void)input;
+    (void)input_len;
+    (void)er_rw;
+    (void)sp;
+}
+void p22i_note_helper_call(uint32_t helper, uint32_t method, int32_t ret_value) {
+    (void)helper;
+    (void)method;
+    (void)ret_value;
+}
+void p22i_note_timer_fire(uint32_t helper, uint32_t p_guest, uint32_t erw, int end) {
+    (void)helper;
+    (void)p_guest;
+    (void)erw;
+    (void)end;
+}
+void p22i_note_mr_event(int32_t event_code, int32_t p0, int32_t p1) {
+    (void)event_code;
+    (void)p0;
+    (void)p1;
+}
+void p22i_note_guest_boundary(const char *stage, uint32_t helper, uint32_t method, uint32_t pc,
+                              uint32_t lr, const uint32_t regs[16], uint32_t cpsr,
+                              const char *module, uint64_t module_id, const char *insn,
+                              int branch_reg, uint32_t source_mem) {
+    (void)stage;
+    (void)helper;
+    (void)method;
+    (void)pc;
+    (void)lr;
+    (void)regs;
+    (void)cpsr;
+    (void)module;
+    (void)module_id;
+    (void)insn;
+    (void)branch_reg;
+    (void)source_mem;
+}
+void p22i_note_memcpy(uint32_t dst, uint32_t src, uint32_t n, uint32_t caller_pc) {
+    (void)dst;
+    (void)src;
+    (void)n;
+    (void)caller_pc;
+}
+void p22i_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                  uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
+}
+
+int p22k_enabled(void) { return 0; }
+void p22k_reset(void) {}
+void p22k_bind_uc(void *uc) { (void)uc; }
+void p22k_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22k_note_dispatcher_continuation(void *uc, uint32_t continuation_pc, uint32_t method,
+                                       int32_t return_r0, uint32_t sp) {
+    (void)uc;
+    (void)continuation_pc;
+    (void)method;
+    (void)return_r0;
+    (void)sp;
+}
+void p22k_note_emu_leave(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r9, const char *phase) {
+    (void)pc;
+    (void)lr;
+    (void)r0;
+    (void)r9;
+    (void)phase;
 }
 
 int p21_enabled(void) { return 0; }

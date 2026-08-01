@@ -1,0 +1,6 @@
+# run_id=p22k_20260802_023515_62205 commit=8ebc5a63ea82cf61d21a1e3bba0f2bc7ab7fdd1d main=ed47b610d41ebdf0c07f26933f19bd6dc0cb3bacb200bf66427ab6139f0779b5 raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 gl_base=0x0 cf_base=0x0 helper=0x0 gl_erw=0x0 cf_erw=0x0 P=? gen=?
+method,hit_n,first_source,first_host_fn,first_helper_entry_pc,first_caller_continuation,first_callsite_pc
+6,1,NATIVE_GUEST,,0x2E3098,0x89BF0,0x89BEC
+0,1,NATIVE_GUEST,,0x2E3098,0x89BF0,0x89BEC
+1,1,NATIVE_GUEST,,0x2E3098,0x89BF0,0x89BEC
+2,2,HOST_timer_FIRE_EXT,bridge_ext_helper_call,0x2E3098,0xA2548,0xA2544
