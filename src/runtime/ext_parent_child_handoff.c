@@ -205,6 +205,24 @@ void ext_parent_child_handoff_on_parent_launch(void *uc, const char *api_name, u
            api_name ? api_name : "?", call_kind ? call_kind : "?", module_name ? module_name : "?",
            (unsigned long long)module_id, g_p19.frame.parent_pc, lr, sp, lr, cpsr_live, r9, live[0],
            live[1], live[2], live[3]);
+    /* P20-CLEAN: stack window for live capsule (observe-only). */
+    if (env1("JJFB_P20_CLEAN") && uc && sp) {
+        uint8_t win[0xC0];
+        uint32_t base = sp - 0x40u;
+        int bi;
+        memset(win, 0, sizeof(win));
+#ifdef GWY_HAVE_UNICORN
+        if (guest_memory_uc_peek((struct uc_struct *)uc, base, win, sizeof(win))) {
+            printf("[PARENT_PRE_STARTGAME] stack_base=0x%X window=0xC0 hex=", base);
+            for (bi = 0; bi < (int)sizeof(win); bi++) printf("%02X", win[bi]);
+            printf(" evidence=OBSERVED\n");
+        }
+#else
+        (void)base;
+        (void)bi;
+        (void)win;
+#endif
+    }
     fflush(stdout);
 }
 

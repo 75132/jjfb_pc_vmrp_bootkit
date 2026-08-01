@@ -626,6 +626,8 @@ void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *n
     bridge_entry_prov_on_host_leave(uc, slot_addr, name, lr, r0);
     snprintf(site, sizeof(site), "MAP_FUNC:%s@0x%X", name ? name : "?", slot_addr);
     gwy_emu_hook_leave(site);
+    /* P20-CLEAN: drain MRPGCMAP documented entries deferred while hook_depth>0. */
+    ext_mrpgcmap_entry_order_drain_pending(uc);
 }
 
 void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *name) {

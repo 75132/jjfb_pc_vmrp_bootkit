@@ -44,6 +44,9 @@ void ext_mrpgcmap_entry_order_before_continuation(void *uc, const char *module_n
 void ext_mrpgcmap_entry_order_on_mem_fault(uint32_t fault_pc, uint32_t fault_addr);
 void ext_mrpgcmap_entry_order_finalize(const char *stop_reason);
 
+/* P20-CLEAN: drain documented entries deferred out of UC_HOOK_CODE (P16 nest rule). */
+void ext_mrpgcmap_entry_order_drain_pending(void *uc);
+
 int ext_mrpgcmap_entry_order_entry_hit(void);
 int ext_mrpgcmap_entry_order_entry_ran(void);
 

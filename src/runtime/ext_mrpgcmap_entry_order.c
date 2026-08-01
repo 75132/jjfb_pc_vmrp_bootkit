@@ -37,6 +37,9 @@ static struct {
     uint32_t last_fault_addr;
     EntryMod mods[8];
     int mod_count;
+    int pending_idx[8];
+    int pending_n;
+    int draining;
 } g_eo;
 
 static int name_has(const char *s, const char *n) {
@@ -209,6 +212,19 @@ static int peek_is_thumb_likely(void *uc, uint32_t addr) {
     return 0;
 }
 
+static void enqueue_pending(EntryMod *m) {
+    int i;
+    int idx;
+    if (!m) return;
+    idx = (int)(m - g_eo.mods);
+    if (idx < 0 || idx >= g_eo.mod_count) return;
+    for (i = 0; i < g_eo.pending_n; i++) {
+        if (g_eo.pending_idx[i] == idx) return;
+    }
+    if (g_eo.pending_n >= (int)(sizeof(g_eo.pending_idx) / sizeof(g_eo.pending_idx[0]))) return;
+    g_eo.pending_idx[g_eo.pending_n++] = idx;
+}
+
 static int run_documented_entry(void *uc, EntryMod *m) {
     uint32_t entry;
     uint32_t stop;
@@ -218,6 +234,18 @@ static int run_documented_entry(void *uc, EntryMod *m) {
     int ok;
 
     if (!uc || !m || !m->base || m->entry_ran) return 0;
+
+    /* P16/P20-CLEAN: never nest uc_emu_start inside UC_HOOK_CODE. */
+    if (gwy_emu_nested_in_code_hook_blocked()) {
+        enqueue_pending(m);
+        printf("[JJFB_MRPGCMAP_ENTRY] module=%s result=DEFERRED "
+               "reason=NESTED_EMU_IN_CODE_HOOK_BLOCKED intended=0x%X "
+               "note=drain_after_map_func_leave evidence=OBSERVED\n",
+               m->name, m->base + 8u);
+        fflush(stdout);
+        return 0;
+    }
+
     entry = m->base + 8u; /* DOCUMENTED MRPGCMAP image+8; never use registry header symbol */
     m->intended = entry;
     stop = m->base;
@@ -266,14 +294,40 @@ static int run_documented_entry(void *uc, EntryMod *m) {
     emit_order(m, "entry_returned");
     return 1;
 }
+
+void ext_mrpgcmap_entry_order_drain_pending(void *uc) {
+    int i;
+    if (!ext_mrpgcmap_entry_order_enabled() || g_eo.draining || g_eo.pending_n <= 0) return;
+    if (!uc) uc = g_eo.uc;
+    if (!uc) return;
+    if (gwy_emu_nested_in_code_hook_blocked()) {
+        printf("[JJFB_MRPGCMAP_ENTRY] op=DRAIN_STILL_IN_HOOK pending=%d evidence=OBSERVED\n",
+               g_eo.pending_n);
+        fflush(stdout);
+        return;
+    }
+    g_eo.draining = 1;
+    printf("[JJFB_MRPGCMAP_ENTRY] op=DRAIN_PENDING count=%d evidence=OBSERVED\n", g_eo.pending_n);
+    fflush(stdout);
+    for (i = 0; i < g_eo.pending_n; i++) {
+        int idx = g_eo.pending_idx[i];
+        EntryMod *m;
+        if (idx < 0 || idx >= g_eo.mod_count) continue;
+        m = &g_eo.mods[idx];
+        if (m->entry_ran || !m->base) continue;
+        (void)run_documented_entry(uc, m);
+    }
+    g_eo.pending_n = 0;
+    g_eo.draining = 0;
+}
 #else
 static int run_documented_entry(void *uc, EntryMod *m) {
     (void)uc;
     (void)m;
     return 0;
 }
+void ext_mrpgcmap_entry_order_drain_pending(void *uc) { (void)uc; }
 #endif
-
 void ext_mrpgcmap_entry_order_before_continuation(void *uc, const char *module_name,
                                                   uint32_t continuation_pc) {
     EntryMod *m;

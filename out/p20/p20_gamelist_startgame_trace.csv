@@ -1,0 +1,10 @@
+﻿field,value
+parent_launch_line,""
+pre_startgame_stack,""
+continue_line,"[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm reason=continue_after_gbrwcore_init evidence=TARGET_OBSERVED"
+br_exit,"BR_EXIT"
+export_startGame_count,2
+parent_launch_count,0
+body_0x2AAD84,0
+entry_deferred,1
+entry_emu_ok,1

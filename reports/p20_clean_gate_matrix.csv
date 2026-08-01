@@ -1,0 +1,20 @@
+﻿gate,name,pass,detail
+G1,gbrwcore_command0_or_start,1,gbrwcore_started
+G2,plat_10102_register,1,""
+G3,natural_callback_or_timer_fire,1,fire_ext=1
+G4,lazy_init_or_cfn,1,markers
+G5,api_builder_or_export_table,1,string_table_ok_dynamic_ptr=0
+G6,lib_startGame_publish,1,string_or_lookup
+G6b,dynamic_startGame_fnptr,0,string_va_only=1
+C0,br_exit_continue,1,"[JJFB_SHELL_CORE_CONTINUE] from=gbrwcore.mrp to=gwy/gamelist.mrp via=start_dsm reason=continue_after_gbrwcore_init evidence=TARGET_OBSERVED
+"
+GL,enter_gamelist,1,isolation=1
+ISO,runtime_frame_isolation,1,"GAMELIST_ERW_HOST_ISOLATED module=gamelist.ext P=0x2AC8EC old_erw=0x0 new_erw=0x682B8C len=0xA34 foreign_owner=- evidence=OBSERVED
+"
+F30,fault_0x30D5D2_absent,1,hits=False
+CFG,cfg36_selected,0,fmt_mapped_not_selected
+G7,guest_startGame_call,0,bl_family=0
+JJ,nested_jjfb_start_dsm,0,child
+ENTRY,mrpgcmap_entry_ok,1,defer=1
+SAFE,nest_guard_clean,1,raw_blocks=1
+SAFE2,no_forced_10140,1,fires=0
