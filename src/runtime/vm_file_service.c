@@ -1,5 +1,6 @@
 #include "gwy_launcher/vm_file_service.h"
 #include "gwy_launcher/ext_loader.h"
+#include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/platform_identity.h"
 #include "gwy_launcher/sha256.h"
 #include <stdio.h>
@@ -334,6 +335,7 @@ int32_t vm_file_service_open(VmFileService *svc, const char *guest_path, uint32_
     handle = (int32_t)(slot + 1);
     trace_open(runtime, guest_path, &res, mode_name(want_write), 1, handle);
     ext_loader_on_member_open(gwy_ext_loader_ensure(), guest_path);
+    p21_note_file_io("open", guest_path, mode_name(want_write), 0, 0, 1, handle, 0, NULL, 0);
     return handle;
 }
 
@@ -363,6 +365,7 @@ int32_t vm_file_service_close(VmFileService *svc, int32_t handle) {
         snprintf(buf, sizeof(buf), "[VM_FILE_CLOSE] handle=%d result=ok\n", (int)handle);
         trace_line(buf);
     }
+    p21_note_file_io("close", "", "", 0, 0, 0, GWY_MR_SUCCESS, 0, NULL, 0);
     return GWY_MR_SUCCESS;
 }
 
@@ -382,6 +385,12 @@ int32_t vm_file_service_read(VmFileService *svc, int32_t handle, void *buf, uint
     snprintf(line, sizeof(line), "[VM_FILE_READ] handle=%d requested=%u got=%d eof=%d\n",
              (int)handle, (unsigned)len, (int)n, eof);
     trace_line(line);
+    {
+        long off = ftell(e->fp);
+        if (off >= (long)n) off -= (long)n;
+        p21_note_file_io("read", e->guest_normalized, "rb", (int32_t)off, len, (int32_t)n,
+                         (int32_t)n, 0, buf, (uint32_t)n);
+    }
     return (int32_t)n;
 }
 
@@ -419,6 +428,7 @@ int32_t vm_file_service_seek(VmFileService *svc, int32_t handle, int32_t pos, in
                  (int)handle, (int)pos, method);
         trace_line(line);
     }
+    p21_note_file_io("seek", e->guest_normalized, "", pos, 0, 0, GWY_MR_SUCCESS, 0, NULL, 0);
     return GWY_MR_SUCCESS;
 }
 
@@ -452,6 +462,7 @@ int32_t vm_file_service_get_len(VmFileService *svc, const char *guest_path) {
                  guest_path, res.guest_canonical, vfs_backend_name(res.backend), sz);
         trace_line(line);
     }
+    p21_note_file_io("getLen", guest_path, "rb", 0, 0, (int32_t)sz, (int32_t)sz, 0, NULL, 0);
     return (int32_t)sz;
 }
 

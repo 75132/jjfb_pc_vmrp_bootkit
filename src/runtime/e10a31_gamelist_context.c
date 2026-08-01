@@ -9,6 +9,7 @@
 #include "gwy_launcher/ext_loader.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/module_registry.h"
+#include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 #ifdef GWY_HAVE_UNICORN
@@ -592,6 +593,8 @@ static void param_mem_read_cb(uc_engine *uc, uc_mem_type type, uint64_t address,
         e10a31_mark_milestone("SHELL_PARAM_GWYBLINK_READ", "param_mem_read");
         p22_note_param_read("SHELL_PARAM_GWYBLINK_READ");
     }
+    p21_note_param_byte_read(pc, mod, (uint32_t)address, (uint32_t)(size > 0 ? size : 0), bytes,
+                             regs, lr, sp, r9);
 }
 
 static void arm_param_read_hook(void *uc) {

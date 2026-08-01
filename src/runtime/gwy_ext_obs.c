@@ -49,6 +49,7 @@
 #include "gwy_launcher/byte_buffer.h"
 #include "gwy_launcher/vm_file_service.h"
 #include "gwy_launcher/p22_selection_gates.h"
+#include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/sha256.h"
 #include "gwy_launcher/product_callback_trace.h"
 #include "gwy_launcher/product_p4_progress.h"
@@ -458,6 +459,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_bound_uc = uc;
     rid = getenv("GWY_PRODUCT_RUN_ID");
     if (rid && rid[0]) gwy_ext_obs_set_product_run_id(rid);
+    p21_bind_uc(uc);
     e10a31j_bind_uc(uc);
     gwy_guest_call_observer_bind_uc(uc);
     ext_entry_observe_bind_uc(uc);
@@ -2760,6 +2762,8 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                    nbytes, hex[0] ? hex : "-", (int)ret);
             fflush(stdout);
             p22_note_plat_10112(path, src_ns, host_note, guest_buf, nbytes, loaded, (int)ret);
+            p21_note_plat_10112(path, src_ns, host_note, guest_buf, nbytes, loaded, (int)ret,
+                                caller_pc);
             if (loaded)
                 p22_note_file_open(path, host_note, 1, nbytes);
         }
@@ -3465,6 +3469,7 @@ void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *en
 }
 
 void gwy_ext_obs_launch_param_mapped(uint32_t entry_va, const char *entry) {
+    p21_set_launch_param(entry_va, entry ? (uint32_t)strlen(entry) + 1u : 0, entry);
     ext_gwy_shell_native_exec_on_launch_param(entry_va, entry);
     e10a31_launch_param_mapped(g_bound_uc, entry_va, entry ? (uint32_t)strlen(entry) + 1u : 0,
                                entry);
@@ -3483,6 +3488,7 @@ void gwy_ext_obs_file_open_ex(const char *guest_path, const char *host_path, int
     ext_gwy_startgame_audit_on_file_open(guest_path, ok);
     ext_gwy_shell_shim_on_file_open(guest_path, host_path, ok);
     ext_gwy_shell_native_exec_on_file_open(guest_path, host_path, ok);
+    p21_note_file_io("open", guest_path, "rb", 0, 0, ok ? 1 : 0, ok ? 1 : 0, 0, NULL, 0);
 }
 
 int gwy_shell_shim_try_init_network(void *uc, uint32_t cb, const char *mode, uint32_t userData,
@@ -3509,6 +3515,8 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
 }
 
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
+    p21_on_timer_fire_end(g_bound_uc, helper, 2u, p_guest, erw, ret);
+    p21_on_timer_fire_begin(g_bound_uc, helper, p_guest, erw, 0, 0);
     e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
 }
 

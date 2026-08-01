@@ -28,6 +28,7 @@
 #include "gwy_launcher/robotol_idle_watch.h"
 #include "gwy_launcher/sms_cfg_compat_profile.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
+#include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
@@ -718,4 +719,94 @@ const char *p22_gate_name(P22Gate g) {
     return "?";
 }
 void p22_finalize(const char *stop_reason) { (void)stop_reason; }
+
+int p21_enabled(void) { return 0; }
+void p21_reset(void) {}
+void p21_bind_uc(void *uc) { (void)uc; }
+void p21_finalize(const char *stop_reason) { (void)stop_reason; }
+void p21_note_gamelist_started(void) {}
+void p21_note_cfg_fmt_mapped(uint32_t fmt_va, const char *note) {
+    (void)fmt_va;
+    (void)note;
+}
+void p21_note_file_io(const char *api, const char *path, const char *mode, int32_t offset,
+                      uint32_t requested_size, int32_t returned_size, int32_t return_value,
+                      uint32_t buffer_guest, const void *host_buf, uint32_t host_buf_len) {
+    (void)api;
+    (void)path;
+    (void)mode;
+    (void)offset;
+    (void)requested_size;
+    (void)returned_size;
+    (void)return_value;
+    (void)buffer_guest;
+    (void)host_buf;
+    (void)host_buf_len;
+}
+void p21_note_plat_10112(const char *path, const char *ns, const char *host, uint32_t buf,
+                         uint32_t len, int loaded, int ret, uint32_t caller_pc) {
+    (void)path;
+    (void)ns;
+    (void)host;
+    (void)buf;
+    (void)len;
+    (void)loaded;
+    (void)ret;
+    (void)caller_pc;
+}
+void p21_set_launch_param(uint32_t va, uint32_t len, const char *entry) {
+    (void)va;
+    (void)len;
+    (void)entry;
+}
+void p21_note_param_byte_read(uint32_t pc, const char *module, uint32_t addr, uint32_t size,
+                              const uint8_t *bytes, const uint32_t regs[13], uint32_t lr,
+                              uint32_t sp, uint32_t r9) {
+    (void)pc;
+    (void)module;
+    (void)addr;
+    (void)size;
+    (void)bytes;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)r9;
+}
+void p21_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                 uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
+}
+void p21_on_timer_fire_begin(void *uc, uint32_t helper, uint32_t p_guest, uint32_t erw,
+                             uint32_t period_ms, uint64_t generation) {
+    (void)uc;
+    (void)helper;
+    (void)p_guest;
+    (void)erw;
+    (void)period_ms;
+    (void)generation;
+}
+void p21_on_timer_fire_end(void *uc, uint32_t helper, uint32_t method, uint32_t p_guest,
+                           uint32_t erw, int32_t ret) {
+    (void)uc;
+    (void)helper;
+    (void)method;
+    (void)p_guest;
+    (void)erw;
+    (void)ret;
+}
+int p21_gate_fmt_mapped(void) { return 0; }
+int p21_gate_file_opened(void) { return 0; }
+int p21_gate_record_read(void) { return 0; }
+int p21_gate_cfg36_present(void) { return 0; }
+int p21_gate_cfg36_selected(void) { return 0; }
+uint32_t p21_cfg36_guest_va(void) { return 0; }
+uint32_t p21_cfg36_source_offset(void) { return 0; }
+int p21_cfg_list_record_count(void) { return 0; }
+const char *p21_cfg_source_path(void) { return ""; }
 

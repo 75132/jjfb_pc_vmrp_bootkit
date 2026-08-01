@@ -128,6 +128,7 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/e10a31l_config_map.c
     src/runtime/e10a31m_fail_2e5404.c
     src/runtime/e10a31n_post_range.c
+    src/runtime/p21_cfg36_selection.c
     src/runtime/p22_selection_gates.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c

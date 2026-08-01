@@ -1,0 +1,10 @@
+field,raw_string_offset,parse_pc,parse_module,parsed_value,write_va,write_owner,write_pc,gamelist_read,note
+gwyblink,70,0x9B8C8,"cfunction.ext","present",0x0,"-",0x0,0,"token_read"
+nmrpname,48,0x9B8C8,"cfunction.ext","gwy/jjfb.mrp",0x0,"-",0x0,0,"token_read"
+narg1,40,0x9B8C8,"cfunction.ext",1,0x0,"-",0x0,0,"token_read"
+narg,33,0x9B8C8,"cfunction.ext",0,0x0,"-",0x0,0,"token_read"
+ncode,23,0x9B8C8,"cfunction.ext",512,0x0,"-",0x0,0,"token_read"
+nextid,12,0x9B8C8,"cfunction.ext",482,0x0,"-",0x0,0,"token_read"
+napptype,0,0x9B8C8,"cfunction.ext",12,0x0,"-",0x0,0,"token_read"
+napptype,0,0x2E77AE,"gamelist.ext",(reread),0x0,"-",0x0,1,"gamelist_consumer_read"
+nextid,12,0x2E77AE,"gamelist.ext",(reread),0x0,"-",0x0,1,"gamelist_consumer_read"

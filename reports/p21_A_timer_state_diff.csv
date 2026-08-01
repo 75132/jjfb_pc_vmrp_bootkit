@@ -1,0 +1,4 @@
+timer_generation,period_ms,helper,method,return,erw_changed,file_calls,network_calls,cfg_buffer_writes,list_count_delta,selected_state_changed,classification,note
+0,0,0x2E3099,2,0,0,20,0,0,0,0,"file_activity","fire_end"
+0,0,0x2E3099,2,0,0,0,0,0,0,0,"idle_or_ui_refresh","fire_end"
+0,0,0x2E3099,2,0,0,0,0,0,0,0,"idle_or_ui_refresh","fire_end"

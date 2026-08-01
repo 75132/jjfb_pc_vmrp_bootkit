@@ -1,0 +1,16 @@
+﻿source_commit=f7ca7c4d6d0d5f405479c1f679ae3cc8be5edc0c
+main_exe_sha256=58bde74d53c39a9614bfe63ca6d9c2e2fdbe7ff2bb71f2c94351be336564033e
+gate=P21_cfg36_selection_contract
+NATURAL_ONLY=yes
+JJFB_FORCE_10140_LIFECYCLE=0
+no_headless_select=yes
+no_startGame_call=yes
+no_static_capsule=yes
+verdict_class=A
+primary_lane=A
+p20_freeze_ok=True
+gamelist=1
+cfg_opened=0
+cfg36_present=0
+cfg36_selected=0
+host_external_cfg36=yes_file_off_10816

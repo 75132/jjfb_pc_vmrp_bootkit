@@ -1,0 +1,2 @@
+record_guest,record_size,record_index,source_file,source_offset,field_offsets,raw_hex,decoded_fields,record_sha256,producer_pc,producer_module,full_cfg36
+0x0,0,0,"NONE",0,"","",no_guest_cfg_buffer,-,0x0,"-",0
