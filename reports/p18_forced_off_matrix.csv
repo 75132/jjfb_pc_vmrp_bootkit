@@ -1,0 +1,5 @@
+﻿tag,policy,skip_forced,forced_host_name,oneshot_logs,lifecycle_fire,reg_10140,guest_timerStart,host_timer_start_chunk,evt_1e209,case9_reached,genuine,fault,draw,note
+p18_natural1,NATURAL_ONLY,1,0,0,0,2,0,0,0,0,0,0,0,idle_after_10800
+p18_natural2,NATURAL_ONLY,1,0,0,0,2,0,0,0,0,0,0,0,idle_after_10800
+p18_natural3,NATURAL_ONLY,1,0,0,0,2,0,0,0,0,0,0,0,idle_after_10800
+p18_oneshot,RESEARCH_ONESHOT,0,0,1,1,2,0,1,6,1,0,0,0,one_echo_same_digest_no_guest_timer

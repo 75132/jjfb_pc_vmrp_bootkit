@@ -1,0 +1,14 @@
+﻿source_commit=f4b783d98a6301d1e66c4219014d70ffd342bb00
+gate=P18_10140_activation_contract
+product_default=JJFB_FORCE_10140_LIFECYCLE_unset_NATURAL_ONLY
+research_oneshot=JJFB_FORCE_10140_ONESHOT
+natural_lifecycle_fire=0
+natural_evt_1e209=0
+natural_forced_host=0
+oneshot_lifecycle_fire=1
+oneshot_guest_timerStart=0
+oneshot_digest_changed=0
+classification=E_plus_A_hypothesis
+shell_jjfb_10140_first_call=NOT_CAPTURED
+
+main_exe_sha256=695675e94084199a897a9d81b68b1f4ccf998077cccb1dd0769f6f674d47f4ab

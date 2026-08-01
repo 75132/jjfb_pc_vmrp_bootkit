@@ -1,0 +1,6 @@
+﻿policy=NATURAL_ONLY
+lifecycle_fire=0
+evt_1e209=0
+last_guest=sendAppEvent(0x10800,0x4) @ pc=0x304A28
+last_plat=plat_10800_ack ret=1
+stop=START_DSM_RETURN + SKIP_FORCED_ARM + idle

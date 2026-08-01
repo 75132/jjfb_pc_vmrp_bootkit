@@ -129,11 +129,14 @@ static int g_arm_absent_emitted;
 static uint32_t g_post_loop_iter;
 static uint32_t g_draw_count;
 static uint32_t g_refresh_count;
-/* Host 50ms tick when guest registered 0x10140 but never armed classic timer. */
+/* Host 50ms tick when guest registered 0x10140 but never armed classic timer.
+ * P18: product default OFF — only research may force-arm / one-shot kick. */
 static int g_lifecycle_host_armed;
+static int g_lifecycle_oneshot; /* research: fire once, no rearm */
 static int g_lifecycle_pending;
 static int g_lifecycle_delivering;
 static uint32_t g_lifecycle_ticks;
+static int g_10140_policy_logged;
 static void *g_bound_uc;
 /* Mirrored from P26 run context — mem_fault may run before g_p26 block. */
 static int g_p26_parked_flag;
@@ -534,9 +537,11 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_draw_count = 0;
     g_refresh_count = 0;
     g_lifecycle_host_armed = 0;
+    g_lifecycle_oneshot = 0;
     g_lifecycle_pending = 0;
     g_lifecycle_delivering = 0;
     g_lifecycle_ticks = 0;
+    g_10140_policy_logged = 0;
     g_helper_r9_scope_valid = 0;
     memset(&g_helper_r9_scope, 0, sizeof(g_helper_r9_scope));
     memset(g_family_eq, 0, sizeof(g_family_eq));
@@ -954,6 +959,9 @@ void gwy_ext_obs_timer_host_disarm(const char *route, uint32_t pc) {
 }
 
 void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
+    int force_periodic = env_flag("JJFB_FORCE_10140_LIFECYCLE");
+    int force_oneshot = env_flag("JJFB_FORCE_10140_ONESHOT");
+    int has_10140 = platform_handler_registry_has(0x10140u);
     g_start_dsm_returned = 1;
     (void)filename;
     (void)ret;
@@ -964,20 +972,51 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
                "reason=no_timer_api_call_seen arm_count=0 evidence=TARGET_OBSERVED\n");
         fflush(stdout);
     }
+
     /*
-     * CROSS_TARGET: 0x10140 is the period/main handler. When guest never calls
-     * classic timerStart, host may arm a tick for liveness — tagged forced so it
-     * cannot satisfy SCHEDULER_NATURAL_CALLBACK.
+     * P18: product default is NATURAL_ONLY — do not fabricate a 50ms host tick
+     * just because 0x10140 was registered. Research may opt in:
+     *   JJFB_FORCE_10140_LIFECYCLE=1  → periodic forced arm+rearm (legacy P17 echo)
+     *   JJFB_FORCE_10140_ONESHOT=1    → single kick, no rearm (product_valid=no)
      */
-    if (!g_lifecycle_host_armed && !g_timer_arm_seen &&
-        platform_handler_registry_has(0x10140u)) {
+    if (!g_10140_policy_logged) {
+        g_10140_policy_logged = 1;
+        printf("[10140_ACTIVATION_POLICY] mode=%s forced_arm=%d forced_enqueue=%d "
+               "forced_rearm=%d has_10140=%d timer_arm_seen=%d "
+               "note=product_default_NATURAL_ONLY evidence=OBSERVED\n",
+               (force_periodic || force_oneshot) ? (force_oneshot ? "RESEARCH_ONESHOT" : "RESEARCH_PERIODIC")
+                                                 : "NATURAL_ONLY",
+               (force_periodic || force_oneshot) ? 1 : 0,
+               (force_periodic || force_oneshot) ? 1 : 0, force_periodic ? 1 : 0, has_10140,
+               g_timer_arm_seen);
+        fflush(stdout);
+    }
+
+    if (!force_periodic && !force_oneshot) {
+        if (has_10140 && !g_timer_arm_seen) {
+            printf("[JJFB_LIFECYCLE] op=SKIP_FORCED_ARM handler=0x%X "
+                   "reason=NATURAL_ONLY_waiting_for_natural_activator "
+                   "evidence=OBSERVED\n",
+                   platform_handler_registry_get(0x10140u));
+            fflush(stdout);
+        }
+        return;
+    }
+
+    if (!g_lifecycle_host_armed && !g_timer_arm_seen && has_10140) {
         uint32_t h = platform_handler_registry_get(0x10140u);
         g_lifecycle_host_armed = 1;
-        gwy_ext_obs_timer_host_arm(GWY_LIFECYCLE_PERIOD_MS, "lifecycle_10140_forced_host", 0);
+        g_lifecycle_oneshot = force_oneshot ? 1 : 0;
+        gwy_ext_obs_timer_host_arm(GWY_LIFECYCLE_PERIOD_MS,
+                                   force_oneshot ? "lifecycle_10140_research_oneshot"
+                                                 : "lifecycle_10140_forced_host",
+                                   0);
         printf("[JJFB_LIFECYCLE] op=ARM period_ms=%u handler=0x%X family=0x%X "
-               "reason=10140_registered_no_classic_timer forced=yes "
-               "evidence=CROSS_TARGET+docs/06\n",
-               GWY_LIFECYCLE_PERIOD_MS, h, platform_handler_registry_family(0x10140u));
+               "reason=%s forced=yes one_shot=%s product_valid=no "
+               "evidence=RESEARCH_ONLY\n",
+               GWY_LIFECYCLE_PERIOD_MS, h, platform_handler_registry_family(0x10140u),
+               force_oneshot ? "research_oneshot_kick" : "10140_registered_no_classic_timer",
+               force_oneshot ? "yes" : "no");
         fflush(stdout);
         {
             GwyScheduledWork w;
@@ -1869,9 +1908,26 @@ int gwy_ext_obs_lifecycle_on_timer_due(void *uc) {
     g_lifecycle_delivering = 1;
     gwy_ext_obs_lifecycle_deliver(uc);
     if (g_lifecycle_host_armed && !product_callback_trace_halted()) {
-        platform_timer_start(GWY_LIFECYCLE_PERIOD_MS);
-        if (g_timer_start) (void)g_timer_start((uint16_t)GWY_LIFECYCLE_PERIOD_MS);
-        platform_timer_cadence_note_arm(1u, 0, GWY_LIFECYCLE_PERIOD_MS, 1, "lifecycle_rearm");
+        if (g_lifecycle_oneshot) {
+            /* Research one-shot: do not rearm; clear host-armed so no echo loop. */
+            g_lifecycle_host_armed = 0;
+            g_lifecycle_oneshot = 0;
+            platform_timer_stop();
+            printf("[JJFB_LIFECYCLE] op=ONESHOT_DONE no_rearm=1 product_valid=no "
+                   "ticks=%u evidence=RESEARCH_ONLY\n",
+                   g_lifecycle_ticks);
+            fflush(stdout);
+        } else if (env_flag("JJFB_FORCE_10140_LIFECYCLE")) {
+            platform_timer_start(GWY_LIFECYCLE_PERIOD_MS);
+            if (g_timer_start) (void)g_timer_start((uint16_t)GWY_LIFECYCLE_PERIOD_MS);
+            platform_timer_cadence_note_arm(1u, 0, GWY_LIFECYCLE_PERIOD_MS, 1, "lifecycle_rearm");
+        } else {
+            /* Safety: armed flag set but force env cleared — stop fabricating. */
+            g_lifecycle_host_armed = 0;
+            platform_timer_stop();
+            printf("[JJFB_LIFECYCLE] op=DISARM reason=force_env_off evidence=OBSERVED\n");
+            fflush(stdout);
+        }
     }
     g_lifecycle_delivering = 0;
     return 1;
@@ -2162,6 +2218,14 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
                 product_p11_on_10102_register(uc, result.reg_family, result.reg_handler, caller_pc,
                                               lr, (int32_t)ret, oname, owner ? owner->module_id : 0,
                                               gen, erw, cbase, csize);
+            }
+            if (r0 == 0x10140u) {
+                printf("[10140_REGISTER] family=0x%X handler=0x%X r0=0x%X r1=0x%X r2=0x%X r3=0x%X "
+                       "r4=0x%X pc=0x%X lr=0x%X r9=0x%X owner=%s ret=%d "
+                       "abi_note=no_period_in_register_args evidence=OBSERVED\n",
+                       result.reg_family, result.reg_handler, r0, r1, r2, r3, r4, caller_pc, lr, r9,
+                       oname ? oname : "?", (int)ret);
+                fflush(stdout);
             }
             robotol_idle_watch_on_handler_register(r0, result.reg_family, result.reg_handler);
             if (owner && oname && strstr(oname, "robotol"))

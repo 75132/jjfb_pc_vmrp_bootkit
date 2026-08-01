@@ -292,9 +292,9 @@ void platform_send_app_event_classify(const GwyPlatCall *call, GwyPlatCallResult
     }
 
     /*
-     * 0x10140: period/main handler register (docs/06).
-     * CROSS_TARGET: (type, chunk, handler); handler prefers R3; ack=1.
-     * After 10120 ret=1, robotol continues here; status-0 aborts mrc_init.
+     * 0x10140: handler register (docs/06 CROSS_TARGET).
+     * ABI observed: (code, family/type, chunk?, handler) — NO period in register args.
+     * P18: do not infer a 50ms host tick from registration alone.
      */
     if (call->code == 0x10140u) {
         uint32_t handler = call->arg3 ? call->arg3 : call->arg2;
