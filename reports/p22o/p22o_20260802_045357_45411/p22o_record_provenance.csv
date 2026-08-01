@@ -1,0 +1,5 @@
+seq,record_addr,value,writer_pc,writer_off,writer_mod,old,lr,kind,note
+1,0x2AF8F8,0x800054,0x928F8,0x128F8,cfunction.ext,0x0,0xA0D34,seed_poll_op14_present,"producer_window"
+2,0x2AF904,0x801B,0x928F8,0x128F8,cfunction.ext,0x0,0xA0D34,seed_poll_op1b_present,"producer_window"
+3,0x28065C,0x801B,0x92CE0,0x12CE0,cfunction.ext,0x801A,0x92FE4,op1b_staging_store,"direct_str;cfunction.ext"
+4,0x28065C,0x801B,0x92CE0,0x12CE0,cfunction.ext,0x801A,0xD0158,op1b_staging_store,"direct_str;cfunction.ext"

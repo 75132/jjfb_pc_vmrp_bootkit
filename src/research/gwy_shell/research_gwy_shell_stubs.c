@@ -36,6 +36,7 @@
 #include "gwy_launcher/p22l_parent_return.h"
 #include "gwy_launcher/p22m_queue_scheduler.h"
 #include "gwy_launcher/p22n_opcode_stream.h"
+#include "gwy_launcher/p22o_cmd_buffer_producer.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
@@ -1268,6 +1269,29 @@ void p22n_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t
     (void)lr;
     (void)sp;
     (void)cpsr;
+}
+
+int p22o_enabled(void) { return 0; }
+int p22o_observation_complete(void) { return 0; }
+void p22o_reset(void) {}
+void p22o_bind_uc(void *uc) { (void)uc; }
+void p22o_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22o_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
+                          uint32_t p_guest, uint64_t generation, const char *package_owner) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+    (void)p_guest;
+    (void)generation;
+    (void)package_owner;
+}
+void p22o_note_dispatcher_continuation(void *uc, uint32_t continuation_pc, uint32_t method,
+                                       uint32_t sp) {
+    (void)uc;
+    (void)continuation_pc;
+    (void)method;
+    (void)sp;
 }
 
 int p21_enabled(void) { return 0; }

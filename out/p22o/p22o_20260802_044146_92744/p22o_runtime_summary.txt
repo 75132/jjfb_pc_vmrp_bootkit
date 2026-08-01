@@ -1,0 +1,21 @@
+run_id=p22o_20260802_044146_92744
+cf_base=0x80000
+cf_end=0xD1154
+cfunction_runtime_sha256=2e6bea16b462f1bb141644fbb6c0a7088cc88f969648535b730659ca505eecf5
+opcodes=0x14,0x1B
+stream_n=2
+fire2_n=1
+first_write14=1
+first_write1b=1
+producer_off14=0x0
+producer_off1b=0x0
+writer_class=dynamic_early_writes
+append_n=23879
+seed_preexisting14=0
+seed_preexisting1b=0
+entered_10740=0
+entered_7b6c=0
+sole_lock=cmd buffer early producer: class=dynamic_early_writes write14=1@+0x0 write1b=1@+0x0; no UI/init record after 0x14/0x1B
+next_fix=inspect producer +0x0/+0x0 skip predicate (field Y=UNKNOWN actual=UNKNOWN); find natural contract W that should enqueue UI/init
+stop_reason=early_producer_closed_idle
+guest_modified=NO

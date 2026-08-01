@@ -10,6 +10,7 @@
 #include "gwy_launcher/p22l_parent_return.h"
 #include "gwy_launcher/p22m_queue_scheduler.h"
 #include "gwy_launcher/p22n_opcode_stream.h"
+#include "gwy_launcher/p22o_cmd_buffer_producer.h"
 #include "gwy_launcher/sha256.h"
 
 #include <stdio.h>
@@ -1098,6 +1099,7 @@ static void push_enter(void *uc, P22iCallSource source, uint32_t helper, uint32_
         p22l_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, sp);
         p22m_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, sp);
         p22n_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, sp);
+        p22o_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, sp);
     }
 }
 static void try_match_return(uint32_t pc, uint32_t sp, const uint32_t regs[16]) {
@@ -1489,6 +1491,7 @@ void p22i_bind_uc(void *uc) {
     p22l_bind_uc(uc);
     p22m_bind_uc(uc);
     p22n_bind_uc(uc);
+    p22o_bind_uc(uc);
     if (!p22i_enabled()) return;
     g.uc = uc;
 }
@@ -1499,6 +1502,7 @@ void p22i_note_module_map(const char *module_name, uint32_t base, uint32_t size,
     p22l_note_module_map(module_name, base, size, erw);
     p22m_note_module_map(module_name, base, size, erw, p_guest, generation, package_owner);
     p22n_note_module_map(module_name, base, size, erw, p_guest, generation, package_owner);
+    p22o_note_module_map(module_name, base, size, erw, p_guest, generation, package_owner);
     if (!p22i_enabled()) return;
     if (is_gl(module_name)) {
         g.gl_base = base;
@@ -1641,9 +1645,10 @@ void p22i_note_timer_fire(uint32_t helper, uint32_t p_guest, uint32_t erw, int e
     if (!end) return;
     g.fire_ext_n++;
     add_post("FIRE_EXT", 0, 0, helper, 2, erw, "code=2");
-    /* While P22N is still capturing the opcode stream, do not cut on first FIRE.
-     * After p22n_observation_complete(), allow the normal post-601 idle stop. */
-    if (!p22n_enabled() || p22n_observation_complete()) {
+    /* While P22N/P22O is still capturing, do not cut on first FIRE.
+     * After observation_complete(), allow the normal post-601 idle stop. */
+    if ((!p22n_enabled() || p22n_observation_complete()) &&
+        (!p22o_enabled() || p22o_observation_complete())) {
         if (g.natural_601 && g.ret_m1 && g.fire_ext_n >= 8u) maybe_stop("natural_601_fire8");
         if (g.natural_601 && g.ret_m6 && g.ret_m0 && g.ret_m1 && g.fire_ext_n >= 1u &&
             !g.entered_10740 && !g.callback_pub)
@@ -1651,6 +1656,8 @@ void p22i_note_timer_fire(uint32_t helper, uint32_t p_guest, uint32_t erw, int e
     }
     if (p22n_enabled() && p22n_observation_complete() && g.fire_ext_n >= 1u)
         maybe_stop("p22n_opcode_stream_closed");
+    if (p22o_enabled() && p22o_observation_complete() && g.fire_ext_n >= 1u)
+        maybe_stop("p22o_cmd_buffer_closed");
     if (g.fire_ext_n >= FIRE_STOP) maybe_stop("fire_ext_n20");
     (void)helper;
 }
@@ -1805,4 +1812,5 @@ void p22i_finalize(const char *stop_reason) {
     p22l_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
     p22m_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
     p22n_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
+    p22o_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
 }

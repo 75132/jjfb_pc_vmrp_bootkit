@@ -1,0 +1,24 @@
+run_id=p22o_20260802_045149_31217
+cf_base=0x80000
+cf_end=0xD1154
+cfunction_runtime_sha256=2e6bea16b462f1bb141644fbb6c0a7088cc88f969648535b730659ca505eecf5
+opcodes=0x05,0x01,0x01,0x19,0x22,0x07,0x01,0x07,0x22,0x07,0x22,0x07,0x22,0x07,0x22,0x07,0x05,0x19,0x07,0x05,0x19,0x05,0x01,0x01,0x19
+stream_n=64
+fire2_n=1
+first_write14=1
+first_write1b=1
+producer_off14=0x128F8
+producer_off1b=0x128F8
+staging_op1b=1
+staging_op1b_addr=0x28065C
+staging_op1b_pc=0x92CE0
+writer_class=dynamic_early_writes
+append_n=2
+seed_preexisting14=0
+seed_preexisting1b=0
+entered_10740=0
+entered_7b6c=0
+sole_lock=cmd buffer early producer: class=dynamic_early_writes write14=1@+0x128F8 write1b=1@+0x128F8 staging1b=1; no UI/init record after 0x14/0x1B
+next_fix=trace staging@0x28065C (+0x12CE0) to seed publish; skip Y=object+0x30_or_cmp_regs A=f30=0x100 r0=0x27FC84 r1=0x0; find contract W for UI/init enqueue
+stop_reason=early_producer_closed_idle
+guest_modified=NO

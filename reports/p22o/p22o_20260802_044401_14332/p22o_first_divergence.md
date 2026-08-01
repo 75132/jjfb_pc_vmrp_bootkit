@@ -1,0 +1,20 @@
+# P22O first divergence
+
+## Early producer window
+
+- mem_armed_at=cfunction_map_or_bind_uc
+- seed14=0x2AF8F8 seed1b=0x2AF904
+- first_write14=0 pc=0x0 off=+0x0
+- first_write1b=0 pc=0x0 off=+0x0
+- seed_preexisting14=0 seed_preexisting1b=0
+- writer_class=UNKNOWN
+
+## Divergence
+
+seeds present at fetch without write in armed window (class=UNKNOWN); stream=[0x14,0x1B]
+
+- skip_field_Y=UNKNOWN
+- skip_actual_A=UNKNOWN
+- expected_contract_W=UNKNOWN
+- opcodes=0x14,0x1B
+- fire2_n=1

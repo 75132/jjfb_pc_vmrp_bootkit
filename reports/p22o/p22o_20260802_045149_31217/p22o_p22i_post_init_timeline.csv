@@ -1,0 +1,9 @@
+# run_id=p22o_20260802_045149_31217 commit=a07b6b62cf9229b6b360fcfca858f2b2d4b00db8 main=92eee2393ba858b14eca6e4e6c49b596386163775abd08b9201b5b225f6ad32b raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 gl_base=0x0 cf_base=0x0 helper=0x0 gl_erw=0x0 cf_erw=0x0 P=? gen=?
+sequence,event,pc,offset,R0,R1,R9,detail
+1,mr_event,0x0,0x0,0xFFFFFF9C,0x280254,0x0,"event=-100 p0=2622036 p1=0"
+2,mr_event,0x0,0x0,0xFFFFFF9D,0x2829D4,0x0,"event=-99 p0=2632148 p1=0"
+3,gamelist_started,0x0,0x0,0x0,0x0,0x0,"shell"
+4,mr_event,0x0,0x0,0xFFFFFF9D,0x682AB4,0x0,"event=-99 p0=6826676 p1=0"
+5,c_function_new,0x0,0x0,0x2E3099,0x0,0x0,"LOG_PARSE"
+20,method1_return,0x89BF0,0x9BF0,0x0,0x1,0x682B8C,"start_post_init_watch"
+30,FIRE_EXT,0x0,0x0,0x2E3099,0x2,0x682B8C,"code=2"
