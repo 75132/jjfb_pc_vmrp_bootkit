@@ -35,6 +35,7 @@
 #include "gwy_launcher/package_metadata.h"
 #include "gwy_launcher/package_scope.h"
 #include "gwy_launcher/gwy_sms_cfg.h"
+#include "gwy_launcher/bridge_entry_provenance.h"
 /* E9V: declared before br_mr_drawBitmap; defined with e9h blit path below. */
 static void jjfb_blit_sprite_with_optional_key(uint16_t *px, int x, int y, int w, int h,
                                                const char *member_or_handle);
@@ -3133,6 +3134,10 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
             gwy_ext_obs_host_callback_resume(uc, slot, obj->name);
             return;
         }
+#ifdef GWY_USE_VM_FILE_SERVICE
+        /* MAP_DATA / unknown stub executed — classic mr_table walk. */
+        bridge_entry_prov_on_data_exec(uc, (uint32_t)address, obj->name);
+#endif
         printf("!!! unregister function at 0x%" PRIX64 " !!! \n", address);
     }
 }
@@ -3199,10 +3204,34 @@ static void bridge_uc_save_regs(uc_engine *uc, uint32_t out[17]) {
         out[i] = 0;
         uc_reg_read(uc, g_bridge_uc_regs[i], &out[i]);
     }
+#ifdef GWY_USE_VM_FILE_SERVICE
+    bridge_entry_prov_on_nest_save(uc, "bridge_uc_save_regs", out);
+#endif
 }
 
 static void bridge_uc_restore_regs(uc_engine *uc, const uint32_t in[17]) {
     int i;
+#ifdef GWY_USE_VM_FILE_SERVICE
+    /* Capture inner regs before outer restore — detects stale LR leakage. */
+    {
+        uint32_t inner[17];
+        for (i = 0; i < 17; i++) {
+            inner[i] = 0;
+            uc_reg_read(uc, g_bridge_uc_regs[i], &inner[i]);
+        }
+        bridge_entry_prov_on_nest_restore(uc, "bridge_uc_restore_regs", in);
+        /* Re-emit with inner-vs-outer via temporary: pass inner through live fields
+         * by writing them briefly is wrong; instead print here when enabled. */
+        if (bridge_entry_prov_enabled()) {
+            printf("[JJFB_BRIDGE_NEST_INNER] site=bridge_uc_restore_regs "
+                   "inner_pc=0x%X inner_lr=0x%X outer_pc=0x%X outer_lr=0x%X "
+                   "lr_polluted=%d evidence=OBSERVED\n",
+                   inner[15], inner[14], in[15], in[14],
+                   (inner[14] != in[14]) ? 1 : 0);
+            fflush(stdout);
+        }
+    }
+#endif
     for (i = 0; i < 17; i++) {
         uint32_t v = in[i];
         uc_reg_write(uc, g_bridge_uc_regs[i], &v);

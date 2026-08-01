@@ -1,0 +1,3 @@
+﻿tag,drawBitmap,getCharBitmap,getTime,getUserInfo,sleep,plat,plat_r0,plat_r1,plat_lr,plat_branch,plat_args_valid,first_genuine,first_false,fallthrough,exit
+diag,NOT_SEEN,NOT_SEEN,NOT_SEEN,NOT_SEEN,NOT_SEEN,NOT_SEEN,,,,,,,,True,
+hit1,LINEAR_SLOT_FALLTHROUGH,LINEAR_SLOT_FALLTHROUGH,LINEAR_SLOT_FALLTHROUGH,LINEAR_SLOT_FALLTHROUGH,LINEAR_SLOT_FALLTHROUGH,LINEAR_SLOT_FALLTHROUGH,0x0,0x9,0x304599,-,0,,mr_drawBitmap/LINEAR_SLOT_FALLTHROUGH,True,

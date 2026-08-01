@@ -54,6 +54,7 @@
 #include "gwy_launcher/product_p5_event_advance.h"
 #include "gwy_launcher/product_first_frame_push.h"
 #include "gwy_launcher/product_p11_case9_trace.h"
+#include "gwy_launcher/bridge_entry_provenance.h"
 #include "gwy_launcher/product_event_queue_bootstrap.h"
 #include "gwy_launcher/product_event_node_alloc.h"
 #include "gwy_launcher/product_event_queue_consumer.h"
@@ -552,6 +553,8 @@ void gwy_ext_obs_bind_uc(void *uc) {
     robotol_idle_watch_bind_uc(uc);
     robotol_flag_writer_trace_reset();
     robotol_flag_writer_trace_bind_uc(uc);
+    bridge_entry_prov_reset();
+    bridge_entry_prov_bind_uc(uc);
 #ifdef GWY_HAVE_UNICORN
     gwy_ext_obs_arm_leave_2fc26c_hook(uc);
 #endif
@@ -561,6 +564,7 @@ void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *n
     ext_callback_frame_on_host_enter(uc, slot_addr, name);
     e10a31j_on_host_api_enter(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 1, 0);
+    bridge_entry_prov_on_host_enter(uc, slot_addr, name);
     ext_gwy_startgame_audit_on_plat_or_testcom(uc, name, slot_addr);
     if (name && (strstr(name, "TestCom") || strstr(name, "testcom") || strstr(name, "plat"))) {
 #ifdef GWY_HAVE_UNICORN
@@ -583,9 +587,17 @@ void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *n
 }
 
 void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *name) {
+    uint32_t lr = 0, r0 = 0;
     ext_callback_frame_on_host_leave(uc, slot_addr, name);
     e10a31j_on_host_api_leave(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 0, 0);
+#ifdef GWY_HAVE_UNICORN
+    if (uc) {
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_LR, &lr);
+        uc_reg_read((uc_engine *)uc, UC_ARM_REG_R0, &r0);
+    }
+#endif
+    bridge_entry_prov_on_host_leave(uc, slot_addr, name, lr, r0);
 }
 
 void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *name) {
@@ -3249,6 +3261,8 @@ void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *nam
     e10a31j_on_unimpl_api(uc, slot_addr, name);
     ext_gwy_startgame_audit_on_plat_or_testcom(uc, name, slot_addr);
     ext_post_cont_audit_note_unimplemented(name);
+    bridge_entry_prov_on_unimplemented(uc, slot_addr, name);
+    bridge_entry_prov_flush();
     printf("[POST_CONT_UNIMPLEMENTED_API] api=%s slot=0x%X evidence=OBSERVED "
            "note=observe_before_exit\n",
            name ? name : "?", slot_addr);
@@ -3458,6 +3472,7 @@ void gwy_ext_obs_p26_run_context(uint32_t depth, uint64_t serial, uint32_t park_
     g_p26.park_owner_depth = park_owner_depth;
     g_p26.park_owner_serial = park_owner_serial;
     g_p26.parked = g_p26_parked_flag;
+    bridge_entry_prov_set_run_context(depth, serial);
     if (!p26_enabled()) return;
 }
 

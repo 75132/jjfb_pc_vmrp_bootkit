@@ -102,6 +102,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/product_runtime_progress.c
     src/runtime/product_event_object_trace.c
     src/runtime/product_p11_case9_trace.c
+    src/runtime/bridge_entry_provenance.c
 )
 
 set(GWY_RESEARCH_GWY_SHELL_SOURCES

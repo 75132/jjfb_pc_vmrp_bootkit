@@ -20,6 +20,7 @@
 #include "gwy_launcher/ext_mrpgcmap_entry_order.h"
 #include "gwy_launcher/ext_entry_abi_cluster_audit.h"
 #include "gwy_launcher/ext_cfunction_publication_audit.h"
+#include "gwy_launcher/bridge_entry_provenance.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/ext_object_observe.h"
 #include "gwy_launcher/guest_memory.h"
@@ -298,6 +299,7 @@ static void gco_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *us
     ext_mrpgcmap_entry_order_on_code(uc, m ? m->requested_name : NULL, pc);
     ext_entry_abi_cluster_audit_on_code(uc, m ? m->requested_name : NULL, pc);
     ext_cfunction_publication_audit_on_code(uc, m ? m->requested_name : NULL, pc, regs, cpsr);
+    bridge_entry_prov_on_guest_code(uc, pc, size, regs, cpsr, m ? m->requested_name : NULL);
     module_r9_switch_set_guest_context(pc, NULL);
 
     /* A5: observe DSM→module transfer on first PC even while still MAPPED
