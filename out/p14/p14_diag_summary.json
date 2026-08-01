@@ -1,0 +1,21 @@
+﻿{
+    "applicable":  "HIT",
+    "hit":  true,
+    "case9_leave":  true,
+    "mmochat":  true,
+    "enter_n":  1,
+    "leave_write":  0,
+    "leave_null":  1,
+    "leave_fail":  1,
+    "leave_note":  "null_ptr",
+    "unimpl":  false,
+    "owner_module":  "robotol.ext",
+    "blob_sha256":  "NONE",
+    "package_alert":  false,
+    "wxjwq_active":  false,
+    "sleep_n":  1,
+    "sleep_unimpl":  false,
+    "dsm_reinit":  1,
+    "next_unimpl":  "mr_plat",
+    "p3_fault":  false
+}
