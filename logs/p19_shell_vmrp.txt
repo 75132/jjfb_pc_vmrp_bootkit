@@ -1,0 +1,1086 @@
+__i386__
+CODE_ADDRESS:0x80000, CODE_SIZE:0x100000
+STACK_ADDRESS:0x180000, STACK_SIZE:0x100000
+MEMORY_MANAGER_ADDRESS:0x280000, MEMORY_MANAGER_SIZE:0xC00000
+START_ADDRESS:0x80000, END_ADDRESS:0xE80000
+TOTAL_MEMORY:0xE00000(14680064)
+[JJFB_WINDOW] kind=SDL_software flags=0 zoom=1 size=240x320 title=JJFB Launcher note=no_OPENGL_for_UpdateWindowSurface evidence=OBSERVED
+initMemoryManager: baseAddress:0x280000 len: 0xC00000
+[DRAW_FP_TABLE_SLOT] mt=0x280004 off=0x1E0 trampoline=0x2801E4 evidence=OBSERVED
+[PLATFORM_MEMCPY] import_armed slot=0x804A8 identity=dsm_misbound_copy mr_table_off=0xC evidence=DOCUMENTED
+[PLATFORM_MEMCPY] dsm_body_armed slot=0x94E94 identity=dsm_memcpy_body evidence=DOCUMENTED
+[PLATFORM_STRLEN] import_armed slot=0xAC374 identity=dsm_strlen_body evidence=DOCUMENTED+E10A
+[PLATFORM_STRCPY] import_armed slot=0xAC300 identity=dsm_strcpy_body evidence=DOCUMENTED
+[PATH_A_SECOND] hooks_armed leave_2FC26C@0x2FC3E6 evidence=OBSERVED+V74
+[EXT_LOAD] stage=DSM_CODE_IMAGE code_base=0x80000 code_size=332116
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0xA4178 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+ext call _mr_c_function_new(0xA4178[672120], 0x14[20])
+==========================REG=================================
+ R0=0x000A4178	R1=0x00000014	 R2=0x00280068	 R3=0x00000000	N:0
+ R4=0x00080008	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:1
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x0027FFF0	 LR=0x00080034	 PC=0x00280068	V:0
+==============================================================
+[JJFB_CFN_P_SLOT] package=? module=? helper=0xA4178 P=0x2803E4 slot=0x80004 lr=0x80034 reason=fixr9_c_function_p_image_plus4 evidence=DOCUMENTED wrote=1
+[JJFB_GAME_P_TIMELINE] package=? module=? event=CFN_P_SLOT_PUBLISH P=0x2803E4 p0=0 p4=0 registry_base=0x0 registry_len=0 slot=0x80004 evidence=DOCUMENTED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=20 p_guest=0x2803E4 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2803E4 len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CALLBACK_FRAME] boundary=HOST_CALLBACK_RETURN callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=1 module= cfn_path=HOST_MAP_FUNC pre=0x0 leave=0x0 resume=0x0 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=1 changed=no r4_pre=0x80008 r4_post=0x80008 r9_pre=0x0 r9_post=0x0 r10_pre=0x0 r10_post=0x0 sp_pre=0x27FFF0 sp_post=0x27FFF0 cpsr_t_pre=0 cpsr_t_post=0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=1 module_id=0 module=? slot=0x280068 slot_name=_mr_c_function_new call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 r0=0x0 r1=0x14 r2=0x280068 r3=0x0 r4=0x80008 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x27FFF0 lr=0x80034 cpsr=0x600001D3 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=1 module= module_id=0 cfn_path=HOST_MAP_FUNC call_pc=0x280068 continuation_pc=0x80034 continuation_file_offset=0x0 helper=0xA4178 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=blocked evidence=OBSERVED
+[CONTEXT_ALLOC_CANDIDATE] addr=0x2803FC size=9684 evidence=OBSERVED
+-----> r9:@00280400
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[EXT_LOAD] stage=EARLY_STASH helper=0xA4178 origin=DSM
+[R9_SCOPE] stage=NOOP scope_id=0 owns_frame=no requested_by=bridge_mr_extHelper requested_frame_id=0 actual_top_frame_id=0 top_frame_kind=NONE leave_action=NOOP emu_exit_reason=NORMAL_GUEST_RETURN depth_before=0 depth_after=0 old_r9=0x0 new_r9=0x0 generation=0 module_r9_switch_gate=open nested_r9_scope_gate=blocked allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=bridge_mr_extHelper owns_frame=no top_frame_id=0 top_frame_kind=UNKNOWN restore_r9=0x0 emu_exit_reason=NORMAL_GUEST_RETURN nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+bridge_dsm_init success
+==========================REG=================================
+ R0=0x00000000	R1=0x00000000	 R2=0x000024B8	 R3=0x00000000	N:0
+ R4=0x00000000	R5=0x00000000	 R6=0x00000000	 R7=0x00000000	Z:0
+ R8=0x00000000	R9=0x00000000	R10=0x00000000	R11=0x00000000	C:1
+R12=0x00000000	SP=0x00280000	 LR=0x00080104	 PC=0x00080000	V:0
+==============================================================
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mythroad/sdk_key.dat" ok=1 backend=overlay rule=overlay
+[JJFB_FILEOPEN] requested="mythroad/sdk_key.dat" normalized="mythroad/sdk_key.dat" canonical="sdk_key.dat" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mythroad/sdk_key.dat" ok=1 backend=generated rule=generated
+[JJFB_SDK_KEY] path=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mythroad/sdk_key.dat sha256=5d87a42f3d47ac8ddaf892f08409373b18936af761c6b9c8331750dbad3cc436 backend=generated (no cwd mythroad copy)
+[VM_FILE_BIND] runtime=1 svc=04bf21b8
+[JJFB_VFS] GuestVFS bound resource_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480 overlay_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991
+[JJFB_VFS] gwy_vm_file bound=1
+[JJFB_GWY_LAUNCH] mode=gwy_shell_core_continue launcher_mode=1 alias_direct=disabled guest_native=yes shell_core_continue=yes
+[JJFB_GWY_ROOT] mythroad_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480
+[JJFB_GWY_ROOT] gwy_root=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy
+[JJFB_GWY_UPDATE_STUB] layer=gwy_shell result=no_update reason=launcher_shim
+[JJFB_GAME_SELF] untouched=yes
+[PATH_A_RESPONSE_CFG] enabled=1 tag=1 name=downVersion secondary= field_c=0 field_d=0x3EE once_per_gen=1 evidence=PROFILE
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=start.mr scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=start.mr resolved=start.mr strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=start.mr module_id=1 requested=start.mr resolved=start.mr origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=1514 unpacked_size=3787 extracted_size=3787 helper=0x0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=mrc_loader.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=mrc_loader.ext module_id=2 requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=219 unpacked_size=232 extracted_size=232 helper=0x0
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=cfunction.ext scope=mrp_member
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=cfunction.ext resolved=robotol.ext strategy=reg_primary scope=mrp_member result=HIT reason=reg_ext_primary
+[MRP_MEMBER_VIEW] ready target=gwy/jjfb.mrp aliases=1
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwcore.mrp primary=gbrwcore.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwcore.ext insert_at=318 entry_size=30 index_end=318 offset=2058 stored_size=98264 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwcore.mrp requested=gbrwcore.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwcore.mrp primary=gbrwcore.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp original_sha256=dc7c2134d214e0667174d1806227ea88b41357269e92845d15afdb7f10267b44 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gamelist.mrp primary=gamelist.ext evidence=CROSS_TARGET source=reg.ext+embedded_package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gamelist.ext insert_at=897 entry_size=30 index_end=897 offset=13325 stored_size=58522 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gamelist.mrp requested=gamelist.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gamelist.mrp requested=gamelist.ext resolved=gamelist.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gamelist.mrp module=gamelist.ext module_id=4 requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=58522 unpacked_size=91532 extracted_size=91532 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gamelist.mrp primary=gamelist.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gamelist_cfunction.mrp original_sha256=4b24babfc82be19015fdf5eb9e2468c7ea030130f61f617a8644ab1e7bf7d956 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwshell.mrp primary=gbrwshell.ext evidence=CROSS_TARGET source=reg.ext+package_stem
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=gbrwshell.ext insert_at=482 entry_size=30 index_end=482 offset=3236 stored_size=29946 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/gbrwshell.mrp requested=gbrwshell.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/gbrwshell.mrp module=gbrwshell.ext module_id=5 requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=29946 unpacked_size=45216 extracted_size=45216 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/gbrwshell.mrp primary=gbrwshell.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwshell_cfunction.mrp original_sha256=3cc99e87680b7ebb94dc6f4c3d765d4480a0595650ee97e3c5463400d1819916 vfs_remap=enabled evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/jjfb.mrp primary=robotol.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=robotol.ext insert_at=1904 entry_size=30 index_end=1904 offset=231624 stored_size=161178 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/jjfb.mrp requested=robotol.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=robotol.ext module_id=6 requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=161178 unpacked_size=253420 extracted_size=253420 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/jjfb.mrp primary=robotol.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/game_jjfb_cfunction.mrp original_sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/jjfb.mrp primary=installed status=installed mode=all_shell_and_game evidence=CROSS_TARGET
+[REG_PRIMARY] package=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/wxjwq.mrp primary=mmochat.ext evidence=CROSS_TARGET source=reg.ext+first_ext_member
+[MRP_VIEW_LOOKUP] requested=cfunction.ext resolved=mmochat.ext insert_at=791 entry_size=30 index_end=791 offset=92949 stored_size=206148 result=HIT
+[MRP_MEMBER_REQUEST] package=gwy/wxjwq.mrp requested=mmochat.ext scope=mrp_member
+[EXT_RESOLVE] package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext strategy=exact scope=mrp_member result=HIT
+[MODULE_REGISTRY] package=gwy/wxjwq.mrp module=mmochat.ext module_id=7 requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER strategy=exact state=EXTRACTED stored_size=206148 unpacked_size=320292 extracted_size=320292 helper=0x0
+[MRP_MEMBER_VIEW] reg_primary_installed package=gwy/wxjwq.mrp primary=mmochat.ext view=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/game_wxjwq_cfunction.mrp original_sha256=6ec628419bc4c0ca1f8fba37b0c5179961220cd53591fc55eba26735defbd02d vfs_remap=enabled evidence=CROSS_TARGET
+[MRP_MEMBER_VIEW] package=gwy/wxjwq.mrp primary=installed status=installed mode=all_shell_and_game evidence=CROSS_TARGET
+[JJFB_PACKAGE_SCOPE] package=gwy/gbrwcore.mrp primary=gbrwcore.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[GWY_PKG_META] activate=OK package=gwy/gbrwcore.mrp package_id=1 generation=1 archive=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwcore.mrp source=MRP_HEADER appid=400101 appver=2057 evidence=OBSERVED
+[JJFB_CLOAD_SCOPE] request=cfunction.ext package=gwy/gbrwcore.mrp resolved=gbrwcore.ext reason=package_reg_primary evidence=CROSS_TARGET
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=dsm:cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved= origin=MRP_MEMBER strategy=unknown state=DISCOVERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0x0
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=EXTRACTED size=0
+[EXT_MAP] module_id=8 code_base=0x80000 code_size=332116 rw_base=0x280400 rw_size=9680 stack_base=0x0 stack_size=0 header_entry_candidate=0x80008 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=MAPPED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_REGISTER] module_id=8 helper=0xA4178 header_entry_candidate=0x80008 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=REGISTERED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[MODULE_ER_RW] module=cfunction.ext module_id=8 base=0x280400 size=9680 source=LOADER_DOCUMENTED evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=332116
+[EXT_LOAD] module_id=1 load_id=2 package=gwy/jjfb.mrp requested=start.mr resolved=start.mr origin=MRP_MEMBER stage=EXTRACTED size=3787
+[EXT_LOAD] module_id=2 load_id=3 package=gwy/jjfb.mrp requested=mrc_loader.ext resolved=mrc_loader.ext origin=MRP_MEMBER stage=EXTRACTED size=232
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=EXTRACTED size=147196
+[EXT_LOAD] module_id=4 load_id=5 package=gwy/gamelist.mrp requested=gamelist.ext resolved=gamelist.ext origin=MRP_MEMBER stage=EXTRACTED size=91532
+[EXT_LOAD] module_id=5 load_id=6 package=gwy/gbrwshell.mrp requested=gbrwshell.ext resolved=gbrwshell.ext origin=MRP_MEMBER stage=EXTRACTED size=45216
+[EXT_LOAD] module_id=6 load_id=7 package=gwy/jjfb.mrp requested=robotol.ext resolved=robotol.ext origin=MRP_MEMBER stage=EXTRACTED size=253420
+[EXT_LOAD] module_id=7 load_id=8 package=gwy/wxjwq.mrp requested=mmochat.ext resolved=mmochat.ext origin=MRP_MEMBER stage=EXTRACTED size=320292
+[EXT_LOAD] module_id=8 load_id=1 package=gwy/jjfb.mrp requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM stage=REGISTERED size=0
+[JJFB_GWY_LAUNCH] prepare=guest_native_shell_keep_target note=no_host_runapp_override
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwcore.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gamelist_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gamelist.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gamelist_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gamelist.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gamelist.mrp" normalized="mythroad/gwy/gamelist.mrp" canonical="gwy/gamelist.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gamelist.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwshell.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwshell_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwshell.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwshell.mrp" normalized="mythroad/gwy/gbrwshell.mrp" canonical="gwy/gbrwshell.mrp" backend=generated mode=read result=HIT handle=1
+[JJFB_GWY_WARMUP] open guest="mythroad/gwy/gbrwshell.mrp" handle=1
+[VM_FILE_CLOSE] handle=1 result=ok
+[JJFB_GWY_UPDATE_STUB] apply=initNetwork mode=cmnet pkg=gwy/gbrwcore.mrp result=MR_SUCCESS_sync
+[JJFB_GWY_LAUNCH] mode=gwy_shell_core_continue dsm_target=gwy/gbrwcore.mrp note=guest_shell_exec
+[GWY_LAUNCH] mode=GWY_LAUNCHER bound=1
+[GWY_LAUNCH] target=gwy/gbrwcore.mrp
+[GWY_LAUNCH] param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[P19_START_DSM] package=gwy/gbrwcore.mrp entry=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink phase=shell_parent evidence=OBSERVED
+[JJFB_PACKAGE_SCOPE] package=gwy/gbrwcore.mrp primary=gbrwcore.ext class=shell_core cload=scoped evidence=CROSS_TARGET
+[GWY_PKG_META] activate=OK package=gwy/gbrwcore.mrp package_id=1 generation=2 archive=C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/gwy/gbrwcore.mrp source=MRP_HEADER appid=400101 appver=2057 evidence=OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_CFG36] match=yes param=napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink
+[JJFB_STARTGAME_EQUIV] layer=bridge_dsm_mr_start_dsm filename="gwy/gbrwcore.mrp" entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" shell_context=yes
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=mr_start entered=yes pc=pending entry="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=entry evidence=TARGET_OBSERVED
+[JJFB_PARAM_MAP] va=0x282A0C len=79 param="napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink" evidence=DOCUMENTED
+[JJFB_E10A31] milestone=SHELL_PARAM_POINTER_COPIED note=mr_start_dsm_entry_mapped evidence=OBSERVED
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0xA4178 p_len=0 p_guest=0x0 rw_base=0x280400 rw_size=9680 stack=0x0 evidence=OBSERVED
+[MODULE_ER_RW] module=cfunction.ext module_id=8 base=0x280400 size=9680 source=MR_C_FUNCTION_LOAD evidence=DOCUMENTED available_before_entry=yes note=no_hardcoded_address
+[EXT_ENTRY] module_id=8 method=1 return=0
+[MODULE_REGISTRY] package=gwy/jjfb.mrp module=cfunction.ext module_id=8 requested=dsm:cfunction.ext resolved=cfunction.ext origin=DSM strategy=unknown state=ENTRY_CALLED stored_size=0 unpacked_size=0 extracted_size=0 helper=0xA4178
+[EXT_ENTRY_POINTS] module_id=8 image_base=0x80000 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 observed_first_pc=0xA4178 match=registered_helper header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=UNKNOWN relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=8 load_id=1 helper=0xA4178 entry_pc=0xA4178 module_offset=0x24178 method=1 r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 er_rw=0x280400 sp=0x280000 caller_pc=0x0 caller_module=unknown caller_offset=0x0 caller_module_id=0 header_entry_candidate=0x80008 chunk_field_04=0x0 registered_helper=0xA4178 entry_class=LEGAL_HELPER_EVENT_WITH_P
+[ENTRY_TRANSFER] dispatch_target=0xA4178 dispatch_module=dsm:cfunction.ext dispatch_offset=0x24178 callee_module=dsm:cfunction.ext first_executed_pc=0xA4178 r0=0x2803E4 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=dsm:cfunction.ext module_id=8 image_base=0x80000 header_raw=0x80008 header_norm=0x80008 chunk_field_04_raw=0x0 chunk_field_04_norm=0x0 helper_raw=0xA4178 helper_norm=0xA4178 observed_first_pc_raw=0xA4178 observed_norm=0xA4178 relation=DIRECT_MATCH dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=dsm:cfunction.ext module_id=8 image_base=0x80000 image_size=0x51154 entry_pc=0xA4178 entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=gwy_shell
+[JJFB_ROBOTOL_ENTER_REJECT] reason=dsm_context module=dsm:cfunction.ext package=gwy/jjfb.mrp pc=0xA4178 module_id=8 evidence=OBSERVED
+[HELPER_ABI] stage=MODULE_ENTER nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=8 module_offset=0x24178 pc=0xA4178 helper=0xA4178 target=0xA4178 origin=HOST_BRIDGE r0=0x2803E4 r1=0x1 r2=0x2803B4 r3=0xC r9=0x280400 sp=0x280000 lr=0x0 cpsr=0x0 caller_module=unknown caller_offset=0x0
+[R9_WRITE] event_seq=1 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x0 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=? to=cfunction.ext old_r9=0x0 new_r9=0x280400 call_kind=MR_HELPER depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=1 frame_id=1 owns_frame=yes requested_kind=MR_HELPER caller=? callee=cfunction.ext current_r9=0x0 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=DSM_R9_GUARD_ATTACH code=[0x80000,0xD1154) module_id=8 evidence=DOCUMENTED note=block_hook_r9_only
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x2809D4 src=0x2829E4 ret=0x2809D4 evidence=OBSERVED
+gwy/gbrwcore.mrp
+br_mem_get base=0x282A64 len=4194304(4096 kb) =================
+got Origin_LG_mem_len:4194304
+Total memory:4194304
+[JJFB_FILEOPEN] requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\game_files\mythroad\320x480/system/gb16.uc2" ok=1 backend=canonical rule=strip_mythroad_prefix
+[VM_FILE_OPEN] runtime=1 requested="mythroad/system/gb16.uc2" normalized="mythroad/system/gb16.uc2" canonical="system/gb16.uc2" backend=canonical mode=read result=HIT handle=1
+[INFO]mr_open(mythroad/system/gb16.uc2,1) fd is: 1
+[INFO]font load suc fd=1
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0758 ret=0x7 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=1 slot=0x94E94 dst=0x2A9884 src=0xD0758 n=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD074C ret=0xA evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=2 slot=0x94E94 dst=0x2A989C src=0xD074C n=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0744 ret=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=3 slot=0x94E94 dst=0x2A98BC src=0xD0744 n=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD073C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0734 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD072C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0724 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD071C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0714 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD070C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0704 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06FC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06F4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06E8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD06E0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0854 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD084C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0848 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0840 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0838 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0834 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD082C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0828 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0824 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0820 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD081C ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0814 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0810 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD080C ret=0x1 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0808 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0800 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07F8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07F0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07E8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07E0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD07D8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF094 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF08C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF084 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF07C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF074 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF06C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF030 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF064 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF05C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF054 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF048 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF040 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF038 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF030 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF028 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF01C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF014 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF00C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF008 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF000 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFF8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFF0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFE4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFE0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFD4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFC8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEFBC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0D0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0D0 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0BC ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0B4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0AC ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0A4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF09C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF0C8 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD65C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD65C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD658 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD650 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD648 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD640 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD638 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD634 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD62C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD624 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD61C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD618 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD610 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD608 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD600 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5F8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5F0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5E8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5E0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5DC ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5D8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5D0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5C8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5C0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5B8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5B0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5AC ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5A8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD5A0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAD598 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECF0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECE8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECDC ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECD0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECC8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECC0 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECB8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECB0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCECA4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC9C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC94 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC8C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC84 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC7C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC74 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC6C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC64 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC5C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC50 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC48 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCEC40 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEEC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEE0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFED8 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFECC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEC4 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEB8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEAC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEA0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE94 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE88 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE7C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE70 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE64 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE58 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE4C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE40 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE34 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE28 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE1C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE14 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE14 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFC4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFC0 ret=0x2 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFB8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFB0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFA4 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF98 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF8C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF80 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF74 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF6C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF60 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF54 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF4C ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF44 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF3C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF34 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF28 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF1C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF10 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFF04 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFEF8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFDA4 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFF8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFF0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE8 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFD8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFD0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE0C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFE0C ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCFFE0 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0010 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0008 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xD0000 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE648 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE648 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE640 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE638 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1AC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1A0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE194 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE188 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE180 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE178 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE168 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE15C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE150 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE148 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE144 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE13C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE138 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE12C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE120 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE114 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE108 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0FC ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0EC ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0E0 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0D4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0C8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0BC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0B0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE0A4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE098 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE08C ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE080 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE078 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2F4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2EC ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2E0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2D4 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2C8 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2BC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2B0 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE2A4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE294 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE288 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE27C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE274 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE268 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE25C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE254 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE24C ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE240 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE234 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE22C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE22C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE528 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE520 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE514 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE510 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE220 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE214 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE20C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE204 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1FC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1F8 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1F0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1E8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1DC ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1D0 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1C4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE1B8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3E0 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3D4 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3C8 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3C0 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3B4 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE3A8 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE39C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE390 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE388 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE37C ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE370 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE364 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE35C ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE350 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE348 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE340 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE338 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE330 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE324 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE318 ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE30C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE300 ret=0xA evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x282A0C ret=0x4E evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE42C ret=0x9 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x280AD4 ret=0x0 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xAE420 ret=0x9 evidence=OBSERVED
+Used by VM(include screen buffer):175832 bytes
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF658 ret=0x0 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2829FC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xCF1E7 ret=0x0 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/gbrwcore.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=2 pos=365 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=1018 got=1018 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(1018)
+_mr_readFile reallen:2490
+mr_unzip
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=500 slot=0x94E94 dst=0x2AEB48 src=0x2AE517 n=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE58 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE50 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE48 ret=0x7 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE40 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE38 ret=0x4 evidence=OBSERVED
+[VM_FILE_SEEK] handle=1 pos=923424 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE28 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE1C ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE18 ret=0x3 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE14 ret=0x3 evidence=OBSERVED
+[VM_FILE_SEEK] handle=1 pos=1600 method=0 result=ok
+[VM_FILE_READ] handle=1 requested=32 got=32 eof=0
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE04 ret=0xC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDF8 ret=0xB evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDF0 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDE8 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDDC ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2809D4 ret=0x10 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADDD0 ret=0x8 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x2809D4 ret=0x10 evidence=OBSERVED
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FDCC src=0xCF8F4 ret=0x27FDCC evidence=OBSERVED
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FDDC src=0xCF8E4 ret=0x27FDDC evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE80 ret=0x5 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDEC ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE78 ret=0x6 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x27FDF4 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE70 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE68 ret=0x4 evidence=OBSERVED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADE60 ret=0x5 evidence=OBSERVED
+[JJFB_FILEOPEN] requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 backend=generated rule=generated
+[JJFB_FILEOPEN] guest="gwy/gbrwcore.mrp" host="C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\out\vmrp_run\overlay_p19_shell_20260801_183051_60991/mrp_member_view/shell_gbrwcore_cfunction.mrp" ok=1 note=shell_package
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.mrp stage=shell_package_open entered=yes evidence=OBSERVED
+[VM_FILE_OPEN] runtime=1 requested="mythroad/gwy/gbrwcore.mrp" normalized="mythroad/gwy/gbrwcore.mrp" canonical="gwy/gbrwcore.mrp" backend=generated mode=read result=HIT handle=2
+[INFO]mr_open(mythroad/gwy/gbrwcore.mrp,1) fd is: 2
+[VM_FILE_READ] handle=2 requested=16 got=16 eof=0
+[VM_FILE_SEEK] handle=2 pos=224 method=1 result=ok
+[VM_FILE_READ] handle=2 requested=108 got=108 eof=0
+[VM_FILE_SEEK] handle=2 pos=2058 method=0 result=ok
+[VM_FILE_READ] handle=2 requested=98264 got=98264 eof=0
+[VM_FILE_CLOSE] handle=2 result=ok
+[INFO]mr_close(2): ret:0
+mr_get_method(98264)
+_mr_readFile reallen:147196
+mr_unzip
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=1000 slot=0x94E94 dst=0x2C82D8 src=0x2C82B4 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=1500 slot=0x94E94 dst=0x2C9866 src=0x2C956A n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=2000 slot=0x94E94 dst=0x2CAB5E src=0x2CAA9C n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=2500 slot=0x94E94 dst=0x2CBDFE src=0x2CB884 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=3000 slot=0x94E94 dst=0x2CCF23 src=0x2CCD5D n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=3500 slot=0x94E94 dst=0x2CDFD4 src=0x2CA188 n=0x6 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=4000 slot=0x94E94 dst=0x2CF266 src=0x2CF0B4 n=0x6 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=4500 slot=0x94E94 dst=0x2D04C6 src=0x2C86A0 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=5000 slot=0x94E94 dst=0x2D1842 src=0x2CB80E n=0x6 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=5500 slot=0x94E94 dst=0x2D297B src=0x2D24C3 n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=6000 slot=0x94E94 dst=0x2D39BB src=0x2D370D n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=6500 slot=0x94E94 dst=0x2D4B3E src=0x2D3E84 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=7000 slot=0x94E94 dst=0x2D5CE6 src=0x2D3182 n=0xA evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=7500 slot=0x94E94 dst=0x2D6E2F src=0x2D0ED9 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=8000 slot=0x94E94 dst=0x2D81C6 src=0x2D7F52 n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=8500 slot=0x94E94 dst=0x2D9223 src=0x2D90B7 n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=9000 slot=0x94E94 dst=0x2DA48D src=0x2D91D3 n=0x5 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=9500 slot=0x94E94 dst=0x2DB90E src=0x2D7C60 n=0x7 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=10000 slot=0x94E94 dst=0x2DCC9D src=0x2DCBFB n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=10500 slot=0x94E94 dst=0x2DDEEB src=0x2DDE57 n=0x5 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=11000 slot=0x94E94 dst=0x2DF280 src=0x2DAA02 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=11500 slot=0x94E94 dst=0x2E03D9 src=0x2E023D n=0x17 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=12000 slot=0x94E94 dst=0x2E14B0 src=0x2E141E n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=12500 slot=0x94E94 dst=0x2E264E src=0x2DF7E2 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=13000 slot=0x94E94 dst=0x2E35D2 src=0x2E35B4 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=13500 slot=0x94E94 dst=0x2E48B6 src=0x2E481A n=0x6 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=14000 slot=0x94E94 dst=0x2E5CB6 src=0x2E59D0 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=14500 slot=0x94E94 dst=0x2E7001 src=0x2E6F6B n=0x3 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=15000 slot=0x94E94 dst=0x2E8301 src=0x2E82A9 n=0x7 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=15500 slot=0x94E94 dst=0x2E9498 src=0x2E21E4 n=0x4 evidence=OBSERVED
+[PLATFORM_MEMCPY] dsm_body_ok n_calls=16000 slot=0x94E94 dst=0x2EA748 src=0x2EA215 n=0x3 evidence=OBSERVED
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=PENDING size=0
+[EXT_MAP] module_id=3 code_base=0x2EB800 code_size=147264 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2EB808 result=OK
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=MAPPED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x0
+[EXT_LOAD] module_id=3 load_id=4 stage=MAPPED code_base=0x2EB800 code_size=147264 reason=cache_sync
+[GUEST_CALL_OBSERVER] attach module_id=3 code=[0x2EB800,0x30F740) helper=0x0 observe_only=1
+[BOOTSTRAP_SEQ] event=CODE_IMAGE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE
+[JJFB_SHELL_EXT] package=gwy/gbrwcore.ext member=gbrwcore.ext loaded=yes base=0x2EB800 size=147264 evidence=OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.getuserinfo registered=yes addr=0x30DB30 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.getuserinfo string_va=0x30DB30 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.checkmrpver registered=yes addr=0x30DC44 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.checkmrpver string_va=0x30DC44 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.getClientInfo registered=yes addr=0x30DC90 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.getClientInfo string_va=0x30DC90 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.startGame registered=yes addr=0x30DBD4 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.startGame string_va=0x30DBD4 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT] module=gbrwcore.ext name=lib.runapp registered=yes addr=0x30DCC0 kind=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXPORT_RESOLVE] name=lib.runapp string_va=0x30DCC0 dispatcher=unknown status=string_va_not_entry evidence=TARGET_OBSERVED
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=loaded base=0x2EB800 intended=0x2EB808 observed_first=0x0 evidence=TARGET_OBSERVED
+[WARN]mr_cacheSync(0x002EB800, 147264)
+[GUEST_EXT] ext_base=0x2EB80C
+[EXT_LOAD] module_id=3 stage=RAW_BASE_REFINE aligned=0x2EB800 raw=0x2EB80C pad=0xC code_size=147252 header_entry=0x2EB814 evidence=DOCUMENTED source=mythroad.c:case800_input1_vs_cacheSync_align
+[EXT_MAP] module_id=3 code_base=0x2EB80C code_size=147252 rw_base=0x0 rw_size=0 stack_base=0x0 stack_size=0 header_entry_candidate=0x2EB814 result=OK reason=raw_base_refine
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=loaded base=0x2EB80C intended=0x2EB814 observed_first=0x0 evidence=TARGET_OBSERVED
+[JJFB_SHELL_EXT] package=gbrwcore.ext member=gbrwcore.ext loaded=yes base=0x2EB80C size=147252 evidence=DOCUMENTED note=raw_base_refine
+--- ext: @002EB80C
+[JJFB_SHELL_GUEST_PC] pc=0x2EB814 module=gbrwcore.ext hit=first evidence=OBSERVED
+[JJFB_SHELL_EXEC] package=gwy/gbrwcore.ext stage=shell_guest_pc_hit entered=yes pc=0x2EB814 evidence=OBSERVED
+[JJFB_SHELL_CORE_MODULE] module=gbrwcore.ext stage=GAMELIST_EXT_FIRST_PC evidence=TARGET_OBSERVED
+[JJFB_SHELL_NATIVE_GATE] shell_native_exec_gate=open class=EXEC_GATE_OPEN pc=0x2EB814 module=gbrwcore.ext note=continue_observe evidence=TARGET_OBSERVED
+[R9_SWITCH_BLOCKED] reason=CALLEE_ER_RW_NOT_AVAILABLE module=gbrwcore.ext call_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee_id=3 depth=1 module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked r9_policy=OBSERVE_ONLY evidence=DOCUMENTED note=no_dsm_r9_fallback
+[R9_SCOPE] stage=ENTER scope_id=2 frame_id=0 owns_frame=no requested_kind=BOOTSTRAP_ENTRY caller=cfunction.ext callee=gbrwcore.ext current_r9=0x0 target_r9=0x0 result=BLOCKED_NO_ER_RW frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[CROSS_MODULE_CALL] transfer_id=1 hop=OTHER from_module=dsm:cfunction.ext from_module_id=8 from_pc=0x89B78 to_module=gbrwcore.ext to_module_id=3 target=0x2EB814 target_offset=0x8 r0=0x0 r1=0x2EB814 lr=0x89B78 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED note=dsm_return_side_stack
+[R9_SCOPE] stage=ENTER scope_id=3 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CAA4 return_pc=0x30CAA6 frame_id=0 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=2 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CAA4 to_module=dsm:cfunction.ext to_module_id=8 target=0x89CF4 target_offset=0x9CF4 r0=0x30CFF9 r1=0x14 lr=0x2EB824 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CAA4 function_entry_pc=0x89CF4 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=3 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x30CFF9 p_len=20 p_guest=0x0 rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[EXT_REGISTER] module_id=3 helper=0x30CFF9 header_entry_candidate=0x2EB814 chunk_field_04=0x0 result=OK
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=REGISTERED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFF9
+[EXT_LOAD] module_id=3 load_id=4 package=gwy/gbrwcore.mrp requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER stage=REGISTERED size=147196
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=2 module_id=3 module=gbrwcore.ext slot=0x89CF4 slot_name=_mr_c_function_new call_pc=0x30CAA4 continuation_pc=0x30CAA6 continuation_file_offset=0x2129A r0=0x30CFF9 r1=0x14 r2=0x89CF4 r3=0x27FB74 r4=0x2EB7D4 r5=0x2EB80C r6=0x2EB814 r7=0x280600 r8=0x2EB800 r9=0x280400 r10=0x23F40 r11=0x2EB814 r12=0x8E8F8 sp=0x27FD78 lr=0x2EB824 cpsr=0x200001F3 thumb=yes guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=2 module=gbrwcore.ext module_id=3 cfn_path=GUEST_NESTED call_pc=0x30CAA4 continuation_pc=0x30CAA6 continuation_file_offset=0x2129A helper=0x30CFF9 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CAA4 function_entry_pc=0x89CF4 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[GUEST_CFUNCTION_NEW] module_id=3 helper=0x30CFF9 p_len=20 reason=region_indirect
+[JJFB_HELPER_RETARGET] old=0xA4178 new=0x30CFF9 P=0x2AC8EC origin=LOG_PARSE evidence=DOCUMENTED source=mythroad.c:_mr_c_function_new
+[JJFB_CFN_P_SLOT] package=gwy/jjfb.mrp module=gbrwcore.ext helper=0x30CFF9 P=0x2AC8EC slot=0x2EB810 lr=0x0 reason=fixr9_c_function_p_image_plus4 evidence=DOCUMENTED wrote=1
+[JJFB_GAME_P_TIMELINE] package=gwy/jjfb.mrp module=gbrwcore.ext event=CFN_P_SLOT_PUBLISH P=0x2AC8EC p0=0 p4=0 registry_base=0x0 registry_len=0 slot=0x2EB810 evidence=DOCUMENTED
+[JJFB_EXTCHUNK_CONTRACT] struct=mrc_extChunk_st check_off=0x0 init_func_off=0x4 event_off=0x8 sendAppEvent_off=0x28 check_magic=0x7FD854EB size=0x40 source=mr_helper.h+doc/ext_important evidence=DOCUMENTED
+[JJFB_E10A31B] milestone=GAMELIST_CHUNK_CREATED chunk=0x682A6C P=0x2AC8EC helper=0x30CFF9 module=gbrwcore.ext module_id=3 reason=mr_c_function_new_contract evidence=OBSERVED
+[JJFB_EXTCHUNK_ALLOC] module=gbrwcore.ext module_id=3 guest=0x682A6C size=0x40 helper=0x30CFF9 evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x04 value=0x2EB814 meaning=init_func evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x08 value=0x30CFF9 meaning=event_helper evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x28 value=0x280058 meaning=sendAppEvent evidence=DOCUMENTED
+[JJFB_EXTCHUNK_PUBLISH] module=gbrwcore.ext P=0x2AC8EC off=0x0C old=0x0 new=0x682A6C reason=mr_c_function_new_contract evidence=DOCUMENTED
+[CALLBACK_FRAME] boundary=GUEST_BEFORE_HOST_CALLBACK callback_id=0 module_id=0 module=gbrwcore.ext slot=0x0 slot_name= call_pc=0x0 continuation_pc=0x0 continuation_file_offset=0x0 r0=0x0 r1=0x0 r2=0x0 r3=0x0 r4=0x0 r5=0x0 r6=0x0 r7=0x0 r8=0x0 r9=0x0 r10=0x0 r11=0x0 r12=0x0 sp=0x0 lr=0x0 cpsr=0x0 thumb=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[EXT_LOAD] stage=C_FUNCTION_NEW_ARGS helper=0x30CFF9 p_len=20 p_guest=0x2AC8EC rw_base=0x0 rw_size=0 stack=0x0 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=C_FUNCTION_NEW seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW
+[CONTEXT_CANDIDATE] kind=mr_c_function_st p=0x2AC8EC len=20 evidence=OBSERVED
+[BOOTSTRAP_SEQ] event=P_CANDIDATE seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE
+[CONTEXT_CANDIDATE] kind=mrc_extChunk_ptr chunk=0x682A6C from=P+0x0C
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=registered base=0x2EB80C intended=0x2EB814 observed_first=0x0 evidence=TARGET_OBSERVED
+[JJFB_MRPGCMAP_ENTRY] module=gbrwcore.ext base=0x2EB80C raw_entry=0x2EB814 thumb_entry=0x2EB815 norm=0x2EB814 thumb=no r0=1 stop=0x2EB80C evidence=DOCUMENTED
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=entry_called base=0x2EB80C intended=0x2EB814 observed_first=0x0 evidence=TARGET_OBSERVED
+[EMU_NEST] op=NESTED_EMU_IN_CODE_HOOK_BLOCKED hook_depth=1 guest_run_depth=0 family_drain_depth=0 start_pc=0x2EB814 stop=0x2EB80C block_count=1 note=defer_to_outer_boundary evidence=OBSERVED
+[JJFB_MRPGCMAP_ENTRY] module=gbrwcore.ext result=EMU_ERR detail=hook_depth=1 evidence=TARGET_OBSERVED
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=entry_returned base=0x2EB80C intended=0x2EB814 observed_first=0x0 evidence=TARGET_OBSERVED
+[JJFB_ENTRY_ORDER] module=gbrwcore.ext state=callback_continuation base=0x2EB80C intended=0x2EB814 observed_first=0x0 evidence=TARGET_OBSERVED
+_mr_c_function_new(0030CFF9, 20)  mr_c_function_P:002AC8EC
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CAA6 return_pc=0x30CAA6 call_pc=0x30CAA4 cur_r9=0x280400 lr=0xA2548 executed=1 owns_r9_pop=0 side_depth=0 frame_id=0 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[JJFB_DSM_HELPER_RET] r0=0x0 r9=0x280400 pc=0x30CAA6 evidence=OBSERVED note=low_pointer_or_status
+[CALLBACK_FRAME] boundary=GUEST_CONTINUATION_RESUME callback_id=2 module_id=3 module=gbrwcore.ext slot=0x89CF4 slot_name=_mr_c_function_new call_pc=0x30CAA4 continuation_pc=0x30CAA6 continuation_file_offset=0x2129A r0=0x0 r1=0x2EB814 r2=0x3A r3=0x27FB4C r4=0x2EB7D4 r5=0x2EB80C r6=0x2EB814 r7=0x280600 r8=0x2EB800 r9=0x280400 r10=0x23F40 r11=0x2EB814 r12=0x8E8F8 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 thumb=yes guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_reg_restore
+[CALLBACK_R9_DELTA] callback_id=2 module=gbrwcore.ext cfn_path=GUEST_NESTED pre=0x280400 leave=0x0 resume=0x280400 return_r0=0x0 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_CALLEE_SAVED_DELTA] callback_id=2 changed=no r4_pre=0x2EB7D4 r4_post=0x2EB7D4 r9_pre=0x280400 r9_post=0x280400 r10_pre=0x23F40 r10_post=0x23F40 sp_pre=0x27FD78 sp_post=0x27FD78 cpsr_t_pre=1 cpsr_t_post=1 guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_CONTINUATION] relation=CALLBACK_CONTINUATION_AFTER_CFUNCTION_NEW callback_id=2 module=gbrwcore.ext module_id=3 cfn_path=GUEST_NESTED call_pc=0x30CAA4 continuation_pc=0x30CAA6 continuation_file_offset=0x2129A helper=0x30CFF9 helper_ne_continuation=yes identity=CONFIRMED superseded_by_callback_continuation_identity=yes causal=false note=not_module_entry guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_R9_LOSS] callback_id=2 module=gbrwcore.ext cfn_path=GUEST_NESTED pre_r9=0x280400 resume_r9=0x280400 first_r9_loss_writer=NONE_YET first_r9_write_reason=NONE first_r9_write_host_callsite=? first_r9_write_event_seq=0 first_r9_write_frame_id=0 guest_wrote_r9=no guest_write_pc=0x0 r9_switch_interfered=no r9_scope_interfered=no guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED
+[CALLBACK_FRAME_CLASS] class=CONTINUATION_CONFIRMED_R9_INTACT continuation_identity=CONFIRMED cfn_path=GUEST_NESTED callback_pre_r9=0x280400 callback_resume_r9=0x280400 first_r9_loss_writer=NONE_YET guest_wrote_r9=no dual_mrc_loader=no dual_robotol=no gate_evidence=OBSERVED next_allowed_fix=UNKNOWN guest_callback_frame_gate=blocked module_r9_switch_gate=open bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked nested_r9_scope_gate=open evidence=OBSERVED note=observe_only_no_frame_restore
+[EXT_ENTRY] module_id=3 method=0 return=0
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFF9
+[EXT_ENTRY_POINTS] module_id=3 image_base=0x2EB80C header_entry_candidate=0x2EB814 chunk_field_04=0x2EB814 registered_helper=0x30CFF9 observed_first_pc=0x30CAA6 match=neither header_ev=DOCUMENTED helper_ev=OBSERVED chunk_ev=OBSERVED relation=UNKNOWN
+[EXT_ENTRY_CTX] module_id=3 load_id=4 helper=0x30CFF9 entry_pc=0x30CAA6 module_offset=0x2129A method=0 r0=0x0 r1=0x2EB814 r2=0x3A r3=0x27FB4C r9=0x280400 er_rw=0x280400 sp=0x27FD78 caller_pc=0xA2548 caller_module=dsm:cfunction.ext caller_offset=0x22548 caller_module_id=8 header_entry_candidate=0x2EB814 chunk_field_04=0x2EB814 registered_helper=0x30CFF9 entry_class=WRONG_ENTRY_SELECTION
+[ENTRY_TRANSFER] dispatch_target=0x30CAA6 dispatch_module=gbrwcore.ext dispatch_offset=0x2129A callee_module=gbrwcore.ext first_executed_pc=0x30CAA6 r0=0x0 stage=FIRST_EXECUTED_PC nested_enter=1
+[ENTRY_RECONCILE] module=gbrwcore.ext module_id=3 image_base=0x2EB80C header_raw=0x2EB814 header_norm=0x2EB814 chunk_field_04_raw=0x2EB814 chunk_field_04_norm=0x2EB814 helper_raw=0x30CFF9 helper_norm=0x30CFF8 observed_first_pc_raw=0x30CAA6 observed_norm=0x30CAA6 relation=HEADER_ENTRY_WRONG dsm_select_correct=unknown chunk_field_04_writer=NONE_BEFORE_SELECT
+[JJFB_MODULE_IDENTITY] package=gwy/jjfb.mrp module=gbrwcore.ext module_id=3 image_base=0x2EB80C image_size=0x23F34 entry_pc=0x30CAA6 entry_in_range=yes sha256=52c13182f87f5ba14bed64589e7f47cb2860a56b32c91fdb25ab13467d5fc036 source=gwy_shell
+[BOOTSTRAP_SEQ] event=MODULE_ENTER seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>MODULE_ENTER
+[JJFB_ROBOTOL_ENTER_REJECT] reason=not_robotol_module module=gbrwcore.ext package=gwy/jjfb.mrp pc=0x30CAA6 module_id=3 evidence=OBSERVED
+[HELPER_ABI] stage=MODULE_ENTER nested_enter_module=gbrwcore.ext module=gbrwcore.ext module_id=3 module_offset=0x2129A pc=0x30CAA6 helper=0x30CFF9 target=0x30CAA6 origin=GUEST_NESTED r0=0x0 r1=0x2EB814 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[JJFB_6K_ENTRY_AUDIT] module=gbrwcore.ext image_base=0x2EB80C intended_entry=0x2EB814 observed_first_pc=0x30CAA6 match=no evidence=TARGET_OBSERVED
+[CROSS_MODULE_CALL] transfer_id=3 hop=OTHER from_module=dsm:cfunction.ext from_module_id=8 from_pc=0xA2548 to_module=gbrwcore.ext to_module_id=3 target=0x30CAA6 target_offset=0x2129A r0=0x0 r1=0x2EB814 lr=0xA2548 evidence=OBSERVED
+[HELPER_ABI] stage=CALL_SITE_BEFORE nested_enter_module=dsm:cfunction.ext module=dsm:cfunction.ext module_id=3 module_offset=0x22546 pc=0xA2546 helper=0x0 target=0x30CAA6 origin=LR_PROXY r0=0x0 r1=0x2EB814 r2=0x3A r3=0x27FB4C r9=0x280400 sp=0x27FD78 lr=0xA2548 cpsr=0x600001F3 caller_module=dsm:cfunction.ext caller_offset=0x22548
+[HELPER_ABI_CALLER_DISASM] call_pc=0xA2546 thumb=1 window=±30
+[HELPER_ABI_CALLER_DISASM]   off=-30 addr=0xA250A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-29 addr=0xA250C raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-28 addr=0xA250E raw=0x0000E58D .hword 0xE58D
+[HELPER_ABI_CALLER_DISASM]   off=-27 addr=0xA2510 raw=0x00004008 .hword 0x4008
+[HELPER_ABI_CALLER_DISASM]   off=-26 addr=0xA2512 raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-25 addr=0xA2514 raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-24 addr=0xA2516 raw=0x0000E1A0 .hword 0xE1A0
+[HELPER_ABI_CALLER_DISASM]   off=-23 addr=0xA2518 raw=0x00003004 .hword 0x3004
+[HELPER_ABI_CALLER_DISASM]   off=-22 addr=0xA251A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=-21 addr=0xA251C raw=0x00002210 .hword 0x2210
+[HELPER_ABI_CALLER_DISASM]   off=-20 addr=0xA251E raw=0x0000E59D .hword 0xE59D
+[HELPER_ABI_CALLER_DISASM]   off=-19 addr=0xA2520 raw=0x00001F80 .hword 0x1F80
+[HELPER_ABI_CALLER_DISASM]   off=-18 addr=0xA2522 raw=0x0000E3A0 .hword 0xE3A0
+[HELPER_ABI_CALLER_DISASM]   off=-17 addr=0xA2524 raw=0x00002A87 .hword 0x2A87
+[HELPER_ABI_CALLER_DISASM]   off=-16 addr=0xA2526 raw=0x0000EB00 .hword 0xEB00
+[HELPER_ABI_CALLER_DISASM]   off=-15 addr=0xA2528 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=-14 addr=0xA252A raw=0x0000E3A0 .hword 0xE3A0
+[HELPER_ABI_CALLER_DISASM]   off=-13 addr=0xA252C raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-12 addr=0xA252E raw=0x0000E58D .hword 0xE58D
+[HELPER_ABI_CALLER_DISASM]   off=-11 addr=0xA2530 raw=0x0000001C MOVS r4, r3
+[HELPER_ABI_CALLER_DISASM]   off=-10 addr=0xA2532 raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=-9 addr=0xA2534 raw=0x00000009 MOVS r1, r1
+[HELPER_ABI_CALLER_DISASM]   off=-8 addr=0xA2536 raw=0x0000E080 .hword 0xE080
+[HELPER_ABI_CALLER_DISASM]   off=-7 addr=0xA2538 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=-6 addr=0xA253A raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=-5 addr=0xA253C raw=0x00001004 .hword 0x1004
+[HELPER_ABI_CALLER_DISASM]   off=-4 addr=0xA253E raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=-3 addr=0xA2540 raw=0x00000004 MOVS r4, r0
+[HELPER_ABI_CALLER_DISASM]   off=-2 addr=0xA2542 raw=0x0000E1A0 .hword 0xE1A0
+[HELPER_ABI_CALLER_DISASM]   off=-1 addr=0xA2544 raw=0x0000FF31 .hword 0xFF31
+[HELPER_ABI_CALLER_DISASM] * off=+0 addr=0xA2546 raw=0x0000E12F .hword 0xE12F
+[HELPER_ABI_CALLER_DISASM]   off=+1 addr=0xA2548 raw=0x0000DF82 .hword 0xDF82
+[HELPER_ABI_CALLER_DISASM]   off=+2 addr=0xA254A raw=0x0000E28D .hword 0xE28D
+[HELPER_ABI_CALLER_DISASM]   off=+3 addr=0xA254C raw=0x00004004 .hword 0x4004
+[HELPER_ABI_CALLER_DISASM]   off=+4 addr=0xA254E raw=0x0000E49D .hword 0xE49D
+[HELPER_ABI_CALLER_DISASM]   off=+5 addr=0xA2550 raw=0x0000F014 .hword 0xF014
+[HELPER_ABI_CALLER_DISASM]   off=+6 addr=0xA2552 raw=0x0000E49D .hword 0xE49D
+[HELPER_ABI_CALLER_DISASM]   off=+7 addr=0xA2554 raw=0x00002084 MOVS r0, #0x84
+[HELPER_ABI_CALLER_DISASM]   off=+8 addr=0xA2556 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+9 addr=0xA2558 raw=0x0000000C MOVS r4, r1
+[HELPER_ABI_CALLER_DISASM]   off=+10 addr=0xA255A raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=+11 addr=0xA255C raw=0x00000009 MOVS r1, r1
+[HELPER_ABI_CALLER_DISASM]   off=+12 addr=0xA255E raw=0x0000E080 .hword 0xE080
+[HELPER_ABI_CALLER_DISASM]   off=+13 addr=0xA2560 raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+14 addr=0xA2562 raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=+15 addr=0xA2564 raw=0x00000010 MOVS r0, r2
+[HELPER_ABI_CALLER_DISASM]   off=+16 addr=0xA2566 raw=0x0000E590 .hword 0xE590
+[HELPER_ABI_CALLER_DISASM]   off=+17 addr=0xA2568 raw=0x0000FF10 .hword 0xFF10
+[HELPER_ABI_CALLER_DISASM]   off=+18 addr=0xA256A raw=0x0000E12F .hword 0xE12F
+[HELPER_ABI_CALLER_DISASM]   off=+19 addr=0xA256C raw=0x00002084 MOVS r0, #0x84
+[HELPER_ABI_CALLER_DISASM]   off=+20 addr=0xA256E raw=0x00000000 MOVS r0, r0
+[HELPER_ABI_CALLER_DISASM]   off=+21 addr=0xA2570 raw=0x0000300C .hword 0x300C
+[HELPER_ABI_CALLER_DISASM]   off=+22 addr=0xA2572 raw=0x0000E59F .hword 0xE59F
+[HELPER_ABI_CALLER_DISASM]   off=+23 addr=0xA2574 raw=0x00003009 .hword 0x3009
+[HELPER_ABI_CALLER_DISASM]   off=+24 addr=0xA2576 raw=0x0000E083 .hword 0xE083
+[HELPER_ABI_CALLER_DISASM]   off=+25 addr=0xA2578 raw=0x00003000 .hword 0x3000
+[HELPER_ABI_CALLER_DISASM]   off=+26 addr=0xA257A raw=0x0000E593 .hword 0xE593
+[HELPER_ABI_CALLER_DISASM]   off=+27 addr=0xA257C raw=0x00003038 .hword 0x3038
+[HELPER_ABI_CALLER_DISASM]   off=+28 addr=0xA257E raw=0x0000E593 .hword 0xE593
+[HELPER_ABI_CALLER_DISASM]   off=+29 addr=0xA2580 raw=0x0000FF13 .hword 0xFF13
+[HELPER_ABI_CALLER_DISASM]   off=+30 addr=0xA2582 raw=0x0000E12F .hword 0xE12F
+[CHUNK_FIELD_04_WRITE] chunk_base=0x682A6C value=0x30CAA6 writer_module=NONE writer_offset=0x0 module=gbrwcore.ext note=NONE_BEFORE_SELECT
+[DSM_ENTRY_SELECT] source=unknown entry_va=0x30CAA6 entry_module=gbrwcore.ext entry_offset=0x2129A registered_helper=0x30CFF9 header_entry_candidate=0x2EB814 chunk_field_04=0x2EB814 match=neither r0_source=explicit_zero r0_value=0x0 r1_target=0x30CAA6 caller_module=dsm:cfunction.ext caller_offset=0x22546 evidence=OBSERVED+DOCUMENTED_chunk_plus4 chunk_field_04_writer=NONE_BEFORE_SELECT chunk_base=0x682A6C chunk_reg=r-1
+[BOOTSTRAP_SEQ] event=DSM_ENTRY_SELECT seq=CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>CODE_IMAGE>C_FUNCTION_NEW>P_CANDIDATE>MODULE_ENTER>DSM_ENTRY_SELECT
+[ENTRY_TRANSFER] dispatch_target=0x30CAA6 dispatch_module=gbrwcore.ext dispatch_offset=0x2129A callee_module=gbrwcore.ext first_executed_pc=0x30CAA6 r0=0x0 stage=CALL_SITE_BEFORE raw_target=0x30CAA6
+[ENTRY_OBJECT_TRACE] stage=FIELD_LOAD base_reg=r-1 base_value=0x0 field_offset=0x4 field_value=0x30CAA6 field_live_peek=0x0 dispatch_target=0x30CAA6 r0_at_blx=0x0
+[ENTRY_OBJECT_TRACE] stage=BASE_SOURCE source=unknown source_address=0x0 producer_module=unknown producer_offset=0x0 caller_module=dsm:cfunction.ext caller_offset=0x22546
+[ADDR_CLASS] role=entry_object_base va=0x0 class=UNKNOWN module= offset=0x0 module_id=0
+[ADDR_CLASS] role=entry_object_field_04 va=0x30CAA6 class=MODULE_CODE module=gbrwcore.ext offset=0x2129A module_id=3
+[ADDR_CLASS] role=dispatch_target va=0x30CAA6 class=MODULE_CODE module=gbrwcore.ext offset=0x2129A module_id=3
+[ENTRY_TRANSFER] dispatch_target=0x30CAA6 dispatch_module=gbrwcore.ext dispatch_offset=0x2129A callee_module=gbrwcore.ext first_executed_pc=0x30CAA6 r0=0x0 stage=CALL_SITE_BEFORE equals_observed_first=1
+[ENTRY_OBJECT_KIND] kind=UNKNOWN confidence=CANDIDATE field_matches_dispatch=0 base_class=UNKNOWN dispatch_class=MODULE_CODE
+[OBJECT_IDENTITY_CASE] case=D legend=A_loader_dispatcher|B_trampoline|C_base_wrong|D_descriptor_or_table|E_attrib_bug dispatch_module=gbrwcore.ext dispatch_offset=0x2129A object_kind=UNKNOWN dsm_direct_robotol=no r0_at_dsm_blx=0x0 candidate_wrong=0 phase6b_b_gate=blocked
+[ENTRY_RECONCILE] module=gbrwcore.ext module_id=3 image_base=0x2EB80C header_raw=0x2EB814 header_norm=0x2EB814 chunk_field_04_raw=0x2EB814 chunk_field_04_norm=0x2EB814 helper_raw=0x30CFF9 helper_norm=0x30CFF8 observed_first_pc_raw=0x30CAA6 observed_norm=0x30CAA6 relation=HEADER_ENTRY_WRONG dsm_select_correct=no chunk_field_04_writer=NONE_BEFORE_SELECT
+[ENTRY_RECONCILE_CASE] case=C relation=HEADER_ENTRY_WRONG chunk_field_04_writer=NONE_BEFORE_SELECT module=gbrwcore.ext header_ev=DOCUMENTED_image_plus8_fixR9_TestCom800 chunk_plus4=DOCUMENTED_mrc_extChunk_field_04 dsm_match=neither dsm_select_correct=no fix_applied=none phase6b_b_gate=blocked
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CACA target=0x2EBC18 arg0=0x30CD41 arg1=0x281F7C
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD6C target=0x30CACF arg0=0x19A8 arg1=0x19A0
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED note=dsm_return_side_stack
+[R9_SCOPE] stage=ENTER scope_id=4 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CAD8 return_pc=0x30CADA frame_id=0 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=4 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CAD8 to_module=dsm:cfunction.ext to_module_id=8 target=0x80160 target_offset=0x160 r0=0x19AC r1=0x80160 lr=0x30CACF evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CAD8 function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=4 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=2 old=0x0 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x0 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CADA return_pc=0x30CADA call_pc=0x30CAD8 cur_r9=0x280400 lr=0x30CADB executed=1 owns_r9_pop=0 side_depth=0 frame_id=0 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CAF8 target=0x2EBC3C arg0=0x2B0D28 arg1=0x2B0D28
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD84 target=0x30CAFD arg0=0x8 arg1=0x2B0D28
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CAFE target=0x2EBC48 arg0=0x8 arg1=0x2B0D28
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD90 target=0x30CB03 arg0=0x23EEC arg1=0x2B0D28
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED note=dsm_return_side_stack
+[R9_SCOPE] stage=ENTER scope_id=5 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CB0E return_pc=0x30CB10 frame_id=0 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=5 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CB0E to_module=dsm:cfunction.ext to_module_id=8 target=0x94E94 target_offset=0x14E94 r0=0x2B0D28 r1=0x30F700 lr=0x30CB03 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CB0E function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=5 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CB10 return_pc=0x30CB10 call_pc=0x30CB0E cur_r9=0x280400 lr=0x30CB11 executed=1 owns_r9_pop=0 side_depth=0 frame_id=0 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CB10 target=0x2EBC48 arg0=0x2B0D28 arg1=0x30F700
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD84 target=0x30CB15 arg0=0x8 arg1=0x30F700
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CB1A target=0x2EBC50 arg0=0x8 arg1=0x19A8
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD84 target=0x30CB1F arg0=0x8 arg1=0x19A8
+[R9_SWITCH] stage=ENTER already_switched=1 from=gbrwcore.ext to=cfunction.ext r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 evidence=DOCUMENTED note=dsm_return_side_stack
+[R9_SCOPE] stage=ENTER scope_id=6 frame_id=1 owns_frame=no requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x280400 target_r9=0x280400 result=ALREADY_SWITCHED frame_pushed=no depth_before=1 depth_after=1 top_frame_id=1 top_frame_kind=MR_HELPER generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CB2C return_pc=0x30CB2E frame_id=0 owns_r9_pop=0 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=6 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CB2C to_module=dsm:cfunction.ext to_module_id=8 target=0x94F04 target_offset=0x14F04 r0=0x2B0D30 r1=0x0 lr=0x30CB1F evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CB2C function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=6 owns_frame=no requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=1 depth_after=1 old_r9=0x280400 new_r9=0x280400 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=no top_frame_id=1 top_frame_kind=MR_HELPER restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CB2E return_pc=0x30CB2E call_pc=0x30CB2C cur_r9=0x280400 lr=0x30CB2F executed=1 owns_r9_pop=0 side_depth=0 frame_id=0 evidence=DOCUMENTED note=mrp_dsm_helper_return
+--- r9: mr_c_function_P.start_of_ER_RW = @002B0D28
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD7C target=0x30D00F arg0=0x2B0D28 arg1=0x280400
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADEF4 ret=0x0 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD7C target=0x30D00F arg0=0x2B0D28 arg1=0x280400
+[JJFB_GBRWCORE_FIELD0_RELEASE] pc=0x30D02C r0=0x682A6C r1=0x188C r4=0x0 r5=0x2AC8EC r6=0x2AD964 r9=0x2B0D28 obj=0x0 field0=0x0 field8=0x0 erw+1880=0x0 field0_bytes=00000000000000000000000000000000 evidence=OBSERVED
+[JJFB_GBRWCORE_DISPATCH_ARG] pc=0x30D02C r5(P)=0x2AC8EC r6=0x2AD964 [r6]=0x0 [r6+4]=0x0 [r6+8]=0x0 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D030 target=0x30B729 arg0=0x682A6C arg1=0x2B25B4
+[R9_WRITE] event_seq=3 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=2 scope_id=7 host_callsite=enter guest_pc=0x30B73C guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=7 frame_id=2 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=2 top_frame_kind=RUNTIME_ENTRY generation=2 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30B73C return_pc=0x30B73E frame_id=2 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30B73E return_pc=0x30B73E call_pc=0x30B73C cur_r9=0x280400 lr=0x30B73F executed=1 owns_r9_pop=1 side_depth=0 frame_id=2 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=4 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=2 scope_id=7 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30B73C guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=7 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=2 actual_top_frame_id=2 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=2 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30B752 target=0x30CCE1 arg0=0x1 arg1=0x64
+[JJFB_PLAT_CALL] code=0x1 app=0x64 arg2=0x0 arg3=0x0 ret=0 kind=STATUS name=default_status evidence=DOCUMENTED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x1 r1=0x64 r2=0x0 r3=0x0 r4=0x1 ret=0x0 evidence=TARGET_OBSERVED
+[R9_WRITE] event_seq=5 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=3 scope_id=8 host_callsite=enter guest_pc=0x30B7D0 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=8 frame_id=3 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=3 top_frame_kind=RUNTIME_ENTRY generation=3 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30B7D0 return_pc=0x30B7D2 frame_id=3 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=7 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30B7D0 to_module=dsm:cfunction.ext to_module_id=8 target=0x81238 target_offset=0x1238 r0=0x0 r1=0x7 lr=0x30CD11 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30B7D0 function_entry_pc=0x81238 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=8 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=3 actual_top_frame_id=3 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=3 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=3 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=6 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30B7D2 return_pc=0x30B7D2 call_pc=0x30B7D0 cur_r9=0x280400 lr=0x30B7D3 executed=1 owns_r9_pop=1 side_depth=0 frame_id=3 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=7 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=3 scope_id=8 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30B7D0 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=8 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=3 actual_top_frame_id=3 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=3 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D034 target=0x30CEE1 arg0=0x270D arg1=0x7
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CF02 target=0x30CCE1 arg0=0x10120 arg1=0x4
+[JJFB_PLAT_CALL] code=0x10120 family=0x4 handler=0x682A6C ret=1 kind=REGISTER name=plat_10120_bind evidence=CROSS_TARGET+docs/06
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10120 r1=0x4 r2=0x682A6C r3=0x0 r4=0x10120 ret=0x1 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CF10 target=0x2FD93D arg0=0x1 arg1=0x4
+[R9_WRITE] event_seq=8 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=4 scope_id=9 host_callsite=enter guest_pc=0x2FD952 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=9 frame_id=4 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=4 top_frame_kind=RUNTIME_ENTRY generation=4 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD952 return_pc=0x2FD954 frame_id=4 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=8 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FD952 to_module=dsm:cfunction.ext to_module_id=8 target=0x94F04 target_offset=0x14F04 r0=0x2B2408 r1=0x0 lr=0x30CF15 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FD952 function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=9 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=4 actual_top_frame_id=4 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=4 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=4 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD954 return_pc=0x2FD954 call_pc=0x2FD952 cur_r9=0x280400 lr=0x2FD955 executed=1 owns_r9_pop=1 side_depth=0 frame_id=4 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=9 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=4 scope_id=9 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD952 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=9 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=4 actual_top_frame_id=4 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=4 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=10 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=5 scope_id=10 host_callsite=enter guest_pc=0x2FD962 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=10 frame_id=5 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=5 top_frame_kind=RUNTIME_ENTRY generation=5 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD962 return_pc=0x2FD964 frame_id=5 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD964 return_pc=0x2FD964 call_pc=0x2FD962 cur_r9=0x280400 lr=0x2FD965 executed=1 owns_r9_pop=1 side_depth=0 frame_id=5 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=11 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=5 scope_id=10 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD962 guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=10 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=5 actual_top_frame_id=5 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=5 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=12 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=6 scope_id=11 host_callsite=enter guest_pc=0x2FD9AA guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=11 frame_id=6 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=6 top_frame_kind=RUNTIME_ENTRY generation=6 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD9AA return_pc=0x2FD9AC frame_id=6 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=9 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FD9AA to_module=dsm:cfunction.ext to_module_id=8 target=0xAC374 target_offset=0x2C374 r0=0x30F15C r1=0xAC374 lr=0x2FD965 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FD9AA function_entry_pc=0xAC374 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=11 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=6 actual_top_frame_id=6 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=6 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=6 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0x30F15C ret=0x5 evidence=OBSERVED
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD9AC return_pc=0x2FD9AC call_pc=0x2FD9AA cur_r9=0x280400 lr=0x2FD9AD executed=1 owns_r9_pop=1 side_depth=0 frame_id=6 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=13 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=6 scope_id=11 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD9AA guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=11 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=6 actual_top_frame_id=6 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=6 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[JJFB_DSM_HELPER_RET] r0=0x5 r9=0x2B0D28 pc=0x2FD9AC evidence=OBSERVED note=low_pointer_or_status
+[R9_WRITE] event_seq=14 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=7 scope_id=12 host_callsite=enter guest_pc=0x2FD9BC guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=12 frame_id=7 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=7 top_frame_kind=RUNTIME_ENTRY generation=7 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD9BC return_pc=0x2FD9BE frame_id=7 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=10 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FD9BC to_module=dsm:cfunction.ext to_module_id=8 target=0x94E94 target_offset=0x14E94 r0=0x2B2483 r1=0x30F15C lr=0x2FD9AD evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FD9BC function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=12 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=7 actual_top_frame_id=7 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=7 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=7 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD9BE return_pc=0x2FD9BE call_pc=0x2FD9BC cur_r9=0x280400 lr=0x2FD9BF executed=1 owns_r9_pop=1 side_depth=0 frame_id=7 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=15 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=7 scope_id=12 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD9BC guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=12 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=7 actual_top_frame_id=7 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=7 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FD9C4 target=0x2EFB01 arg0=0x4 arg1=0x30F15C
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFB08 target=0x2F5E01 arg0=0x27FCE0 arg1=0x30F15C
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F5E16 target=0x30CCE1 arg0=0x0 arg1=0x6
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x0 r1=0x6 r2=0x0 r3=0x0 r4=0x0 ret=0x0 evidence=TARGET_OBSERVED
+[R9_WRITE] event_seq=16 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=8 scope_id=13 host_callsite=enter guest_pc=0x2FD9D4 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=13 frame_id=8 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=8 top_frame_kind=RUNTIME_ENTRY generation=8 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD9D4 return_pc=0x2FD9D6 frame_id=8 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=11 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FD9D4 to_module=dsm:cfunction.ext to_module_id=8 target=0x94F04 target_offset=0x14F04 r0=0x27FCFC r1=0x0 lr=0x30CD11 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FD9D4 function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=13 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=8 actual_top_frame_id=8 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=8 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=8 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD9D6 return_pc=0x2FD9D6 call_pc=0x2FD9D4 cur_r9=0x280400 lr=0x2FD9D7 executed=1 owns_r9_pop=1 side_depth=0 frame_id=8 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=17 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=8 scope_id=13 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD9D4 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=13 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=8 actual_top_frame_id=8 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=8 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=18 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=9 scope_id=14 host_callsite=enter guest_pc=0x2FD9E2 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=14 frame_id=9 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=9 top_frame_kind=RUNTIME_ENTRY generation=9 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FD9E2 return_pc=0x2FD9E4 frame_id=9 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FD9E4 return_pc=0x2FD9E4 call_pc=0x2FD9E2 cur_r9=0x280400 lr=0x2FD9E5 executed=1 owns_r9_pop=1 side_depth=0 frame_id=9 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=19 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=9 scope_id=14 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FD9E2 guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=14 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=9 actual_top_frame_id=9 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=9 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FD9E6 target=0x30CE99 arg0=0x27FCFC arg1=0x27FCFC
+[R9_WRITE] event_seq=20 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=10 scope_id=15 host_callsite=enter guest_pc=0x30CEA4 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=15 frame_id=10 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=10 top_frame_kind=RUNTIME_ENTRY generation=10 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CEA4 return_pc=0x30CEA6 frame_id=10 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=12 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CEA4 to_module=dsm:cfunction.ext to_module_id=8 target=0x80630 target_offset=0x630 r0=0x27FCFC r1=0x80630 lr=0x2FD9EB evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CEA4 function_entry_pc=0x80630 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=15 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=10 actual_top_frame_id=10 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=10 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=10 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=21 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FCFC src=0xCF8F4 ret=0x27FCFC evidence=OBSERVED
+[PLATFORM_STRCPY] import_ok slot=0xAC300 dst=0x27FD0C src=0xCF8E4 ret=0x27FD0C evidence=OBSERVED
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CEA6 return_pc=0x30CEA6 call_pc=0x30CEA4 cur_r9=0x280400 lr=0x30CEA7 executed=1 owns_r9_pop=1 side_depth=0 frame_id=10 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=22 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=10 scope_id=15 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30CEA4 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=15 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=10 actual_top_frame_id=10 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=10 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B0D28 pc=0x30CEA6 evidence=OBSERVED note=low_pointer_or_status
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FD9FE target=0x30CFD1 arg0=0x90004 arg1=0x2B2534
+[R9_WRITE] event_seq=23 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=11 scope_id=16 host_callsite=enter guest_pc=0x30CFEE guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=16 frame_id=11 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=11 top_frame_kind=RUNTIME_ENTRY generation=11 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CFEE return_pc=0x30CFF0 frame_id=11 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=13 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CFEE to_module=dsm:cfunction.ext to_module_id=8 target=0x806A0 target_offset=0x6A0 r0=0x90004 r1=0x2B2534 lr=0x2FDA03 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CFEE function_entry_pc=0x806A0 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=16 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=11 actual_top_frame_id=11 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=11 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=11 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=24 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[INFO]mr_platEx code=589828 in=@002B2534 inlen=35 out=@00000000 outlen=@00000000 cb=@00000000
+[WARN]mr_platEx(code=589828, in=0X2B2534, inlen=35) not impl!
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CFF0 return_pc=0x30CFF0 call_pc=0x30CFEE cur_r9=0x280400 lr=0x30CFF1 executed=1 owns_r9_pop=1 side_depth=0 frame_id=11 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=25 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=11 scope_id=16 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30CFEE guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=16 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=11 actual_top_frame_id=11 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=11 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[JJFB_DSM_HELPER_RET] r0=0x1 r9=0x2B0D28 pc=0x30CFF0 evidence=OBSERVED note=low_pointer_or_status
+[R9_WRITE] event_seq=26 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=12 scope_id=17 host_callsite=enter guest_pc=0x2FDA12 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=17 frame_id=12 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=12 top_frame_kind=RUNTIME_ENTRY generation=12 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FDA12 return_pc=0x2FDA14 frame_id=12 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=14 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FDA12 to_module=dsm:cfunction.ext to_module_id=8 target=0x94F04 target_offset=0x14F04 r0=0x2B2534 r1=0x0 lr=0x30CFF1 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FDA12 function_entry_pc=0x94F04 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=17 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=12 actual_top_frame_id=12 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=12 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=12 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FDA14 return_pc=0x2FDA14 call_pc=0x2FDA12 cur_r9=0x280400 lr=0x2FDA15 executed=1 owns_r9_pop=1 side_depth=0 frame_id=12 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=27 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=12 scope_id=17 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FDA12 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=17 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=12 actual_top_frame_id=12 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=12 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=28 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=13 scope_id=18 host_callsite=enter guest_pc=0x2FDA1C guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=18 frame_id=13 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=13 top_frame_kind=RUNTIME_ENTRY generation=13 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FDA1C return_pc=0x2FDA1E frame_id=13 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=15 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x2FDA1C to_module=dsm:cfunction.ext to_module_id=8 target=0x94E94 target_offset=0x14E94 r0=0x2B2534 r1=0x27FD1C lr=0x2FDA15 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x2FDA1C function_entry_pc=0x94E94 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=18 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=13 actual_top_frame_id=13 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=13 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=13 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FDA1E return_pc=0x2FDA1E call_pc=0x2FDA1C cur_r9=0x280400 lr=0x2FDA1F executed=1 owns_r9_pop=1 side_depth=0 frame_id=13 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=29 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=13 scope_id=18 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FDA1C guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=18 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=13 actual_top_frame_id=13 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=13 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=30 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=14 scope_id=19 host_callsite=enter guest_pc=0x2FDA28 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=19 frame_id=14 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=14 top_frame_kind=RUNTIME_ENTRY generation=14 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FDA28 return_pc=0x2FDA2A frame_id=14 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FDA2A return_pc=0x2FDA2A call_pc=0x2FDA28 cur_r9=0x280400 lr=0x2FDA2B executed=1 owns_r9_pop=1 side_depth=0 frame_id=14 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=31 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=14 scope_id=19 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FDA28 guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=19 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=14 actual_top_frame_id=14 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=14 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=32 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=15 scope_id=20 host_callsite=enter guest_pc=0x2FDA34 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=20 frame_id=15 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=15 top_frame_kind=RUNTIME_ENTRY generation=15 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FDA34 return_pc=0x2FDA36 frame_id=15 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FDA36 return_pc=0x2FDA36 call_pc=0x2FDA34 cur_r9=0x280400 lr=0x2FDA37 executed=1 owns_r9_pop=1 side_depth=0 frame_id=15 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=33 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=15 scope_id=20 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FDA34 guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=20 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=15 actual_top_frame_id=15 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=15 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_WRITE] event_seq=34 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=16 scope_id=21 host_callsite=enter guest_pc=0x2FDA40 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=21 frame_id=16 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=16 top_frame_kind=RUNTIME_ENTRY generation=16 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x2FDA40 return_pc=0x2FDA42 frame_id=16 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x2FDA42 return_pc=0x2FDA42 call_pc=0x2FDA40 cur_r9=0x280400 lr=0x2FDA43 executed=1 owns_r9_pop=1 side_depth=0 frame_id=16 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=35 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=16 scope_id=21 host_callsite=mrp_return_from_dsm_helper guest_pc=0x2FDA40 guest_module=cfunction.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=21 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=16 actual_top_frame_id=16 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=16 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FDA46 target=0x30CED5 arg0=0x6065C76 arg1=0x27FD0C
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CEDA target=0x2FDA4B arg0=0x7B0 arg1=0x27FD0C
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FDA4E target=0x30CE65 arg0=0x27FCF0 arg1=0x27FD0C
+[R9_WRITE] event_seq=36 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=17 scope_id=22 host_callsite=enter guest_pc=0x30CE72 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=22 frame_id=17 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=17 top_frame_kind=RUNTIME_ENTRY generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CE72 return_pc=0x30CE74 frame_id=17 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=16 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CE72 to_module=dsm:cfunction.ext to_module_id=8 target=0x80320 target_offset=0x320 r0=0x27FCF0 r1=0x80320 lr=0x2FDA53 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CE72 function_entry_pc=0x80320 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=22 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=17 actual_top_frame_id=17 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=17 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=37 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CE74 return_pc=0x30CE74 call_pc=0x30CE72 cur_r9=0x280400 lr=0x30CE75 executed=1 owns_r9_pop=1 side_depth=0 frame_id=17 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=38 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=17 scope_id=22 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30CE72 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=22 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=17 actual_top_frame_id=17 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=17 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[JJFB_DSM_HELPER_RET] r0=0x0 r9=0x2B0D28 pc=0x30CE74 evidence=OBSERVED note=low_pointer_or_status
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2FDA64 target=0x30CEAD arg0=0x140 arg1=0x10
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CEBA target=0x2FDA69 arg0=0x400000 arg1=0x10
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CF2A target=0x30CCE1 arg0=0x10102 arg1=0x11100
+[JJFB_PLAT_CALL] code=0x10102 family=0x11100 handler=0x30B7F1 ret=1 kind=REGISTER name=plat_10102_register evidence=CROSS_TARGET+docs/06
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x10102 r1=0x11100 r2=0x30B7F1 r3=0x0 r4=0x10102 ret=0x1 evidence=TARGET_OBSERVED
+[JJFB_GAMELIST_HANDLER_MAP] event_code=0x11100 handler=0x30B7F1 seeded=0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CF34 target=0x30D3A5 arg0=0x0 arg1=0x11100
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D3A8 target=0x30CF71 arg0=0x20 arg1=0x11100
+[R9_WRITE] event_seq=39 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=18 scope_id=23 host_callsite=enter guest_pc=0x30CF8E guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=23 frame_id=18 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=18 top_frame_kind=RUNTIME_ENTRY generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30CF8E return_pc=0x30CF90 frame_id=18 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=17 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30CF8E to_module=dsm:cfunction.ext to_module_id=8 target=0x80160 target_offset=0x160 r0=0x24 r1=0x80160 lr=0x30D3AD evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30CF8E function_entry_pc=0x80160 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=23 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=18 actual_top_frame_id=18 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=18 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=40 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30CF90 return_pc=0x30CF90 call_pc=0x30CF8E cur_r9=0x280400 lr=0x30CF91 executed=1 owns_r9_pop=1 side_depth=0 frame_id=18 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=41 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=18 scope_id=23 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30CF8E guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=23 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=18 actual_top_frame_id=18 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=18 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30CF4C target=0x30D459 arg0=0x2AC908 arg1=0xEA60
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D508 target=0x30D3F9 arg0=0x2AC908 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D436 target=0x30D50D arg0=0x2AC908 arg1=0x2AC908
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D534 target=0x30D585 arg0=0xEA60 arg1=0x0
+[R9_WRITE] event_seq=42 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=19 scope_id=24 host_callsite=enter guest_pc=0x30D592 guest_module=cfunction.ext depth_before=1 depth_after=2 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=2 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=24 frame_id=19 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=1 depth_after=2 top_frame_id=19 top_frame_kind=RUNTIME_ENTRY generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30D592 return_pc=0x30D594 frame_id=19 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[CROSS_MODULE_CALL] transfer_id=18 hop=OTHER from_module=gbrwcore.ext from_module_id=3 from_pc=0x30D592 to_module=dsm:cfunction.ext to_module_id=8 target=0x805F8 target_offset=0x5F8 r0=0x805F8 r1=0x0 lr=0x30D539 evidence=OBSERVED
+[R9_SCOPE] stage=NESTED_CFN_WATCH call_pc=0x30D592 function_entry_pc=0x805F8 pre_r9=0x280400 caller_module_id=3 nested_r9_scope_gate=blocked evidence=OBSERVED
+[R9_SCOPE] stage=NOOP scope_id=24 owns_frame=yes requested_by=CROSS_MODULE_MRP_TO_DSM requested_frame_id=19 actual_top_frame_id=19 top_frame_kind=RUNTIME_ENTRY leave_action=NOOP emu_exit_reason=YIELD_TO_NESTED_GUEST depth_before=2 depth_after=2 old_r9=0x280400 new_r9=0x280400 generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SCOPE_BALANCE] stage=NOOP requested_by=CROSS_MODULE_MRP_TO_DSM owns_frame=yes top_frame_id=19 top_frame_kind=RUNTIME_ENTRY restore_r9=0x280400 emu_exit_reason=YIELD_TO_NESTED_GUEST nested_r9_scope_gate=open next_allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY guest_callback_frame_gate=blocked bootstrap_entry_r9_gate=blocked phase6b_b_gate=blocked er_rw_metadata_timing_gate=blocked evidence=DOCUMENTED note=tokenized_leave_keeps_outer_frame
+[R9_WRITE] event_seq=43 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30D594 return_pc=0x30D594 call_pc=0x30D592 cur_r9=0x280400 lr=0x30D595 executed=1 owns_r9_pop=1 side_depth=0 frame_id=19 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=44 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=19 scope_id=24 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30D592 guest_module=gbrwcore.ext depth_before=2 depth_after=1 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=24 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=19 actual_top_frame_id=19 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=2 depth_after=1 old_r9=0x280400 new_r9=0x2B0D28 generation=19 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=1 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D5A2 target=0x30CD41 arg0=0x30CD41 arg1=0x2B2634
+[PLATFORM_TIMER] op=STOP chunk=0x682A6C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A6C r1=0x1 r2=0x0 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D5AC target=0x30CD19 arg0=0xEA60 arg1=0x30CD19
+[JJFB_E10A31] milestone=GAMELIST_TIMER_REGISTERED note=gbrwcore.ext evidence=OBSERVED
+[SCHEDULER_ENQUEUE] source=PLATFORM_TIMER owner_module=robotol.ext owner_module_id=0 owner_generation=0 handler=0x0 forced=no guest_depth=1 event_id=1 run_id=p19_shell_20260801_183051_60991 evidence=OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A6C period_ms=60000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A6C r1=0x0 r2=0x0 r3=0xEA60 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=POLL_WAIT period_ms=60000 evidence=DOCUMENTED
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADEF4 ret=0x0 evidence=OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD7C target=0x30D00F arg0=0x2B0D28 arg1=0x280400
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D04E target=0x30CC71 arg0=0x1389 arg1=0x2AD964
+[PLATFORM_STRLEN] import_ok slot=0xAC374 str=0xADEF4 ret=0x0 evidence=OBSERVED
+After app init, memory left:3855728
+[R9_WRITE] event_seq=45 old=0x280400 new=0x0 reason=MODULE_R9_SWITCH_LEAVE frame_id=1 scope_id=1 host_callsite=bridge_mr_extHelper guest_pc=0x30D088 guest_module=cfunction.ext depth_before=1 depth_after=0 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=1 owns_frame=yes requested_by=bridge_mr_extHelper requested_frame_id=1 actual_top_frame_id=1 top_frame_kind=MR_HELPER leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=1 depth_after=0 old_r9=0x280400 new_r9=0x0 generation=1 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=? restore_r9=0x0 depth=0 call_kind=MR_HELPER leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[R9_SCOPE_FIRST_ZERO] event_seq=45 old=0x280400 new=0x0 reason=MODULE_R9_SWITCH_LEAVE host_callsite=bridge_mr_extHelper frame_id=1 scope_id=1 nested_r9_scope_gate=open evidence=DYNAMIC_EXACT_WRITER
+[EXT_ENTRY] module_id=3 method=1 return=0
+[MODULE_REGISTRY] package=gwy/gbrwcore.mrp module=gbrwcore.ext module_id=3 requested=gbrwcore.ext resolved=gbrwcore.ext origin=MRP_MEMBER strategy=exact state=ENTRY_CALLED stored_size=98264 unpacked_size=147196 extracted_size=147196 helper=0x30CFF9
+[PLATFORM_TIMER] op=START_DSM_RETURN filename=gwy/gbrwcore.mrp ret=0 evidence=DOCUMENTED
+[10140_ACTIVATION_POLICY] mode=NATURAL_ONLY forced_arm=0 forced_enqueue=0 forced_rearm=0 has_10140=0 timer_arm_seen=1 note=product_default_NATURAL_ONLY evidence=OBSERVED
+bridge_dsm_mr_start_dsm('gwy/gbrwcore.mrp','start.mr','napptype=12_nextid=482_ncode=512_narg=0_narg1=1_nmrpname=gwy/jjfb.mrp_gwyblink'): 0x0
+[PLATFORM_TIMER] op=FIRE_CB interval=60000 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DUE via=host_loop evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_ENTER evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_LOCKED evidence=DOCUMENTED
+[JJFB_E10A31] milestone=GAMELIST_TIMER_FIRES_WITH_OWN_ERW note=gbrwcore.ext evidence=OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT code=2 helper=0x30CFF9 P=0x2AC8EC erw=0x2B0D28 chunk=0x682A6C evidence=DOCUMENTED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EBD7C target=0x30D00F arg0=0x2B0D28 arg1=0x2B0D28
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D056 target=0x30D5C1 arg0=0x2 arg1=0x2B0D28
+[R9_WRITE] event_seq=46 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=20 scope_id=25 host_callsite=enter guest_pc=0x30D5CC guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=25 frame_id=20 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=20 top_frame_kind=RUNTIME_ENTRY generation=20 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30D5CC return_pc=0x30D5CE frame_id=20 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_WRITE] event_seq=47 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30D5CE return_pc=0x30D5CE call_pc=0x30D5CC cur_r9=0x280400 lr=0x30D5CF executed=1 owns_r9_pop=1 side_depth=0 frame_id=20 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=48 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=20 scope_id=25 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30D5CC guest_module=cfunction.ext depth_before=1 depth_after=0 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=25 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=20 actual_top_frame_id=20 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=1 depth_after=0 old_r9=0x280400 new_r9=0x2B0D28 generation=20 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=0 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D67A target=0x30D459 arg0=0x2AC908 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D508 target=0x30D3F9 arg0=0x2AC908 arg1=0x0
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D436 target=0x30D50D arg0=0x2AC908 arg1=0x2AC908
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D534 target=0x30D585 arg0=0xEA60 arg1=0x0
+[R9_WRITE] event_seq=49 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=21 scope_id=26 host_callsite=enter guest_pc=0x30D592 guest_module=cfunction.ext depth_before=0 depth_after=1 evidence=OBSERVED
+[R9_SWITCH] stage=ENTER from=gbrwcore.ext to=cfunction.ext old_r9=0x2B0D28 new_r9=0x280400 call_kind=RUNTIME_ENTRY depth=1 er_rw_size=9680 evidence=DOCUMENTED module_r9_switch_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY phase6b_b_gate=blocked note=r9_only
+[R9_SCOPE] stage=ENTER scope_id=26 frame_id=21 owns_frame=yes requested_kind=RUNTIME_ENTRY caller=gbrwcore.ext callee=cfunction.ext current_r9=0x2B0D28 target_r9=0x280400 result=SWITCHED frame_pushed=yes depth_before=0 depth_after=1 top_frame_id=21 top_frame_kind=RUNTIME_ENTRY generation=21 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=ARM_DSM_RETURN caller_id=3 call_pc=0x30D592 return_pc=0x30D594 frame_id=21 owns_r9_pop=1 side_depth=1 evidence=DOCUMENTED note=mrp_dsm_helper_blx
+[R9_WRITE] event_seq=50 old=0x2B0D28 new=0x280400 reason=MODULE_R9_SWITCH_ENTER frame_id=0 scope_id=0 host_callsite=ensure_dsm_r9 guest_pc=0x91530 guest_module=dsm:cfunction.ext depth_before=0 depth_after=0 evidence=OBSERVED
+[R9_SWITCH] stage=ENSURE_DSM_R9 pc=0x91530 old_r9=0x2B0D28 new_r9=0x280400 evidence=DOCUMENTED note=dsm_code_with_mrp_r9
+[R9_SWITCH] stage=RESTORE_AFTER_DSM to_caller_id=3 pc=0x30D594 return_pc=0x30D594 call_pc=0x30D592 cur_r9=0x280400 lr=0x30D595 executed=1 owns_r9_pop=1 side_depth=0 frame_id=21 evidence=DOCUMENTED note=mrp_dsm_helper_return
+[R9_WRITE] event_seq=51 old=0x280400 new=0x2B0D28 reason=MODULE_R9_SWITCH_LEAVE frame_id=21 scope_id=26 host_callsite=mrp_return_from_dsm_helper guest_pc=0x30D592 guest_module=cfunction.ext depth_before=1 depth_after=0 evidence=OBSERVED
+[R9_SCOPE] stage=LEAVE scope_id=26 owns_frame=yes requested_by=mrp_return_from_dsm_helper requested_frame_id=21 actual_top_frame_id=21 top_frame_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME emu_exit_reason=NORMAL_GUEST_RETURN depth_before=1 depth_after=0 old_r9=0x280400 new_r9=0x2B0D28 generation=21 module_r9_switch_gate=open nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY evidence=DOCUMENTED
+[R9_SWITCH] stage=LEAVE from=cfunction.ext to=gbrwcore.ext restore_r9=0x2B0D28 depth=0 call_kind=RUNTIME_ENTRY leave_action=POP_OWNED_FRAME foreign=no evidence=DOCUMENTED module_r9_switch_gate=open phase6b_b_gate=blocked nested_r9_scope_gate=open allowed_fix=TOKENIZED_R9_SCOPE_BALANCING_ONLY
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D5A2 target=0x30CD41 arg0=0x30CD41 arg1=0x2B2634
+[PLATFORM_TIMER] op=STOP chunk=0x682A6C name=ext_timer_stop_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A6C r1=0x1 r2=0x1 r3=0x0 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D5AC target=0x30CD19 arg0=0xEA60 arg1=0x30CD19
+[JJFB_E10A31] milestone=GAMELIST_TIMER_REGISTERED note=gbrwcore.ext evidence=OBSERVED
+[SCHEDULER_ENQUEUE] source=PLATFORM_TIMER owner_module=robotol.ext owner_module_id=0 owner_generation=0 handler=0x0 forced=no guest_depth=0 event_id=2 run_id=p19_shell_20260801_183051_60991 evidence=OBSERVED
+[JJFB_EXTCHUNK_SLOT] module=gbrwcore.ext off=0x24 value=0x1 meaning=timer evidence=DOCUMENTED
+[PLATFORM_TIMER] op=START chunk=0x682A6C period_ms=60000 id=0x1 name=ext_timer_start_chunk_r0 evidence=TARGET_OBSERVED
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x682A6C r1=0x0 r2=0x1 r3=0xEA60 r4=0x280058 ret=0x0 evidence=TARGET_OBSERVED
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x30D686 target=0x2EFB01 arg0=0x0 arg1=0x2EFB01
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2EFB08 target=0x2F5E01 arg0=0x27FFB8 arg1=0x2EFB01
+[GUEST_INDIRECT_CALL] module_id=3 pc=0x2F5E16 target=0x30CCE1 arg0=0x0 arg1=0x6
+[JJFB_EXTCHUNK_SLOT_CALL] off=0x28 pc=0x280058 r0=0x0 r1=0x6 r2=0x0 r3=0x0 r4=0x0 ret=0x0 evidence=TARGET_OBSERVED
+[PLATFORM_TIMER] op=FIRE_EXT_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE ret=0 evidence=DOCUMENTED
+[PLATFORM_TIMER] op=FIRE_DONE via=host_loop evidence=DOCUMENTED

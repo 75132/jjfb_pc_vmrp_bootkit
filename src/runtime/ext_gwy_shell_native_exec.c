@@ -2,6 +2,7 @@
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/e10a3_postselect_trace.h"
 #include "gwy_launcher/e10a31_gamelist_context.h"
+#include "gwy_launcher/ext_parent_child_handoff.h"
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/p22_selection_gates.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
@@ -338,6 +339,10 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
             g_ne.export_called = 1;
             printf("[JJFB_RUNAPP] source=native_shell target=gwy/jjfb.mrp "
                    "via=guest_native_nested_start_dsm evidence=TARGET_OBSERVED\n");
+            ext_parent_child_handoff_on_parent_launch(g_ne.uc, "start_dsm_nested", 0, NULL, 0,
+                                                     g_ne.mrp_started_gamelist ? "gamelist.ext"
+                                                                              : "gbrwcore.ext",
+                                                     0, "NESTED_START_DSM");
         }
     }
     fflush(stdout);
@@ -525,6 +530,8 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                              regs[i], 0, 0, 0, 0, 0, buf);
             e10a_shell_phase("SHELL_PHASE_RUNAPP_CALLED", module_name ? module_name : "?", pc, 0, 0,
                              0, 0, 0, 0, 0, buf);
+            ext_parent_child_handoff_on_parent_launch(uc, "lib.runapp", pc, regs, 0,
+                                                     module_name, 0, "STRING_OBSERVE");
             fflush(stdout);
         }
         if (strstr(buf, "lib.startGame") || strcmp(buf, "startGame") == 0) {
@@ -541,6 +548,8 @@ static void maybe_export_call_from_regs(void *uc, uint32_t pc, const uint32_t re
                              0, regs[i], 0, 0, 0, 0, 0, buf);
             /* Live startGame body is TARGET_OBSERVED at 0x2AAD84 when lookup resolves. */
             p22_note_startgame_lookup(0x2AAD84u, "lib.startGame");
+            ext_parent_child_handoff_on_parent_launch(uc, "lib.startGame", pc, regs, 0,
+                                                     module_name, 0, "STRING_OBSERVE");
             fflush(stdout);
         }
         if (strstr(buf, "lib.getuserinfo") || strcmp(buf, "getuserinfo") == 0) {

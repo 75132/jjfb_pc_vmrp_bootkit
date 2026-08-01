@@ -1,0 +1,2 @@
+﻿seen,kind,actor_module,pc,instruction,target,r0,r1,r2,r3,event_id,handler,continuation,detail,child_ret,handler_10140,parent_cont,host_ticks
+1,NO_GUEST_SUCCESSOR_HOST_IDLE,host_sdl_loop,0x0,HOST_TICK,0x0,0x0,0x0,0x0,0x0,0x0,0x30631D,0x0,"start_dsm_return_treated_as_end_or_missing_activate",0,0x30631D,0x0,40

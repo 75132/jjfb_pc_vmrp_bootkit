@@ -30,6 +30,7 @@
 #include "gwy_launcher/gwy_sms_cfg.h"
 #include "gwy_launcher/e10a_shell_trace.h"
 #include "gwy_launcher/ext_gwy_startgame_audit.h"
+#include "gwy_launcher/ext_parent_child_handoff.h"
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/guest_call_observer.h"
 #include "gwy_launcher/guest_memory.h"
@@ -494,6 +495,13 @@ void gwy_ext_obs_bind_uc(void *uc) {
     ext_er_rw_bind_restore_bind_uc(uc);
     ext_gwy_startgame_audit_bind_uc(uc);
     ext_gwy_startgame_audit_reset();
+    ext_parent_child_handoff_reset();
+    ext_parent_child_handoff_bind_uc(uc);
+    {
+        const char *p19dir = getenv("JJFB_P19_OUT_DIR");
+        if (p19dir && p19dir[0]) ext_parent_child_handoff_set_out_dir(p19dir);
+        else ext_parent_child_handoff_set_out_dir("out/p19");
+    }
     ext_gwy_shell_native_exec_bind_uc(uc);
     ext_gwy_shell_native_exec_reset();
     module_r9_switch_reset();
@@ -963,9 +971,8 @@ void gwy_ext_obs_on_start_dsm_return(const char *filename, int32_t ret) {
     int force_oneshot = env_flag("JJFB_FORCE_10140_ONESHOT");
     int has_10140 = platform_handler_registry_has(0x10140u);
     g_start_dsm_returned = 1;
-    (void)filename;
-    (void)ret;
     (void)gwy_ext_obs_try_product_handshake(g_bound_uc);
+    ext_parent_child_handoff_on_child_init_return(g_bound_uc, filename, ret);
     if (!g_arm_absent_emitted && !g_timer_arm_seen) {
         g_arm_absent_emitted = 1;
         printf("[JJFB_TIMER_ARM_ABSENT] window=mrc_init_to_start_dsm_return "
@@ -1940,6 +1947,7 @@ void gwy_ext_obs_post_start_loop_tick(uint32_t t_ms) {
     const char *reason;
     /* P26: first host SDL loop tick after start_dsm return = control restored. */
     gwy_ext_obs_p26_host_loop_reenter("post_start_loop_tick");
+    ext_parent_child_handoff_on_host_loop_tick(t_ms);
     if (!env_flag("JJFB_POST_START_SCHEDULER_TRACE")) return;
     if (!g_start_dsm_returned) {
         if ((g_post_loop_iter++ % 40u) == 1u) {
@@ -2797,6 +2805,7 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
     }
 
     ext_chunk_provider_on_slot28_call(pc, r0, r1, r2, r3, r4, ret);
+    ext_parent_child_handoff_on_plat(uc, r0, r1, r2, r3, ret, caller_pc, lr);
     platform_call_census_note(r0, r1, caller_pc, ret);
     e10a31a_note_platform_api(uc, result.name, caller_pc, 0, r0, ret);
     platform_1e209_trace_call(caller_pc, r0, r1, r2, r3, ret, g_lifecycle_ticks);
@@ -3370,6 +3379,7 @@ void gwy_ext_obs_emu_exit(int reason) {
     ext_gwy_shell_native_exec_finalize("emu_exit");
     ext_gwy_shell_shim_finalize("emu_exit");
     ext_gwy_startgame_audit_finalize("emu_exit");
+    ext_parent_child_handoff_flush();
 }
 
 void gwy_ext_obs_mr_exit(void *uc) {
@@ -3447,6 +3457,7 @@ void gwy_ext_obs_unimplemented_api(void *uc, uint32_t slot_addr, const char *nam
 
 void gwy_ext_obs_start_dsm(const char *filename, const char *ext, const char *entry) {
     ext_gwy_startgame_audit_on_start_dsm(filename, ext, entry);
+    ext_parent_child_handoff_on_start_dsm(filename, entry);
     ext_gwy_shell_shim_on_start_dsm(filename, ext, entry);
     ext_gwy_shell_native_exec_on_start_dsm(filename, ext, entry);
 }

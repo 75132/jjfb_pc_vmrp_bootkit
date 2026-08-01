@@ -63,6 +63,7 @@ set(GWY_LAUNCHER_CORE_SOURCES
     src/runtime/ext_chunk_provider.c
     src/runtime/ext_er_rw_bind_restore.c
     src/runtime/ext_gwy_startgame_audit.c
+    src/runtime/ext_parent_child_handoff.c
     src/runtime/module_r9_switch.c
     src/runtime/mrp_member_view.c
     src/runtime/package_scope.c
