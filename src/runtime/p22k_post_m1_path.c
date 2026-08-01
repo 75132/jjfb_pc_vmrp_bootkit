@@ -119,7 +119,8 @@ static void describe_arm(uint32_t w, uint32_t pc, char *out, size_t n) {
         return;
     }
     if (w == 0xE8BD8DF0u) {
-        snprintf(out, n, "LDMFD sp!,{r4-r11,pc}");
+        /* reglist 0x8DF0 = {r4-r8,r10,r11,pc} — r9 NOT included */
+        snprintf(out, n, "LDMFD sp!,{r4-r8,r10,r11,pc}");
         return;
     }
     if ((w & 0xFFF00000u) == 0xE59D0000u) {
@@ -199,12 +200,21 @@ static void p22k_on_code(uc_engine *uc, uint64_t address, uint32_t size, void *u
         emit_insn(g.last_method, pc, insn, regs, sp, sp64, sp68, "epilogue_r0_2");
     } else if (insn == 0xE8BD8DF0u) {
         uint32_t retpc = 0;
+        uint32_t reglist = insn & 0xFFFFu;
+        uint32_t pc_index = 0;
+        uint32_t bit;
+        /* Dynamic LDM reglist: PC slot = popcount(reglist & 0x7FFF) * 4 from pre-LDM SP.
+         * 0x8DF0 => {r4-r8,r10,r11,pc} => pc_index=7 => [sp+0x1C] (NOT sp+0x20). */
+        for (bit = 0; bit < 15u; bit++) {
+            if (reglist & (1u << bit)) pc_index++;
+        }
         g.saw_ldmfd = 1;
-        /* After ADD sp,#0x70, return PC is last of {r4-r11,pc} at [sp+32]. */
-        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + 32u, &retpc);
+        (void)guest_memory_uc_peek_u32((struct uc_struct *)uc, sp + pc_index * 4u, &retpc);
         g.ldmfd_return_pc = retpc;
         emit_insn(g.last_method, pc, insn, regs, sp, sp64, sp68, "function_epilogue");
-        printf("[JJFB_P22K] ldmfd_return_pc=0x%X evidence=OBSERVED\n", retpc);
+        printf("[JJFB_P22K] ldmfd_return_pc=0x%X pc_index=%u pc_addr=0x%X reglist=0x%X "
+               "evidence=OBSERVED\n",
+               retpc, pc_index, sp + pc_index * 4u, reglist);
         fflush(stdout);
     } else if ((insn & 0xFF000000u) == 0xEB000000u) {
         int32_t imm = (int32_t)(insn & 0x00FFFFFFu);

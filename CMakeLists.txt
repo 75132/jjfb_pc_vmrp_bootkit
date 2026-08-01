@@ -136,6 +136,7 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/p22h_helper_handoff.c
     src/runtime/p22i_cfunction_dispatcher.c
     src/runtime/p22k_post_m1_path.c
+    src/runtime/p22l_parent_return.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
 )

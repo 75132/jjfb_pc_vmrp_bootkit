@@ -33,6 +33,7 @@
 #include "gwy_launcher/p22h_helper_handoff.h"
 #include "gwy_launcher/p22i_cfunction_dispatcher.h"
 #include "gwy_launcher/p22k_post_m1_path.h"
+#include "gwy_launcher/p22l_parent_return.h"
 #include "gwy_launcher/p22_selection_gates.h"
 
 int e10a31a_enabled(void) { return 0; }
@@ -1172,6 +1173,34 @@ void p22k_note_emu_leave(uint32_t pc, uint32_t lr, uint32_t r0, uint32_t r9, con
     (void)r0;
     (void)r9;
     (void)phase;
+}
+
+int p22l_enabled(void) { return 0; }
+void p22l_reset(void) {}
+void p22l_bind_uc(void *uc) { (void)uc; }
+void p22l_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22l_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+}
+void p22l_note_dispatcher_continuation(void *uc, uint32_t continuation_pc, uint32_t method,
+                                       uint32_t sp) {
+    (void)uc;
+    (void)continuation_pc;
+    (void)method;
+    (void)sp;
+}
+void p22l_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                  uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
 }
 
 int p21_enabled(void) { return 0; }

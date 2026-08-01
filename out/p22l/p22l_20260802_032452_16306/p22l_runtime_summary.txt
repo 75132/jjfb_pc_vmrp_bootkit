@@ -1,0 +1,29 @@
+run_id=p22l_20260802_032452_16306
+class=C
+cont=0x89BF0
+m6_r0=0
+m0_r0=-1
+m1_r0=1
+wrapper_final_r0=2
+ldm_n=3
+next_n=4
+slice_n=32
+stack_pc=0x86E5C
+next_pc=0x86E5C
+match=1
+parent_module=cfunction.ext
+parent_off=0x6E5C
+parent_callsite=0x86E58
+r0_consume=DP(op=2) r0,r1,r0,LSL#3
+r0_consume_pc=0x97978
+cmp_lhs=0x2ACA14
+cmp_rhs=0x2
+branch=NOT_TAKEN
+branch_tgt=0x9D0F4 (on_derived_r0)
+callback=0
+entered_10740=0
+entered_7b6c=0
+cfg_open=0
+sole_lock=wrapper returns into cfunction state machine @+0x6E5C (not helper); R0=2 scale_index_r0_2_in_SUB (r0=r1-(r0<<shift)); not boolean status
+next_fix=trace upward from 0x86E5C / consume@0x97978; find schedule into +0xF670/+0x10740
+stop_reason=r0_consumed_and_branched

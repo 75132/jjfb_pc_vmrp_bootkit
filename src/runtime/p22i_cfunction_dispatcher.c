@@ -7,6 +7,7 @@
 #include "gwy_launcher/module_r9_switch.h"
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/p22k_post_m1_path.h"
+#include "gwy_launcher/p22l_parent_return.h"
 #include "gwy_launcher/sha256.h"
 
 #include <stdio.h>
@@ -1089,9 +1090,11 @@ static void push_enter(void *uc, P22iCallSource source, uint32_t helper, uint32_
            "r9=0x%X evidence=OBSERVED\n",
            method, helper, cont_lr, f->decoded_callsite_pc, f->source_name, f->entry_r9);
     fflush(stdout);
-    /* P22K: arm sparse DSM CODE watch on continuation BEFORE helper returns. */
-    if (cont_lr && source == P22I_SRC_NATIVE_GUEST)
+    /* P22K/P22L: arm sparse DSM CODE watch on continuation BEFORE helper returns. */
+    if (cont_lr && source == P22I_SRC_NATIVE_GUEST) {
         p22k_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, 0, sp);
+        p22l_note_dispatcher_continuation(uc ? uc : g.uc, cont_lr, method, sp);
+    }
 }
 static void try_match_return(uint32_t pc, uint32_t sp, const uint32_t regs[16]) {
     int i;
@@ -1479,6 +1482,7 @@ void p22i_reset(void) {
 
 void p22i_bind_uc(void *uc) {
     p22k_bind_uc(uc);
+    p22l_bind_uc(uc);
     if (!p22i_enabled()) return;
     g.uc = uc;
 }
@@ -1486,6 +1490,7 @@ void p22i_bind_uc(void *uc) {
 void p22i_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
                           uint32_t p_guest, uint64_t generation, uint64_t module_id,
                           const char *package_owner) {
+    p22l_note_module_map(module_name, base, size, erw);
     if (!p22i_enabled()) return;
     if (is_gl(module_name)) {
         g.gl_base = base;
@@ -1785,4 +1790,5 @@ void p22i_finalize(const char *stop_reason) {
            g.fire_ext_n);
     fflush(stdout);
     p22k_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
+    p22l_finalize(stop_reason && stop_reason[0] ? stop_reason : g.stop_reason);
 }

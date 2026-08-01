@@ -1,0 +1,4 @@
+seq,method,helper_return_r0,helper_return_r0_hex,cont_pc,sp,r9,wrapper_final_r0,saw_mov_r0_2,saw_ldm,note
+1,6,0,0x0,0x89BF0,0x27F8D8,0x280400,0x2,1,1,"CONT_R0_BEFORE_INSN"
+2,0,-1,0xFFFFFFFF,0x89BF0,0x27F8D8,0x280400,0x2,1,1,"CONT_R0_BEFORE_INSN"
+3,1,1,0x1,0x89BF0,0x27F8D8,0x280400,0x2,1,1,"CONT_R0_BEFORE_INSN"
