@@ -1,0 +1,10 @@
+﻿run_id=p22n_20260802_041400_27492
+gate=P22N_OPCODE_STREAM_PROVENANCE
+NATURAL_ONLY=yes
+JJFB_P22N_CLEAN=1
+JJFB_P22I_CLEAN=1
+cfunction_base=0x80000
+cfunction_end=0xD1154
+p22m_0x9C41C_correction=NORMAL_OPCODE_DISPATCH
+no_object_plus30_0x0C_force=yes
+cfunction_runtime_sha256=2e6bea16b462f1bb141644fbb6c0a7088cc88f969648535b730659ca505eecf5

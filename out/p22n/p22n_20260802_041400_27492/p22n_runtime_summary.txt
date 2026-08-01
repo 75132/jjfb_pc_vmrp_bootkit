@@ -1,0 +1,16 @@
+run_id=p22n_20260802_041400_27492
+cf_base=0x80000
+cf_end=0xD1154
+cfunction_runtime_sha256=2e6bea16b462f1bb141644fbb6c0a7088cc88f969648535b730659ca505eecf5
+opcodes=0x14,0x1B
+stream_n=2
+fire2_n=1
+saw_op14=1
+saw_op1b=1
+entered_10740=0
+entered_7b6c=0
+sole_lock=natural 6→0→1 then cfunction opcode stream [0x14,0x1B] (0x9C41C=NORMAL_OPCODE_DISPATCH); returns to helper method=2; UI/init record producer not observed
+next_fix=locate writer of missing UI/init opcode record (not flag 0x0C); compare producer callers upstream of +0x1C40C buffer fill
+stop_reason=natural_601_complete_no_post_progress
+p22m_0x9C41C=NORMAL_OPCODE_DISPATCH
+guest_modified=NO

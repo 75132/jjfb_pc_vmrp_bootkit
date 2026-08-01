@@ -1,0 +1,2 @@
+# run_id=p22n_20260802_042204_41306 commit=a8d5a94c062636562929968488f95a1941a73e72 main=1d228281c50e9d411fe6384c752dc3c26684bb0310684e4ffd4c007ec800f4fb raw_ext=70abc063dae99c95e7d9d7a44db5117c9512a430078c2672ecae9e28c3616414 gl_base=0x0 cf_base=0x0 helper=0x0 gl_erw=0x0 cf_erw=0x0 P=? gen=?
+method,hit_n,first_source,first_host_fn,first_helper_entry_pc,first_caller_continuation,first_callsite_pc

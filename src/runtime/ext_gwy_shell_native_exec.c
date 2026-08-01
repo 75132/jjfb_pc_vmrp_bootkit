@@ -13,6 +13,7 @@
 #include "gwy_launcher/p22i_cfunction_dispatcher.h"
 #include "gwy_launcher/p22l_parent_return.h"
 #include "gwy_launcher/p22m_queue_scheduler.h"
+#include "gwy_launcher/p22n_opcode_stream.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -646,6 +647,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
     p22i_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
     p22l_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
     p22m_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
+    p22n_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
     for (i = 0; i < g_ne.mod_count; i++) {

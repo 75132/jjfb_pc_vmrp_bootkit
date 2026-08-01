@@ -138,6 +138,7 @@ set(GWY_RESEARCH_GWY_SHELL_SOURCES
     src/runtime/p22k_post_m1_path.c
     src/runtime/p22l_parent_return.c
     src/runtime/p22m_queue_scheduler.c
+    src/runtime/p22n_opcode_stream.c
     src/runtime/sms_cfg_compat_profile.c
     src/runtime/gwy_sms_cfg.c
 )
