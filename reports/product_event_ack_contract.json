@@ -19,8 +19,8 @@
     "nested": "sendAppEvent(0x10133, r0-4)",
     "case9_r0": "event_code 0x1E209 (not heap ptr)"
   },
-  "completion_objs": {"10165": "0x6AD11C", "10162": "0x69EF14", "enq_handler": "0x30D2F9", "owner_store": "0x2B215C"},
+  "completion_objs": {"10165": "0x6AD12C", "10162": "0x69EF24", "enq_handler": "0x30D309", "owner_store": "0x2B216C"},
   "request_id": 1,
   "state_advanced": false,
-  "run_id": "manual_20260724_220952"
+  "run_id": "p16_hit3_20260801_142116_73395"
 }

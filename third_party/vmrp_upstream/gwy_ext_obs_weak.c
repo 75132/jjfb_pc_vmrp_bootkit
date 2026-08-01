@@ -161,6 +161,22 @@ void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *
     (void)name;
 }
 
+int gwy_ext_obs_after_map_func_redirect(void *uc, uint32_t continuation_pc) {
+    (void)uc;
+    (void)continuation_pc;
+    return 0;
+}
+
+int gwy_ext_obs_take_pending_continuation(uint32_t *out_pc) {
+    if (out_pc) *out_pc = 0;
+    return 0;
+}
+
+int gwy_ext_obs_drain_pending_family_outside_hook(void *uc) {
+    (void)uc;
+    return 0;
+}
+
 int gwy_ext_obs_r9_switch_enter(void *uc, uint64_t caller_module_id, uint64_t callee_module_id,
                                 int call_kind) {
     (void)uc;

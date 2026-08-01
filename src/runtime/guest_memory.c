@@ -5,6 +5,47 @@
 
 #include <unicorn/unicorn.h>
 
+static int g_uc_data_exec_trap;
+static uint32_t g_uc_data_exec_pc;
+static uint32_t g_uc_data_exec_lr;
+static char g_uc_data_exec_name[48];
+static int g_uc_host_stop;
+static char g_uc_host_stop_reason[40];
+
+const char *gwy_uc_entry_end_class_name(GwyUcEntryEndClass c) {
+    switch (c) {
+    case GWY_ENTRY_REACHED_STOP: return "REACHED_STOP";
+    case GWY_ENTRY_INSN_LIMIT: return "INSN_LIMIT";
+    case GWY_ENTRY_HOST_STOP: return "HOST_STOP";
+    case GWY_ENTRY_DATA_EXEC_TRAP: return "DATA_EXEC_TRAP";
+    case GWY_ENTRY_UC_ERROR: return "UC_ERROR";
+    case GWY_ENTRY_BAD_ARGS: return "BAD_ARGS";
+    default: return "UNKNOWN";
+    }
+}
+
+void gwy_uc_entry_clear_stop_markers(void) {
+    g_uc_data_exec_trap = 0;
+    g_uc_data_exec_pc = 0;
+    g_uc_data_exec_lr = 0;
+    g_uc_data_exec_name[0] = 0;
+    g_uc_host_stop = 0;
+    g_uc_host_stop_reason[0] = 0;
+}
+
+void gwy_uc_entry_note_data_exec_trap(uint32_t pc, uint32_t lr, const char *name) {
+    g_uc_data_exec_trap = 1;
+    g_uc_data_exec_pc = pc;
+    g_uc_data_exec_lr = lr;
+    snprintf(g_uc_data_exec_name, sizeof(g_uc_data_exec_name), "%s", name ? name : "?");
+}
+
+void gwy_uc_entry_note_host_stop(const char *reason) {
+    g_uc_host_stop = 1;
+    snprintf(g_uc_host_stop_reason, sizeof(g_uc_host_stop_reason), "%s",
+             reason ? reason : "host_stop");
+}
+
 static int range_in_regions(const VmRuntime *rt, uint32_t addr, size_t size, GwyMemoryAccess access) {
     size_t n = 0;
     size_t i;
@@ -185,8 +226,13 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         UC_ARM_REG_R10, UC_ARM_REG_R11, UC_ARM_REG_R12, UC_ARM_REG_SP,  UC_ARM_REG_LR,
         UC_ARM_REG_PC,  UC_ARM_REG_CPSR};
     if (out) memset(out, 0, sizeof(*out));
+    gwy_uc_entry_clear_stop_markers();
     if (!uc || !start_pc) {
-        if (out) snprintf(out->end_reason, sizeof(out->end_reason), "bad_args");
+        if (out) {
+            out->end_class = GWY_ENTRY_BAD_ARGS;
+            out->reached_stop = 0;
+            snprintf(out->end_reason, sizeof(out->end_reason), "bad_args");
+        }
         return 0;
     }
     if (insn_limit == 0) insn_limit = 200000ull;
@@ -224,7 +270,9 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         err = uc_emu_start(u, pc_run, stop_run, 0, insn_limit);
     }
     if (out) {
+        int reached;
         out->uc_err = (unsigned)err;
+        out->executed_insns = insn_limit; /* unicorn 1.0.2 does not report count; cap is bound */
         uc_reg_read(u, UC_ARM_REG_PC, &out->pc_after);
         uc_reg_read(u, UC_ARM_REG_R0, &out->r0_after);
         uc_reg_read(u, UC_ARM_REG_R1, &out->r1_after);
@@ -232,19 +280,37 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         uc_reg_read(u, UC_ARM_REG_SP, &out->sp_after);
         uc_reg_read(u, UC_ARM_REG_LR, &out->lr_after);
         uc_reg_read(u, UC_ARM_REG_CPSR, &out->cpsr_after);
-        if (err != UC_ERR_OK) {
+        reached = ((out->pc_after & ~1u) == (stop_addr & ~1u));
+        out->reached_stop = reached ? 1 : 0;
+        if (g_uc_data_exec_trap) {
+            out->end_class = GWY_ENTRY_DATA_EXEC_TRAP;
+            out->reached_stop = 0;
+            out->ok = 0;
+            snprintf(out->end_reason, sizeof(out->end_reason), "data_exec_trap");
+            snprintf(out->err_detail, sizeof(out->err_detail), "pc=0x%X lr=0x%X name=%s",
+                     g_uc_data_exec_pc, g_uc_data_exec_lr, g_uc_data_exec_name);
+        } else if (err != UC_ERR_OK) {
+            out->end_class = GWY_ENTRY_UC_ERROR;
+            out->ok = 0;
             snprintf(out->end_reason, sizeof(out->end_reason), "uc_err");
             snprintf(out->err_detail, sizeof(out->err_detail), "%u:%s", (unsigned)err,
                      uc_strerror(err));
-            out->ok = 0;
-        } else if ((out->pc_after & ~1u) == (stop_addr & ~1u)) {
+        } else if (reached) {
+            out->end_class = GWY_ENTRY_REACHED_STOP;
+            out->ok = 1;
             snprintf(out->end_reason, sizeof(out->end_reason), "stop_at_base");
-            out->ok = 1;
+        } else if (g_uc_host_stop) {
+            out->end_class = GWY_ENTRY_HOST_STOP;
+            out->ok = 1; /* legacy ok: emu returned cleanly; P16 must check end_class */
+            snprintf(out->end_reason, sizeof(out->end_reason), "host_stop");
+            snprintf(out->err_detail, sizeof(out->err_detail), "%s", g_uc_host_stop_reason);
         } else {
+            out->end_class = GWY_ENTRY_INSN_LIMIT;
+            out->ok = 1; /* legacy: keep ok=1 for old callers; not a natural return */
             snprintf(out->end_reason, sizeof(out->end_reason), "insn_limit_or_yield");
-            out->ok = 1;
         }
     }
+    gwy_uc_entry_clear_stop_markers();
     for (i = 0; i < 17; i++) uc_reg_write(u, regs_idx[i], &saved[i]);
     return (err == UC_ERR_OK) ? 1 : 0;
 #else
@@ -255,6 +321,7 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
     (void)abi;
     if (out) {
         memset(out, 0, sizeof(*out));
+        out->end_class = GWY_ENTRY_UC_ERROR;
         snprintf(out->end_reason, sizeof(out->end_reason), "no_unicorn");
         snprintf(out->err_detail, sizeof(out->err_detail), "no_unicorn");
     }

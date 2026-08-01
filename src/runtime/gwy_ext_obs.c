@@ -197,6 +197,11 @@ static GwyFamilyEvent g_family_eq[GWY_P4_FAMILY_EVENT_Q];
 static int g_family_eq_n;
 static int g_family_contract_fixed;
 static int g_family_draining;
+/* P16: continuation to re-apply after MAP_FUNC hook uc_emu_stop returns to runCode. */
+static int g_pending_map_cont;
+static uint32_t g_pending_map_cont_pc;
+/* P16: family drain must run outside CODE hook (nested emu inside hook → stub+4). */
+static int g_pending_family_drain;
 /* One-shot: call real 0x30CBBC so guest strb 15D=1 (not host poke). */
 static int g_family_app2_init_once;
 /* One-shot success: guest strb B70 via 0x2FEBBC completed. */
@@ -538,6 +543,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_family_eq_n = 0;
     g_family_contract_fixed = 0;
     g_family_draining = 0;
+    g_pending_map_cont = 0;
+    g_pending_map_cont_pc = 0;
+    g_pending_family_drain = 0;
     g_family_app2_init_once = 0;
     g_family_c0_2febbc_once = 0;
     g_pending_2febbc_after_b71 = 0;
@@ -609,6 +617,68 @@ void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *
             ext_er_rw_bind_restore_peek_and_bind(pg, "mr_c_function_st_metadata_bind");
         robotol_idle_watch_note_stage(uc, "after_er_rw_bind");
     }
+}
+
+int gwy_ext_obs_after_map_func_redirect(void *uc, uint32_t continuation_pc) {
+    int i;
+    int pending = 0;
+    (void)uc;
+    if (g_in_30cbbc_call || g_family_draining) return 0;
+    for (i = 0; i < g_family_eq_n; i++) {
+        if (g_family_eq[i].used && g_family_eq[i].handler) {
+            pending = 1;
+            break;
+        }
+    }
+    if (!pending) return 0;
+
+    /* Do NOT drain here — nested uc_emu_start inside UC_HOOK_CODE makes unicorn
+     * resume at stub+4 after PC=LR. Schedule drain for runCode instead. */
+    g_pending_map_cont = 1;
+    g_pending_map_cont_pc = continuation_pc;
+    g_pending_family_drain = 1;
+    printf("[PLATFORM_FAMILY_EVENT] op=SCHEDULE_DRAIN_OUTSIDE_HOOK cont=0x%X queued=%d "
+           "cfn_path=PLATFORM_FAMILY_CALLBACK evidence=OBSERVED\n",
+           continuation_pc, g_family_eq_n);
+    fflush(stdout);
+    return 1; /* bridge should uc_emu_stop; runCode applies cont + drain */
+}
+
+int gwy_ext_obs_take_pending_continuation(uint32_t *out_pc) {
+    if (!g_pending_map_cont) return 0;
+    if (out_pc) *out_pc = g_pending_map_cont_pc;
+    g_pending_map_cont = 0;
+    /* keep g_pending_map_cont_pc until drain finishes so runCode can reassert */
+    return 1;
+}
+
+int gwy_ext_obs_drain_pending_family_outside_hook(void *uc) {
+    uint32_t cont = g_pending_map_cont_pc;
+    if (!g_pending_family_drain) return 0;
+    g_pending_family_drain = 0;
+    if (!uc) return 0;
+
+    printf("[PLATFORM_FAMILY_EVENT] op=DRAIN_OUTSIDE_HOOK cont=0x%X "
+           "cfn_path=PLATFORM_FAMILY_CALLBACK evidence=OBSERVED\n",
+           cont);
+    fflush(stdout);
+    printf("[CALLBACK_FRAME] boundary=FAMILY_WRAPPER_ENTER cont=0x%X "
+           "cfn_path=PLATFORM_FAMILY_CALLBACK evidence=OBSERVED\n",
+           cont);
+    fflush(stdout);
+
+    gwy_ext_obs_drain_family_events(uc);
+
+    printf("[CALLBACK_FRAME] boundary=OUTER_CONTEXT_RESUME cont=0x%X "
+           "cfn_path=PLATFORM_FAMILY_CALLBACK evidence=OBSERVED\n",
+           cont);
+    fflush(stdout);
+
+#ifdef GWY_HAVE_UNICORN
+    if (cont) uc_reg_write((uc_engine *)uc, UC_ARM_REG_PC, &cont);
+#endif
+    g_pending_map_cont_pc = 0;
+    return 1;
 }
 
 /*
@@ -1376,42 +1446,57 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
          * emu_slice timer nests CALL_2FEBBC mid-guest (UC_FAULT @ 0x2FEC3C). */
         else g_suppress_timer_poll = 1;
         g_in_family_entry = 1;
+        printf("[CALLBACK_FRAME] boundary=FAMILY_HANDLER_ENTER handler=0x%X request_id=%llu "
+               "stop=0x%X r0=0x%X r1=0x%X r9=0x%X cfn_path=PLATFORM_FAMILY_CALLBACK "
+               "evidence=OBSERVED\n",
+               ev->handler, (unsigned long long)ev->request_id, stop, abi.r0, abi.r1, r9_run);
+        fflush(stdout);
         ok = guest_memory_uc_run_entry_ex((struct uc_struct *)uc, ev->handler, stop,
                                           gwy_lifecycle_insn_limit(), &abi, &out);
+        printf("[CALLBACK_FRAME] boundary=FAMILY_HANDLER_LEAVE handler=0x%X request_id=%llu "
+               "end_class=%s reached_stop=%d pc_after=0x%X cfn_path=PLATFORM_FAMILY_CALLBACK "
+               "evidence=OBSERVED\n",
+               ev->handler, (unsigned long long)ev->request_id,
+               gwy_uc_entry_end_class_name(out.end_class), out.reached_stop, out.pc_after);
+        fflush(stdout);
         g_in_family_entry = 0;
         g_suppress_timer_poll = 0;
-        product_p11_case9_deliver_end(uc, ev->request_id, ok, (unsigned)out.uc_err, out.pc_after,
-                                      (int32_t)out.r0_after);
+        product_p11_case9_deliver_end(uc, ev->request_id, out.reached_stop, (unsigned)out.uc_err,
+                                      out.pc_after, (int32_t)out.r0_after);
         (void)guest_memory_uc_write_r9((struct uc_struct *)uc, r9_save);
 
         if (product_ffp_enabled()) {
-            product_ffp_on_handler_leave(uc, ev->request_id, ok, (int32_t)out.r0_after, r9_run);
+            product_ffp_on_handler_leave(uc, ev->request_id, out.reached_stop,
+                                        (int32_t)out.r0_after, r9_run);
             /* Defer FFP finalize to lifecycle cadence so Round A can collect ≥8 samples. */
         } else if (product_p5_enabled()) {
-            product_p5_on_handler_leave(uc, ev->request_id, ok, (int32_t)out.r0_after, r9_run);
+            product_p5_on_handler_leave(uc, ev->request_id, out.reached_stop,
+                                        (int32_t)out.r0_after, r9_run);
             /* Flush after ≥2 deliveries so Round A sees guest reissue before kill. */
             if (product_p5_txn_by_id(ev->request_id) &&
                 product_p5_txn_by_id(ev->request_id)->request_id >= 2)
                 product_p5_finalize();
         }
 
-        printf("[PLATFORM_FAMILY_EVENT] op=DELIVER_DONE ok=%d ret=%d end=%s handler=0x%X "
-               "pc_after=0x%X lr_after=0x%X lim=%llu evidence=OBSERVED\n",
-               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?", ev->handler,
-               out.pc_after, out.lr_after, (unsigned long long)gwy_lifecycle_insn_limit());
+        printf("[PLATFORM_FAMILY_EVENT] op=DELIVER_DONE ok=%d ret=%d end=%s end_class=%s "
+               "reached_stop=%d handler=0x%X pc_after=0x%X stop=0x%X lr_after=0x%X lim=%llu "
+               "evidence=OBSERVED\n",
+               ok, (int)out.r0_after, out.end_reason[0] ? out.end_reason : "?",
+               gwy_uc_entry_end_class_name(out.end_class), out.reached_stop, ev->handler,
+               out.pc_after, stop, out.lr_after, (unsigned long long)gwy_lifecycle_insn_limit());
         fflush(stdout);
 
         /* V75: after Path-A/drain guest wrote B71 and the deliver fully returns
          * (list consume finished), deliver family app=0xC0 → 2FEBBC → B70. */
-        if (ok || g_pending_2febbc_after_b71)
+        if (out.reached_stop || g_pending_2febbc_after_b71)
             gwy_ext_obs_try_call_2febbc_for_b70(uc, r9_run, "after_family_deliver");
 
         if (ev->drain_trigger_mode)
-            platform_event_queue_note_drain_delivered(ev->handler, ok);
+            platform_event_queue_note_drain_delivered(ev->handler, out.reached_stop);
 
         /* Case 2: after Path-A enqueue makes B54 nonempty, schedule the proven
          * periodic drain trigger once (not a direct 0x2DC80C call). */
-        if (ev->enqueue_mode && ok && product_ffp_enabled() &&
+        if (ev->enqueue_mode && out.reached_stop && product_ffp_enabled() &&
             env_flag("JJFB_PRODUCT_EVENT_CONTRACT") && g_family_eq_n < GWY_P4_FAMILY_EVENT_Q) {
             uint32_t dtrig = 0;
             uint32_t erw = r9_run;
@@ -1435,7 +1520,7 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
         if (product_p4_enabled()) {
             product_p4_note_work("event_completion_delivered", 0x10102u, ev->event_code, ev->handler,
                                  ev->owner_module_id, ev->owner_generation, ev->owner_module, 1, 1,
-                                 1, 1, ok ? 1 : 0);
+                                 1, 1, out.reached_stop ? 1 : 0);
         }
         {
             GwyScheduledWork delivered;
@@ -1448,7 +1533,8 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
             delivered.owner_module_id = ev->owner_module_id;
             delivered.owner_generation = ev->owner_generation;
             snprintf(delivered.owner_module, sizeof(delivered.owner_module), "%s", ev->owner_module);
-            platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after, ok ? 1 : 0);
+            platform_scheduler_note_natural_callback(&delivered, (int32_t)out.r0_after,
+                                                     out.reached_stop ? 1 : 0);
         }
         ev->used = 0;
     }
@@ -2598,11 +2684,15 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             fflush(stdout);
         }
         /* Proven P4 gap: guest posts family ops (e.g. 0x1E209) after 10102 register;
-         * returning STATUS alone never delivered the registered handler. */
+         * returning STATUS alone never delivered the registered handler.
+         * P16: enqueue only here — drain after MAP_FUNC PC=LR (after_map_func_redirect)
+         * so nested uc_emu_start cannot clobber the outer stub continuation into +4. */
         if (platform_handler_registry_find_family_event(r0)) {
             (void)gwy_ext_obs_note_family_event(r0, r1);
-            /* Deliver after note — but never while nested inside 0x30CBBC emu. */
-            if (!g_in_30cbbc_call) gwy_ext_obs_drain_family_events(uc);
+            printf("[PLATFORM_FAMILY_EVENT] op=DEFER_DRAIN_TO_MAP_REDIRECT event=0x%X app=0x%X "
+                   "note=avoid_nested_emu_inside_map_func evidence=OBSERVED\n",
+                   r0, r1);
+            fflush(stdout);
         }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     } else {
@@ -2616,7 +2706,10 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
         }
         if (platform_handler_registry_find_family_event(r0)) {
             (void)gwy_ext_obs_note_family_event(r0, r1);
-            if (!g_in_30cbbc_call) gwy_ext_obs_drain_family_events(uc);
+            printf("[PLATFORM_FAMILY_EVENT] op=DEFER_DRAIN_TO_MAP_REDIRECT event=0x%X app=0x%X "
+                   "note=avoid_nested_emu_inside_map_func evidence=OBSERVED\n",
+                   r0, r1);
+            fflush(stdout);
         }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     }

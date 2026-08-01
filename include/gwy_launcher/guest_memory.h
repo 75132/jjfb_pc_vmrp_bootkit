@@ -101,8 +101,18 @@ typedef struct GwyUcEntryAbi {
     uint32_t mirror_cpsr;
 } GwyUcEntryAbi;
 
+/* P16: strict nested-entry completion — do not treat ok==1 as natural return. */
+typedef enum GwyUcEntryEndClass {
+    GWY_ENTRY_REACHED_STOP = 0,
+    GWY_ENTRY_INSN_LIMIT = 1,
+    GWY_ENTRY_HOST_STOP = 2,
+    GWY_ENTRY_DATA_EXEC_TRAP = 3,
+    GWY_ENTRY_UC_ERROR = 4,
+    GWY_ENTRY_BAD_ARGS = 5
+} GwyUcEntryEndClass;
+
 typedef struct GwyUcEntryRunOut {
-    int ok;
+    int ok; /* legacy: UC_ERR_OK (may be insn-limit); P16+ must use reached_stop */
     unsigned uc_err;
     uint32_t pc_after;
     uint32_t r0_after;
@@ -111,9 +121,19 @@ typedef struct GwyUcEntryRunOut {
     uint32_t sp_after;
     uint32_t lr_after;
     uint32_t cpsr_after;
+    GwyUcEntryEndClass end_class;
+    int reached_stop; /* 1 iff pc_after == stop_addr (ignore Thumb LSB) */
+    uint64_t executed_insns;
     char end_reason[40];
     char err_detail[96];
 } GwyUcEntryRunOut;
+
+const char *gwy_uc_entry_end_class_name(GwyUcEntryEndClass c);
+
+/* Bridge MAP_DATA / host stop markers consumed by guest_memory_uc_run_entry_ex. */
+void gwy_uc_entry_note_data_exec_trap(uint32_t pc, uint32_t lr, const char *name);
+void gwy_uc_entry_note_host_stop(const char *reason);
+void gwy_uc_entry_clear_stop_markers(void);
 
 int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32_t stop_addr,
                                  uint64_t insn_limit, const GwyUcEntryAbi *abi,

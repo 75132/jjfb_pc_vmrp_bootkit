@@ -277,6 +277,8 @@ static uint32_t g_e10a_exit_park_owner_depth;
 static uint64_t g_e10a_exit_park_owner_serial;
 /* Nonzero while MAP_FUNC host callback runs — stop-hook must not re-stop. */
 static int g_in_map_func_callback;
+/* P16: after MAP_DATA trap, refuse further mr_table stub execution (no PC rewrite). */
+static int g_bridge_data_exec_lockout;
 
 /* P27: per-call start_dsm ownership (do not share global mr_start_dsm_param). */
 typedef struct BridgeStartDsmFrame {
@@ -3057,6 +3059,11 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
         (void)uc_emu_stop(uc);
         return;
     }
+    /* P16: MAP_DATA already trapped — keep stopping without touching PC/LR or MAP_FUNC. */
+    if (g_bridge_data_exec_lockout) {
+        (void)uc_emu_stop(uc);
+        return;
+    }
     mobj = uIntMap_search(&root, address);
     if (mobj) {
         BridgeMap *obj = mobj->data;
@@ -3132,13 +3139,54 @@ static void hook_code(uc_engine *uc, uint64_t address, uint32_t size, void *user
             uc_reg_read(uc, UC_ARM_REG_LR, &_lr);
             uc_reg_write(uc, UC_ARM_REG_PC, &_lr);
             gwy_ext_obs_host_callback_resume(uc, slot, obj->name);
+            /*
+             * P16: Family deliver must not nest uc_emu_start inside sendAppEvent's
+             * MAP_FUNC body (that clobbers PC=LR → fallthrough into mr_table+4).
+             * Drain after redirect, re-assert continuation, and stop the outer slice
+             * so runCode restarts at the true guest continuation.
+             */
+            if (gwy_ext_obs_after_map_func_redirect(uc, _lr)) {
+                (void)uc_emu_stop(uc);
+            }
             return;
         }
 #ifdef GWY_USE_VM_FILE_SERVICE
-        /* MAP_DATA / unknown stub executed — classic mr_table walk. */
-        bridge_entry_prov_on_data_exec(uc, (uint32_t)address, obj->name);
-#endif
+        /* P16: MAP_DATA executed as code — fail closed; never fall through the table. */
+        {
+            uint32_t trap_lr = 0, trap_sp = 0, trap_cpsr = 0;
+            uint32_t trap_r[13];
+            int ti;
+            static const int k_trap_reg[13] = {
+                UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,  UC_ARM_REG_R3, UC_ARM_REG_R4,
+                UC_ARM_REG_R5, UC_ARM_REG_R6, UC_ARM_REG_R7,  UC_ARM_REG_R8, UC_ARM_REG_R9,
+                UC_ARM_REG_R10, UC_ARM_REG_R11, UC_ARM_REG_R12};
+            for (ti = 0; ti < 13; ti++) {
+                trap_r[ti] = 0;
+                uc_reg_read(uc, k_trap_reg[ti], &trap_r[ti]);
+            }
+            uc_reg_read(uc, UC_ARM_REG_LR, &trap_lr);
+            uc_reg_read(uc, UC_ARM_REG_SP, &trap_sp);
+            uc_reg_read(uc, UC_ARM_REG_CPSR, &trap_cpsr);
+            bridge_entry_prov_on_data_exec(uc, (uint32_t)address, obj->name);
+            gwy_uc_entry_note_data_exec_trap((uint32_t)address, trap_lr,
+                                            obj->name ? obj->name : "MAP_DATA");
+            g_bridge_data_exec_lockout = 1;
+            printf("[BRIDGE_DATA_EXEC_TRAP] pc=0x%" PRIX64 " lr=0x%X sp=0x%X cpsr=0x%X "
+                   "r0=0x%X r1=0x%X r2=0x%X r3=0x%X r4=0x%X r5=0x%X r6=0x%X r7=0x%X "
+                   "r8=0x%X r9=0x%X r10=0x%X r11=0x%X r12=0x%X slot_name=%s "
+                   "depth=%u serial=%llu note=stop_no_pc_lr_fix evidence=OBSERVED\n",
+                   address, trap_lr, trap_sp, trap_cpsr, trap_r[0], trap_r[1], trap_r[2],
+                   trap_r[3], trap_r[4], trap_r[5], trap_r[6], trap_r[7], trap_r[8], trap_r[9],
+                   trap_r[10], trap_r[11], trap_r[12], obj->name ? obj->name : "?",
+                   g_runCode_depth, (unsigned long long)g_runCode_serial);
+            fflush(stdout);
+            printf("!!! unregister function at 0x%" PRIX64 " !!! \n", address);
+            (void)uc_emu_stop(uc);
+            return;
+        }
+#else
         printf("!!! unregister function at 0x%" PRIX64 " !!! \n", address);
+#endif
     }
 }
 
@@ -3268,6 +3316,38 @@ static void runCode(uc_engine *uc, uint32_t startAddr, uint32_t stopAddr, bool i
         uc_reg_read(uc, UC_ARM_REG_PC, &pc);
         e10a_sync_p26_ctx();
         gwy_ext_obs_p26_cf(uc, "UC_EMU_START_RETURN", phase, (int)err);
+        /*
+         * P16: MAP_FUNC hook may uc_emu_stop after family drain; unicorn can still
+         * leave PC at stub+4. Re-apply the saved guest continuation before poll.
+         * If MAP_DATA lockout armed without a pending cont, abort this runCode.
+         */
+        {
+            uint32_t cont = 0;
+            int had_cont = gwy_ext_obs_take_pending_continuation(&cont);
+            if (had_cont && cont) {
+                printf("[JJFB_P16_CONT_REAPPLY] from_pc=0x%X cont=0x%X evidence=OBSERVED\n", pc,
+                       cont);
+                fflush(stdout);
+                pc = cont;
+                uc_reg_write(uc, UC_ARM_REG_PC, &pc);
+                g_bridge_data_exec_lockout = 0;
+            } else if (g_bridge_data_exec_lockout) {
+                printf("[JJFB_P16_DATA_EXEC_ABORT] pc=0x%X note=lockout_without_cont "
+                       "evidence=OBSERVED\n",
+                       pc);
+                fflush(stdout);
+                break;
+            }
+            /* Drain family outside CODE hook so nested emu cannot clobber PC=LR. */
+            if (gwy_ext_obs_drain_pending_family_outside_hook(uc)) {
+                uc_reg_read(uc, UC_ARM_REG_PC, &pc);
+                if (cont) {
+                    pc = cont;
+                    uc_reg_write(uc, UC_ARM_REG_PC, &pc);
+                }
+                g_bridge_data_exec_lockout = 0;
+            }
+        }
 
         /*
          * P26: owner-scoped EXIT_PARK must be checked BEFORE timer_poll /

@@ -113,6 +113,18 @@ void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *n
 void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *name);
 void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *name);
 
+/*
+ * P16: after MAP_FUNC sets PC=continuation, drain deferred family callbacks and
+ * re-assert PC. Returns 1 if the caller should uc_emu_stop() so the outer slice
+ * restarts at the continuation (avoids stub+4 fallthrough after nested emu).
+ */
+int gwy_ext_obs_after_map_func_redirect(void *uc, uint32_t continuation_pc);
+
+/* P16: runCode must re-apply continuation after uc_emu_start returns from hook stop. */
+int gwy_ext_obs_take_pending_continuation(uint32_t *out_pc);
+/* P16: drain family events outside UC_HOOK_CODE (returns 1 if drained). */
+int gwy_ext_obs_drain_pending_family_outside_hook(void *uc);
+
 /* Phase 6C-A: nested EXT R9 switch (MODULE_R9_SWITCH_ONLY). */
 int gwy_ext_obs_r9_switch_enter(void *uc, uint64_t caller_module_id, uint64_t callee_module_id,
                                 int call_kind);
