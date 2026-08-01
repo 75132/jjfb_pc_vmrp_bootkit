@@ -1,6 +1,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/p22_selection_gates.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <unicorn/unicorn.h>
@@ -12,6 +13,58 @@ static char g_uc_data_exec_name[48];
 static int g_uc_host_stop;
 static char g_uc_host_stop_reason[40];
 
+/* P17: permanent nest depths — never nest uc_emu_start inside UC_HOOK_CODE. */
+static uint32_t g_hook_depth;
+static uint32_t g_guest_run_depth;
+static uint32_t g_family_drain_depth;
+static uint64_t g_nested_block_count;
+
+uint32_t gwy_emu_hook_depth(void) { return g_hook_depth; }
+uint32_t gwy_emu_guest_run_depth(void) { return g_guest_run_depth; }
+uint32_t gwy_emu_family_drain_depth(void) { return g_family_drain_depth; }
+uint64_t gwy_emu_nested_block_count(void) { return g_nested_block_count; }
+
+void gwy_emu_nest_depths_reset(void) {
+    g_hook_depth = 0;
+    g_guest_run_depth = 0;
+    g_family_drain_depth = 0;
+    g_nested_block_count = 0;
+}
+
+void gwy_emu_hook_enter(const char *site) {
+    g_hook_depth++;
+    if (getenv("JJFB_EMU_NEST_TRACE")) {
+        printf("[EMU_NEST] op=HOOK_ENTER depth=%u site=%s evidence=OBSERVED\n", g_hook_depth,
+               site ? site : "?");
+        fflush(stdout);
+    }
+}
+
+void gwy_emu_hook_leave(const char *site) {
+    if (g_hook_depth > 0) g_hook_depth--;
+    if (getenv("JJFB_EMU_NEST_TRACE")) {
+        printf("[EMU_NEST] op=HOOK_LEAVE depth=%u site=%s evidence=OBSERVED\n", g_hook_depth,
+               site ? site : "?");
+        fflush(stdout);
+    }
+}
+
+void gwy_emu_family_drain_enter(const char *site) {
+    g_family_drain_depth++;
+    printf("[EMU_NEST] op=FAMILY_DRAIN_ENTER depth=%u site=%s evidence=OBSERVED\n",
+           g_family_drain_depth, site ? site : "?");
+    fflush(stdout);
+}
+
+void gwy_emu_family_drain_leave(const char *site) {
+    if (g_family_drain_depth > 0) g_family_drain_depth--;
+    printf("[EMU_NEST] op=FAMILY_DRAIN_LEAVE depth=%u site=%s evidence=OBSERVED\n",
+           g_family_drain_depth, site ? site : "?");
+    fflush(stdout);
+}
+
+int gwy_emu_nested_in_code_hook_blocked(void) { return g_hook_depth > 0 ? 1 : 0; }
+
 const char *gwy_uc_entry_end_class_name(GwyUcEntryEndClass c) {
     switch (c) {
     case GWY_ENTRY_REACHED_STOP: return "REACHED_STOP";
@@ -20,6 +73,7 @@ const char *gwy_uc_entry_end_class_name(GwyUcEntryEndClass c) {
     case GWY_ENTRY_DATA_EXEC_TRAP: return "DATA_EXEC_TRAP";
     case GWY_ENTRY_UC_ERROR: return "UC_ERROR";
     case GWY_ENTRY_BAD_ARGS: return "BAD_ARGS";
+    case GWY_ENTRY_NESTED_EMU_BLOCKED: return "NESTED_EMU_BLOCKED";
     default: return "UNKNOWN";
     }
 }
@@ -227,6 +281,26 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         UC_ARM_REG_PC,  UC_ARM_REG_CPSR};
     if (out) memset(out, 0, sizeof(*out));
     gwy_uc_entry_clear_stop_markers();
+    /* P17 permanent guard: never nest Unicorn from inside UC_HOOK_CODE.
+     * Checked before arg validation so deferred-schedule decisions are uniform. */
+    if (g_hook_depth > 0) {
+        g_nested_block_count++;
+        printf("[EMU_NEST] op=NESTED_EMU_IN_CODE_HOOK_BLOCKED hook_depth=%u guest_run_depth=%u "
+               "family_drain_depth=%u start_pc=0x%X stop=0x%X block_count=%llu "
+               "note=defer_to_outer_boundary evidence=OBSERVED\n",
+               g_hook_depth, g_guest_run_depth, g_family_drain_depth, start_pc, stop_addr,
+               (unsigned long long)g_nested_block_count);
+        fflush(stdout);
+        if (out) {
+            out->end_class = GWY_ENTRY_NESTED_EMU_BLOCKED;
+            out->reached_stop = 0;
+            out->ok = 0;
+            out->pc_after = start_pc;
+            snprintf(out->end_reason, sizeof(out->end_reason), "nested_emu_blocked");
+            snprintf(out->err_detail, sizeof(out->err_detail), "hook_depth=%u", g_hook_depth);
+        }
+        return 0;
+    }
     if (!uc || !start_pc) {
         if (out) {
             out->end_class = GWY_ENTRY_BAD_ARGS;
@@ -267,7 +341,9 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
         else
             cpsr &= ~(1u << 5);
         uc_reg_write(u, UC_ARM_REG_CPSR, &cpsr);
+        g_guest_run_depth++;
         err = uc_emu_start(u, pc_run, stop_run, 0, insn_limit);
+        if (g_guest_run_depth > 0) g_guest_run_depth--;
     }
     if (out) {
         int reached;
@@ -321,9 +397,15 @@ int guest_memory_uc_run_entry_ex(struct uc_struct *uc, uint32_t start_pc, uint32
     (void)abi;
     if (out) {
         memset(out, 0, sizeof(*out));
-        out->end_class = GWY_ENTRY_UC_ERROR;
-        snprintf(out->end_reason, sizeof(out->end_reason), "no_unicorn");
-        snprintf(out->err_detail, sizeof(out->err_detail), "no_unicorn");
+        if (g_hook_depth > 0) {
+            g_nested_block_count++;
+            out->end_class = GWY_ENTRY_NESTED_EMU_BLOCKED;
+            snprintf(out->end_reason, sizeof(out->end_reason), "nested_emu_blocked");
+        } else {
+            out->end_class = GWY_ENTRY_UC_ERROR;
+            snprintf(out->end_reason, sizeof(out->end_reason), "no_unicorn");
+            snprintf(out->err_detail, sizeof(out->err_detail), "no_unicorn");
+        }
     }
     return 0;
 #endif

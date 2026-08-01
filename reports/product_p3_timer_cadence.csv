@@ -1,2 +1,2 @@
 run_id,timer_id,owner_generation,period_ms,repeating,rearm_source,outstanding,inflight,delivery_count,dropped,duplicate,verdict
-p16_hit3_20260801_142116_73395,1,3,50,1,platform_timer,0,0,20,0,0,TIMER_CADENCE_VALID
+p17_hit3_20260801_144835_85006,1,3,50,1,platform_timer,0,0,1530,0,0,TIMER_CADENCE_VALID

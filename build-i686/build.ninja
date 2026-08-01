@@ -3301,6 +3301,46 @@ build test_guest_memory.exe: C_EXECUTABLE_LINKER__test_guest_memory_RelWithDebIn
   TARGET_SUPPORT_DIR = CMakeFiles\test_guest_memory.dir
 
 # =============================================================================
+# Object build statements for EXECUTABLE target test_nested_emu_guard
+
+
+#############################################
+# Order-only phony target for test_nested_emu_guard
+
+build cmake_object_order_depends_target_test_nested_emu_guard: phony || cmake_object_order_depends_target_launcher_core cmake_object_order_depends_target_research_gwy_shell_stubs
+
+build CMakeFiles/test_nested_emu_guard.dir/tests/unit/test_nested_emu_guard.c.obj: C_COMPILER__test_nested_emu_guard_unscanned_RelWithDebInfo C$:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/tests/unit/test_nested_emu_guard.c || cmake_object_order_depends_target_test_nested_emu_guard
+  CONFIG = RelWithDebInfo
+  DEFINES = -DGWY_HAVE_UNICORN=1
+  DEP_FILE = CMakeFiles\test_nested_emu_guard.dir\tests\unit\test_nested_emu_guard.c.obj.d
+  FLAGS = -m32 -O2 -g -DNDEBUG -std=gnu11
+  INCLUDES = -IC:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/include -IC:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/include
+  OBJECT_DIR = CMakeFiles\test_nested_emu_guard.dir
+  OBJECT_FILE_DIR = CMakeFiles\test_nested_emu_guard.dir\tests\unit
+  TARGET_SUPPORT_DIR = CMakeFiles\test_nested_emu_guard.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_nested_emu_guard
+
+
+#############################################
+# Link the executable test_nested_emu_guard.exe
+
+build test_nested_emu_guard.exe: C_EXECUTABLE_LINKER__test_nested_emu_guard_RelWithDebInfo CMakeFiles/test_nested_emu_guard.dir/tests/unit/test_nested_emu_guard.c.obj | liblauncher_core.a libresearch_gwy_shell_stubs.a C$:/msys64/mingw32/lib/libz.dll.a C$:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib || liblauncher_core.a libresearch_gwy_shell_stubs.a
+  CONFIG = RelWithDebInfo
+  FLAGS = -m32 -O2 -g -DNDEBUG
+  LINK_FLAGS = -m32
+  LINK_LIBRARIES = -Wl,--start-group  liblauncher_core.a  libresearch_gwy_shell_stubs.a  -Wl,--end-group  C:/msys64/mingw32/lib/libz.dll.a  C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.lib  -luser32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\test_nested_emu_guard.dir
+  POST_BUILD = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\Administrator\Desktop\jjfb_pc_vmrp_bootkit\build-i686 && C:\msys64\mingw32\bin\cmake.exe -E copy_if_different C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/third_party/vmrp_upstream/windows/unicorn-1.0.2-win32/unicorn.dll C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/unicorn.dll"
+  PRE_LINK = cd .
+  TARGET_FILE = test_nested_emu_guard.exe
+  TARGET_IMPLIB = libtest_nested_emu_guard.dll.a
+  TARGET_PDB = test_nested_emu_guard.exe.dbg
+  TARGET_SUPPORT_DIR = CMakeFiles\test_nested_emu_guard.dir
+
+# =============================================================================
 # Object build statements for EXECUTABLE target test_vm_file_service
 
 
@@ -3458,6 +3498,8 @@ build test_mrp_member_view: phony test_mrp_member_view.exe
 
 build test_mrp_reg_primary: phony test_mrp_reg_primary.exe
 
+build test_nested_emu_guard: phony test_nested_emu_guard.exe
+
 build test_package_metadata: phony test_package_metadata.exe
 
 build test_package_scope: phony test_package_scope.exe
@@ -3498,7 +3540,7 @@ build test_vm_runtime: phony test_vm_runtime.exe
 #############################################
 # Folder: C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686
 
-build all: phony liblauncher_core.a libresearch_gwy_shell.a libresearch_gwy_shell_stubs.a gwy_launcher.exe JJFB_Launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_char_bitmap.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_ext_abi_adapter_p2.exe test_product_p3_visual_stability.exe test_product_p4_natural_progress.exe test_product_p5_event_advance.exe test_platform_event_service.exe test_platform_event_queue.exe test_vm_runtime.exe test_guest_memory.exe test_vm_file_service.exe
+build all: phony liblauncher_core.a libresearch_gwy_shell.a libresearch_gwy_shell_stubs.a gwy_launcher.exe JJFB_Launcher.exe test_smoke.exe test_mrp_jjfb.exe test_cfg36.exe test_game_catalog.exe test_guest_vfs.exe test_launch_descriptor.exe test_ext_resolver.exe test_module_registry.exe test_ext_loader.exe test_mrp_member_view.exe test_mrp_reg_primary.exe test_package_scope.exe test_package_metadata.exe test_ext_entry_observe.exe test_ext_chunk_observe.exe test_ext_object_observe.exe test_ext_helper_handoff.exe test_ext_dsm_record_observe.exe test_ext_module_entry_abi.exe test_ext_entry_null_contract.exe test_ext_module_data_init.exe test_module_r9_switch.exe test_ext_er_rw_producer.exe test_ext_bootstrap_abi.exe test_ext_callback_frame.exe test_ext_post_cont_audit.exe test_ext_post_cfn_r9_audit.exe test_ext_p_extchunk_audit.exe test_ext_shell_publication_audit.exe test_ext_mrpgcmap_entry_order.exe test_ext_entry_abi_cluster_audit.exe test_ext_cfunction_publication_audit.exe test_ext_chunk_provider.exe test_ext_er_rw_bind_restore.exe test_ext_gwy_startgame_audit.exe test_ext_gwy_shell_shim.exe test_platform_identity.exe test_platform_userinfo.exe test_platform_timer.exe test_platform_char_bitmap.exe test_platform_send_app_event.exe test_platform_handler_registry.exe test_ext_abi_adapter_p2.exe test_product_p3_visual_stability.exe test_product_p4_natural_progress.exe test_product_p5_event_advance.exe test_platform_event_service.exe test_platform_event_queue.exe test_vm_runtime.exe test_guest_memory.exe test_nested_emu_guard.exe test_vm_file_service.exe
 
 # =============================================================================
 # Built-in targets

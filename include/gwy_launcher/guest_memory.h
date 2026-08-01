@@ -108,8 +108,26 @@ typedef enum GwyUcEntryEndClass {
     GWY_ENTRY_HOST_STOP = 2,
     GWY_ENTRY_DATA_EXEC_TRAP = 3,
     GWY_ENTRY_UC_ERROR = 4,
-    GWY_ENTRY_BAD_ARGS = 5
+    GWY_ENTRY_BAD_ARGS = 5,
+    /* P17: permanent guard — uc_emu_start refused while UC_HOOK_CODE is active. */
+    GWY_ENTRY_NESTED_EMU_BLOCKED = 6
 } GwyUcEntryEndClass;
+
+/*
+ * P17 permanent nest depths (thread-local / process-global for single-emu host).
+ * Any Guest nested run must refuse when hook_depth > 0.
+ */
+uint32_t gwy_emu_hook_depth(void);
+uint32_t gwy_emu_guest_run_depth(void);
+uint32_t gwy_emu_family_drain_depth(void);
+uint64_t gwy_emu_nested_block_count(void);
+void gwy_emu_hook_enter(const char *site);
+void gwy_emu_hook_leave(const char *site);
+void gwy_emu_family_drain_enter(const char *site);
+void gwy_emu_family_drain_leave(const char *site);
+void gwy_emu_nest_depths_reset(void);
+/* 1 if guest_memory_uc_run_entry_ex / uc_emu_start must be deferred. */
+int gwy_emu_nested_in_code_hook_blocked(void);
 
 typedef struct GwyUcEntryRunOut {
     int ok; /* legacy: UC_ERR_OK (may be insn-limit); P16+ must use reached_stop */

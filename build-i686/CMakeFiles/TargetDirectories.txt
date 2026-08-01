@@ -53,6 +53,7 @@ C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_p
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_platform_event_queue.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_vm_runtime.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_guest_memory.dir
+C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_nested_emu_guard.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test_vm_file_service.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/test.dir
 C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/CMakeFiles/edit_cache.dir

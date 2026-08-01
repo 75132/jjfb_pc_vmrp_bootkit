@@ -436,6 +436,11 @@ gwy_link_product_runtime(test_guest_memory)
 gwy_copy_unicorn_dll(test_guest_memory)
 add_test(NAME guest_memory COMMAND test_guest_memory)
 
+add_executable(test_nested_emu_guard tests/unit/test_nested_emu_guard.c)
+gwy_link_product_runtime(test_nested_emu_guard)
+gwy_copy_unicorn_dll(test_nested_emu_guard)
+add_test(NAME nested_emu_guard COMMAND test_nested_emu_guard)
+
 add_executable(test_vm_file_service tests/unit/test_vm_file_service.c)
 gwy_link_product_runtime(test_vm_file_service)
 add_test(NAME vm_file_service COMMAND test_vm_file_service)

@@ -546,6 +546,7 @@ void gwy_ext_obs_bind_uc(void *uc) {
     g_pending_map_cont = 0;
     g_pending_map_cont_pc = 0;
     g_pending_family_drain = 0;
+    gwy_emu_nest_depths_reset();
     g_family_app2_init_once = 0;
     g_family_c0_2febbc_once = 0;
     g_pending_2febbc_after_b71 = 0;
@@ -569,6 +570,9 @@ void gwy_ext_obs_bind_uc(void *uc) {
 }
 
 void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *name) {
+    char site[72];
+    snprintf(site, sizeof(site), "MAP_FUNC:%s@0x%X", name ? name : "?", slot_addr);
+    gwy_emu_hook_enter(site);
     ext_callback_frame_on_host_enter(uc, slot_addr, name);
     e10a31j_on_host_api_enter(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 1, 0);
@@ -596,6 +600,7 @@ void gwy_ext_obs_host_callback_enter(void *uc, uint32_t slot_addr, const char *n
 
 void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *name) {
     uint32_t lr = 0, r0 = 0;
+    char site[72];
     ext_callback_frame_on_host_leave(uc, slot_addr, name);
     e10a31j_on_host_api_leave(uc, slot_addr, name);
     ext_post_cont_audit_on_host_api(uc, slot_addr, name, 0, 0);
@@ -606,6 +611,8 @@ void gwy_ext_obs_host_callback_leave(void *uc, uint32_t slot_addr, const char *n
     }
 #endif
     bridge_entry_prov_on_host_leave(uc, slot_addr, name, lr, r0);
+    snprintf(site, sizeof(site), "MAP_FUNC:%s@0x%X", name ? name : "?", slot_addr);
+    gwy_emu_hook_leave(site);
 }
 
 void gwy_ext_obs_host_callback_resume(void *uc, uint32_t slot_addr, const char *name) {
@@ -1316,7 +1323,17 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
     if (!uc || g_family_draining || g_family_eq_n <= 0) return;
     /* Host lifecycle already runs nested under package depth; do not require
      * guest_depth==0 here — that would permanently drop registered completions. */
+    /* P17: refuse drain while still inside UC_HOOK_CODE (permanent guard). */
+    if (gwy_emu_nested_in_code_hook_blocked()) {
+        printf("[EMU_NEST] op=FAMILY_DRAIN_DEFERRED hook_depth=%u queued=%d "
+               "note=NESTED_EMU_IN_CODE_HOOK_BLOCKED evidence=OBSERVED\n",
+               gwy_emu_hook_depth(), g_family_eq_n);
+        fflush(stdout);
+        g_pending_family_drain = 1;
+        return;
+    }
     g_family_draining = 1;
+    gwy_emu_family_drain_enter("drain_family_events");
     for (i = 0; i < g_family_eq_n; i++) {
         GwyFamilyEvent *ev = &g_family_eq[i];
         GwyUcEntryAbi abi;
@@ -1540,6 +1557,7 @@ static void gwy_ext_obs_drain_family_events(void *uc) {
     }
     g_family_eq_n = 0;
     g_family_draining = 0;
+    gwy_emu_family_drain_leave("drain_family_events");
     /* Safety: B71 may land on the last deliver; flush 2FEBBC once drain is fully idle. */
     if (uc) {
         uint32_t erw = 0;

@@ -1,0 +1,5 @@
+﻿seq,api,slot,class,r0,r1,lr,branch,branch_pc,args_valid,note,post_case9
+1,_mr_c_function_new,0x280068,UNKNOWN,0xA4178,0x14,0x80034,-,0x0,0,OTHER_pre_case9,0
+# P17 hit1/hit2/hit3: class=GENUINE_* count = 0 across 180s windows.
+# Family/sendAppEvent path dominates; no GENUINE_DIRECT_CALL / GENUINE_INDIRECT_CALL MAP_FUNC after Case-9.
+# False-progress classes also absent: LINEAR_SLOT_FALLTHROUGH=0 TABLE_DATA_EXECUTION=0 mr_plat=0.

@@ -104,5 +104,7 @@ add_test("vm_runtime" "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build
 set_tests_properties("vm_runtime" PROPERTIES  _BACKTRACE_TRIPLES "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;432;add_test;C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;0;")
 add_test("guest_memory" "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_guest_memory.exe")
 set_tests_properties("guest_memory" PROPERTIES  _BACKTRACE_TRIPLES "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;437;add_test;C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;0;")
+add_test("nested_emu_guard" "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_nested_emu_guard.exe")
+set_tests_properties("nested_emu_guard" PROPERTIES  _BACKTRACE_TRIPLES "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;442;add_test;C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;0;")
 add_test("vm_file_service" "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/build-i686/test_vm_file_service.exe")
-set_tests_properties("vm_file_service" PROPERTIES  _BACKTRACE_TRIPLES "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;441;add_test;C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;0;")
+set_tests_properties("vm_file_service" PROPERTIES  _BACKTRACE_TRIPLES "C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;446;add_test;C:/Users/Administrator/Desktop/jjfb_pc_vmrp_bootkit/CMakeLists.txt;0;")

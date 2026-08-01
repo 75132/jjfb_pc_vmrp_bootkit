@@ -1,0 +1,13 @@
+﻿source_commit=320358d24a18563d501bb984fa491f654d66abac
+main_exe_sha256=7cd9e559df279112c4b00765e14d43b3c8a0838ad261f7646624cd043c62e4f8
+gate=P17_post_case9_lifecycle
+guard=nested_emu_in_code_hook_blocked
+seconds=180
+hit1_case9_done=48
+hit1_reached_stop=96
+hit1_nested_block=0
+hit1_fallthrough=0
+hit1_data_trap=0
+hit1_evt_1e209=3191
+hit1_genuine=0
+loop=host_lifecycle_50ms_reissue_1E209

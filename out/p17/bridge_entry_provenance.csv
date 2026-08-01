@@ -1,0 +1,2 @@
+sequence,runCode_depth,runCode_serial,slot,api,pc,lr,cpsr,r0,r1,r2,r3,r9,sp,owner_module,current_mrp,logical_package,previous_bridge_api,previous_bridge_slot,previous_bridge_entry_lr,previous_bridge_leave_lr,previous_bridge_return_r0,classification,branch_kind,branch_insn_pc,branch_target,r0_last_writer_pc,r0_source,r1_last_writer_pc,r1_source,args_valid
+1,1,1,0x280068,_mr_c_function_new,0x280068,0x80034,0x600001D3,0xA4178,0x14,0x280068,0x0,0x0,0x27FFF0,?,?,?,,0x0,0x0,0x0,0x0,UNKNOWN,,0x0,0x0,0x0,"NONE_SINCE_RESET",0x0,"NONE_SINCE_RESET",0
