@@ -1,0 +1,6 @@
+field,address,erw_or_p_offset,current_value,expected_value,last_writer_pc,last_writer_module,write_trigger,natural_producer,category,note
+param_mem_read,0x2E77AE,pc_off=0x1344A,addr=0x682AFC,size=2,0x2E77AE,gamelist.ext,mem_read,guest_code,launch_descriptor_or_alias,"lr=0x2E23AD note=not_assume_77AE"
+summary_block,0x0,0x10740,0x0,0x0,0x0,-,-,callers of +0x10740 (e.g. +0x4076/+0x12D0E event path),n/a,"class=F"
+ui_once_flag,R9+0x3E4,+0x3E4,UNOBS,0_or_not_1,unobserved,-,unobserved,prior_+0x10740_or_parent_UI,parent_shell_state,"gate only if +0x10740 entered"
+ui_mode_field,R9+0x6C4,+0x6C4,UNOBS,0xF,unobserved,-,unobserved,UI_list_mode_publisher,list_ready_or_ui_state,"beq +0x10814 only when ==0xF"
+cfg_loader_path_missing,+0x10740,-,0,entered,0x0,-,not_scheduled,callers_+0x4076_+0x12D0E,event_or_UI,"Class F lock"

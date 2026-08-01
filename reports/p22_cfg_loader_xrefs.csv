@@ -1,0 +1,4 @@
+caller_offset,caller_absolute_pc,branch_instruction,direct_indirect,r0,r1,r2,r3,lr_continuation,owner_function,upper_caller,classification,note
+0xD96C,0x2E1CD0,bl_+0x7B6C,direct,,,,,0x2E1CD4,loader_wrap_d964,see_static,CALLER_NOT_REACHED,"runtime_hit_loader=0"
+0xFF3A,0x2E429E,bl_+0x7B6C,direct,,,,,0x2E42A2,ff00_case_cfg0,see_static,CALLER_NOT_REACHED,"runtime_hit_loader=0"
+0xFFB2,0x2E4316,bl_+0x7B6C,direct,,,,,0x2E431A,ff00_case_cfg1,see_static,CALLER_NOT_REACHED,"runtime_hit_loader=0"

@@ -6,6 +6,7 @@
 #include "gwy_launcher/guest_memory.h"
 #include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/p22_selection_gates.h"
+#include "gwy_launcher/p22_cfg_loader_predicate.h"
 #include "gwy_launcher/robotol_flag_writer_trace.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -322,6 +323,7 @@ void ext_gwy_shell_native_exec_on_start_dsm(const char *filename, const char *ex
                "evidence=TARGET_OBSERVED\n");
         p22_note_start_dsm(pkg, entry, g_ne.param_va);
         p21_note_gamelist_started();
+        p22c_note_gamelist_started();
         p21_on_timer_fire_begin(g_ne.uc, 0, 0, 0, 0, 0);
     } else if (path_has(pkg, "gbrwshell")) {
         g_ne.mrp_started_gbrwshell = 1;
@@ -456,6 +458,7 @@ void ext_gwy_shell_native_exec_on_code_image(uint32_t guest_addr, uint32_t size)
         e10a_shell_phase("SHELL_PHASE_CFG_FMT_MAPPED", "gamelist.ext", 0, 0, 0, 0, 0, 0, 0, 0,
                          "cfg36_param_fmt_not_selected");
         p22_note_module_map("gamelist.ext", guest_addr, size);
+        p22c_note_module_map("gamelist.ext", guest_addr, size, 0, 0, 0, "gwy/gamelist.mrp");
         p21_note_cfg_fmt_mapped(guest_addr + GAMELIST_OFF_CFG36_FMT, "fmt_not_selected");
         fflush(stdout);
     }
@@ -623,6 +626,7 @@ void ext_gwy_shell_native_exec_on_code(void *uc, uint64_t module_id, const char 
 #endif
     p22_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
     p21_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
+    p22c_on_code(uc, module_name, pc, regs, lr, sp, cpsr);
 
     if (module_name && is_shell_ext_name(module_name)) in_shell = 1;
     for (i = 0; i < g_ne.mod_count; i++) {
@@ -886,6 +890,7 @@ void ext_gwy_shell_native_exec_finalize(const char *stop_reason) {
     if (!ext_gwy_shell_native_exec_enabled() || g_ne.finalized) return;
     g_ne.finalized = 1;
     p21_finalize(stop_reason);
+    p22c_finalize(stop_reason);
     recompute_gate();
     pkg_open = g_ne.package_open_gbrwcore || g_ne.package_open_gamelist ||
                g_ne.package_open_gbrwshell;

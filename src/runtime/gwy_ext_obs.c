@@ -50,6 +50,7 @@
 #include "gwy_launcher/vm_file_service.h"
 #include "gwy_launcher/p22_selection_gates.h"
 #include "gwy_launcher/p21_cfg36_selection.h"
+#include "gwy_launcher/p22_cfg_loader_predicate.h"
 #include "gwy_launcher/sha256.h"
 #include "gwy_launcher/product_callback_trace.h"
 #include "gwy_launcher/product_p4_progress.h"
@@ -2764,13 +2765,18 @@ uint32_t gwy_ext_obs_sendappevent_dispatch(void *uc) {
             p22_note_plat_10112(path, src_ns, host_note, guest_buf, nbytes, loaded, (int)ret);
             p21_note_plat_10112(path, src_ns, host_note, guest_buf, nbytes, loaded, (int)ret,
                                 caller_pc);
+            p22c_note_plat_10112(path, caller_pc, (int)ret);
             if (loaded)
                 p22_note_file_open(path, host_note, 1, nbytes);
         }
         if (product_na_enabled()) product_na_on_platform(r0, r1, r2, ret);
     } else if (result.kind == GWY_PLAT_KIND_STATUS) {
         ret = result.status_ret;
-        if ((env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE")) &&
+        if (r0 == 0x10800u) {
+            p22c_note_plat_10800(caller_pc, r1, r2, r3, (uint32_t)ret, 0);
+        }
+        if ((env_flag("JJFB_PLAT_RET0_TRACE") || env_flag("JJFB_MRC_INIT_TRACE") ||
+             env_flag("JJFB_P22_CLEAN")) &&
             (r0 == 0x10102u || r0 == 0x10113u || r0 == 0x10120u || r0 == 0x10800u || r0 == 1u ||
              r0 == 0x10112u)) {
             printf("[JJFB_PLAT_CALL] code=0x%X app=0x%X arg2=0x%X arg3=0x%X ret=%d kind=STATUS "
@@ -3126,8 +3132,11 @@ void gwy_ext_obs_ext_image_raw(uint32_t raw_base) {
                mn, mn, m->map.guest_code_base, m->map.guest_code_size);
         fflush(stdout);
         /* P25 file offsets are relative to refined raw MRPG base, not cacheSync align. */
-        if (mn && (strstr(mn, "gamelist") || strstr(mn, "GAMELIST")))
+        if (mn && (strstr(mn, "gamelist") || strstr(mn, "GAMELIST"))) {
             p22_note_module_map(mn, m->map.guest_code_base, m->map.guest_code_size);
+            p22c_note_module_map(mn, m->map.guest_code_base, m->map.guest_code_size, 0, 0, 0,
+                                 "gwy/gamelist.mrp");
+        }
     }
 }
 
@@ -3517,6 +3526,7 @@ void gwy_shell_shim_finalize(const char *stop_reason) {
 void gwy_ext_obs_on_timer_fire_ext(uint32_t helper, uint32_t p_guest, uint32_t erw, int32_t ret) {
     p21_on_timer_fire_end(g_bound_uc, helper, 2u, p_guest, erw, ret);
     p21_on_timer_fire_begin(g_bound_uc, helper, p_guest, erw, 0, 0);
+    p22c_note_timer_fire(helper, 2u, 1);
     e10a31_on_timer_fire(g_bound_uc, helper, 2u, p_guest, erw, ret);
 }
 

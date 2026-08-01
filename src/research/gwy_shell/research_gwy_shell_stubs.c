@@ -720,6 +720,64 @@ const char *p22_gate_name(P22Gate g) {
 }
 void p22_finalize(const char *stop_reason) { (void)stop_reason; }
 
+/* P22-CLEAN cfg-loader predicate — product stubs. */
+int p22c_enabled(void) { return 0; }
+void p22c_reset(void) {}
+void p22c_bind_uc(void *uc) { (void)uc; }
+void p22c_finalize(const char *stop_reason) { (void)stop_reason; }
+void p22c_note_module_map(const char *module_name, uint32_t base, uint32_t size, uint32_t erw,
+                          uint32_t p_guest, uint32_t generation, const char *package_owner) {
+    (void)module_name;
+    (void)base;
+    (void)size;
+    (void)erw;
+    (void)p_guest;
+    (void)generation;
+    (void)package_owner;
+}
+void p22c_note_gamelist_started(void) {}
+void p22c_note_plat_10800(uint32_t caller_pc, uint32_t app, uint32_t arg2, uint32_t arg3,
+                          uint32_t status_ret, uint32_t r9) {
+    (void)caller_pc;
+    (void)app;
+    (void)arg2;
+    (void)arg3;
+    (void)status_ret;
+    (void)r9;
+}
+void p22c_note_plat_10112(const char *path, uint32_t caller_pc, int ret) {
+    (void)path;
+    (void)caller_pc;
+    (void)ret;
+}
+void p22c_note_param_byte_read(uint32_t pc, const char *module, uint32_t addr, uint32_t size,
+                               const uint8_t *bytes, const uint32_t regs[13], uint32_t lr,
+                               uint32_t r9) {
+    (void)pc;
+    (void)module;
+    (void)addr;
+    (void)size;
+    (void)bytes;
+    (void)regs;
+    (void)lr;
+    (void)r9;
+}
+void p22c_note_timer_fire(uint32_t helper, uint32_t method, int end) {
+    (void)helper;
+    (void)method;
+    (void)end;
+}
+void p22c_on_code(void *uc, const char *module_name, uint32_t pc, const uint32_t regs[16],
+                  uint32_t lr, uint32_t sp, uint32_t cpsr) {
+    (void)uc;
+    (void)module_name;
+    (void)pc;
+    (void)regs;
+    (void)lr;
+    (void)sp;
+    (void)cpsr;
+}
+
 int p21_enabled(void) { return 0; }
 void p21_reset(void) {}
 void p21_bind_uc(void *uc) { (void)uc; }

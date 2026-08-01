@@ -11,6 +11,7 @@
 #include "gwy_launcher/module_registry.h"
 #include "gwy_launcher/p21_cfg36_selection.h"
 #include "gwy_launcher/p22_selection_gates.h"
+#include "gwy_launcher/p22_cfg_loader_predicate.h"
 
 #ifdef GWY_HAVE_UNICORN
 #include <unicorn/unicorn.h>
@@ -595,6 +596,8 @@ static void param_mem_read_cb(uc_engine *uc, uc_mem_type type, uint64_t address,
     }
     p21_note_param_byte_read(pc, mod, (uint32_t)address, (uint32_t)(size > 0 ? size : 0), bytes,
                              regs, lr, sp, r9);
+    p22c_note_param_byte_read(pc, mod, (uint32_t)address, (uint32_t)(size > 0 ? size : 0), bytes,
+                              regs, lr, r9);
 }
 
 static void arm_param_read_hook(void *uc) {

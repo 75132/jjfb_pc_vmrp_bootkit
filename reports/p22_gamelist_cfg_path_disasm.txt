@@ -1,0 +1,1977 @@
+# P22-CLEAN gamelist cfg-path runtime dump
+# module_base=0x2D4360 size=0x165E0 sha256=ed984d85451a7d7b8e3afe2b0595f12e0a3cb778d17a7d10143e91f4488c8fb6
+# bytes_ok_77AE=0 (expect thumb adds @+0x77AE)
+# bytes_ok_7B6C=0 (expect push {r4-r7,lr} = function ENTRY)
+# static_xrefs_to_7B6C: +0xD96C, +0xFF3A, +0xFFB2 (direct BL)
+# window module_offset 0x7600 .. 0x7D00
+
+0x7600: 7c03        hint=op
+0x7602: 0000        hint=op
+0x7604: ffb5        hint=push
+0x7606: 5a49        hint=ldr_pc
+0x7608: 81b0        hint=op
+0x760A: 171c        hint=op
+0x760C: 1e1c        hint=op
+0x760E: 051c        hint=op
+0x7610: 0028        hint=cmp_imm
+0x7612: 0a9c        hint=op
+0x7614: 4944        hint=op
+0x7616: 11d0        hint=b.cond
+0x7618: 029a        hint=op
+0x761A: 002a        hint=cmp_imm
+0x761C: 0edb        hint=b.cond
+0x761E: a869        hint=ldr
+0x7620: 029a        hint=op
+0x7622: 0090        hint=op
+0x7624: 9042        hint=cmp_reg
+0x7626: 09d9        hint=b.cond
+0x7628: 002f        hint=cmp_imm
+0x762A: 07db        hint=b.cond
+0x762C: 002e        hint=cmp_imm
+0x762E: 05dd        hint=b.cond
+0x7630: 6a69        hint=ldr
+0x7632: b819        hint=op
+0x7634: 9042        hint=cmp_reg
+0x7636: 01d8        hint=b.cond
+0x7638: 002c        hint=cmp_imm
+0x763A: 03d1        hint=b.cond
+0x763C: 0720        hint=op
+0x763E: 0870        hint=op
+0x7640: 05b0        hint=op
+0x7642: f0bd        hint=pop
+0x7644: 0020        hint=op
+0x7646: 0870        hint=op
+0x7648: 696a        hint=ldr
+0x764A: 0098        hint=op
+0x764C: f8f78ced  blx  ; blx 0x168
+0x7650: 8446        hint=op
+0x7652: e88b        hint=op
+0x7654: 0828        hint=cmp_imm
+0x7656: 27d1        hint=b.cond
+0x7658: e86b        hint=ldr
+0x765A: 0099        hint=op
+0x765C: 029a        hint=op
+0x765E: 891a        hint=op
+0x7660: 0139        hint=op
+0x7662: 6246        hint=op
+0x7664: 5143        hint=op
+0x7666: 4018        hint=op
+0x7668: c019        hint=op
+0x766A: 0022        hint=op
+0x766C: 0b9b        hint=op
+0x766E: 002b        hint=cmp_imm
+0x7670: 0fd1        hint=b.cond
+0x7672: 0378        hint=op
+0x7674: a96b        hint=ldr
+0x7676: 9b00        hint=op
+0x7678: c918        hint=op
+0x767A: 8b78        hint=op
+0x767C: 4f78        hint=op
+0x767E: 0978        hint=op
+0x7680: db08        hint=op
+0x7682: bf08        hint=op
+0x7684: 7f01        hint=op
+0x7686: db02        hint=op
+0x7688: db19        hint=op
+0x768A: c908        hint=op
+0x768C: 5918        hint=op
+0x768E: 2180        hint=op
+0x7690: 04e0        hint=b
+0x7692: 0178        hint=op
+0x7694: 0b9b        hint=op
+0x7696: 4900        hint=op
+0x7698: 595a        hint=op
+0x769A: 2180        hint=op
+0x769C: 0234        hint=op
+0x769E: 0130        hint=op
+0x76A0: 0132        hint=op
+0x76A2: b242        hint=cmp_reg
+0x76A4: e2db        hint=b.cond
+0x76A6: cbe7        hint=b
+0x76A8: 0428        hint=cmp_imm
+0x76AA: c9d1        hint=b.cond
+0x76AC: e96b        hint=ldr
+0x76AE: 009a        hint=op
+0x76B0: 029b        hint=op
+0x76B2: f80f        hint=op
+0x76B4: d21a        hint=op
+0x76B6: 013a        hint=op
+0x76B8: 6346        hint=op
+0x76BA: 5a43        hint=op
+0x76BC: c019        hint=op
+0x76BE: 4010        hint=op
+0x76C0: 8918        hint=op
+0x76C2: 4018        hint=op
+0x76C4: f907        hint=op
+0x76C6: 12d5        hint=b.cond
+0x76C8: 0278        hint=op
+0x76CA: a96b        hint=ldr
+0x76CC: 0130        hint=op
+0x76CE: 1207        hint=op
+0x76D0: 920e        hint=op
+0x76D2: 8918        hint=op
+0x76D4: 8a78        hint=op
+0x76D6: 4b78        hint=op
+0x76D8: 0978        hint=op
+0x76DA: d208        hint=op
+0x76DC: 9b08        hint=op
+0x76DE: 5b01        hint=op
+0x76E0: d202        hint=op
+0x76E2: d218        hint=op
+0x76E4: c908        hint=op
+0x76E6: 5118        hint=op
+0x76E8: 2180        hint=op
+0x76EA: 0234        hint=op
+0x76EC: 013e        hint=op
+0x76EE: f10f        hint=op
+0x76F0: 8919        hint=op
+0x76F2: 4910        hint=op
+0x76F4: 0022        hint=op
+0x76F6: 0029        hint=cmp_imm
+0x76F8: 8c46        hint=op
+0x76FA: 25dd        hint=b.cond
+0x76FC: 0378        hint=op
+0x76FE: a96b        hint=ldr
+0x7700: 0132        hint=op
+0x7702: 1b09        hint=op
+0x7704: 9b00        hint=op
+0x7706: c918        hint=op
+0x7708: 8b78        hint=op
+0x770A: 4f78        hint=op
+0x770C: 0978        hint=op
+0x770E: db08        hint=op
+0x7710: bf08        hint=op
+0x7712: 7f01        hint=op
+0x7714: db02        hint=op
+0x7716: db19        hint=op
+0x7718: c908        hint=op
+0x771A: 5918        hint=op
+0x771C: 2180        hint=op
+0x771E: a31c        hint=op
+0x7720: 0478        hint=op
+0x7722: a96b        hint=ldr
+0x7724: 0130        hint=op
+0x7726: 2407        hint=op
+0x7728: a40e        hint=op
+0x772A: 0919        hint=op
+0x772C: 8c78        hint=op
+0x772E: 4f78        hint=op
+0x7730: 0978        hint=op
+0x7732: e408        hint=op
+0x7734: bf08        hint=op
+0x7736: 7f01        hint=op
+0x7738: e402        hint=op
+0x773A: e419        hint=op
+0x773C: c908        hint=op
+0x773E: 6118        hint=op
+0x7740: 9c1c        hint=op
+0x7742: 9445        hint=op
+0x7744: 1980        hint=op
+0x7746: d9dc        hint=b.cond
+0x7748: f107        hint=op
+0x774A: acd5        hint=b.cond
+0x774C: 0078        hint=op
+0x774E: a96b        hint=ldr
+0x7750: 0007        hint=op
+0x7752: 800e        hint=op
+0x7754: 0818        hint=op
+0x7756: 8178        hint=op
+0x7758: 4278        hint=op
+0x775A: 0078        hint=op
+0x775C: c908        hint=op
+0x775E: 9208        hint=op
+0x7760: 5201        hint=op
+0x7762: c902        hint=op
+0x7764: 8918        hint=op
+0x7766: c008        hint=op
+0x7768: 0818        hint=op
+0x776A: 2080        hint=op
+0x776C: 68e7        hint=b
+0x776E: 0000        hint=op
+0x7770: 7c03        hint=op
+0x7772: 0000        hint=op
+0x7774: ffb5        hint=push
+0x7776: 0f1c        hint=op
+0x7778: 1d1c        hint=op
+0x777A: 041c        hint=op
+0x777C: 0028        hint=cmp_imm
+0x777E: 81b0        hint=op
+0x7780: 8669        hint=ldr
+0x7782: 05d0        hint=b.cond
+0x7784: 6069        hint=ldr
+0x7786: b842        hint=cmp_reg
+0x7788: 02d9        hint=b.cond
+0x778A: 0398        hint=op
+0x778C: 8642        hint=cmp_reg
+0x778E: 03d8        hint=b.cond
+0x7790: 1c49        hint=ldr_pc
+0x7792: 0720        hint=op
+0x7794: 4944        hint=op
+0x7796: 0870        hint=op
+0x7798: 301c        hint=op
+0x779A: 616a        hint=ldr
+0x779C: f8f7e4ec  blx  ; blx 0x168
+0x77A0: e18b        hint=op
+0x77A2: 0829        hint=cmp_imm
+0x77A4: 0bd1        hint=b.cond
+0x77A6: e16b        hint=ldr
+0x77A8: 039a        hint=op
+0x77AA: b21a        hint=op
+0x77AC: 013a        hint=op
+0x77AE: 4243        hint=param_site_77AE  ; PARAM_SITE (P21 label; static=adds)
+0x77B0: d019        hint=op
+0x77B2: 0818        hint=op
+0x77B4: 002d        hint=cmp_imm
+0x77B6: 1ad0        hint=b.cond
+0x77B8: 0078        hint=op
+0x77BA: 2870        hint=op
+0x77BC: 17e0        hint=b
+0x77BE: 0429        hint=cmp_imm
+0x77C0: 1bd1        hint=b.cond
+0x77C2: e16b        hint=ldr
+0x77C4: 039a        hint=op
+0x77C6: b21a        hint=op
+0x77C8: 013a        hint=op
+0x77CA: 4243        hint=op
+0x77CC: 8818        hint=op
+0x77CE: 7908        hint=op
+0x77D0: 4018        hint=op
+0x77D2: f907        hint=op
+0x77D4: 06d5        hint=b.cond
+0x77D6: 002d        hint=cmp_imm
+0x77D8: 09d0        hint=b.cond
+0x77DA: 0078        hint=op
+0x77DC: 0007        hint=op
+0x77DE: 000f        hint=op
+0x77E0: 2870        hint=op
+0x77E2: 04e0        hint=b
+0x77E4: 002d        hint=cmp_imm
+0x77E6: 02d0        hint=b.cond
+0x77E8: 0078        hint=op
+0x77EA: 0009        hint=op
+0x77EC: 2870        hint=op
+0x77EE: 0549        hint=ldr_pc
+0x77F0: 0020        hint=op
+0x77F2: 4944        hint=op
+0x77F4: 0870        hint=op
+0x77F6: 05b0        hint=op
+0x77F8: f0bd        hint=pop
+0x77FA: 0249        hint=ldr_pc
+0x77FC: 0820        hint=op
+0x77FE: 4944        hint=op
+0x7800: 0870        hint=op
+0x7802: f8e7        hint=b
+0x7804: 7c03        hint=op
+0x7806: 0000        hint=op
+0x7808: ffb5        hint=push
+0x780A: 0e1c        hint=op
+0x780C: 2749        hint=ldr_pc
+0x780E: 0025        hint=op
+0x7810: 041c        hint=op
+0x7812: 0028        hint=cmp_imm
+0x7814: 81b0        hint=op
+0x7816: 4944        hint=op
+0x7818: 06d0        hint=b.cond
+0x781A: 6069        hint=ldr
+0x781C: b042        hint=cmp_reg
+0x781E: 03d9        hint=b.cond
+0x7820: a769        hint=ldr
+0x7822: 0398        hint=op
+0x7824: 8742        hint=cmp_reg
+0x7826: 03d8        hint=b.cond
+0x7828: 0720        hint=op
+0x782A: 0870        hint=op
+0x782C: 05b0        hint=op
+0x782E: f0bd        hint=pop
+0x7830: 0020        hint=op
+0x7832: 0870        hint=op
+0x7834: 616a        hint=ldr
+0x7836: 381c        hint=op
+0x7838: f8f796ec  blx  ; blx 0x168
+0x783C: e18b        hint=op
+0x783E: 0829        hint=cmp_imm
+0x7840: 0bd1        hint=b.cond
+0x7842: e16b        hint=ldr
+0x7844: 039a        hint=op
+0x7846: ba1a        hint=op
+0x7848: 013a        hint=op
+0x784A: 4243        hint=op
+0x784C: 9019        hint=op
+0x784E: 0818        hint=op
+0x7850: 0078        hint=op
+0x7852: a16b        hint=ldr
+0x7854: 8000        hint=op
+0x7856: 0d18        hint=op
+0x7858: 15e0        hint=b
+0x785A: 0429        hint=cmp_imm
+0x785C: 13d1        hint=b.cond
+0x785E: e16b        hint=ldr
+0x7860: 039a        hint=op
+0x7862: ba1a        hint=op
+0x7864: 013a        hint=op
+0x7866: 4243        hint=op
+0x7868: 8818        hint=op
+0x786A: 7108        hint=op
+0x786C: 4018        hint=op
+0x786E: f107        hint=op
+0x7870: a16b        hint=ldr
+0x7872: 04d5        hint=b.cond
+0x7874: 0078        hint=op
+0x7876: 0007        hint=op
+0x7878: 800e        hint=op
+0x787A: 0d18        hint=op
+0x787C: 03e0        hint=b
+0x787E: 0078        hint=op
+0x7880: 0009        hint=op
+0x7882: 8000        hint=op
+0x7884: 0d18        hint=op
+0x7886: 0499        hint=op
+0x7888: 0029        hint=cmp_imm
+0x788A: 02d0        hint=b.cond
+0x788C: a878        hint=op
+0x788E: 0499        hint=op
+0x7890: 0870        hint=op
+0x7892: 0a99        hint=op
+0x7894: 0029        hint=cmp_imm
+0x7896: 02d0        hint=b.cond
+0x7898: 6878        hint=op
+0x789A: 0a99        hint=op
+0x789C: 0870        hint=op
+0x789E: 0b98        hint=op
+0x78A0: 0028        hint=cmp_imm
+0x78A2: c3d0        hint=b.cond
+0x78A4: 2878        hint=op
+0x78A6: 0b99        hint=op
+0x78A8: 0870        hint=op
+0x78AA: bfe7        hint=b
+0x78AC: 7c03        hint=op
+0x78AE: 0000        hint=op
+0x78B0: f3b5        hint=push
+0x78B2: 3f4d        hint=ldr_pc
+0x78B4: 83b0        hint=op
+0x78B6: 061c        hint=op
+0x78B8: 0028        hint=cmp_imm
+0x78BA: 6f46        hint=op
+0x78BC: 4d44        hint=op
+0x78BE: 04d1        hint=b.cond
+0x78C0: 0120        hint=op
+0x78C2: 2870        hint=op
+0x78C4: 0020        hint=op
+0x78C6: 05b0        hint=op
+0x78C8: f0bd        hint=pop
+0x78CA: 4c20        hint=op
+0x78CC: 07f0e6f9  bl  ; bl 0xEC9C
+0x78D0: 041c        hint=op
+0x78D2: 03d1        hint=b.cond
+0x78D4: 0220        hint=op
+0x78D6: 2870        hint=op
+0x78D8: 0020        hint=op
+0x78DA: f4e7        hint=b
+0x78DC: 354b        hint=ldr_pc
+0x78DE: 4c22        hint=op
+0x78E0: 4b44        hint=op
+0x78E2: 1b68        hint=ldr
+0x78E4: 0021        hint=op
+0x78E6: 201c        hint=op
+0x78E8: 9847        hint=blx_reg
+0x78EA: 0096        hint=op
+0x78EC: 0498        hint=op
+0x78EE: 0026        hint=op
+0x78F0: 391c        hint=op
+0x78F2: 0290        hint=op
+0x78F4: 201c        hint=op
+0x78F6: 0196        hint=op
+0x78F8: faf7a2fd  bl  ; bl 0x2440
+0x78FC: 0028        hint=cmp_imm
+0x78FE: 03d1        hint=b.cond
+0x7900: 2088        hint=op
+0x7902: 2d49        hint=ldr_pc
+0x7904: 8842        hint=cmp_reg
+0x7906: 06d0        hint=b.cond
+0x7908: 0620        hint=op
+0x790A: 2870        hint=op
+0x790C: 201c        hint=op
+0x790E: fff757fe  bl  ; bl 0x75C0
+0x7912: 0020        hint=op
+0x7914: d7e7        hint=b
+0x7916: e08b        hint=op
+0x7918: 2028        hint=cmp_imm
+0x791A: 05d0        hint=b.cond
+0x791C: 1828        hint=cmp_imm
+0x791E: 03d0        hint=b.cond
+0x7920: 0828        hint=cmp_imm
+0x7922: 01d0        hint=b.cond
+0x7924: 0428        hint=cmp_imm
+0x7926: 05d1        hint=b.cond
+0x7928: 216a        hint=ldr
+0x792A: 0029        hint=cmp_imm
+0x792C: 02d1        hint=b.cond
+0x792E: 2169        hint=ldr
+0x7930: 2829        hint=cmp_imm
+0x7932: 06d0        hint=b.cond
+0x7934: 0520        hint=op
+0x7936: 2870        hint=op
+0x7938: 201c        hint=op
+0x793A: fff741fe  bl  ; bl 0x75C0
+0x793E: 0020        hint=op
+0x7940: c1e7        hint=b
+0x7942: 0828        hint=cmp_imm
+0x7944: 12d1        hint=b.cond
+0x7946: 2664        hint=str
+0x7948: 00a9        hint=op
+0x794A: 03c9        hint=op
+0x794C: 4018        hint=op
+0x794E: a063        hint=str
+0x7950: 206b        hint=ldr
+0x7952: 0028        hint=cmp_imm
+0x7954: 05d1        hint=b.cond
+0x7956: 0121        hint=op
+0x7958: 0198        hint=op
+0x795A: 8902        hint=op
+0x795C: 4018        hint=op
+0x795E: 0190        hint=op
+0x7960: 19e0        hint=b
+0x7962: 0199        hint=op
+0x7964: 8000        hint=op
+0x7966: 0818        hint=op
+0x7968: 0190        hint=op
+0x796A: 14e0        hint=b
+0x796C: 0428        hint=cmp_imm
+0x796E: 10d1        hint=b.cond
+0x7970: 2664        hint=str
+0x7972: 00a9        hint=op
+0x7974: 03c9        hint=op
+0x7976: 4018        hint=op
+0x7978: a063        hint=str
+0x797A: 206b        hint=ldr
+0x797C: 0028        hint=cmp_imm
+0x797E: 03d1        hint=b.cond
+0x7980: 0198        hint=op
+0x7982: 4030        hint=op
+0x7984: 0190        hint=op
+0x7986: 06e0        hint=b
+0x7988: 0199        hint=op
+0x798A: 8000        hint=op
+0x798C: 0818        hint=op
+0x798E: 0190        hint=op
+0x7990: 01e0        hint=b
+0x7992: a663        hint=str
+0x7994: 2664        hint=str
+0x7996: 6664        hint=str
+0x7998: 00a9        hint=op
+0x799A: 03c9        hint=op
+0x799C: 4018        hint=op
+0x799E: e063        hint=str
+0x79A0: 0198        hint=op
+0x79A2: 616a        hint=ldr
+0x79A4: 4018        hint=op
+0x79A6: 0190        hint=op
+0x79A8: a664        hint=str
+0x79AA: 2e70        hint=op
+0x79AC: 201c        hint=op
+0x79AE: 8ae7        hint=b
+0x79B0: 7c03        hint=op
+0x79B2: 0000        hint=op
+0x79B4: 5c09        hint=op
+0x79B6: 0000        hint=op
+0x79B8: 424d        hint=ldr_pc
+0x79BA: 0000        hint=op
+0x79BC: 30b5        hint=push
+0x79BE: 85b0        hint=op
+0x79C0: 051c        hint=op
+0x79C2: 0020        hint=op
+0x79C4: 154c        hint=ldr_pc
+0x79C6: 0490        hint=op
+0x79C8: 0120        hint=op
+0x79CA: 4c44        hint=op
+0x79CC: 2070        hint=op
+0x79CE: 03a8        hint=op
+0x79D0: 0022        hint=op
+0x79D2: 0021        hint=op
+0x79D4: 0292        hint=op
+0x79D6: 0090        hint=op
+0x79D8: 1148        hint=ldr_pc
+0x79DA: 2a1c        hint=op
+0x79DC: 0191        hint=op
+0x79DE: 04ab        hint=op
+0x79E0: 06f01cfb  bl  ; bl 0xE01C
+0x79E4: 0498        hint=op
+0x79E6: 0028        hint=cmp_imm
+0x79E8: 04d1        hint=b.cond
+0x79EA: 0420        hint=op
+0x79EC: 2070        hint=op
+0x79EE: 0020        hint=op
+0x79F0: 05b0        hint=op
+0x79F2: 30bd        hint=pop
+0x79F4: 0399        hint=op
+0x79F6: 4c29        hint=cmp_imm
+0x79F8: 03d2        hint=b.cond
+0x79FA: 0620        hint=op
+0x79FC: 2070        hint=op
+0x79FE: 0020        hint=op
+0x7A00: f6e7        hint=b
+0x7A02: fff755ff  bl  ; bl 0x78B0
+0x7A06: 0028        hint=cmp_imm
+0x7A08: 04d1        hint=b.cond
+0x7A0A: 0498        hint=op
+0x7A0C: 06f056fb  bl  ; bl 0xE0BC
+0x7A10: 0020        hint=op
+0x7A12: ede7        hint=b
+0x7A14: 0499        hint=op
+0x7A16: 8164        hint=str
+0x7A18: eae7        hint=b
+0x7A1A: 0000        hint=op
+0x7A1C: 7c03        hint=op
+0x7A1E: 0000        hint=op
+0x7A20: 1201        hint=op
+0x7A22: 0100        hint=op
+0x7A24: f0b5        hint=push
+0x7A26: 85b0        hint=op
+0x7A28: 141c        hint=op
+0x7A2A: 0baa        hint=op
+0x7A2C: 0e1c        hint=op
+0x7A2E: 051c        hint=op
+0x7A30: 07ca        hint=op
+0x7A32: 0a9f        hint=op
+0x7A34: 0093        hint=op
+0x7A36: 0492        hint=op
+0x7A38: 321c        hint=op
+0x7A3A: 231c        hint=op
+0x7A3C: 0391        hint=op
+0x7A3E: 291c        hint=op
+0x7A40: 0290        hint=op
+0x7A42: 1e20        hint=op
+0x7A44: 0197        hint=op
+0x7A46: fff7b7f9  bl  ; bl 0x6DB8
+0x7A4A: 05b0        hint=op
+0x7A4C: f0bd        hint=pop
+0x7A4E: 0000        hint=op
+0x7A50: f0b5        hint=push
+0x7A52: 87b0        hint=op
+0x7A54: 9646        hint=op
+0x7A56: 041c        hint=op
+0x7A58: 9c46        hint=op
+0x7A5A: 00ab        hint=op
+0x7A5C: 0c98        hint=op
+0x7A5E: 109a        hint=op
+0x7A60: 0d9e        hint=op
+0x7A62: 0e9d        hint=op
+0x7A64: 0f9f        hint=op
+0x7A66: 9981        hint=op
+0x7A68: 7146        hint=op
+0x7A6A: d981        hint=op
+0x7A6C: 1882        hint=op
+0x7A6E: 5e82        hint=op
+0x7A70: 6046        hint=op
+0x7A72: 9882        hint=op
+0x7A74: df82        hint=op
+0x7A76: 1a83        hint=op
+0x7A78: 2088        hint=op
+0x7A7A: 0022        hint=op
+0x7A7C: 0021        hint=op
+0x7A7E: 0191        hint=op
+0x7A80: 0292        hint=op
+0x7A82: 2b1c        hint=op
+0x7A84: 0090        hint=op
+0x7A86: 0348        hint=ldr_pc
+0x7A88: 211c        hint=op
+0x7A8A: 03aa        hint=op
+0x7A8C: 06f0c6fa  bl  ; bl 0xE01C
+0x7A90: 07b0        hint=op
+0x7A92: f0bd        hint=pop
+0x7A94: 011f        hint=op
+0x7A96: 0100        hint=op
+0x7A98: ffb5        hint=push
+0x7A9A: 87b0        hint=op
+0x7A9C: 9646        hint=op
+0x7A9E: 9c46        hint=op
+0x7AA0: 00ab        hint=op
+0x7AA2: 149a        hint=op
+0x7AA4: 1598        hint=op
+0x7AA6: 129c        hint=op
+0x7AA8: 139f        hint=op
+0x7AAA: 109d        hint=op
+0x7AAC: 119e        hint=op
+0x7AAE: 9981        hint=op
+0x7AB0: 7146        hint=op
+0x7AB2: d981        hint=op
+0x7AB4: 1d82        hint=op
+0x7AB6: 5e82        hint=op
+0x7AB8: 6146        hint=op
+0x7ABA: 9982        hint=op
+0x7ABC: df82        hint=op
+0x7ABE: 1a83        hint=op
+0x7AC0: 0022        hint=op
+0x7AC2: 0021        hint=op
+0x7AC4: 0191        hint=op
+0x7AC6: 0292        hint=op
+0x7AC8: 0090        hint=op
+0x7ACA: 0448        hint=ldr_pc
+0x7ACC: 03aa        hint=op
+0x7ACE: 0799        hint=op
+0x7AD0: 231c        hint=op
+0x7AD2: 06f0a3fa  bl  ; bl 0xE01C
+0x7AD6: 0bb0        hint=op
+0x7AD8: f0bd        hint=pop
+0x7ADA: 0000        hint=op
+0x7ADC: 011f        hint=op
+0x7ADE: 0100        hint=op
+0x7AE0: f0b5        hint=push
+0x7AE2: 1949        hint=ldr_pc
+0x7AE4: 051c        hint=op
+0x7AE6: 4944        hint=op
+0x7AE8: 0968        hint=ldr
+0x7AEA: 0024        hint=op
+0x7AEC: 91b0        hint=op
+0x7AEE: 8847        hint=blx_reg
+0x7AF0: 061c        hint=op
+0x7AF2: 291c        hint=op
+0x7AF4: 6d46        hint=op
+0x7AF6: 154a        hint=ldr_pc
+0x7AF8: 6846        hint=op
+0x7AFA: 4a44        hint=op
+0x7AFC: 1268        hint=ldr
+0x7AFE: 9047        hint=blx_reg
+0x7B00: 281c        hint=op
+0x7B02: 06f0d1fa  bl  ; bl 0xE0A8
+0x7B06: 0828        hint=cmp_imm
+0x7B08: 1bd1        hint=b.cond
+0x7B0A: 002e        hint=cmp_imm
+0x7B0C: 19dd        hint=b.cond
+0x7B0E: 2f27        hint=op
+0x7B10: 285d        hint=op
+0x7B12: 2f28        hint=cmp_imm
+0x7B14: 01d0        hint=b.cond
+0x7B16: 5c28        hint=cmp_imm
+0x7B18: 10d1        hint=b.cond
+0x7B1A: 0020        hint=op
+0x7B1C: 2855        hint=op
+0x7B1E: 281c        hint=op
+0x7B20: 06f0c2fa  bl  ; bl 0xE0A8
+0x7B24: 0828        hint=cmp_imm
+0x7B26: 08d1        hint=b.cond
+0x7B28: 281c        hint=op
+0x7B2A: 07f0d1f8  bl  ; bl 0xECD0
+0x7B2E: 431c        hint=op
+0x7B30: 03d1        hint=b.cond
+0x7B32: 2f55        hint=op
+0x7B34: d843        hint=op
+0x7B36: 11b0        hint=op
+0x7B38: f0bd        hint=pop
+0x7B3A: 2f55        hint=op
+0x7B3C: 0134        hint=op
+0x7B3E: b442        hint=cmp_reg
+0x7B40: e6db        hint=b.cond
+0x7B42: 0020        hint=op
+0x7B44: f7e7        hint=b
+0x7B46: 0000        hint=op
+0x7B48: 6009        hint=op
+0x7B4A: 0000        hint=op
+0x7B4C: 3809        hint=op
+0x7B4E: 0000        hint=op
+0x7B50: 0648        hint=ldr_pc
+0x7B52: 4844        hint=op
+0x7B54: 4188        hint=op
+0x7B56: 0029        hint=cmp_imm
+0x7B58: 05d0        hint=b.cond
+0x7B5A: 4068        hint=ldr
+0x7B5C: 0028        hint=cmp_imm
+0x7B5E: 02d0        hint=b.cond
+0x7B60: 0020        hint=op
+0x7B62: c043        hint=op
+0x7B64: 7047        hint=bx
+0x7B66: 0020        hint=op
+0x7B68: 7047        hint=bx
+0x7B6A: 0000        hint=op
+0x7B6C: 5c04        hint=cfg_loader_entry  ; CFG_LOADER ENTRY
+0x7B6E: 0000        hint=op
+0x7B70: f0b5        hint=push
+0x7B72: 454d        hint=ldr_pc
+0x7B74: 85b0        hint=op
+0x7B76: 0020        hint=op
+0x7B78: 0490        hint=op
+0x7B7A: 0024        hint=op
+0x7B7C: 4d44        hint=op
+0x7B7E: 281c        hint=op
+0x7B80: 06f092fa  bl  ; bl 0xE0A8
+0x7B84: 0128        hint=cmp_imm
+0x7B86: 6ed0        hint=b.cond
+0x7B88: 0022        hint=op
+0x7B8A: 0292        hint=op
+0x7B8C: 3f4a        hint=ldr_pc
+0x7B8E: 0021        hint=op
+0x7B90: 03a8        hint=op
+0x7B92: 0090        hint=op
+0x7B94: 0191        hint=op
+0x7B96: 04ab        hint=op
+0x7B98: 7a44        hint=op
+0x7B9A: 3d49        hint=ldr_pc
+0x7B9C: 3d48        hint=ldr_pc  ; near 10112 dispatch helper call
+0x7B9E: 4944        hint=op
+0x7BA0: 06f03cfa  bl  ; bl 0xE01C
+0x7BA4: 3c4f        hint=ldr_pc
+0x7BA6: 3d49        hint=ldr_pc
+0x7BA8: 4f44        hint=op
+0x7BAA: 7944        hint=op
+0x7BAC: c98d        hint=op
+0x7BAE: 3c4a        hint=ldr_pc
+0x7BB0: 7a44        hint=op
+0x7BB2: 0498        hint=op
+0x7BB4: 8e18        hint=op
+0x7BB6: 0028        hint=cmp_imm
+0x7BB8: 02d0        hint=b.cond
+0x7BBA: 0398        hint=op
+0x7BBC: 0028        hint=cmp_imm
+0x7BBE: 11d1        hint=b.cond
+0x7BC0: 3868        hint=ldr
+0x7BC2: 0022        hint=op
+0x7BC4: 0021        hint=op
+0x7BC6: 0191        hint=op
+0x7BC8: 0292        hint=op
+0x7BCA: 0123        hint=op
+0x7BCC: 0090        hint=op
+0x7BCE: 2120        hint=op
+0x7BD0: db03        hint=op
+0x7BD2: 321c        hint=op
+0x7BD4: 0c21        hint=op
+0x7BD6: c002        hint=op
+0x7BD8: 06f020fa  bl  ; bl 0xE01C
+0x7BDC: 0020        hint=op
+0x7BDE: c043        hint=op
+0x7BE0: 05b0        hint=op
+0x7BE2: f0bd        hint=pop
+0x7BE4: 0a21        hint=op
+0x7BE6: 281c        hint=op
+0x7BE8: 07f07cf8  bl  ; bl 0xECE4
+0x7BEC: 051c        hint=op
+0x7BEE: 12d1        hint=b.cond
+0x7BF0: 0498        hint=op
+0x7BF2: 06f063fa  bl  ; bl 0xE0BC
+0x7BF6: 3868        hint=ldr
+0x7BF8: 0022        hint=op
+0x7BFA: 0021        hint=op
+0x7BFC: 0191        hint=op
+0x7BFE: 0292        hint=op
+0x7C00: 0123        hint=op
+0x7C02: 0090        hint=op
+0x7C04: 2120        hint=op
+0x7C06: db03        hint=op
+0x7C08: 321c        hint=op
+0x7C0A: 0c21        hint=op
+0x7C0C: c002        hint=op
+0x7C0E: 06f005fa  bl  ; bl 0xE01C
+0x7C12: e843        hint=op
+0x7C14: e4e7        hint=b
+0x7C16: 0398        hint=op
+0x7C18: 0028        hint=cmp_imm
+0x7C1A: 29dd        hint=b.cond
+0x7C1C: 0398        hint=op
+0x7C1E: 021b        hint=op
+0x7C20: 0498        hint=op
+0x7C22: 0119        hint=op
+0x7C24: 281c        hint=op
+0x7C26: 07f015fc  bl  ; bl 0xF454
+0x7C2A: 431c        hint=op
+0x7C2C: 1cd1        hint=b.cond
+0x7C2E: 0022        hint=op
+0x7C30: 3868        hint=ldr
+0x7C32: 0021        hint=op
+0x7C34: 0191        hint=op
+0x7C36: 1b49        hint=ldr_pc
+0x7C38: 0292        hint=op
+0x7C3A: 0090        hint=op
+0x7C3C: 7944        hint=op
+0x7C3E: 888e        hint=op
+0x7C40: 194a        hint=ldr_pc
+0x7C42: 7a44        hint=op
+0x7C44: 8218        hint=op
+0x7C46: 0123        hint=op
+0x7C48: db03        hint=op
+0x7C4A: 2120        hint=op
+0x7C4C: 0c21        hint=op
+0x7C4E: c002        hint=op
+0x7C50: 06f0e4f9  bl  ; bl 0xE01C
+0x7C54: 0498        hint=op
+0x7C56: 06f031fa  bl  ; bl 0xE0BC
+0x7C5A: 281c        hint=op
+0x7C5C: 06f0c8f8  bl  ; bl 0xDDF0
+0x7C60: 0120        hint=op
+0x7C62: c043        hint=op
+0x7C64: bce7        hint=b
+0x7C66: 0de0        hint=b
+0x7C68: 2418        hint=op
+0x7C6A: 0398        hint=op
+0x7C6C: 8442        hint=cmp_reg
+0x7C6E: d5db        hint=b.cond
+0x7C70: 0e49        hint=ldr_pc
+0x7C72: 0120        hint=op
+0x7C74: 4944        hint=op
+0x7C76: 0860        hint=str
+0x7C78: 0498        hint=op
+0x7C7A: 06f01ffa  bl  ; bl 0xE0BC
+0x7C7E: 281c        hint=op
+0x7C80: 06f0b6f8  bl  ; bl 0xDDF0
+0x7C84: 0020        hint=op
+0x7C86: abe7        hint=b
+0x7C88: 8003        hint=op
+0x7C8A: 0000        hint=op
+0x7C8C: 00c3        hint=op
+0x7C8E: 0000        hint=op
+0x7C90: 6c04        hint=op
+0x7C92: 0000        hint=op
+0x7C94: 1201        hint=op
+0x7C96: 0100        hint=op
+0x7C98: 0800        hint=op
+0x7C9A: 0000        hint=op
+0x7C9C: b8de        hint=b.cond
+0x7C9E: 0000        hint=op
+0x7CA0: 54c8        hint=op
+0x7CA2: 0000        hint=op
+0x7CA4: 26de        hint=b.cond
+0x7CA6: 0000        hint=op
+0x7CA8: c2c7        hint=op
+0x7CAA: 0000        hint=op
+0x7CAC: f008        hint=op
+0x7CAE: 0000        hint=op
+0x7CB0: 70b5        hint=push
+0x7CB2: 90b0        hint=op
+0x7CB4: 051c        hint=op
+0x7CB6: 6846        hint=op
+0x7CB8: 4021        hint=op
+0x7CBA: 6c46        hint=op
+0x7CBC: f8f7bae9  blx  ; blx 0x34
+0x7CC0: 0a4a        hint=ldr_pc
+0x7CC2: 0b49        hint=ldr_pc
+0x7CC4: 2b1c        hint=op
+0x7CC6: 4a44        hint=op
+0x7CC8: 7944        hint=op
+0x7CCA: 0a4d        hint=ldr_pc
+0x7CCC: 201c        hint=op
+0x7CCE: 4d44        hint=op
+0x7CD0: 2e68        hint=ldr
+0x7CD2: b047        hint=blx_reg
+0x7CD4: 201c        hint=op
+0x7CD6: 06f0e7f9  bl  ; bl 0xE0A8
+0x7CDA: 0128        hint=cmp_imm
+0x7CDC: 02d1        hint=b.cond
+0x7CDE: 0020        hint=op
+0x7CE0: 10b0        hint=op
+0x7CE2: 70bd        hint=pop
+0x7CE4: 0020        hint=op
+0x7CE6: c043        hint=op
+0x7CE8: fae7        hint=b
+0x7CEA: 0000        hint=op
+0x7CEC: 8c08        hint=op
+0x7CEE: 0000        hint=op
+0x7CF0: acc4        hint=op
+0x7CF2: 0000        hint=op
+0x7CF4: 6809        hint=op
+0x7CF6: 0000        hint=op
+0x7CF8: f3b5        hint=push
+0x7CFA: 061c        hint=op
+0x7CFC: 0024        hint=op
+0x7CFE: a9b0        hint=op
+
+# Also see full-module dump for xrefs outside window:
+#   loader_wrap +0xD964: bl +0xD768; movs r0,#0; bl +0x7B6C; bl +0xFF00
+#   ff00_dispatch +0xFF00: bl +0x7DB0; adds r0,#5; cmp r0,#5; bhs early_exit
+#   case paths: +0xFF3A bl cfg_loader(r0=0); +0xFFB2 bl cfg_loader(r0=1)
+# P22-CLEAN gamelist cfg-path runtime dump
+# module_base=0x2D4364 size=0x165DC sha256=e510fe8795381f27e1ec49048f04ee94a486baf0ede0c9382825d2d606427ca8
+# bytes_ok_77AE=1 (expect thumb adds @+0x77AE)
+# bytes_ok_7B6C=1 (expect push {r4-r7,lr} = function ENTRY)
+# static_xrefs_to_7B6C: +0xD96C, +0xFF3A, +0xFFB2 (direct BL)
+# window module_offset 0x7600 .. 0x7D00
+
+0x7600: ffb5        hint=push
+0x7602: 5a49        hint=ldr_pc
+0x7604: 81b0        hint=op
+0x7606: 171c        hint=op
+0x7608: 1e1c        hint=op
+0x760A: 051c        hint=op
+0x760C: 0028        hint=cmp_imm
+0x760E: 0a9c        hint=op
+0x7610: 4944        hint=op
+0x7612: 11d0        hint=b.cond
+0x7614: 029a        hint=op
+0x7616: 002a        hint=cmp_imm
+0x7618: 0edb        hint=b.cond
+0x761A: a869        hint=ldr
+0x761C: 029a        hint=op
+0x761E: 0090        hint=op
+0x7620: 9042        hint=cmp_reg
+0x7622: 09d9        hint=b.cond
+0x7624: 002f        hint=cmp_imm
+0x7626: 07db        hint=b.cond
+0x7628: 002e        hint=cmp_imm
+0x762A: 05dd        hint=b.cond
+0x762C: 6a69        hint=ldr
+0x762E: b819        hint=op
+0x7630: 9042        hint=cmp_reg
+0x7632: 01d8        hint=b.cond
+0x7634: 002c        hint=cmp_imm
+0x7636: 03d1        hint=b.cond
+0x7638: 0720        hint=op
+0x763A: 0870        hint=op
+0x763C: 05b0        hint=op
+0x763E: f0bd        hint=pop
+0x7640: 0020        hint=op
+0x7642: 0870        hint=op
+0x7644: 696a        hint=ldr
+0x7646: 0098        hint=op
+0x7648: f8f78ced  blx  ; blx 0x164
+0x764C: 8446        hint=op
+0x764E: e88b        hint=op
+0x7650: 0828        hint=cmp_imm
+0x7652: 27d1        hint=b.cond
+0x7654: e86b        hint=ldr
+0x7656: 0099        hint=op
+0x7658: 029a        hint=op
+0x765A: 891a        hint=op
+0x765C: 0139        hint=op
+0x765E: 6246        hint=op
+0x7660: 5143        hint=op
+0x7662: 4018        hint=op
+0x7664: c019        hint=op
+0x7666: 0022        hint=op
+0x7668: 0b9b        hint=op
+0x766A: 002b        hint=cmp_imm
+0x766C: 0fd1        hint=b.cond
+0x766E: 0378        hint=op
+0x7670: a96b        hint=ldr
+0x7672: 9b00        hint=op
+0x7674: c918        hint=op
+0x7676: 8b78        hint=op
+0x7678: 4f78        hint=op
+0x767A: 0978        hint=op
+0x767C: db08        hint=op
+0x767E: bf08        hint=op
+0x7680: 7f01        hint=op
+0x7682: db02        hint=op
+0x7684: db19        hint=op
+0x7686: c908        hint=op
+0x7688: 5918        hint=op
+0x768A: 2180        hint=op
+0x768C: 04e0        hint=b
+0x768E: 0178        hint=op
+0x7690: 0b9b        hint=op
+0x7692: 4900        hint=op
+0x7694: 595a        hint=op
+0x7696: 2180        hint=op
+0x7698: 0234        hint=op
+0x769A: 0130        hint=op
+0x769C: 0132        hint=op
+0x769E: b242        hint=cmp_reg
+0x76A0: e2db        hint=b.cond
+0x76A2: cbe7        hint=b
+0x76A4: 0428        hint=cmp_imm
+0x76A6: c9d1        hint=b.cond
+0x76A8: e96b        hint=ldr
+0x76AA: 009a        hint=op
+0x76AC: 029b        hint=op
+0x76AE: f80f        hint=op
+0x76B0: d21a        hint=op
+0x76B2: 013a        hint=op
+0x76B4: 6346        hint=op
+0x76B6: 5a43        hint=op
+0x76B8: c019        hint=op
+0x76BA: 4010        hint=op
+0x76BC: 8918        hint=op
+0x76BE: 4018        hint=op
+0x76C0: f907        hint=op
+0x76C2: 12d5        hint=b.cond
+0x76C4: 0278        hint=op
+0x76C6: a96b        hint=ldr
+0x76C8: 0130        hint=op
+0x76CA: 1207        hint=op
+0x76CC: 920e        hint=op
+0x76CE: 8918        hint=op
+0x76D0: 8a78        hint=op
+0x76D2: 4b78        hint=op
+0x76D4: 0978        hint=op
+0x76D6: d208        hint=op
+0x76D8: 9b08        hint=op
+0x76DA: 5b01        hint=op
+0x76DC: d202        hint=op
+0x76DE: d218        hint=op
+0x76E0: c908        hint=op
+0x76E2: 5118        hint=op
+0x76E4: 2180        hint=op
+0x76E6: 0234        hint=op
+0x76E8: 013e        hint=op
+0x76EA: f10f        hint=op
+0x76EC: 8919        hint=op
+0x76EE: 4910        hint=op
+0x76F0: 0022        hint=op
+0x76F2: 0029        hint=cmp_imm
+0x76F4: 8c46        hint=op
+0x76F6: 25dd        hint=b.cond
+0x76F8: 0378        hint=op
+0x76FA: a96b        hint=ldr
+0x76FC: 0132        hint=op
+0x76FE: 1b09        hint=op
+0x7700: 9b00        hint=op
+0x7702: c918        hint=op
+0x7704: 8b78        hint=op
+0x7706: 4f78        hint=op
+0x7708: 0978        hint=op
+0x770A: db08        hint=op
+0x770C: bf08        hint=op
+0x770E: 7f01        hint=op
+0x7710: db02        hint=op
+0x7712: db19        hint=op
+0x7714: c908        hint=op
+0x7716: 5918        hint=op
+0x7718: 2180        hint=op
+0x771A: a31c        hint=op
+0x771C: 0478        hint=op
+0x771E: a96b        hint=ldr
+0x7720: 0130        hint=op
+0x7722: 2407        hint=op
+0x7724: a40e        hint=op
+0x7726: 0919        hint=op
+0x7728: 8c78        hint=op
+0x772A: 4f78        hint=op
+0x772C: 0978        hint=op
+0x772E: e408        hint=op
+0x7730: bf08        hint=op
+0x7732: 7f01        hint=op
+0x7734: e402        hint=op
+0x7736: e419        hint=op
+0x7738: c908        hint=op
+0x773A: 6118        hint=op
+0x773C: 9c1c        hint=op
+0x773E: 9445        hint=op
+0x7740: 1980        hint=op
+0x7742: d9dc        hint=b.cond
+0x7744: f107        hint=op
+0x7746: acd5        hint=b.cond
+0x7748: 0078        hint=op
+0x774A: a96b        hint=ldr
+0x774C: 0007        hint=op
+0x774E: 800e        hint=op
+0x7750: 0818        hint=op
+0x7752: 8178        hint=op
+0x7754: 4278        hint=op
+0x7756: 0078        hint=op
+0x7758: c908        hint=op
+0x775A: 9208        hint=op
+0x775C: 5201        hint=op
+0x775E: c902        hint=op
+0x7760: 8918        hint=op
+0x7762: c008        hint=op
+0x7764: 0818        hint=op
+0x7766: 2080        hint=op
+0x7768: 68e7        hint=b
+0x776A: 0000        hint=op
+0x776C: 7c03        hint=op
+0x776E: 0000        hint=op
+0x7770: ffb5        hint=push
+0x7772: 0f1c        hint=op
+0x7774: 1d1c        hint=op
+0x7776: 041c        hint=op
+0x7778: 0028        hint=cmp_imm
+0x777A: 81b0        hint=op
+0x777C: 8669        hint=ldr
+0x777E: 05d0        hint=b.cond
+0x7780: 6069        hint=ldr
+0x7782: b842        hint=cmp_reg
+0x7784: 02d9        hint=b.cond
+0x7786: 0398        hint=op
+0x7788: 8642        hint=cmp_reg
+0x778A: 03d8        hint=b.cond
+0x778C: 1c49        hint=ldr_pc
+0x778E: 0720        hint=op
+0x7790: 4944        hint=op
+0x7792: 0870        hint=op
+0x7794: 301c        hint=op
+0x7796: 616a        hint=ldr
+0x7798: f8f7e4ec  blx  ; blx 0x164
+0x779C: e18b        hint=op
+0x779E: 0829        hint=cmp_imm
+0x77A0: 0bd1        hint=b.cond
+0x77A2: e16b        hint=ldr
+0x77A4: 039a        hint=op
+0x77A6: b21a        hint=op
+0x77A8: 013a        hint=op
+0x77AA: 4243        hint=op
+0x77AC: d019        hint=op
+0x77AE: 0818        hint=param_site_77AE  ; PARAM_SITE (P21 label; static=adds)
+0x77B0: 002d        hint=cmp_imm
+0x77B2: 1ad0        hint=b.cond
+0x77B4: 0078        hint=op
+0x77B6: 2870        hint=op
+0x77B8: 17e0        hint=b
+0x77BA: 0429        hint=cmp_imm
+0x77BC: 1bd1        hint=b.cond
+0x77BE: e16b        hint=ldr
+0x77C0: 039a        hint=op
+0x77C2: b21a        hint=op
+0x77C4: 013a        hint=op
+0x77C6: 4243        hint=op
+0x77C8: 8818        hint=op
+0x77CA: 7908        hint=op
+0x77CC: 4018        hint=op
+0x77CE: f907        hint=op
+0x77D0: 06d5        hint=b.cond
+0x77D2: 002d        hint=cmp_imm
+0x77D4: 09d0        hint=b.cond
+0x77D6: 0078        hint=op
+0x77D8: 0007        hint=op
+0x77DA: 000f        hint=op
+0x77DC: 2870        hint=op
+0x77DE: 04e0        hint=b
+0x77E0: 002d        hint=cmp_imm
+0x77E2: 02d0        hint=b.cond
+0x77E4: 0078        hint=op
+0x77E6: 0009        hint=op
+0x77E8: 2870        hint=op
+0x77EA: 0549        hint=ldr_pc
+0x77EC: 0020        hint=op
+0x77EE: 4944        hint=op
+0x77F0: 0870        hint=op
+0x77F2: 05b0        hint=op
+0x77F4: f0bd        hint=pop
+0x77F6: 0249        hint=ldr_pc
+0x77F8: 0820        hint=op
+0x77FA: 4944        hint=op
+0x77FC: 0870        hint=op
+0x77FE: f8e7        hint=b
+0x7800: 7c03        hint=op
+0x7802: 0000        hint=op
+0x7804: ffb5        hint=push
+0x7806: 0e1c        hint=op
+0x7808: 2749        hint=ldr_pc
+0x780A: 0025        hint=op
+0x780C: 041c        hint=op
+0x780E: 0028        hint=cmp_imm
+0x7810: 81b0        hint=op
+0x7812: 4944        hint=op
+0x7814: 06d0        hint=b.cond
+0x7816: 6069        hint=ldr
+0x7818: b042        hint=cmp_reg
+0x781A: 03d9        hint=b.cond
+0x781C: a769        hint=ldr
+0x781E: 0398        hint=op
+0x7820: 8742        hint=cmp_reg
+0x7822: 03d8        hint=b.cond
+0x7824: 0720        hint=op
+0x7826: 0870        hint=op
+0x7828: 05b0        hint=op
+0x782A: f0bd        hint=pop
+0x782C: 0020        hint=op
+0x782E: 0870        hint=op
+0x7830: 616a        hint=ldr
+0x7832: 381c        hint=op
+0x7834: f8f796ec  blx  ; blx 0x164
+0x7838: e18b        hint=op
+0x783A: 0829        hint=cmp_imm
+0x783C: 0bd1        hint=b.cond
+0x783E: e16b        hint=ldr
+0x7840: 039a        hint=op
+0x7842: ba1a        hint=op
+0x7844: 013a        hint=op
+0x7846: 4243        hint=op
+0x7848: 9019        hint=op
+0x784A: 0818        hint=op
+0x784C: 0078        hint=op
+0x784E: a16b        hint=ldr
+0x7850: 8000        hint=op
+0x7852: 0d18        hint=op
+0x7854: 15e0        hint=b
+0x7856: 0429        hint=cmp_imm
+0x7858: 13d1        hint=b.cond
+0x785A: e16b        hint=ldr
+0x785C: 039a        hint=op
+0x785E: ba1a        hint=op
+0x7860: 013a        hint=op
+0x7862: 4243        hint=op
+0x7864: 8818        hint=op
+0x7866: 7108        hint=op
+0x7868: 4018        hint=op
+0x786A: f107        hint=op
+0x786C: a16b        hint=ldr
+0x786E: 04d5        hint=b.cond
+0x7870: 0078        hint=op
+0x7872: 0007        hint=op
+0x7874: 800e        hint=op
+0x7876: 0d18        hint=op
+0x7878: 03e0        hint=b
+0x787A: 0078        hint=op
+0x787C: 0009        hint=op
+0x787E: 8000        hint=op
+0x7880: 0d18        hint=op
+0x7882: 0499        hint=op
+0x7884: 0029        hint=cmp_imm
+0x7886: 02d0        hint=b.cond
+0x7888: a878        hint=op
+0x788A: 0499        hint=op
+0x788C: 0870        hint=op
+0x788E: 0a99        hint=op
+0x7890: 0029        hint=cmp_imm
+0x7892: 02d0        hint=b.cond
+0x7894: 6878        hint=op
+0x7896: 0a99        hint=op
+0x7898: 0870        hint=op
+0x789A: 0b98        hint=op
+0x789C: 0028        hint=cmp_imm
+0x789E: c3d0        hint=b.cond
+0x78A0: 2878        hint=op
+0x78A2: 0b99        hint=op
+0x78A4: 0870        hint=op
+0x78A6: bfe7        hint=b
+0x78A8: 7c03        hint=op
+0x78AA: 0000        hint=op
+0x78AC: f3b5        hint=push
+0x78AE: 3f4d        hint=ldr_pc
+0x78B0: 83b0        hint=op
+0x78B2: 061c        hint=op
+0x78B4: 0028        hint=cmp_imm
+0x78B6: 6f46        hint=op
+0x78B8: 4d44        hint=op
+0x78BA: 04d1        hint=b.cond
+0x78BC: 0120        hint=op
+0x78BE: 2870        hint=op
+0x78C0: 0020        hint=op
+0x78C2: 05b0        hint=op
+0x78C4: f0bd        hint=pop
+0x78C6: 4c20        hint=op
+0x78C8: 07f0e6f9  bl  ; bl 0xEC98
+0x78CC: 041c        hint=op
+0x78CE: 03d1        hint=b.cond
+0x78D0: 0220        hint=op
+0x78D2: 2870        hint=op
+0x78D4: 0020        hint=op
+0x78D6: f4e7        hint=b
+0x78D8: 354b        hint=ldr_pc
+0x78DA: 4c22        hint=op
+0x78DC: 4b44        hint=op
+0x78DE: 1b68        hint=ldr
+0x78E0: 0021        hint=op
+0x78E2: 201c        hint=op
+0x78E4: 9847        hint=blx_reg
+0x78E6: 0096        hint=op
+0x78E8: 0498        hint=op
+0x78EA: 0026        hint=op
+0x78EC: 391c        hint=op
+0x78EE: 0290        hint=op
+0x78F0: 201c        hint=op
+0x78F2: 0196        hint=op
+0x78F4: faf7a2fd  bl  ; bl 0x243C
+0x78F8: 0028        hint=cmp_imm
+0x78FA: 03d1        hint=b.cond
+0x78FC: 2088        hint=op
+0x78FE: 2d49        hint=ldr_pc
+0x7900: 8842        hint=cmp_reg
+0x7902: 06d0        hint=b.cond
+0x7904: 0620        hint=op
+0x7906: 2870        hint=op
+0x7908: 201c        hint=op
+0x790A: fff757fe  bl  ; bl 0x75BC
+0x790E: 0020        hint=op
+0x7910: d7e7        hint=b
+0x7912: e08b        hint=op
+0x7914: 2028        hint=cmp_imm
+0x7916: 05d0        hint=b.cond
+0x7918: 1828        hint=cmp_imm
+0x791A: 03d0        hint=b.cond
+0x791C: 0828        hint=cmp_imm
+0x791E: 01d0        hint=b.cond
+0x7920: 0428        hint=cmp_imm
+0x7922: 05d1        hint=b.cond
+0x7924: 216a        hint=ldr
+0x7926: 0029        hint=cmp_imm
+0x7928: 02d1        hint=b.cond
+0x792A: 2169        hint=ldr
+0x792C: 2829        hint=cmp_imm
+0x792E: 06d0        hint=b.cond
+0x7930: 0520        hint=op
+0x7932: 2870        hint=op
+0x7934: 201c        hint=op
+0x7936: fff741fe  bl  ; bl 0x75BC
+0x793A: 0020        hint=op
+0x793C: c1e7        hint=b
+0x793E: 0828        hint=cmp_imm
+0x7940: 12d1        hint=b.cond
+0x7942: 2664        hint=str
+0x7944: 00a9        hint=op
+0x7946: 03c9        hint=op
+0x7948: 4018        hint=op
+0x794A: a063        hint=str
+0x794C: 206b        hint=ldr
+0x794E: 0028        hint=cmp_imm
+0x7950: 05d1        hint=b.cond
+0x7952: 0121        hint=op
+0x7954: 0198        hint=op
+0x7956: 8902        hint=op
+0x7958: 4018        hint=op
+0x795A: 0190        hint=op
+0x795C: 19e0        hint=b
+0x795E: 0199        hint=op
+0x7960: 8000        hint=op
+0x7962: 0818        hint=op
+0x7964: 0190        hint=op
+0x7966: 14e0        hint=b
+0x7968: 0428        hint=cmp_imm
+0x796A: 10d1        hint=b.cond
+0x796C: 2664        hint=str
+0x796E: 00a9        hint=op
+0x7970: 03c9        hint=op
+0x7972: 4018        hint=op
+0x7974: a063        hint=str
+0x7976: 206b        hint=ldr
+0x7978: 0028        hint=cmp_imm
+0x797A: 03d1        hint=b.cond
+0x797C: 0198        hint=op
+0x797E: 4030        hint=op
+0x7980: 0190        hint=op
+0x7982: 06e0        hint=b
+0x7984: 0199        hint=op
+0x7986: 8000        hint=op
+0x7988: 0818        hint=op
+0x798A: 0190        hint=op
+0x798C: 01e0        hint=b
+0x798E: a663        hint=str
+0x7990: 2664        hint=str
+0x7992: 6664        hint=str
+0x7994: 00a9        hint=op
+0x7996: 03c9        hint=op
+0x7998: 4018        hint=op
+0x799A: e063        hint=str
+0x799C: 0198        hint=op
+0x799E: 616a        hint=ldr
+0x79A0: 4018        hint=op
+0x79A2: 0190        hint=op
+0x79A4: a664        hint=str
+0x79A6: 2e70        hint=op
+0x79A8: 201c        hint=op
+0x79AA: 8ae7        hint=b
+0x79AC: 7c03        hint=op
+0x79AE: 0000        hint=op
+0x79B0: 5c09        hint=op
+0x79B2: 0000        hint=op
+0x79B4: 424d        hint=ldr_pc
+0x79B6: 0000        hint=op
+0x79B8: 30b5        hint=push
+0x79BA: 85b0        hint=op
+0x79BC: 051c        hint=op
+0x79BE: 0020        hint=op
+0x79C0: 154c        hint=ldr_pc
+0x79C2: 0490        hint=op
+0x79C4: 0120        hint=op
+0x79C6: 4c44        hint=op
+0x79C8: 2070        hint=op
+0x79CA: 03a8        hint=op
+0x79CC: 0022        hint=op
+0x79CE: 0021        hint=op
+0x79D0: 0292        hint=op
+0x79D2: 0090        hint=op
+0x79D4: 1148        hint=ldr_pc
+0x79D6: 2a1c        hint=op
+0x79D8: 0191        hint=op
+0x79DA: 04ab        hint=op
+0x79DC: 06f01cfb  bl  ; bl 0xE018
+0x79E0: 0498        hint=op
+0x79E2: 0028        hint=cmp_imm
+0x79E4: 04d1        hint=b.cond
+0x79E6: 0420        hint=op
+0x79E8: 2070        hint=op
+0x79EA: 0020        hint=op
+0x79EC: 05b0        hint=op
+0x79EE: 30bd        hint=pop
+0x79F0: 0399        hint=op
+0x79F2: 4c29        hint=cmp_imm
+0x79F4: 03d2        hint=b.cond
+0x79F6: 0620        hint=op
+0x79F8: 2070        hint=op
+0x79FA: 0020        hint=op
+0x79FC: f6e7        hint=b
+0x79FE: fff755ff  bl  ; bl 0x78AC
+0x7A02: 0028        hint=cmp_imm
+0x7A04: 04d1        hint=b.cond
+0x7A06: 0498        hint=op
+0x7A08: 06f056fb  bl  ; bl 0xE0B8
+0x7A0C: 0020        hint=op
+0x7A0E: ede7        hint=b
+0x7A10: 0499        hint=op
+0x7A12: 8164        hint=str
+0x7A14: eae7        hint=b
+0x7A16: 0000        hint=op
+0x7A18: 7c03        hint=op
+0x7A1A: 0000        hint=op
+0x7A1C: 1201        hint=op
+0x7A1E: 0100        hint=op
+0x7A20: f0b5        hint=push
+0x7A22: 85b0        hint=op
+0x7A24: 141c        hint=op
+0x7A26: 0baa        hint=op
+0x7A28: 0e1c        hint=op
+0x7A2A: 051c        hint=op
+0x7A2C: 07ca        hint=op
+0x7A2E: 0a9f        hint=op
+0x7A30: 0093        hint=op
+0x7A32: 0492        hint=op
+0x7A34: 321c        hint=op
+0x7A36: 231c        hint=op
+0x7A38: 0391        hint=op
+0x7A3A: 291c        hint=op
+0x7A3C: 0290        hint=op
+0x7A3E: 1e20        hint=op
+0x7A40: 0197        hint=op
+0x7A42: fff7b7f9  bl  ; bl 0x6DB4
+0x7A46: 05b0        hint=op
+0x7A48: f0bd        hint=pop
+0x7A4A: 0000        hint=op
+0x7A4C: f0b5        hint=push
+0x7A4E: 87b0        hint=op
+0x7A50: 9646        hint=op
+0x7A52: 041c        hint=op
+0x7A54: 9c46        hint=op
+0x7A56: 00ab        hint=op
+0x7A58: 0c98        hint=op
+0x7A5A: 109a        hint=op
+0x7A5C: 0d9e        hint=op
+0x7A5E: 0e9d        hint=op
+0x7A60: 0f9f        hint=op
+0x7A62: 9981        hint=op
+0x7A64: 7146        hint=op
+0x7A66: d981        hint=op
+0x7A68: 1882        hint=op
+0x7A6A: 5e82        hint=op
+0x7A6C: 6046        hint=op
+0x7A6E: 9882        hint=op
+0x7A70: df82        hint=op
+0x7A72: 1a83        hint=op
+0x7A74: 2088        hint=op
+0x7A76: 0022        hint=op
+0x7A78: 0021        hint=op
+0x7A7A: 0191        hint=op
+0x7A7C: 0292        hint=op
+0x7A7E: 2b1c        hint=op
+0x7A80: 0090        hint=op
+0x7A82: 0348        hint=ldr_pc
+0x7A84: 211c        hint=op
+0x7A86: 03aa        hint=op
+0x7A88: 06f0c6fa  bl  ; bl 0xE018
+0x7A8C: 07b0        hint=op
+0x7A8E: f0bd        hint=pop
+0x7A90: 011f        hint=op
+0x7A92: 0100        hint=op
+0x7A94: ffb5        hint=push
+0x7A96: 87b0        hint=op
+0x7A98: 9646        hint=op
+0x7A9A: 9c46        hint=op
+0x7A9C: 00ab        hint=op
+0x7A9E: 149a        hint=op
+0x7AA0: 1598        hint=op
+0x7AA2: 129c        hint=op
+0x7AA4: 139f        hint=op
+0x7AA6: 109d        hint=op
+0x7AA8: 119e        hint=op
+0x7AAA: 9981        hint=op
+0x7AAC: 7146        hint=op
+0x7AAE: d981        hint=op
+0x7AB0: 1d82        hint=op
+0x7AB2: 5e82        hint=op
+0x7AB4: 6146        hint=op
+0x7AB6: 9982        hint=op
+0x7AB8: df82        hint=op
+0x7ABA: 1a83        hint=op
+0x7ABC: 0022        hint=op
+0x7ABE: 0021        hint=op
+0x7AC0: 0191        hint=op
+0x7AC2: 0292        hint=op
+0x7AC4: 0090        hint=op
+0x7AC6: 0448        hint=ldr_pc
+0x7AC8: 03aa        hint=op
+0x7ACA: 0799        hint=op
+0x7ACC: 231c        hint=op
+0x7ACE: 06f0a3fa  bl  ; bl 0xE018
+0x7AD2: 0bb0        hint=op
+0x7AD4: f0bd        hint=pop
+0x7AD6: 0000        hint=op
+0x7AD8: 011f        hint=op
+0x7ADA: 0100        hint=op
+0x7ADC: f0b5        hint=push
+0x7ADE: 1949        hint=ldr_pc
+0x7AE0: 051c        hint=op
+0x7AE2: 4944        hint=op
+0x7AE4: 0968        hint=ldr
+0x7AE6: 0024        hint=op
+0x7AE8: 91b0        hint=op
+0x7AEA: 8847        hint=blx_reg
+0x7AEC: 061c        hint=op
+0x7AEE: 291c        hint=op
+0x7AF0: 6d46        hint=op
+0x7AF2: 154a        hint=ldr_pc
+0x7AF4: 6846        hint=op
+0x7AF6: 4a44        hint=op
+0x7AF8: 1268        hint=ldr
+0x7AFA: 9047        hint=blx_reg
+0x7AFC: 281c        hint=op
+0x7AFE: 06f0d1fa  bl  ; bl 0xE0A4
+0x7B02: 0828        hint=cmp_imm
+0x7B04: 1bd1        hint=b.cond
+0x7B06: 002e        hint=cmp_imm
+0x7B08: 19dd        hint=b.cond
+0x7B0A: 2f27        hint=op
+0x7B0C: 285d        hint=op
+0x7B0E: 2f28        hint=cmp_imm
+0x7B10: 01d0        hint=b.cond
+0x7B12: 5c28        hint=cmp_imm
+0x7B14: 10d1        hint=b.cond
+0x7B16: 0020        hint=op
+0x7B18: 2855        hint=op
+0x7B1A: 281c        hint=op
+0x7B1C: 06f0c2fa  bl  ; bl 0xE0A4
+0x7B20: 0828        hint=cmp_imm
+0x7B22: 08d1        hint=b.cond
+0x7B24: 281c        hint=op
+0x7B26: 07f0d1f8  bl  ; bl 0xECCC
+0x7B2A: 431c        hint=op
+0x7B2C: 03d1        hint=b.cond
+0x7B2E: 2f55        hint=op
+0x7B30: d843        hint=op
+0x7B32: 11b0        hint=op
+0x7B34: f0bd        hint=pop
+0x7B36: 2f55        hint=op
+0x7B38: 0134        hint=op
+0x7B3A: b442        hint=cmp_reg
+0x7B3C: e6db        hint=b.cond
+0x7B3E: 0020        hint=op
+0x7B40: f7e7        hint=b
+0x7B42: 0000        hint=op
+0x7B44: 6009        hint=op
+0x7B46: 0000        hint=op
+0x7B48: 3809        hint=op
+0x7B4A: 0000        hint=op
+0x7B4C: 0648        hint=ldr_pc
+0x7B4E: 4844        hint=op
+0x7B50: 4188        hint=op
+0x7B52: 0029        hint=cmp_imm
+0x7B54: 05d0        hint=b.cond
+0x7B56: 4068        hint=ldr
+0x7B58: 0028        hint=cmp_imm
+0x7B5A: 02d0        hint=b.cond
+0x7B5C: 0020        hint=op
+0x7B5E: c043        hint=op
+0x7B60: 7047        hint=bx
+0x7B62: 0020        hint=op
+0x7B64: 7047        hint=bx
+0x7B66: 0000        hint=op
+0x7B68: 5c04        hint=op
+0x7B6A: 0000        hint=op
+0x7B6C: f0b5        hint=push  ; CFG_LOADER ENTRY
+0x7B6E: 454d        hint=ldr_pc
+0x7B70: 85b0        hint=op
+0x7B72: 0020        hint=op
+0x7B74: 0490        hint=op
+0x7B76: 0024        hint=op
+0x7B78: 4d44        hint=op
+0x7B7A: 281c        hint=op
+0x7B7C: 06f092fa  bl  ; bl 0xE0A4
+0x7B80: 0128        hint=cmp_imm
+0x7B82: 6ed0        hint=b.cond
+0x7B84: 0022        hint=op
+0x7B86: 0292        hint=op
+0x7B88: 3f4a        hint=ldr_pc
+0x7B8A: 0021        hint=op
+0x7B8C: 03a8        hint=op
+0x7B8E: 0090        hint=op
+0x7B90: 0191        hint=op
+0x7B92: 04ab        hint=op
+0x7B94: 7a44        hint=op
+0x7B96: 3d49        hint=ldr_pc
+0x7B98: 3d48        hint=ldr_pc
+0x7B9A: 4944        hint=op
+0x7B9C: 06f03cfa  bl  ; bl 0xE018  ; near 10112 dispatch helper call
+0x7BA0: 3c4f        hint=ldr_pc
+0x7BA2: 3d49        hint=ldr_pc
+0x7BA4: 4f44        hint=op
+0x7BA6: 7944        hint=op
+0x7BA8: c98d        hint=op
+0x7BAA: 3c4a        hint=ldr_pc
+0x7BAC: 7a44        hint=op
+0x7BAE: 0498        hint=op
+0x7BB0: 8e18        hint=op
+0x7BB2: 0028        hint=cmp_imm
+0x7BB4: 02d0        hint=b.cond
+0x7BB6: 0398        hint=op
+0x7BB8: 0028        hint=cmp_imm
+0x7BBA: 11d1        hint=b.cond
+0x7BBC: 3868        hint=ldr
+0x7BBE: 0022        hint=op
+0x7BC0: 0021        hint=op
+0x7BC2: 0191        hint=op
+0x7BC4: 0292        hint=op
+0x7BC6: 0123        hint=op
+0x7BC8: 0090        hint=op
+0x7BCA: 2120        hint=op
+0x7BCC: db03        hint=op
+0x7BCE: 321c        hint=op
+0x7BD0: 0c21        hint=op
+0x7BD2: c002        hint=op
+0x7BD4: 06f020fa  bl  ; bl 0xE018
+0x7BD8: 0020        hint=op
+0x7BDA: c043        hint=op
+0x7BDC: 05b0        hint=op
+0x7BDE: f0bd        hint=pop
+0x7BE0: 0a21        hint=op
+0x7BE2: 281c        hint=op
+0x7BE4: 07f07cf8  bl  ; bl 0xECE0
+0x7BE8: 051c        hint=op
+0x7BEA: 12d1        hint=b.cond
+0x7BEC: 0498        hint=op
+0x7BEE: 06f063fa  bl  ; bl 0xE0B8
+0x7BF2: 3868        hint=ldr
+0x7BF4: 0022        hint=op
+0x7BF6: 0021        hint=op
+0x7BF8: 0191        hint=op
+0x7BFA: 0292        hint=op
+0x7BFC: 0123        hint=op
+0x7BFE: 0090        hint=op
+0x7C00: 2120        hint=op
+0x7C02: db03        hint=op
+0x7C04: 321c        hint=op
+0x7C06: 0c21        hint=op
+0x7C08: c002        hint=op
+0x7C0A: 06f005fa  bl  ; bl 0xE018
+0x7C0E: e843        hint=op
+0x7C10: e4e7        hint=b
+0x7C12: 0398        hint=op
+0x7C14: 0028        hint=cmp_imm
+0x7C16: 29dd        hint=b.cond
+0x7C18: 0398        hint=op
+0x7C1A: 021b        hint=op
+0x7C1C: 0498        hint=op
+0x7C1E: 0119        hint=op
+0x7C20: 281c        hint=op
+0x7C22: 07f015fc  bl  ; bl 0xF450
+0x7C26: 431c        hint=op
+0x7C28: 1cd1        hint=b.cond
+0x7C2A: 0022        hint=op
+0x7C2C: 3868        hint=ldr
+0x7C2E: 0021        hint=op
+0x7C30: 0191        hint=op
+0x7C32: 1b49        hint=ldr_pc
+0x7C34: 0292        hint=op
+0x7C36: 0090        hint=op
+0x7C38: 7944        hint=op
+0x7C3A: 888e        hint=op
+0x7C3C: 194a        hint=ldr_pc
+0x7C3E: 7a44        hint=op
+0x7C40: 8218        hint=op
+0x7C42: 0123        hint=op
+0x7C44: db03        hint=op
+0x7C46: 2120        hint=op
+0x7C48: 0c21        hint=op
+0x7C4A: c002        hint=op
+0x7C4C: 06f0e4f9  bl  ; bl 0xE018
+0x7C50: 0498        hint=op
+0x7C52: 06f031fa  bl  ; bl 0xE0B8
+0x7C56: 281c        hint=op
+0x7C58: 06f0c8f8  bl  ; bl 0xDDEC
+0x7C5C: 0120        hint=op
+0x7C5E: c043        hint=op
+0x7C60: bce7        hint=b
+0x7C62: 0de0        hint=b
+0x7C64: 2418        hint=op
+0x7C66: 0398        hint=op
+0x7C68: 8442        hint=cmp_reg
+0x7C6A: d5db        hint=b.cond
+0x7C6C: 0e49        hint=ldr_pc
+0x7C6E: 0120        hint=op
+0x7C70: 4944        hint=op
+0x7C72: 0860        hint=str
+0x7C74: 0498        hint=op
+0x7C76: 06f01ffa  bl  ; bl 0xE0B8
+0x7C7A: 281c        hint=op
+0x7C7C: 06f0b6f8  bl  ; bl 0xDDEC
+0x7C80: 0020        hint=op
+0x7C82: abe7        hint=b
+0x7C84: 8003        hint=op
+0x7C86: 0000        hint=op
+0x7C88: 00c3        hint=op
+0x7C8A: 0000        hint=op
+0x7C8C: 6c04        hint=op
+0x7C8E: 0000        hint=op
+0x7C90: 1201        hint=op
+0x7C92: 0100        hint=op
+0x7C94: 0800        hint=op
+0x7C96: 0000        hint=op
+0x7C98: b8de        hint=b.cond
+0x7C9A: 0000        hint=op
+0x7C9C: 54c8        hint=op
+0x7C9E: 0000        hint=op
+0x7CA0: 26de        hint=b.cond
+0x7CA2: 0000        hint=op
+0x7CA4: c2c7        hint=op
+0x7CA6: 0000        hint=op
+0x7CA8: f008        hint=op
+0x7CAA: 0000        hint=op
+0x7CAC: 70b5        hint=push
+0x7CAE: 90b0        hint=op
+0x7CB0: 051c        hint=op
+0x7CB2: 6846        hint=op
+0x7CB4: 4021        hint=op
+0x7CB6: 6c46        hint=op
+0x7CB8: f8f7bae9  blx  ; blx 0x30
+0x7CBC: 0a4a        hint=ldr_pc
+0x7CBE: 0b49        hint=ldr_pc
+0x7CC0: 2b1c        hint=op
+0x7CC2: 4a44        hint=op
+0x7CC4: 7944        hint=op
+0x7CC6: 0a4d        hint=ldr_pc
+0x7CC8: 201c        hint=op
+0x7CCA: 4d44        hint=op
+0x7CCC: 2e68        hint=ldr
+0x7CCE: b047        hint=blx_reg
+0x7CD0: 201c        hint=op
+0x7CD2: 06f0e7f9  bl  ; bl 0xE0A4
+0x7CD6: 0128        hint=cmp_imm
+0x7CD8: 02d1        hint=b.cond
+0x7CDA: 0020        hint=op
+0x7CDC: 10b0        hint=op
+0x7CDE: 70bd        hint=pop
+0x7CE0: 0020        hint=op
+0x7CE2: c043        hint=op
+0x7CE4: fae7        hint=b
+0x7CE6: 0000        hint=op
+0x7CE8: 8c08        hint=op
+0x7CEA: 0000        hint=op
+0x7CEC: acc4        hint=op
+0x7CEE: 0000        hint=op
+0x7CF0: 6809        hint=op
+0x7CF2: 0000        hint=op
+0x7CF4: f3b5        hint=push
+0x7CF6: 061c        hint=op
+0x7CF8: 0024        hint=op
+0x7CFA: a9b0        hint=op
+0x7CFC: 06f0d2f9  bl  ; bl 0xE0A4
+
+# Also see full-module dump for xrefs outside window:
+#   loader_wrap +0xD964: bl +0xD768; movs r0,#0; bl +0x7B6C; bl +0xFF00
+#   ff00_dispatch +0xFF00: bl +0x7DB0; adds r0,#5; cmp r0,#5; bhs early_exit
+#   case paths: +0xFF3A bl cfg_loader(r0=0); +0xFFB2 bl cfg_loader(r0=1)
+
+## Static enrichment (image offsets = module offsets)
+
+### fn@+0x7770 (contains +0x77AE)
+0x7770: ffb5         push     {r0, r1, r2, r3, r4, r5, r6, r7, lr}
+0x7772: 0f1c         adds     r7, r1, #0
+0x7774: 1d1c         adds     r5, r3, #0
+0x7776: 041c         adds     r4, r0, #0
+0x7778: 0028         cmp      r0, #0
+0x777A: 81b0         sub      sp, #4
+0x777C: 8669         ldr      r6, [r0, #0x18]
+0x777E: 05d0         beq      #0x778c
+0x7780: 6069         ldr      r0, [r4, #0x14]
+0x7782: b842         cmp      r0, r7
+0x7784: 02d9         bls      #0x778c
+0x7786: 0398         ldr      r0, [sp, #0xc]
+0x7788: 8642         cmp      r6, r0
+0x778A: 03d8         bhi      #0x7794
+0x778C: 1c49         ldr      r1, [pc, #0x70]
+0x778E: 0720         movs     r0, #7
+0x7790: 4944         add      r1, sb
+0x7792: 0870         strb     r0, [r1]
+0x7794: 301c         adds     r0, r6, #0
+0x7796: 616a         ldr      r1, [r4, #0x24]
+0x7798: f8f7e4ec     blx      #0x164
+0x779C: e18b         ldrh     r1, [r4, #0x1e]
+0x779E: 0829         cmp      r1, #8
+0x77A0: 0bd1         bne      #0x77ba
+0x77A2: e16b         ldr      r1, [r4, #0x3c]
+0x77A4: 039a         ldr      r2, [sp, #0xc]
+0x77A6: b21a         subs     r2, r6, r2
+0x77A8: 013a         subs     r2, #1
+0x77AA: 4243         muls     r2, r0, r2
+0x77AC: d019         adds     r0, r2, r7
+0x77AE: 0818         adds     r0, r1, r0  ; PARAM_SITE
+0x77B0: 002d         cmp      r5, #0
+0x77B2: 1ad0         beq      #0x77ea
+0x77B4: 0078         ldrb     r0, [r0]
+0x77B6: 2870         strb     r0, [r5]
+0x77B8: 17e0         b        #0x77ea
+0x77BA: 0429         cmp      r1, #4
+0x77BC: 1bd1         bne      #0x77f6
+0x77BE: e16b         ldr      r1, [r4, #0x3c]
+0x77C0: 039a         ldr      r2, [sp, #0xc]
+0x77C2: b21a         subs     r2, r6, r2
+0x77C4: 013a         subs     r2, #1
+0x77C6: 4243         muls     r2, r0, r2
+0x77C8: 8818         adds     r0, r1, r2
+0x77CA: 7908         lsrs     r1, r7, #1
+0x77CC: 4018         adds     r0, r0, r1
+0x77CE: f907         lsls     r1, r7, #0x1f
+0x77D0: 06d5         bpl      #0x77e0
+0x77D2: 002d         cmp      r5, #0
+0x77D4: 09d0         beq      #0x77ea
+0x77D6: 0078         ldrb     r0, [r0]
+0x77D8: 0007         lsls     r0, r0, #0x1c
+0x77DA: 000f         lsrs     r0, r0, #0x1c
+0x77DC: 2870         strb     r0, [r5]
+0x77DE: 04e0         b        #0x77ea
+0x77E0: 002d         cmp      r5, #0
+0x77E2: 02d0         beq      #0x77ea
+0x77E4: 0078         ldrb     r0, [r0]
+0x77E6: 0009         lsrs     r0, r0, #4
+0x77E8: 2870         strb     r0, [r5]
+0x77EA: 0549         ldr      r1, [pc, #0x14]
+0x77EC: 0020         movs     r0, #0
+0x77EE: 4944         add      r1, sb
+0x77F0: 0870         strb     r0, [r1]
+0x77F2: 05b0         add      sp, #0x14
+0x77F4: f0bd         pop      {r4, r5, r6, r7, pc}
+
+### CFG_LOADER +0x7B6C
+0x7B6C: f0b5         push     {r4, r5, r6, r7, lr}  ; ENTRY
+0x7B6E: 454d         ldr      r5, [pc, #0x114]
+0x7B70: 85b0         sub      sp, #0x14
+0x7B72: 0020         movs     r0, #0
+0x7B74: 0490         str      r0, [sp, #0x10]
+0x7B76: 0024         movs     r4, #0
+0x7B78: 4d44         add      r5, sb
+0x7B7A: 281c         adds     r0, r5, #0
+0x7B7C: 06f092fa     bl       #0xe0a4
+0x7B80: 0128         cmp      r0, #1
+0x7B82: 6ed0         beq      #0x7c62
+0x7B84: 0022         movs     r2, #0
+0x7B86: 0292         str      r2, [sp, #8]
+0x7B88: 3f4a         ldr      r2, [pc, #0xfc]
+0x7B8A: 0021         movs     r1, #0
+0x7B8C: 03a8         add      r0, sp, #0xc
+0x7B8E: 0090         str      r0, [sp]
+0x7B90: 0191         str      r1, [sp, #4]
+0x7B92: 04ab         add      r3, sp, #0x10
+0x7B94: 7a44         add      r2, pc
+0x7B96: 3d49         ldr      r1, [pc, #0xf4]
+0x7B98: 3d48         ldr      r0, [pc, #0xf4]
+0x7B9A: 4944         add      r1, sb
+0x7B9C: 06f03cfa     bl       #0xe018
+0x7BA0: 3c4f         ldr      r7, [pc, #0xf0]
+0x7BA2: 3d49         ldr      r1, [pc, #0xf4]
+0x7BA4: 4f44         add      r7, sb
+0x7BA6: 7944         add      r1, pc
+0x7BA8: c98d         ldrh     r1, [r1, #0x2e]
+0x7BAA: 3c4a         ldr      r2, [pc, #0xf0]
+0x7BAC: 7a44         add      r2, pc
+0x7BAE: 0498         ldr      r0, [sp, #0x10]
+0x7BB0: 8e18         adds     r6, r1, r2
+0x7BB2: 0028         cmp      r0, #0
+0x7BB4: 02d0         beq      #0x7bbc
+0x7BB6: 0398         ldr      r0, [sp, #0xc]
+0x7BB8: 0028         cmp      r0, #0
+0x7BBA: 11d1         bne      #0x7be0
+0x7BBC: 3868         ldr      r0, [r7]
+0x7BBE: 0022         movs     r2, #0
+0x7BC0: 0021         movs     r1, #0
+0x7BC2: 0191         str      r1, [sp, #4]
+0x7BC4: 0292         str      r2, [sp, #8]
+0x7BC6: 0123         movs     r3, #1
+0x7BC8: 0090         str      r0, [sp]
+0x7BCA: 2120         movs     r0, #0x21
+0x7BCC: db03         lsls     r3, r3, #0xf
+0x7BCE: 321c         adds     r2, r6, #0
+0x7BD0: 0c21         movs     r1, #0xc
+0x7BD2: c002         lsls     r0, r0, #0xb
+0x7BD4: 06f020fa     bl       #0xe018
+0x7BD8: 0020         movs     r0, #0
+0x7BDA: c043         mvns     r0, r0
+0x7BDC: 05b0         add      sp, #0x14
+0x7BDE: f0bd         pop      {r4, r5, r6, r7, pc}
+
+### dispatch +0xFF00
+0xFF00: f0b5         push     {r4, r5, r6, r7, lr}
+0xFF02: 3048         ldr      r0, [pc, #0xc0]
+0xFF04: 83b0         sub      sp, #0xc
+0xFF06: 4844         add      r0, sb
+0xFF08: f7f752ff     bl       #0x7db0
+0xFF0C: 041c         adds     r4, r0, #0
+0xFF0E: 0530         adds     r0, #5
+0xFF10: 0528         cmp      r0, #5
+0xFF12: 55d2         bhs      #0xffc0  ; EARLY_EXIT_GATE
+0xFF14: 01a3         adr      r3, #4
+0xFF16: 1b5c         ldrb     r3, [r3, r0]
+0xFF18: 5b00         lsls     r3, r3, #1
+0xFF1A: 9f44         add      pc, r3
+0xFF1C: 3e13         asrs     r6, r7, #0xc
+0xFF1E: 024e         ldr      r6, [pc, #8]
+0xFF20: 4e00         lsls     r6, r1, #1
+0xFF22: 2848         ldr      r0, [pc, #0xa0]
+0xFF24: 4844         add      r0, sb
+0xFF26: fef7bbff     bl       #0xeea0
+0xFF2A: 2748         ldr      r0, [pc, #0x9c]
+0xFF2C: 4844         add      r0, sb
+0xFF2E: 0068         ldr      r0, [r0]
+0xFF30: 0028         cmp      r0, #0
+0xFF32: 42d1         bne      #0xffba
+0xFF34: fdf718fc     bl       #0xd768
+0xFF38: 0020         movs     r0, #0
+0xFF3A: f7f717fe     bl       #0x7b6c  ; CALL cfg_loader
+0xFF3E: fff7dfff     bl       #0xff00
+0xFF42: 3ae0         b        #0xffba
+0xFF44: 214d         ldr      r5, [pc, #0x84]
+0xFF46: 4d44         add      r5, sb
+0xFF48: 2868         ldr      r0, [r5]
+0xFF4A: 0088         ldrh     r0, [r0]
+0xFF4C: 0028         cmp      r0, #0
+0xFF4E: 34d0         beq      #0xffba
+0xFF50: 0021         movs     r1, #0
+0xFF52: 0022         movs     r2, #0
+0xFF54: 0292         str      r2, [sp, #8]
+0xFF56: ca43         mvns     r2, r1
+0xFF58: 0091         str      r1, [sp]
+0xFF5A: 0191         str      r1, [sp, #4]
+0xFF5C: 0023         movs     r3, #0
+0xFF5E: 0421         movs     r1, #4
+0xFF60: 1b48         ldr      r0, [pc, #0x6c]
+0xFF62: fef759f8     bl       #0xe018
+0xFF66: 061c         adds     r6, r0, #0
+0xFF68: 0022         movs     r2, #0
+0xFF6A: 1a4b         ldr      r3, [pc, #0x68]
+0xFF6C: 0021         movs     r1, #0
+0xFF6E: 7b44         add      r3, pc
+0xFF70: 988d         ldrh     r0, [r3, #0x2c]
+0xFF72: 194f         ldr      r7, [pc, #0x64]
+0xFF74: 7f44         add      r7, pc
+0xFF76: c019         adds     r0, r0, r7
+0xFF78: 0090         str      r0, [sp]
+0xFF7A: 0191         str      r1, [sp, #4]
+0xFF7C: 0292         str      r2, [sp, #8]
+0xFF7E: 588b         ldrh     r0, [r3, #0x1a]
+0xFF80: 321c         adds     r2, r6, #0
+0xFF82: ff21         movs     r1, #0xff
+0xFF84: c319         adds     r3, r0, r7
+0xFF86: 1548         ldr      r0, [pc, #0x54]
+0xFF88: 0131         adds     r1, #1
+0xFF8A: fef745f8     bl       #0xe018
+0xFF8E: 2868         ldr      r0, [r5]
+0xFF90: 0023         movs     r3, #0
+0xFF92: c05e         ldrsh    r0, [r0, r3]
+0xFF94: 02f068f9     bl       #0x12268
+0xFF98: 0fe0         b        #0xffba
+0xFF9A: 0a4d         ldr      r5, [pc, #0x28]
+0xFF9C: 4d44         add      r5, sb
+0xFF9E: 281c         adds     r0, r5, #0
+0xFFA0: fef780f8     bl       #0xe0a4
+0xFFA4: 0128         cmp      r0, #1
+0xFFA6: 03d1         bne      #0xffb0
+0xFFA8: 281c         adds     r0, r5, #0
+0xFFAA: fef779ff     bl       #0xeea0
+0xFFAE: 041c         adds     r4, r0, #0
+0xFFB0: 0120         movs     r0, #1
+0xFFB2: f7f7dbfd     bl       #0x7b6c  ; CALL cfg_loader
+0xFFB6: fff7a3ff     bl       #0xff00
+0xFFBA: 201c         adds     r0, r4, #0
+0xFFBC: 03b0         add      sp, #0xc
+0xFFBE: f0bd         pop      {r4, r5, r6, r7, pc}
+
+### wrap +0xD964
+0xD964: 08b5         push     {r3, lr}
+0xD966: fff7fffe     bl       #0xd768
+0xD96A: 0020         movs     r0, #0
+0xD96C: faf7fef8     bl       #0x7b6c  ; CALL cfg_loader
+0xD970: 02f0c6fa     bl       #0xff00
+0xD974: 08bd         pop      {r3, pc}
+
